@@ -38,3 +38,11 @@ A pathway should begin with a learner goal or real question, specify entry requi
 
 - [Capability-to-curriculum map](capability-curriculum-map.md)
 - [Machine-readable capability map](capability-curriculum-map.json)
+
+## Learning and capability development
+
+- [Learning and capability development methodology](learning-and-capability-development.md)
+- [Machine-readable learning cycle](learning-cycle.json)
+- [Capability progression rubric](capability-progression-rubric.md)
+
+The learning cycle is revisitable rather than strictly linear. The progression rubric describes evidence in a particular capability and context; it is not a ranking of learners.
