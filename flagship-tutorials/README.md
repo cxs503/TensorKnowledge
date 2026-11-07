@@ -22,3 +22,7 @@ Prioritize tutorials that teach transferable foundations; can be practiced with 
 ## Status convention
 
 Use proposed, draft, in-review, piloted, validated, or deprecated. A tutorial is not validated merely because it is published or an agent reports completion.
+
+## Cross-disciplinary pilot
+
+The four-studio pilot design is maintained separately in [`pilots/cross-disciplinary/README.md`](../pilots/cross-disciplinary/README.md). It is a proposed evaluation program, not a set of validated tutorials.
