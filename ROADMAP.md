@@ -22,6 +22,15 @@ This roadmap is a sequence of evidence-gated stages, not a promise of dates. Pro
 - OpenStax references have been added for the pendulum model.
 - Subject-matter review, learner pilot, accessibility review, and full reproducibility review remain pending. The tutorial is **not validated**.
 
+## Current knowledge-asset implementation
+
+- [x] Add machine-readable contracts for knowledge nodes, pathways, and tutorial metadata.
+- [x] Seed 14 linked knowledge nodes spanning inquiry, causality, systems, modeling, critical thinking, and ethics.
+- [x] Add two question-led pathways: scientific inquiry and systems/decisions.
+- [x] Add a repository integrity validator and a GitHub Actions check for pushes and pull requests.
+- [ ] Confirm the GitHub Actions check passes on the current main branch.
+- [ ] Obtain independent domain and learning-design review; no review is claimed complete.
+
 ## Current production-readiness work
 
 The repository now includes `AGENT_WORK_PACKAGES.md`, a reusable tutorial template, question-led learning pathways, and a source/claim standard. These documents prepare work for later delegation through TensorPlatform; they do not imply that the platform integration has been implemented or tested.
