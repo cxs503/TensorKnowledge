@@ -16,7 +16,8 @@ AI agents increasingly retrieve information, write software, analyze data, run s
 2. **Curriculum** — learning pathways organized around questions and real-world problems.
 3. **Tutorial standards** — specifications for accurate, multimodal, interactive, agent-assisted learning materials.
 4. **Flagship tutorials** — exemplary learning experiences with experiments, projects, reflection, and assessment.
-5. **Knowledge governance** — review, provenance, versioning, correction, and continuous improvement.\n6. **Agent production workflow** — bounded work packages, independent review, evidence-based acceptance, and a future handoff to TensorPlatform.
+5. **Knowledge governance** — review, provenance, versioning, correction, and continuous improvement.
+6. **Agent production workflow** — bounded work packages, independent review, evidence-based acceptance, and a future handoff to TensorPlatform.
 
 ## What TensorKnowledge is not
 
