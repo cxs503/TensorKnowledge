@@ -63,3 +63,8 @@ python scripts/validate_knowledge_assets.py
 ```
 
 The same integrity check runs in GitHub Actions for pushes to `main` and pull requests targeting `main`. A green check means local references and required metadata are structurally consistent; it does not certify factual accuracy or learning effectiveness.
+
+
+## Human capability framework
+
+The curriculum's cross-cutting capability architecture is documented in [`curriculum/human-capabilities-ai-era.md`](curriculum/human-capabilities-ai-era.md). A machine-readable summary is available at [`curriculum/human-capabilities-framework.json`](curriculum/human-capabilities-framework.json). Both are drafts pending independent review and learner feedback.
