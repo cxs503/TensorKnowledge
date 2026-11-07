@@ -53,3 +53,13 @@ This repository begins as a framework-and-content project. The initial priority 
 ## Guiding principle
 
 > Do not educate people only to know what the world already contains. Help them understand what exists, discover what is unknown, and responsibly create what could exist.
+
+## Knowledge asset integrity
+
+Machine-readable nodes, tutorials, and learning pathways live alongside the human-readable material. Before proposing changes, run:
+
+```bash
+python scripts/validate_knowledge_assets.py
+```
+
+The same integrity check runs in GitHub Actions for pushes to `main` and pull requests targeting `main`. A green check means local references and required metadata are structurally consistent; it does not certify factual accuracy or learning effectiveness.
