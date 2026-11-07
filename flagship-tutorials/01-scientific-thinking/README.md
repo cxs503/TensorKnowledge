@@ -334,11 +334,12 @@ Write short answers:
 
 ## 12. Sources and further study
 
-Use a reliable introductory physics textbook or an open university physics resource for the simple-pendulum derivation and its assumptions. For experimental practice, consult an established school or university laboratory manual. Verify the exact edition, author, and publication details before adding a citation to a published version of this tutorial.
+1. OpenStax, *University Physics Volume 1*, Section 15.4, “Pendulums.” This open textbook derives the small-angle simple-pendulum equation, states its assumptions, and discusses the dependence of period on length and gravitational acceleration: https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums
+2. OpenStax, *College Physics for AP® Courses*, Section 16.4, “The Simple Pendulum.” An alternative introductory explanation of the small-angle approximation and period equation: https://openstax.org/books/college-physics-ap-courses/pages/16-4-the-simple-pendulum
 
 The numerical value of gravitational acceleration used here is an approximate near-Earth reference value; local effective gravity varies with location and altitude. The ideal period equation is standard introductory mechanics, subject to the assumptions stated above.
 
-**Source-maintenance note:** this draft intentionally does not invent bibliographic entries or URLs. Before the tutorial is labeled reviewed, an editor must add and verify specific sources and record the review date.
+**Source-maintenance note:** links and the stated physics relationship have been checked against the cited OpenStax sections for this draft. A subject reviewer should still verify the full tutorial, its experimental advice, and the suitability of the sources before publication.
 
 ## 13. Review record
 
