@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/knowledge-node.schema.json",
+  "title": "TensorKnowledge Knowledge Node",
+  "description": "A typed, traceable knowledge object. Evidence status and workflow review status are intentionally distinct.",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "object_type",
+    "domains",
+    "summary",
+    "status",
+    "version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tk:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "object_type": {
+      "enum": [
+        "concept",
+        "claim",
+        "observation",
+        "principle",
+        "model",
+        "method",
+        "skill",
+        "dataset",
+        "experiment",
+        "case-study",
+        "artifact",
+        "question",
+        "hypothesis",
+        "value",
+        "norm"
+      ]
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "cognitive-foundations",
+          "evidence-and-reality",
+          "models-and-principles",
+          "systems-and-interdisciplinary-thinking",
+          "creativity-and-discovery",
+          "civilization-and-values"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "definition": {
+      "type": "string"
+    },
+    "learning_outcomes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^tk:"
+      },
+      "uniqueItems": true
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "target"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target": {
+            "type": "string",
+            "pattern": "^tk:"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence_status": {
+      "enum": [
+        "established",
+        "well-supported",
+        "provisional",
+        "contested",
+        "speculative",
+        "superseded"
+      ]
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "in-review",
+        "approved",
+        "deprecated"
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "citation"
+        ],
+        "properties": {
+          "citation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "accessed": {
+            "type": "string",
+            "format": "date"
+          },
+          "supports": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\\\.[0-9]+\\\\.[0-9]+$"
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}
