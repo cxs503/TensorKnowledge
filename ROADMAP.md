@@ -13,6 +13,20 @@ This roadmap is a sequence of evidence-gated stages, not a promise of dates. Pro
 
 **Exit gate:** the framework is internally consistent, understandable, and reviewed for major omissions and unsupported assumptions.
 
+## Current implementation snapshot
+
+- The first flagship tutorial, **Scientific Thinking: From Observation to Explanation**, has an initial full draft in `flagship-tutorials/01-scientific-thinking/README.md`.
+- The draft includes a pendulum investigation, model assumptions, uncertainty, agent-assisted critique, transfer exercises, and an assessment rubric.
+- OpenStax references have been added for the pendulum model.
+- Subject-matter review, learner pilot, accessibility review, and full reproducibility review remain pending. The tutorial is **not validated**.
+
+## Immediate next actions
+
+1. Obtain an independent physics educator review of the first tutorial.
+2. Run the pendulum activity with learners and record actual feedback and measurement issues.
+3. Improve the lesson based on review evidence.
+4. Only then use the revised tutorial as the production template for the next flagship lesson.
+
 ## Stage 1 — Build the knowledge map
 
 - Define core concepts, learning outcomes, prerequisites, and cross-domain links.
