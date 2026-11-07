@@ -9,7 +9,7 @@ This roadmap is a sequence of evidence-gated stages, not a promise of dates. Pro
 - [x] Define a common tutorial specification.
 - [x] Define content-quality and review expectations.
 - [ ] Review the framework with educators and domain specialists.
-- [ ] Convert the framework into an issue-based work plan.
+- [x] Convert the framework into reusable agent work-package contracts.\n- [x] Define a reusable tutorial template and question-led learning pathways.\n- [x] Define source and claim traceability requirements.
 
 **Exit gate:** the framework is internally consistent, understandable, and reviewed for major omissions and unsupported assumptions.
 
@@ -20,7 +20,7 @@ This roadmap is a sequence of evidence-gated stages, not a promise of dates. Pro
 - OpenStax references have been added for the pendulum model.
 - Subject-matter review, learner pilot, accessibility review, and full reproducibility review remain pending. The tutorial is **not validated**.
 
-## Immediate next actions
+## Current production-readiness work\n\nThe repository now includes `AGENT_WORK_PACKAGES.md`, a reusable tutorial template, question-led learning pathways, and a source/claim standard. These documents prepare work for later delegation through TensorPlatform; they do not imply that the platform integration has been implemented or tested.\n\n## Immediate next actions
 
 1. Obtain an independent physics educator review of the first tutorial.
 2. Run the pendulum activity with learners and record actual feedback and measurement issues.
