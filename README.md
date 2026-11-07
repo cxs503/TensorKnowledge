@@ -68,3 +68,7 @@ The same integrity check runs in GitHub Actions for pushes to `main` and pull re
 ## Human capability framework
 
 The curriculum's cross-cutting capability architecture is documented in [`curriculum/human-capabilities-ai-era.md`](curriculum/human-capabilities-ai-era.md). A machine-readable summary is available at [`curriculum/human-capabilities-framework.json`](curriculum/human-capabilities-framework.json). Both are drafts pending independent review and learner feedback.
+
+## Learning and capability development
+
+The draft methodology in [`curriculum/learning-and-capability-development.md`](curriculum/learning-and-capability-development.md) describes a revisitable learning loop from orientation and diagnosis through practice, verification, transfer, creation, and stewardship. Its machine-readable cycle and formative progression rubric are maintained alongside it. These assets are drafts; structural validation does not establish learning effectiveness.
