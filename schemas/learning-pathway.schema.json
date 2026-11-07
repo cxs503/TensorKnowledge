@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/learning-pathway.schema.json",
+  "title": "TensorKnowledge Learning Pathway",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "central_question",
+    "entry_nodes",
+    "steps",
+    "status",
+    "version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tk:pathway:[a-z0-9][a-z0-9-]*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "central_question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_capability": {
+      "type": "string"
+    },
+    "learner_profile": {
+      "type": "string"
+    },
+    "entry_nodes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^tk:"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "purpose"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "essential_nodes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^tk:"
+            }
+          },
+          "optional_nodes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^tk:"
+            }
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "assessment_evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "exit_capability": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "in-review",
+        "approved",
+        "deprecated"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\\\.[0-9]+\\\\.[0-9]+$"
+    }
+  },
+  "additionalProperties": false
+}
