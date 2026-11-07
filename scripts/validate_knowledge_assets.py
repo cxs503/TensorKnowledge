@@ -62,6 +62,22 @@ def main() -> int:
         except ValueError as exc:
             errors.append(str(exc))
 
+    for path in sorted((ROOT / "knowledge-map" / "pathways").glob("*.json")):
+        try:
+            item = load_json(path)
+            for key in ("id", "title", "central_question", "entry_nodes", "steps", "status", "version"):
+                if key not in item:
+                    errors.append(f"{path.relative_to(ROOT)}: missing required field {key}")
+            for node_id in item.get("entry_nodes", []):
+                if node_id not in nodes:
+                    errors.append(f"{path.relative_to(ROOT)}: unresolved pathway entry node {node_id}")
+            for step in item.get("steps", []):
+                for node_id in step.get("essential_nodes", []) + step.get("optional_nodes", []):
+                    if node_id not in nodes:
+                        errors.append(f"{path.relative_to(ROOT)}: unresolved pathway node {node_id}")
+        except ValueError as exc:
+            errors.append(str(exc))
+
     for path in sorted(SCHEMA_DIR.glob("*.schema.json")):
         try:
             schema = load_json(path)
