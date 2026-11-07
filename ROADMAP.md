@@ -55,6 +55,17 @@ This roadmap is a sequence of evidence-gated stages, not a promise of dates. Pro
 - [ ] Review the methodology and rubric with educators, domain specialists, and learners.
 - [ ] Pilot the cycle in more than one discipline and learner context; report actual evidence and limitations.
 
+## Cross-disciplinary learning pilot
+
+- [x] Define four pilot studios: scientific inquiry, engineering design, humanities research, and creative production.
+- [x] Define a shared learner protocol while preserving discipline-specific evidence standards.
+- [x] Define machine-readable agent work packages TK-008–TK-014 with dependencies and reviewer roles.
+- [ ] Produce and independently review the four studio learning materials.
+- [ ] Finalize assessment/transfer probes and ethics, privacy, and accessibility protocols.
+- [ ] Run a consent-based learner pilot and publish anonymized findings, sample size, limitations, and revisions.
+
+The pilot is currently **designed, not executed**. The work-package manifest does not imply that any agent has been assigned or that reviewers/learners have participated.
+
 ## Current production-readiness work
 
 The repository now includes `AGENT_WORK_PACKAGES.md`, a reusable tutorial template, question-led learning pathways, and a source/claim standard. These documents prepare work for later delegation through TensorPlatform; they do not imply that the platform integration has been implemented or tested.
