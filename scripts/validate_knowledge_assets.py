@@ -120,6 +120,41 @@ def main() -> int:
         except ValueError as exc:
             errors.append(str(exc))
 
+    framework_path = ROOT / "curriculum" / "human-capabilities-framework.json"
+    if framework_path.is_file():
+        try:
+            framework = load_json(framework_path)
+            if framework.get("id") != "tk:framework:human-capabilities-ai-era":
+                errors.append(f"{framework_path.relative_to(ROOT)}: unexpected framework id")
+            check_version(framework, framework_path, errors)
+            for layer in framework.get("layers", []):
+                if not layer.get("capabilities"):
+                    errors.append(f"{framework_path.relative_to(ROOT)}: empty capability layer {layer.get('id')}")
+        except ValueError as exc:
+            errors.append(str(exc))
+
+    mapping_path = ROOT / "curriculum" / "capability-curriculum-map.json"
+    if mapping_path.is_file():
+        try:
+            mapping = load_json(mapping_path)
+            check_version(mapping, mapping_path, errors)
+            if mapping.get("framework") != "tk:framework:human-capabilities-ai-era":
+                errors.append(f"{mapping_path.relative_to(ROOT)}: unresolved capability framework")
+            capability_ids: set[str] = set()
+            for capability in mapping.get("priority_capabilities", []):
+                capability_id = capability.get("id")
+                if not capability_id or capability_id in capability_ids:
+                    errors.append(f"{mapping_path.relative_to(ROOT)}: missing or duplicate capability id {capability_id!r}")
+                capability_ids.add(capability_id)
+                for node_id in capability.get("knowledge_nodes", []):
+                    if node_id not in nodes:
+                        errors.append(f"{mapping_path.relative_to(ROOT)}: unresolved capability knowledge node {node_id}")
+                for pathway_id in capability.get("pathways", []):
+                    if pathway_id not in {item.get("id") for _, item in pathways.values()}:
+                        errors.append(f"{mapping_path.relative_to(ROOT)}: unresolved capability pathway {pathway_id}")
+        except ValueError as exc:
+            errors.append(str(exc))
+
     for path in sorted(SCHEMA_DIR.glob("*.schema.json")):
         try:
             schema = load_json(path)
