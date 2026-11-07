@@ -35,3 +35,6 @@ A pathway should begin with a learner goal or real question, specify entry requi
 
 - [Human Capabilities in the AI Era](human-capabilities-ai-era.md)
 - [Machine-readable capability summary](human-capabilities-framework.json)
+
+- [Capability-to-curriculum map](capability-curriculum-map.md)
+- [Machine-readable capability map](capability-curriculum-map.json)
