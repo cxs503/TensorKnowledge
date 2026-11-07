@@ -22,6 +22,13 @@ This roadmap is a sequence of evidence-gated stages, not a promise of dates. Pro
 - OpenStax references have been added for the pendulum model.
 - Subject-matter review, learner pilot, accessibility review, and full reproducibility review remain pending. The tutorial is **not validated**.
 
+## Human capability framework
+
+- [x] Draft a cross-cutting human capability architecture across understanding, inquiry, agent-era agency, and responsibility/meaning.
+- [x] Publish both a readable framework and a machine-readable summary.
+- [ ] Review the framework with educators, domain specialists, and learners.
+- [ ] Map priority capabilities to existing knowledge nodes, pathways, and tutorial assessments.
+
 ## Current knowledge-asset implementation
 
 - [x] Add machine-readable contracts for knowledge nodes, pathways, and tutorial metadata.
