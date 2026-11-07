@@ -4,7 +4,7 @@ These are initial tutorial briefs, not completed or validated courses. Each must
 
 | # | Working title | Main domains | Intended capstone |
 |---|---|---|---|
-| 1 | Scientific Thinking: From Observation to Explanation | 1, 2, 3 | Design and critique a small investigation |
+| 1 | [Scientific Thinking: From Observation to Explanation](01-scientific-thinking/README.md) | 1, 2, 3, 5 | Design and critique a small investigation |
 | 2 | Mathematics and Logic: Tools for Understanding | 1, 3 | Build and explain a simple formal model |
 | 3 | Data, Evidence, and Uncertainty | 2, 1 | Audit a dataset and communicate uncertainty |
 | 4 | Models, Systems, and Emergence | 3, 4 | Analyze a system with feedback and limits |
@@ -15,7 +15,7 @@ These are initial tutorial briefs, not completed or validated courses. Each must
 | 9 | Creativity Across Art, Media, and Technology | 5, 6 | Create and reflect on an original work |
 | 10 | Ethics, Institutions, and Civilizational Futures | 6, 4 | Compare futures and justify a design choice |
 
-## Selection criteria
+## Development status\n\nTutorial 01 is an initial draft. Subject-matter review, learner piloting, accessibility review, and source verification are still pending. It must not be described as validated until those gates are completed.\n\n## Selection criteria
 
 Prioritize tutorials that teach transferable foundations; can be practiced with accessible tools and data; demonstrate value and limits of agent assistance; connect multiple representations; have assessable outcomes; and can be reviewed by qualified people.
 
