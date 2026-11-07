@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/tutorial.schema.json",
+  "title": "TensorKnowledge Tutorial Metadata",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "path",
+    "status",
+    "version",
+    "domains",
+    "knowledge_nodes",
+    "learning_outcomes",
+    "sources"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tk:tutorial:[a-z0-9][a-z0-9-]*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "in-review",
+        "pilot",
+        "approved",
+        "deprecated"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\\\.[0-9]+\\\\.[0-9]+$"
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "knowledge_nodes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^tk:"
+      },
+      "uniqueItems": true
+    },
+    "learning_outcomes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "activities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assessment_dimensions": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "understanding",
+          "judgment",
+          "transfer",
+          "creation"
+        ]
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "citation"
+        ],
+        "properties": {
+          "citation": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "supports": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "review": {
+      "type": "object",
+      "properties": {
+        "domain_review": {
+          "enum": [
+            "not-started",
+            "in-progress",
+            "passed",
+            "changes-requested"
+          ]
+        },
+        "learning_design_review": {
+          "enum": [
+            "not-started",
+            "in-progress",
+            "passed",
+            "changes-requested"
+          ]
+        },
+        "learner_pilot": {
+          "enum": [
+            "not-started",
+            "in-progress",
+            "passed",
+            "changes-requested"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
