@@ -8,3 +8,7 @@ Pilot programs are controlled tests of the knowledge architecture and learning m
 - [Machine-readable work-package manifest](cross-disciplinary/pilot-work-packages.json) — proposed packages TK-008–TK-014, with dependencies, deliverables, and reviewer requirements.
 
 Learner participation requires appropriate consent, privacy protections, accessibility arrangements, and any applicable institutional approvals.
+
+## TensorPlatform execution handoff
+
+- [Execution instructions for TensorPlatform agents](cross-disciplinary/TENSORPLATFORM_HANDOFF.md)
