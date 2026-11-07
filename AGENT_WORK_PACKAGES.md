@@ -123,6 +123,22 @@ Do not build a dedicated TensorKnowledge execution engine if TensorPlatform can 
 
 These are candidate packages, not evidence that any external agent has executed them.
 
+### Cross-disciplinary learning pilot
+
+The next controlled pilot is specified in [`pilots/cross-disciplinary/README.md`](pilots/cross-disciplinary/README.md), with machine-readable contracts in [`pilots/cross-disciplinary/pilot-work-packages.json`](pilots/cross-disciplinary/pilot-work-packages.json).
+
+| ID | Package | Output | Dependency | Review |
+|---|---|---|---|---|
+| TK-008 | Develop scientific inquiry studio | `pilots/cross-disciplinary/studios/scientific-inquiry.md` | none | science educator / learning designer |
+| TK-009 | Develop engineering design studio | `pilots/cross-disciplinary/studios/engineering-design.md` | none | engineering educator / safety reviewer |
+| TK-010 | Develop humanities evidence studio | `pilots/cross-disciplinary/studios/humanities-research.md` | none | humanities specialist / source reviewer |
+| TK-011 | Develop creative production studio | `pilots/cross-disciplinary/studios/creative-production.md` | none | creative practitioner / accessibility reviewer |
+| TK-012 | Design common assessment and transfer probes | `pilots/cross-disciplinary/assessment-and-transfer.md` | TK-008–TK-011 | assessment specialist / independent reviewers |
+| TK-013 | Prepare ethics, accessibility, and data protocol | `pilots/cross-disciplinary/participant-and-data-protocol.md` | TK-008–TK-011 | ethics/privacy / accessibility reviewers |
+| TK-014 | Integrate and adversarially review pilot | `pilots/cross-disciplinary/integration-review.md` | TK-012–TK-013 | independent interdisciplinary panel |
+
+All six packages are **proposed and unassigned**. Deliverables are targets, not existing files. Learner recruitment must not begin before the relevant review and approval gates are satisfied.
+
 ## 10. Definition of ready for platform-scale production
 
 Begin large-scale delegation only when:
