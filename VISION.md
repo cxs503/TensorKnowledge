@@ -20,6 +20,10 @@ The educational response should be neither "learn nothing because AI knows it" n
 - **Create:** produce original explanations, theories, designs, works, and institutions.
 - **Orient:** deliberate about values, purpose, fairness, responsibility, and long-term futures.
 
+## Human capability framework
+
+The cross-cutting capability architecture is specified in [`curriculum/human-capabilities-ai-era.md`](curriculum/human-capabilities-ai-era.md), with a machine-readable summary in [`curriculum/human-capabilities-framework.json`](curriculum/human-capabilities-framework.json). It guides curriculum and assessment design; it is a draft to be reviewed, not a claim that these capabilities are uniquely human or permanently beyond AI.
+
 ## Human–agent relationship
 
 TensorKnowledge adopts a human-agency-first approach. Agents can extend memory, search, analysis, simulation, and execution. Humans remain responsible for goals, interpretation, consequential decisions, and the ethical use of outcomes.
