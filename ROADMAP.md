@@ -46,6 +46,15 @@ This roadmap is a sequence of evidence-gated stages, not a promise of dates. Pro
 - [ ] Confirm the GitHub Actions check passes on the current main branch.
 - [ ] Obtain independent domain and learning-design review; no review is claimed complete.
 
+## Learning and capability development
+
+- [x] Draft an AI-era learning methodology from field entry through contribution and stewardship.
+- [x] Define a machine-readable, revisitable learning cycle.
+- [x] Add an evidence-oriented capability progression rubric with L0–L5 descriptive anchors.
+- [x] Add structural checks for the learning-cycle stages and rubric anchors.
+- [ ] Review the methodology and rubric with educators, domain specialists, and learners.
+- [ ] Pilot the cycle in more than one discipline and learner context; report actual evidence and limitations.
+
 ## Current production-readiness work
 
 The repository now includes `AGENT_WORK_PACKAGES.md`, a reusable tutorial template, question-led learning pathways, and a source/claim standard. These documents prepare work for later delegation through TensorPlatform; they do not imply that the platform integration has been implemented or tested.
