@@ -189,6 +189,32 @@ def main() -> int:
             if level not in rubric_text:
                 errors.append(f"{rubric_path.relative_to(ROOT)}: missing progression anchor {level}")
 
+    pilot_path = ROOT / "pilots" / "cross-disciplinary" / "pilot-work-packages.json"
+    if pilot_path.is_file():
+        try:
+            pilot = load_json(pilot_path)
+            if pilot.get("id") != "tk:pilot:cross-disciplinary-learning":
+                errors.append(f"{pilot_path.relative_to(ROOT)}: unexpected pilot id")
+            check_version(pilot, pilot_path, errors)
+            package_items = pilot.get("packages", [])
+            package_ids = [package.get("id") for package in package_items if isinstance(package, dict)]
+            if len(package_ids) != len(package_items) or len(package_ids) != len(set(package_ids)):
+                errors.append(f"{pilot_path.relative_to(ROOT)}: packages must be objects with unique ids")
+            required_packages = {"TK-008", "TK-009", "TK-010", "TK-011", "TK-012", "TK-013", "TK-014"}
+            if required_packages - set(package_ids):
+                errors.append(f"{pilot_path.relative_to(ROOT)}: missing packages {sorted(required_packages - set(package_ids))}")
+            known_ids = set(package_ids)
+            for package in package_items:
+                if not package.get("title") or not package.get("deliverables") or not package.get("acceptance") or not package.get("reviewers"):
+                    errors.append(f"{pilot_path.relative_to(ROOT)}: package {package.get('id')} is missing required contract fields")
+                for dependency in package.get("depends_on", []):
+                    if dependency not in known_ids:
+                        errors.append(f"{pilot_path.relative_to(ROOT)}: package {package.get('id')} has unknown dependency {dependency}")
+            if pilot.get("execution_status") != "not-assigned":
+                errors.append(f"{pilot_path.relative_to(ROOT)}: initial execution status must remain not-assigned")
+        except ValueError as exc:
+            errors.append(str(exc))
+
     for path in sorted(SCHEMA_DIR.glob("*.schema.json")):
         try:
             schema = load_json(path)
