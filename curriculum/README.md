@@ -29,3 +29,9 @@ Philosophy and theories of knowledge; ethics, responsibility, and governance; hi
 ## Pathway design
 
 A pathway should begin with a learner goal or real question, specify entry requirements, link relevant concepts across domains, and culminate in an observable artifact, explanation, or investigation. Avoid treating this outline as a fixed universal sequence.
+
+
+## Core capability framework
+
+- [Human Capabilities in the AI Era](human-capabilities-ai-era.md)
+- [Machine-readable capability summary](human-capabilities-framework.json)
