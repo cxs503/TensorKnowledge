@@ -155,6 +155,40 @@ def main() -> int:
         except ValueError as exc:
             errors.append(str(exc))
 
+    cycle_path = ROOT / "curriculum" / "learning-cycle.json"
+    if cycle_path.is_file():
+        try:
+            cycle = load_json(cycle_path)
+            if cycle.get("id") != "tk:learning-cycle:ai-era":
+                errors.append(f"{cycle_path.relative_to(ROOT)}: unexpected learning cycle id")
+            check_version(cycle, cycle_path, errors)
+            stages = cycle.get("stages", [])
+            stage_ids = [stage.get("id") for stage in stages if isinstance(stage, dict)]
+            if len(stage_ids) != len(stages) or len(stage_ids) != len(set(stage_ids)):
+                errors.append(f"{cycle_path.relative_to(ROOT)}: stages must be objects with unique ids")
+            required_stages = {"orient", "diagnose", "map", "understand", "practice", "verify", "reflect", "transfer", "create", "contribute-steward"}
+            missing_stages = required_stages - set(stage_ids)
+            if missing_stages:
+                errors.append(f"{cycle_path.relative_to(ROOT)}: missing stages {sorted(missing_stages)}")
+            for stage in stages:
+                if not isinstance(stage.get("order"), int) or not stage.get("goal") or not stage.get("actions") or not stage.get("evidence"):
+                    errors.append(f"{cycle_path.relative_to(ROOT)}: each stage needs order, goal, actions, and evidence")
+            review = cycle.get("review", {})
+            for key in ("expert_review", "learner_pilot", "accessibility_review", "cross_context_validation"):
+                if key not in review:
+                    errors.append(f"{cycle_path.relative_to(ROOT)}: missing review status {key}")
+        except ValueError as exc:
+            errors.append(str(exc))
+
+    rubric_path = ROOT / "curriculum" / "capability-progression-rubric.md"
+    if not rubric_path.is_file():
+        errors.append("curriculum/capability-progression-rubric.md: missing capability progression rubric")
+    else:
+        rubric_text = rubric_path.read_text(encoding="utf-8")
+        for level in ("L0 — Not yet evidenced", "L1 — Supported orientation", "L2 — Independent in familiar contexts", "L3 — Adaptive transfer", "L4 — Original contribution", "L5 — Stewardship and enablement"):
+            if level not in rubric_text:
+                errors.append(f"{rubric_path.relative_to(ROOT)}: missing progression anchor {level}")
+
     for path in sorted(SCHEMA_DIR.glob("*.schema.json")):
         try:
             schema = load_json(path)
