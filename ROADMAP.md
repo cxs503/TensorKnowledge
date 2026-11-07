@@ -22,6 +22,14 @@ This roadmap is a sequence of evidence-gated stages, not a promise of dates. Pro
 - OpenStax references have been added for the pendulum model.
 - Subject-matter review, learner pilot, accessibility review, and full reproducibility review remain pending. The tutorial is **not validated**.
 
+## Capability-to-curriculum translation
+
+- [x] Draft the human capability framework in readable and machine-readable forms.
+- [x] Map seven first-cycle capabilities to existing knowledge nodes, learning pathways, and observable evidence.
+- [x] Define assessment through explanation, performance, transfer, and reflection/accountability.
+- [ ] Validate every mapping reference automatically and in CI.
+- [ ] Review assessment validity and accessibility with educators and learners.
+
 ## Human capability framework
 
 - [x] Draft a cross-cutting human capability architecture across understanding, inquiry, agent-era agency, and responsibility/meaning.
