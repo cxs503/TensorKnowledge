@@ -1,0 +1,49 @@
+[
+    {
+        "id": "tkp:oss-lbm:thermalmulti:ingestion-2026-11-09",
+        "generated_entity": {
+            "id": "knowledge/oss-lbm/thermalmulti",
+            "entity_type": "knowledge-object",
+            "version": "1.0.0"
+        },
+        "activity": {
+            "id": "activity-thermalmulti-ingest",
+            "activity_type": "extraction",
+            "description": "Source-code-driven extraction of 17 claims about ThermalMultiphaseOpenLB (JuliusWeinmiller/ThermalMultiphaseOpenLB@769efd4), an OpenLB extension for thermal single-component phase change multiphase flow. Each claim verified against actual source code in /tmp/ThermalMultiphaseOpenLB with file:line locators and verbatim quotes. Covers: Peng-Robinson/Carnahan-Starling EoS, modified Guo forcing, semi-hybrid thermal coupling, Maxwell construction, latent heat via EoS, MRT thermal solver, pool boiling, evaporating droplet, Laplace law, wall wettability, thermodynamic consistency, fluid properties, interaction potential, phase separation, d²-law, and OpenLB compatibility.",
+            "started_at": "2026-11-09T16:00:00Z",
+            "ended_at": "2026-11-09T16:30:00Z",
+            "used_entities": [
+                "ThermalMultiphaseOpenLB@769efd4"
+            ],
+            "software": [
+                {
+                    "name": "python",
+                    "version": "3.12"
+                },
+                {
+                    "name": "jsonschema",
+                    "version": "4.23"
+                }
+            ]
+        },
+        "agents": [
+            {
+                "id": "agent-m8689",
+                "agent_type": "software-agent",
+                "name": "TensorKnowledge builder agent",
+                "role": "knowledge extractor"
+            }
+        ],
+        "derived_from": [
+            {
+                "id": "ThermalMultiphaseOpenLB@769efd4",
+                "entity_type": "source-repository",
+                "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+                "commit": "769efd4",
+                "description": "OpenLB extension for thermal single-component phase change multiphase flow by Julius Weinmiller (master thesis, TU Delft)"
+            }
+        ],
+        "recorded_at": "2026-11-09T16:30:00Z",
+        "version": "1.0.0"
+    }
+]
