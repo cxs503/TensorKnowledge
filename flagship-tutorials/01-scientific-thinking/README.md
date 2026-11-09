@@ -83,7 +83,7 @@ T = 2π√(L/g)
 where:
 - T is the period in seconds;
 - L is the length in metres, measured from pivot to bob centre;
-- g is gravitational acceleration, approximately 9.81 m/s² near Earth's surface.
+- g is the local acceleration due to gravity. For rough classroom calculations, use approximately 9.81 m/s²; this rounds the conventional standard-gravity value 9.80665 m/s², which is not the measured value at every location [3].
 
 The equation predicts that period is proportional to the square root of length. If length is multiplied by four, the predicted period doubles.
 
@@ -374,8 +374,9 @@ Write short answers:
 
 1. Ling, S. J., Sanny, J., and Moebs, W. (2016). *University Physics Volume 1*. OpenStax, Rice University, §15.4, “Pendulums” (open textbook). This section defines the simple-pendulum idealization, derives the small-angle period equation, and discusses its dependence on length and gravitational acceleration: https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums
 2. Taylor, B. N., and Kuyatt, C. E. (1994). *Guidelines for Evaluating and Expressing the Uncertainty of NIST Measurement Results*, NIST Technical Note 1297, §2, “Classification of Components of Uncertainty.” DOI: https://doi.org/10.6028/NIST.tn.1297. The section distinguishes uncertainty from error and cautions against treating random/systematic labels as a complete classification of uncertainty components: https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-2-classification-components-uncertainty
+3. Tate, D. R. (1969). *Gravity Measurements and the Standards Laboratory*, National Bureau of Standards Technical Note 491, §§5–6. This note distinguishes local gravity values from the conventional standard-gravity value 9.80665 m/s²: https://nvlpubs.nist.gov/nistpubs/Legacy/TN/nbstechnicalnote491.pdf
 
-The numerical value of gravitational acceleration used here is an approximate near-Earth reference value; local effective gravity varies with location and altitude. The ideal period equation is standard introductory mechanics, subject to the assumptions stated above.
+The value 9.81 m/s² is a rounded reference for classroom calculations, not a claim that local gravity is exactly the same everywhere. NIST's historical technical note explains the distinction between local gravity and the conventional standard-gravity value [3]. The ideal period equation is standard introductory mechanics, subject to the assumptions stated above.
 
 **Source-maintenance note:** the OpenStax pendulum derivation and the NIST uncertainty terminology were checked against the cited sections on 2026-11-09. These are source checks, not independent subject-matter review. A qualified reviewer must still assess the full tutorial, its experimental advice, and its suitability for the intended learners before publication.
 
