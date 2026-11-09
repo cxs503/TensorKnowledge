@@ -1,7 +1,7 @@
 # Scientific Thinking: From Observation to Explanation
 
 **Status:** draft  
-**Version:** 0.1.0  
+**Version:** 0.2.0  
 **Audience:** curious learners; no specialist science background required  
 **Estimated time:** 3–5 hours, plus optional follow-up investigation  
 **Domains:** Cognitive Foundations; Evidence and Reality; Models and Principles; Creativity and Discovery  
@@ -87,7 +87,7 @@ where:
 
 The equation predicts that period is proportional to the square root of length. If length is multiplied by four, the predicted period doubles.
 
-This is a model, not a law that applies under every condition. It assumes a point-like bob, a light inextensible string, negligible friction and air resistance, and a sufficiently small swing angle for the small-angle approximation.
+This is a model, not a law that applies under every condition. It assumes a point-like bob, a light inextensible string, negligible friction and air resistance, and a sufficiently small swing angle for the small-angle approximation. OpenStax derives this result from the small-angle approximation and describes the point-mass, light-string idealization; it notes that the approximation is accurate to within 1% for angles below about 15° [1]. The suggested 5–10° release range is deliberately more conservative.
 
 ### 3.4 Design the experiment
 
@@ -109,7 +109,18 @@ This is a model, not a law that applies under every condition. It assumes a poin
 8. Repeat for several lengths, for example 0.25 m, 0.40 m, 0.55 m, and 0.70 m.
 9. Record unexpected events, such as a collision, a moving pivot, or a missed count.
 
-Timing multiple oscillations reduces the relative effect of stopwatch reaction time. Repetition helps reveal variability; it does not automatically remove systematic error.
+Timing multiple oscillations reduces the relative effect of stopwatch reaction time when the start/stop delay is small compared with the total timing interval. Repetition helps reveal variability; it does not automatically remove a consistent bias.
+
+**Record enough detail for someone else to repeat the activity.** Alongside the table, record:
+- bob shape, approximate size and material; string material; and how the pivot is secured;
+- how length is measured (pivot to bob centre), and the ruler's smallest displayed increment;
+- how the release angle is set, how the bob is released without a push, and the point/direction used to start and stop timing;
+- timer type or app, displayed resolution, number of cycles per timing, and number of repeats;
+- every raw trial time, any excluded trial and the reason for exclusion;
+- formulas, rounding, graph axes and units, fitting method, and whether the fitted intercept was free or fixed;
+- whether values are learner measurements, a published dataset, or simulated data.
+
+Keep raw observations separate from calculated periods and fitted results. Do not silently delete inconvenient trials.
 
 **Safety:** keep the weight small, secure the pivot, keep faces and fragile objects out of the swing path, and do not use an overhead fixture that may detach.
 
@@ -139,6 +150,8 @@ T² = (4π²/g)L
 So a plot of T² against L should be approximately a straight line through the origin under ideal conditions. Its slope is 4π²/g, allowing an estimate of g:
 
 g = 4π² / slope
+
+The slope has units s²/m, so the resulting estimate of g has units m/s². Record the regression method and whether an intercept was fitted; these choices affect the interpretation.
 
 Before interpreting the slope, check:
 - Are units consistent?
@@ -183,11 +196,13 @@ Measurements are not exact. A ruler has finite resolution; a stopwatch depends o
 Distinguish:
 - **resolution:** the smallest increment an instrument displays;
 - **repeatability:** how similar repeated measurements are under similar conditions;
-- **random variation:** trial-to-trial fluctuations;
-- **systematic error:** a consistent bias, such as measuring from the wrong reference point;
-- **model error:** the idealized equation omits effects present in the real setup.
+- **random effect:** a source of trial-to-trial variation under similar conditions;
+- **systematic effect:** a consistent influence that may bias results, such as measuring from the wrong reference point;
+- **model limitation:** the idealized equation omits effects present in the real setup.
 
-Do not report more decimal places than the method supports. If the three trials differ noticeably, report the spread as well as the mean. If a systematic error is suspected, explain how it might shift the result; taking more trials alone may not fix it.
+Do not treat *measurement error* and *measurement uncertainty* as synonyms. In formal metrology, uncertainty characterizes the dispersion of values that could reasonably be attributed to the measurand; the relationship between random/systematic effects and formal uncertainty components is not a simple one-to-one mapping [3]. This tutorial uses the terms qualitatively and does not claim a complete uncertainty budget.
+
+Do not report more decimal places than the method supports. If the three trials differ noticeably, report the spread as well as the mean. If a systematic effect is suspected, explain how it might shift the result; taking more trials alone may not fix it.
 
 ## 6. Use an AI agent as a collaborator—not an authority
 
@@ -242,6 +257,15 @@ Can you identify every defect and explain its consequence?
 ## 7. Practice: test your understanding
 
 Answer before consulting an agent.
+
+**Classification check:** classify each statement as an observation/measurement, interpretation, hypothesis, model, or conclusion, and explain your choices:
+- “The bob passes the centre mark on each swing.”
+- “The measured mean period for this setup was 1.27 s.”
+- “A longer string causes a longer period.”
+- “The ideal model predicts T = 2π√(L/g).”
+- “These measurements are consistent with the model over the lengths tested.”
+
+Then answer the questions below.
 
 1. A learner says, "The bob is heavier, so the pendulum must swing faster." What evidence or model would you use to evaluate the claim?
 2. Why time 10 cycles rather than one?
@@ -303,6 +327,19 @@ Originality is not merely choosing an unusual topic. It means making a meaningfu
 
 Assess each dimension separately. A polished report is not enough.
 
+### Outcome-to-evidence alignment
+
+| Learning outcome | Required evidence in this tutorial |
+|---|---|
+| Distinguish observation, interpretation, hypothesis, model, and conclusion | Classification check above, with reasons for at least two classifications |
+| Turn curiosity into a precise question | Transfer plan states a focused, investigable question |
+| Define variables and design a fair, repeatable test | Investigation plan defines variables, operational measurements, controls, and repeat procedure |
+| Collect and inspect data, including uncertainty | Raw trial record, calculated periods, graph, and discussion of variation and possible bias |
+| Construct a model and state assumptions | Explanation of the simple-pendulum model, its assumptions, and the T²–L relation |
+| Compare predictions with observations | T and T² plots, fitted-line interpretation, residual inspection, and bounded conclusion |
+| Use an agent while independently checking its work | Failure challenge plus independently checked calculation/source claims and a short agent-use record |
+| Transfer the process and explain what remains unknown | Transfer challenge and reflection identify changed assumptions, evidence needed, and next question |
+
 | Dimension | Developing | Competent | Strong |
 |---|---|---|---|
 | Question | Broad or not testable | Precise and investigable | Reveals a useful distinction or gap |
@@ -315,6 +352,7 @@ Assess each dimension separately. A polished report is not enough.
 
 **Minimum completion evidence**
 - an investigation plan;
+- an initial prediction or explanation completed before agent assistance;
 - a traceable data record or a clearly labeled alternative dataset;
 - at least one graph or structured analysis;
 - a conclusion with limitations;
@@ -334,12 +372,12 @@ Write short answers:
 
 ## 12. Sources and further study
 
-1. OpenStax, *University Physics Volume 1*, Section 15.4, “Pendulums.” This open textbook derives the small-angle simple-pendulum equation, states its assumptions, and discusses the dependence of period on length and gravitational acceleration: https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums
-2. OpenStax, *College Physics for AP® Courses*, Section 16.4, “The Simple Pendulum.” An alternative introductory explanation of the small-angle approximation and period equation: https://openstax.org/books/college-physics-ap-courses/pages/16-4-the-simple-pendulum
+1. Ling, S. J., Sanny, J., and Moebs, W. (2016). *University Physics Volume 1*. OpenStax, Rice University, §15.4, “Pendulums” (open textbook). This section defines the simple-pendulum idealization, derives the small-angle period equation, and discusses its dependence on length and gravitational acceleration: https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums
+2. Taylor, B. N., and Kuyatt, C. E. (1994). *Guidelines for Evaluating and Expressing the Uncertainty of NIST Measurement Results*, NIST Technical Note 1297, §2, “Classification of Components of Uncertainty.” DOI: https://doi.org/10.6028/NIST.tn.1297. The section distinguishes uncertainty from error and cautions against treating random/systematic labels as a complete classification of uncertainty components: https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-2-classification-components-uncertainty
 
 The numerical value of gravitational acceleration used here is an approximate near-Earth reference value; local effective gravity varies with location and altitude. The ideal period equation is standard introductory mechanics, subject to the assumptions stated above.
 
-**Source-maintenance note:** links and the stated physics relationship have been checked against the cited OpenStax sections for this draft. A subject reviewer should still verify the full tutorial, its experimental advice, and the suitability of the sources before publication.
+**Source-maintenance note:** the OpenStax pendulum derivation and the NIST uncertainty terminology were checked against the cited sections on 2026-11-09. These are source checks, not independent subject-matter review. A qualified reviewer must still assess the full tutorial, its experimental advice, and its suitability for the intended learners before publication.
 
 ## 13. Review record
 
@@ -348,6 +386,11 @@ The numerical value of gravitational acceleration used here is an approximate ne
 - Learner pilot: pending
 - Accessibility review: pending
 - Reproducibility check: pending
-- Last reviewed: not yet reviewed
+- Agent-assisted source and structure check: 2026-11-09 (not an independent domain review)
+- Subject-matter review: pending
+- Learner pilot: pending
+- Accessibility review: pending
+- Reproducibility check: pending
+- Qualified-review date: pending
 
 Do not label this tutorial validated until qualified subject review and a learner pilot have been completed and documented.
