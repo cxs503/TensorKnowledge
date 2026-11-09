@@ -1,7 +1,7 @@
 # TensorPlatform Integration Contract
 
 **Version:** 0.1.1  
-**Status:** proposed adapter contract, mapped against the current TensorPlatform repository on 2026-11-09
+**Status:** proposed adapter contract, mapped against TensorPlatform main at commit d354c78173dea9aa92948cd7e89cc15969d47fd7 (inspected 2026-11-09)
 
 ## 1. Purpose and ownership
 
