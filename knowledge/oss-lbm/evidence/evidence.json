@@ -1,0 +1,359 @@
+[
+  {
+    "id": "tke:oss-lbm:pylbm-equiv-eq-src",
+    "claim_refs": ["tkc:oss-lbm:pylbm-equiv-eq"],
+    "source": {
+      "source_type": "other",
+      "citation": "pylbm source code, analysis/equivalent_equation.py",
+      "url": "https://github.com/pyLBM/pyLBM",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "pylbm@48c19da analysis/equivalent_equation.py:14-115",
+      "quote": "class EquivalentEquation: ... self.coeff_order1.append(A * func + B * eq_func) ... self.coeff_order2 = [[sp.zeros(nconsm) for _ in range(scheme.dim)] for _ in range(scheme.dim)]"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:pylbm-stability-src",
+    "claim_refs": ["tkc:oss-lbm:pylbm-stability"],
+    "source": {
+      "source_type": "other",
+      "citation": "pylbm source code, analysis/stability.py",
+      "url": "https://github.com/pyLBM/pyLBM",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "pylbm@48c19da analysis/stability.py:24-100",
+      "quote": "class Stability: ... jacobian = scheme.EQ.jacobian(self.consm) ... relax_mat_m = sp.eye(nmoments) - sp.diag(*scheme.s) ... eigs = np.empty((n_wv, self.nvtot), dtype='complex')"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:pylbm-bfl-src",
+    "claim_refs": ["tkc:oss-lbm:pylbm-bfl-bounce-back"],
+    "source": {
+      "source_type": "other",
+      "citation": "pylbm source code, boundary.py",
+      "url": "https://github.com/pyLBM/pyLBM",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "pylbm@48c19da boundary.py:500-560",
+      "quote": "class BFLBounceBack(BoundaryMethod): ... Boundary condition of type Bouzidi-Firdaouss-Lallemand bounce-back [BFL01] ... mask = self.distance < 0.5 ... self.s[mask] = 2.0 * self.distance[mask]"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:pylbm-linear-bb-src",
+    "claim_refs": ["tkc:oss-lbm:pylbm-linear-bb-family"],
+    "source": {
+      "source_type": "other",
+      "citation": "pylbm source code, boundary.py",
+      "url": "https://github.com/pyLBM/pyLBM",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "pylbm@48c19da boundary.py:810-1160",
+      "quote": "class LinearBounceBack(BoundaryMethod): ... class CLIBounceBack(LinearBounceBack): ... alpha = 4/(1+2δ) ... class YLIBounceBack(LinearBounceBack): ... alpha = 2/(1+δ)"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:pylbm-sympy-src",
+    "claim_refs": ["tkc:oss-lbm:pylbm-sympy-scheme"],
+    "source": {
+      "source_type": "other",
+      "citation": "pylbm source code, analysis/equivalent_equation.py and analysis/stability.py",
+      "url": "https://github.com/pyLBM/pyLBM",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "pylbm@48c19da analysis/equivalent_equation.py:10",
+      "quote": "import sympy as sp ... LA = scheme.la ... Lambda.append(scheme.M * vd * scheme.invM)"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:lettuce-context-src",
+    "claim_refs": ["tkc:oss-lbm:lettuce-torch-context"],
+    "source": {
+      "source_type": "other",
+      "citation": "lettuce source code, _context.py",
+      "url": "https://github.com/lettucecfd/lettuce",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lettuce@a0e3f2d _context.py:1-80",
+      "quote": "import torch ... class Context: ... self.device = torch.device(device) ... self.dtype = dtype"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:lettuce-bgk-src",
+    "claim_refs": ["tkc:oss-lbm:lettuce-bgk-differentiable"],
+    "source": {
+      "source_type": "other",
+      "citation": "lettuce source code, ext/_collision/bgk_collision.py",
+      "url": "https://github.com/lettucecfd/lettuce",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lettuce@a0e3f2d ext/_collision/bgk_collision.py:12-30",
+      "quote": "class BGKCollision(Collision): ... def __call__(self, flow): ... return flow.f - 1.0 / self.tau * (flow.f - feq) + si"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:lettuce-cuda-src",
+    "claim_refs": ["tkc:oss-lbm:lettuce-native-cuda"],
+    "source": {
+      "source_type": "other",
+      "citation": "lettuce source code, _simulation.py and cuda_native/",
+      "url": "https://github.com/lettucecfd/lettuce",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lettuce@a0e3f2d _simulation.py:80-120",
+      "quote": "native_collision = self.collision.native_generator(self.collision_index) ... generator = Generator(self.flow.stencil, collision = native_collision ...) ... native_kernel = generator.resolve()"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:lbmpy-ce-src",
+    "claim_refs": ["tkc:oss-lbm:lbmpy-chapman-enskog"],
+    "source": {
+      "source_type": "other",
+      "citation": "lbmpy source code, chapman_enskog/chapman_enskog.py",
+      "url": "https://github.com/lettucecfd/lbmpy",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbmpy@0afc9d5 src/lbmpy/chapman_enskog/chapman_enskog.py:18-80",
+      "quote": "class ChapmanEnskogAnalysis: ... compressible, pressure, sigma = match_to_navier_stokes(self._equationsWithHigherOrderMoments) ... def get_dynamic_viscosity(self):"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:lbmpy-pipeline-src",
+    "claim_refs": ["tkc:oss-lbm:lbmpy-pipeline"],
+    "source": {
+      "source_type": "other",
+      "citation": "lbmpy source code, creationfunctions.py",
+      "url": "https://github.com/lettucecfd/lbmpy",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbmpy@0afc9d5 src/lbmpy/creationfunctions.py:1-50",
+      "quote": "Kernel functions are created in four/five steps: create_lb_method, create_lb_collision_rule/create_lb_update_rule, create_lb_ast and create_lb_function"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:lbmpy-methods-src",
+    "claim_refs": ["tkc:oss-lbm:lbmpy-method-spaces"],
+    "source": {
+      "source_type": "other",
+      "citation": "lbmpy source code, methods/abstractlbmethod.py and methods/__init__.py",
+      "url": "https://github.com/lettucecfd/lbmpy",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbmpy@0afc9d5 src/lbmpy/methods/abstractlbmethod.py:20-60",
+      "quote": "class AbstractLbMethod(abc.ABC): ... from lbmpy.methods import (create_mrt_orthogonal, create_mrt_raw, create_central_moment, create_srt, create_trt, create_trt_kbc)"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:xlb-warp-src",
+    "claim_refs": ["tkc:oss-lbm:xlb-warp-kernel"],
+    "source": {
+      "source_type": "other",
+      "citation": "XLB source code, operator/stream/stream.py",
+      "url": "https://github.com/lettucecfd/xlb",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "xlb@9c23e82 xlb/operator/stream/stream.py:85-125",
+      "quote": "@wp.kernel def kernel(f_0: wp.array4d(dtype=Any), f_1: wp.array4d(dtype=Any)): ... i, j, k = wp.tid() ... _f = functional(f_0, index) ... f_1[l, index[0], index[1], index[2]] = self.store_dtype(_f[l])"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:xlb-distribute-src",
+    "claim_refs": ["tkc:oss-lbm:xlb-jax-distribute"],
+    "source": {
+      "source_type": "other",
+      "citation": "XLB source code, distribute/distribute.py",
+      "url": "https://github.com/lettucecfd/xlb",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "xlb@9c23e82 xlb/distribute/distribute.py:1-60",
+      "quote": "from jax import shard_map ... left_comm = lax.ppermute(left_comm, perm=rightPerm, axis_name='x') ... distributed_operator = shard_map(_sharded_operator, mesh=grid.global_mesh, in_specs=in_specs, out_specs=out_specs, check_vma=False)"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:xlb-operator-src",
+    "claim_refs": ["tkc:oss-lbm:xlb-operator-pattern"],
+    "source": {
+      "source_type": "other",
+      "citation": "XLB source code, operator/operator.py and operator/collision/collision.py",
+      "url": "https://github.com/lettucecfd/xlb",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "xlb@9c23e82 xlb/operator/operator.py:26",
+      "quote": "class Operator: ... @Operator.register_backend(ComputeBackend.JAX) ... @Operator.register_backend(ComputeBackend.WARP)"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:lettuce-tests-src",
+    "claim_refs": ["tkc:oss-lbm:lettuce-test-invariants"],
+    "source": {
+      "source_type": "other",
+      "citation": "lettuce test suite, tests/collision/",
+      "url": "https://github.com/lettucecfd/lettuce",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lettuce@a0e3f2d tests/collision/",
+      "quote": "test_collision_conserves_mass.py, test_collision_conserves_momentum.py, test_collision_fixpoint_2x.py, test_collision_relaxes_shear_moments.py, test_collision_optimizes_pseudo_entropy.py"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:lettuce-conftest-src",
+    "claim_refs": ["tkc:oss-lbm:lettuce-test-parametrize"],
+    "source": {
+      "source_type": "other",
+      "citation": "lettuce test suite, tests/conftest.py",
+      "url": "https://github.com/lettucecfd/lettuce",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lettuce@a0e3f2d tests/conftest.py:1-60",
+      "quote": "def stencil_params(): return stencil1d_params() + stencil2d_params() + stencil3d_params() ... @pytest.fixture(params=dtype_params(), ids=dtype_ids()) ... @pytest.fixture(params=stencil_params(), ids=stencil_ids())"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:xlb-tests-src",
+    "claim_refs": ["tkc:oss-lbm:xlb-test-organization"],
+    "source": {
+      "source_type": "other",
+      "citation": "XLB test suite, tests/",
+      "url": "https://github.com/lettucecfd/xlb",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "xlb@9c23e82 tests/",
+      "quote": "tests/kernels/{collision,equilibrium,macroscopic,stream}/ and tests/backends/test_neon_backend.py"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T14:30:00Z",
+    "captured_by": "agent-m8635",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  }
+]

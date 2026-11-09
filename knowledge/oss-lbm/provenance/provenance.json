@@ -1,0 +1,43 @@
+[
+  {
+    "id": "tkp:oss-lbm:ingestion-2026-11-09",
+    "generated_entity": {
+      "id": "knowledge/oss-lbm",
+      "entity_type": "knowledge-object",
+      "version": "1.0.0"
+    },
+    "activity": {
+      "id": "activity-oss-lbm-ingest",
+      "activity_type": "extraction",
+      "description": "Source-code-driven extraction of 17 claims about LBM open-source ecosystem (pylbm, lettuce, lbmpy, XLB). Each claim verified against actual source code in /tmp/ caches with file:line locators and verbatim quotes.",
+      "started_at": "2026-11-09T14:30:00Z",
+      "ended_at": "2026-11-09T15:00:00Z",
+      "used_entities": [
+        "pylbm@48c19da",
+        "lettuce@a0e3f2d",
+        "lbmpy@0afc9d5",
+        "xlb@9c23e82"
+      ],
+      "software": [
+        {"name": "python", "version": "3.12"},
+        {"name": "jsonschema", "version": "4.23"}
+      ]
+    },
+    "agents": [
+      {
+        "id": "agent-m8635",
+        "agent_type": "software-agent",
+        "name": "TensorKnowledge builder agent",
+        "role": "knowledge extractor"
+      }
+    ],
+    "derived_from": [
+      "pylbm source code (https://github.com/pyLBM/pyLBM)",
+      "lettuce source code (https://github.com/lettucecfd/lettuce)",
+      "lbmpy source code (https://github.com/lettucecfd/lbmpy)",
+      "XLB source code (https://github.com/lettucecfd/xlb)"
+    ],
+    "recorded_at": "2026-11-09T15:00:00Z",
+    "version": "1.0.0"
+  }
+]
