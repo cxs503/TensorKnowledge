@@ -6,6 +6,7 @@
 - [System architecture](system-architecture.md) — product boundary, logical components, deployment profiles and data ownership.
 - [TensorPlatform integration](platform-integration.md) — execution delegation, callbacks, identity, permissions and operational boundaries.
 - [Architecture decisions](decisions.md) — decisions that remain stable unless explicitly revised.
+- [Platform test handoff](../platform-test/TENSORPLATFORM_HANDOFF.md) — preflight requirements and the exact request to the Platform team.
 
 ## Architectural statement
 TensorKnowledge is an independent knowledge infrastructure and asset system. TensorPlatform is the preferred general-purpose agent execution and orchestration provider. TensorKnowledge may delegate knowledge-production work to TensorPlatform, while agents and applications running on TensorPlatform may consume TensorKnowledge services directly.
