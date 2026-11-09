@@ -378,12 +378,12 @@ Write short answers:
 
 The value 9.81 m/s² is a rounded reference for classroom calculations, not a claim that local gravity is exactly the same everywhere. NIST's historical technical note explains the distinction between local gravity and the conventional standard-gravity value [3]. The ideal period equation is standard introductory mechanics, subject to the assumptions stated above.
 
-**Source-maintenance note:** the OpenStax pendulum derivation and the NIST uncertainty terminology were checked against the cited sections on 2026-11-09. These are source checks, not independent subject-matter review. A qualified reviewer must still assess the full tutorial, its experimental advice, and its suitability for the intended learners before publication.
+**Source-maintenance note:** the OpenStax pendulum derivation, NIST uncertainty terminology, and standard-versus-local gravity reference were checked against the cited sections on 2026-11-09. These are source checks, not independent subject-matter review. A qualified reviewer must still assess the full tutorial, its experimental advice, and its suitability for the intended learners before publication.
 
 ## 13. Review record
 
 - Authoring status: instructional draft, version 0.2.0
-- Agent-assisted source and structure check: 2026-11-09; OpenStax pendulum derivation and NIST uncertainty terminology checked against cited sections
+- Agent-assisted source and structure check: 2026-11-09; OpenStax pendulum derivation, NIST uncertainty terminology, and standard/local gravity reference checked against cited sections
 - Independent subject-matter review: pending
 - Independent learning-design review: pending
 - Learner pilot: pending
