@@ -170,7 +170,7 @@ def main() -> int:
                     if node_id not in nodes:
                         errors.append(f"{mapping_path.relative_to(ROOT)}: unresolved capability knowledge node {node_id}")
                 for pathway_id in capability.get("pathways", []):
-                    if pathway_id not in {item.get("id") for _, item in pathways.values()}:
+                    if pathway_id not in set(pathways):
                         errors.append(f"{mapping_path.relative_to(ROOT)}: unresolved capability pathway {pathway_id}")
         except ValueError as exc:
             errors.append(str(exc))
