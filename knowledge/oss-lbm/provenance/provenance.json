@@ -19,8 +19,14 @@
         "xlb@9c23e82"
       ],
       "software": [
-        {"name": "python", "version": "3.12"},
-        {"name": "jsonschema", "version": "4.23"}
+        {
+          "name": "python",
+          "version": "3.12"
+        },
+        {
+          "name": "jsonschema",
+          "version": "4.23"
+        }
       ]
     },
     "agents": [
@@ -38,6 +44,47 @@
       "XLB source code (https://github.com/lettucecfd/xlb)"
     ],
     "recorded_at": "2026-11-09T15:00:00Z",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tkp:oss-lbm:mflbm-ingestion-2026-11-09",
+    "generated_entity": {
+      "id": "knowledge/oss-lbm/mflbm",
+      "entity_type": "knowledge-object",
+      "version": "1.0.0"
+    },
+    "activity": {
+      "id": "activity-mflbm-ingest",
+      "activity_type": "extraction",
+      "description": "Source-code-driven extraction of 10 claims about MF-LBM (lanl/MF-LBM, BSD-3 licensed porous media DNS LBM code). Claims cover: CSF multiphase model, AA streaming, MPI-OpenACC hybrid, comm-compute overlap, SoA layout, MRT collision, domain decomposition, contact angle scheme, checkpoint/restart, and BSD-3 license. All verified against cached source at commit 11be324.",
+      "started_at": "2026-11-09T16:00:00Z",
+      "ended_at": "2026-11-09T16:30:00Z",
+      "used_entities": [
+        "MF-LBM@11be324a97fe6331b2271102da370460715355e8"
+      ],
+      "software": [
+        {
+          "name": "python",
+          "version": "3.12"
+        },
+        {
+          "name": "json",
+          "version": "standard"
+        }
+      ]
+    },
+    "agents": [
+      {
+        "id": "agent-m8678",
+        "agent_type": "software-agent",
+        "name": "TensorKnowledge builder agent",
+        "role": "knowledge extractor"
+      }
+    ],
+    "derived_from": [
+      "MF-LBM source code (https://github.com/lanl/MF-LBM) @ 11be324a97fe6331b2271102da370460715355e8"
+    ],
+    "recorded_at": "2026-11-09T16:30:00Z",
     "version": "1.0.0"
   }
 ]
