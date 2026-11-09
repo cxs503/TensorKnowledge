@@ -20,7 +20,7 @@ Stop and report if any preflight check fails. Do not bypass allowlists or target
 
 ## Pilot scenarios
 
-Use three of the ten benchmark scenario types:
+Use three of the twelve benchmark scenario types:
 - **Scientific claim:** one bounded, low-risk factual claim with explicit domain and conditions.
 - **Contested or qualifying claim:** locate at least one material source that qualifies or contradicts an initial broad formulation; preserve both sides.
 - **Insufficient evidence:** include a tempting but non-entailing source mention and explain why it does not support the claim.
