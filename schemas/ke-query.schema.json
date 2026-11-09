@@ -1,0 +1,731 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/ke-query.schema.json",
+  "title": "Knowledge Engine retrieval interface (draft v0.1)",
+  "description": "Request/response schemas for the four retrieval classes of docs/ke/mapping-spec.md §8. Requests and responses are separated by the top-level oneOf; a client pairs P*/R* by class name. These schemas are draft and are exercised by scripts/validate_ke_mapping.py against responses computed from the m8554 pilot projection.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/domainRequest"
+    },
+    {
+      "$ref": "#/$defs/domainResponse"
+    },
+    {
+      "$ref": "#/$defs/anchorRequest"
+    },
+    {
+      "$ref": "#/$defs/anchorResponse"
+    },
+    {
+      "$ref": "#/$defs/evidenceStatusRequest"
+    },
+    {
+      "$ref": "#/$defs/evidenceStatusResponse"
+    },
+    {
+      "$ref": "#/$defs/provenanceRequest"
+    },
+    {
+      "$ref": "#/$defs/provenanceResponse"
+    },
+    {
+      "$ref": "#/$defs/errorResponse"
+    }
+  ],
+  "$defs": {
+    "policyView": {
+      "type": "object",
+      "description": "Every response states which projection produced it and what was deliberately not projected, so the client can never mistake a projection for the source record.",
+      "required": [
+        "policy_version",
+        "projection_version",
+        "review_policy_version",
+        "records_as_recorded",
+        "withheld_fields",
+        "degraded"
+      ],
+      "properties": {
+        "policy_version": {
+          "type": "string"
+        },
+        "projection_version": {
+          "type": "string"
+        },
+        "review_policy_version": {
+          "type": "string"
+        },
+        "records_as_recorded": {
+          "const": true,
+          "description": "as-authored values are returned verbatim; the engine never rewrites epistemic_status"
+        },
+        "withheld_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "degraded": {
+          "type": "boolean",
+          "description": "true when a subsystem (e.g. vector index) is unavailable and results are lexical only"
+        },
+        "requested_at": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "asOf": {
+      "type": "object",
+      "description": "Bi-temporal selection. Exactly one axis per request; both axes must not be combined.",
+      "required": [
+        "axis",
+        "instant"
+      ],
+      "properties": {
+        "axis": {
+          "enum": [
+            "recorded",
+            "valid"
+          ],
+          "description": "recorded = transaction time (what we believed then); valid = domain time (what was true then)"
+        },
+        "instant": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "hitSummary": {
+      "type": "object",
+      "required": [
+        "entity_id",
+        "kind",
+        "epistemic_status",
+        "review_status",
+        "flags"
+      ],
+      "properties": {
+        "entity_id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "claim",
+            "evidence",
+            "provenance",
+            "knowledge-object",
+            "production-result",
+            "activity",
+            "agent",
+            "source-node",
+            "external"
+          ]
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "epistemic_status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "review_status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "recorded_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "valid_time_resolution": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence_count": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "domainRequest": {
+      "type": "object",
+      "required": [
+        "query_class",
+        "domain"
+      ],
+      "properties": {
+        "query_class": {
+          "const": "by-domain"
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain_match": {
+          "enum": [
+            "exact",
+            "prefix"
+          ],
+          "default": "exact"
+        },
+        "entity_kinds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "epistemic_status": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "established",
+              "well-supported",
+              "provisional",
+              "contested",
+              "speculative",
+              "superseded",
+              "not-assessed"
+            ]
+          }
+        },
+        "review_status": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "draft",
+              "in-review",
+              "approved",
+              "rejected",
+              "deprecated"
+            ]
+          }
+        },
+        "as_of": {
+          "$ref": "#/$defs/asOf"
+        },
+        "include_not_assessed": {
+          "type": "boolean",
+          "default": true,
+          "description": "gaps are knowledge; suppressing them must be explicit"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        },
+        "cursor": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "domainResponse": {
+      "type": "object",
+      "required": [
+        "query_class",
+        "items",
+        "total",
+        "policy_view"
+      ],
+      "properties": {
+        "query_class": {
+          "const": "by-domain"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hitSummary"
+          }
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "policy_view": {
+          "$ref": "#/$defs/policyView"
+        }
+      },
+      "additionalProperties": false
+    },
+    "anchorRequest": {
+      "type": "object",
+      "required": [
+        "query_class",
+        "entity_id"
+      ],
+      "properties": {
+        "query_class": {
+          "const": "by-anchor"
+        },
+        "entity_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expand": {
+          "type": "object",
+          "properties": {
+            "claims": {
+              "type": "boolean"
+            },
+            "evidence": {
+              "type": "boolean"
+            },
+            "provenance": {
+              "type": "boolean"
+            },
+            "review_events": {
+              "type": "boolean"
+            },
+            "sources": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false,
+          "description": "There is deliberately no 'only_support' option: a contested anchor always returns every side (§3 T-3.3)."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "as_of": {
+          "$ref": "#/$defs/asOf"
+        }
+      },
+      "additionalProperties": false
+    },
+    "anchorResponse": {
+      "type": "object",
+      "required": [
+        "query_class",
+        "anchor",
+        "nodes",
+        "edges",
+        "epistemic_view",
+        "policy_view"
+      ],
+      "properties": {
+        "query_class": {
+          "const": "by-anchor"
+        },
+        "anchor": {
+          "type": "string"
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "entity_id",
+              "kind"
+            ],
+            "properties": {
+              "entity_id": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "edge_id",
+              "subject",
+              "predicate",
+              "object"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "epistemic_view": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "description": "Partitioned evidence view. All seven keys are mandatory, so a response can never carry only one side of a contested claim (spec §3 T-3.3).",
+            "required": [
+              "supports",
+              "refutes",
+              "qualifies",
+              "contextualizes",
+              "mentions",
+              "derived_from",
+              "insufficient"
+            ],
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "entity_id",
+                  "relation"
+                ],
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "policy_view": {
+          "$ref": "#/$defs/policyView"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceStatusRequest": {
+      "type": "object",
+      "required": [
+        "query_class"
+      ],
+      "properties": {
+        "query_class": {
+          "const": "by-evidence-status"
+        },
+        "assessment_status": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "unassessed",
+              "reviewed-supports",
+              "reviewed-refutes",
+              "reviewed-qualifies",
+              "insufficient",
+              "disputed"
+            ]
+          }
+        },
+        "relation": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "supports",
+              "refutes",
+              "qualifies",
+              "contextualizes",
+              "mentions",
+              "derived-from"
+            ]
+          }
+        },
+        "require_contested_pair": {
+          "type": "boolean",
+          "default": false
+        },
+        "as_of": {
+          "$ref": "#/$defs/asOf"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceStatusResponse": {
+      "type": "object",
+      "required": [
+        "query_class",
+        "items",
+        "total",
+        "policy_view"
+      ],
+      "properties": {
+        "query_class": {
+          "const": "by-evidence-status"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "claim_id",
+              "epistemic_status",
+              "review_status",
+              "evidence_partition"
+            ],
+            "properties": {
+              "claim_id": {
+                "type": "string"
+              },
+              "epistemic_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "review_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "matched_evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "evidence_partition": {
+                "type": "object",
+                "description": "Partitioned evidence view. All seven keys are mandatory, so a response can never carry only one side of a contested claim (spec §3 T-3.3).",
+                "required": [
+                  "supports",
+                  "refutes",
+                  "qualifies",
+                  "contextualizes",
+                  "mentions",
+                  "derived_from",
+                  "insufficient"
+                ],
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "entity_id",
+                      "relation"
+                    ],
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "flags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "two_sided": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "total": {
+          "type": "integer"
+        },
+        "contested_pairs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "question_ref",
+              "contested_claim",
+              "against",
+              "surviving_narrowed_sides",
+              "both_sides_retained"
+            ],
+            "properties": {
+              "question_ref": {
+                "type": "string"
+              },
+              "contested_claim": {
+                "type": "string"
+              },
+              "contested_epistemic_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "against": {
+                "type": "array"
+              },
+              "surviving_narrowed_sides": {
+                "type": "array"
+              },
+              "both_sides_retained": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "policy_view": {
+          "$ref": "#/$defs/policyView"
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenanceRequest": {
+      "type": "object",
+      "required": [
+        "query_class",
+        "entity_id"
+      ],
+      "properties": {
+        "query_class": {
+          "const": "by-provenance-chain"
+        },
+        "entity_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "direction": {
+          "enum": [
+            "upstream",
+            "downstream",
+            "both"
+          ],
+          "default": "upstream"
+        },
+        "max_depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "include_agents": {
+          "type": "boolean",
+          "default": true
+        },
+        "include_activities": {
+          "type": "boolean",
+          "default": true
+        },
+        "require_software_versions": {
+          "type": "boolean",
+          "default": false
+        },
+        "as_of": {
+          "$ref": "#/$defs/asOf",
+          "description": "audit queries use recorded; sourcing questions use valid"
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenanceResponse": {
+      "type": "object",
+      "required": [
+        "query_class",
+        "entity_id",
+        "direction",
+        "steps",
+        "gaps",
+        "policy_view"
+      ],
+      "properties": {
+        "query_class": {
+          "const": "by-provenance-chain"
+        },
+        "entity_id": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "edge_id",
+              "subject",
+              "predicate",
+              "object",
+              "depth"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "description": "Explicit provenance gaps (unresolved external ids, unknown tool versions). A chain is never silently truncated.",
+          "items": {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "policy_view": {
+          "$ref": "#/$defs/policyView"
+        }
+      },
+      "additionalProperties": false
+    },
+    "errorResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "error"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            400,
+            404,
+            409,
+            422
+          ]
+        },
+        "error": {
+          "type": "object",
+          "required": [
+            "code"
+          ],
+          "properties": {
+            "code": {
+              "enum": [
+                "ANCHOR_NOT_FOUND",
+                "INVALID_REQUEST",
+                "CONFLICTING_AS_OF_AXES",
+                "POLICY_REJECTED",
+                "SIMILARITY_IS_NOT_SUPPORT"
+              ]
+            },
+            "entity_id": {
+              "type": "string"
+            },
+            "detail": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
