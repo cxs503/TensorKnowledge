@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/provenance-record.schema.json",
+  "title": "Provenance Record",
+  "description": "PROV-O-aligned provenance record. Describes entities, activities and agents involved in generating or deriving a knowledge asset; it does not assess truth.",
+  "type": "object",
+  "required": [
+    "id",
+    "generated_entity",
+    "activity",
+    "agents",
+    "recorded_at",
+    "version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkp:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "generated_entity": {
+      "type": "object",
+      "required": [
+        "id",
+        "entity_type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entity_type": {
+          "enum": [
+            "knowledge-object",
+            "claim",
+            "evidence",
+            "dataset",
+            "artifact",
+            "report",
+            "model",
+            "other"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "activity": {
+      "type": "object",
+      "required": [
+        "id",
+        "activity_type",
+        "started_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activity_type": {
+          "enum": [
+            "ingestion",
+            "extraction",
+            "synthesis",
+            "analysis",
+            "calculation",
+            "experiment",
+            "simulation",
+            "review",
+            "transformation",
+            "publication",
+            "other"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ended_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "used_entities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "software": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "agent_type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "agent_type": {
+            "enum": [
+              "person",
+              "software-agent",
+              "organization",
+              "software",
+              "instrument",
+              "service",
+              "other"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "external_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "derived_from": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "attributed_to": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "valid_time": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}
