@@ -1,0 +1,326 @@
+[
+ {
+  "id": "tkc:oss-lbm:fing-free-energy-calibration",
+  "statement": "Fingering_dynamics calibrates its free-energy phase-field from the requested interfacial tension sigma and interface thickness xi via kappa = 0.75*xi*sigma and a = -2*kappa/xi^2, i.e. exactly the parameter pair for which the equilibrium (tanh) interface carries sigma = 4*kappa/(3*xi).",
+  "claim_type": "mathematical",
+  "epistemic_status": "established",
+  "notes": [
+   "TensorLBM 可服务改进点: 该三式可直接作为 free-energy LBM 内核的参数标定入口（输入 sigma, xi -> kappa, a），TensorLBM 侧可用同一标定关系做相场表面张力的一致性单测。",
+   "Verification surface (runtime, this package): integrating kappa*(dpsi/dx)^2 across the equilibrium tanh(x/xi) profile reproduces the declared sigma = 4*kappa/(3*xi) to machine precision; see test_oss_lbm_fingering.py::test_calibration_triple_reproduces_sigma."
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-free-energy-calibration-fingering",
+   "tke:oss-lbm:fing-free-energy-calibration-periodic",
+   "tke:oss-lbm:fing-free-energy-calibration-validation"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+    "interface thickness xi = 2.0 lattice units"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-chemical-potential-sign-equivalence",
+  "statement": "The two chemical-potential spellings used across the repository - a*psi*(1-psi^2) - kappa*lap(psi) with a = -2*kappa/xi^2 (fingering.py) and a*psi*(psi^2-1) - kappa*lap(psi) with a = +2*kappa/xi^2 (validation.py) - are algebraically identical; the sign of the double-well coefficient is carried by the definition of a, not by the potential.",
+  "claim_type": "mathematical",
+  "epistemic_status": "established",
+  "notes": [
+   "TensorLBM 可服务改进点: 迁移 free-energy 内核时不要把两种写法当成两套模型；TensorLBM 侧应固定一套约定（a<0 + (1-psi^2)）并在符号推导测试里锁死。",
+   "Verification surface: sympy symbolic equality check in test_oss_lbm_fingering.py::test_chemical_potential_spellings_equivalent."
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-mu-fingering",
+   "tke:oss-lbm:fing-mu-validation"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "gap-anchor: free-energy-phase-field anchor (bulk chemical potential term of the free energy)",
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-zou-he-force-corrected",
+  "statement": "Both open boundaries are Zou-He reconstructions (Zou & He 1997, cited in-source) in which the inlet density / outlet unknown populations are corrected with the chemical-potential gradient times mu, e.g. the outlet unknown f_3 gets the additive term psi_x*mu/6, so the pressure boundary is consistent with the non-ideal (free-energy) stress.",
+  "claim_type": "methodological",
+  "epistemic_status": "provisional",
+  "notes": [
+   "TensorLBM 可服务改进点: 该 force-corrected Zou-He 出口/入口可直接作为 multiphase LBM 的压力边界参考实现；TensorLBM 目前只有单相 Zou-He，扩到多相需带 mu*grad(psi) 修正项。",
+   "未验证面: 仓库内无该边界的解析/质量守恒检验，故 status=provisional（仅源码面证据）。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-zou-he-inlet",
+   "tke:oss-lbm:fing-zou-he-outlet"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+    "2-D D2Q9, inlet at column 0, outlet at last column"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-halfway-bounceback",
+  "statement": "Solid obstacles (rectangular blocks) are handled by half-way bounce-back: after streaming, each boundary population is overwritten by the velocity-reversed population taken from the pre-streaming copy (f_behind/g_behind), which places the wall at the mid-link and applies the same rule to both the momentum set f and the order-parameter set g.",
+  "claim_type": "methodological",
+  "epistemic_status": "provisional",
+  "notes": [
+   "TensorLBM 可服务改进点: f 与 g 同步半程反弹（g 反弹等价于壁面零法向通量 + psi_wall Dirichlet），TensorLBM 的 bounce-back 工具可加一个双分布版本用于相场/标量场。",
+   "未验证面: 仓库未提供弯管/泊肃叶解析解对照（README 标题虽称 Poiseuille flow in porous medium，但无误差表），故 status=provisional。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-bounceback-reference",
+   "tke:oss-lbm:fing-bounceback-assignment"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+    "rectangular obstacles given as corner lists"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-wetting-via-order-parameter",
+  "statement": "Wettability is encoded as a single Dirichlet value of the order parameter on the wall, psi_wall (-1.0 in fingering.py, -0.5 in fingering_periodic.py, 0.0 for the droplet test in validation.py), which is written into psi on the solid mask and replicated as a one-cell ghost layer before every discrete gradient, so the wall free-energy enters only through grad(psi) and the local chemical potential.",
+  "claim_type": "methodological",
+  "epistemic_status": "provisional",
+  "notes": [
+   "TensorLBM 可服务改进点: psi_wall 是最小可用的润湿实现（改一个标量即改接触角趋势），可作 TensorLBM润湿模块的 fallback；但它不给出 psi_wall -> 接触角 theta 的解析标定。",
+   "未验证面: 仓库内无水静接触角与 psi_wall 的定量对照表（见 fing-validation-no-angle-measurement 条），status 保守取 provisional。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-psi-wall-value",
+   "tke:oss-lbm:fing-psi-wall-enforced",
+   "tke:oss-lbm:fing-psi-wall-ghost",
+   "tke:oss-lbm:fing-psi-wall-periodic"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+    "one-cell ghost layer",
+    "no explicit theta(psi_wall) map"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-validation-no-angle-measurement",
+  "statement": "The script advertised as wettability validation ('valitation.py' in the README, validation.py in the tree) never measures a contact angle: the module constant Theta = np.pi/4 is defined and never referenced again anywhere in the repository, and the run ends by colour-mapping psi and calling plt.show(), with no circle fit, no angle extraction and no comparison against a target angle.",
+  "claim_type": "interpretive",
+  "epistemic_status": "contested",
+  "notes": [
+   "证据面: 全仓 grep 'Theta' 仅命中 validation.py:22 一处（定义处），无使用点；main() 收尾仅 plt.pcolor(...)+plt.show()。",
+   "TensorLBM 可服务改进点: 反例——润湿模块的验收判据不能是「画出来像」，必须给 theta 提取器 + 目标角误差表；TensorLBM 润湿验证面应对照 Theta 做数值判据（如 <3%）。",
+   "本条的 contested 指「声称的验证能力 vs 实际代码」矛盾，不是指润湿物理有争议。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-theta-declared",
+   "tke:oss-lbm:fing-validation-output-only-plot"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "anti-pattern / reproducibility defect",
+    "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-one-sided-initial-perturbation",
+  "statement": "The initial density perturbation intended to seed the fingering instability is one-sided: np.random.randint(0, 1, size=(H, W)) is identically zero because the high bound is exclusive, so the multiplier my_number is -1.0 everywhere and the density becomes 1 - 1e-3*rand(H, W) instead of the intended symmetric 1 +/- 1e-3*rand(H, W).",
+  "claim_type": "causal",
+  "epistemic_status": "established",
+  "notes": [
+   "Runtime-confirmed: np.random.randint(0, 1, size=n) returns all zeros, hence my_number = 0*2 - 1.0 = -1.0 (test_oss_lbm_fingering.py::test_randint_seed_is_one_sided).",
+   "TensorLBM 可服务改进点: 不稳定性的初始扰动必须零均值（否则等效叠加一个 1e-3 均值压缩，线性稳定性增长率与主导波数都会被污染）；TensorLBM 的随机扰动工具应内置零均值断言。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-randint-seed"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "defect",
+    "numpy random API semantics",
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-mixed-viscosity-relaxation",
+  "statement": "The non-Newtonian (power-law) rheology enters as a local mixed kinematic viscosity: v1 = Eta_n/rho (Newtonian) and v2 = M*Eta_n/rho (non-Newtonian) are blended harmonically with weights (1-psi) and (1+psi), and the momentum relaxation time is mix_tau = 3*mix_v + 0.5, so one fluid is 20x more viscous (M = 20) and the interface interpolates between them through psi.",
+  "claim_type": "descriptive",
+  "epistemic_status": "provisional",
+  "notes": [
+   "TensorLBM 可服务改进点: 这是一个最小代价的黏度比实现（界面自动过渡），可用于 TensorLBM 变黏度算例；但注意它是「界面加权的两组分黏度」，不是剪切率相关的幂律本构。",
+   "未验证面: 仓库内无该混合黏度的解析/实验对照，status=provisional。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-mix-tau"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "M = 20.0",
+    "Eta_n = nondimensional Newtonian viscosity",
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-mobility-fixed-relaxation",
+  "statement": "The momentum populations relax with the local mix_tau while the order-parameter populations always relax with the fixed module-level tau = 1/(3-sqrt(3)) ~ 0.789, so the Cahn-Hilliard mobility is spatially uniform and decoupled from the viscosity field; nothing in the repository documents this choice.",
+  "claim_type": "descriptive",
+  "epistemic_status": "contested",
+  "notes": [
+   "证据面: getF 用 self.mix_tau（fingering.py:289），getG 用模块级 tau（fingering.py:293），同文件内两种松弛时间来源并存且无注释说明。",
+   "可能有意义: 若作者想让 Pe/迁移率固定，这是合理选择；但文档缺失使读者无法判断，故 status=contested。",
+   "TensorLBM 可服务改进点: 迁移率 M 应显式参数化（M = cs^2*(tau_g-0.5)*...），并在配置里与黏度解耦，避免隐含常量。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-getf-mix-tau",
+   "tke:oss-lbm:fing-getg-const-tau"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "possible modelling choice, not necessarily a defect",
+    "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-guo-forcing-chemical-potential",
+  "statement": "The body force driving phase separation is the chemical-potential gradient force F = mu * w_i * (1 - 1/(2*mix_tau)) * [ (e_i - u)*3 + 9*e_i*(e_i.u) ] . grad(psi), i.e. a Guo-style forcing with the (1 - 1/(2*tau)) discrete-lattice correction applied to the same relaxation time used in the collision step.",
+  "claim_type": "methodological",
+  "epistemic_status": "provisional",
+  "notes": [
+   "TensorLBM 可服务改进点: 这是 free-energy LBM 的标准力项写法，TensorLBM 若加多相模块可直接复用该 (1-1/(2tau)) 修正；注意本源在 collision 后整项相加（getF 里 +self.F[i]），等价于 forcing 半隐式的一阶版本。",
+   "未验证面: 仓库无二阶精度/伽利略不变性检验，status=provisional。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-large-f"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+    "force added to the post-collision population"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-spectral-ab2-integrating-factor",
+  "statement": "The companion spectral solver integrates the viscous-fingering concentration equation in Fourier space with a second-order Adams-Bashforth treatment of the nonlinear term (-1.5*J_hat + 0.5*J_hat_before) combined with an exact integrating factor exp(-k^2*DELTA_T), and cites the Tan & Homsy J. Chem. Phys. paper as its reference.",
+  "claim_type": "methodological",
+  "epistemic_status": "provisional",
+  "notes": [
+   "TensorLBM 可服务改进点: 线性稳定性/指进基准可与 LBM 求解器交叉验证（同一物理、两种数值方法），是 TensorLBM 指进算例的低成本参考解来源。",
+   "未验证面: 无网格收敛/与文献增长率对照表，status=provisional。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-spectral-reference",
+   "tke:oss-lbm:fing-spectral-ab2"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent) - adjacent: this is the non-LBM reference solution for the same fingering physics",
+    "spectrum_method/main.py",
+    "DELTA_T = 0.1 (spectral solver)",
+    "FFT collocation 256 x 128"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tkc:oss-lbm:fing-no-buoyancy-capillary-driven",
+  "statement": "The displacement is purely capillary/viscous-driven: the inlet velocity is set from the capillary number as u0 = Ca*sigma/Eta_n, and no gravity, buoyancy or density-difference body force term exists anywhere in the solver (a case-insensitive search for gravity/buoyancy/body force over all lattice_boltzmann modules returns zero hits).",
+  "claim_type": "descriptive",
+  "epistemic_status": "provisional",
+  "notes": [
+   "搜索面: grep -ric 'gravity|buoyan|body force' lattice_boltzmann/*.py -> 全部为 0（源码面负证据）。",
+   "TensorLBM 可服务改进点: 若要做重力驱动指进/瑞利-泰勒，需要外挂 buoyancy 力项——本源没有，不能声称它复现了重力指进（其论文场景为压力/毛细驱动）。"
+  ],
+  "evidence_refs": [
+   "tke:oss-lbm:fing-inlet-velocity-from-ca"
+  ],
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Fingering_dynamics",
+   "conditions": [
+    "gravity-free configuration",
+    "Ca-based inlet velocity",
+    "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+   ]
+  },
+  "modality": "asserted",
+  "created_at": "2026-11-09T15:30:00Z",
+  "created_by": "agent-m8691",
+  "version": "1.0.0"
+ }
+]

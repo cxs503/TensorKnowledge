@@ -1,0 +1,577 @@
+[
+ {
+  "id": "tke:oss-lbm:fing-free-energy-calibration-fingering",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-free-energy-calibration"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:40-42",
+   "quote": "xi = 2.0  # interface thickness\nkappa = 0.75 * xi * sigma\na = - 2.0 * kappa / (xi ** 2)",
+   "quote_language": "python",
+   "content_hash": "6f70c2017cf4243595e20238258acdd6327eb163012a6d3d2c6a35670c265a70"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-free-energy-calibration-periodic",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-free-energy-calibration"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering_periodic.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering_periodic.py:37-39",
+   "quote": "xi = 2.0  # interface thickness\nkappa = 0.75 * sigma * xi  # interfacial tension\na = - 2.0 * kappa / (xi ** 2)",
+   "quote_language": "python",
+   "content_hash": "19f7174f1b7a1e29c2ffd8eda4b86893429ad27d6c5e2c6b9ba9f9a16ba8567e"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-free-energy-calibration-validation",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-free-energy-calibration"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/validation.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/validation.py:34-36",
+   "quote": "xi = 2.0 * DELTA_X\nkappa = (3 / 4) * sigma * xi\na = 2 * kappa / (xi ** 2)",
+   "quote_language": "python",
+   "content_hash": "ed5575182ce10369881776236f78d0e5570483ae531f9b3167e761bff57e7f49"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-mu-fingering",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-chemical-potential-sign-equivalence"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:148-149",
+   "quote": "        ones = np.ones((H, W))[self.mask]\n        mu = a * self.psi[self.mask] * (ones - np.power(self.psi[self.mask], 2)) - kappa * self.nabla_psi2[self.mask]",
+   "quote_language": "python",
+   "content_hash": "65021f38b3da4e05e4a2c5bdcd470650ec49b3ba1286d84f9ad924ab95f1f16f"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-mu-validation",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-chemical-potential-sign-equivalence"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/validation.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/validation.py:117-118",
+   "quote": "    def getMu(self):\n        mu = a * self.psi * (self.psi ** 2 - 1) - kappa * self.getNabla_psi2()",
+   "quote_language": "python",
+   "content_hash": "3c3781484509ede52c2dbb1cb60764eeb3beaf7b1744aa35869e6055e4885bbd"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-zou-he-inlet",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-zou-he-force-corrected"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:296-298",
+   "quote": "    \"\"\"http://phelafel.technion.ac.il/~drorden/project/ZouHe.pdf\"\"\"\n\n    def zou_he_boundary_inlet(self):",
+   "quote_language": "python",
+   "content_hash": "42bda9c0ddf4f1770cd44d55e521e2f651d1c240cba00b2f4969f7bc4215d64a"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-zou-he-outlet",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-zou-he-force-corrected"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:378-378",
+   "quote": "        self.f[3][:, -1] = self.f[1][:, -1] - 1.5 * ux * rho_outlet + psi_x * mu / 6",
+   "quote_language": "python",
+   "content_hash": "2a88e6da030ba8e74f2071445597abfa292c17c3df71a4604b89938ed6ac0d52"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-bounceback-reference",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-halfway-bounceback"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/bounce_back.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/bounce_back.py:10-10",
+   "quote": "    \"\"\"https://www.math.nyu.edu/~billbao/report930.pdf\"\"\"",
+   "quote_language": "python",
+   "content_hash": "29338a827362f1f4b5c2e064ddb0112c1e769de7956607adc52e01733e8f5a39"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-bounceback-assignment",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-halfway-bounceback"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/bounce_back.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/bounce_back.py:48-49",
+   "quote": "                f[i][e_barrier] = f_behind[3][e_barrier]\n                g[i][e_barrier] = g_behind[3][e_barrier]",
+   "quote_language": "python",
+   "content_hash": "0bd276c70e2516bdf07784c4cfcd1c95c37de81280e9fe20a0565173c67cd555"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-psi-wall-value",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-wetting-via-order-parameter"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:19-19",
+   "quote": "psi_wall = -1.0  # wettability on block and wall",
+   "quote_language": "python",
+   "content_hash": "153f4d34060be11f08e2e3550f01083b64f17b0b7429745f18140ffacf3928ae"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-psi-wall-enforced",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-wetting-via-order-parameter"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:215-217",
+   "quote": "    def udpatePsi(self):\n        self.psi[self.mask] = np.sum(self.g, axis=0)[self.mask]\n        self.psi[self.block_mask] = psi_wall",
+   "quote_language": "python",
+   "content_hash": "3aadf553764b1ec1026cefdd2c288cb354e4722c7c6466389c85fc7d354cab4b"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-psi-wall-ghost",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-wetting-via-order-parameter"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/validation.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/validation.py:71-71",
+   "quote": "        self.psi_wall_list = np.full((1, W), psi_wall).astype(float)",
+   "quote_language": "python",
+   "content_hash": "06182f549faeb8b46010cbeb39d4306c2fb8ba4f0394583fa23e0f618bf9a391"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-psi-wall-periodic",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-wetting-via-order-parameter"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering_periodic.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering_periodic.py:18-18",
+   "quote": "psi_wall = -0.5  # wettability on block and wall",
+   "quote_language": "python",
+   "content_hash": "353b273520ea3253293dc86a2a86b7f1f884b34c1c839b31827f6ed3be841435"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-theta-declared",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-validation-no-angle-measurement"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/validation.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "refutes",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/validation.py:22-22",
+   "quote": "Theta = np.pi / 4  # contact angle",
+   "quote_language": "python",
+   "content_hash": "896e881dc516802d13fde3f9b775be9fbfd1185559597ad441cd8214a1fd8891"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-validation-output-only-plot",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-validation-no-angle-measurement"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/validation.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "refutes",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/validation.py:419-421",
+   "quote": "    plt.figure()\n    plt.pcolor(x, y, cm.psi, label=\"MAX_T:{}, Pe:{}, M:{}, wall{}\".format(MAX_T, Pe, M, psi_wall))\n    plt.colorbar()",
+   "quote_language": "python",
+   "content_hash": "b6805ce9be6f89ef825428190707557abe018d5d39342c875eaeedbc9aa2844b"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-randint-seed",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-one-sided-initial-perturbation"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:106-107",
+   "quote": "        my_number = np.random.randint(0, 1, size=(H, W)) * 2 - 1.0\n        self.rho = np.ones((H, W))[mask] + np.random.rand(H, W)[mask] * 0.001 * my_number[mask]  # macroscopic density",
+   "quote_language": "python",
+   "content_hash": "87f2e44069817c9353d494ad2f02016a8e9ce28d6574528a2914a352615f987e"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-mix-tau",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-mixed-viscosity-relaxation"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:211-212",
+   "quote": "        mix_v = np.divide(2 * v11 * v2, (v11 * (ones - self.psi[self.mask]) + v2 * (ones + self.psi[self.mask])))\n        mix_tau = 3 * mix_v + 0.5",
+   "quote_language": "python",
+   "content_hash": "cf4ea84417508998388e0a4b60eb410001939dc316a4ad4d1a2be2dff72149b1"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-getf-mix-tau",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-mobility-fixed-relaxation"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:289-289",
+   "quote": "        f = self.f[i][self.mask] - 1.0 / self.mix_tau * (self.f[i][self.mask] - self.feq[i]) + self.F[i]",
+   "quote_language": "python",
+   "content_hash": "0f2f3dcf9bbf4816e4aab83bf1149e0498457c62c04490a5f0bd612ffc04297a"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-getg-const-tau",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-mobility-fixed-relaxation"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:292-294",
+   "quote": "    def getG(self, i):\n        g = self.g[i][self.mask] - 1.0 / tau * (self.g[i][self.mask] - self.geq[i])\n        return g",
+   "quote_language": "python",
+   "content_hash": "dad9329d241e0a4ddcbe2eef5ed2c97c3b6a982ce3b9c3f078a9a982cf28a368"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-large-f",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-guo-forcing-chemical-potential"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:201-202",
+   "quote": "        f = self.mu * self.w[n] * (1 - 1 / (2 * self.mix_tau)) \\\n            * (((self.e[n][0] - self.ux) * 3 + self.e[n][0] * (self.e[n][0] * self.ux + self.e[n][1] * self.uy) * 9)",
+   "quote_language": "python",
+   "content_hash": "f11778d377cfcfc47f90e38d9936226045cb75ab0e18c6223624612c08f15d7c"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-spectral-reference",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-spectral-ab2-integrating-factor"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, spectrum_method/main.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e spectrum_method/main.py:11-11",
+   "quote": "'''https://aip.scitation.org/doi/10.1063/1.866726'''",
+   "quote_language": "python",
+   "content_hash": "5a5831ac18c2e43dadc7bebf100bb930cdf496f2681b065f3febb7e5457b4cc7"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-spectral-ab2",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-spectral-ab2-integrating-factor"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, spectrum_method/main.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e spectrum_method/main.py:58-60",
+   "quote": "    def getC_barbyAdams(self, J_hat, J_hat_before):\n        c_tilda = DELTA_T * (- 1.5 * J_hat + 0.5 * J_hat_before) + self.c_hat\n        c_bar = c_tilda * np.exp(-self.km2kn2 * DELTA_T)",
+   "quote_language": "python",
+   "content_hash": "2add4f0cf11dd3f03dc98ec4e759a9d321f266892dad223e07e26d9eb168f04a"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:fing-inlet-velocity-from-ca",
+  "claim_refs": [
+   "tkc:oss-lbm:fing-no-buoyancy-capillary-driven"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "ebinan92/Fingering_dynamics source code, lattice_boltzmann/fingering.py",
+   "url": "https://github.com/ebinan92/Fingering_dynamics",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "fingering_dynamics@150a5739e lattice_boltzmann/fingering.py:39-39",
+   "quote": "u0 = Ca * sigma / Eta_n  # inlet velocity",
+   "quote_language": "python",
+   "content_hash": "300cb117a564bd86683d91430d8c55c8a279c23d720d843606e258dee9c955c0"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:30:00Z",
+  "captured_by": "agent-m8691",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ }
+]
