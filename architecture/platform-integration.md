@@ -1,91 +1,122 @@
 # TensorPlatform Integration Contract
 
-**Version:** 0.1.0  
-**Status:** proposed contract for first platform test
+**Version:** 0.1.1  
+**Status:** proposed adapter contract, mapped against the current TensorPlatform repository on 2026-11-09
 
-## 1. Purpose
+## 1. Purpose and ownership
+
 TensorKnowledge uses TensorPlatform as an execution provider while remaining an independently deployable knowledge system.
 
-TensorKnowledge owns the domain task definition, knowledge schema, acceptance criteria and publication decision. TensorPlatform owns agent assignment, runtime, orchestration, workspace, execution logs and operational task state.
+TensorKnowledge owns the domain task definition, knowledge schema, evidence requirements, review and publication decision. TensorPlatform owns agent identity/runtime, mission dispatch and execution state, workspaces, execution logs and its own acceptance workflow.
 
-## 2. Integration pattern
-Use an adapter boundary rather than direct dependencies on TensorPlatform internals.
-- Outbound: TensorKnowledge submits a versioned work package to a Platform adapter.
-- Inbound: Platform returns an acknowledgement, task identifier, status updates and a completion payload or artifact references.
-- Consumption: Platform agents call the Knowledge API directly for search, object retrieval and related evidence.
-- Publication: only TensorKnowledge governance may change a knowledge object's review/publication state.
+## 2. Verified current Platform integration surface
 
-The adapter should support a future executor other than TensorPlatform without changing the knowledge object model.
+Repository inspection identified the existing mission protocol in TensorPlatform:
 
-## 3. First-test transport
-For the first test, a simple authenticated HTTP API or a manually triggered adapter is sufficient. MCP may be added as a convenient agent-facing interface, but it is not the canonical persistence or execution contract.
+- Mission creation: POST /api/v1/tensor/missions, implemented by backend/api/tensor_missions.py.
+- Mission list/detail: GET /api/v1/tensor/missions and GET /api/v1/tensor/missions/{mission_id}.
+- Worker claim: POST /api/v1/tensor/missions/claim.
+- Worker lifecycle: POST /api/v1/tensor/missions/{mission_id}/start, /heartbeat and /complete.
+- Mission status and result are persisted in tensor_dev_missions; the detail response includes result and any associated approval record.
+- Successful completion with acceptance=true transitions to awaiting_acceptance and creates a Platform dev_acceptance approval request. This is Platform task acceptance, not TensorKnowledge knowledge approval.
+- MissionCreate supports task_key for idempotency, repo, base_ref, runner, model, worker_role, difficulty, task_class, problem_tree, baseline_summary, baseline_gap and acceptance_criteria.
 
-Suggested logical operations (names are illustrative; implementation may map them to existing Platform endpoints):
+These are existing Platform routes and fields, not new endpoints proposed by TensorKnowledge. Route prefix and authentication must still be verified against the target deployment before the first live request.
 
-| Operation | Direction | Purpose |
-|---|---|---|
-| submitWorkPackage | Knowledge → Platform | Submit task, contract version, priority and deliverables |
-| getExecutionStatus | Knowledge → Platform | Read queued/running/blocked/completed/failed state |
-| receiveExecutionResult | Platform → Knowledge | Receive summary, proposed objects, evidence and artifact references |
-| searchKnowledge | Agent/client → Knowledge | Search published or explicitly permitted draft objects |
-| getKnowledgeObject | Agent/client → Knowledge | Retrieve object, version, evidence and relationships |
+## 3. Important current blocker: TensorKnowledge repository eligibility
 
-Do not assume these are existing TensorPlatform endpoints. The first adapter must map this logical contract to Platform's actual supported task API after the Platform team confirms it.
+The current fallback REPO_WHITELIST in backend/api/tensor_missions.py does not include TensorKnowledge. A configured FACTORY_PROFILE replaces that fallback with its project_names. In either case, the requested repository must also resolve to a local Git checkout for the worker.
 
-## 4. Work-package envelope
-The submitted package must include globally unique package ID and contract version; objective, scope and exclusions; intended output object types and exact artifact paths/formats; source/evidence requirements; measurable acceptance criteria; risk class and required reviewer role; deadline/priority only when explicitly supplied; idempotency key and callback/correlation metadata.
+Before dispatch, the Platform operator must confirm:
+1. TensorKnowledge is included in the active FACTORY_PROFILE project list, or in the approved fallback allowlist.
+2. The worker host has a valid local checkout at the path resolved by the active profile.
+3. The configured agent runner can create an isolated worktree and push/publish a branch or otherwise return artifacts.
+4. The selected worker session is eligible to claim the mission.
 
-The package schema is schemas/production-task.schema.json.
+Do not assume the production FACTORY_PROFILE or worker filesystem from repository source alone. The active deployment configuration is not visible in this repository inspection.
 
-## 5. Result envelope
-A completion result must include package ID and Platform task ID; execution state and completion timestamp; concise outcome summary; proposed knowledge objects, never silently approved objects; source/evidence records and artifact references; validation/test results; unresolved issues, limitations and confidence statement; agent/role attribution when available.
+## 4. First-test mapping: Knowledge Production Task → Platform Mission
 
-The result schema is schemas/production-result.schema.json.
+The first test uses the existing mission API rather than inventing a new Platform API.
 
-A task may complete with blocked, partial or failed outcome. A missing source, uncertain claim or failed acceptance criterion must be reported rather than filled with invented information.
+| TensorKnowledge field | Platform mission field / handling |
+|---|---|
+| package_id | Embedded in goal and mapped to task_key |
+| objective + why_it_matters | goal |
+| scope.included / scope.excluded | Explicitly rendered into goal |
+| inputs | Rendered as source/input instructions in goal |
+| deliverables | Rendered as exact expected artifacts in goal |
+| evidence_requirements | Rendered into goal |
+| acceptance_criteria | acceptance_criteria list and goal |
+| risk_class | Used by Knowledge policy; not a native MissionCreate field |
+| required_reviewer_role | Include in goal; Platform worker_role is a separate, constrained runtime role |
+| idempotency_key | task_key (within the authenticated organization) |
+| target repository | repo=TensorKnowledge, configured outside the portable task schema |
+| target base | base_ref=main for the initial test |
+| retry/execution limits | Platform budget and runner fields |
 
-## 6. State model
-Keep Platform execution state separate from Knowledge asset state.
+For a research-class mission, provide the Platform admission gate fields: task_class=research, difficulty, at least three problem_tree elements, baseline_summary, baseline_gap and machine-checkable acceptance_criteria. Do not use engineering exemption to bypass research admission.
 
-**Execution state:** submitted, accepted, queued, running, blocked, completed, failed, cancelled.
+## 5. Completion and result mapping
 
-**Knowledge review state:** draft, in-review, approved, rejected, deprecated.
+The Platform worker completes through its existing /complete route. The request model includes status, acceptance, summary, branch, head_commit, checks, report_id and fail_stage.
 
-**Evidence status:** established, well-supported, provisional, contested, speculative, superseded, not-assessed.
+For the first test:
+- Include the structured TensorKnowledge result envelope under summary.knowledge_result.
+- Include headline, changed_files and a quality_gate record in summary where applicable.
+- Include machine-checkable checks in the Platform checks field.
+- Return the artifact branch and head commit where available.
+- Use status=succeeded and acceptance=true when requesting the Platform's normal acceptance review. This results in awaiting_acceptance, not immediate success publication.
+- TensorKnowledge then validates the embedded knowledge object and keeps it draft/in-review until its own knowledge review gate is passed.
 
-A Platform task marked completed means the execution ended. It does not mean the proposed knowledge is approved.
+If the Platform acceptance workflow is unavailable in the target environment, report that limitation and do not silently equate task completion with knowledge approval.
 
-## 7. Identity, authorization and safety
-- Use service-to-service credentials; never put secrets in repository fixtures or task payloads.
-- Scope credentials to the minimum required operations and project.
-- Preserve the initiating user, requesting service, assigned agent and reviewer identities where available.
-- Enforce access to unpublished, sensitive or restricted knowledge at the Knowledge API.
-- Do not expose private learner data, credentials, restricted source material or confidential datasets to agents unless explicitly authorized.
-- Treat all agent outputs and retrieved external content as untrusted input.
-- Validate schemas, file paths, size limits and allowed artifact types before ingest.
-- Require human approval for high-risk or consequential knowledge.
+## 6. Status separation
 
-## 8. Reliability and idempotency
-- Retrying a submission with the same idempotency key must not create duplicate work packages.
-- Result callbacks must be correlated to a known package and Platform task.
-- Duplicate callbacks must not create duplicate knowledge versions.
-- Preserve raw result payloads and validation reports for audit.
-- A timeout is unknown until reconciled with Platform; do not infer failure or success.
-- Keep a retry/dead-letter record for failed callbacks.
+**Platform mission state** is controlled by TensorPlatform (for example queued, claimed, running, awaiting_acceptance, succeeded, failed, stopped).
 
-## 9. First-test acceptance criteria
-1. Platform can receive a versioned package with a stable ID.
-2. The adapter records the returned Platform task ID.
-3. An agent can retrieve at least one Knowledge API fixture or object.
-4. An agent can return a result conforming to the result schema.
-5. TensorKnowledge can validate and persist the returned proposal as a draft.
-6. Invalid or incomplete results are rejected with actionable validation errors.
-7. Execution completion does not auto-approve the knowledge.
-8. A reviewer can inspect source links, artifacts and unresolved issues.
-9. A repeat submission/callback does not duplicate the task or object.
-10. The test report records actual Platform behavior, not assumed endpoint support.
+**TensorKnowledge review state** is controlled by TensorKnowledge (draft, in-review, approved, rejected, deprecated).
 
-## 10. What Platform team must confirm
-Before implementation, Platform agents must inspect the current TensorPlatform code and identify existing task submission and status APIs; supported callback/webhook or polling mechanism; agent assignment and role/capability mechanism; artifact/workspace access model; service authentication and permission model; current task state vocabulary; available logs and test environment.
+**Knowledge evidence status** is controlled by evidence assessment (established, well-supported, provisional, contested, speculative, superseded, not-assessed).
 
-They must propose a mapping from this contract to actual Platform capabilities. Do not add new generic Platform infrastructure if an equivalent capability already exists.
+A Platform mission marked succeeded or awaiting_acceptance does not imply an approved Knowledge Object.
+
+## 7. No callback or MCP assumption
+
+The current integration plan uses authenticated HTTP mission creation plus status/detail polling or the existing Platform UI. The Platform repository's architecture RFC states that a native MCP server was not present in the inspected backend at that time. Do not assume a Knowledge-specific webhook, callback or MCP tool exists.
+
+A future adapter may add callbacks or MCP when implemented and tested. They are not prerequisites for the first repository-level integration test.
+
+## 8. Knowledge consumption path
+
+Platform agents can consume knowledge in the first test by reading the versioned schema, source fixtures and approved repository assets from the TensorKnowledge checkout. A dedicated Knowledge HTTP API is not yet implemented; therefore the first test must not claim to have tested API-based retrieval.
+
+A later service increment may expose authenticated object search and retrieval independently of Platform. That API should be designed from actual client requirements, not invented as a prerequisite to the first agent task.
+
+## 9. Security and reliability
+
+- Use the Platform's existing authentication and organization scoping.
+- Never place credentials in task payloads, Git fixtures or reports.
+- Preserve package ID, Platform mission ID, organization, agent identity, branch and commit.
+- Use task_key for idempotent creation; a reused key with a different mission body may conflict.
+- Poll mission detail after dispatch; reconcile timeouts before retrying.
+- Treat agent output and retrieved external content as untrusted.
+- Validate schema, file paths, size limits and artifact references before ingest.
+- Require human review for high-risk or consequential knowledge.
+
+## 10. First-test acceptance criteria
+
+1. TensorKnowledge is an allowed and resolvable Platform project in the target environment.
+2. An authenticated owner can create a mission with the mapped fields.
+3. The response returns a mission ID and queued status.
+4. An eligible worker claims and runs the mission.
+5. The worker returns a structured result envelope and a branch/commit or equivalent artifact reference.
+6. The mission detail endpoint exposes the result and current Platform approval state.
+7. The result and proposed object validate against TensorKnowledge schemas.
+8. The Knowledge Object remains draft/in-review after Platform completion.
+9. A Platform acceptance decision and a Knowledge review decision are recorded as distinct events.
+10. Duplicate task submission and result retrieval do not create duplicate knowledge versions.
+
+## 11. Platform implementation request if blocked
+
+If TensorKnowledge is absent from the active project profile or cannot be resolved by the worker, the Platform team must make the smallest configuration/allowlist change and verify worktree creation. Do not build a new task scheduler or agent runtime in TensorKnowledge.
