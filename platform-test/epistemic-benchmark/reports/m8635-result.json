@@ -1,0 +1,65 @@
+{
+  "contract_version": "0.1.0",
+  "package_id": "tk:oss-lbm",
+  "platform_task_id": "m8635",
+  "execution_state": "completed",
+  "completed_at": "2026-11-09T15:30:00Z",
+  "outcome": "accepted-for-review",
+  "summary": "Landed 17 source-code-verified claims about LBM open-source ecosystem (pylbm, lettuce, lbmpy, XLB) into TensorKnowledge with full evidence provenance, self-validator, and package documentation. All validators pass without disturbing existing 12-case epistemic benchmark count.",
+  "proposed_objects": [
+    {
+      "id": "tko:oss-lbm:pylbm-analysis",
+      "object_type": "knowledge-package",
+      "title": "pylbm Symbolic Analysis Methods",
+      "description": "5 claims about pylbm's SymPy-based equivalent equation derivation, von Neumann stability analysis, and interpolated bounce-back boundary conditions",
+      "domain": "lattice-Boltzmann-method",
+      "status": "draft",
+      "version": "1.0.0"
+    },
+    {
+      "id": "tko:oss-lbm:lettuce-differentiable",
+      "object_type": "knowledge-package",
+      "title": "lettuce Differentiable LBM Design",
+      "description": "5 claims about lettuce's PyTorch-based differentiable collision operators, native CUDA code generation, and invariant-based testing",
+      "domain": "lattice-Boltzmann-method",
+      "status": "draft",
+      "version": "1.0.0"
+    },
+    {
+      "id": "tko:oss-lbm:lbmpy-generation",
+      "object_type": "knowledge-package",
+      "title": "lbmpy Symbolic Code Generation",
+      "description": "3 claims about lbmpy's Chapman-Enskog analysis, 4-stage kernel generation pipeline, and multi-method collision spaces",
+      "domain": "lattice-Boltzmann-method",
+      "status": "draft",
+      "version": "1.0.0"
+    },
+    {
+      "id": "tko:oss-lbm:xlb-gpu-distributed",
+      "object_type": "knowledge-package",
+      "title": "XLB GPU and Distributed Patterns",
+      "description": "4 claims about XLB's Warp GPU kernels with f0/f1 double-buffering, JAX shard_map distributed parallelism, and Operator backend pattern",
+      "domain": "lattice-Boltzmann-method",
+      "status": "draft",
+      "version": "1.0.0"
+    }
+  ],
+  "artifact_references": [
+    "knowledge/oss-lbm/claims/claims.json",
+    "knowledge/oss-lbm/evidence/evidence.json",
+    "knowledge/oss-lbm/provenance/provenance.json",
+    "knowledge/oss-lbm/validate_oss_lbm.py",
+    "knowledge/oss-lbm/README.md",
+    "platform-test/epistemic-benchmark/reports/m8635.md"
+  ],
+  "validation_results": {
+    "validate_oss_lbm": "PASS: 17 claims, 17 evidence, 1 provenance",
+    "validate_epistemic_benchmark": "PASS: 12 cases, 5 schemas",
+    "validate_knowledge_assets": "PASSED: 14 nodes, 11 schemas"
+  },
+  "unresolved_issues": [
+    "lbm-principles-practice and Kruger textbook repos not found in /tmp/ cache; related knowledge covered indirectly",
+    "lettuce git log returned empty (shallow clone); commit hash inferred from file metadata"
+  ],
+  "report_id": 9946
+}
