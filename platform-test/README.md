@@ -29,7 +29,7 @@ The result fixture is illustrative only. It contains placeholders and must never
 The current fallback REPO_WHITELIST found in TensorPlatform source does not list TensorKnowledge. A configured FACTORY_PROFILE may override the fallback. The active deployment profile is not known from source inspection, so this is a live-environment blocker until verified.
 
 ## 4. Existing mission protocol
-Use the existing authenticated POST /api/v1/tensor/missions endpoint. Map package_id to task_key, render objective/scope/inputs/deliverables/evidence and acceptance criteria into goal, and set repo=TensorKnowledge and base_ref=main. For this research task, map problem_definition.problem_tree, baseline_summary and baseline_gap to Platform's research-admission fields; also supply task_class=research, difficulty and machine-checkable acceptance_criteria.
+Use the existing authenticated POST /api/v1/tensor/missions endpoint. Map package_id to task_key, render objective/scope/inputs/deliverables/evidence and acceptance criteria into goal, and set repo=TensorKnowledge and base_ref=main. For this research task, map problem_definition.problem_tree, baseline_summary and baseline_gap to Platform's research-admission fields; map execution_profile.task_class, difficulty and budget to the corresponding mission fields; also supply machine-checkable acceptance_criteria. Do not map a free-form preferred role to Platform worker_role unless it matches the active role vocabulary.
 
 The worker lifecycle uses the existing claim, start, heartbeat and complete routes. Poll GET /api/v1/tensor/missions/{mission_id} for status and result. The complete request can return a structured result under summary.knowledge_result, with branch, head_commit and checks.
 
