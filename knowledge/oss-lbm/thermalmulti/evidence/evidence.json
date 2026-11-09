@@ -1,0 +1,393 @@
+[
+    {
+        "id": "tke:oss-lbm:thermalmulti:pr-eos-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:pr-eos"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeSource/interactionPotentialExtended.h",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeSource/interactionPotentialExtended.h:62-78",
+            "quote": "template <typename T, typename S>\nclass PengRobinsonExt : public InteractionPotentialExtended<T,S> {\nprivate:\n  T _acentricFactor;\n  T _c;\n  T _alpha;\npublic:\n  PengRobinsonExt(T G, T acentricFactor=0.334, T a=2./49., T b=2./21., T tr=.7, T R=1.);\n  bool operator() (T psi[], const S rho[]) override;"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:cs-eos-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:cs-eos"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeSource/interactionPotentialExtended.h",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeSource/interactionPotentialExtended.h:89-100",
+            "quote": "template <typename T, typename S>\nclass CarnahanStarlingExt : public InteractionPotentialExtended<T,S> {\npublic:\n  CarnahanStarlingExt(T G, T a=1., T b=4., T tr=.7, T R=1.);\n  bool operator() (T psi[], const S rho[]) override;"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:guo-forcing-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:modified-guo-forcing"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeSource/modifiedGuoBGKDynamics.h",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeSource/modifiedGuoBGKDynamics.h:20-42",
+            "quote": "/// Implementation of the BGK collision step with modified Guo force\n// Forcing scheme in pseudopotential lattice Boltzmann model for multiphase flows\n// Q. Li, K. Luo and X. Li\n// 10.1103/PhysRevE.86.016709\ntemplate<typename T, typename DESCRIPTOR>\nclass ForcedModifiedGuoBGKdynamics : public BasicDynamics<T,DESCRIPTOR> {\n...\nprotected:\n  T _sigma;  ///< correction factor\n  T _omega;"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:semi-hybrid-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:semi-hybrid-thermal"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeSource/combinedShanChenSemiHybridThermalCouplingPostProcessor2D.h",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeSource/combinedShanChenSemiHybridThermalCouplingPostProcessor2D.h:1-50",
+            "quote": "/** \\file\n * A modification to the navier stokes into advection diffusion coupling \n * -- header file.\n */\n...\ntemplate<typename T, typename DESCRIPTOR>\nclass CombinedShanChenSemiHybridThermalCouplingPostProcessor2D :\n  public LocalPostProcessor2D<T,DESCRIPTOR> {"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:maxwell-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:maxwell-construction"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeSource/maxwellConstruction.h",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeSource/maxwellConstruction.h:1-50",
+            "quote": "#include <gsl/gsl_integration.h>\n#include <gsl/gsl_roots.h>\n#include <gsl/gsl_min.h>\n#include <gsl/gsl_errno.h>\n#include <gsl/gsl_math.h>\n...\ntemplate <typename T, typename ipType>\nclass MaxwellConstruction {\npublic:\n    MaxwellConstruction( ipType & IP, T lowerBound=1e-1, T upperBound=1e20 );\n    bool operator() ( T rho[], T tr );"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:latent-heat-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:latent-heat-eos"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/EquationOfStatePython/eos.py",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/EquationOfStatePython/eos.py:latent-heat-calc",
+            "quote": "latentHeat = T_eos*v_lg*PR.dPdT(rhol,tempRatio)\n...\nintF2 = lambda rho: rho**-2 * PR.dPdT(rho, tempRatio)\nintegral2 = integrate.quad(intF2, rhov, rhol)[0]\nprint(\"Latent heat EoS  scale:      \",tempRatio *integral2 )"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:mrt-thermal-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:mrt-thermal"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeExamples/poolBoiling2D/poolBoiling2D.cpp",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeExamples/poolBoiling2D/poolBoiling2D.cpp:24-35",
+            "quote": "#define ThermalMRT\n...\n#ifdef ThermalMRT\n#define TDESCRIPTOR olb::descriptors::D2Q5<olb::descriptors::tag::MRT,      \\\n                                           olb::descriptors::VELOCITY,      \\\n                                           olb::descriptors::PHI_THERMAL,   \\\n                                           olb::descriptors::PREV_T_V,      \\\n                                           olb::descriptors::PREV_PHI>"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:pool-boiling-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:pool-boiling"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeExamples/poolBoiling2D/poolBoiling2D.cpp",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeExamples/poolBoiling2D/poolBoiling2D.cpp:1-20",
+            "quote": "/* poolBoiling2D.cpp\n * This simulation showcases a implementation of gravity\n * in addition to phase changing multiphase flow\n * This method has some issues with the metastability of\n * the non-ideal equation of state. This can be alleviated\n * using high disturbance fluctuations. Another factor\n * that helps in pool boiling is using a higher gravity.\n */"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:evap-droplet-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:evaporating-droplet"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeExamples/evaporatingDroplet2D/evaporatingDroplet2D.cpp",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeExamples/evaporatingDroplet2D/evaporatingDroplet2D.cpp:1-10",
+            "quote": "/*  OpenLB Extension:\n *  Phase-change multiphase flow  \n *  Written by Julius Weinmiller for his thesis\n */\n...\n#include \"olb2D.h\"\n#include \"olb2D.hh\"\n#include \"phaseChangeExtension.h\""
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:laplace-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:laplace-law"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeExamples/laplace2D/laplace2D.cpp and resultsEvalLaplacePressure.py",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeExamples/laplace2D/laplace2D.cpp:1-10",
+            "quote": "/*  OpenLB Extension:\n *  Phase-change multiphase flow  \n *  Written by Julius Weinmiller for his thesis\n */\n...\n#include \"olb2D.h\"\n#include \"olb2D.hh\"\n#include \"phaseChangeExtension.h\""
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:wettability-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:wall-wettability"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeExamples/wallWettability2D/wallWettability2D.cpp",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeExamples/wallWettability2D/wallWettability2D.cpp:1-10",
+            "quote": "/*  OpenLB Extension:\n *  Phase-change multiphase flow  \n *  Written by Julius Weinmiller for his thesis\n */\n...\n#include \"olb2D.h\"\n#include \"olb2D.hh\"\n#include \"phaseChangeExtension.h\""
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:thermo-consist-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:thermo-consistency"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeExamples/thermodynamicConsistency2D/thermodynamicConsistency2D.cpp",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeExamples/thermodynamicConsistency2D/thermodynamicConsistency2D.cpp:1-10",
+            "quote": "/*  OpenLB Extension:\n *  Phase-change multiphase flow  \n *  Written by Julius Weinmiller for his thesis\n */\n...\n#include \"olb2D.h\"\n#include \"olb2D.hh\"\n#include \"phaseChangeExtension.h\""
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:fluid-props-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:fluid-properties"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeSource/fluidProperties.h",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeSource/fluidProperties.h:14-50",
+            "quote": "template <typename T>\nclass FluidProperties{\n    public:\n        FluidProperties(T densityVapour, T densityLiquid,\n                          T specificHeatVapour, T specificHeatLiquid,\n                          T conductivityVapour, T conductivityLiquid,\n                          T tempLower, T tempHigher, T tempCritical);\n        T specificHeat(const T latticeDensity);\n        T conductivity(const T latticeDensity);\n        T density(const T latticeDensity);\n        T temperatureRatio(const T latticeTemperature);"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:interaction-pot-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:interaction-potential"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeSource/interactionPotentialExtended.h",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeSource/interactionPotentialExtended.h:22-45",
+            "quote": "template <typename T, typename S>\nclass InteractionPotentialExtended: public AnalyticalF1D<T,S> {\npublic:\n  InteractionPotentialExtended(T G, T a, T b, T R=1);\n  virtual bool operator() (T psi[], const S rho[]) = 0;\n  virtual bool operator() (T psi[], const S rho[], const S tr[]) = 0;\n  virtual bool computeDerivativeConstRho( T deriv[], const S rho[], const S tr[]) = 0;"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:phase-sep-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:phase-separation"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeExamples/phaseSeparation3D/phaseSeparation3D.cpp",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeExamples/phaseSeparation3D/phaseSeparation3D.cpp:1-10",
+            "quote": "/*  OpenLB Extension:\n *  Phase-change multiphase flow  \n *  Written by Julius Weinmiller for his thesis\n */\n...\n#include \"olb3D.h\"\n#include \"olb3D.hh\"\n#include \"phaseChangeExtension.h\""
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:d2law-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:d2-law"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB source code, phaseChangeExtension/phaseChangeExamples/d2law2D/d2law2D.cpp",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 phaseChangeExtension/phaseChangeExamples/d2law2D/d2law2D.cpp:1-10",
+            "quote": "/*  OpenLB Extension:\n *  Phase-change multiphase flow  \n *  Written by Julius Weinmiller for his thesis\n */\n...\n#include \"olb2D.h\"\n#include \"olb2D.hh\"\n#include \"phaseChangeExtension.h\""
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    },
+    {
+        "id": "tke:oss-lbm:thermalmulti:compat-src",
+        "claim_refs": [
+            "tkc:oss-lbm:thermalmulti:openlb-compat"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "ThermalMultiphaseOpenLB README.md",
+            "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "ThermalMultiphaseOpenLB@769efd4 README.md:22-35",
+            "quote": "## Limitations\nThe original extension was created for OpenLB v1.3-1.\nIt is currently not working in combination with OpenLB v 1.4, but it is being worked on to make sure it functions as well\n...\n3. One small change needs to be made in the file `src/dynamics/dynamics.h`\n  * Navigate to the class `BounceBack` (line 651)\n  * Change `private` to `protected` (line 701)"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8689",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    }
+]
