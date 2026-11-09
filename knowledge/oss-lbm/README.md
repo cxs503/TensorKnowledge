@@ -13,6 +13,12 @@ Lattice Boltzmann Method open-source ecosystem knowledge for TensorLBM improveme
 | **lbmpy** | Chapman-Enskog analysis, 4-stage kernel generation pipeline, multi-method collision spaces | 0afc9d5 |
 | **XLB** | Warp GPU kernels with f₀/f₁ double-buffering, JAX shard_map distributed parallelism, Operator pattern | 9c23e82 |
 
+## Sub-packages
+
+| Package | Framework | Claims | Notes |
+|---------|-----------|--------|-------|
+| `ludwig/` | [Ludwig](https://github.com/ludwig-cf/ludwig) (free-energy binary fluids / complex fluids, ANSI C) | 17 | MCMP free-energy + Cahn-Hilliard sector, GAP-anchored to `GAP-LBM-MCMP-POISEUILLE`; own validator (`validate_ludwig.py`), pytest suite and shear-wave verification harness |
+
 ## Structure
 
 ```

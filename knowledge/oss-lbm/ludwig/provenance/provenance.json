@@ -1,0 +1,30 @@
+[
+  {
+    "id": "tkp:oss-lbm:ludwig-source-snapshot",
+    "generated_entity": "knowledge/oss-lbm/ludwig (claims/evidence/provenance)",
+    "activity": {
+      "type": "source-inspection",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master",
+      "retrieval": "https://codeload.github.com/ludwig-cf/ludwig/tar.gz/refs/heads/master",
+      "archive_sha256": "6e216ef8f4c2f5654dc11b9c6b4f3570f97cc5e277193922b48cfaf0cd72e198",
+      "method": "tarball snapshot extracted locally; every quote sliced verbatim by scripts/build_package.py; absence claims verified by exhaustive case-insensitive grep over the whole tree",
+      "build": {
+        "model": "D3Q27",
+        "cc": "gcc 12.3.0",
+        "flags": "-O2 -g -Wall",
+        "unit_tests": "tests/unit `make test` -> 98 PASS / 0 FAIL",
+        "regression": "top-level `make test` fails against stored reference logs (serial-actv-s01 drift ~1e-7 relative) — stale-log artefact, reported honestly"
+      }
+    },
+    "agents": [
+      {
+        "name": "agent-m8669",
+        "role": "extractor"
+      }
+    ],
+    "recorded_at": "2026-11-09T15:00:00Z",
+    "version": "1.0.0"
+  }
+]
