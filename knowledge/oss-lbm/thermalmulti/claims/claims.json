@@ -1,0 +1,427 @@
+[
+    {
+        "id": "tkc:oss-lbm:thermalmulti:pr-eos",
+        "statement": "ThermalMultiphaseOpenLB implements the Peng-Robinson equation of state with acentric factor support, enabling thermodynamically consistent pseudopotential multiphase simulations at high density ratios.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "pseudopotential multiphase",
+                "high density ratio"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:pr-eos-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 可参考 Peng-Robinson EoS 实现为 TensorLBM 建立非理想状态方程模块，支持相变模拟中的热力学一致性密度计算。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:cs-eos",
+        "statement": "ThermalMultiphaseOpenLB implements the Carnahan-Starling equation of state as an alternative to Peng-Robinson, providing different thermodynamic behavior for pseudopotential multiphase flows.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "pseudopotential multiphase",
+                "alternative EoS"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:cs-eos-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Carnahan-Starling EoS 适用于硬球流体，可为 TensorLBM 提供另一种状态方程选项。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:modified-guo-forcing",
+        "statement": "ThermalMultiphaseOpenLB implements a modified Guo forcing scheme (ForcedModifiedGuoBGKdynamics) based on Li, Luo & Li (Phys. Rev. E 86, 016709, 2012), with a correction factor sigma for thermodynamically consistent densities in pseudopotential LBM.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "pseudopotential forcing",
+                "thermodynamic consistency"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:guo-forcing-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 修正的 Guo 力格式可提升 TensorLBM 在多相流中的热力学一致性，消除虚假速度。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:semi-hybrid-thermal",
+        "statement": "ThermalMultiphaseOpenLB implements a semi-hybrid thermal solver using Double Distribution Function (DDF) approach, solving the thermal equation with explicit Euler to help set thermal diffusivity independently.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "thermal multiphase",
+                "DDF approach"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:semi-hybrid-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 半混合热求解器架构可为 TensorLBM 的热-流耦合提供参考，实现热扩散率独立设置。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:maxwell-construction",
+        "statement": "ThermalMultiphaseOpenLB implements Maxwell construction using GSL (GNU Scientific Library) for root-finding and integration, enabling thermodynamic consistency verification of coexistence densities at given temperature ratios.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "thermodynamic consistency",
+                "GSL dependency"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:maxwell-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Maxwell 构造验证是相变模拟中热力学一致性的关键工具，可集成到 TensorLBM 的验证流程中。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:latent-heat-eos",
+        "statement": "ThermalMultiphaseOpenLB incorporates latent heat effects via the equation of state, using the temperature derivative of pressure (dP/dT) integrated over density to compute latent heat following Gong & Cheng (IJHMT 55, 4923-4927, 2012).",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "phase change",
+                "latent heat"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:latent-heat-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 潜热通过状态方程的 dP/dT 积分计算的方法可直接应用于 TensorLBM 的相变模块。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:mrt-thermal",
+        "statement": "ThermalMultiphaseOpenLB provides an MRT (Multi-Relaxation-Time) option for the thermal lattice using D2Q5 descriptor with MRT tag, alongside the standard BGK thermal solver.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "thermal lattice",
+                "MRT collision"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:mrt-thermal-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: MRT 热求解器可提高数值稳定性，尤其在高 Prandtl 数情况下。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:pool-boiling",
+        "statement": "ThermalMultiphaseOpenLB includes a 2D pool boiling simulation example that demonstrates gravity-driven phase change with metastability issues in the non-ideal equation of state, alleviated by high disturbance fluctuations and higher gravity.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "pool boiling",
+                "gravity-driven phase change"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:pool-boiling-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 池沸腾算例展示了重力驱动相变的实现模式，包括亚稳态处理策略。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:evaporating-droplet",
+        "statement": "ThermalMultiphaseOpenLB includes a 2D evaporating droplet simulation example (evaporatingDroplet2D.cpp) demonstrating phase change with moving interface tracking.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "droplet evaporation",
+                "moving interface"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:evap-droplet-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 蒸发液滴算例可用于验证 TensorLBM 的动界面相变能力。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:laplace-law",
+        "statement": "ThermalMultiphaseOpenLB includes 2D and 3D Laplace law verification examples (laplace2D.cpp, laplace3D.cpp) with Python evaluation scripts to verify pressure jump across curved interfaces against the theoretical Laplace pressure.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "interface verification",
+                "Laplace law"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:laplace-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Laplace 定律验证是多相流模拟的标准基准，应纳入 TensorLBM 的验证面。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:wall-wettability",
+        "statement": "ThermalMultiphaseOpenLB includes 2D and 3D wall wettability simulation examples (wallWettability2D.cpp, wallWettability3D.cpp) for studying contact angle behavior in multiphase flows.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "wall interaction",
+                "contact angle"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:wettability-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 壁面润湿性模型对沸腾传热模拟至关重要，可参考其接触角实现。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:thermo-consistency",
+        "statement": "ThermalMultiphaseOpenLB includes 2D and 3D thermodynamic consistency verification examples (thermodynamicConsistency2D.cpp, thermodynamicConsistency3D.cpp) with Python evaluation scripts comparing simulated coexistence densities against Maxwell construction predictions.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "thermodynamic consistency",
+                "coexistence density"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:thermo-consist-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 热力学一致性验证是相变模拟可信度的核心判据，应作为 TensorLBM 的标准验证流程。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:fluid-properties",
+        "statement": "ThermalMultiphaseOpenLB implements a FluidProperties class that interpolates specific heat, thermal conductivity, and density between vapour and liquid phases based on local lattice density, with temperature ratio computation from lattice temperature.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "property interpolation",
+                "two-phase properties"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:fluid-props-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 流体属性插值类为 TensorLBM 提供了两相物性管理的参考实现。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:interaction-potential",
+        "statement": "ThermalMultiphaseOpenLB extends the OpenLB InteractionPotential base class with InteractionPotentialExtended, adding temperature-dependent operators (operator() with temperature ratio tr[]) and derivative computation at constant rho for thermal coupling.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "temperature-dependent interaction",
+                "thermal coupling"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:interaction-pot-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 温度依赖的相互作用势扩展是热-多相耦合的核心机制，可指导 TensorLBM 的势函数设计。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:phase-separation",
+        "statement": "ThermalMultiphaseOpenLB includes a 3D phase separation example (phaseSeparation3D.cpp) demonstrating spontaneous phase separation from random initial fluctuations in the pseudopotential model.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "phase separation",
+                "3D simulation"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:phase-sep-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 相分离算例是伪势模型的基础验证，可用于 TensorLBM 的多相流初始化测试。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:d2-law",
+        "statement": "ThermalMultiphaseOpenLB includes 2D and 3D d²-law evaporation examples (d2law2D.cpp, d2law3D.cpp) for validating droplet evaporation rate against the classical d²-law, a standard benchmark for phase change models.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "d²-law validation",
+                "droplet evaporation"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:d2law-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: d² 定律是蒸发模型的标准验证基准，应纳入 TensorLBM 的相变验证面。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:thermalmulti:openlb-compat",
+        "statement": "ThermalMultiphaseOpenLB was created for OpenLB v1.3-1 and is not currently compatible with OpenLB v1.4, requiring modification of BounceBack class (private→protected) and global.mk configuration for integration.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "ThermalMultiphaseOpenLB",
+            "conditions": [
+                "OpenLB v1.3-1",
+                "integration requirements"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:thermalmulti:compat-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8689",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 版本兼容性限制表明需要关注 LBM 框架的版本演进对扩展模块的影响。",
+            "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）"
+        ]
+    }
+]
