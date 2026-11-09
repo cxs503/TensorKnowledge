@@ -381,16 +381,13 @@ The numerical value of gravitational acceleration used here is an approximate ne
 
 ## 13. Review record
 
-- Authoring status: initial instructional draft
-- Subject-matter review: pending
+- Authoring status: instructional draft, version 0.2.0
+- Agent-assisted source and structure check: 2026-11-09; OpenStax pendulum derivation and NIST uncertainty terminology checked against cited sections
+- Independent subject-matter review: pending
+- Independent learning-design review: pending
 - Learner pilot: pending
 - Accessibility review: pending
-- Reproducibility check: pending
-- Agent-assisted source and structure check: 2026-11-09 (not an independent domain review)
-- Subject-matter review: pending
-- Learner pilot: pending
-- Accessibility review: pending
-- Reproducibility check: pending
+- Physical/computational reproducibility check: pending
 - Qualified-review date: pending
 
 Do not label this tutorial validated until qualified subject review and a learner pilot have been completed and documented.
