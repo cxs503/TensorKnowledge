@@ -10,6 +10,7 @@ Use the existing TensorPlatform mission system to produce one small, source-trac
 This first slice uses the TensorKnowledge Git repository as the artifact and review surface. It does not test a Knowledge HTTP API; no such service is implemented yet.
 
 ## 2. Canonical inputs
+- Platform-side action request: TENSORPLATFORM_HANDOFF.md
 - Task fixture: fixtures/knowledge-task.example.json
 - Illustrative result shape: fixtures/knowledge-result.example.json
 - Platform mapping and current blockers: ../architecture/platform-integration.md
