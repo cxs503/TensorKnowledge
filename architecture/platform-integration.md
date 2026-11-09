@@ -49,6 +49,9 @@ The first test uses the existing mission API rather than inventing a new Platfor
 | evidence_requirements | Rendered into goal |
 | acceptance_criteria | acceptance_criteria list and goal |
 | risk_class | Used by Knowledge policy; not a native MissionCreate field |
+| execution_profile.task_class / difficulty | Platform task_class / difficulty |
+| execution_profile.budget | Platform budget, subject to Platform caps |
+| execution_profile.preferred_role | Hint only; map to an allowed Platform worker_role only if the configured role vocabulary supports it; otherwise leave unpinned |
 | required_reviewer_role | Include in goal; Platform worker_role is a separate, constrained runtime role |
 | idempotency_key | task_key (within the authenticated organization) |
 | target repository | repo=TensorKnowledge, configured outside the portable task schema |
