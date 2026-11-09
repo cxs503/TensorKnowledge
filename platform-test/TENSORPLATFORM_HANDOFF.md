@@ -1,6 +1,6 @@
 # TensorKnowledge → TensorPlatform Test Handoff
 
-**Handoff status:** ready for Platform-side preflight; not yet ready for live dispatch.  
+**Handoff status:** ready for Platform-side preflight; not yet ready for live dispatch. Source inspection baseline: TensorPlatform main at d354c78173dea9aa92948cd7e89cc15969d47fd7.  
 **Requested action:** inspect the active deployment profile and enable/verify TensorKnowledge as a mission target, then run the bounded integration test.
 
 ## Why this handoff exists
