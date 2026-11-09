@@ -1,0 +1,962 @@
+[
+  {
+    "id": "tke:oss-lbm:kruger-poiseuille-bb-tau",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-poiseuille-bb-tau",
+      "tkc:oss-lbm:kruger-poiseuille-bb-exactness-scope"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter5/poiseuille_BB.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter5/poiseuille_BB.m:24-24",
+      "quote": "tau=sqrt(3/16)+0.5;     % relaxation time (BGK model) (tau=sqrt(3/16)+0.5 gives exact solution)",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-poiseuille-bb-analytic",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-poiseuille-bb-tau"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter5/poiseuille_BB.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter5/poiseuille_BB.m:48-50",
+      "quote": "ybottom=0;\nytop=NY;\nu_analy=-4*u_max/(NY^2).*(y-ybottom).*(y-ytop);",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-poiseuille-bb-pbbc",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-poiseuille-pbbc-inout"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter5/poiseuille_BB.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter5/poiseuille_BB.m:100-102",
+      "quote": "        f(1,:,k) = w(k)*(rho_inlet+...\n            3*(cx(k)*u(NX-1,:)+cy(k)*v(NX-1,:)))...\n             +(f(NX-1,:,k)-feq(NX-1,:,k));",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-poiseuille-bb-linear-eq",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-poiseuille-bb-linear-equilibrium"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter5/poiseuille_BB.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter5/poiseuille_BB.m:93-93",
+      "quote": "        feq(:,:,k)=w(k)*(rho + 3*(u*cx(k)+v*cy(k)));",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-couette-wetnode-variants",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-couette-wetnode-family"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter5/couette_wetnode.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter5/couette_wetnode.m:43-45",
+      "quote": "% 1) Equilibrium scheme:                        wetnode=1 \n% 2) Non-equilibrium extrapolation method:      wetnode=2 \n% 3) Non-equilibrium bounce-back method:        wetnode=else ",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-couette-bb-moving-wall",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-couette-bb-moving-wall"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter5/couette_BB.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter5/couette_BB.m:106-108",
+      "quote": "    % Top wall (moving with tangential velocity u_max)\n    fprop(:,NY,4)=f(:,NY,2);\n    fprop(:,NY,7)=f(:,NY,5)-(1/6)*u_max;",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-couette-bb-analytic",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-couette-bb-moving-wall"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter5/couette_BB.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter5/couette_BB.m:43-43",
+      "quote": "u_analy=u_max/NY.*y;",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-poiseuille-wetnode-gradp",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-poiseuille-pbbc-inout",
+      "tkc:oss-lbm:kruger-poiseuille-wetnode-setup"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter5/poiseuille_wetnode.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter5/poiseuille_wetnode.m:56-58",
+      "quote": "gradP=8*nu*u_max/(ytop-ybottom)^2;\nrho_outlet=1;\nrho_inlet=3.*(NX-1).*gradP+rho_outlet;",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-poiseuille-wetnode-wallpos",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-couette-wetnode-family",
+      "tkc:oss-lbm:kruger-poiseuille-wetnode-setup"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter5/poiseuille_wetnode.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter5/poiseuille_wetnode.m:42-44",
+      "quote": "% Wall locations\nybottom=1;\nytop=NY;",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-force-model-axes",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-force-model-axes"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter6/force_poiseuille_BB.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter6/force_poiseuille_BB.m:52-54",
+      "quote": "% First order discretisation in time/configuration space:                  force_spatial_order=1\n% Second order discretisation in time/configuration space:                 force_spatial_order=2\n% First order discretisation in velocity space (Buick and Greated):        force_velocity_order=1",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-force-split-matrix",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-force-pressure-split"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter6/force_poiseuille_BB.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter6/force_poiseuille_BB.m:61-63",
+      "quote": "% 1) Constant body force and Zero pressure gradient:                        select_combination=1 \n% 2) Constant body force (50%) and Constant pressure gradient (50%):        select_combination=2 \n% 3) Linearly varying body force (50%) and Linearly varying pressure gradient (50%):select_combination=else ",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-force-init-shift",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-force-init-shift"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter6/force_poiseuille_BB.m (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter6/force_poiseuille_BB.m:103-103",
+      "quote": "        feq(i,:,k)=w(k)-0.5*w(k)*3*(cx(k)*forcex(i)+cy(k)*forcey(i)); ",
+      "quote_language": "m"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-tg-analytic-td",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-tg-analytic-solution"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter13/python3/vortexdecay.py (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter13/python3/vortexdecay.py:55-55",
+      "quote": "    td = 1/(nu*(kx*kx+ky*ky))",
+      "quote_language": "py"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-tg-analytic-velocity",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-tg-analytic-solution"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter13/python3/vortexdecay.py (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter13/python3/vortexdecay.py:57-58",
+      "quote": "    u = np.array([-u_max*np.sqrt(ky/kx)*np.cos(kx*X)*np.sin(ky*Y)*np.exp(-t/td),\n                   u_max*np.sqrt(kx/ky)*np.sin(kx*X)*np.cos(ky*Y)*np.exp(-t/td)])",
+      "quote_language": "py"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-tg-l2-norms",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-tg-analytic-solution"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter13/python3/vortexdecay.py (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter13/python3/vortexdecay.py:114-116",
+      "quote": "        L2rho = np.sqrt( sumrhoe2  / sumrhoa2 )\n        L2ux  = np.sqrt( sumue2[0] / sumua2[0] )\n        L2uy  = np.sqrt( sumue2[1] / sumua2[1] )",
+      "quote_language": "py"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-tg-cpu-constants",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-tg-multi-backend-ladder"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter13/cpu/LBM.h (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter13/cpu/LBM.h:29-30",
+      "quote": "const double nu = 1.0/6.0;\nconst double tau = 3.0*nu+0.5;",
+      "quote_language": "h"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-tg-cpu-domain",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-tg-multi-backend-ladder"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter13/cpu/LBM.h (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter13/cpu/LBM.h:17-18",
+      "quote": "const unsigned int NX = 32*scale;\nconst unsigned int NY = NX;",
+      "quote_language": "h"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-tg-gpu-backend",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-tg-multi-backend-ladder"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter13/gpu/compile.sh (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter13/gpu/compile.sh:9-9",
+      "quote": "nvcc -arch sm_20 -v --ptxas-options=-v -O3 seconds.cpp main.cu -o sim",
+      "quote_language": "sh"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-tg-mpi-backend",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-tg-multi-backend-ladder"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter13/mpi/blocking/compile.sh (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter13/mpi/blocking/compile.sh:7-7",
+      "quote": "mpic++ ${CXXFLAGS} -c LBM.cpp -o LBM.o",
+      "quote_language": "sh"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-tg-openmp-backend",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-tg-multi-backend-ladder"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter13/openmp/compile.sh (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter13/openmp/compile.sh:7-7",
+      "quote": "g++ ${CXXFLAGS} -fopenmp -c LBM.cpp -o LBM.o",
+      "quote_language": "sh"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-sc-pseudopotential",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-shanchen-laplace"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter9/shanchen.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter9/shanchen.cpp:74-76",
+      "quote": "double psi(double dens) {\n  return rho0 * (1. - exp(-dens / rho0));\n}",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-sc-force",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-shanchen-laplace"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter9/shanchen.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter9/shanchen.cpp:99-100",
+      "quote": "          fxtemp *= (-g[s][ss] * psiloc);\n          fytemp *= (-g[s][ss] * psiloc);",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-sc-pressure",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-shanchen-laplace"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter9/shanchen.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter9/shanchen.cpp:134-134",
+      "quote": "          press[k] += (g[s][ss] * psi(rho[s][k]) * psi(rho[ss][k]) / 6.);",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-sc-laplace",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-shanchen-laplace"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter9/shanchen.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter9/shanchen.cpp:369-369",
+      "quote": "  const double gamma = delta_press * rad;",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-sc-setup",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-shanchen-laplace"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter9/shanchen.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter9/shanchen.cpp:40-40",
+      "quote": "const double radius = 15.; // initial droplet radius",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-ib-lbm-header",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-ib-lbm-poiseuille"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter11/IBLBM_2D_Poiseuille.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter11/IBLBM_2D_Poiseuille.cpp:15-15",
+      "quote": " * It uses the D2Q9 lattice with Guo's forcing term.",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-ib-lbm-stencil",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-ib-lbm-poiseuille"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter11/IBLBM_2D_Poiseuille.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter11/IBLBM_2D_Poiseuille.cpp:70-70",
+      "quote": "int IBM_stencil = 2; // interpolation stencil; available values: 2, 4",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-ib-lbm-wall",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-ib-lbm-poiseuille"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter11/IBLBM_2D_Poiseuille.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter11/IBLBM_2D_Poiseuille.cpp:73-73",
+      "quote": "const double wall_stiffness = 1; // IBM spring constant",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-ib-lbm-nodes",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-ib-lbm-poiseuille"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter11/IBLBM_2D_Poiseuille.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter11/IBLBM_2D_Poiseuille.cpp:71-71",
+      "quote": "const int wall_num_nodes = 19; // number of IBM nodes along each wall",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-trt-magic-formula",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-trt-magic-parameter"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter8/gaussian_1d_magic12.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter8/gaussian_1d_magic12.cpp:122-122",
+      "quote": "        double omega_plus_phase=1.0/(magic/(1.0/omega-0.5)+0.5);",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-trt-magic6-values",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-trt-magic-parameter"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter8/gaussian_1d_magic6.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter8/gaussian_1d_magic6.cpp:46-47",
+      "quote": "double magic=1.0/6.0;\ndouble omega=0.3;",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-trt-magic12-values",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-trt-magic-parameter"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter8/gaussian_1d_magic12.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter8/gaussian_1d_magic12.cpp:46-47",
+      "quote": "double magic=1.0/12.0;\ndouble omega=0.5;",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-trt-cylinder",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-cylinder-trt-karman"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter8/cylinder.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter8/cylinder.cpp:51-52",
+      "quote": "double omega=1.0/(0.5+0.5/32.0);\ndouble omega_plus=2.0-omega;",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-trt-cylinder-plus",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-cylinder-trt-karman"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter8/cylinder.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter8/cylinder.cpp:52-53",
+      "quote": "double omega_plus=2.0-omega;\ndouble omega_minus=omega;",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-trt-cylinder-domain",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-cylinder-trt-karman"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter8/cylinder.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter8/cylinder.cpp:231-232",
+      "quote": "    NY=129;\n    NX=129;",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-trt-cylinder-geometry",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-cylinder-trt-karman"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "lbm-principles-practice/code chapter8/cylinder.cpp (Kruger et al., The Lattice Boltzmann Method: Principles and Practice, Springer 2017; MIT-licensed accompanying code)",
+      "url": "https://github.com/lbm-principles-practice/code",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "value": "lbm-principles-practice/code@6e2c592 chapter8/cylinder.cpp:238-238",
+      "quote": "    radius=40;",
+      "quote_language": "cpp"
+    },
+    "extraction_method": "direct-quotation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-run-chapter5-port",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-couette-bb-moving-wall",
+      "tkc:oss-lbm:kruger-poiseuille-bb-exactness-scope"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "m8676 verification run: validation_summary.json#port_chapter5 (NumPy port of chapter5/poiseuille_BB.m and chapter5/couette_BB.m; MATLAB/Octave unavailable in this image)",
+      "url": "local:runs/oss-lbm-kruger-8676",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "other",
+      "value": "runs/oss-lbm-kruger-8676/validation_summary.json#port_chapter5",
+      "quote": "poiseuille L2=7.568e-16 (tau=0.933013), couette L2=2.319e-15"
+    },
+    "extraction_method": "simulation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-run-taylor-green",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-tg-analytic-solution"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "m8676 verification run: validation_summary.json#taylor_green (chapter13/python3/vortexdecay.py executed at NX=32/64/128, L2 norms vs analytic Taylor-Green solution)",
+      "url": "local:runs/oss-lbm-kruger-8676",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "other",
+      "value": "runs/oss-lbm-kruger-8676/validation_summary.json#taylor_green",
+      "quote": "NX=32 L2(ux)=7.688e-03; NX=64 L2(ux)=1.919e-03; NX=128 L2(ux)=4.789e-04"
+    },
+    "extraction_method": "simulation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-run-young-laplace",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-shanchen-laplace"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "m8676 verification run: validation_summary.json#young_laplace (chapter9/shanchen.cpp compiled and executed for initial droplet radii 15 and 12; Laplace pressure and gamma = dp*r)",
+      "url": "local:runs/oss-lbm-kruger-8676",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "other",
+      "value": "runs/oss-lbm-kruger-8676/validation_summary.json#young_laplace",
+      "quote": "gamma=0.02072 / 0.02039, rel diff 1.61%"
+    },
+    "extraction_method": "simulation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  },
+  {
+    "id": "tke:oss-lbm:kruger-run-ib-lbm",
+    "claim_refs": [
+      "tkc:oss-lbm:kruger-ib-lbm-poiseuille"
+    ],
+    "source": {
+      "source_type": "other",
+      "citation": "m8676 verification run: validation_summary.json#ib_lbm_poiseuille (chapter11/IBLBM_2D_Poiseuille.cpp executed 2000 steps; mid-channel profile vs the analytic value printed by the code itself)",
+      "url": "local:runs/oss-lbm-kruger-8676",
+      "accessed_at": "2026-11-09"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "other",
+      "value": "runs/oss-lbm-kruger-8676/validation_summary.json#ib_lbm_poiseuille",
+      "quote": "u_centre=0.001642 vs expected 0.001756 (-6.47%)"
+    },
+    "extraction_method": "simulation",
+    "captured_at": "2026-11-09T15:20:00Z",
+    "captured_by": "agent-m8676",
+    "assessment_status": "unassessed",
+    "version": "1.0.0"
+  }
+]

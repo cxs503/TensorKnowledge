@@ -1,0 +1,31 @@
+name: Validate OSS-LBM Kruger package
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install validation dependencies
+        run: pip install "jsonschema>=4.18,<5" pytest
+      - name: Validate Kruger claim package (schema, cross-refs, GAP anchors, verbatim index)
+        run: python knowledge/oss-lbm/kruger/validate_kruger.py -v
+      - name: Run Kruger package tests (offline tier; live tier skips without a checkout)
+        run: pytest -q knowledge/oss-lbm/kruger/tests
+      - name: Re-run the repository-wide knowledge asset checks
+        run: python scripts/validate_knowledge_assets.py
+      - name: Re-run the existing OSS-LBM package validator
+        run: python knowledge/oss-lbm/validate_oss_lbm.py

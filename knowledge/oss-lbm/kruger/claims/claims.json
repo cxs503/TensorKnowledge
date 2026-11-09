@@ -1,0 +1,462 @@
+[
+  {
+    "id": "tkc:oss-lbm:kruger-poiseuille-bb-tau",
+    "statement": "chapter5/poiseuille_BB.m simulates the pressure-driven plane Poiseuille benchmark with half-way bounce-back walls using the BGK relaxation time tau = sqrt(3/16) + 0.5, which the source itself documents as the value that gives the exact solution.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "D2Q9",
+        "BGK collision",
+        "half-way bounce-back walls",
+        "steady state"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-bb-tau",
+      "tke:oss-lbm:kruger-poiseuille-bb-analytic"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 泊肃叶标准算例的壁面精度基准点（τ 魔数）",
+      "TensorLBM 可服务改进点: 可作为 TensorLBM 通道流回归测试的参考 τ 与参考剖面，在 CI 中断言稳态剖面对解析抛物线的 L2 误差量级。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-poiseuille-bb-linear-equilibrium",
+    "statement": "The Poiseuille benchmark uses a linearised (incompressible-limit) D2Q9 equilibrium, feq = w_k (rho + 3 c_k.u), and obtains the macroscopic velocity from population sums without dividing by the density.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "BGK",
+        "incompressible-limit equilibrium",
+        "momentum from populations"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-bb-linear-eq"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 宏观量提取约定（u 未除 rho）必须与解析解比较口径一致",
+      "TensorLBM 可服务改进点: 基准对比时必须统一宏观量定义（ρu 与 u 的差异在 ρ≠1 时成为系统性偏差）。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-poiseuille-pbbc-inout",
+    "statement": "Inlet and outlet of the Poiseuille channel are closed with a pressure boundary condition (the source labels it 'PBBC'): the incoming population is set to the equilibrium at the target density plus the non-equilibrium part copied from the adjacent fluid layer, with density contrast rho_inlet = 3 (NX-1) gradP + rho_outlet.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "PBBC / non-equilibrium extrapolation",
+        "inlet and outlet are non-periodic",
+        "two virtual layers i=1 and i=NX"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-bb-pbbc",
+      "tke:oss-lbm:kruger-poiseuille-wetnode-gradp"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 压差驱动算例的进出口边界口径（勿以周期驱动冒充压力驱动）",
+      "TensorLBM 可服务改进点: 压力边界 + 非平衡外推的组合可直接作为 TensorLBM 进出口实现的对照实现。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-couette-wetnode-family",
+    "statement": "chapter5/couette_wetnode.m exposes three wet-node wall schemes selected by an integer flag: 1 = equilibrium scheme, 2 = non-equilibrium extrapolation, other = non-equilibrium bounce-back, all applied on wall nodes that lie inside the computational domain.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "wet-node boundary conditions",
+        "Couette flow",
+        "switch by integer flag"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-couette-wetnode-variants",
+      "tke:oss-lbm:kruger-poiseuille-wetnode-wallpos"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 库特标准算例上的壁面条件族对照（湿节点三式 vs 反弹）",
+      "TensorLBM 可服务改进点: 壁面条件应以「族」形式实现并共用同一基准，便于逐个量误差阶。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-couette-bb-moving-wall",
+    "statement": "chapter5/couette_BB.m drives Couette flow by a moving half-way bounce-back wall: the reflected diagonal populations receive the momentum offset -/+ (1/6) u_max, and the analytic reference is the linear profile u = u_max y / NY with wall planes at y = 0 and y = NY.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "moving wall",
+        "half-way bounce-back",
+        "D2Q9",
+        "steady state"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-couette-bb-moving-wall",
+      "tke:oss-lbm:kruger-couette-bb-analytic",
+      "tke:oss-lbm:kruger-run-chapter5-port"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 库特算例的运动壁动量注入基准",
+      "TensorLBM 可服务改进点: 运动壁动量偏移 6 w_k rho c_k.u_wall 应由权重推导，不要硬编码 1/6。",
+      "运行佐证: 逐行 NumPy 移植 (runs/oss-lbm-kruger-8676) 得 L2 = 2.3e-15，与解析线性剖面机器精度一致。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-poiseuille-wetnode-setup",
+    "statement": "The wet-node Poiseuille variant places the walls on lattice nodes y = 1 and y = NY inside the domain and drives the flow with gradP = 8 nu u_max / (ytop - ybottom)^2, giving the density difference rho_inlet = 3 (NX-1) gradP + rho_outlet.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "wet-node walls",
+        "pressure-driven channel",
+        "tau = 0.7"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-wetnode-wallpos",
+      "tke:oss-lbm:kruger-poiseuille-wetnode-gradp"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 湿节点壁面位置（通道宽度定义）必须与解析解一致",
+      "TensorLBM 可服务改进点: 通道宽度定义（节点中心距 vs 物理壁面距）在湿节点与反弹壁下不同，基准脚本需显式区分，否则引入 O(1/NY) 的系统偏差。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-force-model-axes",
+    "statement": "chapter6/force_poiseuille_BB.m separates the body-force discretisation into two independent axes: the spatial (time/configuration) order, 1st or 2nd, and the velocity-space order, 1st (Buick and Greated) or 2nd (Guo et al.), each selected by its own flag.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "body force",
+        "Guo forcing",
+        "Buick-Greated forcing",
+        "flag-selected variants"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-force-model-axes"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 体积力驱动算例的力项离散口径（一/二阶 × 一/二阶）",
+      "TensorLBM 可服务改进点: 力项实现应参数化为 (spatial_order, velocity_order) 两轴，并以同一泊肃叶基准交叉验证四种组合。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-force-pressure-split",
+    "statement": "The forced Poiseuille code splits the driving between body force and pressure gradient in three selectable ways: constant body force only; 50/50 constant force plus constant pressure gradient; or 50/50 linearly varying force plus linearly varying pressure gradient.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "body force",
+        "pressure gradient",
+        "steady state"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-force-split-matrix"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 驱动力分配方式的等价性检查（三种分配应给出同一稳态剖面）",
+      "TensorLBM 可服务改进点: 可作为力项实现的等价性回归测试用例。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-force-init-shift",
+    "statement": "Initialisation in the forced Poiseuille code carries a half-force offset in the equilibrium, feq = w_k - 0.5 w_k 3 c_k.F, i.e. the populations are initialised consistently with the force to O(dt) rather than to the force-free equilibrium.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "forced flow",
+        "initial condition",
+        "Guo-type force"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-force-init-shift"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 初始条件与力项的一致性（影响瞬态误差而非稳态）",
+      "保守定级理由: 代码事实已逐字核实，但其对收敛速度/瞬态误差的收益本单未做对照实验，故 provisional。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-tg-analytic-solution",
+    "statement": "chapter13/python3/vortexdecay.py validates the D2Q9 BGK solver against the analytic Taylor-Green vortex solution: velocity components decay as exp(-t/t_d) with t_d = 1/(nu (kx^2+ky^2)), and the L2 norms of density, ux and uy are computed against that solution every NMSG steps.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "Taylor-Green vortex",
+        "periodic domain",
+        "BGK tau = 1",
+        "u_max = 0.04/scale"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-tg-analytic-td",
+      "tke:oss-lbm:kruger-tg-analytic-velocity",
+      "tke:oss-lbm:kruger-tg-l2-norms",
+      "tke:oss-lbm:kruger-run-taylor-green"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 有解析解的标准算例（Taylor-Green 衰减）作为精度与收敛阶基准",
+      "TensorLBM 可服务改进点: 该解析解与 L2 归一化口径可直接作为 TensorLBM 时间推进器的二阶收敛测试。",
+      "运行佐证: NX=32/64/128 三档执行，L2(ux) = 7.69e-3 / 1.92e-3 / 4.79e-4，实测收敛阶 2.00。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-tg-multi-backend-ladder",
+    "statement": "The same Taylor-Green case ships in seven implementations (python3, cpu, cpu_intro, openmp, mpi/blocking, mpi/nonblocking, gpu), all built from identical constants (nu = 1/6, tau = 3 nu + 0.5, NX = 32 scale, NSTEPS = 200 scale^2) and compiled with g++, mpic++ or nvcc respectively, so the repository doubles as a performance-ladder benchmark.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "identical physical parameters across backends",
+        "CUDA / MPI / OpenMP / serial"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-tg-cpu-constants",
+      "tke:oss-lbm:kruger-tg-cpu-domain",
+      "tke:oss-lbm:kruger-tg-gpu-backend",
+      "tke:oss-lbm:kruger-tg-mpi-backend",
+      "tke:oss-lbm:kruger-tg-openmp-backend"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 同一算例跨后端可比性（Mlups 阶梯）",
+      "TensorLBM 可服务改进点: 异构后端基准应固定物理参数与输出口径，只替换内核，避免「换参数换结果」。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-shanchen-laplace",
+    "statement": "chapter9/shanchen.cpp implements single-component Shan-Chen multiphase flow with the exponential pseudopotential psi = rho0 (1 - exp(-rho/rho0)), nearest-neighbour force summation, pressure p = rho/3 + g psi psi/6, and then measures surface tension from the Young-Laplace law as gamma = (p_liquid - p_gas) * r, with the interface radius r located by linear interpolation of the density profile along the centre line.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "D2Q9",
+        "Shan-Chen pseudopotential",
+        "g = -4.7",
+        "64x64 periodic box",
+        "droplet initial radius 15"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-sc-pseudopotential",
+      "tke:oss-lbm:kruger-sc-force",
+      "tke:oss-lbm:kruger-sc-pressure",
+      "tke:oss-lbm:kruger-sc-laplace",
+      "tke:oss-lbm:kruger-sc-setup",
+      "tke:oss-lbm:kruger-run-young-laplace"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— Young-Laplace 定律作为多相/界面算例的验证面",
+      "TensorLBM 可服务改进点: 表面张力应从 Laplace 压强差反演并与 Laplace 定律交叉校验，且应在两个以上半径上验证 gamma 不变性。",
+      "运行佐证: 半径 16.32 与 12.29 两算例给出 gamma = 0.02072 / 0.02039（相对差 1.61%）。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-ib-lbm-poiseuille",
+    "statement": "chapter11/IBLBM_2D_Poiseuille.cpp combines D2Q9 with Guo forcing and an immersed-boundary method: each wall is discretised with 19 Lagrangian nodes of stiffness 1, the interpolation stencil is switchable between 2 and 4 points, forces are spread/interpolated every step, and the code prints its own analytic expectation for the Poiseuille centre-line velocity.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "immersed boundary method",
+        "Guo forcing",
+        "periodic in x",
+        "gravity-driven",
+        "wall_width = 15.3"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-ib-lbm-header",
+      "tke:oss-lbm:kruger-ib-lbm-stencil",
+      "tke:oss-lbm:kruger-ib-lbm-wall",
+      "tke:oss-lbm:kruger-ib-lbm-nodes",
+      "tke:oss-lbm:kruger-run-ib-lbm"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 浸没边界算例的解析基准与分辨率敏感性",
+      "TensorLBM 可服务改进点: IBM 力扩散/插值核（2 点 vs 4 点）应以同一基准分别量误差，并注意低分辨率下中心线速度的系统性偏低。",
+      "运行佐证: Ny=20 时中心线速度 1.642e-3 vs 代码自带解析期望 1.756e-3（-6.5%）。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-trt-magic-parameter",
+    "statement": "The chapter8 two-relaxation-time examples compute one relaxation frequency from a magic parameter Lambda as omega = 1/(Lambda/(1/omega_other - 0.5) + 0.5), and ship the same 1D Gaussian advection-diffusion case twice with Lambda = 1/6 and Lambda = 1/12 so that the effect of the magic parameter can be isolated.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "TRT collision",
+        "1D advection-diffusion of a Gaussian",
+        "magic parameter 1/6 vs 1/12"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-trt-magic-formula",
+      "tke:oss-lbm:kruger-trt-magic6-values",
+      "tke:oss-lbm:kruger-trt-magic12-values"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 魔数参数（TRT 壁面/边界精度自由度）的成对对照实验设计",
+      "TensorLBM 可服务改进点: TRT 两个松弛频率应由 (omega, Lambda) 参数化，并提供成对算例分辨 Lambda 对边界精度的影响。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-cylinder-trt-karman",
+    "statement": "chapter8/cylinder.cpp sets up a D2Q9 TRT flow past a circular cylinder in a 129x129 box with radius 40 lattice units (diameter 80), omega = 1/(0.5 + 0.5/32) and omega_plus = 2 - omega, i.e. the magic-parameter pair Lambda = 1/4, and marks the geometry (fluid / wall / boundary layer) in an integer mask before time stepping.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code",
+      "conditions": [
+        "TRT",
+        "cylinder in cross-flow",
+        "129x129 lattice",
+        "radius 40"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-trt-cylinder",
+      "tke:oss-lbm:kruger-trt-cylinder-plus",
+      "tke:oss-lbm:kruger-trt-cylinder-domain",
+      "tke:oss-lbm:kruger-trt-cylinder-geometry"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 绕流标准算例（圆柱/卡门涡街）的几何与分辨率口径",
+      "TensorLBM 可服务改进点: 圆柱绕流算例必须固定 D（晶格单位）、阻塞比与 Re 定义，否则 Strouhal/Cd/Cl 无法跨实现比对。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:kruger-poiseuille-bb-exactness-scope",
+    "statement": "The documented exactness of the half-way bounce-back Poiseuille solution at tau = sqrt(3/16) + 0.5 was reproduced only for part of the tested channel widths: a line-by-line NumPy port reaches L2 = 7.6e-16 at NY = 5 and 6.8e-13 at NY = 15, but 4.0e-3 at NY = 10 and 1.1e-3 at NY = 20 (u_max = 0.1/scale, tau fixed), so as an unrestricted statement it is not supported by this evidence.",
+    "claim_type": "hypothesis",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code (port)",
+      "conditions": [
+        "BGK",
+        "half-way bounce-back",
+        "linear equilibrium",
+        "PBBC inlet/outlet",
+        "tau = sqrt(3/16)+0.5",
+        "steady state",
+        "u_max scaled as 0.1/scale"
+      ]
+    },
+    "modality": "hypothetical",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-bb-tau",
+      "tke:oss-lbm:kruger-run-chapter5-port"
+    ],
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "version": "1.0.0",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 「精确解」结论的适用范围必须随分辨率登记（negative result）",
+      "诚实的负面结果: 偶数宽度（NY=10/20）未达机器精度；可能源于 PBBC 进出口非平衡外推项与偶数宽度的奇偶耦合，也可能源于本移植与 MATLAB 原码的差异（原码本机不可执行，无法对拍）。在拿到 MATLAB/Octave 原码结果之前，本条保持 contested。"
+    ]
+  }
+]
