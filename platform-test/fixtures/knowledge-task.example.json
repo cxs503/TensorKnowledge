@@ -39,16 +39,47 @@
     "Distinguish direct source statements from the agent's synthesis"
   ],
   "acceptance_criteria": [
-    {"id": "AC-01", "criterion": "The object has a stable ID, title, type, domain, summary and semantic version.", "verification": "Validate against knowledge-object.schema.json."},
-    {"id": "AC-02", "criterion": "At least two attributable sources are recorded with URLs and supporting locators.", "verification": "Inspect source records and source passages."},
-    {"id": "AC-03", "criterion": "The explanation distinguishes source, claim and evidence without treating citation presence as proof.", "verification": "Independent reviewer checks definitions and example."},
-    {"id": "AC-04", "criterion": "Evidence status and review status are explicit and conservative.", "verification": "Object must remain not-assessed or provisional and draft/in-review."},
-    {"id": "AC-05", "criterion": "Limitations and unresolved ambiguities are recorded.", "verification": "Inspect content limitations and handoff report."}
+    {
+      "id": "AC-01",
+      "criterion": "The object has a stable ID, title, type, domain, summary and semantic version.",
+      "verification": "Validate against knowledge-object.schema.json."
+    },
+    {
+      "id": "AC-02",
+      "criterion": "At least two attributable sources are recorded with URLs and supporting locators.",
+      "verification": "Inspect source records and source passages."
+    },
+    {
+      "id": "AC-03",
+      "criterion": "The explanation distinguishes source, claim and evidence without treating citation presence as proof.",
+      "verification": "Independent reviewer checks definitions and example."
+    },
+    {
+      "id": "AC-04",
+      "criterion": "Evidence status and review status are explicit and conservative.",
+      "verification": "Object must remain not-assessed or provisional and draft/in-review."
+    },
+    {
+      "id": "AC-05",
+      "criterion": "Limitations and unresolved ambiguities are recorded.",
+      "verification": "Inspect content limitations and handoff report."
+    }
   ],
   "risk_class": "low",
   "required_reviewer_role": "independent research-methods reviewer",
   "dependencies": [],
   "requested_by": "TensorKnowledge integration test",
   "idempotency_key": "tkp:integration-test:concept-provenance-basics:v0.1.0",
-  "callback": {"correlation_id": "tk-integration-001"}
+  "callback": {
+    "correlation_id": "tk-integration-001"
+  },
+  "problem_definition": {
+    "problem_tree": [
+      "Define the three terms and their distinct roles in a research argument.",
+      "Explain how source provenance and context affect evidential value.",
+      "Show how a claim is evaluated against evidence rather than citation presence alone."
+    ],
+    "baseline_summary": "The repository currently has source/provenance requirements in its tutorial metadata and an existing learning-focused knowledge-node schema, but no general-purpose Knowledge Object or platform-mission mapping existed before this architecture increment.",
+    "baseline_gap": "A general Knowledge Object contract and an execution handoff are now specified, but they have not yet been exercised by a live TensorPlatform mission; source support and end-to-end artifact return remain untested."
+  }
 }
