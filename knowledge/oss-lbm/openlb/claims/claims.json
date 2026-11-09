@@ -1,0 +1,327 @@
+[
+ {
+  "id": "tkc:oss-lbm:openlb-gpl2-reference-only",
+  "statement": "openLB source files carry a GPL-2-or-later copyleft license header ('either version 2 of the License, or (at your option) any later version'); because GPL-2 is contagious, TensorLBM may use openLB strictly as a reference (study algorithms, never copy code) - the reference-only boundary of GAP-LBM-INDUSTRIAL-ENG.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-gpl2-reference-only-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - explicit license judgment: GPL-2 (or later) is copyleft/contagious; any openLB-derived artifact inside TensorLBM would infect the whole tree, so the boundary is reference-only (clean-room re-implementation required for any port).",
+   "TensorLBM service: this claim is the license gate for every other openlb claim - no code may be copied, only patterns re-implemented from scratch."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-shanchen-two-lattice",
+  "statement": "openLB implements the Shan-Chen multiphase model as a coupling between two partner lattices (one per component): a post-processor computes a common velocity shared by both populations and an interaction force from a lattice-stencil sum of the interaction potential, stored as external force on each lattice.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-shanchen-two-lattice-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - two-lattice Shan-Chen with per-component density normalization (force divided by own density) is the baseline industrial pattern for phase-separation/free-surface-adjacent studies.",
+   "TensorLBM service: reference design for a multiphase coupling layer (common velocity + force injection) to benchmark TensorLBM's own multiphase scheme against."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-interaction-potential-library",
+  "statement": "openLB provides a pluggable library of interaction potentials as AnalyticalF1D functors - ShanChen93, ShanChen94, PengRobinson, CarnahanStarling, Krause, WeisbrodKrause, Normal and PsiEqualsRho - so the equation of state is swapped without touching collision code.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-interaction-potential-library-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - a swappable EOS/potential library behind one interface is an industrial-grade engineering pattern (configuration, not code fork).",
+   "TensorLBM service: adopt a pluggable interaction-potential interface so EOS selection becomes a configuration choice."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-eos-temperature-overload",
+  "statement": "The PengRobinson and CarnahanStarling interaction potentials provide a second operator() overload that accepts a temperature field, enabling temperature-dependent (thermally coupled) multiphase simulations.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-eos-temperature-overload-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - a temperature-dependent EOS is the minimal hook for thermally coupled multiphase (evaporating/condensing interfaces, boiling-adjacent flows).",
+   "TensorLBM service: if TensorLBM adds multiphase, design the potential interface to accept an optional temperature field from day one."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-free-energy-model",
+  "statement": "openLB implements a multi-component free-energy model: one density lattice per component coupled through a chemical potential whose gradient is evaluated with a 9-point (1/12) stencil; the coupling supports two or three components (partners.size() > 1).",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-free-energy-model-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - the free-energy model with chemical-potential coupling is the route to thermodynamically consistent surface tension (Young-Laplace validation example ships in-repo).",
+   "TensorLBM service: the 9-point 1/12 gradient stencil for the chemical potential is a concrete, testable pattern for gradient-based multiphase coupling."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-boussinesq-coupling",
+  "statement": "The Boussinesq thermal-coupling post-processor applies a body force proportional to the temperature difference (force = gravity*dir*(T-T0)) on the velocity lattice and copies the velocity from the temperature lattice for the advection term.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-boussinesq-coupling-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - Boussinesq coupling is the standard industrial pattern for natural convection (Rayleigh-Benard, cooling, HVAC).",
+   "TensorLBM service: force = gravity*dir*(T-T0) plus velocity-copy is a minimal, testable thermal-coupling contract to mirror in TensorLBM."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-thermal-d3q7-lattice",
+  "statement": "The temperature field is carried on a separate D3Q7 advection-diffusion lattice (7 directions), and the Navier-Stokes lattice reads its velocity field for the advection term.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-thermal-d3q7-lattice-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - a dedicated low-direction (D3Q7) thermal lattice keeps thermal advection cheap while the velocity lattice keeps full accuracy.",
+   "TensorLBM service: consider a reduced-direction thermal lattice to cut thermal-simulation cost on large meshes."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-validation-surface",
+  "statement": "The repository ships multiphase and thermal validation examples that print analytical references next to the numerics: youngLaplace2d (Young-Laplace delta-p = alpha*(kappa1+kappa2)/(6R)), contactAngle2d (100-degree droplet), rayleighBenard2d (Ra=1e4, Pr=0.71); numerical run results are not bundled in the snapshot.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-validation-surface-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - an in-repo validation surface (analytical reference printed beside the numeric) is the industrial-grade habit TensorLBM should copy.",
+   "TensorLBM service: port the 'print numerical vs analytical side by side' pattern into TensorLBM validation examples; magnitudes must be re-run before reuse since the snapshot bundles no results."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-meta-descriptor",
+  "statement": "openLB's descriptor system is a variadic template (DESCRIPTOR_BASE<D,Q,FIELDS...>) with compile-time field introspection (provides/index/size), enabling compile-time-checked field access across dynamics, boundaries and functors.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-meta-descriptor-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - compile-time field introspection is how openLB keeps one codebase across BGK/MRT/porous/particle dynamics without runtime branching.",
+   "TensorLBM service: a descriptor/field-tag system with compile-time checks would prevent field-mismatch bugs in TensorLBM multi-physics coupling."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-bounceback-dynamics",
+  "statement": "In openLB, bounce-back is implemented as a Dynamics class (not a boundary condition) with an optional fictitious density; off-boundary conditions live in the boundary module.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-bounceback-dynamics-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - modeling bounce-back as a dynamics (with fictitious-density option) localizes wall behavior and keeps the boundary module thin.",
+   "TensorLBM service: compare against TensorLBM's boundary design; the fictitious-density constructor is a useful knob for multiphase walls."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-turbulence-models",
+  "statement": "openLB ships Smagorinsky, dynamic Smagorinsky and WALE subgrid-scale models (plus porous-media variants) for industrial turbulence, with the turbulent relaxation time added to the molecular one (tau_eff = tau_mol + tau_turb).",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "well-supported",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-turbulence-models-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - Smagorinsky/dynamic/WALE with tau_eff = tau_mol + tau_turb is the industrial turbulence baseline for LBM CFD.",
+   "TensorLBM service: for industrial CFD targets, a WALE option (rotation-aware) is the differentiator over plain Smagorinsky."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-no-freesurface-snapshot",
+  "statement": "The cached snapshot (6c3934d, 2019-12-02) contains no free-surface module (verified by exhaustive filename and content search); the task's free-surface anchor is therefore insufficient against this snapshot and must be re-verified against a newer openLB release.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "provisional",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-no-freesurface-snapshot-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - negative result: the 2019-12-02 snapshot predates openLB's free-surface module; any free-surface claim about openLB must cite a newer commit.",
+   "TensorLBM service: do not attribute free-surface capabilities to openlb@6c3934d; re-cache a current release before claiming free-surface parity."
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm:openlb-cpu-mpi-parallel",
+  "statement": "The snapshot has no CUDA/GPU backend; parallelism is MPI-based via Communicator2D/3D with cuboid neighbourhoods and a block load balancer (guarded by PARALLEL_MODE_MPI).",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "openlb",
+   "conditions": [
+    "openlb@6c3934d",
+    "source-inspection-only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "provisional",
+  "evidence_refs": [
+   "tke:oss-lbm:openlb-cpu-mpi-parallel-src"
+  ],
+  "created_at": "2026-11-09T15:15:00Z",
+  "created_by": "agent-m8677",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - the snapshot is CPU/MPI-only; openLB's GPU story (later releases) is out of scope for this snapshot.",
+   "TensorLBM service: TensorLBM's GPU-first design is a structural advantage over this openLB snapshot for large industrial meshes."
+  ]
+ }
+]
