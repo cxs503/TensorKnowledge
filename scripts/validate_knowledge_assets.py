@@ -240,9 +240,11 @@ def main() -> int:
             schema = load_json(path)
             if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
                 errors.append(f"{path.relative_to(ROOT)}: unexpected JSON Schema dialect")
-            version_pattern = schema.get("properties", {}).get("version", {}).get("pattern")
-            if version_pattern != r"^[0-9]+\.[0-9]+\.[0-9]+$":
-                errors.append(f"{path.relative_to(ROOT)}: version pattern must accept MAJOR.MINOR.PATCH")
+            version_property = schema.get("properties", {}).get("version")
+            if version_property is not None:
+                version_pattern = version_property.get("pattern") if isinstance(version_property, dict) else None
+                if version_pattern != r"^[0-9]+\.[0-9]+\.[0-9]+$":
+                    errors.append(f"{path.relative_to(ROOT)}: version pattern must accept MAJOR.MINOR.PATCH when a version field is defined")
         except ValueError as exc:
             errors.append(str(exc))
 

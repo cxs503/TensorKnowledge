@@ -1,74 +1,80 @@
 # TensorKnowledge
 
-**Human Knowledge, Learning & Creativity Infrastructure for the AI Era**
+**AI-Native Knowledge Infrastructure for Humans and Agents**
 
-TensorKnowledge is an open, evolving project for rethinking what humans should learn, how knowledge should be organized, and how people can learn, investigate, and create in partnership with capable AI agents.
+TensorKnowledge is an independent knowledge infrastructure for producing, structuring, validating, governing, evolving and serving reusable knowledge assets. It supports both machine-usable knowledge and human understanding, judgment, learning and creativity.
 
-Its mission is to help people understand the world, exercise independent judgment, connect disciplines, and create what does not yet exist.
+Its central managed asset is a traceable **Knowledge Object**: a typed, versioned unit that can represent a concept, claim, theory, method, observation, model, experiment, result, case, skill or other reusable knowledge. Documents, datasets, code and media remain source artifacts or linked assets; they are not all forced into one storage format.
 
 ## Why this project exists
 
-AI agents increasingly retrieve information, write software, analyze data, run simulations, and coordinate complex work. This changes the purpose of education. The goal should not be to memorize everything or train people only for predefined jobs. People still need strong foundations, but should increasingly learn to understand mechanisms; distinguish evidence from claims; ask worthwhile questions; connect disciplines and modalities; use agents without outsourcing judgment; evaluate results; create new knowledge and works; and reason about values and consequences.
+AI agents increasingly retrieve information, write software, analyze data, run simulations and coordinate complex work. The limiting factor is no longer only access to information. It is the ability to turn information and experience into knowledge that is traceable, assessable, reusable and capable of evolving.
+
+TensorKnowledge aims to make that process systematic: collect sources; decompose and synthesize claims; preserve evidence and uncertainty; connect concepts, methods, data and results; review and correct outputs; and make governed knowledge available to people, agents and applications.
 
 ## Project scope
 
-1. **Knowledge framework** — a map of foundational, evidential, explanatory, systemic, creative, and civilizational knowledge.
-2. **Curriculum** — learning pathways organized around questions and real-world problems.
-3. **Tutorial standards** — specifications for accurate, multimodal, interactive, agent-assisted learning materials.
-4. **Flagship tutorials** — exemplary learning experiences with experiments, projects, reflection, and assessment.
-5. **Knowledge governance** — review, provenance, versioning, correction, and continuous improvement.
-6. **Agent production workflow** — bounded work packages, independent review, evidence-based acceptance, and a future handoff to TensorPlatform.
+1. **Knowledge production** — bounded research, extraction, synthesis, analysis, verification and knowledge creation workflows.
+2. **Knowledge assets** — typed objects, evidence, provenance, relationships, versions and links to source artifacts and datasets.
+3. **Knowledge governance** — independent review, evidence status, publication gates, correction, supersession and rights management.
+4. **Knowledge engine** — search, retrieval, graph traversal, context assembly and agent-facing services.
+5. **Human learning and capability development** — knowledge frameworks, curricula, pathways, tutorials and assessment.
+6. **Platform integration** — reusable work-package contracts and execution delegation to TensorPlatform without duplicating its agent runtime.
 
 ## What TensorKnowledge is not
 
-- Not a replacement for schools, universities, teachers, or domain experts.
+- Not a second general-purpose agent runtime or orchestration platform.
+- Not a raw data lake or replacement for TensorData.
+- Not an uncurated mirror of the public web.
 - Not an encyclopedia that treats accumulated information as the final goal.
-- Not an AI prompting course or a collection of tool tutorials.
-- Not a claim that foundational knowledge or specialist expertise is obsolete.
-- Not a system that treats agent-generated output as verified knowledge.
-
-## Six curriculum domains
-
-1. Cognitive foundations
-2. Evidence and reality
-3. Models and principles
-4. Systems and interdisciplinary thinking
-5. Creativity and discovery
-6. Civilization and values
-
-These domains are interconnected. Learners may enter through different questions and follow different paths.
+- Not a system that treats agent-generated output, citations or schema validity as proof of truth.
+- Not a replacement for domain experts, educators or accountable human decisions.
 
 ## Relationship to the Tensor ecosystem
 
-- **TensorPlatform** provides general agent orchestration, collaboration, execution, and governance infrastructure.
-- **TensorPhysics** and domain solvers provide scientific models, computational experiments, and domain capabilities.
-- **TensorKnowledge** defines the human-facing knowledge architecture, learning experiences, tutorial standards, and learning-quality criteria.
+- **TensorPlatform** provides general agent identity, runtime, orchestration, collaboration, harnesses, execution environments and platform-level governance. TensorKnowledge delegates agent execution to it when available.
+- **TensorKnowledge** owns knowledge objects, evidence and provenance, knowledge-specific production workflows, domain review and approval, knowledge retrieval services, and human learning applications.
+- **TensorData** owns canonical data assets and data lifecycle. TensorKnowledge references datasets and computational outputs rather than absorbing raw data.
+- **TensorPhysics** and other domain projects produce domain-specific models, methods, experiments and results. Reviewed findings can become Knowledge Objects, while their original code and data remain in their owning systems.
 
-TensorKnowledge should integrate with these capabilities rather than reimplement them.
+TensorKnowledge is an independent project and service boundary. It can run alongside TensorPlatform in one operational environment, but it is not an internal Platform module and does not require Platform to serve knowledge queries. Its APIs and assets should remain usable by other agent systems.
 
-## Current stage
+## Architecture and integration
 
-This repository begins as a framework-and-content project. The initial priority is to establish a coherent knowledge map, tutorial specification, quality rubric, and a small set of validated flagship tutorials before attempting a large-scale content factory or dedicated learning platform.
+- [Architecture overview](architecture/README.md)
+- [System architecture and deployment model](architecture/system-architecture.md)
+- [TensorPlatform integration contract](architecture/platform-integration.md)
+- [Architecture decisions](architecture/decisions.md)
+- [First Platform integration test](platform-test/README.md)
 
-## Guiding principle
+The initial deployment should reuse the existing TensorPlatform agent runtime while keeping TensorKnowledge's API, repository, configuration and release lifecycle separate. The first integration test is a bounded knowledge-production task that returns a proposed draft object; it must not auto-approve or publish the result.
 
-> Do not educate people only to know what the world already contains. Help them understand what exists, discover what is unknown, and responsibly create what could exist.
+## Human capability framework
 
-## Knowledge asset integrity
+The existing human-capability architecture remains a first-class application of TensorKnowledge. It is documented in [Human Capabilities in the AI Era](curriculum/human-capabilities-ai-era.md), with a machine-readable summary in [human-capabilities-framework.json](curriculum/human-capabilities-framework.json).
 
-Machine-readable nodes, tutorials, and learning pathways live alongside the human-readable material. Before proposing changes, run:
+The learning methodology, capability progression rubric, knowledge framework, pathways and tutorials remain in scope. They will be connected to the general Knowledge Object model rather than replaced by it.
+
+## Machine-readable knowledge assets
+
+Portable contracts live in the schemas directory. Start with:
+- [Knowledge Object schema](schemas/knowledge-object.schema.json)
+- [Production task schema](schemas/production-task.schema.json)
+- [Production result schema](schemas/production-result.schema.json)
+- [Existing curriculum knowledge-node schema](schemas/knowledge-node.schema.json)
+
+The existing knowledge-node schema remains a specialized learning/curriculum graph. The new Knowledge Object schema is the domain-neutral asset contract.
+
+## Validation
+
+Before proposing changes, run:
 
 ```bash
 python scripts/validate_knowledge_assets.py
 ```
 
-The same integrity check runs in GitHub Actions for pushes to `main` and pull requests targeting `main`. A green check means local references and required metadata are structurally consistent; it does not certify factual accuracy or learning effectiveness.
+The repository check validates local learning-asset integrity and schema-file consistency. It does not establish factual accuracy, expert approval or learning effectiveness. Integration fixtures are illustrative shapes, not evidence that TensorPlatform integration has already run.
 
+## Guiding principle
 
-## Human capability framework
-
-The curriculum's cross-cutting capability architecture is documented in [`curriculum/human-capabilities-ai-era.md`](curriculum/human-capabilities-ai-era.md). A machine-readable summary is available at [`curriculum/human-capabilities-framework.json`](curriculum/human-capabilities-framework.json). Both are drafts pending independent review and learner feedback.
-
-## Learning and capability development
-
-The draft methodology in [`curriculum/learning-and-capability-development.md`](curriculum/learning-and-capability-development.md) describes a revisitable learning loop from orientation and diagnosis through practice, verification, transfer, creation, and stewardship. Its machine-readable cycle and formative progression rubric are maintained alongside it. These assets are drafts; structural validation does not establish learning effectiveness.
+> Do not merely collect what the world already contains. Turn information and experience into traceable knowledge, make it useful to people and agents, and keep it open to correction and further discovery.
