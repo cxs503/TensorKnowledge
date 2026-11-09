@@ -180,6 +180,34 @@
         }
       },
       "additionalProperties": false
+    },
+    "execution_profile": {
+      "type": "object",
+      "description": "Optional provider-neutral execution hints; adapters translate them to the selected provider's fields.",
+      "properties": {
+        "task_class": {
+          "enum": [
+            "research",
+            "engineering"
+          ]
+        },
+        "difficulty": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "preferred_role": {
+          "type": "string"
+        },
+        "model_hint": {
+          "type": "string"
+        },
+        "budget": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false
