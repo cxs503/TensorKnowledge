@@ -84,18 +84,53 @@
       "items": {
         "type": "object",
         "required": [
-          "citation"
+          "citation",
+          "author",
+          "publication_date",
+          "source_type",
+          "section",
+          "accessed",
+          "url",
+          "supports"
         ],
         "properties": {
           "citation": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
+          },
+          "author": {
+            "type": "string",
+            "minLength": 1
+          },
+          "publication_date": {
+            "type": "string",
+            "pattern": "^[0-9]{4}(-[0-9]{2}-[0-9]{2})?$"
+          },
+          "source_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "section": {
+            "type": "string",
+            "minLength": 1
+          },
+          "accessed": {
+            "type": "string",
+            "format": "date"
           },
           "url": {
             "type": "string",
             "format": "uri"
           },
-          "supports": {
+          "identifier": {
             "type": "string"
+          },
+          "license": {
+            "type": "string"
+          },
+          "supports": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
