@@ -4,56 +4,377 @@
   "title": "TensorKnowledge Knowledge Object",
   "description": "A portable, traceable knowledge asset. Execution, evidence, review and publication states are deliberately separate.",
   "type": "object",
-  "required": ["id", "title", "object_type", "domains", "summary", "evidence_status", "review_status", "version"],
+  "required": [
+    "id",
+    "title",
+    "object_type",
+    "domains",
+    "summary",
+    "evidence_status",
+    "review_status",
+    "version"
+  ],
   "properties": {
-    "id": {"type": "string", "pattern": "^tko:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"},
-    "title": {"type": "string", "minLength": 1},
-    "object_type": {"enum": ["concept", "claim", "observation", "principle", "theory", "model", "method", "procedure", "decision-rule", "skill", "dataset-reference", "experiment", "result", "case-study", "hypothesis", "question", "artifact", "value", "norm"]},
-    "domains": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
-    "summary": {"type": "string", "minLength": 1},
-    "definition": {"type": "string"},
+    "id": {
+      "type": "string",
+      "pattern": "^tko:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "object_type": {
+      "enum": [
+        "concept",
+        "claim",
+        "observation",
+        "principle",
+        "theory",
+        "model",
+        "method",
+        "procedure",
+        "decision-rule",
+        "skill",
+        "dataset-reference",
+        "experiment",
+        "result",
+        "case-study",
+        "hypothesis",
+        "question",
+        "artifact",
+        "value",
+        "norm"
+      ]
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "definition": {
+      "type": "string"
+    },
     "content": {
       "type": "object",
       "description": "Optional structured content. Keep large binary or source artifacts outside this object and reference them.",
       "properties": {
-        "text": {"type": "string"},
-        "formulas": {"type": "array", "items": {"type": "string"}},
-        "assumptions": {"type": "array", "items": {"type": "string"}},
-        "conditions": {"type": "array", "items": {"type": "string"}},
-        "limitations": {"type": "array", "items": {"type": "string"}}
+        "text": {
+          "type": "string"
+        },
+        "formulas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
       "additionalProperties": true
     },
-    "relations": {"type": "array", "items": {"type": "object", "required": ["relation_type", "target_id"], "properties": {"relation_type": {"type": "string", "minLength": 1}, "target_id": {"type": "string", "minLength": 1}, "note": {"type": "string"}}, "additionalProperties": false}},
-    "sources": {
+    "relations": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["source_type", "citation"],
+        "required": [
+          "relation_type",
+          "target_id"
+        ],
         "properties": {
-          "source_type": {"enum": ["paper", "book", "standard", "website", "dataset", "experiment", "simulation", "interview", "internal-artifact", "other"]},
-          "citation": {"type": "string", "minLength": 1},
-          "url": {"type": "string", "format": "uri"},
-          "doi": {"type": "string"},
-          "locator": {"type": "string"},
-          "accessed_at": {"type": "string", "format": "date"},
-          "supports": {"type": "string"},
-          "license_or_rights": {"type": "string"}
+          "relation_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "note": {
+            "type": "string"
+          }
         },
         "additionalProperties": false
       }
     },
-    "data_references": {"type": "array", "description": "References to canonical data assets, normally owned by TensorData or a domain project.", "items": {"type": "object", "required": ["system", "asset_id"], "properties": {"system": {"type": "string", "minLength": 1}, "asset_id": {"type": "string", "minLength": 1}, "uri": {"type": "string"}, "checksum": {"type": "string"}, "relation": {"type": "string"}}, "additionalProperties": false}},
-    "artifact_references": {"type": "array", "items": {"type": "object", "required": ["artifact_type", "uri"], "properties": {"artifact_type": {"enum": ["document", "code", "model", "image", "video", "audio", "notebook", "report", "other"]}, "uri": {"type": "string", "minLength": 1}, "checksum": {"type": "string"}, "media_type": {"type": "string"}, "description": {"type": "string"}}, "additionalProperties": false}},
-    "provenance": {"type": "object", "properties": {"created_by": {"type": "string"}, "created_at": {"type": "string", "format": "date-time"}, "method": {"type": "string"}, "agent_assisted": {"type": "boolean"}, "work_package_id": {"type": "string"}, "parent_versions": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": true},
-    "evidence_status": {"enum": ["established", "well-supported", "provisional", "contested", "speculative", "superseded", "not-assessed"]},
-    "review_status": {"enum": ["draft", "in-review", "approved", "rejected", "deprecated"]},
-    "publication_status": {"enum": ["private", "internal", "public"]},
-    "review": {"type": "object", "properties": {"reviewer": {"type": "string"}, "reviewed_at": {"type": "string", "format": "date-time"}, "decision": {"enum": ["approve", "request-changes", "reject"]}, "notes": {"type": "string"}}, "additionalProperties": false},
-    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
-    "supersedes": {"type": "array", "items": {"type": "string"}},
-    "tags": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-    "extensions": {"type": "object"}
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_type",
+          "citation"
+        ],
+        "properties": {
+          "source_type": {
+            "enum": [
+              "paper",
+              "book",
+              "standard",
+              "website",
+              "dataset",
+              "experiment",
+              "simulation",
+              "interview",
+              "internal-artifact",
+              "other"
+            ]
+          },
+          "citation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "doi": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "string"
+          },
+          "accessed_at": {
+            "type": "string",
+            "format": "date"
+          },
+          "supports": {
+            "type": "string"
+          },
+          "license_or_rights": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "data_references": {
+      "type": "array",
+      "description": "References to canonical data assets, normally owned by TensorData or a domain project.",
+      "items": {
+        "type": "object",
+        "required": [
+          "system",
+          "asset_id"
+        ],
+        "properties": {
+          "system": {
+            "type": "string",
+            "minLength": 1
+          },
+          "asset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uri": {
+            "type": "string"
+          },
+          "checksum": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "artifact_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "artifact_type",
+          "uri"
+        ],
+        "properties": {
+          "artifact_type": {
+            "enum": [
+              "document",
+              "code",
+              "model",
+              "image",
+              "video",
+              "audio",
+              "notebook",
+              "report",
+              "other"
+            ]
+          },
+          "uri": {
+            "type": "string",
+            "minLength": 1
+          },
+          "checksum": {
+            "type": "string"
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "created_by": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "method": {
+          "type": "string"
+        },
+        "agent_assisted": {
+          "type": "boolean"
+        },
+        "work_package_id": {
+          "type": "string"
+        },
+        "parent_versions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "evidence_status": {
+      "enum": [
+        "established",
+        "well-supported",
+        "provisional",
+        "contested",
+        "speculative",
+        "superseded",
+        "not-assessed"
+      ]
+    },
+    "review_status": {
+      "enum": [
+        "draft",
+        "in-review",
+        "approved",
+        "rejected",
+        "deprecated"
+      ]
+    },
+    "publication_status": {
+      "enum": [
+        "private",
+        "internal",
+        "public"
+      ]
+    },
+    "review": {
+      "type": "object",
+      "properties": {
+        "reviewer": {
+          "type": "string"
+        },
+        "reviewed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "decision": {
+          "enum": [
+            "approve",
+            "request-changes",
+            "reject"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "claim_refs": {
+      "type": "array",
+      "description": "References to atomic Claim Records stored independently from this aggregate Knowledge Object.",
+      "items": {
+        "type": "string",
+        "pattern": "^tkc:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+      },
+      "uniqueItems": true
+    },
+    "evidence_refs": {
+      "type": "array",
+      "description": "References to Evidence Records. Evidence assessment is independent from object review status.",
+      "items": {
+        "type": "string",
+        "pattern": "^tke:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+      },
+      "uniqueItems": true
+    },
+    "provenance_refs": {
+      "type": "array",
+      "description": "References to append-only, PROV-O-aligned Provenance Records.",
+      "items": {
+        "type": "string",
+        "pattern": "^tkp:[a-z][a-z0-9-]*:[a-z0-9-]*$"
+      },
+      "uniqueItems": true
+    },
+    "review_event_refs": {
+      "type": "array",
+      "description": "References to append-only Review Event records; retained separately from Platform mission acceptance.",
+      "items": {
+        "type": "string",
+        "pattern": "^tkr:[a-z][a-z0-9-]*:[a-z0-9-]*$"
+      },
+      "uniqueItems": true
+    }
   },
   "additionalProperties": false
 }
