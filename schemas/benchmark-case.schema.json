@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/benchmark-case.schema.json",
+  "title": "Benchmark Case",
+  "description": "One synthetic or curator-authored epistemic test case. Cases define intended structural behavior, not factual ground truth unless gold labels and sources are explicitly supplied.",
+  "type": "object",
+  "required": [
+    "case_id",
+    "category",
+    "description",
+    "expected_checks",
+    "claims",
+    "evidence",
+    "provenance",
+    "review_events"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^tkbench:[a-z0-9-]+$"
+    },
+    "category": {
+      "enum": [
+        "scientific-claim",
+        "method",
+        "dataset-result",
+        "capability-definition",
+        "contested-claim",
+        "temporal-change",
+        "insufficient-evidence",
+        "counterevidence",
+        "derived-result",
+        "review-separation"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expected_checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "claim-record.schema.json"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "evidence-record.schema.json"
+      }
+    },
+    "provenance": {
+      "$ref": "provenance-record.schema.json"
+    },
+    "review_events": {
+      "type": "array",
+      "items": {
+        "$ref": "review-event.schema.json"
+      }
+    }
+  },
+  "additionalProperties": false
+}
