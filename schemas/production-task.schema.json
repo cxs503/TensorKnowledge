@@ -3,23 +3,184 @@
   "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/production-task.schema.json",
   "title": "TensorKnowledge Production Task",
   "type": "object",
-  "required": ["contract_version", "package_id", "objective", "scope", "deliverables", "acceptance_criteria", "risk_class", "requested_by"],
+  "required": [
+    "contract_version",
+    "package_id",
+    "objective",
+    "scope",
+    "deliverables",
+    "acceptance_criteria",
+    "risk_class",
+    "requested_by"
+  ],
   "properties": {
-    "contract_version": {"const": "0.1.0"},
-    "package_id": {"type": "string", "pattern": "^tkp:[a-z0-9][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"},
-    "objective": {"type": "string", "minLength": 1},
-    "why_it_matters": {"type": "string"},
-    "scope": {"type": "object", "required": ["included", "excluded"], "properties": {"included": {"type": "array", "items": {"type": "string"}, "minItems": 1}, "excluded": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
-    "inputs": {"type": "array", "items": {"type": "string"}},
-    "deliverables": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["kind", "format", "description"], "properties": {"kind": {"enum": ["knowledge-object", "report", "source-audit", "code", "dataset-reference", "other"]}, "format": {"type": "string"}, "path_or_uri": {"type": "string"}, "description": {"type": "string"}}, "additionalProperties": false}},
-    "evidence_requirements": {"type": "array", "items": {"type": "string"}},
-    "acceptance_criteria": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["id", "criterion"], "properties": {"id": {"type": "string"}, "criterion": {"type": "string"}, "verification": {"type": "string"}}, "additionalProperties": false}},
-    "risk_class": {"enum": ["low", "medium", "high", "critical"]},
-    "required_reviewer_role": {"type": "string"},
-    "dependencies": {"type": "array", "items": {"type": "string"}},
-    "requested_by": {"type": "string", "minLength": 1},
-    "idempotency_key": {"type": "string"},
-    "callback": {"type": "object", "properties": {"correlation_id": {"type": "string"}}, "additionalProperties": true}
+    "contract_version": {
+      "const": "0.1.0"
+    },
+    "package_id": {
+      "type": "string",
+      "pattern": "^tkp:[a-z0-9][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "why_it_matters": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "object",
+      "required": [
+        "included",
+        "excluded"
+      ],
+      "properties": {
+        "included": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "excluded": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deliverables": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "format",
+          "description"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "knowledge-object",
+              "report",
+              "source-audit",
+              "code",
+              "dataset-reference",
+              "other"
+            ]
+          },
+          "format": {
+            "type": "string"
+          },
+          "path_or_uri": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "criterion"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "criterion": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "risk_class": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "required_reviewer_role": {
+      "type": "string"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requested_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "idempotency_key": {
+      "type": "string"
+    },
+    "callback": {
+      "type": "object",
+      "properties": {
+        "correlation_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "problem_definition": {
+      "type": "object",
+      "description": "Structured problem framing mapped to Platform research-admission fields when the execution provider requires them.",
+      "required": [
+        "problem_tree",
+        "baseline_summary",
+        "baseline_gap"
+      ],
+      "properties": {
+        "problem_tree": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 3
+        },
+        "baseline_summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline_gap": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
   },
   "additionalProperties": false
 }
