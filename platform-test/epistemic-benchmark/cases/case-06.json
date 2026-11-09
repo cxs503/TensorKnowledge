@@ -1,0 +1,108 @@
+{
+  "case_id": "tkbench:case-06",
+  "category": "temporal-change",
+  "description": "A fact is valid only during a bounded time interval",
+  "expected_checks": [
+    "Valid time is separate from recorded time."
+  ],
+  "claims": [
+    {
+      "id": "tkc:benchmark:case-06",
+      "statement": "Synthetic benchmark proposition for temporal-change.",
+      "claim_type": "descriptive",
+      "scope": {
+        "domain": "benchmark-fixtures",
+        "conditions": [
+          "synthetic test only"
+        ]
+      },
+      "modality": "asserted",
+      "epistemic_status": "well-supported",
+      "evidence_refs": [
+        "tke:benchmark:case-06-evidence"
+      ],
+      "created_at": "2026-11-09T00:00:00Z",
+      "created_by": "benchmark-curator",
+      "version": "0.1.0",
+      "valid_time": {
+        "start": "2020-01-01T00:00:00Z",
+        "end": "2024-12-31T23:59:59Z"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "tke:benchmark:case-06-evidence",
+      "claim_refs": [
+        "tkc:benchmark:case-06"
+      ],
+      "source": {
+        "source_type": "internal-artifact",
+        "citation": "Synthetic benchmark source 06; not an external factual reference."
+      },
+      "relation": "supports",
+      "locator": {
+        "locator_type": "section",
+        "value": "Synthetic fixture section 1",
+        "quote": "Synthetic excerpt used only to test schema structure."
+      },
+      "extraction_method": "manual-paraphrase",
+      "captured_at": "2026-11-09T00:00:00Z",
+      "captured_by": "benchmark-curator",
+      "assessment_status": "unassessed",
+      "version": "0.1.0"
+    }
+  ],
+  "provenance": {
+    "id": "tkp:benchmark:case-06-provenance",
+    "generated_entity": {
+      "id": "tkc:benchmark:case-06",
+      "entity_type": "claim",
+      "version": "0.1.0"
+    },
+    "activity": {
+      "id": "activity-06",
+      "activity_type": "synthesis",
+      "description": "Create synthetic test fixture.",
+      "started_at": "2026-11-09T00:00:00Z",
+      "used_entities": [
+        "synthetic-source-06"
+      ],
+      "software": [
+        {
+          "name": "TensorKnowledge benchmark fixture generator",
+          "version": "0.1.0"
+        }
+      ]
+    },
+    "agents": [
+      {
+        "id": "benchmark-curator",
+        "agent_type": "person",
+        "name": "Synthetic benchmark curator",
+        "role": "fixture author"
+      }
+    ],
+    "derived_from": [
+      "synthetic-source-06"
+    ],
+    "recorded_at": "2026-11-09T00:00:00Z",
+    "version": "0.1.0"
+  },
+  "review_events": [
+    {
+      "id": "tkr:benchmark:case-06-review",
+      "object_ref": "tkc:benchmark:case-06",
+      "object_version": "0.1.0",
+      "decision": "request-changes",
+      "reviewer": {
+        "id": "independent-reviewer",
+        "reviewer_type": "person",
+        "role": "benchmark reviewer"
+      },
+      "reviewed_at": "2026-11-09T00:00:00Z",
+      "policy_version": "benchmark-review-policy-0.1",
+      "rationale": "Synthetic event; demonstrates review record structure without approving the claim."
+    }
+  ]
+}
