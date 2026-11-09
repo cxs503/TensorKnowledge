@@ -1,65 +1,86 @@
 # TensorPlatform Integration Test — Knowledge Production Loop
 
-**Status:** test specification ready for Platform capability mapping; not yet executed.  
-**Version:** 0.1.0  
+**Status:** specification and fixtures ready; live dispatch is blocked pending target-environment repository eligibility check.  
+**Version:** 0.1.1  
 **Risk:** low
 
 ## 1. Test objective
-Use the TensorPlatform agent runtime to produce one small, source-traceable knowledge object from supplied, stable references. Verify task submission, execution tracking, artifact/result return, schema validation, draft persistence and human review separation.
+Use the existing TensorPlatform mission system to produce one small, source-traceable Knowledge Object. Verify mission dispatch, agent execution, artifact/result return, schema validation and separation between Platform acceptance and Knowledge approval.
 
-This is an integration test, not a test of scientific discovery or production-scale throughput.
+This first slice uses the TensorKnowledge Git repository as the artifact and review surface. It does not test a Knowledge HTTP API; no such service is implemented yet.
 
-## 2. Test package
-The canonical request fixture is fixtures/knowledge-task.example.json. The expected result shape is fixtures/knowledge-result.example.json.
+## 2. Canonical inputs
+- Task fixture: fixtures/knowledge-task.example.json
+- Illustrative result shape: fixtures/knowledge-result.example.json
+- Platform mapping and current blockers: ../architecture/platform-integration.md
+- Knowledge Object schema: ../schemas/knowledge-object.schema.json
+- Mission result schema: ../schemas/production-result.schema.json
 
-Suggested topic: a basic, low-risk concept with authoritative, openly accessible sources. The Platform team may use another low-risk topic if source access is easier, but must preserve the acceptance criteria and report the chosen sources.
+The result fixture is illustrative only. It contains placeholders and must never be registered or reported as a real research result.
 
-## 3. Execution sequence
-1. Inspect TensorPlatform's current task APIs, agent assignment, workspace and callback/polling support.
-2. Map the logical operations in architecture/platform-integration.md to existing capabilities.
-3. Validate the task fixture against schemas/production-task.schema.json.
-4. Submit the task through the Platform adapter and record the Platform task ID.
-5. Assign one research agent and one independent reviewer if current Platform capabilities permit. If not, report the limitation; do not describe self-review as independent.
-6. Agent returns a result matching schemas/production-result.schema.json, with at least one proposed Knowledge Object.
-7. Validate every proposed object against schemas/knowledge-object.schema.json.
-8. Persist the proposal as draft or in-review; do not set approved.
-9. Retrieve the object through the Knowledge API or a documented repository-level test adapter.
-10. Submit an integration report with actual request/response evidence, logs, limitations and next steps.
+## 3. Preflight — mandatory before dispatch
+1. Inspect the target TensorPlatform deployment's active FACTORY_PROFILE.
+2. Confirm TensorKnowledge is in the active project list, or in the approved fallback allowlist.
+3. Confirm the worker host has the TensorKnowledge Git checkout at the path resolved by that profile.
+4. Confirm the worker can create an isolated worktree and publish a branch or provide equivalent inspectable artifacts.
+5. Confirm an eligible agent session can claim a mission for this repository.
+6. Confirm authentication, organization scope and current Platform mission route prefix.
 
-## 4. Acceptance criteria
-- [ ] A unique package ID is accepted by TensorPlatform.
-- [ ] A Platform task ID is returned and correlated to the package.
-- [ ] Execution status can be queried or received.
-- [ ] Agent can access the required input references.
-- [ ] Result payload conforms to the result schema.
-- [ ] At least one proposed object conforms to the Knowledge Object schema.
-- [ ] Sources are attributable and support the stated claim; source excerpts/locators are recorded where possible.
-- [ ] Execution completion does not automatically approve or publish the object.
-- [ ] Duplicate submission/result delivery is handled idempotently or the limitation is documented.
-- [ ] A final report distinguishes passed, failed, blocked and not-tested criteria.
+The current fallback REPO_WHITELIST found in TensorPlatform source does not list TensorKnowledge. A configured FACTORY_PROFILE may override the fallback. The active deployment profile is not known from source inspection, so this is a live-environment blocker until verified.
 
-## 5. Safety and quality constraints
+## 4. Existing mission protocol
+Use the existing authenticated POST /api/v1/tensor/missions endpoint. Map package_id to task_key, render objective/scope/inputs/deliverables/evidence and acceptance criteria into goal, and set repo=TensorKnowledge and base_ref=main. For this research task, supply task_class=research, difficulty, a problem_tree of at least three items, baseline_summary, baseline_gap and machine-checkable acceptance_criteria.
+
+The worker lifecycle uses the existing claim, start, heartbeat and complete routes. Poll GET /api/v1/tensor/missions/{mission_id} for status and result. The complete request can return a structured result under summary.knowledge_result, with branch, head_commit and checks.
+
+On successful work, request Platform acceptance through status=succeeded and acceptance=true. This should yield awaiting_acceptance and a Platform dev_acceptance approval record. This is not Knowledge approval.
+
+## 5. Execution sequence
+1. Complete the preflight checklist.
+2. Validate all JSON fixtures and schemas.
+3. Create one Platform mission using the mapping above and record its mission ID.
+4. Allow an eligible agent to claim and execute it.
+5. Produce one proposed Knowledge Object plus a handoff report, with at least two authoritative, attributable sources and precise locators.
+6. Return the result envelope under the Platform mission summary and provide branch/commit references.
+7. Inspect Platform mission detail and acceptance evidence.
+8. Validate the proposed object against the Knowledge Object schema.
+9. Keep the object draft/in-review; do not publish or mark it approved.
+10. Record actual results in platform-test/reports/.
+
+## 6. Acceptance criteria
+- [ ] TensorKnowledge is an allowed and resolvable Platform project in the target environment.
+- [ ] A unique package ID is accepted and mapped to a Platform mission ID.
+- [ ] An eligible worker claims and runs the mission.
+- [ ] Execution status can be queried from mission detail.
+- [ ] The result contains a proposed object conforming to the Knowledge Object schema.
+- [ ] At least two attributable sources are recorded with supporting locators.
+- [ ] Source passages support the associated definitions/claims.
+- [ ] Branch/commit or equivalent artifact references are inspectable.
+- [ ] Platform acceptance state is distinct from Knowledge review state.
+- [ ] Duplicate dispatch/result handling is idempotent or its limitation is documented.
+- [ ] The final report marks each criterion passed, failed, blocked or not-tested with evidence.
+
+## 7. Safety and quality constraints
 - No private or sensitive data.
-- No external learner recruitment or human-subject data collection.
+- No learner recruitment or human-subject data collection.
 - No high-risk advice or consequential decision content.
 - No fabricated citations, quotes, measurements or test results.
-- No claim of scientific truth based only on schema validation.
+- No claim of truth based only on schema validation.
 - Do not build a new generic scheduler, agent runtime or harness inside TensorKnowledge.
-- Do not assume an endpoint exists before inspecting TensorPlatform.
+- Do not assume an endpoint, callback, webhook or MCP server exists before verifying it.
 
-## 6. Required Platform handoff report
+## 8. Required handoff report
 Save a report under platform-test/reports/ containing:
 - tested TensorPlatform commit and environment;
-- endpoint/adapter mapping and authentication method (never include secrets);
-- package ID and Platform task ID;
+- active project profile and repository checkout verification (no secrets);
+- endpoint mapping and authentication/organization scope;
+- package ID and Platform mission ID;
 - assigned agent roles;
 - request, status and result evidence with sensitive values redacted;
 - schema validation commands and exact outcomes;
-- object IDs and draft status;
-- acceptance checklist with evidence links;
-- blockers, deviations and recommendations.
+- object IDs, branch/commit and draft status;
+- Platform approval status and separate Knowledge review status;
+- acceptance checklist, blockers and recommendations.
 
-## 7. Exit decision
-The test is ready when Platform confirms a feasible mapping to current capabilities and can run the package in a controlled environment.
-
-The test is passed only when evidence supports every mandatory acceptance criterion. If the platform lacks a callback, use polling or a documented manual result handoff for this first test and record the limitation; do not block the architecture test on optional automation.
+## 9. Exit decision
+The test is ready to dispatch only after all preflight checks pass. It is passed only when evidence supports every mandatory acceptance criterion. If callbacks or MCP are unavailable, use polling and the existing mission protocol; those optional capabilities do not block this first test.
