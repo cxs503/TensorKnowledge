@@ -200,7 +200,7 @@ Distinguish:
 - **systematic effect:** a consistent influence that may bias results, such as measuring from the wrong reference point;
 - **model limitation:** the idealized equation omits effects present in the real setup.
 
-Do not treat *measurement error* and *measurement uncertainty* as synonyms. In formal metrology, uncertainty characterizes the dispersion of values that could reasonably be attributed to the measurand; the relationship between random/systematic effects and formal uncertainty components is not a simple one-to-one mapping [3]. This tutorial uses the terms qualitatively and does not claim a complete uncertainty budget.
+Do not treat *measurement error* and *measurement uncertainty* as synonyms. In formal metrology, uncertainty characterizes the dispersion of values that could reasonably be attributed to the measurand; the relationship between random/systematic effects and formal uncertainty components is not a simple one-to-one mapping [2]. This tutorial uses the terms qualitatively and does not claim a complete uncertainty budget.
 
 Do not report more decimal places than the method supports. If the three trials differ noticeably, report the spread as well as the mean. If a systematic effect is suspected, explain how it might shift the result; taking more trials alone may not fix it.
 
