@@ -39,6 +39,10 @@ TensorKnowledge aims to make that process systematic: collect sources; decompose
 
 TensorKnowledge is an independent project and service boundary. It can run alongside TensorPlatform in one operational environment, but it is not an internal Platform module and does not require Platform to serve knowledge queries. Its APIs and assets should remain usable by other agent systems.
 
+## Global landscape research
+
+The international landscape, capability comparison, standards mapping and strategic gap analysis are maintained in [research/global-landscape/](research/global-landscape/). Start with the [global landscape](research/global-landscape/GLOBAL_LANDSCAPE.md) and [strategic gap analysis](research/global-landscape/STRATEGIC_GAP_ANALYSIS.md).
+
 ## Architecture and integration
 
 - [Architecture overview](architecture/README.md)
@@ -62,6 +66,11 @@ Portable contracts live in the schemas directory. Start with:
 - [Production task schema](schemas/production-task.schema.json)
 - [Production result schema](schemas/production-result.schema.json)
 - [Existing curriculum knowledge-node schema](schemas/knowledge-node.schema.json)
+- [Claim Record schema](schemas/claim-record.schema.json)
+- [Evidence Record schema](schemas/evidence-record.schema.json)
+- [Provenance Record schema](schemas/provenance-record.schema.json)
+- [Review Event schema](schemas/review-event.schema.json)
+- [Epistemic benchmark](platform-test/epistemic-benchmark/README.md)
 
 The existing knowledge-node schema remains a specialized learning/curriculum graph. The new Knowledge Object schema is the domain-neutral asset contract.
 

@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/evidence-record.schema.json",
+  "title": "Evidence Record",
+  "description": "Evidence item connecting a source and exact locator to one or more claims, with an explicit epistemic relation.",
+  "type": "object",
+  "required": [
+    "id",
+    "source",
+    "relation",
+    "locator",
+    "captured_at",
+    "assessment_status",
+    "version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tke:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "claim_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^tkc:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "source_type",
+        "citation"
+      ],
+      "properties": {
+        "source_type": {
+          "enum": [
+            "paper",
+            "book",
+            "standard",
+            "website",
+            "dataset",
+            "experiment",
+            "simulation",
+            "interview",
+            "internal-artifact",
+            "other"
+          ]
+        },
+        "citation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "doi": {
+          "type": "string"
+        },
+        "persistent_id": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "published_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "accessed_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "rights": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "relation": {
+      "enum": [
+        "supports",
+        "refutes",
+        "qualifies",
+        "contextualizes",
+        "mentions",
+        "derived-from"
+      ]
+    },
+    "locator": {
+      "type": "object",
+      "required": [
+        "locator_type",
+        "value"
+      ],
+      "properties": {
+        "locator_type": {
+          "enum": [
+            "page",
+            "section",
+            "paragraph",
+            "table",
+            "figure",
+            "timestamp",
+            "dataset-variable",
+            "row-range",
+            "code-location",
+            "url-fragment",
+            "other"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "quote": {
+          "type": "string",
+          "maxLength": 1200
+        },
+        "quote_language": {
+          "type": "string"
+        },
+        "content_hash": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "extraction_method": {
+      "enum": [
+        "direct-quotation",
+        "manual-paraphrase",
+        "automated-extraction",
+        "calculation",
+        "experiment",
+        "simulation",
+        "observation",
+        "other"
+      ]
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "captured_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assessment_status": {
+      "enum": [
+        "unassessed",
+        "reviewed-supports",
+        "reviewed-refutes",
+        "reviewed-qualifies",
+        "insufficient",
+        "disputed"
+      ]
+    },
+    "assessment": {
+      "type": "object",
+      "properties": {
+        "assessor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assessed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "not-rated"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

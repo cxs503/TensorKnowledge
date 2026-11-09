@@ -10,6 +10,17 @@ Its primary product is not a document repository or a standalone agent platform.
 
 The existing human-capability framework, curriculum, learning pathways and tutorials remain first-class TensorKnowledge applications. They are not the entire scope of the knowledge infrastructure.
 
+## Epistemic record model
+
+The Knowledge Object is the canonical aggregate and stable entry point, but high-value epistemic components are separate versioned records:
+
+- **Claim Record**: an atomic proposition with scope, modality, temporal validity and epistemic status.
+- **Evidence Record**: a source plus exact locator and an explicit relation to one or more claims (supports, refutes, qualifies, contextualizes, mentions or derived-from).
+- **Provenance Record**: PROV-O-aligned entities, activities, agents, inputs and software/tool versions.
+- **Review Event**: append-only decision and rationale under a versioned review policy.
+
+Knowledge Objects reference these records by stable IDs. Evidence assessment, review decision, publication visibility and Platform mission state remain independent dimensions. Provenance describes derivation; it does not establish truth. JSON Schema validation establishes structural conformance only.
+
 ## 2. Core principles
 1. Knowledge object first: a document may contain knowledge, but the canonical managed unit is a typed, addressable knowledge object.
 2. Evidence before authority: source, evidence status, review status and publication status are separate fields.
