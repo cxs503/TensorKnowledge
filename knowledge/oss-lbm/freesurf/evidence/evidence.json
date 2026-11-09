@@ -1,0 +1,370 @@
+[
+ {
+  "id": "tke:oss-lbm-freesurf:thuerey-vof-architecture-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:thuerey-vof-architecture"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, README.md:2",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c README.md:2",
+   "quote": "Low level interface of Lattice Boltzmann technique as described in the PhD thesis of Nils Thuerey. Heavily depends on Numba for optimization.  "
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:cell-type-bitflags-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:cell-type-bitflags"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/util.py:36-38",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/util.py:36-38",
+   "quote": "    FLUID =          2 ** 0   # 1\n    INTERFACE =      2 ** 1   # 2\n    GAS =            2 ** 2   # 4"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:epsilon-fill-fraction-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:epsilon-fill-fraction"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/streamcollide.py:169-171",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/streamcollide.py:169-171",
+   "quote": "        if rho > 0:\n            # clip\n            epsilon = mass / rho"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:interface-mass-exchange-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:interface-mass-exchange"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/streamcollide.py:86-88",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/streamcollide.py:86-88",
+   "quote": "                        epsilon_nei = get_epsilon(cell_type[ix_next, iy_next], rho_prev[ix_next, iy_next], mass_prev[ix_next, iy_next])\n                        mass[ix, iy] += interface_mass_exchange(cell_type[ix, iy], cell_type[ix_next, iy_next], fout[v_inv[n], ix, iy], fout[n, ix_next, iy_next]) * \\\n                                        (epsilon + epsilon_nei) * 0.5"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:normal-correction-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:normal-correction"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/streamcollide.py:98-100",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/streamcollide.py:98-100",
+   "quote": "                for n in range(1, 9):\n                    if (normal[0] * v[v_inv[n], 0] + normal[1] * v[v_inv[n], 1]) > 0:\n                        fin[n, ix, iy] = equi[n, ix, iy] + equi[v_inv[n], ix, iy] - fout[v_inv[n], ix, iy]"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:transition-criteria-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:transition-criteria"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/update_types.py:20-22",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/update_types.py:20-22",
+   "quote": "                if mass[ix, iy] > (1 + fill_offset) * rho[ix, iy] or \\\n                        (mass[ix, iy] >= (1 - lonely_tresh) * rho[ix, iy] and cell_type[ix, iy] & CT.NO_EMPTY_NEIGH):\n                    cell_type[ix, iy] = CT.TO_FLUID"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:mass-redistribution-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:mass-redistribution"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/update_types.py:64-66",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/update_types.py:64-66",
+   "quote": "            if cell_type[ix, iy] & CT.TO_FLUID:\n                mex = mass[ix, iy] - rho[ix, iy]\n                mass[ix, iy] = rho[ix, iy]"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:rho-prev-copy-bug-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:rho-prev-copy-bug"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/time_evolve.py:18",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/time_evolve.py:18",
+   "quote": "        mass_prev = np.copy(mass); rho_prev = np.copy(mass)"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:gas-branch-precedence-bug-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:gas-branch-precedence-bug"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/streamcollide.py:166-167",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/streamcollide.py:166-167",
+   "quote": "    elif cell_type & CT.GAS == 2:\n        return 0"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:mass-destruction-no-iface-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:mass-destruction-no-iface"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/update_types.py:94-96",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/update_types.py:94-96",
+   "quote": "            if eta_total > 0:\n                eta_frac = 1 / eta_total\n                for n in range(1, 9):"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:velocity-limiter-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:velocity-limiter"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/streamcollide.py:131-133",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/streamcollide.py:131-133",
+   "quote": "    maxvel = (2/3) ** 0.5\n    if vel > maxvel:\n        u[:, ix, iy] *= maxvel / vel"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:gravity-forcing-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:gravity-forcing"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/streamcollide.py:155-157",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/streamcollide.py:155-157",
+   "quote": "        grav_temp = v[n, 0] * gravity[0] + \\\n                    v[n, 1] * gravity[1]\n        fout[n, ix, iy] -= rho[ix, iy] * t[n] * grav_temp"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:zou-he-inlet-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:zou-he-inlet"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/streamcollide.py:231-233",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/streamcollide.py:231-233",
+   "quote": "    for n in range(3, 6):\n        local_rho += 2 * fin[n, ix, iy]\n    rho[ix, iy] = 1. / (1. - u[0, ix, iy]) * local_rho"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:bounce-back-obstacle-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:bounce-back-obstacle"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/streamcollide.py:64-66",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/streamcollide.py:64-66",
+   "quote": "                    else:  # obstacle\n                        # stream back (no slip boundary)\n                        fin[n, ix, iy] = fout[v_inv[n], ix, iy]"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:avg-surround-mass-zero-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:avg-surround-mass-zero"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/update_types.py:139-141",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/update_types.py:139-141",
+   "quote": "    mass[ix, iy] = 0\n    rho[ix, iy] = 0\n    u[:, ix, iy] *= 0"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm-freesurf:asymmetric-reinit-src",
+  "claim_refs": [
+   "tkc:oss-lbm-freesurf:asymmetric-reinit"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "Maarten-vd-Sande/lbm source code, lbm/update_types.py:53-54",
+   "url": "https://github.com/Maarten-vd-Sande/lbm",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "Maarten-vd-Sande/lbm@573a01c lbm/update_types.py:53-54",
+   "quote": "                    if cell_type[ix_next, iy_next] & CT.FLUID:\n                        cell_type[ix_next, iy_next] = CT.INTERFACE"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:35:22Z",
+  "captured_by": "agent-m8688",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ }
+]
