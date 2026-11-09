@@ -1,0 +1,43 @@
+name: Validate KE projection mapping
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-mapping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install validation dependencies
+        run: python -m pip install -r requirements-validation.txt
+      - name: Re-derive the projection mapping from the frozen snapshot
+        run: python scripts/build_ke_mapping.py --out /tmp/m8554.rebuilt.json
+      - name: Fail if the committed mapping is stale
+        run: |
+          python - <<'PY'
+          import json, sys
+          a = json.load(open("mappings/m8554.json", encoding="utf-8"))
+          b = json.load(open("/tmp/m8554.rebuilt.json", encoding="utf-8"))
+          if a != b:
+              print("mappings/m8554.json is stale: rebuild it with scripts/build_ke_mapping.py")
+              sys.exit(1)
+          print("committed mapping matches a fresh build")
+          PY
+      - name: Review-event state machine conformance
+        run: python scripts/ke_state_machine.py
+      - name: Validate KE mapping (structure, semantics, query interface)
+        run: python scripts/validate_ke_mapping.py
+      - name: Render the audit document and fail if it is stale
+        run: |
+          python scripts/render_ke_audit.py --check
