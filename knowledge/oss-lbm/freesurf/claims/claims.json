@@ -1,0 +1,401 @@
+[
+ {
+  "id": "tkc:oss-lbm-freesurf:thuerey-vof-architecture",
+  "statement": "Maarten-vd-Sande/lbm is a D2Q9 BGK LBM in Python/Numba implementing the free-surface method of Nils Thuerey's PhD thesis: it tracks a per-cell fluid mass array (the mass ledger) in addition to the distribution functions, with cell states encoded as bit flags.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "D2Q9",
+    "BGK",
+    "Numba JIT",
+    "2D"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:thuerey-vof-architecture-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (free-surface method family identification: Thuerey/Körner VoF-epsilon family).",
+   "TensorLBM 可服务改进点: 自由面 LBM 的参考实现基线——per-cell mass 记账 + 位标志单元分类是 VoF-ε 家族的最小实现，可作为 TensorLBM 自由面模块的对照实现。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:cell-type-bitflags",
+  "statement": "Cell states are encoded as bit flags in class CT_Enum (FLUID=2**0, INTERFACE=2**1, GAS=2**2, OBSTACLE=2**3, INLET=2**4, OUTLET=2**5, NO_FLUID_NEIGH=2**6, NO_EMPTY_NEIGH=2**7, NO_IFACE_NEIGH=2**8, TO_FLUID=2**9, TO_GAS=2**10), converted to a namedtuple because Numba does not support enum.IntFlag.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "bit-flag cell classification",
+    "Numba IntFlag workaround"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:cell-type-bitflags-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (cell classification is the substrate of the free-surface method).",
+   "TensorLBM 可服务改进点: 位标志单元分类 + 邻域标志（NO_*_NEIGH）+ 过渡标志（TO_*）的三层结构可直接借鉴；Numba 不支持 IntFlag 的 namedtuple 绕行是 Numba 生态的通用坑。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:epsilon-fill-fraction",
+  "statement": "The interface fill fraction epsilon is computed as mass/rho clipped to [0,1] (get_epsilon), with a hard-coded 1 for FLUID/OBSTACLE cells and a fallback of 0.5 when rho<=0.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "epsilon = mass/rho clipped to [0,1]"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:epsilon-fill-fraction-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (fill fraction is the core VoF-epsilon quantity).",
+   "TensorLBM 可服务改进点: ε=mass/rho 的记账式填充分数（而非独立输运的 VoF 场）是 Thuerey 路线的特征；TensorLBM 若走 VoF 路线需明确选择独立输运 vs 记账派生。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:interface-mass-exchange",
+  "statement": "When an interface cell streams from a neighboring interface cell, the mass exchange is weighted by the arithmetic mean of the two cells' fill fractions: mass[ix,iy] += interface_mass_exchange(...) * (epsilon + epsilon_nei) * 0.5.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "interface-interface streaming",
+    "epsilon-weighted exchange"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:interface-mass-exchange-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (interface mass exchange is the core mass-transfer operator of the method).",
+   "TensorLBM 可服务改进点: 界面间质量交换按双方 ε 均值加权——该权重在 rho_prev 缺陷（见 rho-prev-copy-bug）下退化为常数 1，是质量记账病理的放大器。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:normal-correction",
+  "statement": "For interface cells, populations whose opposite lattice direction points into the fluid (normal·v_inv > 0) are replaced by the equilibrium-based reconstruction fin[n] = equi[n] + equi[v_inv[n]] - fout[v_inv[n]], with the surface normal taken as a central difference of the epsilon field.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "interface cells",
+    "central-difference normal"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:normal-correction-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (surface-normal correction at the free surface).",
+   "TensorLBM 可服务改进点: 法向修正用平衡态重构覆盖分布函数，直接改变分布函数之和（即质量）——自由面质量守恒审计必须把该算子计入非守恒源项。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:transition-criteria",
+  "statement": "Interface cells are flagged TO_FLUID when mass > (1+fill_offset)*rho or (mass >= (1-lonely_tresh)*rho and NO_EMPTY_NEIGH), and TO_GAS when mass < -fill_offset*rho or (mass <= lonely_tresh*rho and NO_FLUID_NEIGH) or (NO_IFACE_NEIGH|NO_FLUID_NEIGH), with fill_offset=0.003 and lonely_tresh=0.1.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "fill_offset=0.003",
+    "lonely_tresh=0.1"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:transition-criteria-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (cell-type transition criteria define the free-surface topology update).",
+   "TensorLBM 可服务改进点: 双阈值（fill_offset=0.003 / lonely_tresh=0.1）+ 邻域标志的过渡判据是可调参数面；lonely 判据（孤立界面单元回收）是防界面碎片化的实用技巧。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:mass-redistribution",
+  "statement": "Excess mass mex = mass - rho (TO_FLUID) or mex = mass (TO_GAS) is removed from the transitioning cell and redistributed to interface neighbors weighted by eta = max(0, v_n·normal), with a uniform fallback over interface neighbors when the normal-weighted sum vanishes.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "eta = max(0, v_n·normal) weighting",
+    "uniform fallback"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:mass-redistribution-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (excess-mass redistribution closes the mass ledger after topology change).",
+   "TensorLBM 可服务改进点: 拓扑变化后的质量再分配（沿法向 eta 加权）是记账守恒的关键闭环；TensorLBM 自由面模块应把该算子作为守恒审计的必查项。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:rho-prev-copy-bug",
+  "statement": "time_evolve.evolve sets rho_prev = np.copy(mass) instead of np.copy(rho), so get_epsilon receives rho_prev==mass_prev and returns epsilon=1 for every non-empty interface cell (runtime-verified: mass/rho degenerates to 1.0), degenerating the fill-fraction weighting of the interface mass exchange and the central-difference surface normal; this is a code-level defect consistent with the prior inventory's finding of non-conserved mass accounting (±1.5~3% over 200 steps).",
+  "claim_type": "causal",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "prev-snapshot bug",
+    "epsilon degeneracy"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "contested",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:rho-prev-copy-bug-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE-MASS-LEDGER (自拟子锚：自由面方法下的质量记账病理，归属自由面方法缺口；反例证据入 claims，status=contested 并注明证据)。",
+   "证据: 代码逐字引文（time_evolve.py:18）+ 运行时验证（epsilon 恒为 1.0/0.5，穷举验证见 runs 记录）；仓内无测试/验证面，影响面为推断，故 status=contested。",
+   "TensorLBM 可服务改进点: 中间量拷贝（prev 快照）是 LBM 时间推进的高频笔误位；TensorLBM 应加 prev 快照一致性断言（rho_prev 与 rho 同形同源）。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:gas-branch-precedence-bug",
+  "statement": "The GAS branch of get_epsilon, 'elif cell_type & CT.GAS == 2:', is parsed by Python as cell_type & (CT.GAS == 2) i.e. cell_type & False, which is never true for any cell_type (exhaustively verified for 0..2047); gas cells therefore fall through to the else branch and return 0.5 instead of 0, erasing the gas/empty-interface distinction in the epsilon field.",
+  "claim_type": "causal",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "operator precedence",
+    "dead branch"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "contested",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:gas-branch-precedence-bug-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE-MASS-LEDGER (自拟子锚：质量记账病理——ε 场失真直接污染质量交换权重与法向修正；归属自由面方法缺口)。",
+   "证据: 逐字引文（streamcollide.py:166-167）+ 穷举运行时验证（0..2047 全为 False）；对模拟结果的影响为推断（仓内无验证面），故 status=contested。",
+   "TensorLBM 可服务改进点: 位运算与比较运算的优先级陷阱（& 低于 ==）应在 lint 规则中显式拦截（自定义 ruff 规则）。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:mass-destruction-no-iface",
+  "statement": "In the excess-mass redistribution loop, if a transitioning cell has no interface neighbors (eta_total==0 and IF_total==0), the excess mex is neither distributed nor retained and is silently destroyed, a direct mass non-conservation channel in the mass ledger.",
+  "claim_type": "causal",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "no interface neighbor",
+    "silent mass destruction"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "contested",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:mass-destruction-no-iface-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE-MASS-LEDGER (自拟子锚：质量记账病理——无界面邻居时 mex 被静默销毁；归属自由面方法缺口)。",
+   "证据: 逐字引文（update_types.py:94-96 的 if/elif 结构，两分支均不覆盖 IF_total==0 情形）；触发频率与总量影响未量化（仓内无验证面），故 status=contested。",
+   "TensorLBM 可服务改进点: 再分配算子必须有守恒兜底（无接收者时回退到最近界面单元或保留在源单元），并配全局质量守恒断言。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:velocity-limiter",
+  "statement": "update_rho_u clamps the cell velocity magnitude to sqrt(2/3) by rescaling u after the moment computation, without adjusting the distribution functions, so the limiter is not population-consistent.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "|u| <= sqrt(2/3) clamp"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:velocity-limiter-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (stability guard used in the free-surface solver loop).",
+   "TensorLBM 可服务改进点: 速度限幅只改矩不改分布函数，会引入动量/质量通量不一致；TensorLBM 若需限幅应采用分布函数级（如 Zou-He 型）限幅。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:gravity-forcing",
+  "statement": "Gravity is applied as a first-order force term in the collision step, fout[n] -= rho * t[n] * (v_n·g), without the second-order Chapman-Enskog correction of momentum-conserving forcing schemes.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "first-order force term"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:gravity-forcing-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (body-force term of the free-surface solver; sum_n t[n]·v_n = 0 keeps the mass sum invariant).",
+   "TensorLBM 可服务改进点: 一阶力项在重力驱动自由面问题中引入 O(ω) 动量误差；TensorLBM 力项模块应提供 Guo 型动量守恒力项作为默认。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:zou-he-inlet",
+  "statement": "The inlet boundary reconstructs density with the Zou-He formula rho = (f0+f1+f2 + 2(f3+f4+f5))/(1-u_x) and the collision step sets the unknown populations f6..f8 to equilibrium for INLET cells.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "left-side inlet only"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:zou-he-inlet-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (inlet BC of the free-surface solver; f6..f8 eliminated via the momentum equation, so the formula is the standard Zou-He form).",
+   "TensorLBM 可服务改进点: 标准 Zou-He 入口重构的紧凑实现参考；注意其仅适用于左边界（docstring 明示）。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:bounce-back-obstacle",
+  "statement": "Obstacle boundaries use standard no-slip bounce-back: the streamed population is the opposite-direction post-collision population, fin[n] = fout[v_inv[n]], applied in both the fluid-cell and interface-cell streaming branches.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "no-slip",
+    "both streaming branches"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:bounce-back-obstacle-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (solid boundary of the free-surface domain).",
+   "TensorLBM 可服务改进点: 标准 bounce-back 在界面单元分支同样使用（streamcollide.py:92-94），即界面单元贴壁时不做修正——壁面附近界面单元的精度损失是已知代价。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:avg-surround-mass-zero",
+  "statement": "A newly created interface cell (GAS neighbor of a TO_FLUID cell) is initialized by average_surround, which averages rho and u over fluid/interface neighbors but sets mass to zero and never accumulates neighbor mass, so the new cell's mass ledger starts empty and is only filled by later redistribution.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "new interface cell initialization"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:avg-surround-mass-zero-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE-MASS-LEDGER (自拟子锚：质量记账初始化——新界面单元 mass 从零起步，与 rho 均值初始化不对称；归属自由面方法缺口)。",
+   "TensorLBM 可服务改进点: 新界面单元的 mass 初始化应与 rho 初始化同源（如 mass = ε·rho），否则拓扑增长瞬间产生记账缺口。"
+  ]
+ },
+ {
+  "id": "tkc:oss-lbm-freesurf:asymmetric-reinit",
+  "statement": "The interface->fluid transition reinitializes the newly created interface cell via average_surround, whereas the interface->gas transition merely flags the fluid neighbor as INTERFACE without any reinitialization, an asymmetry between the two transition paths.",
+  "claim_type": "descriptive",
+  "scope": {
+   "domain": "lattice-Boltzmann-method",
+   "system": "Maarten-vd-Sande/lbm",
+   "conditions": [
+    "TO_FLUID vs TO_GAS paths"
+   ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+   "tke:oss-lbm-freesurf:asymmetric-reinit-src"
+  ],
+  "created_at": "2026-11-09T15:35:22Z",
+  "created_by": "agent-m8688",
+  "version": "1.0.0",
+  "notes": [
+   "GAP anchor: GAP-LBM-FREESURFACE (topology update asymmetry between the two transition directions).",
+   "TensorLBM 可服务改进点: 两条拓扑过渡路径的初始化不对称（TO_FLUID 有 average_surround，TO_GAS 无）是审计时易漏的结构性差异。"
+  ]
+ }
+]
