@@ -1,0 +1,54 @@
+{
+  "contract_version": "0.1.0",
+  "package_id": "tkp:integration-test:concept-provenance-basics",
+  "objective": "Produce one concise, source-traceable knowledge object explaining the distinction between a source, a claim, and evidence.",
+  "why_it_matters": "This tests whether an agent can return a reusable knowledge object with explicit provenance and epistemic status rather than an unsupported prose summary.",
+  "scope": {
+    "included": [
+      "Define source, claim, and evidence in a general research context",
+      "Explain how a source may support, qualify, or fail to support a claim",
+      "Provide one simple, clearly labeled illustrative example"
+    ],
+    "excluded": [
+      "Discipline-specific legal or scientific advice",
+      "Claims about the reliability of named publications",
+      "Automatic approval or publication"
+    ]
+  },
+  "inputs": [
+    "Use authoritative research-methods or academic-integrity guidance that is publicly accessible",
+    "Record full citation, URL and the specific section or passage supporting each definition"
+  ],
+  "deliverables": [
+    {
+      "kind": "knowledge-object",
+      "format": "json",
+      "path_or_uri": "platform-test/output/source-claim-evidence.json",
+      "description": "One proposed Knowledge Object conforming to schemas/knowledge-object.schema.json"
+    },
+    {
+      "kind": "report",
+      "format": "markdown",
+      "path_or_uri": "platform-test/output/handoff-report.md",
+      "description": "Sources consulted, claim-to-source mapping, limitations and acceptance checklist"
+    }
+  ],
+  "evidence_requirements": [
+    "At least two attributable authoritative sources",
+    "For each source, provide a locator and explain which part of the object it supports",
+    "Distinguish direct source statements from the agent's synthesis"
+  ],
+  "acceptance_criteria": [
+    {"id": "AC-01", "criterion": "The object has a stable ID, title, type, domain, summary and semantic version.", "verification": "Validate against knowledge-object.schema.json."},
+    {"id": "AC-02", "criterion": "At least two attributable sources are recorded with URLs and supporting locators.", "verification": "Inspect source records and source passages."},
+    {"id": "AC-03", "criterion": "The explanation distinguishes source, claim and evidence without treating citation presence as proof.", "verification": "Independent reviewer checks definitions and example."},
+    {"id": "AC-04", "criterion": "Evidence status and review status are explicit and conservative.", "verification": "Object must remain not-assessed or provisional and draft/in-review."},
+    {"id": "AC-05", "criterion": "Limitations and unresolved ambiguities are recorded.", "verification": "Inspect content limitations and handoff report."}
+  ],
+  "risk_class": "low",
+  "required_reviewer_role": "independent research-methods reviewer",
+  "dependencies": [],
+  "requested_by": "TensorKnowledge integration test",
+  "idempotency_key": "tkp:integration-test:concept-provenance-basics:v0.1.0",
+  "callback": {"correlation_id": "tk-integration-001"}
+}
