@@ -66,6 +66,11 @@ Portable contracts live in the schemas directory. Start with:
 - [Production task schema](schemas/production-task.schema.json)
 - [Production result schema](schemas/production-result.schema.json)
 - [Existing curriculum knowledge-node schema](schemas/knowledge-node.schema.json)
+- [Claim Record schema](schemas/claim-record.schema.json)
+- [Evidence Record schema](schemas/evidence-record.schema.json)
+- [Provenance Record schema](schemas/provenance-record.schema.json)
+- [Review Event schema](schemas/review-event.schema.json)
+- [Epistemic benchmark](platform-test/epistemic-benchmark/README.md)
 
 The existing knowledge-node schema remains a specialized learning/curriculum graph. The new Knowledge Object schema is the domain-neutral asset contract.
 

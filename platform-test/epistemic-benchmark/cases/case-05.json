@@ -1,0 +1,127 @@
+{
+  "case_id": "tkbench:case-05",
+  "category": "contested-claim",
+  "description": "Competing sources support and refute one proposition",
+  "expected_checks": [
+    "Both supporting and refuting evidence are retained.",
+    "Claim status is contested."
+  ],
+  "claims": [
+    {
+      "id": "tkc:benchmark:case-05",
+      "statement": "Synthetic benchmark proposition for contested-claim.",
+      "claim_type": "descriptive",
+      "scope": {
+        "domain": "benchmark-fixtures",
+        "conditions": [
+          "synthetic test only"
+        ]
+      },
+      "modality": "asserted",
+      "epistemic_status": "contested",
+      "evidence_refs": [
+        "tke:benchmark:case-05-evidence",
+        "tke:benchmark:case-05-counterevidence"
+      ],
+      "created_at": "2026-11-09T00:00:00Z",
+      "created_by": "benchmark-curator",
+      "version": "0.1.0"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "tke:benchmark:case-05-evidence",
+      "claim_refs": [
+        "tkc:benchmark:case-05"
+      ],
+      "source": {
+        "source_type": "internal-artifact",
+        "citation": "Synthetic benchmark source 05; not an external factual reference."
+      },
+      "relation": "supports",
+      "locator": {
+        "locator_type": "section",
+        "value": "Synthetic fixture section 1",
+        "quote": "Synthetic excerpt used only to test schema structure."
+      },
+      "extraction_method": "manual-paraphrase",
+      "captured_at": "2026-11-09T00:00:00Z",
+      "captured_by": "benchmark-curator",
+      "assessment_status": "reviewed-supports",
+      "version": "0.1.0"
+    },
+    {
+      "id": "tke:benchmark:case-05-counterevidence",
+      "claim_refs": [
+        "tkc:benchmark:case-05"
+      ],
+      "source": {
+        "source_type": "internal-artifact",
+        "citation": "Synthetic counterevidence source 05; not an external factual reference."
+      },
+      "relation": "refutes",
+      "locator": {
+        "locator_type": "section",
+        "value": "Synthetic fixture section 2",
+        "quote": "Synthetic counterexample used only to test contradiction handling."
+      },
+      "extraction_method": "manual-paraphrase",
+      "captured_at": "2026-11-09T00:00:00Z",
+      "captured_by": "benchmark-curator",
+      "assessment_status": "disputed",
+      "version": "0.1.0"
+    }
+  ],
+  "provenance": {
+    "id": "tkp:benchmark:case-05-provenance",
+    "generated_entity": {
+      "id": "tkc:benchmark:case-05",
+      "entity_type": "claim",
+      "version": "0.1.0"
+    },
+    "activity": {
+      "id": "activity-05",
+      "activity_type": "synthesis",
+      "description": "Create synthetic test fixture.",
+      "started_at": "2026-11-09T00:00:00Z",
+      "used_entities": [
+        "synthetic-source-05"
+      ],
+      "software": [
+        {
+          "name": "TensorKnowledge benchmark fixture generator",
+          "version": "0.1.0"
+        }
+      ]
+    },
+    "agents": [
+      {
+        "id": "benchmark-curator",
+        "agent_type": "person",
+        "name": "Synthetic benchmark curator",
+        "role": "fixture author"
+      }
+    ],
+    "derived_from": [
+      "synthetic-source-05"
+    ],
+    "recorded_at": "2026-11-09T00:00:00Z",
+    "version": "0.1.0"
+  },
+  "review_events": [
+    {
+      "id": "tkr:benchmark:case-05-review",
+      "object_ref": "tkc:benchmark:case-05",
+      "object_version": "0.1.0",
+      "decision": "request-changes",
+      "reviewer": {
+        "id": "independent-reviewer",
+        "reviewer_type": "person",
+        "role": "benchmark reviewer"
+      },
+      "reviewed_at": "2026-11-09T00:00:00Z",
+      "policy_version": "benchmark-review-policy-0.1",
+      "rationale": "Synthetic event; demonstrates review record structure without approving the claim."
+    }
+  ]
+}
