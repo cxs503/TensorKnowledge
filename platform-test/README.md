@@ -85,7 +85,7 @@ Save a report under platform-test/reports/ containing:
 
 ## 9. Epistemic quality benchmark
 
-The modular epistemic contracts and ten synthetic structural cases are maintained in [epistemic-benchmark](epistemic-benchmark/README.md). They extend, but do not replace, the first live Platform integration test. The cases are fixtures, not factual gold answers. A real agent evaluation must use separately identified public sources and independent human adjudication.
+The modular epistemic contracts and twelve synthetic structural cases are maintained in [epistemic-benchmark](epistemic-benchmark/README.md). They extend, but do not replace, the first live Platform integration test. The cases are fixtures, not factual gold answers. A real agent evaluation must use separately identified public sources and independent human adjudication.
 
 ## 10. Exit decision
 The test is ready to dispatch only after all preflight checks pass. It is passed only when evidence supports every mandatory acceptance criterion. If callbacks or MCP are unavailable, use polling and the existing mission protocol; those optional capabilities do not block this first test.

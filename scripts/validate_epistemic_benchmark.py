@@ -18,6 +18,11 @@ SCHEMA_NAMES = [
     "benchmark-case.schema.json",
 ]
 
+# Epistemic statuses that would mean the claim is treated as supported.
+# Boundary scenarios must keep their claims out of this set (or, for
+# contested-both-sides, pinned to "contested").
+SUPPORTED_STATUSES = {"established", "well-supported", "provisional"}
+
 def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -49,8 +54,8 @@ def main() -> int:
     benchmark_validator = jsonschema.Draft202012Validator(schemas["benchmark-case.schema.json"], registry=registry)
 
     files = sorted(CASES.glob("case-*.json"))
-    if len(files) != 10:
-        errors.append(f"expected 10 benchmark cases, found {len(files)}")
+    if len(files) != 12:
+        errors.append(f"expected 12 benchmark cases, found {len(files)}")
 
     seen_case_ids: set[str] = set()
     category_seen: set[str] = set()
@@ -104,8 +109,26 @@ def main() -> int:
     temporal = by_category.get("temporal-change")
     if temporal and not any(item.get("valid_time") for item in temporal["claims"]):
         errors.append("temporal-change case must include claim valid_time")
-    if len(category_seen) != 10:
-        errors.append(f"expected 10 distinct scenario categories, found {len(category_seen)}")
+    weak = by_category.get("weak-relevance")
+    if weak:
+        for item in weak["evidence"]:
+            if item["relation"] == "supports" or item["assessment_status"] == "reviewed-supports":
+                errors.append("weak-relevance case must not label weakly related evidence as support")
+        for item in weak["claims"]:
+            if item["epistemic_status"] in SUPPORTED_STATUSES:
+                errors.append("weak-relevance case claim must not carry a supported epistemic status (gold verdict is unsupported)")
+    both_sides = by_category.get("contested-both-sides")
+    if both_sides:
+        pairs = {(item["relation"], item["assessment_status"]) for item in both_sides["evidence"]}
+        if ("supports", "reviewed-supports") not in pairs:
+            errors.append("contested-both-sides case must retain a credible (reviewed) supporting evidence item")
+        if ("refutes", "reviewed-refutes") not in pairs:
+            errors.append("contested-both-sides case must retain a credible (reviewed) refuting evidence item")
+        for item in both_sides["claims"]:
+            if item["epistemic_status"] != "contested":
+                errors.append("contested-both-sides case claim must stay contested, not resolved to one side")
+    if len(category_seen) != 12:
+        errors.append(f"expected 12 distinct scenario categories, found {len(category_seen)}")
 
     if errors:
         print("FAIL: epistemic benchmark validation")
