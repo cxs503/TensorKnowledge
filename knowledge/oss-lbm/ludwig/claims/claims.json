@@ -1,0 +1,426 @@
+[
+  {
+    "id": "tkc:oss-lbm:ludwig-free-energy-catalog",
+    "statement": "Ludwig exposes nine concrete free-energy models (symmetric phi^4, Brazovskii, surfactant, polar, liquid crystal, electrokinetic, electrokinetic-symmetric, liquid-crystal droplet, ternary) plus a null model behind a single abstract fe_id_enum tag, so that the binary-fluid free-energy sector is selectable at run time (input key 'free_energy') rather than at compile time.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "compile-time model choice (D2Q9/D3Q15/D3Q19/D3Q27)",
+        "run-time free-energy choice via input file"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-enum-src",
+      "tke:oss-lbm:ludwig-spinodal-inp-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: MCMP 自由能模型的『运行时选择』接口（enum + 虚表）可直接照搬，避免 TensorLBM 里自由能/多相模型与编译期开关耦合；对照 GAP-LBM-MCMP-POISEUILLE 的两相通道流需先能选模型。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-fe-vtable-contract",
+    "statement": "Every Ludwig free energy implements a virtual table whose entries are typed callbacks for free-energy density (fed), chemical potential (mu), solvation chemical potential (mu_solv), chemical stress (stress), and molecular fields, so the Cahn-Hilliard and force sectors can evaluate any model without knowing it; the chemical potential entry has signature 'int (*)(fe_t *, int, double *)' evaluated pointwise at a lattice index.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "C, function-pointer vtable (no introspection)"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-vtable-mu-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-FORCE-GAUGE",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 化学势/应力以『逐点回调』注入，利于把一个自由能核在 CPU/GPU 两套内核间复用；TensorLBM 多相内核可用同样契约把 mu、应力、分子场分离测试。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-ch-fd-evolution",
+    "statement": "The order-parameter sector of Ludwig evolves the Cahn-Hilliard equation d_t phi + div(u phi - M grad mu) = 0 by finite difference, with the velocity u taken as known from the hydrodynamic sector and the chemical potential mu supplied by the chosen free energy; i.e. binary-fluid composition dynamics is a separate finite-difference module coupled to the lattice-Boltzmann hydrodynamics, not a second lattice-Boltzmann equation.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "finite-difference advection scheme order set by input (fd_advection_scheme_order)"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-ch-equation-src",
+      "tke:oss-lbm:ludwig-ch-fd-scheme-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 『LB 水动力 + FD 组分』的算子拆分让两相通道流可用独立模块做收敛研究；TensorLBM 若在 MCMP 上做 POISEUILLE 基准需明确组分方程离散阶数对界面通量的影响。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-ch-flux-first-order-mu",
+    "statement": "The diffusive Cahn-Hilliard flux in Ludwig is assembled from neighbouring chemical potential values as flux = mobility*(mu(ic+1) - mu(ic)), i.e. a two-point (first-order accurate) face gradient of mu, accumulated into an advective-flux buffer before the update; the interfacial current therefore carries O(h) truncation error in the chemical-potential gradient unless a wider stencil is used.",
+    "claim_type": "interpretive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "metric/symmetric mesh only (unit spacing)"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-ch-flux-mu-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-MU-STENCIL",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 这是 MCMP 通道流里寄生界面流(parasitic current)的典型来源；TensorLBM 若实现两相驱动流需量化 mu 面梯度阶数对滑移/回流误差的贡献。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-symm-phi4-density",
+    "statement": "Ludwig's symmetric free energy implements F[phi] = (1/2) A phi^2 + (1/4) B phi^4 + (1/2) kappa (grad phi)^2, with the bulk double-well term from A<0 and the gradient penalty from kappa; this is the canonical phi^4 free energy of Kendon et al. (J. Fluid Mech. 440, 147 (2001)) cited in the file header.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "A < 0, B > 0, kappa > 0 for a stable interface"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-symm-fed-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 二元流体 MCMP 的『参考自由能』可用此 phi^4 形式作为 TensorLBM 的解析基准族；A/B/kappa 三参数直接给出界面张力与界面宽度（见另两条 claims），便于误差判据。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-symm-analytic-sigma",
+    "statement": "Ludwig computes the interfacial tension of the symmetric free energy from the analytic phi^4 result sigma = sqrt(-8 kappa a^3 / (9 b^2)) (for phi* = sqrt(-a/b), a < 0), and the interfacial width from xi = sqrt(-2 kappa / a); both are exact continuum expressions evaluated from the input parameters, hence usable as closed-form references for measured (droplet-calibrated) surface tension.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "a < 0 (double-well)",
+        "sharp-interface (xi << L) regime"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-symm-sigma-src",
+      "tke:oss-lbm:ludwig-fe-symm-xi-src",
+      "tke:oss-lbm:ludwig-sigma-calib-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SIGMA-CALIB",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 解析 sigma 与数值液滴标定的对照就是 TensorLBM 两相实现的精度判据（目标 <3%）；同一对公式可直接进 TensorLBM 的基准测试夹具。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-symm-mu-discrete",
+    "statement": "The chemical potential of the symmetric free energy is evaluated as mu = a*phi + b*phi^3 - kappa*delsq(phi), where delsq(phi) is a discrete Laplacian read from the field-gradient object (choice of finite-difference stencil at run time); therefore the discretisation error of mu is entirely inherited from the selected gradient/Laplacian stencil, with no analytic correction term.",
+    "claim_type": "interpretive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "delsq from field_grad; stencil chosen via fd_gradient_calculation"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-symm-mu-src",
+      "tke:oss-lbm:ludwig-gradient-rt-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-MU-STENCIL",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 说明 mu 的精度是『纯模板』问题——TensorLBM 应在两相基准里做 7pt vs 27pt（各向同性）模板的收敛对照，而不是假设其一更好。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-force-methods",
+    "statement": "Ludwig provides five free-energy force formulations for the hydrodynamic sector: no force, stress divergence (documented as the current default), phi*grad(mu), phi*grad(mu) with a conservation correction, and symmetric/antisymmetric relaxation via the LB collision; the stress-divergence form uses the 'thermodynamic' stress tensor derived from the chosen free energy.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "force method selected at run time (fe_force_method enum)"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-force-method-src",
+      "tke:oss-lbm:ludwig-thermo-stress-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-FORCE-GAUGE",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 同一物理（自由能力）有 5 种离散实现→TensorLBM 应把它们做成可切换的力格式并交叉验证（尤其 stress-divergence vs phi grad mu 在小密度比下的差异）。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-no-gauge-formulation",
+    "statement": "The string 'gauge' does not occur anywhere in the Ludwig source, documentation, tests or README (case-insensitive search over src/, docs/, tests/, README.md gives zero hits); Ludwig's free-energy forcing is expressed as stress divergence and phi*grad(mu) forms, so a claim that Ludwig implements a 'gauge' formulation of the multicomponent force is not supported by the source.",
+    "claim_type": "negative",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "source inspection of master snapshot; absence is grep-exhaustive, not a proof of semantics"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-no-gauge-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-FORCE-GAUGE",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 否定性结论——不能把 Ludwig 当『gauge 实现』参考；若 TensorLBM 要做 gauge/规范不变的 MCMP 力格式，需另找文献与参考实现（本包已把该缺口挂锚）。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-no-scmp-pseudopotential",
+    "statement": "Ludwig contains no Shan-Chen single-component-multiphase (SCMP) pseudo-potential implementation: a case-insensitive search for 'scmp', 'pseudopotential', 'pseudo-potential' and 'shan-chen' over src/, docs/, tests/ and README.md returns zero hits (the string 'Shan' appears only as the code contributor name Shan Chen in the ternary free-energy files, plus one literature citation in gradient_2d_tomita_fluid.c. Multiphase behaviour is obtained from free-energy (Cahn-Hilliard) models instead.",
+    "claim_type": "negative",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "source inspection of master snapshot"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-no-scmp-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SCMP",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 明确 SCMP 是缺口而非参考实现——TensorLBM 若需要 SC 型伪势模型，Ludwig 无法提供对照基线，只能用于自由能型两相（这与 POISEUILLE 两相基准的模型选择直接相关）。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-poiseuille-init",
+    "statement": "Ludwig provides a run-time initial distribution '1d_poiseuille' that sets the analytic parabolic profile u_i = umax_i * x(L - x) * 4/L^2 along each coordinate using the local-to-global offset and lmin so that the profile is centred symmetrically, with the 4/L^2 factor normalising u to umax at the centre; this supplies the closed-form channel-flow reference state for two-phase (MCMP) Poiseuille benchmarks but it is only an initial condition, not a steady-state verification.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "one non-zero component of umax[3]",
+        "periodic walls unless a wall/bbl condition is set"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-poiseuille-comment-src",
+      "tke:oss-lbm:ludwig-poiseuille-formula-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 直接对齐 GAP-LBM-MCMP-POISEUILLE——Ludwig 只给解析剖面初值，不给压力驱动/两相逆流稳态校核；TensorLBM 应补『驱动-稳态-解析剖面对比』的验收环。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-shear-wave-init",
+    "statement": "Ludwig provides a run-time initial distribution '2d_shear_wave' with fixed amplitude u0 = 0.04 and wavenumber kappa = 2*pi applied as u_x = u0*sin(kappa*y) with y normalised by the box length in y; this is a single-phase viscous-decay reference configuration whose exact solution u_x = u0 sin(ky) exp(-nu k^2 t) is available in closed form.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "periodic boundaries",
+        "single phase (free_energy none)"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-shear-wave-init-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 本包用它做了定量验证（见 artifacts/shear_wave_verification.json，L=32 衰减率误差 0.26%）；TensorLBM 可复用同一构型作 LB 粘性/收敛回归环。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-gradient-stencil-selection",
+    "statement": "The discrete gradient/Laplacian used by the free-energy sector is selectable at run time through the input keys 'fd_gradient_calculation' (default) and 'fd_gradient_calculation_phi' / '_q' overrides for the phi and Q_ab fields, with separate 7-point and isotropic 27-point fluid stencils provided as distinct source files (gradient_3d_7pt_fluid.c, gradient_3d_27pt_fluid.c) in addition to the 2D 5-point and Tomita stencils.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "3D fluid fields",
+        "solid-like fields use *_solid stencils"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-gradient-rt-src",
+      "tke:oss-lbm:ludwig-grad-27pt-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-MU-STENCIL",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 模板=运行期参数而非编译期宏，TensorLBM 应照此把离散模板外置，以便在两相基准上做 7pt/27pt 收敛对照。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-spinodal-smoke-test",
+    "statement": "The only regression test that exercises the binary-fluid free-energy path in the D3Q27 build is a 10-step, 16^3 spinodal-decomposition case labelled 'smoke test' in its own header, using free_energy symmetric, mobility 1.25 and the 7-point gradient; it is a numerical-diff regression against a stored log, with no physical quantity (surface tension, growth rate, phase composition) asserted.",
+    "claim_type": "interpretive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "tests/regression/d3q27",
+        "comparison via tests/awk-fp-diff.sh"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-spinodal-inp-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SPINODAL",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 说明 Ludwig 的两相回归面偏弱（只 diff 不判物理量）——TensorLBM 的两相回归必须带物理判据（sigma、界面宽度、生长率），否则同类的『绿但无意义』陷阱会重现。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-unit-test-ch-scope",
+    "statement": "The Cahn-Hilliard unit test test_ch.c only checks object construction and the mobility bookkeeping (ch->info->mobility[] compared to input values at double epsilon), i.e. the discretised evolution operator of the order-parameter sector is not covered by a quantitative unit test in the repository's own suite.",
+    "claim_type": "interpretive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "tests/unit/test_ch.c as shipped"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-unit-ch-src",
+      "tke:oss-lbm:ludwig-ch-equation-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SPINODAL",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 可作为 TensorLBM 测试面的反面样本——两相组分算子必须有定量的解析解单元测试（如界面平衡剖面 tanh 拟合），不能只测构造。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-sigma-droplet-calibration",
+    "statement": "Ludwig calibrates the surface tension of the symmetric free energy from a simulated droplet in 2d or 3d (stats_sigma.c, 128 radial bins), i.e. a measurement-based verification path independent of the analytic formula; it is exercised from the main driver only when the 'sigma' statistics option is requested.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "symmetric free energy only",
+        "droplet initialisation"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-sigma-calib-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SIGMA-CALIB",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 『解析 sigma vs 液滴实测 sigma』的双通道标定正是 TensorLBM 两相精度验收模板（误差判据 <3%）。"
+    ]
+  },
+  {
+    "id": "tkc:oss-lbm:ludwig-ansi-c-not-fortran",
+    "statement": "Ludwig's README states that the code 'is written in standard ANSI C' and uses MPI plus a TargetDP abstraction for OpenMP/CUDA/HIP; the repository contains no Fortran sources (no *.f90/*.F90 files in the tree). Any description of Ludwig as a Fortran code is therefore incorrect.",
+    "claim_type": "descriptive",
+    "scope": {
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig",
+      "conditions": [
+        "master snapshot inspected"
+      ]
+    },
+    "modality": "asserted",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-readme-ansi-c-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "version": "1.0.0",
+    "notes": [
+      "TensorLBM 可服务改进点: 元数据纠错——按 C 代码对待（移植/对照时不要假设 Fortran 数组序与 ABI）。"
+    ]
+  }
+]
