@@ -1,0 +1,58 @@
+{
+  "id": "tkp:m8554:scenario-scientific",
+  "generated_entity": {
+    "id": "platform-test/epistemic-benchmark/pilots/m8554/scenario-scientific.json",
+    "entity_type": "artifact",
+    "version": "1.0.0"
+  },
+  "activity": {
+    "id": "m8554-act-scientific-extraction",
+    "activity_type": "extraction",
+    "description": "经 webReader 工具全文抓取 W3C PROV-O（REC-prov-o-20130430）规范文本，逐字抽取 §4.1 条目(6) prov:wasAttributedTo 的定义句、超属性、定义域/值域声明，构建 claim+evidence 记录（场景一：低风险有界定义性命题）",
+    "started_at": "2026-11-09T12:00:00Z",
+    "ended_at": "2026-11-09T12:15:00Z",
+    "used_entities": [
+      "https://www.w3.org/TR/prov-o/",
+      "tkc:prov-o:wasattributedto-signature",
+      "tke:prov-o:entry6-wasattributedto",
+      "tke:prov-o:section31-agent-responsibility"
+    ],
+    "software": [
+      {
+        "name": "webReader MCP tool (Z.ai built-in)",
+        "version": ""
+      },
+      {
+        "name": "Claude Code CLI",
+        "version": ""
+      },
+      {
+        "name": "ssh + docker exec (node099 container lbm_test)",
+        "version": ""
+      }
+    ]
+  },
+  "agents": [
+    {
+      "id": "cc-session-6f76cd3d",
+      "agent_type": "software-agent",
+      "name": "Claude Code 后台会话（模型 glm-5.3）",
+      "role": "source retrieval + record authoring",
+      "external_id": "bg-job-6f76cd3d"
+    },
+    {
+      "id": "tp-owner",
+      "agent_type": "person",
+      "name": "平台 owner",
+      "role": "directive authorizer（2026-11-09『你直接先接手亲自做吧』接管令）"
+    }
+  ],
+  "attributed_to": [
+    "tp-owner"
+  ],
+  "derived_from": [
+    "https://www.w3.org/TR/prov-o/"
+  ],
+  "recorded_at": "2026-11-09T12:10:00Z",
+  "version": "1.0.0"
+}
