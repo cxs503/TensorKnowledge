@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMAS = ROOT / "schemas"
@@ -42,6 +43,11 @@ def main() -> int:
         print("\n".join(errors))
         return 1
 
+    registry = Registry()
+    for schema in schemas.values():
+        registry = registry.with_resource(schema["$id"], Resource.from_contents(schema))
+    benchmark_validator = jsonschema.Draft202012Validator(schemas["benchmark-case.schema.json"], registry=registry)
+
     files = sorted(CASES.glob("case-*.json"))
     if len(files) != 10:
         errors.append(f"expected 10 benchmark cases, found {len(files)}")
@@ -52,7 +58,7 @@ def main() -> int:
     for path in files:
         try:
             case = load(path)
-            jsonschema.validate(case, schemas["benchmark-case.schema.json"])
+            benchmark_validator.validate(case)
             all_cases.append(case)
             if case["case_id"] in seen_case_ids:
                 errors.append(f"{path.name}: duplicate case_id {case['case_id']}")
