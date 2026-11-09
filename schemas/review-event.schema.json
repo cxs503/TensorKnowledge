@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/review-event.schema.json",
+  "title": "Review Event",
+  "description": "Append-only knowledge review event. Review decisions are independent from Platform mission acceptance and evidence assessment.",
+  "type": "object",
+  "required": [
+    "id",
+    "object_ref",
+    "decision",
+    "reviewer",
+    "reviewed_at",
+    "policy_version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkr:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "object_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "object_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision": {
+      "enum": [
+        "approve",
+        "request-changes",
+        "reject",
+        "revoke",
+        "deprecate"
+      ]
+    },
+    "reviewer": {
+      "type": "object",
+      "required": [
+        "id",
+        "reviewer_type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewer_type": {
+          "enum": [
+            "person",
+            "agent",
+            "organization",
+            "committee"
+          ]
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "severity",
+          "finding"
+        ],
+        "properties": {
+          "severity": {
+            "enum": [
+              "blocking",
+              "major",
+              "minor",
+              "informational"
+            ]
+          },
+          "finding": {
+            "type": "string",
+            "minLength": 1
+          },
+          "related_claim_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "related_evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "supersedes_event": {
+      "type": "string",
+      "minLength": 1
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}
