@@ -4,7 +4,7 @@
 
 ## What is included
 
-- `cases/case-01.json` through `case-10.json`: ten synthetic structural test scenarios.
+- `cases/case-01.json` through `case-12.json`: twelve synthetic structural test scenarios.
 - `../schemas/claim-record.schema.json`: atomic claims.
 - `../schemas/evidence-record.schema.json`: source/locator-to-claim evidence relations.
 - `../schemas/provenance-record.schema.json`: PROV-O-aligned generation lineage.
@@ -14,7 +14,7 @@
 
 The cases are **synthetic fixtures**, not factual reference answers, source endorsements or evidence of agent capability. In particular, the example quotations are synthetic and must never be cited as external evidence.
 
-## Ten scenarios
+## Twelve scenarios
 
 | Case | Scenario | Required behavior |
 |---|---|---|
@@ -28,6 +28,8 @@ The cases are **synthetic fixtures**, not factual reference answers, source endo
 | 08 | Counterevidence | Preserve qualifying evidence and narrow claim scope |
 | 09 | Derived result | Record inputs and software in provenance |
 | 10 | Review separation | Platform completion does not imply knowledge approval |
+| 11 | Weak relevance | Weakly related (topically overlapping) evidence must not be upgraded to support; verdict stays unsupported |
+| 12 | Contested both sides | Two credible (reviewed) sources in conflict keep the claim contested; no one-sided resolution |
 
 ## Validation
 
