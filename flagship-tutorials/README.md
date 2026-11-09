@@ -15,7 +15,11 @@ These are initial tutorial briefs, not completed or validated courses. Each must
 | 9 | Creativity Across Art, Media, and Technology | 5, 6 | Create and reflect on an original work |
 | 10 | Ethics, Institutions, and Civilizational Futures | 6, 4 | Compare futures and justify a design choice |
 
-## Development status\n\nTutorial 01 is an initial draft. Subject-matter review, learner piloting, accessibility review, and source verification are still pending. It must not be described as validated until those gates are completed.\n\n## Selection criteria
+## Development status
+
+Tutorial 01 is an initial draft (v0.2.0). An agent-assisted source check of the pendulum model, uncertainty terminology, and gravity reference was completed on 2026-11-09. Independent subject-matter review, learning-design review, learner piloting, accessibility review, and reproducibility review remain pending. It is not validated.
+
+## Selection criteria
 
 Prioritize tutorials that teach transferable foundations; can be practiced with accessible tools and data; demonstrate value and limits of agent assistance; connect multiple representations; have assessable outcomes; and can be reviewed by qualified people.
 
