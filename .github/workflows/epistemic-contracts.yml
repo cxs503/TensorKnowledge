@@ -1,0 +1,35 @@
+name: Epistemic Contract Validation
+
+on:
+  push:
+    paths:
+      - "schemas/**"
+      - "platform-test/epistemic-benchmark/**"
+      - "scripts/validate_epistemic_benchmark.py"
+      - "requirements-validation.txt"
+      - ".github/workflows/epistemic-contracts.yml"
+  pull_request:
+    paths:
+      - "schemas/**"
+      - "platform-test/epistemic-benchmark/**"
+      - "scripts/validate_epistemic_benchmark.py"
+      - "requirements-validation.txt"
+      - ".github/workflows/epistemic-contracts.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-epistemic-contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install validator
+        run: python -m pip install -r requirements-validation.txt
+      - name: Validate epistemic benchmark
+        run: python scripts/validate_epistemic_benchmark.py
+      - name: Validate existing learning assets
+        run: python scripts/validate_knowledge_assets.py
