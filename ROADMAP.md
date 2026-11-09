@@ -20,6 +20,7 @@ This roadmap is a sequence of evidence-gated stages, not a promise of dates. Pro
 - The first flagship tutorial, **Scientific Thinking: From Observation to Explanation**, has an initial full draft in `flagship-tutorials/01-scientific-thinking/README.md`.
 - The draft includes a pendulum investigation, model assumptions, uncertainty, agent-assisted critique, transfer exercises, and an assessment rubric.
 - OpenStax references have been added for the pendulum model.
+- On 2026-11-09, an agent-assisted source and structure pass checked the pendulum model and uncertainty terminology against OpenStax and NIST; the tutorial now has a more explicit reproducibility record and outcome-to-evidence map. This is not independent expert review or a learner pilot.
 - Subject-matter review, learner pilot, accessibility review, and full reproducibility review remain pending. The tutorial is **not validated**.
 
 ## Capability-to-curriculum translation
