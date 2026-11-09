@@ -9,7 +9,9 @@ from __future__ import annotations
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 NODE_DIR = ROOT / "knowledge-map" / "nodes"
@@ -83,6 +85,24 @@ def main() -> int:
             else:
                 tutorials[asset_id] = path
             check_version(item, path, errors)
+            for source_index, source in enumerate(item.get("sources", []), start=1):
+                if not isinstance(source, dict):
+                    errors.append(f"{path.relative_to(ROOT)}: source {source_index} must be an object")
+                    continue
+                for key in ("citation", "author", "publication_date", "source_type", "section", "accessed", "url", "supports"):
+                    if not source.get(key):
+                        errors.append(f"{path.relative_to(ROOT)}: source {source_index} missing required field {key}")
+                publication_date = str(source.get("publication_date", ""))
+                if not re.fullmatch(r"[0-9]{4}(-[0-9]{2}-[0-9]{2})?", publication_date):
+                    errors.append(f"{path.relative_to(ROOT)}: source {source_index} has invalid publication_date {publication_date!r}")
+                accessed = source.get("accessed")
+                try:
+                    date.fromisoformat(accessed)
+                except (TypeError, ValueError):
+                    errors.append(f"{path.relative_to(ROOT)}: source {source_index} has invalid accessed date {accessed!r}")
+                parsed_url = urlparse(str(source.get("url", "")))
+                if parsed_url.scheme not in ("http", "https") or not parsed_url.netloc:
+                    errors.append(f"{path.relative_to(ROOT)}: source {source_index} has invalid HTTP(S) URL")
             for node_id in item.get("knowledge_nodes", []):
                 if node_id not in nodes:
                     errors.append(f"{path.relative_to(ROOT)}: unresolved tutorial knowledge node {node_id}")
