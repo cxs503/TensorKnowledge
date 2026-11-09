@@ -1,37 +1,43 @@
 # Machine-Readable Knowledge Assets
 
-This directory defines the portable data contracts used by TensorKnowledge. The schemas are deliberately format-first: they describe stable identifiers, relationships, provenance, and review state without prescribing a particular database or user interface.
+This directory defines portable data contracts used by TensorKnowledge. The schemas describe stable identifiers, relationships, provenance, evidence and review state without prescribing a particular database or user interface.
 
 ## Contracts
 
-- `knowledge-node.schema.json`: a concept, claim, method, model, dataset, experiment, skill, question, value, or other typed knowledge object.
-- `learning-pathway.schema.json`: a question- or capability-led route through knowledge nodes and learning assets.
-- `tutorial.schema.json`: tutorial metadata and its explicit links to knowledge nodes, outcomes, activities, assessment, and sources.
+### General knowledge infrastructure
+- knowledge-object.schema.json: the domain-neutral, canonical Knowledge Object. It can represent concepts, claims, observations, theories, models, methods, procedures, skills, experiments, results, cases and other reusable knowledge assets.
+- production-task.schema.json: the bounded work package submitted to an execution provider such as TensorPlatform.
+- production-result.schema.json: the execution result envelope, including proposed objects, evidence, artifacts, checks and unresolved issues.
+
+### Human learning application
+- knowledge-node.schema.json: a specialized node for the existing human-capability and curriculum knowledge graph.
+- learning-pathway.schema.json: a question- or capability-led route through knowledge nodes and learning assets.
+- tutorial.schema.json: tutorial metadata and explicit links to knowledge nodes, outcomes, activities, assessment and sources.
 
 All schemas use JSON Schema Draft 2020-12. Assets should be valid UTF-8 JSON.
 
 ## Identity and relationships
 
-- IDs are stable, globally namespaced strings within this repository (for example, `tk:concept:observation`).
+- General Knowledge Object IDs use the tko:<domain>:<slug> namespace.
+- Existing curriculum IDs continue to use the tk: namespace. Do not silently rename or reinterpret existing IDs.
 - Renaming a title must not change an ID. Retire an ID rather than silently reusing it.
-- Relationship types are explicit strings. The schema permits extension; repository validation checks that local targets exist.
-- A relationship does not itself establish evidence or certainty.
+- Relationship types are explicit strings. A relationship does not itself establish evidence or certainty.
 - Prerequisite links should be used only when the target genuinely depends on the source. Recommended background belongs in pathway metadata, not as a hard prerequisite.
 
-## Tutorial source records
+## Source and data references
 
-Tutorial metadata requires each source record to include:
-- a full citation and responsible author/organization;
-- publication year or full publication date;
-- source type and exact section/page or equivalent locator;
-- access date and a stable HTTP(S) URL;
-- the claim or learning content the source supports.
+A source record should identify the source type, citation, URL or persistent identifier where available, exact locator, access date and the claim or content it supports. Check reuse and licensing terms before copying source content.
 
-A persistent identifier (such as a DOI) and reuse/license note should be added when relevant. These fields make the source record machine-readable; they do not prove that the source actually supports the claim. Reviewers must inspect the cited passage.
+TensorKnowledge should normally reference canonical datasets and large artifacts owned by TensorData or domain projects. Use data_references and artifact_references with stable asset IDs, URIs and checksums where available. Do not copy large raw datasets into Knowledge Objects.
 
-## Evidence and review are separate
+## Evidence, execution and review are separate
 
-Evidence status describes the state of a claim or knowledge object (for example, `well-supported` or `provisional`). Review status describes the workflow state of the asset (for example, `draft` or `approved`). Neither should be inferred from the other.
+- Execution state describes what happened to a delegated task.
+- Evidence status describes how well a claim or object is supported.
+- Review status describes the workflow decision on an asset.
+- Publication status describes who may access the asset.
+
+A completed Platform task does not imply approved knowledge. A schema-valid object does not imply factual accuracy.
 
 ## Validation
 
@@ -41,12 +47,12 @@ From the repository root, run:
 python scripts/validate_knowledge_assets.py
 ```
 
-The validator uses only the Python standard library. It checks JSON syntax, duplicate IDs, local relationship targets, tutorial node references, and required metadata. Full JSON Schema validation can additionally be run with a Draft 2020-12 validator in CI; it is not required to run the lightweight repository integrity checks.
+The validator uses the Python standard library. It checks learning-asset consistency, JSON syntax and schema-file conventions. Full JSON Schema validation can additionally be run with a Draft 2020-12 validator; it is not required for the lightweight repository integrity check.
 
 ## Compatibility policy
 
 - Additive optional fields are preferred for minor revisions.
 - Breaking changes to required fields or field meaning require a schema version change and migration notes.
 - Preserve unknown extension fields when reading and rewriting assets.
-- Never silently convert evidence status, review status, units, or provenance.
+- Never silently convert evidence status, review status, units or provenance.
 - A schema-valid asset is not automatically scientifically correct or pedagogically effective; human and domain review remain necessary.
