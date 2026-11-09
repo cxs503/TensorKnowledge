@@ -1,0 +1,301 @@
+[
+ {
+  "id": "tke:oss-lbm:openlb-gpl2-reference-only-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-gpl2-reference-only"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/shanChenDynOmegaForcedPostProcessor2D.hh",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/shanChenDynOmegaForcedPostProcessor2D.hh:9-11",
+   "quote": " *  modify it under the terms of the GNU General Public License\n *  as published by the Free Software Foundation; either version 2\n *  of the License, or (at your option) any later version."
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-shanchen-two-lattice-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-shanchen-two-lattice"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/shanChenDynOmegaForcedPostProcessor2D.hh",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/shanChenDynOmegaForcedPostProcessor2D.hh:146-148",
+   "quote": "        for (int iD = 0; iD < L::d; ++iD) {\n          blockU[iD] = uTot[iD];\n          blockForce[iD] = externalBlockForce[iD] - G*rhoPartnerContribution[iD]/rhoField1.get(iX-offsetX, iY-offsetY);"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-interaction-potential-library-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-interaction-potential-library"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/interactionPotential.hh",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/interactionPotential.hh:44",
+   "quote": "  psi[0]=sqrt(_rhoZero)*(1-exp(-(rho[0]/_rhoZero)));"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-eos-temperature-overload-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-eos-temperature-overload"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/interactionPotential.hh",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/interactionPotential.hh:88-90",
+   "quote": "template <typename T, typename S>\nbool PengRobinson<T,S>::operator()(T psi[], const S rho[], const S t[])\n{"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-free-energy-model-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-free-energy-model"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/freeEnergyPostProcessor2D.hh",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/freeEnergyPostProcessor2D.hh:250-252",
+   "quote": "        T forceX = -rho*gradMuRhoX - phi*gradMuPhiX - psi*gradMuPsiX;\n        T forceY = -rho*gradMuRhoY - phi*gradMuPhiY - psi*gradMuPsiY;\n        partnerLattice1->get(iX, iY).template setField<descriptors::FORCE>({forceX, forceY});"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-boussinesq-coupling-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-boussinesq-coupling"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/navierStokesAdvectionDiffusionCouplingPostProcessor3D.hh",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/navierStokesAdvectionDiffusionCouplingPostProcessor3D.hh:86-88",
+   "quote": "          T temperatureDifference = tPartner->get(iX,iY,iZ).computeRho() - T0;\n          for (unsigned iD = 0; iD < L::d; ++iD) {\n            force[iD] = forcePrefactor[iD] * temperatureDifference;"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-thermal-d3q7-lattice-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-thermal-d3q7-lattice"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/navierStokesAdvectionDiffusionCouplingPostProcessor3D.h",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/navierStokesAdvectionDiffusionCouplingPostProcessor3D.h:72",
+   "quote": "  BlockLattice3D<T,descriptors::D3Q7<descriptors::VELOCITY>> *tPartner;"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-validation-surface-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-validation-surface"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, examples/multiComponent/youngLaplace2d/youngLaplace2d.cpp",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d examples/multiComponent/youngLaplace2d/youngLaplace2d.cpp:218-219",
+   "quote": "      clout << \"Analytical Pressure Difference: \" << alpha/(6.*radius) * (kappa1 + kappa2) << \"  ;  \";\n      clout << \"Analytical Surface Tension: \" << alpha/6. * (kappa1 + kappa2) << std::endl;"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-meta-descriptor-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-meta-descriptor"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/descriptorBase.h",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/descriptorBase.h:97-99",
+   "quote": "  static constexpr bool provides()\n  {\n    return utilities::meta::list_contains_item<WANTED_FIELD,FIELDS...>::type::value;"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-bounceback-dynamics-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-bounceback-dynamics"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/dynamics.h",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/dynamics.h:652-654",
+   "quote": "class BounceBack : public Dynamics<T,DESCRIPTOR> {\npublic:\n  /// A fictitious density value on bounce-back in not fixed on nodes via this constructor."
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-turbulence-models-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-turbulence-models"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/dynamics/smagorinskyBGKdynamics.hh",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/dynamics/smagorinskyBGKdynamics.hh:239-241",
+   "quote": "  T tau_turb = pow(smagoConst_,2)*SNorm/cs2;\n  /// Effective realaxation time\n  T tau_eff = tau_mol+tau_turb;"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-no-freesurface-snapshot-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-no-freesurface-snapshot"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, README.md",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d README.md:7-9",
+   "quote": "* New meta descriptor concept\n* New homogenised lattice Boltzmann method\n* New free energy model"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ },
+ {
+  "id": "tke:oss-lbm:openlb-cpu-mpi-parallel-src",
+  "claim_refs": [
+   "tkc:oss-lbm:openlb-cpu-mpi-parallel"
+  ],
+  "source": {
+   "source_type": "other",
+   "citation": "openLB source code, src/communication/communicator2D.h",
+   "url": "https://github.com/openlb/openLB",
+   "accessed_at": "2026-11-09"
+  },
+  "relation": "supports",
+  "locator": {
+   "locator_type": "code-location",
+   "value": "openlb@6c3934d src/communication/communicator2D.h:41-43",
+   "quote": "/// A communicator provides a cuboid with data of other\n/// cuboids.\n/** For each cuboid a cuboid neighbourhood is defined. A communicator"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-09T15:15:00Z",
+  "captured_by": "agent-m8677",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+ }
+]

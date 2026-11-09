@@ -1,0 +1,43 @@
+[
+ {
+  "id": "tkp:oss-lbm:openlb-ingestion-2026-11-09",
+  "generated_entity": {
+   "id": "knowledge/oss-lbm/openlb",
+   "entity_type": "knowledge-object",
+   "version": "1.0.0"
+  },
+  "activity": {
+   "id": "activity-oss-lbm-openlb-ingest",
+   "activity_type": "extraction",
+   "description": "Source-code-driven extraction of 13 claims about openLB (multiphase Shan-Chen + free-energy model, Boussinesq thermal coupling, validation surface, descriptor system, turbulence models, GPL-2 license boundary). Every quote extracted programmatically from the cached checkout openlb@6c3934dea66e4c3cad66049f579e00b93effc256 (2019-12-02) at the cited file:line; no hand transcription. Cache note: /root/oss-cache/ does not exist on this host; the openLB cache actually lives at /root/openlb (same commit 6c3934d) and was used instead. The snapshot contains no LICENSE file and no free-surface module; both limitations are recorded as claims.",
+   "started_at": "2026-11-09T15:00:00Z",
+   "ended_at": "2026-11-09T15:15:00Z",
+   "used_entities": [
+    "openlb@6c3934dea66e4c3cad66049f579e00b93effc256"
+   ],
+   "software": [
+    {
+     "name": "python",
+     "version": "3.12"
+    },
+    {
+     "name": "pytest",
+     "version": "8.x"
+    }
+   ]
+  },
+  "agents": [
+   {
+    "id": "agent-m8677",
+    "agent_type": "software-agent",
+    "name": "TensorKnowledge builder agent",
+    "role": "knowledge extractor"
+   }
+  ],
+  "derived_from": [
+   "openLB source code (https://github.com/openlb/openLB), commit 6c3934dea66e4c3cad66049f579e00b93effc256, cached at /root/openlb"
+  ],
+  "recorded_at": "2026-11-09T15:15:00Z",
+  "version": "1.0.0"
+ }
+]
