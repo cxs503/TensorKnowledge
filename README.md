@@ -71,6 +71,20 @@ Portable contracts live in the schemas directory. Start with:
 - [Provenance Record schema](schemas/provenance-record.schema.json)
 - [Review Event schema](schemas/review-event.schema.json)
 - [Epistemic benchmark](platform-test/epistemic-benchmark/README.md)
+- [KE query interface draft (retrieval schemas)](schemas/ke-query.schema.json)
+
+## Knowledge Engine mapping
+
+The four epistemic contracts are not directly queryable: a Knowledge Engine must project them into entities, edges and vector facets without losing information. That projection is specified (v0.1) and machine-checked:
+- [Mapping specification v0.1](docs/ke/mapping-spec.md) — storage/retrieval mapping, review-event state machine with no self-approval, epistemic conservativeness, bi-temporal split, retrieval interface draft
+- [m8554 projection audit (generated)](docs/ke/m8554-audit.md) — per-record coverage, loss register, validation results
+- [Worked example mapping](mappings/m8554.json) — every record of the m8554 pilot projected, with an explicit loss register
+
+```bash
+python scripts/ke_state_machine.py
+python scripts/build_ke_mapping.py
+python scripts/validate_ke_mapping.py
+```
 
 The existing knowledge-node schema remains a specialized learning/curriculum graph. The new Knowledge Object schema is the domain-neutral asset contract.
 
