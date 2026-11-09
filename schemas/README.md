@@ -18,6 +18,17 @@ All schemas use JSON Schema Draft 2020-12. Assets should be valid UTF-8 JSON.
 - A relationship does not itself establish evidence or certainty.
 - Prerequisite links should be used only when the target genuinely depends on the source. Recommended background belongs in pathway metadata, not as a hard prerequisite.
 
+## Tutorial source records
+
+Tutorial metadata requires each source record to include:
+- a full citation and responsible author/organization;
+- publication year or full publication date;
+- source type and exact section/page or equivalent locator;
+- access date and a stable HTTP(S) URL;
+- the claim or learning content the source supports.
+
+A persistent identifier (such as a DOI) and reuse/license note should be added when relevant. These fields make the source record machine-readable; they do not prove that the source actually supports the claim. Reviewers must inspect the cited passage.
+
 ## Evidence and review are separate
 
 Evidence status describes the state of a claim or knowledge object (for example, `well-supported` or `provisional`). Review status describes the workflow state of the asset (for example, `draft` or `approved`). Neither should be inferred from the other.
