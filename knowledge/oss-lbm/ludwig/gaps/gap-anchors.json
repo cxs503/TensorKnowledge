@@ -1,0 +1,73 @@
+[
+  {
+    "id": "GAP-LBM-MCMP-POISEUILLE",
+    "title": "MCMP 两相通道流（Poiseuille 基准）验收缺口",
+    "declared_by": "mission brief (m8669) — anchored, not self-declared",
+    "summary": "TensorLBM 缺少『两相（MCMP）压力驱动通道流 → 稳态解析/半解析剖面对比』的验收环。Ludwig 只提供解析 Poiseuille 初值（1d_poiseuille）与单相粘性衰减初值（2d_shear_wave），不提供压力驱动与两相逆流稳态校核，故不能直接充当该缺口的验收器。",
+    "resolved_by_claims": [
+      "tkc:oss-lbm:ludwig-poiseuille-init",
+      "tkc:oss-lbm:ludwig-shear-wave-init",
+      "tkc:oss-lbm:ludwig-ch-fd-evolution",
+      "tkc:oss-lbm:ludwig-free-energy-catalog",
+      "tkc:oss-lbm:ludwig-symm-phi4-density",
+      "tkc:oss-lbm:ludwig-ansi-c-not-fortran"
+    ],
+    "next_step": "在 TensorLBM 实现体积力驱动的两相通道流，用 Ludwig 的 phi^4 参数族（a,b,kappa）给出 sigma/xi 解析值，并把界面处的表观滑移与解析 Poiseuille 剖面对比。"
+  },
+  {
+    "id": "GAP-LBM-MCMP-SCMP",
+    "title": "SCMP（Shan-Chen 伪势单组分多相）能力缺口",
+    "declared_by": "self-declared by m8669 package (adjacent to GAP-LBM-MCMP-POISEUILLE; 待平台缺口账本收养)",
+    "summary": "TensorLBM 若无 SCMP 伪势模型，则两相基准的模型族只有自由能型；本包确认 Ludwig 不含 SCMP 实现，因此 SCMP 侧无可对照的 OSS 参考实现（该缺口不能用 Ludwig 观测值填）。",
+    "resolved_by_claims": [
+      "tkc:oss-lbm:ludwig-no-scmp-pseudopotential"
+    ],
+    "next_step": "在 TensorLBM 内以解析 Maxwell 构造/共存密度曲线作为 SCMP 自验，勿引 Ludwig 为基线。"
+  },
+  {
+    "id": "GAP-LBM-MCMP-FORCE-GAUGE",
+    "title": "自由能力格式（应力散度 / phi·∇μ / 规范型）交叉验证缺口",
+    "declared_by": "self-declared by m8669 package (adjacent to GAP-LBM-MCMP-POISEUILLE; 待平台缺口账本收养)",
+    "summary": "自由能两相模型把体力写入 LB 的方式有多种（Ludwig 有 5 种可切换格式）；缺少『同一物理、不同离散力格式』的交叉验证，且任务书中『gauge 表述』在 Ludwig 源码中不存在（grep 0 命中）。",
+    "resolved_by_claims": [
+      "tkc:oss-lbm:ludwig-force-methods",
+      "tkc:oss-lbm:ludwig-no-gauge-formulation",
+      "tkc:oss-lbm:ludwig-fe-vtable-contract"
+    ],
+    "next_step": "TensorLBM 对 stress-divergence 与 phi·∇mu 两格式在同一算例上量化差异（目标 <3%）。"
+  },
+  {
+    "id": "GAP-LBM-MCMP-MU-STENCIL",
+    "title": "化学势/界面通量的离散模板阶数缺口",
+    "declared_by": "self-declared by m8669 package (adjacent to GAP-LBM-MCMP-POISEUILLE; 待平台缺口账本收养)",
+    "summary": "两相通道流中的寄生界面流由化学势梯度的离散阶数与各向同性决定；Ludwig 用两点面梯度 + 可选 7pt/27pt 模板，TensorLBM 侧缺少模板阶数 → 误差的收敛对照。",
+    "resolved_by_claims": [
+      "tkc:oss-lbm:ludwig-ch-flux-first-order-mu",
+      "tkc:oss-lbm:ludwig-symm-mu-discrete",
+      "tkc:oss-lbm:ludwig-gradient-stencil-selection"
+    ],
+    "next_step": "固定物理参数，扫 7pt/27pt/Tomita 模板，报告 sigma 与界面剖面误差随 h 的收敛阶。"
+  },
+  {
+    "id": "GAP-LBM-MCMP-SIGMA-CALIB",
+    "title": "界面张力/界面宽度的解析-数值双通道标定缺口",
+    "declared_by": "self-declared by m8669 package (adjacent to GAP-LBM-MCMP-POISEUILLE; 待平台缺口账本收养)",
+    "summary": "两相精度判据需要 sigma 的解析值与数值实测值同时在场；Ludwig 两者皆有（解析式 + 液滴标定），TensorLBM 侧尚无该双通道标定环。",
+    "resolved_by_claims": [
+      "tkc:oss-lbm:ludwig-symm-analytic-sigma",
+      "tkc:oss-lbm:ludwig-sigma-droplet-calibration"
+    ],
+    "next_step": "TensorLBM 用 phi^4 参数族做 sigma 解析-实测对照，判据 3%。"
+  },
+  {
+    "id": "GAP-LBM-MCMP-SPINODAL",
+    "title": "相分离（spinodal）与组分算子定量回归缺口",
+    "declared_by": "self-declared by m8669 package (adjacent to GAP-LBM-MCMP-POISEUILLE; 待平台缺口账本收养)",
+    "summary": "组分算子（Cahn-Hilliard）需要定量回归（界面平衡剖面、生长率），而非仅数值 diff；Ludwig 的两相回归只有一个标注为 smoke test 的 10 步算例、单测只覆盖构造与 mobility。",
+    "resolved_by_claims": [
+      "tkc:oss-lbm:ludwig-spinodal-smoke-test",
+      "tkc:oss-lbm:ludwig-unit-test-ch-scope"
+    ],
+    "next_step": "TensorLBM 组分算子加『tanh 平衡剖面拟合』与『线性生长率 vs 理论』两个定量测试。"
+  }
+]

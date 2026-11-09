@@ -1,0 +1,35 @@
+# Build / test transcript (m8669) — ludwig-cf/ludwig master snapshot
+# host: Linux 6.6.52-1.7.lns23.loongarch64 loongarch64, 128 cores, Mon Nov  9 15:07:22 UTC 2026
+
+$ cp config/unix-gcc-default.mk config.mk; sed -i 's/-D_D3Q19_/-D_D3Q27_/'  # MODEL=-D_D3Q27_
+$ gcc --version
+gcc (GCC) 12.3.0 20230508 (Anolis OS 12.3.0-9)
+
+$ make -j32 serial && make -j32   # serial build, D3Q27
+[build rc=0; src/Ludwig.exe produced; see mk2.log]
+-rwxr-xr-x 1 root root 5440296 Nov  9 14:58 src/Ludwig.exe
+
+$ cd tests/unit && make test
+[PASS lines: 98]
+[FAIL lines: 0]
+PASS     ./unit/test_ch
+PASS      test_fe_force_method.c
+PASS      test_fe_force_method_rt.c
+PASS     ./unit/test_field_grad
+PASS      test_hydro_options.c
+PASS     ./unit/test_hydro
+PASS     ./unit/test_lb_model
+PASS     ./unit/test_fe_symmetric
+
+$ make test   # top-level: regression diff vs stored logs
+[rc=2 — FAIL in d3q19-short/serial-actv-s01; excerpt:]
+    FAIL ./serial-actv-s01.inp
+79 < [rho]        4096.00  1.00000000000  2.1166918e-06  0.98789531168  1.00580926654
+80 < [Qxx] -6.2429132e+02 -1.5241487e-01 5.5639370e-03 -1.6702433e-01 2.8093481e-01
+79 < [rho]        4096.00  1.00000000000  2.1166918e-06  0.98789531168  1.00580926654
+79 > [rho]        4096.00  1.00000000000  2.1253264e-06  0.98772554450  1.00581825483
+
+$ ./src/Ludwig.exe   (input = 2d_shear_wave, size 8_8_8 / 16_16_16 / 32_32_32, viscosity 0.00625)
+Velocity magnitude:    4.0000000e-02
+Shear layer kappa:     6.2831853e+00
+Ludwig finished normally.

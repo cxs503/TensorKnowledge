@@ -1,0 +1,73 @@
+{
+  "description": "Ludwig single-phase shear-wave viscous decay vs exact solution (2d_shear_wave initial distribution, periodic box, free_energy none)",
+  "tool": "src/Ludwig.exe built from the inspected snapshot (gcc 12.3.0, -O2, D3Q27)",
+  "exact_solution": "u_x(y,t) = u0 sin(2 pi y / L) exp(-nu (2 pi/L)^2 t)",
+  "cases": [
+    {
+      "label": "8",
+      "L": 8,
+      "log": "artifacts/runs/shear_wave_L8.log",
+      "n_samples": 20,
+      "step_first": 10,
+      "step_last": 200,
+      "amplitude_first": 0.033576157,
+      "amplitude_last": 0.015646139,
+      "amplitude_t0_fit": 0.03508265091913683,
+      "k": 0.7853981633974483,
+      "viscosity_input": 0.00625,
+      "tau": 0.51875,
+      "decay_rate_measured": 0.004035431222227559,
+      "decay_rate_exact": 0.0038553142191755305,
+      "decay_rate_rel_error": 0.046719149934955816,
+      "amplitude_final_exact": 0.016226470474193528,
+      "amplitude_final_rel_error": -0.03576449204504969,
+      "fit_r2": 0.9999857718527073
+    },
+    {
+      "label": "16",
+      "L": 16,
+      "log": "artifacts/runs/shear_wave_L16.log",
+      "n_samples": 20,
+      "step_first": 20,
+      "step_last": 400,
+      "amplitude_first": 0.03796509,
+      "amplitude_last": 0.026239126,
+      "amplitude_t0_fit": 0.03874997031533902,
+      "k": 0.39269908169872414,
+      "viscosity_input": 0.00625,
+      "tau": 0.51875,
+      "decay_rate_measured": 0.0009744154129604018,
+      "decay_rate_exact": 0.0009638285547938826,
+      "decay_rate_rel_error": 0.01098417152496924,
+      "amplitude_final_exact": 0.026353433439962538,
+      "amplitude_final_rel_error": -0.004337478083185909,
+      "fit_r2": 0.9999953505201328
+    },
+    {
+      "label": "32",
+      "L": 32,
+      "log": "artifacts/runs/shear_wave_L32.log",
+      "n_samples": 20,
+      "step_first": 20,
+      "step_last": 400,
+      "amplitude_first": 0.03947334,
+      "amplitude_last": 0.036031802,
+      "amplitude_t0_fit": 0.03968312530313856,
+      "k": 0.19634954084936207,
+      "viscosity_input": 0.00625,
+      "tau": 0.51875,
+      "decay_rate_measured": 0.00024115684971135043,
+      "decay_rate_exact": 0.00024095713869847065,
+      "decay_rate_rel_error": 0.0008288238064184873,
+      "amplitude_final_exact": 0.03603689182010292,
+      "amplitude_final_rel_error": -0.000141239153707385,
+      "fit_r2": 0.9999813525433314
+    }
+  ],
+  "summary": {
+    "worst_rel_error": 0.046719149934955816,
+    "acceptance": "3%",
+    "passes": false,
+    "note": "The L=8 case carries a visible finite-k (dispersion) error of the discrete BGK operator, which is a property of the model at that resolution, not a code defect; the L=32 case is inside the 3% band."
+  }
+}

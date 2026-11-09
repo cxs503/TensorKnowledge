@@ -1,0 +1,544 @@
+[
+  {
+    "id": "tke:oss-lbm:ludwig-fe-enum-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/free_energy.h",
+      "line_start": 27,
+      "line_end": 29,
+      "quote": "enum fe_id_enum {FE_NULL,\n                 FE_SYMMETRIC,\n\t\t FE_BRAZOVSKII,"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-free-energy-catalog"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-fe-vtable-mu-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/free_energy.h",
+      "line_start": 44,
+      "line_end": 46,
+      "quote": "typedef int (* fe_fed_ft)(fe_t * fe, int index, double * fed);\ntypedef int (* fe_mu_ft)(fe_t * fe, int index, double * mu);\ntypedef int (* fe_str_ft)(fe_t * fe, int index, double s[3][3]);"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-fe-vtable-contract"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-ch-equation-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/cahn_hilliard.c",
+      "line_start": 8,
+      "line_end": 8,
+      "quote": " *     d_t phi + div (u phi - M grad mu) = 0."
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-ch-fd-evolution",
+      "tkc:oss-lbm:ludwig-unit-test-ch-scope"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-ch-fd-scheme-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/cahn_hilliard.c",
+      "line_start": 13,
+      "line_end": 15,
+      "quote": " *  The equation is solved here via finite difference. The velocity\n *  field u is assumed known from the hydrodynamic sector. M is the\n *  order parameter mobility. The chemical potential mu is set via"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-ch-fd-evolution"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-ch-flux-mu-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/cahn_hilliard.c",
+      "line_start": 281,
+      "line_end": 283,
+      "quote": "    for (int n = 0; n < info.nfield; n++) {\n      flux = info.mobility[n]*(mu1[n] - mu0[n]);\n      ch->flux->fx[addr_rank1(ch->flux->nsite, info.nfield, index0, n)] -= flux;"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-ch-flux-first-order-mu"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-fe-symm-fed-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/symmetric.c",
+      "line_start": 7,
+      "line_end": 8,
+      "quote": " *  F[\\phi] = (1/2) A \\phi^2 + (1/4) B \\phi^4 + (1/2) \\kappa (\\nabla\\phi)^2\n *"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-symm-phi4-density"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-fe-symm-sigma-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/symmetric.c",
+      "line_start": 253,
+      "line_end": 255,
+      "quote": "  kappa = fe->param->kappa;\n\n  *sigma = sqrt(-8.0*kappa*a*a*a/(9.0*b*b));"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-symm-analytic-sigma"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-fe-symm-xi-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/symmetric.c",
+      "line_start": 271,
+      "line_end": 271,
+      "quote": "  *xi = sqrt(-2.0*fe->param->kappa/fe->param->a);"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-symm-analytic-sigma"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-fe-symm-mu-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/symmetric.c",
+      "line_start": 314,
+      "line_end": 316,
+      "quote": "  delsq = fe->dphi->delsq[addr_rank0(fe->phi->nsites, index)];\n\n  *mu = fe->param->a*phi + fe->param->b*phi*phi*phi - fe->param->kappa*delsq;"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-symm-mu-discrete"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-force-method-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/fe_force_method.h",
+      "line_start": 22,
+      "line_end": 24,
+      "quote": "  FE_FORCE_METHOD_NO_FORCE,                   /* Usually no hydrodynamics */\n  FE_FORCE_METHOD_STRESS_DIVERGENCE,          /* Current default */\n  FE_FORCE_METHOD_PHI_GRADMU,                 /* Simple phi grad mu version */"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-force-methods"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-thermo-stress-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/phi_force_stress.c",
+      "line_start": 4,
+      "line_end": 5,
+      "quote": " *\n *  Storage and computation of the \"thermodynamic\" stress which"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-force-methods"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-poiseuille-comment-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/distribution_rt.c",
+      "line_start": 552,
+      "line_end": 554,
+      "quote": " *  A 1-d Poiseuille parabolic profile based on, e.g.,\n *    u(x) ~ umax[X] x (Lx - x)\n *"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-poiseuille-init"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-poiseuille-formula-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/distribution_rt.c",
+      "line_start": 582,
+      "line_end": 583,
+      "quote": "    x = 1.0*(noffset[X] + ic) - lmin[X];\n    u0[X] = umax[X]*x*(ltot[X] - x)*4.0/(ltot[X]*ltot[X]);"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-poiseuille-init"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-shear-wave-init-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/distribution_rt.c",
+      "line_start": 490,
+      "line_end": 492,
+      "quote": "  kappa = 2.0*pi;\n\n  for (ic = 1; ic <= nlocal[X]; ic++) {"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-shear-wave-init"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-sigma-calib-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/stats_sigma.c",
+      "line_start": 4,
+      "line_end": 6,
+      "quote": " *\n *  Provides a calibration of the surface tension when the symmetric\n *  free energy is used. This approach uses a droplet in 2d or 3d."
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-sigma-droplet-calibration",
+      "tkc:oss-lbm:ludwig-symm-analytic-sigma"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-gradient-rt-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/gradient_rt.c",
+      "line_start": 49,
+      "line_end": 51,
+      "quote": "  /* fd_gradient_calculation is     defualt\n   * fd_gradient_calculation_phi    overrides if and only if field is phi\n   * fd_gradient_calculation_q      overrides if and only if field is Q_ab"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-gradient-stencil-selection",
+      "tkc:oss-lbm:ludwig-symm-mu-discrete"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-grad-27pt-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "src/gradient_3d_27pt_fluid.c",
+      "line_start": 5,
+      "line_end": 6,
+      "quote": " *  Gradient operations for equally-weighted 27-point stencil\n *  in three dimensions."
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-gradient-stencil-selection"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-spinodal-inp-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "tests/regression/d3q27/serial-spin-n01.inp",
+      "line_start": 44,
+      "line_end": 46,
+      "quote": "phi0                0.0\nphi_initialisation  spinodal\nmobility            1.25"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-free-energy-catalog",
+      "tkc:oss-lbm:ludwig-spinodal-smoke-test"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-unit-ch-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "tests/unit/test_ch.c",
+      "line_start": 87,
+      "line_end": 89,
+      "quote": "  assert(ch->info->nfield == nfield);\n  assert(fabs(ch->info->mobility[0] - m1) < DBL_EPSILON);\n  assert(fabs(ch->info->mobility[1] - m2) < DBL_EPSILON);"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-unit-test-ch-scope"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-readme-ansi-c-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-location",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "path": "README.md",
+      "line_start": 18,
+      "line_end": 19,
+      "quote": "The code is written in standard ANSI C, and uses the Message Passing\nInterface for distributed memory parallelism. Threaded parallelism is"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-ansi-c-not-fortran"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-no-scmp-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-search",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "pattern": "scmp|pseudopotential|pseudo-potential|shan-chen",
+      "scope": [
+        "src/",
+        "docs/",
+        "tests/",
+        "README.md"
+      ],
+      "hits": 0,
+      "query": "grep -rinE 'scmp|pseudopotential|pseudo-potential|shan-chen' src/ docs/ tests/ README.md"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-no-scmp-pseudopotential"
+    ]
+  },
+  {
+    "id": "tke:oss-lbm:ludwig-no-gauge-src",
+    "source": {
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "branch": "master"
+    },
+    "relation": "supports",
+    "locator": {
+      "locator_type": "code-search",
+      "repo": "ludwig-cf/ludwig",
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "pattern": "gauge",
+      "scope": [
+        "src/",
+        "docs/",
+        "tests/",
+        "README.md"
+      ],
+      "hits": 0,
+      "query": "grep -rinE 'gauge' src/ docs/ tests/ README.md"
+    },
+    "captured_at": "2026-11-09T15:00:00Z",
+    "assessment_status": "unassessed",
+    "version": "1.0.0",
+    "claim_refs": [
+      "tkc:oss-lbm:ludwig-no-gauge-formulation"
+    ]
+  }
+]

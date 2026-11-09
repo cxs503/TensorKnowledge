@@ -1,0 +1,24 @@
+# Absence / presence search transcript (m8669)
+# tree: ludwig-cf/ludwig master snapshot extracted at /tmp/ludwig_tar/ludwig-master
+# date: Mon Nov  9 15:07:04 UTC 2026
+
+$ grep -rinE 'scmp|pseudopotential|pseudo-potential|shan-chen' src/ docs/ tests/ README.md
+[hits: 0]
+
+$ grep -rinE 'gauge' src/ docs/ tests/ README.md
+[hits: 0]
+
+$ grep -rin 'shan' src/*.c src/*.h | head -10   # author name only
+src/fe_ternary.c:23: *  Shan Chen (shan.chen@epfl.ch)
+src/fe_ternary_rt.c:13: *  Shan Chen (shan.chen@epfl.ch)
+src/field_ternary_init.c:25: *  Shan Chen (shan.chen@epfl.ch)
+src/gradient_2d_ternary_solid.c:17: *  Shan Chen (chan.chen@epfl.ch)
+src/gradient_2d_tomita_fluid.c:30: *  471 (1986). See also Shan PRE {\bf 73} 047701 (2006).
+src/gradient_3d_ternary_solid.c:21: *  Shan Chen (shan.chen@epfl.ch)
+src/fe_ternary.h:11: *  Shan Chen (shan.chen@epfl.ch)
+src/fe_ternary_rt.h:11: *  Shan Chen (shan.chen@epfl.ch)
+src/field_ternary_init.h:11: *  Shan Chen (shan.chen@epfl.ch)
+src/gradient_3d_ternary_solid.h:10: *  Shan Chen (shan.chen@epfl.ch)
+
+$ find . -name '*.f90' -o -name '*.F90' -o -name '*.f'  # Fortran sources
+[hits: 0]
