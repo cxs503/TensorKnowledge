@@ -4,6 +4,15 @@ This directory defines portable data contracts used by TensorKnowledge. The sche
 
 ## Contracts
 
+### Epistemic core (modular records)
+- claim-record.schema.json: atomic claim with scope, modality, epistemic status and evidence references.
+- evidence-record.schema.json: source identity, exact locator, relation to claim and separate evidence assessment.
+- provenance-record.schema.json: PROV-O-aligned generation lineage across entities, activities, agents and tools.
+- review-event.schema.json: append-only knowledge review decisions, separate from Platform acceptance.
+- benchmark-case.schema.json: envelope for synthetic/curated epistemic test cases.
+
+The general Knowledge Object may reference these records through claim_refs, evidence_refs, provenance_refs and review_event_refs. This keeps the canonical asset portable while allowing claims, evidence and reviews to evolve independently.
+
 ### General knowledge infrastructure
 - knowledge-object.schema.json: the domain-neutral, canonical Knowledge Object. It can represent concepts, claims, observations, theories, models, methods, procedures, skills, experiments, results, cases and other reusable knowledge assets.
 - production-task.schema.json: the bounded work package submitted to an execution provider such as TensorPlatform.
