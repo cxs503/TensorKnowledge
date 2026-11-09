@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/production-result.schema.json",
+  "title": "TensorKnowledge Production Result",
+  "type": "object",
+  "required": ["contract_version", "package_id", "platform_task_id", "execution_state", "outcome", "summary", "proposed_objects", "unresolved_issues"],
+  "properties": {
+    "contract_version": {"const": "0.1.0"},
+    "package_id": {"type": "string"},
+    "platform_task_id": {"type": "string"},
+    "execution_state": {"enum": ["completed", "partial", "blocked", "failed", "cancelled"]},
+    "completed_at": {"type": "string", "format": "date-time"},
+    "outcome": {"enum": ["accepted-for-review", "needs-revision", "blocked", "no-valid-output"]},
+    "summary": {"type": "string", "minLength": 1},
+    "proposed_objects": {"type": "array", "items": {"$ref": "knowledge-object.schema.json"}},
+    "artifact_references": {"type": "array", "items": {"type": "string"}},
+    "evidence_and_sources": {"type": "array", "items": {"type": "string"}},
+    "checks": {"type": "array", "items": {"type": "object", "required": ["check", "status"], "properties": {"check": {"type": "string"}, "status": {"enum": ["passed", "failed", "not-run", "not-applicable"]}, "evidence": {"type": "string"}}, "additionalProperties": false}},
+    "unresolved_issues": {"type": "array", "items": {"type": "string"}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "confidence_statement": {"type": "string"},
+    "agent_attribution": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}
