@@ -10,10 +10,14 @@ Usage:
     python -m ke.cli query    <pilot_dir> --db <path> --type stats
     python -m ke.cli validate <pilot_dir> --db <path>
     python -m ke.cli demo     <pilot_dir> [--db <path>]
+    python -m ke.cli export   <pilot_dir> --kind sft|eval|triples --out DIR [--db <path>]
 
 ``demo`` runs the full closed loop (ingest -> all query classes -> xref
 validation) and prints deterministic JSON; exit code 0 iff all invariants
 hold.
+
+``export`` produces training/eval/triple artifacts for physical-AI training
+with epistemic hard gates and manifests.
 """
 from __future__ import annotations
 
@@ -23,6 +27,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+from . import export as exp
 from . import queries as q
 from . import store, validate
 
@@ -134,6 +139,22 @@ def cmd_demo(args) -> int:
     return 1 if fails else 0
 
 
+def cmd_export(args) -> int:
+    """Export knowledge artifacts for physical-AI training."""
+    out_dir = Path(args.out)
+    pilot = Path(args.pilot).resolve()
+    db_path = args.db if args.db else None
+
+    manifest = exp.export(
+        kind=args.kind,
+        pilot_dir=pilot,
+        db_path=db_path,
+        out_dir=out_dir,
+    )
+    _print_json(manifest)
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="ke", description="TensorKnowledge Knowledge Engine prototype")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -160,6 +181,14 @@ def main(argv=None) -> int:
     p.add_argument("pilot")
     p.add_argument("--db", default=None)
     p.set_defaults(fn=cmd_demo)
+
+    p = sub.add_parser("export", help="export knowledge artifacts for physical-AI training")
+    p.add_argument("pilot")
+    p.add_argument("--kind", required=True, choices=["sft", "eval", "triples"],
+                   help="Export type: sft (training corpus), eval (benchmark set), triples (KG triples)")
+    p.add_argument("--out", required=True, help="Output directory for JSONL + manifest")
+    p.add_argument("--db", default=None, help="Optional existing KE database path")
+    p.set_defaults(fn=cmd_export)
 
     args = ap.parse_args(argv)
     if args.cmd == "query" and args.type != "stats" and not args.value:
