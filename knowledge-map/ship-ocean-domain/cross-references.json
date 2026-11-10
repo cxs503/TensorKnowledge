@@ -1,0 +1,275 @@
+{
+  "version": "1.0.0",
+  "created": "2026-11-10",
+  "mission": "m8817",
+  "title": "方法轴交叉挂载表（≥12交叉点）",
+  "description": "领域学科×数值方法的交叉点，每个交叉点至少1张DecisionCard/AnchorCard",
+  "cross_references": [
+    {
+      "id": "xref-01",
+      "domain_node": "ice-resistance-dem",
+      "domain_label": "冰区航行×冰阻力",
+      "method": "DEM (离散元方法)",
+      "method_repo": "TensorDEM",
+      "card_type": "DecisionCard",
+      "card_id": "DC-ice-dem-001",
+      "title": "冰-船相互作用DEM选型决策卡",
+      "key_question": "何时选用DEM而非连续介质方法模拟冰-船作用？",
+      "decision_criteria": [
+        "冰厚>0.3m且需捕捉破碎模式→DEM优先",
+        "船速<5kn且关注冰载荷峰值→DEM优先",
+        "实时性要求>100×加速→降阶模型/经验公式优先"
+      ],
+      "validation_anchor": "TensorPhysics benchmarks/icebreaking/adfreeze_breakout.py",
+      "evidence_path": "cross-refs/DC-ice-dem-001.md"
+    },
+    {
+      "id": "xref-02",
+      "domain_node": "multiphase-bubble-lbm",
+      "domain_label": "多相流×气泡动力学",
+      "method": "LBM-MCMP (多组分多相格子Boltzmann)",
+      "method_repo": "TensorLBM",
+      "card_type": "DecisionCard",
+      "card_id": "DC-bubble-lbm-001",
+      "title": "气泡动力学LBM-MCMP选型决策卡",
+      "key_question": "LBM-MCMP模拟气泡聚并/破裂的适用条件？",
+      "decision_criteria": [
+        "Re_bubble<500且关注界面拓扑→LBM-MCMP优先",
+        "多气泡相互作用(>10个)→LBM-MCMP可扩展",
+        "高Re湍流气泡→VOF/LevelSet优先"
+      ],
+      "validation_anchor": "TensorLBM docs/SUBOFF_VALIDATION.md",
+      "evidence_path": "cross-refs/DC-bubble-lbm-001.md"
+    },
+    {
+      "id": "xref-03",
+      "domain_node": "seakeeping-wave-3d",
+      "domain_label": "耐波×波浪载荷",
+      "method": "BEM (边界元/势流方法)",
+      "method_repo": "TensorBEM",
+      "card_type": "DecisionCard",
+      "card_id": "DC-seakeeping-bem-001",
+      "title": "耐波性势流BEM选型决策卡",
+      "key_question": "何时选用势流BEM而非CFD进行耐波性计算？",
+      "decision_criteria": [
+        "Fn<0.3且无显著非线性→势流BEM优先(快10-100×)",
+        "需RAO全频响→势流BEM优先",
+        "砰击/甲板上浪显著→CFD优先"
+      ],
+      "validation_anchor": "ITTC-1978耐波性预报规程",
+      "evidence_path": "cross-refs/DC-seakeeping-bem-001.md"
+    },
+    {
+      "id": "xref-04",
+      "domain_node": "structural-hydro-fsi-two",
+      "domain_label": "结构水动力×流固耦合",
+      "method": "FEM (有限元方法)",
+      "method_repo": "TensorFEM",
+      "card_type": "DecisionCard",
+      "card_id": "DC-fsi-fem-001",
+      "title": "双向流固耦合FEM选型决策卡",
+      "key_question": "双向FSI中结构侧FEM离散策略？",
+      "decision_criteria": [
+        "薄板/壳结构→Mindlin/ Kirchhoff板单元",
+        "大变形几何非线性→非线性FEM+更新Lagrange",
+        "湿模态分析→附加质量矩阵耦合"
+      ],
+      "validation_anchor": "TensorFEM plate_mindlin曲率收敛校验",
+      "evidence_path": "cross-refs/DC-fsi-fem-001.md"
+    },
+    {
+      "id": "xref-05",
+      "domain_node": "resistance-viscous-cfd",
+      "domain_label": "阻力×粘压阻力",
+      "method": "FVM (有限体积CFD)",
+      "method_repo": "TensorFVM",
+      "card_type": "DecisionCard",
+      "card_id": "DC-resistance-fvm-001",
+      "title": "阻力CFD计算FVM选型决策卡",
+      "key_question": "RANS/LES/DES在船体阻力计算中的选择？",
+      "decision_criteria": [
+        "工程预报(误差<5%)→RANS SST k-ω优先",
+        "分离流/涡脱落→DES/LES优先",
+        "网格独立性: y+<1(壁面解析)或30<y+<300(壁面函数)"
+      ],
+      "validation_anchor": "SUBOFF阻力验证(误差<3%)",
+      "evidence_path": "cross-refs/DC-resistance-fvm-001.md"
+    },
+    {
+      "id": "xref-06",
+      "domain_node": "multiphase-freesurface-lbm",
+      "domain_label": "多相流×自由面",
+      "method": "LBM自由面",
+      "method_repo": "TensorLBM",
+      "card_type": "AnchorCard",
+      "card_id": "AC-freesurface-lbm-001",
+      "title": "LBM自由面方法验证锚卡",
+      "key_question": "LBM自由面方法精度与适用范围？",
+      "validation_criteria": [
+        "静水压力分布误差<2%",
+        "波浪传播色散关系误差<5%",
+        "质量守恒: 总质量漂移<0.1%/1000步"
+      ],
+      "evidence_path": "cross-refs/AC-freesurface-lbm-001.md"
+    },
+    {
+      "id": "xref-07",
+      "domain_node": "ice-mechanics-vibration",
+      "domain_label": "冰区航行×冰致振动",
+      "method": "DEM+FEM耦合",
+      "method_repo": "TensorDEM+TensorFEM",
+      "card_type": "DecisionCard",
+      "card_id": "DC-ice-vibration-001",
+      "title": "冰致振动锁频DEM-FEM耦合决策卡",
+      "key_question": "冰-结构相互作用中锁频(lock-in)现象的数值捕捉？",
+      "decision_criteria": [
+        "冰速0.05-0.3m/s且结构固有频率0.5-5Hz→锁频风险高",
+        "需捕捉冰力周期性→DEM时间步<结构周期1/20",
+        "结构响应→FEM模态叠加或瞬态直接积分"
+      ],
+      "validation_anchor": "TensorPhysics冰致振动锁频基准",
+      "evidence_path": "cross-refs/DC-ice-vibration-001.md"
+    },
+    {
+      "id": "xref-08",
+      "domain_node": "maneuvering-model-mmg",
+      "domain_label": "操纵×MMG模型",
+      "method": "系统辨识+CFD",
+      "method_repo": "TensorFVM+TensorPlatform",
+      "card_type": "DecisionCard",
+      "card_id": "DC-maneuvering-mmg-001",
+      "title": "MMG操纵模型参数获取决策卡",
+      "key_question": "MMG模型水动力导数如何获取？",
+      "decision_criteria": [
+        "已有船模试验数据→系统辨识优先",
+        "新船型无试验→CFD captive model test",
+        "早期设计阶段→经验公式估算(误差15-25%)"
+      ],
+      "validation_anchor": "IMO Res.757操纵性标准",
+      "evidence_path": "cross-refs/DC-maneuvering-mmg-001.md"
+    },
+    {
+      "id": "xref-09",
+      "domain_node": "propulsion-propeller-cfd",
+      "domain_label": "推进×螺旋桨CFD",
+      "method": "FVM滑移网格/重叠网格",
+      "method_repo": "TensorFVM",
+      "card_type": "DecisionCard",
+      "card_id": "DC-propeller-cfd-001",
+      "title": "螺旋桨CFD计算网格策略决策卡",
+      "key_question": "螺旋桨敞水性能CFD网格与湍流模型选择？",
+      "decision_criteria": [
+        "稳态敞水→MRF滑移网格(快)",
+        "非定常脉动→滑移网格瞬态(准)",
+        "桨-舵干扰→重叠网格(灵活)"
+      ],
+      "validation_anchor": "ITTC螺旋桨敞水试验规程",
+      "evidence_path": "cross-refs/DC-propeller-cfd-001.md"
+    },
+    {
+      "id": "xref-10",
+      "domain_node": "multiphase-cavitation-sheet",
+      "domain_label": "多相流×片状空化",
+      "method": "FVM+空化模型",
+      "method_repo": "TensorFVM",
+      "card_type": "AnchorCard",
+      "card_id": "AC-cavitation-fvm-001",
+      "title": "空化CFD验证锚卡",
+      "key_question": "空化模型(Schnerr-Sauer/Zwart)的验证判据？",
+      "validation_criteria": [
+        "空化数σ对应空化区域长度误差<10%",
+        "升力系数CL误差<5%",
+        "空化脱落频率Strouhal数误差<15%"
+      ],
+      "evidence_path": "cross-refs/AC-cavitation-fvm-001.md"
+    },
+    {
+      "id": "xref-11",
+      "domain_node": "structural-hydro-slamming-wagner",
+      "domain_label": "结构水动力×砰击",
+      "method": "解析解+Wagner理论",
+      "method_repo": "TensorPhysics",
+      "card_type": "AnchorCard",
+      "card_id": "AC-slamming-wagner-001",
+      "title": "Wagner砰击理论验证锚卡",
+      "key_question": "Wagner理论对二维楔形体入水的精度？",
+      "validation_criteria": [
+        "入水初期(t<0.01s)压力峰值误差<10%",
+        "附加质量系数误差<5%",
+        "楔角<10°时Wagner理论适用"
+      ],
+      "evidence_path": "cross-refs/AC-slamming-wagner-001.md"
+    },
+    {
+      "id": "xref-12",
+      "domain_node": "seakeeping-motion-slamming",
+      "domain_label": "耐波×砰击载荷",
+      "method": "CFD+结构响应耦合",
+      "method_repo": "TensorFVM+TensorFEM",
+      "card_type": "DecisionCard",
+      "card_id": "DC-slamming-coupled-001",
+      "title": "砰击载荷流固耦合决策卡",
+      "key_question": "砰击载荷计算中何时需要双向耦合？",
+      "decision_criteria": [
+        "弹性响应时间<砰击持续时间→双向耦合必须",
+        "刚性假设下压力峰值→单向CFD→FEM可接受",
+        "湿甲板砰击→VOF自由面+结构瞬态响应"
+      ],
+      "validation_anchor": "ITTC耐波性试验规程",
+      "evidence_path": "cross-refs/DC-slamming-coupled-001.md"
+    },
+    {
+      "id": "xref-13",
+      "domain_node": "ice-operation-beset",
+      "domain_label": "冰区航行×被困船脱困",
+      "method": "DEM+热力学耦合",
+      "method_repo": "TensorDEM+TensorPhysics",
+      "card_type": "DecisionCard",
+      "card_id": "DC-beset-dem-001",
+      "title": "被困船脱困DEM决策卡",
+      "key_question": "脱困力计算中冻结强度与机械阻力的耦合？",
+      "decision_criteria": [
+        "冻结时间>24h→adfreeze强度主导(Frederking 1984)",
+        "船体运动→DEM冰-船接触力+冻结面剪切",
+        "脱困判据: 主机推力>总阻力(冰+冻结)"
+      ],
+      "validation_anchor": "TensorPhysics adfreeze_breakout.py (校准3.3%)",
+      "evidence_path": "cross-refs/DC-beset-dem-001.md"
+    },
+    {
+      "id": "xref-14",
+      "domain_node": "resistance-prediction-cfd",
+      "domain_label": "阻力×CFD直接计算",
+      "method": "LBM (格子Boltzmann)",
+      "method_repo": "TensorLBM",
+      "card_type": "DecisionCard",
+      "card_id": "DC-resistance-lbm-001",
+      "title": "LBM阻力计算选型决策卡",
+      "key_question": "LBM用于船体阻力计算的适用性？",
+      "decision_criteria": [
+        "Re<10^6且几何简单→LBM D3Q19可行",
+        "高Re湍流→LBM需LES亚格子模型",
+        "复杂几何+边界层→FVM优先"
+      ],
+      "validation_anchor": "SUBOFF LBM验证(TensorLBM)",
+      "evidence_path": "cross-refs/DC-resistance-lbm-001.md"
+    }
+  ],
+  "summary": {
+    "total_cross_refs": 14,
+    "by_card_type": {
+      "DecisionCard": 11,
+      "AnchorCard": 3
+    },
+    "by_method": {
+      "DEM": 3,
+      "LBM": 3,
+      "BEM": 1,
+      "FEM": 2,
+      "FVM": 3,
+      "LBM-MCMP": 1,
+      "CFD+FEM": 1
+    },
+    "coverage": "14个交叉点覆盖8大分支中的7个，每个交叉点含DecisionCard或AnchorCard"
+  }
+}
