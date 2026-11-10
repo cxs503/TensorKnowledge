@@ -93,13 +93,75 @@ CREATE TABLE IF NOT EXISTS ingest_meta (
 );
 """
 
+# Asset management schema (ko_versions, review_events, dataset_assets, quality_ledger)
+ASSET_SCHEMA = """
+CREATE TABLE IF NOT EXISTS ko_versions (
+    id              TEXT PRIMARY KEY,
+    ko_id           TEXT NOT NULL,
+    version         TEXT NOT NULL,
+    state           TEXT NOT NULL DEFAULT 'draft',
+    title           TEXT,
+    object_type     TEXT,
+    summary         TEXT,
+    content_json    TEXT,
+    superseded_by   TEXT,
+    created_at      TEXT NOT NULL,
+    created_by      TEXT,
+    source_file     TEXT,
+    raw_json        TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS review_events (
+    id              TEXT PRIMARY KEY,
+    object_ref      TEXT NOT NULL,
+    object_version  TEXT,
+    decision        TEXT NOT NULL,
+    reviewer_json   TEXT NOT NULL,
+    reviewed_at     TEXT NOT NULL,
+    policy_version  TEXT NOT NULL,
+    rationale       TEXT,
+    findings_json   TEXT,
+    supersedes_event TEXT,
+    conditions_json TEXT,
+    source_file     TEXT,
+    raw_json        TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS dataset_assets (
+    id              TEXT PRIMARY KEY,
+    asset_type      TEXT NOT NULL,
+    version         TEXT NOT NULL,
+    record_count    INTEGER NOT NULL,
+    status_dist_json TEXT,
+    sha256          TEXT NOT NULL,
+    gen_params_json TEXT,
+    upstream_commit TEXT,
+    created_at      TEXT NOT NULL,
+    created_by      TEXT,
+    source_file     TEXT,
+    raw_json        TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS quality_ledger (
+    ko_id           TEXT PRIMARY KEY,
+    evidence_count  INTEGER NOT NULL DEFAULT 0,
+    citation_count  INTEGER NOT NULL DEFAULT 0,
+    falsified_count INTEGER NOT NULL DEFAULT 0,
+    last_review_at  TEXT,
+    last_review_decision TEXT,
+    state           TEXT,
+    version         TEXT,
+    is_stale        INTEGER NOT NULL DEFAULT 0,
+    computed_at     TEXT NOT NULL
+);
+"""
+
+FULL_SCHEMA = SCHEMA + ASSET_SCHEMA
+
 
 def connect(db_path: str | Path = ":memory:") -> sqlite3.Connection:
     """Open (and initialize) the KE database. ``:memory:`` supported."""
     conn = sqlite3.connect(str(db_path))
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
-    conn.executescript(SCHEMA)
+    conn.executescript(FULL_SCHEMA)
     return conn
 
 
