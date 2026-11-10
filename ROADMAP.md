@@ -1,133 +1,151 @@
-# Roadmap
+# TensorKnowledge Roadmap
 
-This roadmap is a sequence of evidence-gated stages, not a promise of dates. Progress is measured by usable, reviewed learning assets rather than the number of files produced.
+本路线图按「地基 → 进水口 → 出水口 → 多模态」分层排期。
+状态标注纪律：**done** = 已完成可验证、**in-progress** = 在建有可追踪工件、**planned** = 未建。
+禁止把 planned 写成已有。
 
-## Stage 0 — Establish the foundation
+---
 
-- [x] Define project mission and boundaries.
-- [x] Establish the six-domain knowledge framework.
-- [x] Define a common tutorial specification.
-- [x] Define content-quality and review expectations.
-- [ ] Review the framework with educators and domain specialists.
-- [x] Convert the framework into reusable agent work-package contracts.
-- [x] Define a reusable tutorial template and question-led learning pathways.
-- [x] Define source and claim traceability requirements.
+## P0 · 地基（in-flight）
 
-**Exit gate:** the framework is internally consistent, understandable, and reviewed for major omissions and unsupported assumptions.
+三条 P0 单并行推进，构成知识治理基础设施的最小可用闭环。
 
-## Current implementation snapshot
+### m8800 · 存储统一（in-progress）
 
-- The first flagship tutorial, **Scientific Thinking: From Observation to Explanation**, has an initial full draft in `flagship-tutorials/01-scientific-thinking/README.md`.
-- The draft includes a pendulum investigation, model assumptions, uncertainty, agent-assisted critique, transfer exercises, and an assessment rubric.
-- OpenStax references have been added for the pendulum model.
-- On 2026-11-09, an agent-assisted source and structure pass checked the pendulum model, uncertainty terminology, and standard/local gravity distinction against OpenStax and NIST; the tutorial now has a more explicit reproducibility record and outcome-to-evidence map. This is not independent expert review or a learner pilot.
-- Subject-matter review, learner pilot, accessibility review, and full reproducibility review remain pending. The tutorial is **not validated**.
+**目标**：统一知识引擎存储层，从 ke-proto（SQLite 原型）演进为生产级存储。
 
-## Capability-to-curriculum translation
+- [x] ke-proto 原型完成（SQLite + 六类查询 + 一致性校验）— [docs/ke/proto.md](docs/ke/proto.md)
+- [x] 选型评估完成（Cognee vs Graphiti vs 自研薄层）— [docs/ke/evaluation.md](docs/ke/evaluation.md)
+- [x] 决策：自研薄层作为权威存储（canonical store）
+- [ ] PostgreSQL 生产存储实现（替代 SQLite 原型）
+- [ ] 多包 ingest 与包间 xref
+- [ ] review-event 接入存储层
+- [ ] 与 production-result 信封的联动校验
 
-- [x] Draft the human capability framework in readable and machine-readable forms.
-- [x] Map seven first-cycle capabilities to existing knowledge nodes, learning pathways, and observable evidence.
-- [x] Define assessment through explanation, performance, transfer, and reflection/accountability.
-- [ ] Validate every mapping reference automatically and in CI.
-- [ ] Review assessment validity and accessibility with educators and learners.
+**验收**：PostgreSQL 存储通过 ke-proto 全部 15 个测试 + 新增多包/增量测试。
 
-## Human capability framework
+### m8801 · KE API（in-progress）
 
-- [x] Draft a cross-cutting human capability architecture across understanding, inquiry, agent-era agency, and responsibility/meaning.
-- [x] Publish both a readable framework and a machine-readable summary.
-- [ ] Review the framework with educators, domain specialists, and learners.
-- [ ] Map priority capabilities to existing knowledge nodes, pathways, and tutorial assessments.
+**目标**：知识引擎对外提供可检索 API，支持 Agent 任务引用。
 
-## Current knowledge-asset implementation
+- [x] 映射规格 v0.1 完成 — [docs/ke/mapping-spec.md](docs/ke/mapping-spec.md)
+- [x] 六类查询原语定义（Q1–Q6）
+- [x] KE 查询接口草案 schema（`schemas/ke-query.schema.json`）
+- [ ] REST API 实现（/ke/query, /ke/claim/{id}, /ke/evidence/{id}, /ke/chain/{id}）
+- [ ] 上下文组装端点（为 Agent 任务返回带出处的知识片段）
+- [ ] API 鉴权与速率限制
+- [ ] 查询性能基准（P95 < 50ms）
 
-- [x] Add machine-readable contracts for knowledge nodes, pathways, and tutorial metadata.
-- [x] Seed 14 linked knowledge nodes spanning inquiry, causality, systems, modeling, critical thinking, and ethics.
-- [x] Add two question-led pathways: scientific inquiry and systems/decisions.
-- [x] Add a repository integrity validator and a GitHub Actions check for pushes and pull requests.
-- [ ] Confirm the GitHub Actions check passes on the current main branch.
-- [ ] Obtain independent domain and learning-design review; no review is claimed complete.
+**验收**：API 通过集成测试，m8802 旗舰闭环可成功调用。
 
-## Learning and capability development
+### m8802 · 旗舰闭环（in-progress）
 
-- [x] Draft an AI-era learning methodology from field entry through contribution and stewardship.
-- [x] Define a machine-readable, revisitable learning cycle.
-- [x] Add an evidence-oriented capability progression rubric with L0–L5 descriptive anchors.
-- [x] Add structural checks for the learning-cycle stages and rubric anchors.
-- [ ] Review the methodology and rubric with educators, domain specialists, and learners.
-- [ ] Pilot the cycle in more than one discipline and learner context; report actual evidence and limitations.
+**目标**：验证「任务引用 KE → 产出新 claim → 回流沉淀」完整闭环。
 
-## Cross-disciplinary learning pilot
+- [ ] 任务侧 KE 引用机制（Agent 在任务中检索知识引擎）
+- [ ] 产出 claim 自动封装为四契约格式
+- [ ] 回流沉淀管线（新 claim → 知识对象 → 评审状态机）
+- [ ] 端到端测试（至少一个完整任务闭环）
+- [ ] 闭环延迟与可靠性度量
 
-- [x] Define four pilot studios: scientific inquiry, engineering design, humanities research, and creative production.
-- [x] Define a shared learner protocol while preserving discipline-specific evidence standards.
-- [x] Define machine-readable agent work packages TK-008–TK-014 with dependencies and reviewer roles.
-- [ ] Produce and independently review the four studio learning materials.
-- [ ] Finalize assessment/transfer probes and ethics, privacy, and accessibility protocols.
-- [ ] Run a consent-based learner pilot and publish anonymized findings, sample size, limitations, and revisions.
+**验收**：端到端测试通过，闭环延迟可度量，负结果如实入账。
 
-The pilot is currently **designed, not executed**. The work-package manifest does not imply that any agent has been assigned or that reviewers/learners have participated.
+---
 
-## Current production-readiness work
+## P1 · 进水口（planned）
 
-The repository now includes `AGENT_WORK_PACKAGES.md`, a reusable tutorial template, question-led learning pathways, and a source/claim standard. These documents prepare work for later delegation through TensorPlatform; they do not imply that the platform integration has been implemented or tested.
+### 被动沉淀管线
 
-## Immediate next actions
+- [ ] 任务完成自动触发四契约生成（claim + evidence + provenance）
+- [ ] 负结果（honest-FAIL / falsified_hypothesis）自动入账
+- [ ] 定谳/证伪/基准类知识优先沉淀
+- [ ] 四契约 schema 校验自动化（CI 门禁）
 
-1. Obtain an independent physics educator review of the first tutorial.
-2. Run the pendulum activity with learners and record actual feedback and measurement issues.
-3. Improve the lesson based on review evidence.
-4. Only then use the revised tutorial as the production template for the next flagship lesson.
+### 主动收集扫描线
 
-## Stage 1 — Build the knowledge map
+- [x] OSS 生态扫描试点（`knowledge/oss-lbm/`，17 条 claim，4 仓库）— done
+- [ ] SPH/DG 生态扫描（在飞）
+- [ ] 文献结构化抽取管线
+- [ ] 数据集元数据注册
+- [ ] 标准/规范映射为知识对象
 
-- Define core concepts, learning outcomes, prerequisites, and cross-domain links.
-- Distinguish foundational knowledge from optional specialization.
-- Add multiple learning pathways for different backgrounds and goals.
-- Record contested topics and unresolved design questions.
+### 知识包规范
 
-**Exit gate:** a learner can navigate from a real question to relevant concepts, tutorials, and practical investigations.
+- [x] 知识包目录结构约定（claims/ evidence/ provenance/）
+- [x] 自验证脚本约定（`validate_*.py`）
+- [ ] 知识包发布与版本管理
+- [ ] 跨包 xref 解析
 
-## Stage 2 — Produce flagship tutorials
+---
 
-Initial candidates:
-1. Scientific thinking: from observation to explanation
-2. Mathematics and logic as tools for understanding
-3. Data, evidence, uncertainty, and causal reasoning
-4. Models, systems, and emergence
-5. Interdisciplinary thinking and knowledge transfer
-6. Working with AI agents without surrendering judgment
-7. Scientific investigation and reproducibility
-8. Engineering design from idea to validated artifact
-9. Creativity across art, media, and technology
-10. Ethics, institutions, and civilizational futures
+## P2 · 出水口（planned）
 
-Each tutorial must be piloted with real learners or reviewers and revised using feedback.
+### Agent 应用出口（KE API 消费侧）
 
-**Exit gate:** at least three complete tutorials have passed content, practice, accessibility, and learning-effectiveness review.
+- [ ] KE API 文档与 SDK
+- [ ] 上下文组装模板（不同任务类型的知识片段格式）
+- [ ] Agent 任务引用 KE 的最佳实践
+- [ ] 检索质量度量（recall@k / precision）
 
-## Stage 3 — Establish a learning experience
+### 物理 AI 训练出口
 
-- Add interactive demonstrations and reproducible exercises.
-- Provide learner pathways and optional depth.
-- Track mastery through explanations, decisions, experiments, and artifacts.
-- Make agent assistance inspectable and attributable.
-- Support accessibility and low-resource learning contexts.
+- [ ] epistemic 分层导出（published / reviewed / draft）
+- [ ] 训练语料格式转换（JSON → 训练框架输入）
+- [ ] 评测集构建（从 published 知识对象生成问答/判断题）
+- [ ] 结构化监督信号导出（claim-evidence 对作为训练标签）
 
-**Exit gate:** learners can complete a coherent learning journey and demonstrate transferable understanding.
+### 人类学习应用
 
-## Stage 4 — Knowledge evolution and responsible scaling
+- [x] 人类能力框架（`curriculum/human-capabilities-ai-era.md`）— done
+- [x] 机器可读能力摘要（`curriculum/human-capabilities-framework.json`）— done
+- [ ] 学习路径与知识对象关联
+- [ ] 教程与知识对象双向链接
 
-- Create an editorial process for proposed updates.
-- Use agents for drafting, cross-checking, translation, and test generation.
-- Require qualified human review for substantive claims and high-impact material.
-- Maintain provenance, version history, correction notices, and deprecation policies.
-- Evaluate learning outcomes before scaling automated content production.
+---
 
-**Exit gate:** content production can scale without weakening reliability, traceability, or educational value.
+## P3 · 多模态（planned）
 
-## Non-goals for the initial release
+### 多模态知识对象
 
-- Building a full LMS before validating the learning model.
-- Publishing hundreds of AI-generated lessons without review.
-- Replacing specialist education with superficial generalism.
-- Treating completion metrics or agent task success as proof of learning.
+- [ ] 图像/图表作为 evidence 载体（含 sha256 钉死）
+- [ ] 代码片段作为 evidence 载体（repo@commit:line 定位）
+- [ ] 仿真结果作为 evidence 载体（含复现参数）
+- [ ] 多模态 facet 投影（向量 + 结构化元数据）
+
+### 知识演化
+
+- [ ] 知识对象版本演进追踪
+- [ ] 冲突检测与合并策略
+- [ ] 知识衰减与过期策略
+- [ ] 社区贡献与评审流程
+
+### 规模与性能
+
+- [ ] 10K 知识对象规模基准
+- [ ] 分布式存储与查询
+- [ ] 全文检索集成
+- [ ] 缓存与 CDN 策略
+
+---
+
+## KPI 追踪
+
+| 指标 | 目标 | 当前 | 状态 |
+|---|---|---|---|
+| 治理知识对象 | 10,000 条 | ~20 条（试点） | in-progress |
+| 独立评审率 | ≥80% | 0%（规模化待 P0） | planned |
+| KE API P95 延迟 | < 50ms | < 1ms（15 条规模） | in-progress |
+| 溯源链完整度 | ≥90% | 100%（试点规模） | done（试点） |
+| OSS 扫描覆盖 | ≥10 生态 | 1（LBM） | in-progress |
+
+---
+
+## 历史里程碑
+
+| 日期 | 事件 | 状态 |
+|---|---|---|
+| 2026-11-09 | ke-proto 原型完成（15 测试全绿） | done |
+| 2026-11-09 | KE 选型评估完成（自研薄层胜出） | done |
+| 2026-11-09 | mapping-spec v0.1 完成 | done |
+| 2026-11-09 | oss-lbm 知识包试点完成（17 claim） | done |
+| 2026-11-10 | VISION/README/ROADMAP 重写（本任务 m8808） | done |
