@@ -1,103 +1,63 @@
 # TensorKnowledge
 
-**AI-Native Knowledge Infrastructure for Humans and Agents**
+**AI 时代的知识治理基础设施** — 把信息和经验转化为可追溯、可评估、可复用、可演进的知识资产。
 
-TensorKnowledge is an independent knowledge infrastructure for producing, structuring, validating, governing, evolving and serving reusable knowledge assets. It supports both machine-usable knowledge and human understanding, judgment, learning and creativity.
+TensorKnowledge 不是文档库、不是向量仓、不是 Agent 私有记忆。它提供**四契约**（claim / evidence / provenance / review-event）治理框架、知识引擎投影与检索服务、以及面向 Agent 应用和物理 AI 训练的双出水口。完整愿景见 [VISION.md](VISION.md)，路线图见 [ROADMAP.md](ROADMAP.md)。
 
-Its central managed asset is a traceable **Knowledge Object**: a typed, versioned unit that can represent a concept, claim, theory, method, observation, model, experiment, result, case, skill or other reusable knowledge. Documents, datasets, code and media remain source artifacts or linked assets; they are not all forced into one storage format.
+---
 
-## Why this project exists
+## 核心能力
 
-AI agents increasingly retrieve information, write software, analyze data, run simulations and coordinate complex work. The limiting factor is no longer only access to information. It is the ability to turn information and experience into knowledge that is traceable, assessable, reusable and capable of evolving.
+| 层 | 能力 | 状态 |
+|---|---|---|
+| **L1 · 生产沉淀** | 被动沉淀（Agent 任务完成→四契约）+ 主动收集（OSS/文献扫描） | in-progress |
+| **L2 · 治理契约** | 四契约 schema + 知识对象聚合 + 评审状态机（禁止自批） | done |
+| **L3 · 知识引擎** | 实体/边/facet 投影 + 六类查询 + 一致性校验 | in-progress |
+| **L4 · 应用出口** | KE API 检索/上下文组装 + 训练语料分层导出 | planned |
 
-TensorKnowledge aims to make that process systematic: collect sources; decompose and synthesize claims; preserve evidence and uncertainty; connect concepts, methods, data and results; review and correct outputs; and make governed knowledge available to people, agents and applications.
-
-## Project scope
-
-1. **Knowledge production** — bounded research, extraction, synthesis, analysis, verification and knowledge creation workflows.
-2. **Knowledge assets** — typed objects, evidence, provenance, relationships, versions and links to source artifacts and datasets.
-3. **Knowledge governance** — independent review, evidence status, publication gates, correction, supersession and rights management.
-4. **Knowledge engine** — search, retrieval, graph traversal, context assembly and agent-facing services.
-5. **Human learning and capability development** — knowledge frameworks, curricula, pathways, tutorials and assessment.
-6. **Platform integration** — reusable work-package contracts and execution delegation to TensorPlatform without duplicating its agent runtime.
-
-## What TensorKnowledge is not
-
-- Not a second general-purpose agent runtime or orchestration platform.
-- Not a raw data lake or replacement for TensorData.
-- Not an uncurated mirror of the public web.
-- Not an encyclopedia that treats accumulated information as the final goal.
-- Not a system that treats agent-generated output, citations or schema validity as proof of truth.
-- Not a replacement for domain experts, educators or accountable human decisions.
-
-## Relationship to the Tensor ecosystem
-
-- **TensorPlatform** provides general agent identity, runtime, orchestration, collaboration, harnesses, execution environments and platform-level governance. TensorKnowledge delegates agent execution to it when available.
-- **TensorKnowledge** owns knowledge objects, evidence and provenance, knowledge-specific production workflows, domain review and approval, knowledge retrieval services, and human learning applications.
-- **TensorData** owns canonical data assets and data lifecycle. TensorKnowledge references datasets and computational outputs rather than absorbing raw data.
-- **TensorPhysics** and other domain projects produce domain-specific models, methods, experiments and results. Reviewed findings can become Knowledge Objects, while their original code and data remain in their owning systems.
-
-TensorKnowledge is an independent project and service boundary. It can run alongside TensorPlatform in one operational environment, but it is not an internal Platform module and does not require Platform to serve knowledge queries. Its APIs and assets should remain usable by other agent systems.
-
-## Global landscape research
-
-The international landscape, capability comparison, standards mapping and strategic gap analysis are maintained in [research/global-landscape/](research/global-landscape/). Start with the [global landscape](research/global-landscape/GLOBAL_LANDSCAPE.md) and [strategic gap analysis](research/global-landscape/STRATEGIC_GAP_ANALYSIS.md).
-
-## Architecture and integration
-
-- [Architecture overview](architecture/README.md)
-- [System architecture and deployment model](architecture/system-architecture.md)
-- [TensorPlatform integration contract](architecture/platform-integration.md)
-- [Architecture decisions](architecture/decisions.md)
-- [First Platform integration test](platform-test/README.md)
-
-The initial deployment should reuse the existing TensorPlatform agent runtime while keeping TensorKnowledge's API, repository, configuration and release lifecycle separate. The first integration test is a bounded knowledge-production task that returns a proposed draft object; it must not auto-approve or publish the result.
-
-## Human capability framework
-
-The existing human-capability architecture remains a first-class application of TensorKnowledge. It is documented in [Human Capabilities in the AI Era](curriculum/human-capabilities-ai-era.md), with a machine-readable summary in [human-capabilities-framework.json](curriculum/human-capabilities-framework.json).
-
-The learning methodology, capability progression rubric, knowledge framework, pathways and tutorials remain in scope. They will be connected to the general Knowledge Object model rather than replaced by it.
-
-## Machine-readable knowledge assets
-
-Portable contracts live in the schemas directory. Start with:
-- [Knowledge Object schema](schemas/knowledge-object.schema.json)
-- [Production task schema](schemas/production-task.schema.json)
-- [Production result schema](schemas/production-result.schema.json)
-- [Existing curriculum knowledge-node schema](schemas/knowledge-node.schema.json)
-- [Claim Record schema](schemas/claim-record.schema.json)
-- [Evidence Record schema](schemas/evidence-record.schema.json)
-- [Provenance Record schema](schemas/provenance-record.schema.json)
-- [Review Event schema](schemas/review-event.schema.json)
-- [Epistemic benchmark](platform-test/epistemic-benchmark/README.md)
-- [KE query interface draft (retrieval schemas)](schemas/ke-query.schema.json)
-
-## Knowledge Engine mapping
-
-The four epistemic contracts are not directly queryable: a Knowledge Engine must project them into entities, edges and vector facets without losing information. That projection is specified (v0.1) and machine-checked:
-- [Mapping specification v0.1](docs/ke/mapping-spec.md) — storage/retrieval mapping, review-event state machine with no self-approval, epistemic conservativeness, bi-temporal split, retrieval interface draft
-- [m8554 projection audit (generated)](docs/ke/m8554-audit.md) — per-record coverage, loss register, validation results
-- [Worked example mapping](mappings/m8554.json) — every record of the m8554 pilot projected, with an explicit loss register
+## 快速开始
 
 ```bash
-python scripts/ke_state_machine.py
-python scripts/build_ke_mapping.py
-python scripts/validate_ke_mapping.py
-```
-
-The existing knowledge-node schema remains a specialized learning/curriculum graph. The new Knowledge Object schema is the domain-neutral asset contract.
-
-## Validation
-
-Before proposing changes, run:
-
-```bash
+# 验证知识资产完整性
 python scripts/validate_knowledge_assets.py
+
+# KE 映射验证
+python scripts/validate_ke_mapping.py
+
+# KE 原型 demo（ingest → 查询 → 校验）
+python -m ke.cli demo platform-test/epistemic-benchmark/pilots/m8554
 ```
 
-The repository check validates local learning-asset integrity and schema-file consistency. It does not establish factual accuracy, expert approval or learning effectiveness. Integration fixtures are illustrative shapes, not evidence that TensorPlatform integration has already run.
+## 项目结构
 
-## Guiding principle
+| 路径 | 内容 |
+|---|---|
+| `schemas/` | 四契约 schema + KE 查询/映射 schema |
+| `docs/ke/` | 知识引擎规格（mapping-spec / 选型评估 / 原型文档） |
+| `scripts/` | 验证器、映射构建器、状态机可执行形式 |
+| `mappings/` | 试点包映射结果（含损耗登记） |
+| `knowledge/` | 知识包（如 oss-lbm 试点） |
+| `platform-test/` | 认知基准测试与试点包 |
+| `architecture/` | 系统架构与集成契约 |
+| `curriculum/` | 人类能力框架与学习路径 |
 
-> Do not merely collect what the world already contains. Turn information and experience into traceable knowledge, make it useful to people and agents, and keep it open to correction and further discovery.
+## 与 Tensor 生态的关系
+
+- **TensorPlatform**：Agent 运行共性平台 → TensorKnowledge 委托执行，不重复构建运行时
+- **TensorData**：规范数据资产 → TensorKnowledge 引用数据集，不吸收原始数据
+- **TensorPhysics**：科学计算流程 → 评审后的发现可成为知识对象，原始代码留在领域仓
+- **领域仓**（TensorLBM/FEM/BEM/…）：领域求解器 → 领域知识经四契约沉淀后进入 TensorKnowledge
+
+详见 [VISION.md §5](VISION.md#5-与-tensor-生态的边界)。
+
+## 知识引擎
+
+四契约到知识引擎的存储/检索映射规格 v0.1 在 [docs/ke/mapping-spec.md](docs/ke/mapping-spec.md)。
+原型实现（SQLite + 六类查询 + 一致性校验）在 `ke/` 目录，详见 [docs/ke/proto.md](docs/ke/proto.md)。
+选型评估（Cognee vs Graphiti vs 自研薄层）在 [docs/ke/evaluation.md](docs/ke/evaluation.md)。
+
+## 治理原则
+
+1. 出处必引 · 2. 零手抄 · 3. 禁止自批 · 4. 损耗显式 · 5. 诚实申报 · 6. 可回滚
+
+完整原则与长期愿景见 [VISION.md](VISION.md)。
