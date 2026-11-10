@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/docs/ontology/schemas/anchor-card.schema.json",
+  "title": "AnchorCard — Agent-Ready Benchmark Anchor",
+  "description": "基准→期望值+容差→跑法→验收线。智能体运行基准案例并自动比对结果。",
+  "type": "object",
+  "required": ["id", "kind", "title", "benchmark", "expected_values", "run_procedure", "acceptance_criteria", "method_axis", "domain_axis", "version"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkac:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "kind": { "const": "anchor-card" },
+    "title": { "type": "string", "minLength": 1 },
+    "benchmark": {
+      "type": "object",
+      "required": ["name", "description"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "geometry": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string" },
+            "parameters": { "type": "object", "additionalProperties": true },
+            "Cb": { "type": "number", "description": "Block coefficient (ship geometry validation)" },
+            "L": { "type": "number", "description": "Length" },
+            "B": { "type": "number", "description": "Breadth" }
+          },
+          "additionalProperties": false
+        },
+        "flow_conditions": {
+          "type": "object",
+          "properties": {
+            "Re": { "type": "number" },
+            "Fr": { "type": "number" },
+            "Ma": { "type": "number" }
+          },
+          "additionalProperties": true
+        },
+        "preconditions": {
+          "type": "object",
+          "description": "适用前提：机器可检的用数值/枚举，不可检的显式声明为自然语言",
+          "properties": {
+            "machine_checkable": { "type": "object", "additionalProperties": true },
+            "natural_language": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "expected_values": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["quantity", "value", "tolerance"],
+        "properties": {
+          "quantity": { "type": "string", "description": "Name of the physical quantity, e.g. 'Cd', 'St'" },
+          "value": { "type": "number", "description": "Expected reference value" },
+          "tolerance": {
+            "type": "object",
+            "required": ["type", "value"],
+            "properties": {
+              "type": { "enum": ["absolute", "relative_pct"] },
+              "value": { "type": "number", "minimum": 0 }
+            },
+            "additionalProperties": false
+          },
+          "source": { "type": "string", "description": "Reference for expected value (paper, experiment, etc.)" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "run_procedure": {
+      "type": "object",
+      "required": ["setup", "execution", "post_processing"],
+      "properties": {
+        "setup": { "type": "string", "description": "How to set up the case" },
+        "execution": { "type": "string", "description": "How to run the simulation" },
+        "post_processing": { "type": "string", "description": "How to extract quantities of interest" },
+        "reference_implementation": {
+          "type": "object",
+          "properties": {
+            "repo": { "type": "string" },
+            "file": { "type": "string" },
+            "line": { "type": "integer", "minimum": 1 },
+            "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" }
+          },
+          "required": ["repo", "file", "commit"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["criterion", "pass_rule"],
+        "properties": {
+          "criterion": { "type": "string" },
+          "pass_rule": { "type": "string", "description": "Machine-evaluable rule, e.g. 'abs(computed - expected) / expected < 0.03'" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "method_axis": {
+      "type": "string",
+      "enum": ["lbm", "fem", "fvm", "sph", "dg", "dem", "bem", "cad", "coupled"]
+    },
+    "domain_axis": {
+      "type": "string",
+      "enum": [
+        "resistance", "propulsion", "seakeeping", "maneuvering", "ice",
+        "multiphase", "structural-hydro", "full-scale-experiment",
+        "turbulence", "two-phase", "interface", "general-physics"
+      ]
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relation_type", "target_id"],
+        "properties": {
+          "relation_type": {
+            "enum": ["supports", "refutes", "alternative_of", "precondition_of", "fixes", "verifies", "specializes", "subsumes"]
+          },
+          "target_id": { "type": "string", "pattern": "^tk(dc|rc|pc|ac|mc|gc):" },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "created_by": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "source_refs": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": { "enum": ["draft", "reviewed", "published", "deprecated"], "default": "draft" },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}

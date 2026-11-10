@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/docs/ontology/schemas/decision-card.schema.json",
+  "title": "DecisionCard — Agent-Ready Decision Record",
+  "description": "情境→选项→取舍→选择判据。用于智能体在方法选型、参数配置、架构决策时自动检索并执行判据。",
+  "type": "object",
+  "required": ["id", "kind", "title", "context", "options", "decision_criteria", "selected", "method_axis", "domain_axis", "version"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkdc:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$",
+      "description": "Unique identifier, e.g. tkdc:lbm:collision-space-selection"
+    },
+    "kind": { "const": "decision-card" },
+    "title": { "type": "string", "minLength": 1 },
+    "context": {
+      "type": "object",
+      "required": ["goal", "constraints"],
+      "properties": {
+        "goal": { "type": "string", "minLength": 1, "description": "What the agent is trying to achieve" },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Hard constraints (budget, hardware, accuracy floor, etc.)"
+        },
+        "preconditions": {
+          "type": "object",
+          "description": "适用前提：机器可检的用数值/枚举，不可检的显式声明为自然语言",
+          "properties": {
+            "machine_checkable": {
+              "type": "object",
+              "description": "Key-value pairs the agent can verify programmatically",
+              "additionalProperties": true
+            },
+            "natural_language": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Conditions that require human judgment or are not programmatically checkable"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "options": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["label", "description"],
+        "properties": {
+          "label": { "type": "string", "minLength": 1 },
+          "description": { "type": "string" },
+          "cost": {
+            "type": "object",
+            "properties": {
+              "compute": { "type": "string", "description": "e.g. O(N), O(N log N), wall-clock estimate" },
+              "memory": { "type": "string" },
+              "implementation_effort": { "enum": ["trivial", "moderate", "significant", "major"] }
+            },
+            "additionalProperties": false
+          },
+          "accuracy": {
+            "type": "object",
+            "properties": {
+              "order": { "type": "string", "description": "e.g. '2nd-order', 'spectral'" },
+              "typical_error_pct": { "type": "number", "minimum": 0 },
+              "reference": { "type": "string", "description": "Source of accuracy claim" }
+            },
+            "additionalProperties": false
+          },
+          "maturity": {
+            "enum": ["experimental", "beta", "stable", "deprecated"],
+            "description": "Implementation maturity in the ecosystem"
+          },
+          "trade_offs": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "What you give up by choosing this option"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "decision_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["criterion", "rule"],
+        "properties": {
+          "criterion": { "type": "string", "description": "Name of the decision factor" },
+          "rule": { "type": "string", "description": "Machine-evaluable rule, e.g. 'if Re > 1e5 → MRT'" },
+          "priority": { "type": "integer", "minimum": 1, "description": "Lower = higher priority" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "selected": {
+      "type": "object",
+      "required": ["option_label", "rationale"],
+      "properties": {
+        "option_label": { "type": "string" },
+        "rationale": { "type": "string" },
+        "applied_criteria": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Which criteria fired to produce this selection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "method_axis": {
+      "type": "string",
+      "enum": ["lbm", "fem", "fvm", "sph", "dg", "dem", "bem", "cad", "coupled"],
+      "description": "方法轴：所属数值方法树"
+    },
+    "domain_axis": {
+      "type": "string",
+      "enum": [
+        "resistance", "propulsion", "seakeeping", "maneuvering", "ice",
+        "multiphase", "structural-hydro", "full-scale-experiment",
+        "turbulence", "two-phase", "interface", "general-physics"
+      ],
+      "description": "领域轴：所属船舶/物理领域"
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relation_type", "target_id"],
+        "properties": {
+          "relation_type": {
+            "enum": ["supports", "refutes", "alternative_of", "precondition_of", "fixes", "verifies", "specializes", "subsumes"]
+          },
+          "target_id": { "type": "string", "pattern": "^tk(dc|rc|pc|ac|mc|gc):" },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "created_by": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "source_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "References to source claims/evidence"
+        }
+      },
+      "additionalProperties": false
+    },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": {
+      "enum": ["draft", "reviewed", "published", "deprecated"],
+      "default": "draft"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    }
+  }
+}
