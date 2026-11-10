@@ -61,3 +61,7 @@ python -m ke.cli demo platform-test/epistemic-benchmark/pilots/m8554
 1. 出处必引 · 2. 零手抄 · 3. 禁止自批 · 4. 损耗显式 · 5. 诚实申报 · 6. 可回滚
 
 完整原则与长期愿景见 [VISION.md](VISION.md)。
+
+## License
+
+See [LICENSE](LICENSE) for the software license and [LICENSE_SCOPE.md](LICENSE_SCOPE.md) for the boundary between project software and third-party or content assets. Dataset, paper, model, customer, and other non-software assets retain their own rights and restrictions.
