@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/docs/ontology/schemas/gap-card.schema.json",
+  "title": "GapCard — Agent-Ready Knowledge Gap Record",
+  "description": "缺什么/为何难/已试什么。智能体识别知识缺口并规划填补路径。",
+  "type": "object",
+  "required": ["id", "kind", "title", "gap_description", "difficulty", "attempts", "method_axis", "domain_axis", "version"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkgc:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "kind": { "const": "gap-card" },
+    "title": { "type": "string", "minLength": 1 },
+    "gap_description": {
+      "type": "object",
+      "required": ["what_is_missing", "impact"],
+      "properties": {
+        "what_is_missing": { "type": "string", "minLength": 1, "description": "Precise description of the missing knowledge/capability" },
+        "impact": {
+          "type": "string",
+          "description": "What downstream tasks are blocked or degraded by this gap"
+        },
+        "affected_capabilities": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of capabilities affected"
+        },
+        "preconditions": {
+          "type": "object",
+          "description": "适用前提：机器可检的用数值/枚举，不可检的显式声明为自然语言",
+          "properties": {
+            "machine_checkable": { "type": "object", "additionalProperties": true },
+            "natural_language": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "difficulty": {
+      "type": "object",
+      "required": ["level", "reasons"],
+      "properties": {
+        "level": { "enum": ["trivial", "moderate", "hard", "open-problem"] },
+        "reasons": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Why this gap is hard to fill"
+        },
+        "estimated_effort": { "type": "string", "description": "Rough effort estimate, e.g. '2-4 weeks'" }
+      },
+      "additionalProperties": false
+    },
+    "attempts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["approach", "outcome"],
+        "properties": {
+          "approach": { "type": "string", "description": "What was tried" },
+          "outcome": { "enum": ["failed", "partial", "abandoned", "ongoing"] },
+          "reason": { "type": "string", "description": "Why it didn't fully succeed" },
+          "date": { "type": "string", "format": "date" },
+          "evidence_ref": { "type": "string" }
+        },
+        "additionalProperties": false
+      },
+      "description": "Previous attempts to fill this gap"
+    },
+    "suggested_path": {
+      "type": "object",
+      "properties": {
+        "next_step": { "type": "string", "description": "Recommended next action" },
+        "required_resources": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Data, compute, or expertise needed"
+        },
+        "related_cards": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^tk(dc|rc|pc|ac|mc|gc):" },
+          "description": "Cards that may help fill this gap"
+        }
+      },
+      "additionalProperties": false
+    },
+    "method_axis": {
+      "type": "string",
+      "enum": ["lbm", "fem", "fvm", "sph", "dg", "dem", "bem", "cad", "coupled"]
+    },
+    "domain_axis": {
+      "type": "string",
+      "enum": [
+        "resistance", "propulsion", "seakeeping", "maneuvering", "ice",
+        "multiphase", "structural-hydro", "full-scale-experiment",
+        "turbulence", "two-phase", "interface", "general-physics"
+      ]
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relation_type", "target_id"],
+        "properties": {
+          "relation_type": {
+            "enum": ["supports", "refutes", "alternative_of", "precondition_of", "fixes", "verifies", "specializes", "subsumes"]
+          },
+          "target_id": { "type": "string", "pattern": "^tk(dc|rc|pc|ac|mc|gc):" },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "created_by": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "source_refs": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": { "enum": ["draft", "reviewed", "published", "deprecated"], "default": "draft" },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}

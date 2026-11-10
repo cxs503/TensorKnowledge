@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/docs/ontology/schemas/recipe-card.schema.json",
+  "title": "RecipeCard — Agent-Ready Procedural Recipe",
+  "description": "目标→步骤→每步验证判据→参考实现锚→常见错。智能体按步骤执行并自动验证每步产出。",
+  "type": "object",
+  "required": ["id", "kind", "title", "goal", "steps", "method_axis", "domain_axis", "version"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkrc:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "kind": { "const": "recipe-card" },
+    "title": { "type": "string", "minLength": 1 },
+    "goal": {
+      "type": "object",
+      "required": ["description", "success_criteria"],
+      "properties": {
+        "description": { "type": "string", "minLength": 1 },
+        "success_criteria": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Machine-verifiable conditions that define success"
+        },
+        "preconditions": {
+          "type": "object",
+          "description": "适用前提：机器可检的用数值/枚举，不可检的显式声明为自然语言",
+          "properties": {
+            "machine_checkable": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "natural_language": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["step_number", "action", "verification"],
+        "properties": {
+          "step_number": { "type": "integer", "minimum": 1 },
+          "action": { "type": "string", "minLength": 1, "description": "What the agent should do" },
+          "verification": {
+            "type": "object",
+            "required": ["check", "pass_condition"],
+            "properties": {
+              "check": { "type": "string", "description": "What to measure/inspect" },
+              "pass_condition": { "type": "string", "description": "Machine-evaluable pass condition, e.g. 'residual < 1e-6'" },
+              "fallback": { "type": "string", "description": "What to do if check fails" }
+            },
+            "additionalProperties": false
+          },
+          "reference_implementation": {
+            "type": "object",
+            "properties": {
+              "repo": { "type": "string", "description": "Repository name, e.g. TensorLBM" },
+              "file": { "type": "string", "description": "File path within repo" },
+              "line": { "type": "integer", "minimum": 1, "description": "Line number or range" },
+              "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" }
+            },
+            "required": ["repo", "file", "commit"],
+            "additionalProperties": false
+          },
+          "common_mistakes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["mistake", "symptom", "fix"],
+              "properties": {
+                "mistake": { "type": "string" },
+                "symptom": { "type": "string", "description": "How the agent can detect this mistake" },
+                "fix": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "method_axis": {
+      "type": "string",
+      "enum": ["lbm", "fem", "fvm", "sph", "dg", "dem", "bem", "cad", "coupled"]
+    },
+    "domain_axis": {
+      "type": "string",
+      "enum": [
+        "resistance", "propulsion", "seakeeping", "maneuvering", "ice",
+        "multiphase", "structural-hydro", "full-scale-experiment",
+        "turbulence", "two-phase", "interface", "general-physics"
+      ]
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relation_type", "target_id"],
+        "properties": {
+          "relation_type": {
+            "enum": ["supports", "refutes", "alternative_of", "precondition_of", "fixes", "verifies", "specializes", "subsumes"]
+          },
+          "target_id": { "type": "string", "pattern": "^tk(dc|rc|pc|ac|mc|gc):" },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "created_by": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "source_refs": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": { "enum": ["draft", "reviewed", "published", "deprecated"], "default": "draft" },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}
