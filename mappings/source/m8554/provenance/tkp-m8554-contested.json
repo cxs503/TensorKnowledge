@@ -1,0 +1,61 @@
+{
+  "id": "tkp:m8554:scenario-contested",
+  "generated_entity": {
+    "id": "platform-test/epistemic-benchmark/pilots/m8554/scenario-contested.json",
+    "entity_type": "artifact",
+    "version": "1.0.0"
+  },
+  "activity": {
+    "id": "m8554-act-contested-synthesis",
+    "activity_type": "synthesis",
+    "description": "抓取 go-fair.org FAIR Principles 页面，将『FAIR 蕴涵开放获取』登记为争议命题并两边保留：宽命题保留 A1.2（refutes）/前言（contextualizes）/R1.1（qualifies）证据，窄命题以 A1-A1.2 连续块（supports）锚定（场景二：争议命题两边保留）",
+    "started_at": "2026-11-09T12:00:00Z",
+    "ended_at": "2026-11-09T12:15:00Z",
+    "used_entities": [
+      "https://www.go-fair.org/fair-principles/",
+      "tkc:fair:requires-open-access",
+      "tkc:fair:a1-protocol-conditions",
+      "tke:fair:a1-2-auth-protocol",
+      "tke:fair:a1-block",
+      "tke:fair:preamble-machine-actionability",
+      "tke:fair:r1-1-license"
+    ],
+    "software": [
+      {
+        "name": "webReader MCP tool (Z.ai built-in)",
+        "version": ""
+      },
+      {
+        "name": "Claude Code CLI",
+        "version": ""
+      },
+      {
+        "name": "ssh + docker exec (node099 container lbm_test)",
+        "version": ""
+      }
+    ]
+  },
+  "agents": [
+    {
+      "id": "cc-session-6f76cd3d",
+      "agent_type": "software-agent",
+      "name": "Claude Code 后台会话（模型 glm-5.3）",
+      "role": "source retrieval + record authoring",
+      "external_id": "bg-job-6f76cd3d"
+    },
+    {
+      "id": "tp-owner",
+      "agent_type": "person",
+      "name": "平台 owner",
+      "role": "directive authorizer（2026-11-09『你直接先接手亲自做吧』接管令）"
+    }
+  ],
+  "attributed_to": [
+    "tp-owner"
+  ],
+  "derived_from": [
+    "https://www.go-fair.org/fair-principles/"
+  ],
+  "recorded_at": "2026-11-09T12:10:00Z",
+  "version": "1.0.0"
+}
