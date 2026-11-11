@@ -199,3 +199,55 @@ def validate_package(pilot_dir: str | Path, conn: Store) -> list[tuple[str, bool
         f"claims w/o evidence: {rep['claims_without_evidence']}",
     ))
     return lines
+
+
+def schema_report_records(source_root: str | Path) -> list[tuple[str, bool, str]]:
+    """Validate every record found by :func:`ke.contract.discover`.
+
+    ``schema_report`` walks ``claims/*.json`` one file per record, which cannot
+    express the **aggregate container** layout that ``ke.contract.discover``
+    documents as supported (a file holding a *list* of records).  Large
+    governed corpora (KPI-KB-10K: 10k knowledge objects under the push gate's
+    80-file budget) necessarily use aggregate shards, so schema checking is
+    offered per *record* here while still reading the same five schema files
+    from ``schemas/`` — one contract, not a second one.
+
+    Returns ``[(name, ok, detail), ...]`` in the same shape as
+    :func:`schema_report`.
+    """
+    from . import contract
+
+    root = Path(source_root).resolve()
+    schemas_dir = next(
+        (a / "schemas" for a in [root, *root.parents]
+         if (a / "schemas" / "claim-record.schema.json").is_file()), None)
+    if jsonschema is None:
+        return [("deps:jsonschema", False, "jsonschema not installed")]
+    if schemas_dir is None:
+        return [("schemas:dir", False, f"schemas dir not found above {root}")]
+
+    registry = Registry()
+    schema_docs: dict[str, dict] = {}
+    for name in SCHEMA_NAMES:
+        doc = json.loads((schemas_dir / f"{name}.schema.json").read_text(encoding="utf-8"))
+        schema_docs[name] = doc
+        rid = doc.get("$id")
+        if rid:
+            registry = registry.with_resource(rid, Resource.from_contents(doc))
+
+    kind_schema = {"claims": "claim-record", "evidence": "evidence-record",
+                   "provenance": "provenance-record", "gaps": None}
+    out: list[tuple[str, bool, str]] = []
+    found = contract.discover(root)
+    for kind, recs in found.records.items():
+        schema_name = kind_schema.get(kind)
+        if schema_name is None:
+            continue
+        for rid, (rec, rel) in sorted(recs.items()):
+            try:
+                jsonschema.Draft202012Validator(schema_docs[schema_name],
+                                                registry=registry).validate(rec)
+                out.append((f"schema:{kind}:{rid}", True, ""))
+            except jsonschema.ValidationError as exc:
+                out.append((f"schema:{kind}:{rid}", False, f"{exc.message[:180]} @{rel}"))
+    return out
