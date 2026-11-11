@@ -1,0 +1,26 @@
+{
+  "schema": "kb-retrieval-gold/1",
+  "frozen_note": "holdout 题集：与 v1 同分布但换题面（不复用 v1 措辞），用于检验读路径不是对 v1 过拟合。写定后不改。",
+  "thresholds": {
+    "precision_at_1": 0.7,
+    "recall_at_5": 0.8,
+    "mrr_at_5": 0.6,
+    "note": "holdout 阈值比 v1 放宽（n=10 方差更大），同样在看到结果前写定。"
+  },
+  "queries": [
+    {"id": "h01", "q": "摩擦阻力系数 ITTC1957 公式里 log10Re 的指数", "gold": ["KB-ITTC1957"]},
+    {"id": "h02", "q": "容器里怎么连 8010 后端的数据库 postgresql psycopg", "gold": ["KB-PSYCOPG-DIALECT"]},
+    {"id": "h03", "q": "全量测试交集群 cj 作业 不占控制器", "gold": ["KB-CLUSTER-FIRST"]},
+    {"id": "h04", "q": "派发层死了 怎么看 queued 和 worker 日志", "gold": ["KB-DISPATCH-DEAD-DIAG"]},
+    {"id": "h05", "q": "SUBOFF 阻力为负数 是 bug 还是操作点问题", "gold": ["KB-SUBOFF-NEGDRAG-E0"]},
+    {"id": "h06", "q": "冰区冰带结构 FEM 建模能力", "gold": ["cap:TensorFEM:m14884_H4-ICE-BELT-FEM"]},
+    {"id": "h07", "q": "自适应网格加密能力到 L4 了吗", "gold": ["cap:TensorFEM:m14683_GAP-FEM-ADAPTIVE"]},
+    {"id": "h08", "q": "GPU 十万颗粒 DEM 能力", "gold": ["cap:TensorDEM:m14682_GAP-DEM-GPU-100K"]},
+    {"id": "h09", "q": "Frazil 冰晶流变学 LBM 算例", "gold": ["cap:TensorLBM:m15051_H2-FRAZIL-RHEOLOGY"]},
+    {"id": "h10", "q": "专利与论文的 KPI 口径", "gold": ["cap:TensorPapers:m15170_KPI-STD-PATENT-PAPER"]}
+  ],
+  "negatives": [
+    {"id": "n01", "q": "明天北京限号尾号是多少"},
+    {"id": "n02", "q": "推荐几本好看的小说"}
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "kb-retrieval-gold/1",
+  "frozen_note": "预先冻结的评测题集（在跑 bench 之前写定；sha256 由 scripts/kb_retrieve_bench.py 记入 bench.json.prereg_sha256）。改题=新版本文件，不得回改本文件。",
+  "task_style": "题面按真实任务语气写（不是抄卡标题），故是「检索器能不能把对的卡捞上来」的考试，而不是字符串包含测试。",
+  "thresholds": {
+    "precision_at_1": 0.8,
+    "recall_at_5": 0.9,
+    "mrr_at_5": 0.7,
+    "note": "阈值在看到任何 bench 数字前写定；got 未达标即 honest FAIL，不改阈值。"
+  },
+  "queries": [
+    {"id": "q01", "q": "ITTC 1957 平板摩擦阻力系数公式怎么算", "gold": ["KB-ITTC1957"], "kind": "fact"},
+    {"id": "q02", "q": "容器 8010 后端连数据库该用哪个 SQLAlchemy 方言", "gold": ["KB-PSYCOPG-DIALECT"], "kind": "trap"},
+    {"id": "q03", "q": "任务预估 25 分钟 8 核的全量 pytest 应该在哪里跑", "gold": ["KB-CLUSTER-FIRST"], "kind": "pattern"},
+    {"id": "q04", "q": "PR 合不进去 需要双亲提交治愈", "gold": ["KB-PR-TWOPARENT-HEAL"], "kind": "pattern"},
+    {"id": "q05", "q": "前端构建 esbuild 报 service was stopped 怎么自救", "gold": ["KB-VITE-ESBUILD-FLAKE"], "kind": "pattern"},
+    {"id": "q06", "q": "pkill -f 把自己所在的命令行也匹配杀了", "gold": ["KB-PKILL-SELF-MATCH"], "kind": "trap"},
+    {"id": "q07", "q": "ssh 进容器再 docker sh -c 嵌套引号炸开", "gold": ["KB-SSH-NESTED-QUOTE"], "kind": "trap"},
+    {"id": "q08", "q": "bash 命令替换剥掉 NUL 导致 env 环境变量全丢", "gold": ["KB-BASH-NUL-ENV"], "kind": "trap"},
+    {"id": "q09", "q": "Ladd 力采样应该取 post-stream 还是 bounce-back 之间", "gold": ["KB-LADD-FORCE-PHASE"], "kind": "trap"},
+    {"id": "q10", "q": "SUBOFF 计算出现负阻力 E0 怎么判", "gold": ["KB-SUBOFF-NEGDRAG-E0"], "kind": "lesson"},
+    {"id": "q11", "q": "worker 侧日志队列空但任务表里还有 queued 的单", "gold": ["KB-DISPATCH-DEAD-DIAG"], "kind": "lesson"},
+    {"id": "q12", "q": "prepare 阶段 240 秒心跳竞态导致长任务假死", "gold": ["KB-PREPARE-240S-RACE"], "kind": "trap"},
+    {"id": "q13", "q": "报告里的判据数字不许手抄要机器生成", "gold": ["KB-NUMBERS-NOT-COPIED"], "kind": "lesson"},
+    {"id": "q14", "q": "自己写的 result 不能当证据 要独立复算", "gold": ["KB-SELFRESULT-DISTRUST"], "kind": "lesson"},
+    {"id": "q15", "q": "TensorFEM mortar 接触 收敛率和力误差是多少", "gold": ["cap:TensorFEM:m14687_GAP-FEM-MORTAR"], "kind": "capability"},
+    {"id": "q16", "q": "冰区冰板 FEM 能力到了第几级", "gold": ["cap:TensorFEM:m15038_H3-ICE-PLATE-FEM"], "kind": "capability"},
+    {"id": "q17", "q": "颗粒摩擦参数标定的能力等级", "gold": ["cap:TensorDEM:m15159_GAP-DEM-FRICTION"], "domain": "TensorDEM", "kind": "capability"},
+    {"id": "q18", "q": "Sod 激波管算例跟解析解对过没有", "gold": ["cap:TensorFVM:m15163_XVAL-FVM-SOD1978"], "kind": "capability"},
+    {"id": "q19", "q": "席位模型重映射之后滞留的派发单要清", "gold": ["KB-SEAT-REMAPPING-STRAND"], "kind": "pattern"},
+    {"id": "q20", "q": "螺旋桨推进模块是真实算法还是桩", "gold": ["cap:ship-performance-platform:m14896_CAP-PROPULSION-REAL"], "domain": "ship-performance-platform", "kind": "capability"}
+  ],
+  "negatives": [
+    {"id": "n01", "q": "今天上海的天气怎么样"},
+    {"id": "n02", "q": "如何用 Rust 写一个 HTTP 服务器"}
+  ],
+  "arms": {
+    "ref": "naive_overlap —— 复刻现网注入器：空白分词 + 全库不过滤 + 命中词数排序",
+    "got": "ke.consume.rank —— 中文 bigram + 标题/元数据/正文覆盖度加权 + 域过滤",
+    "got_domain": "ke.consume.rank + 调用方给 domain 提示（开工三查里 ktype/domain 是已知的）"
+  }
+}
