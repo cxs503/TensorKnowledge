@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/docs/ontology/schemas/method-card.schema.json",
+  "title": "MethodCard — Agent-Ready Method Description",
+  "description": "本质/参数空间/成本/成熟度/替代。智能体理解方法本质并评估适用性。",
+  "type": "object",
+  "required": ["id", "kind", "title", "essence", "parameter_space", "cost_profile", "maturity", "method_axis", "domain_axis", "version"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkmc:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "kind": { "const": "method-card" },
+    "title": { "type": "string", "minLength": 1 },
+    "essence": {
+      "type": "object",
+      "required": ["description", "governing_equations"],
+      "properties": {
+        "description": { "type": "string", "minLength": 1, "description": "What this method fundamentally does" },
+        "governing_equations": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Key equations in LaTeX or plain text"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Fundamental assumptions of the method"
+        },
+        "preconditions": {
+          "type": "object",
+          "description": "适用前提：机器可检的用数值/枚举，不可检的显式声明为自然语言",
+          "properties": {
+            "machine_checkable": { "type": "object", "additionalProperties": true },
+            "natural_language": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "parameter_space": {
+      "type": "object",
+      "properties": {
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "range", "type"],
+            "properties": {
+              "name": { "type": "string" },
+              "range": { "type": "string", "description": "Valid range, e.g. '[0.01, 100]' or 'positive reals'" },
+              "type": { "enum": ["continuous", "discrete", "categorical", "boolean"] },
+              "default": true
+            },
+            "additionalProperties": false
+          }
+        },
+        "stability_constraints": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Conditions for numerical stability, e.g. CFL < 1"
+        }
+      },
+      "additionalProperties": false
+    },
+    "cost_profile": {
+      "type": "object",
+      "properties": {
+        "compute_complexity": { "type": "string", "description": "e.g. 'O(N log N) per timestep'" },
+        "memory_complexity": { "type": "string" },
+        "parallel_scaling": { "type": "string", "description": "Strong/weak scaling characteristics" },
+        "typical_wallclock": { "type": "string", "description": "Rough wall-clock for a standard case" }
+      },
+      "additionalProperties": false
+    },
+    "maturity": {
+      "type": "object",
+      "required": ["level", "evidence"],
+      "properties": {
+        "level": { "enum": ["theoretical", "prototype", "validated", "production", "legacy"] },
+        "evidence": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "References supporting maturity claim"
+        },
+        "known_limitations": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["method", "when_preferred"],
+        "properties": {
+          "method": { "type": "string", "description": "Alternative method name or card ID" },
+          "when_preferred": { "type": "string", "description": "Conditions under which the alternative is better" },
+          "trade_off": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "method_axis": {
+      "type": "string",
+      "enum": ["lbm", "fem", "fvm", "sph", "dg", "dem", "bem", "cad", "coupled"]
+    },
+    "domain_axis": {
+      "type": "string",
+      "enum": [
+        "resistance", "propulsion", "seakeeping", "maneuvering", "ice",
+        "multiphase", "structural-hydro", "full-scale-experiment",
+        "turbulence", "two-phase", "interface", "general-physics"
+      ]
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relation_type", "target_id"],
+        "properties": {
+          "relation_type": {
+            "enum": ["supports", "refutes", "alternative_of", "precondition_of", "fixes", "verifies", "specializes", "subsumes"]
+          },
+          "target_id": { "type": "string", "pattern": "^tk(dc|rc|pc|ac|mc|gc):" },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "created_by": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "source_refs": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": { "enum": ["draft", "reviewed", "published", "deprecated"], "default": "draft" },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}

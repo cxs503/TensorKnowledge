@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/docs/ontology/schemas/pitfall-card.schema.json",
+  "title": "PitfallCard — Agent-Ready Error Signature & Fix",
+  "description": "错误签名→根因排序→修法→判伪史。智能体遇到异常时匹配错误签名并自动执行修法。",
+  "type": "object",
+  "required": ["id", "kind", "title", "error_signature", "root_causes", "fixes", "method_axis", "domain_axis", "version"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkpc:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "kind": { "const": "pitfall-card" },
+    "title": { "type": "string", "minLength": 1 },
+    "error_signature": {
+      "type": "object",
+      "required": ["pattern", "detection"],
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "description": "Machine-matchable pattern: regex, log keyword, numeric threshold, or assertion failure"
+        },
+        "detection": {
+          "type": "string",
+          "description": "How the agent detects this pitfall during execution"
+        },
+        "severity": { "enum": ["blocking", "major", "minor", "cosmetic"] },
+        "preconditions": {
+          "type": "object",
+          "description": "适用前提：机器可检的用数值/枚举，不可检的显式声明为自然语言",
+          "properties": {
+            "machine_checkable": { "type": "object", "additionalProperties": true },
+            "natural_language": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "root_causes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["cause", "likelihood", "explanation"],
+        "properties": {
+          "cause": { "type": "string", "minLength": 1 },
+          "likelihood": { "enum": ["very-likely", "likely", "possible", "unlikely"], "description": "Sorted by likelihood" },
+          "explanation": { "type": "string" },
+          "diagnostic": { "type": "string", "description": "How to confirm this is the actual cause" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "fixes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["fix", "verification"],
+        "properties": {
+          "fix": { "type": "string", "minLength": 1, "description": "Actionable fix instruction" },
+          "verification": { "type": "string", "description": "How to verify the fix worked" },
+          "side_effects": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Potential side effects of applying this fix"
+          },
+          "reference_implementation": {
+            "type": "object",
+            "properties": {
+              "repo": { "type": "string" },
+              "file": { "type": "string" },
+              "line": { "type": "integer", "minimum": 1 },
+              "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" }
+            },
+            "required": ["repo", "file", "commit"],
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "falsification_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["attempt", "outcome", "date"],
+        "properties": {
+          "attempt": { "type": "string", "description": "What was tried" },
+          "outcome": { "enum": ["confirmed", "refuted", "inconclusive"] },
+          "date": { "type": "string", "format": "date" },
+          "evidence_ref": { "type": "string" }
+        },
+        "additionalProperties": false
+      },
+      "description": "History of attempts to confirm or refute this pitfall"
+    },
+    "method_axis": {
+      "type": "string",
+      "enum": ["lbm", "fem", "fvm", "sph", "dg", "dem", "bem", "cad", "coupled"]
+    },
+    "domain_axis": {
+      "type": "string",
+      "enum": [
+        "resistance", "propulsion", "seakeeping", "maneuvering", "ice",
+        "multiphase", "structural-hydro", "full-scale-experiment",
+        "turbulence", "two-phase", "interface", "general-physics"
+      ]
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relation_type", "target_id"],
+        "properties": {
+          "relation_type": {
+            "enum": ["supports", "refutes", "alternative_of", "precondition_of", "fixes", "verifies", "specializes", "subsumes"]
+          },
+          "target_id": { "type": "string", "pattern": "^tk(dc|rc|pc|ac|mc|gc):" },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "created_by": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "source_refs": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": { "enum": ["draft", "reviewed", "published", "deprecated"], "default": "draft" },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}
