@@ -1,623 +1,830 @@
 [
-  {
-    "id": "tke:oss-lbm:pylbm-equiv-eq-src",
-    "claim_refs": [
-      "tkc:oss-lbm:pylbm-equiv-eq"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "pylbm source code, analysis/equivalent_equation.py",
-      "url": "https://github.com/pyLBM/pyLBM",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:pylbm-equiv-eq-src",
+        "claim_refs": [
+            "tkc:oss-lbm:pylbm-equiv-eq"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "pylbm source code, analysis/equivalent_equation.py",
+            "url": "https://github.com/pyLBM/pyLBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "pylbm@f9f5d16 analysis/equivalent_equation.py:14-115",
+            "quote": "class EquivalentEquation: ... self.coeff_order1.append(A * func + B * eq_func) ... self.coeff_order2 = [[sp.zeros(nconsm) for _ in range(scheme.dim)] for _ in range(scheme.dim)]"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "pylbm@48c19da analysis/equivalent_equation.py:14-115",
-      "quote": "class EquivalentEquation: ... self.coeff_order1.append(A * func + B * eq_func) ... self.coeff_order2 = [[sp.zeros(nconsm) for _ in range(scheme.dim)] for _ in range(scheme.dim)]"
+    {
+        "id": "tke:oss-lbm:pylbm-stability-src",
+        "claim_refs": [
+            "tkc:oss-lbm:pylbm-stability"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "pylbm source code, analysis/stability.py",
+            "url": "https://github.com/pyLBM/pyLBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "pylbm@f9f5d16 analysis/stability.py:24-100",
+            "quote": "class Stability: ... jacobian = scheme.EQ.jacobian(self.consm) ... relax_mat_m = sp.eye(nmoments) - sp.diag(*scheme.s) ... eigs = np.empty((n_wv, self.nvtot), dtype='complex')"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:pylbm-stability-src",
-    "claim_refs": [
-      "tkc:oss-lbm:pylbm-stability"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "pylbm source code, analysis/stability.py",
-      "url": "https://github.com/pyLBM/pyLBM",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:pylbm-bfl-src",
+        "claim_refs": [
+            "tkc:oss-lbm:pylbm-bfl-bounce-back"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "pylbm source code, boundary.py",
+            "url": "https://github.com/pyLBM/pyLBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "pylbm@f9f5d16 boundary.py:500-560",
+            "quote": "class BFLBounceBack(BoundaryMethod): ... Boundary condition of type Bouzidi-Firdaouss-Lallemand bounce-back [BFL01] ... mask = self.distance < 0.5 ... self.s[mask] = 2.0 * self.distance[mask]"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "pylbm@48c19da analysis/stability.py:24-100",
-      "quote": "class Stability: ... jacobian = scheme.EQ.jacobian(self.consm) ... relax_mat_m = sp.eye(nmoments) - sp.diag(*scheme.s) ... eigs = np.empty((n_wv, self.nvtot), dtype='complex')"
+    {
+        "id": "tke:oss-lbm:pylbm-linear-bb-src",
+        "claim_refs": [
+            "tkc:oss-lbm:pylbm-linear-bb-family"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "pylbm source code, boundary.py",
+            "url": "https://github.com/pyLBM/pyLBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "pylbm@f9f5d16 boundary.py:810-1160",
+            "quote": "class LinearBounceBack(BoundaryMethod): ... class CLIBounceBack(LinearBounceBack): ... alpha = 4/(1+2δ) ... class YLIBounceBack(LinearBounceBack): ... alpha = 2/(1+δ)"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:pylbm-bfl-src",
-    "claim_refs": [
-      "tkc:oss-lbm:pylbm-bfl-bounce-back"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "pylbm source code, boundary.py",
-      "url": "https://github.com/pyLBM/pyLBM",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:pylbm-sympy-src",
+        "claim_refs": [
+            "tkc:oss-lbm:pylbm-sympy-scheme"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "pylbm source code, analysis/equivalent_equation.py and analysis/stability.py",
+            "url": "https://github.com/pyLBM/pyLBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "pylbm@f9f5d16 analysis/equivalent_equation.py:10",
+            "quote": "import sympy as sp ... LA = scheme.la ... Lambda.append(scheme.M * vd * scheme.invM)"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "pylbm@48c19da boundary.py:500-560",
-      "quote": "class BFLBounceBack(BoundaryMethod): ... Boundary condition of type Bouzidi-Firdaouss-Lallemand bounce-back [BFL01] ... mask = self.distance < 0.5 ... self.s[mask] = 2.0 * self.distance[mask]"
+    {
+        "id": "tke:oss-lbm:lettuce-context-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lettuce-torch-context"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lettuce source code, _context.py",
+            "url": "https://github.com/lettucecfd/lettuce",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lettuce@a0e3f2d _context.py:1-80",
+            "quote": "import torch ... class Context: ... self.device = torch.device(device) ... self.dtype = dtype"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:pylbm-linear-bb-src",
-    "claim_refs": [
-      "tkc:oss-lbm:pylbm-linear-bb-family"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "pylbm source code, boundary.py",
-      "url": "https://github.com/pyLBM/pyLBM",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:lettuce-bgk-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lettuce-bgk-differentiable"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lettuce source code, ext/_collision/bgk_collision.py",
+            "url": "https://github.com/lettucecfd/lettuce",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lettuce@a0e3f2d ext/_collision/bgk_collision.py:12-30",
+            "quote": "class BGKCollision(Collision): ... def __call__(self, flow): ... return flow.f - 1.0 / self.tau * (flow.f - feq) + si"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "pylbm@48c19da boundary.py:810-1160",
-      "quote": "class LinearBounceBack(BoundaryMethod): ... class CLIBounceBack(LinearBounceBack): ... alpha = 4/(1+2δ) ... class YLIBounceBack(LinearBounceBack): ... alpha = 2/(1+δ)"
+    {
+        "id": "tke:oss-lbm:lettuce-cuda-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lettuce-native-cuda"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lettuce source code, _simulation.py and cuda_native/",
+            "url": "https://github.com/lettucecfd/lettuce",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lettuce@a0e3f2d _simulation.py:80-120",
+            "quote": "native_collision = self.collision.native_generator(self.collision_index) ... generator = Generator(self.flow.stencil, collision = native_collision ...) ... native_kernel = generator.resolve()"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:pylbm-sympy-src",
-    "claim_refs": [
-      "tkc:oss-lbm:pylbm-sympy-scheme"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "pylbm source code, analysis/equivalent_equation.py and analysis/stability.py",
-      "url": "https://github.com/pyLBM/pyLBM",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:lbmpy-ce-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbmpy-chapman-enskog"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbmpy source code, chapman_enskog/chapman_enskog.py",
+            "url": "https://github.com/lettucecfd/lbmpy",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbmpy@0afc9d5 src/lbmpy/chapman_enskog/chapman_enskog.py:18-80",
+            "quote": "class ChapmanEnskogAnalysis: ... compressible, pressure, sigma = match_to_navier_stokes(self._equationsWithHigherOrderMoments) ... def get_dynamic_viscosity(self):"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "pylbm@48c19da analysis/equivalent_equation.py:10",
-      "quote": "import sympy as sp ... LA = scheme.la ... Lambda.append(scheme.M * vd * scheme.invM)"
+    {
+        "id": "tke:oss-lbm:lbmpy-pipeline-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbmpy-pipeline"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbmpy source code, creationfunctions.py",
+            "url": "https://github.com/lettucecfd/lbmpy",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbmpy@0afc9d5 src/lbmpy/creationfunctions.py:1-50",
+            "quote": "Kernel functions are created in four/five steps: create_lb_method, create_lb_collision_rule/create_lb_update_rule, create_lb_ast and create_lb_function"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:lettuce-context-src",
-    "claim_refs": [
-      "tkc:oss-lbm:lettuce-torch-context"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "lettuce source code, _context.py",
-      "url": "https://github.com/lettucecfd/lettuce",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:lbmpy-methods-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbmpy-method-spaces"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbmpy source code, methods/abstractlbmethod.py and methods/__init__.py",
+            "url": "https://github.com/lettucecfd/lbmpy",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbmpy@0afc9d5 src/lbmpy/methods/abstractlbmethod.py:20-60",
+            "quote": "class AbstractLbMethod(abc.ABC): ... from lbmpy.methods import (create_mrt_orthogonal, create_mrt_raw, create_central_moment, create_srt, create_trt, create_trt_kbc)"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "lettuce@a0e3f2d _context.py:1-80",
-      "quote": "import torch ... class Context: ... self.device = torch.device(device) ... self.dtype = dtype"
+    {
+        "id": "tke:oss-lbm:xlb-warp-src",
+        "claim_refs": [
+            "tkc:oss-lbm:xlb-warp-kernel"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "XLB source code, operator/stream/stream.py",
+            "url": "https://github.com/lettucecfd/xlb",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "xlb@9c23e82 xlb/operator/stream/stream.py:85-125",
+            "quote": "@wp.kernel def kernel(f_0: wp.array4d(dtype=Any), f_1: wp.array4d(dtype=Any)): ... i, j, k = wp.tid() ... _f = functional(f_0, index) ... f_1[l, index[0], index[1], index[2]] = self.store_dtype(_f[l])"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:lettuce-bgk-src",
-    "claim_refs": [
-      "tkc:oss-lbm:lettuce-bgk-differentiable"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "lettuce source code, ext/_collision/bgk_collision.py",
-      "url": "https://github.com/lettucecfd/lettuce",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:xlb-distribute-src",
+        "claim_refs": [
+            "tkc:oss-lbm:xlb-jax-distribute"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "XLB source code, distribute/distribute.py",
+            "url": "https://github.com/lettucecfd/xlb",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "xlb@9c23e82 xlb/distribute/distribute.py:1-60",
+            "quote": "from jax import shard_map ... left_comm = lax.ppermute(left_comm, perm=rightPerm, axis_name='x') ... distributed_operator = shard_map(_sharded_operator, mesh=grid.global_mesh, in_specs=in_specs, out_specs=out_specs, check_vma=False)"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "lettuce@a0e3f2d ext/_collision/bgk_collision.py:12-30",
-      "quote": "class BGKCollision(Collision): ... def __call__(self, flow): ... return flow.f - 1.0 / self.tau * (flow.f - feq) + si"
+    {
+        "id": "tke:oss-lbm:xlb-operator-src",
+        "claim_refs": [
+            "tkc:oss-lbm:xlb-operator-pattern"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "XLB source code, operator/operator.py and operator/collision/collision.py",
+            "url": "https://github.com/lettucecfd/xlb",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "xlb@9c23e82 xlb/operator/operator.py:26",
+            "quote": "class Operator: ... @Operator.register_backend(ComputeBackend.JAX) ... @Operator.register_backend(ComputeBackend.WARP)"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:lettuce-cuda-src",
-    "claim_refs": [
-      "tkc:oss-lbm:lettuce-native-cuda"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "lettuce source code, _simulation.py and cuda_native/",
-      "url": "https://github.com/lettucecfd/lettuce",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:lettuce-tests-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lettuce-test-invariants"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lettuce test suite, tests/collision/",
+            "url": "https://github.com/lettucecfd/lettuce",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lettuce@a0e3f2d tests/collision/",
+            "quote": "test_collision_conserves_mass.py, test_collision_conserves_momentum.py, test_collision_fixpoint_2x.py, test_collision_relaxes_shear_moments.py, test_collision_optimizes_pseudo_entropy.py"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "lettuce@a0e3f2d _simulation.py:80-120",
-      "quote": "native_collision = self.collision.native_generator(self.collision_index) ... generator = Generator(self.flow.stencil, collision = native_collision ...) ... native_kernel = generator.resolve()"
+    {
+        "id": "tke:oss-lbm:lettuce-conftest-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lettuce-test-parametrize"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lettuce test suite, tests/conftest.py",
+            "url": "https://github.com/lettucecfd/lettuce",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lettuce@a0e3f2d tests/conftest.py:1-60",
+            "quote": "def stencil_params(): return stencil1d_params() + stencil2d_params() + stencil3d_params() ... @pytest.fixture(params=dtype_params(), ids=dtype_ids()) ... @pytest.fixture(params=stencil_params(), ids=stencil_ids())"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:lbmpy-ce-src",
-    "claim_refs": [
-      "tkc:oss-lbm:lbmpy-chapman-enskog"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "lbmpy source code, chapman_enskog/chapman_enskog.py",
-      "url": "https://github.com/lettucecfd/lbmpy",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:xlb-tests-src",
+        "claim_refs": [
+            "tkc:oss-lbm:xlb-test-organization"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "XLB test suite, tests/",
+            "url": "https://github.com/lettucecfd/xlb",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "xlb@9c23e82 tests/",
+            "quote": "tests/kernels/{collision,equilibrium,macroscopic,stream}/ and tests/backends/test_neon_backend.py"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T14:30:00Z",
+        "captured_by": "agent-m8635",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "lbmpy@0afc9d5 src/lbmpy/chapman_enskog/chapman_enskog.py:18-80",
-      "quote": "class ChapmanEnskogAnalysis: ... compressible, pressure, sigma = match_to_navier_stokes(self._equationsWithHigherOrderMoments) ... def get_dynamic_viscosity(self):"
+    {
+        "id": "tke:oss-lbm:mflbm-csf-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-csf-multiphase"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, README.md and multiphase_3D/0.src/",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 README.md:About The Code + multiphase_3D/0.src/Kernel_multiphase.F90",
+            "quote": "MF-LBM is a high-performance lattice Boltzmann (LB) code for direct numerical simulation (DNS) of flow in porous media... implementing the Continuum-Surface-Force and geometrical wetting models to reduce spurious currents"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:lbmpy-pipeline-src",
-    "claim_refs": [
-      "tkc:oss-lbm:lbmpy-pipeline"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "lbmpy source code, creationfunctions.py",
-      "url": "https://github.com/lettucecfd/lbmpy",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:mflbm-aa-streaming-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-aa-streaming"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, multiphase_3D/0.src/Kernel_multiphase.F90",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 multiphase_3D/0.src/Kernel_multiphase.F90:40-60",
+            "quote": "!+++++++++- AA pattern pull step++++++++++++\n                  g1t0=  f0(i  ,j  ,k  )\n                  g1t1=  f1(i-1,j  ,k  )\n                  g1t2=  f2(i+1,j  ,k  )"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "lbmpy@0afc9d5 src/lbmpy/creationfunctions.py:1-50",
-      "quote": "Kernel functions are created in four/five steps: create_lb_method, create_lb_collision_rule/create_lb_update_rule, create_lb_ast and create_lb_function"
+    {
+        "id": "tke:oss-lbm:mflbm-mpi-openacc-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-mpi-openacc-hybrid"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, README.md and multiphase_3D/makefile",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 README.md:Technical details + multiphase_3D/makefile",
+            "quote": "The code is written on Fortran 90 and employs MPI-OpenACC/OpenMP hybrid programing model. The main reason that we chose OpenACC/OpenMP (directive-based parallel programming models) over CUDA is that we want to keep the code portable across different computing platforms"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:lbmpy-methods-src",
-    "claim_refs": [
-      "tkc:oss-lbm:lbmpy-method-spaces"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "lbmpy source code, methods/abstractlbmethod.py and methods/__init__.py",
-      "url": "https://github.com/lettucecfd/lbmpy",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:mflbm-comm-overlap-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-comm-compute-overlap"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, multiphase_3D/0.src/Mpi.F90",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 multiphase_3D/0.src/Mpi.F90:mpi_send_req",
+            "quote": "!$acc wait(z_pdf_update_async)\n        CALL MPI_Isend( send_pdf_zM, isize_pdf_z, MPI_DOUBLE_PRECISION, idzM, tag5, MPI_COMM_VGRID, MPI_REQ_z(3), MPI_ERR )\n        CALL MPI_Isend( send_pdf_zP, isize_pdf_z, MPI_DOUBLE_PRECISION, idzP, tag6, MPI_COMM_VGRID, MPI_REQ_z(4), MPI_ERR )"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "lbmpy@0afc9d5 src/lbmpy/methods/abstractlbmethod.py:20-60",
-      "quote": "class AbstractLbMethod(abc.ABC): ... from lbmpy.methods import (create_mrt_orthogonal, create_mrt_raw, create_central_moment, create_srt, create_trt, create_trt_kbc)"
+    {
+        "id": "tke:oss-lbm:mflbm-soa-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-soa-layout"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, README.md and multiphase_3D/0.src/Module.F90",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 README.md:Technical details",
+            "quote": "The structure of arrays (SoA) data layout is used to achieve coalesced memory access and maximize vectorization."
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:xlb-warp-src",
-    "claim_refs": [
-      "tkc:oss-lbm:xlb-warp-kernel"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "XLB source code, operator/stream/stream.py",
-      "url": "https://github.com/lettucecfd/xlb",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:mflbm-mrt-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-mrt-collision"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, multiphase_3D/0.src/Kernel_multiphase.F90",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 multiphase_3D/0.src/Kernel_multiphase.F90:15-20",
+            "quote": "real(kind=8) :: s_e,s_e2,s_q,s_nu,s_pi,s_t  !relaxation parameters\n    real(kind=8) :: m_rho, m_e, m_e2, m_jx, m_qx, m_jy, m_qy, m_jz, m_qz, m_3pxx, m_3pixx, m_pww, m_piww, m_pxy, m_pyz, m_pzx, m_tx, m_ty, m_tz"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "xlb@9c23e82 xlb/operator/stream/stream.py:85-125",
-      "quote": "@wp.kernel def kernel(f_0: wp.array4d(dtype=Any), f_1: wp.array4d(dtype=Any)): ... i, j, k = wp.tid() ... _f = functional(f_0, index) ... f_1[l, index[0], index[1], index[2]] = self.store_dtype(_f[l])"
+    {
+        "id": "tke:oss-lbm:mflbm-decomp-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-domain-decomposition"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, README.md and multiphase_3D/0.src/Mpi.F90",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 README.md:Important Notes > Domain decomposition",
+            "quote": "Domain decomposition along X direction is no longer supported in the main simulation code for the moment, due to the consideration of non-vectorized data packing and halo area computation. Domain decompositions along Y and Z direction are usually sufficient"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:xlb-distribute-src",
-    "claim_refs": [
-      "tkc:oss-lbm:xlb-jax-distribute"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "XLB source code, distribute/distribute.py",
-      "url": "https://github.com/lettucecfd/xlb",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:mflbm-contact-angle-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-contact-angle-akail"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, README.md",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 README.md:Important Notes > Contact angle",
+            "quote": "The contact angle alteration scheme from Akai et al., 2018 has been implemented and the above limitation no longer exists."
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "xlb@9c23e82 xlb/distribute/distribute.py:1-60",
-      "quote": "from jax import shard_map ... left_comm = lax.ppermute(left_comm, perm=rightPerm, axis_name='x') ... distributed_operator = shard_map(_sharded_operator, mesh=grid.global_mesh, in_specs=in_specs, out_specs=out_specs, check_vma=False)"
+    {
+        "id": "tke:oss-lbm:mflbm-checkpoint-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-checkpoint-restart"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, multiphase_3D/0.src/IO_multiphase.F90",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 multiphase_3D/0.src/IO_multiphase.F90:read_parameter_multi",
+            "quote": "if(trim(job_status)=='new_simulation')then ... elseif(trim(job_status)=='continue_simulation')then ... elseif(trim(job_status)=='simulation_done')then ... elseif(trim(job_status)=='simulation_failed')then"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:xlb-operator-src",
-    "claim_refs": [
-      "tkc:oss-lbm:xlb-operator-pattern"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "XLB source code, operator/operator.py and operator/collision/collision.py",
-      "url": "https://github.com/lettucecfd/xlb",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:mflbm-license-src",
+        "claim_refs": [
+            "tkc:oss-lbm:mflbm-bsd3-license"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "MF-LBM source code, LICENSE",
+            "url": "https://github.com/lanl/MF-LBM",
+            "accessed_at": "2026-11-09"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "MF-LBM@11be324 LICENSE",
+            "quote": "Distributed under the BSD-3 License. ... © 2021. Triad National Security, LLC. All rights reserved. ... This program was produced under U.S. Government contract 89233218CNA000001 for Los Alamos National Laboratory (LANL)"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-09T16:00:00Z",
+        "captured_by": "agent-m8678",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "xlb@9c23e82 xlb/operator/operator.py:26",
-      "quote": "class Operator: ... @Operator.register_backend(ComputeBackend.JAX) ... @Operator.register_backend(ComputeBackend.WARP)"
+    {
+        "id": "tke:oss-lbm:lbm-principles-practice-set-equi-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbm-principles-practice-set-equi"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbm-principles-practice source code, lbm/streamcollide.py",
+            "url": "https://github.com/lbm-principles-practice",
+            "accessed_at": "2026-11-11"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbm-principles-practice@master lbm/streamcollide.py:137",
+            "quote": "\n@jit()\ndef set_equi(ix, iy, equi, rho, u, v, t):\n    \"\"\"\n    Set the equilibrium value for the gridcell ix, iy\n    \"\"\"\n    usqr = 3 / 2 * (u[0] ** 2 + u[1] ** 2)\n    for n in range(9):\n        vu = 3 * (v[n, 0] * u[0] + v[n, 1] * u[1])\n        equi[n, ix, iy] = rho * t[n] * (1 + vu + 0.5 * vu * vu - usqr)\n\n@jit()\ndef collide(ix, iy, equi, fin, fout, omega, rho, v, t, gravity):\n    \"\"\"\n    Perform the collision step\n    \"\"\"\n    for n in range(9):\n        fout[n, ix, iy] = fin[n, ix, iy] + omega["
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-11T07:45:06.782212Z",
+        "captured_by": "agent-extractor",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:lettuce-tests-src",
-    "claim_refs": [
-      "tkc:oss-lbm:lettuce-test-invariants"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "lettuce test suite, tests/collision/",
-      "url": "https://github.com/lettucecfd/lettuce",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:lbm-principles-practice-collide-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbm-principles-practice-collide"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbm-principles-practice source code, lbm/streamcollide.py",
+            "url": "https://github.com/lbm-principles-practice",
+            "accessed_at": "2026-11-11"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbm-principles-practice@master lbm/streamcollide.py:147",
+            "quote": "\n@jit()\ndef collide(ix, iy, equi, fin, fout, omega, rho, v, t, gravity):\n    \"\"\"\n    Perform the collision step\n    \"\"\"\n    for n in range(9):\n        fout[n, ix, iy] = fin[n, ix, iy] + omega[0] * (equi[n, ix, iy] - fin[n, ix, iy])\n\n        # add gravitational forces\n        grav_temp = v[n, 0] * gravity[0] + \\\n                    v[n, 1] * gravity[1]\n        fout[n, ix, iy] -= rho[ix, iy] * t[n] * grav_temp\n\n@jit(nopython=True)\ndef get_epsilon(cell_type, rho, mass):\n    \"\"\"\n    Calculate the fr"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-11T07:45:06.782518Z",
+        "captured_by": "agent-extractor",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "lettuce@a0e3f2d tests/collision/",
-      "quote": "test_collision_conserves_mass.py, test_collision_conserves_momentum.py, test_collision_fixpoint_2x.py, test_collision_relaxes_shear_moments.py, test_collision_optimizes_pseudo_entropy.py"
+    {
+        "id": "tke:oss-lbm:lbm-principles-practice-get-epsilon-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbm-principles-practice-get-epsilon"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbm-principles-practice source code, lbm/streamcollide.py",
+            "url": "https://github.com/lbm-principles-practice",
+            "accessed_at": "2026-11-11"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbm-principles-practice@master lbm/streamcollide.py:160",
+            "quote": "\n@jit(nopython=True)\ndef get_epsilon(cell_type, rho, mass):\n    \"\"\"\n    Calculate the fraction the cell is filled\n    \"\"\"\n    if cell_type & CT.FLUID or cell_type & CT.OBSTACLE:\n        return 1\n    elif cell_type & CT.GAS == 2:\n        return 0\n    else:\n        if rho > 0:\n            # clip\n            epsilon = mass / rho\n\n            if epsilon > 1:\n                epsilon = 1\n            elif epsilon < 0:\n                epsilon = 0\n\n            return epsilon\n        return 0.5\n"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-11T07:45:06.782785Z",
+        "captured_by": "agent-extractor",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:lettuce-conftest-src",
-    "claim_refs": [
-      "tkc:oss-lbm:lettuce-test-parametrize"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "lettuce test suite, tests/conftest.py",
-      "url": "https://github.com/lettucecfd/lettuce",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:lbm-principles-practice-get-normal-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbm-principles-practice-get-normal"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbm-principles-practice source code, lbm/streamcollide.py",
+            "url": "https://github.com/lbm-principles-practice",
+            "accessed_at": "2026-11-11"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbm-principles-practice@master lbm/streamcollide.py:182",
+            "quote": "\n@jit(nopython=True)\ndef get_normal(ix, iy, cell_type, rho, mass):\n    x = 0.5 * (get_epsilon(cell_type[ix - 1, iy], rho[ix - 1, iy], mass[ix - 1, iy]) -\n               get_epsilon(cell_type[ix + 1, iy], rho[ix + 1, iy], mass[ix + 1, iy]))\n    y = 0.5 * (get_epsilon(cell_type[ix, iy - 1], rho[ix, iy - 1], mass[ix, iy - 1]) -\n               get_epsilon(cell_type[ix, iy + 1], rho[ix, iy + 1], mass[ix, iy + 1]))\n    return x, y\n\n\n@jit()\ndef interface_mass_exchange(cell_type_self, cell_type_nei, fou"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-11T07:45:06.783045Z",
+        "captured_by": "agent-extractor",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "lettuce@a0e3f2d tests/conftest.py:1-60",
-      "quote": "def stencil_params(): return stencil1d_params() + stencil2d_params() + stencil3d_params() ... @pytest.fixture(params=dtype_params(), ids=dtype_ids()) ... @pytest.fixture(params=stencil_params(), ids=stencil_ids())"
+    {
+        "id": "tke:oss-lbm:lbm-principles-practice-interface-mass-exchange-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbm-principles-practice-interface-mass-exchange"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbm-principles-practice source code, lbm/streamcollide.py",
+            "url": "https://github.com/lbm-principles-practice",
+            "accessed_at": "2026-11-11"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbm-principles-practice@master lbm/streamcollide.py:191",
+            "quote": "\n@jit()\ndef interface_mass_exchange(cell_type_self, cell_type_nei, fout_self, fout_nei):\n    if cell_type_self & CT.NO_FLUID_NEIGH:\n        if cell_type_nei & CT.NO_FLUID_NEIGH:\n            return fout_nei - fout_self\n        else:\n            return -fout_self\n    elif cell_type_self & CT.NO_EMPTY_NEIGH:\n        if cell_type_nei & CT.NO_EMPTY_NEIGH:\n            return fout_nei - fout_self\n        else:\n            return fout_nei\n    else:\n        if cell_type_nei & CT.NO_FLUID_NEIGH:\n         "
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-11T07:45:06.785034Z",
+        "captured_by": "agent-extractor",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:xlb-tests-src",
-    "claim_refs": [
-      "tkc:oss-lbm:xlb-test-organization"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "XLB test suite, tests/",
-      "url": "https://github.com/lettucecfd/xlb",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:lbm-principles-practice-update-rho-u-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbm-principles-practice-update-rho-u"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbm-principles-practice source code, lbm/streamcollide.py",
+            "url": "https://github.com/lbm-principles-practice",
+            "accessed_at": "2026-11-11"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbm-principles-practice@master lbm/streamcollide.py:109",
+            "quote": "\n@jit()\ndef update_rho_u(ix, iy, fin, rho, u, v):\n    \"\"\"\n    Set the density and velocity for the gridcell ix, iy\n    \"\"\"\n    # set values to zeros\n    rho[ix, iy] = 0\n    u[0, ix, iy] = 0\n    u[1, ix, iy] = 0\n\n    for n in range(9):\n        # calculate the density of this gridpoint\n        rho[ix, iy] += fin[n, ix, iy]\n\n        # calculate the velocity of this gridpoint\n        u[0, ix, iy] += v[n, 0] * fin[n, ix, iy]\n        u[1, ix, iy] += v[n, 1] * fin[n, ix, iy]\n\n    # divide velocity by d"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-11T07:45:06.785292Z",
+        "captured_by": "agent-extractor",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "xlb@9c23e82 tests/",
-      "quote": "tests/kernels/{collision,equilibrium,macroscopic,stream}/ and tests/backends/test_neon_backend.py"
+    {
+        "id": "tke:oss-lbm:lbm-principles-practice-set-inlet-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbm-principles-practice-set-inlet"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbm-principles-practice source code, lbm/streamcollide.py",
+            "url": "https://github.com/lbm-principles-practice",
+            "accessed_at": "2026-11-11"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbm-principles-practice@master lbm/streamcollide.py:219",
+            "quote": "\n@jit()\ndef set_inlet(ix, iy, fin, rho, u, inlet):\n    \"\"\"\n    Set the values for the inlet (careful: inlet has the be on the left side of the domain)\n    \"\"\"\n    # set inlet velocities\n    u[0, ix, iy] = inlet[0, ix, iy]\n    u[1, ix, iy] = inlet[1, ix, iy]\n\n    # set inlet density\n    local_rho = 0\n    for n in range(0, 3):\n        local_rho += fin[n, ix, iy]\n    for n in range(3, 6):\n        local_rho += 2 * fin[n, ix, iy]\n    rho[ix, iy] = 1. / (1. - u[0, ix, iy]) * local_rho\n"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-11T07:45:06.785699Z",
+        "captured_by": "agent-extractor",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T14:30:00Z",
-    "captured_by": "agent-m8635",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-csf-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-csf-multiphase"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, README.md and multiphase_3D/0.src/",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
+    {
+        "id": "tke:oss-lbm:lbm-principles-practice-set-outlet-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbm-principles-practice-set-outlet"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbm-principles-practice source code, lbm/streamcollide.py",
+            "url": "https://github.com/lbm-principles-practice",
+            "accessed_at": "2026-11-11"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbm-principles-practice@master lbm/streamcollide.py:211",
+            "quote": "\n@jit()\ndef set_outlet(ix, iy, fin):\n    \"\"\"\n    Set the values for the outlet (careful: outlet has to be on the right side of the domain)\n    \"\"\"\n    for n in range(3, 6):\n        fin[n, ix, iy] = fin[n, ix - 1, iy]\n\n@jit()\ndef set_inlet(ix, iy, fin, rho, u, inlet):\n    \"\"\"\n    Set the values for the inlet (careful: inlet has the be on the left side of the domain)\n    \"\"\"\n    # set inlet velocities\n    u[0, ix, iy] = inlet[0, ix, iy]\n    u[1, ix, iy] = inlet[1, ix, iy]\n\n    # set inlet density\n"
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-11T07:45:06.785952Z",
+        "captured_by": "agent-extractor",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
     },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 README.md:About The Code + multiphase_3D/0.src/Kernel_multiphase.F90",
-      "quote": "MF-LBM is a high-performance lattice Boltzmann (LB) code for direct numerical simulation (DNS) of flow in porous media... implementing the Continuum-Surface-Force and geometrical wetting models to reduce spurious currents"
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-aa-streaming-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-aa-streaming"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, multiphase_3D/0.src/Kernel_multiphase.F90",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
-    },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 multiphase_3D/0.src/Kernel_multiphase.F90:40-60",
-      "quote": "!+++++++++- AA pattern pull step++++++++++++\n                  g1t0=  f0(i  ,j  ,k  )\n                  g1t1=  f1(i-1,j  ,k  )\n                  g1t2=  f2(i+1,j  ,k  )"
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-mpi-openacc-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-mpi-openacc-hybrid"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, README.md and multiphase_3D/makefile",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
-    },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 README.md:Technical details + multiphase_3D/makefile",
-      "quote": "The code is written on Fortran 90 and employs MPI-OpenACC/OpenMP hybrid programing model. The main reason that we chose OpenACC/OpenMP (directive-based parallel programming models) over CUDA is that we want to keep the code portable across different computing platforms"
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-comm-overlap-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-comm-compute-overlap"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, multiphase_3D/0.src/Mpi.F90",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
-    },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 multiphase_3D/0.src/Mpi.F90:mpi_send_req",
-      "quote": "!$acc wait(z_pdf_update_async)\n        CALL MPI_Isend( send_pdf_zM, isize_pdf_z, MPI_DOUBLE_PRECISION, idzM, tag5, MPI_COMM_VGRID, MPI_REQ_z(3), MPI_ERR )\n        CALL MPI_Isend( send_pdf_zP, isize_pdf_z, MPI_DOUBLE_PRECISION, idzP, tag6, MPI_COMM_VGRID, MPI_REQ_z(4), MPI_ERR )"
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-soa-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-soa-layout"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, README.md and multiphase_3D/0.src/Module.F90",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
-    },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 README.md:Technical details",
-      "quote": "The structure of arrays (SoA) data layout is used to achieve coalesced memory access and maximize vectorization."
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-mrt-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-mrt-collision"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, multiphase_3D/0.src/Kernel_multiphase.F90",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
-    },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 multiphase_3D/0.src/Kernel_multiphase.F90:15-20",
-      "quote": "real(kind=8) :: s_e,s_e2,s_q,s_nu,s_pi,s_t  !relaxation parameters\n    real(kind=8) :: m_rho, m_e, m_e2, m_jx, m_qx, m_jy, m_qy, m_jz, m_qz, m_3pxx, m_3pixx, m_pww, m_piww, m_pxy, m_pyz, m_pzx, m_tx, m_ty, m_tz"
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-decomp-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-domain-decomposition"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, README.md and multiphase_3D/0.src/Mpi.F90",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
-    },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 README.md:Important Notes > Domain decomposition",
-      "quote": "Domain decomposition along X direction is no longer supported in the main simulation code for the moment, due to the consideration of non-vectorized data packing and halo area computation. Domain decompositions along Y and Z direction are usually sufficient"
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-contact-angle-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-contact-angle-akail"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, README.md",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
-    },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 README.md:Important Notes > Contact angle",
-      "quote": "The contact angle alteration scheme from Akai et al., 2018 has been implemented and the above limitation no longer exists."
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-checkpoint-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-checkpoint-restart"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, multiphase_3D/0.src/IO_multiphase.F90",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
-    },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 multiphase_3D/0.src/IO_multiphase.F90:read_parameter_multi",
-      "quote": "if(trim(job_status)=='new_simulation')then ... elseif(trim(job_status)=='continue_simulation')then ... elseif(trim(job_status)=='simulation_done')then ... elseif(trim(job_status)=='simulation_failed')then"
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  },
-  {
-    "id": "tke:oss-lbm:mflbm-license-src",
-    "claim_refs": [
-      "tkc:oss-lbm:mflbm-bsd3-license"
-    ],
-    "source": {
-      "source_type": "other",
-      "citation": "MF-LBM source code, LICENSE",
-      "url": "https://github.com/lanl/MF-LBM",
-      "accessed_at": "2026-11-09"
-    },
-    "relation": "supports",
-    "locator": {
-      "locator_type": "code-location",
-      "value": "MF-LBM@11be324 LICENSE",
-      "quote": "Distributed under the BSD-3 License. ... © 2021. Triad National Security, LLC. All rights reserved. ... This program was produced under U.S. Government contract 89233218CNA000001 for Los Alamos National Laboratory (LANL)"
-    },
-    "extraction_method": "direct-quotation",
-    "captured_at": "2026-11-09T16:00:00Z",
-    "captured_by": "agent-m8678",
-    "assessment_status": "unassessed",
-    "version": "1.0.0"
-  }
+    {
+        "id": "tke:oss-lbm:lbm-principles-practice-evolve-src",
+        "claim_refs": [
+            "tkc:oss-lbm:lbm-principles-practice-evolve"
+        ],
+        "source": {
+            "source_type": "other",
+            "citation": "lbm-principles-practice source code, lbm/time_evolve.py",
+            "url": "https://github.com/lbm-principles-practice",
+            "accessed_at": "2026-11-11"
+        },
+        "relation": "supports",
+        "locator": {
+            "locator_type": "code-location",
+            "value": "lbm-principles-practice@master lbm/time_evolve.py:7",
+            "quote": "\n\ndef evolve(total_timesteps, fin, fout, equi, fdist, inlet, u, rho, mass, cell_type, omega, v, v_inv, t, gravity):\n    velocities = np.zeros((total_timesteps, *u.shape))\n    cell_types = np.zeros((total_timesteps, *cell_type.shape), dtype=type(cell_type))\n\n    for time in range(total_timesteps):\n        print(time)\n\n        # collision step\n        lbm_collision(fin, fout, equi, inlet, u, rho, cell_type, omega, v, t, gravity)\n\n        # copy intermediate step\n        mass_prev = np.copy(mass); "
+        },
+        "extraction_method": "direct-quotation",
+        "captured_at": "2026-11-11T07:45:06.786150Z",
+        "captured_by": "agent-extractor",
+        "assessment_status": "unassessed",
+        "version": "1.0.0"
+    }
 ]
