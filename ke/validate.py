@@ -18,8 +18,9 @@ validator, so the two can be diffed line by line.
 from __future__ import annotations
 
 import json
-import sqlite3
 from pathlib import Path
+
+from .store import Store
 
 try:
     import jsonschema
@@ -37,44 +38,64 @@ SCHEMA_NAMES = (
 )
 
 
-def xref_report(conn: sqlite3.Connection) -> dict[str, list[str]]:
+def xref_report(conn: Store) -> dict[str, list[str]]:
     """Check invariants I1-I4. Each value is a sorted list of offending ids
     (empty list = invariant holds)."""
+    # byte-order collation on both backends (see ke.store.Store.collate):
+    # PostgreSQL would otherwise sort by database locale, not by byte value
+    c1, c2 = conn.collate("ce.claim_id"), conn.collate("ce.evidence_id")
+    e1, e2 = conn.collate("ec.evidence_id"), conn.collate("ec.claim_id")
+    g1, g2 = conn.collate("gc.gap_id"), conn.collate("gc.claim_id")
+
     unresolved_claim_refs = [
         (r[0], r[1])
         for r in conn.execute(
-            """SELECT DISTINCT ce.claim_id, ce.evidence_id
-               FROM claim_evidence ce LEFT JOIN evidence e ON e.id = ce.evidence_id
-               WHERE e.id IS NULL ORDER BY 1, 2"""
+            f"""SELECT ce.claim_id, ce.evidence_id
+                FROM claim_evidence ce LEFT JOIN evidence e ON e.id = ce.evidence_id
+                WHERE e.id IS NULL ORDER BY {c1}, {c2}"""
         )
     ]
     unresolved_evidence_refs = [
         (r[0], r[1])
         for r in conn.execute(
-            """SELECT DISTINCT ec.evidence_id, ec.claim_id
-               FROM evidence_claims ec LEFT JOIN claims c ON c.id = ec.claim_id
-               WHERE c.id IS NULL ORDER BY 1, 2"""
+            f"""SELECT ec.evidence_id, ec.claim_id
+                FROM evidence_claims ec LEFT JOIN claims c ON c.id = ec.claim_id
+                WHERE c.id IS NULL ORDER BY {e1}, {e2}"""
         )
     ]
+    oe = conn.collate("e.id")
     orphan_evidence = [
         r[0]
         for r in conn.execute(
-            """SELECT e.id FROM evidence e
-               WHERE NOT EXISTS (SELECT 1 FROM claim_evidence ce
-                                 WHERE ce.evidence_id = e.id)
-               ORDER BY e.id"""
+            f"""SELECT e.id FROM evidence e
+                WHERE NOT EXISTS (SELECT 1 FROM claim_evidence ce
+                                  WHERE ce.evidence_id = e.id)
+                ORDER BY {oe}"""
         )
     ]
+    cw = conn.collate("c.id")
     claims_without_evidence = [
         r[0]
         for r in conn.execute(
-            """SELECT c.id FROM claims c
-               WHERE NOT EXISTS (SELECT 1 FROM evidence_claims ec
-                                 WHERE ec.claim_id = c.id)
-               ORDER BY c.id"""
+            f"""SELECT c.id FROM claims c
+                WHERE NOT EXISTS (SELECT 1 FROM evidence_claims ec
+                                  WHERE ec.claim_id = c.id)
+                ORDER BY {cw}"""
+        )
+    ]
+    # I5 (extension): every gap_claims edge must resolve on both sides
+    unresolved_gap_refs = [
+        (r[0], r[1])
+        for r in conn.execute(
+            f"""SELECT gc.gap_id, gc.claim_id
+                FROM gap_claims gc
+                LEFT JOIN gap_anchors g ON g.id = gc.gap_id
+                LEFT JOIN claims c ON c.id = gc.claim_id
+                WHERE g.id IS NULL OR c.id IS NULL ORDER BY {g1}, {g2}"""
         )
     ]
     return {
+        "unresolved_gap_refs": sorted(unresolved_gap_refs),
         "unresolved_claim_refs": sorted(unresolved_claim_refs),
         "unresolved_evidence_refs": sorted(unresolved_evidence_refs),
         "orphan_evidence": sorted(orphan_evidence),
@@ -90,8 +111,13 @@ def schema_report(pilot_dir: str | Path) -> list[tuple[str, bool, str]]:
     """Validate every record against its TensorKnowledge schema (same five
     schema files as validate_pilot.py). Returns [(name, ok, detail), ...]."""
     pilot = Path(pilot_dir).resolve()
-    repo_root = pilot.parents[3]  # .../pilots/m8554 -> repo root
-    schemas_dir = repo_root / "schemas"
+    # repo root = nearest ancestor carrying the schemas/ directory; this keeps
+    # validation working for any package location (pilots/, tests/fixtures/, ...)
+    schemas_dir = next(
+        (a / "schemas" for a in pilot.parents
+         if (a / "schemas" / "claim-record.schema.json").is_file()),
+        pilot.parents[3] / "schemas",
+    )
     if jsonschema is None:
         return [("deps:jsonschema", False, "jsonschema not installed")]
     if not schemas_dir.is_dir():
@@ -142,7 +168,7 @@ def schema_report(pilot_dir: str | Path) -> list[tuple[str, bool, str]]:
     return out
 
 
-def validate_package(pilot_dir: str | Path, conn: sqlite3.Connection) -> list[tuple[str, bool, str]]:
+def validate_package(pilot_dir: str | Path, conn: Store) -> list[tuple[str, bool, str]]:
     """Combined report: schema checks + xref invariants, PASS/FAIL lines in
     the same shape as validate_pilot.py output."""
     lines: list[tuple[str, bool, str]] = list(schema_report(pilot_dir))
@@ -161,6 +187,11 @@ def validate_package(pilot_dir: str | Path, conn: sqlite3.Connection) -> list[tu
         "xref:no_orphan_evidence",
         not rep["orphan_evidence"],
         f"orphan evidence: {rep['orphan_evidence']}",
+    ))
+    lines.append((
+        "xref:all_gap_refs_resolve",
+        not rep["unresolved_gap_refs"],
+        f"unresolved {rep['unresolved_gap_refs']}",
     ))
     lines.append((
         "xref:no_claim_without_evidence",

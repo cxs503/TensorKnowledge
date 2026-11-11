@@ -1,0 +1,9 @@
+# Ruff configuration (m8800).
+#
+# `tests/fixtures/` holds byte-identical copies of end-of-pipeline artefacts
+# (e.g. the frozen m8554 pilot package and its reference validator).  They are
+# *data*, restored verbatim from git objects (see
+# tests/fixtures/ke-pilot/PROVENANCE.md) and are not maintained code, so they
+# are excluded from linting — reformatting them would break the byte-identity
+# guarantee that makes the fixture trustworthy.
+extend-exclude = ["tests/fixtures"]
