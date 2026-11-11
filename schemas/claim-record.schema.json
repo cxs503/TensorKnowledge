@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/claim-record.schema.json",
   "title": "Claim Record",
-  "description": "Atomic, independently assessable knowledge claim. Evidence is linked by identifiers; a claim record does not itself assert truth.",
+  "description": "Atomic, independently assessable knowledge claim. Evidence is linked by identifiers; a claim record does not itself assert truth. epistemic_status=\"draft\" marks a producer-recorded claim that has not yet been independently reviewed (additive to the original vocabulary; see knowledge/sediment/m2591/INDEX.md).",
   "type": "object",
   "required": [
     "id",
@@ -91,7 +91,8 @@
         "contested",
         "speculative",
         "superseded",
-        "not-assessed"
+        "not-assessed",
+        "draft"
       ]
     },
     "evidence_refs": {
