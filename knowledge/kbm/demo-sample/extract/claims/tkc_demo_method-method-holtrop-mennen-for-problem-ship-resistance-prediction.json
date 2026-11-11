@@ -1,0 +1,56 @@
+{
+  "id": "tkc:demo:method-method-holtrop-mennen-for-problem-ship-resistance-prediction",
+  "card_type": "method",
+  "statement": "Method 'Holtrop-Mennen' for problem: Ship resistance prediction for displacement hulls",
+  "claim_type": "methodological",
+  "epistemic_status": "draft",
+  "scope": {
+    "domain": "ship-resistance"
+  },
+  "evidence_refs": [
+    "tke:demo:method-ev-0366188e"
+  ],
+  "created_at": "2026-11-11T20:15:47Z",
+  "created_by": "agent-m15180",
+  "version": "1.0.0",
+  "problem": {
+    "description": "Ship resistance prediction for displacement hulls",
+    "governing_equation": "R_T = 0.5 * rho * V^2 * S * C_T"
+  },
+  "method": {
+    "name": "Holtrop-Mennen",
+    "description": "Empirical resistance prediction method decomposing total resistance into frictional, residual, and appendage components",
+    "family": "other"
+  },
+  "equations": [
+    {
+      "formula": "C_T = C_F + C_R + C_A",
+      "source": "Holtrop & Mennen (1982)",
+      "source_type": "paper"
+    }
+  ],
+  "applicable_domain": {
+    "domain": "ship-resistance",
+    "limitations": [
+      "valid for Fr < 0.45",
+      "displacement hulls only"
+    ]
+  },
+  "verification": {
+    "quotes_verified": [
+      {
+        "ok": true,
+        "start": 275,
+        "end": 339,
+        "content_hash": "fd2ae9398b4b08412fb50fe0b982ea817eb3c6ee18511b34c81478b507536e89"
+      }
+    ],
+    "numbers_verified": [
+      {
+        "ok": true,
+        "found": 0.00325
+      }
+    ],
+    "source_path": "knowledge/kbm/demo-sample/report.md"
+  }
+}
