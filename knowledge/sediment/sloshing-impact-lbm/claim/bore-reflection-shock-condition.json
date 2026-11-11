@@ -1,0 +1,27 @@
+{
+  "id": "tkc:sloshing-lbm:bore-reflection-shock-condition",
+  "statement": "涌潮对壁滞止的精确参照取 rho g h_r：h_r/h_l = 3.4940，由 Saint-Venant 激波（Rankine-Hugoniot）条件 u_i = (h_r - h_i) sqrt(g (h_r + h_i) / (2 h_r h_i)) 在 h_i = 4 m、前缘速度 u_i = 2 sqrt(g h_l) = 12.5262 m/s 下解得 h_r = 13.9758 m；浅水闭式 4.0000 rho g h_l 是其近似上界，两者相差 14.48%。",
+  "claim_type": "mathematical",
+  "scope": {
+    "domain": "free-surface hydraulics",
+    "system": "uniform bore stopped by a vertical wall (u_r = 0)",
+    "conditions": [
+      "Saint-Venant (hydrostatic) pressure assumption, pre-reflection state (h_i, u_i)"
+    ],
+    "exclusions": [
+      "no air entrainment, no compressibility, no three-dimensional effect"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "draft",
+  "evidence_refs": [
+    "tke:sloshing-lbm:e13-bore-reflection-shock-condition",
+    "tke:sloshing-lbm:e14-bore-reflection-shock-condition"
+  ],
+  "created_at": "2026-11-11T00:00:00Z",
+  "created_by": "tkc-agent:m14530",
+  "version": "1.0.0",
+  "notes": [
+    "this is the anchor that makes the impact peak band falsifiable in claim 1"
+  ]
+}

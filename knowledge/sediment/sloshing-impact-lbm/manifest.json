@@ -1,0 +1,30 @@
+{
+  "package": "sloshing-impact-lbm",
+  "title": "Three-dimensional free-surface LBM reference for the low-order sloshing chain",
+  "source": {
+    "repo": "TensorLBM",
+    "sha": "aecabea25cc776b211f372d225ab3a5aa4d09cdc",
+    "branch": "agent/m7437",
+    "pr": 1221,
+    "mission": 7437,
+    "task_key": "tk-sediment-m7437",
+    "model": "deepseek-v4-flash",
+    "finished_at": "2026-11-08T16:25:06.595538+00:00",
+    "root_env": "SLOSHING_SRC_REPO",
+    "default_root": "/root/tensor-ecosystem/TensorLBM"
+  },
+  "records": {
+    "claims": 5,
+    "evidence": 14,
+    "provenance": 5
+  },
+  "entry": {
+    "builder": "scripts/sediment_sloshing_extract.py",
+    "verifier": "scripts/verify_sediment_sloshing.py",
+    "artifacts": [
+      "run/verification.json",
+      "run/benchmark.json"
+    ]
+  },
+  "version": "1.0.0"
+}

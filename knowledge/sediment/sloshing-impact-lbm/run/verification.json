@@ -1,0 +1,866 @@
+{
+  "package": "sloshing-impact-lbm",
+  "source": {
+    "sha": "aecabea25cc776b211f372d225ab3a5aa4d09cdc",
+    "root": "/root/tensor-ecosystem/TensorLBM"
+  },
+  "environment": {
+    "python": "3.11.6",
+    "implementation": "CPython",
+    "platform": "Linux",
+    "partial": false
+  },
+  "summary": {
+    "n_checks": 104,
+    "n_pass": 104,
+    "n_fail": 0,
+    "failures": []
+  },
+  "checks": [
+    {
+      "name": "package:manifest",
+      "ok": true,
+      "detail": "{'claims': 5, 'evidence': 14, 'provenance': 5}"
+    },
+    {
+      "name": "package:counts",
+      "ok": true,
+      "detail": "5/14/5"
+    },
+    {
+      "name": "schema:claim",
+      "ok": true,
+      "detail": "5 valid"
+    },
+    {
+      "name": "schema:evidence",
+      "ok": true,
+      "detail": "14 valid"
+    },
+    {
+      "name": "schema:provenance",
+      "ok": true,
+      "detail": "5 valid"
+    },
+    {
+      "name": "xref:unique-claim-ids",
+      "ok": true,
+      "detail": "5 claims"
+    },
+    {
+      "name": "xref:unique-evidence-ids",
+      "ok": true,
+      "detail": "14 evidence records"
+    },
+    {
+      "name": "xref:claim->evidence",
+      "ok": true,
+      "detail": "dangling=[]"
+    },
+    {
+      "name": "xref:evidence->claim",
+      "ok": true,
+      "detail": "dangling=[]"
+    },
+    {
+      "name": "xref:every-evidence-referenced",
+      "ok": true,
+      "detail": "unreferenced=[]"
+    },
+    {
+      "name": "xref:every-claim-has-evidence",
+      "ok": true,
+      "detail": "without evidence=[]"
+    },
+    {
+      "name": "index:row-count",
+      "ok": true,
+      "detail": "parsed=5 expected=5"
+    },
+    {
+      "name": "index:rows-match-json",
+      "ok": true,
+      "detail": "mismatch=[]"
+    },
+    {
+      "name": "discipline:claims-draft",
+      "ok": true,
+      "detail": "non-draft=[]"
+    },
+    {
+      "name": "discipline:evidence-unassessed",
+      "ok": true,
+      "detail": "assessed=[]"
+    },
+    {
+      "name": "discipline:semver",
+      "ok": true,
+      "detail": "bad=[]"
+    },
+    {
+      "name": "discipline:evidence-has-quote",
+      "ok": true,
+      "detail": "without quote=[]"
+    },
+    {
+      "name": "source:available",
+      "ok": true,
+      "detail": "/root/tensor-ecosystem/TensorLBM"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e01-impact-peak-below-low-order-band",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L94-L94 (78 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e01-impact-peak-below-low-order-band",
+      "ok": true,
+      "detail": "39562c8f58bb6157"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e01-impact-peak-below-low-order-band",
+      "ok": true,
+      "detail": "first line found at [94]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e02-impact-peak-below-low-order-band",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L95-L95 (65 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e02-impact-peak-below-low-order-band",
+      "ok": true,
+      "detail": "5358a285c34e7cc2"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e02-impact-peak-below-low-order-band",
+      "ok": true,
+      "detail": "first line found at [95]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e03-impact-peak-below-low-order-band",
+      "ok": true,
+      "detail": "artifacts/sloshing_impact_lbm/report.json#L22-L22 (41 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e03-impact-peak-below-low-order-band",
+      "ok": true,
+      "detail": "2b185405762920e1"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e03-impact-peak-below-low-order-band",
+      "ok": true,
+      "detail": "first line found at [22]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e04-forced-frequency-vs-exact-dispersion",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L21-L21 (67 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e04-forced-frequency-vs-exact-dispersion",
+      "ok": true,
+      "detail": "f02da4228c2adcb2"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e04-forced-frequency-vs-exact-dispersion",
+      "ok": true,
+      "detail": "first line found at [21]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e05-forced-frequency-vs-exact-dispersion",
+      "ok": true,
+      "detail": "artifacts/sloshing_impact_lbm/report.json#L84-L84 (54 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e05-forced-frequency-vs-exact-dispersion",
+      "ok": true,
+      "detail": "5e13a0914324d283"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e05-forced-frequency-vs-exact-dispersion",
+      "ok": true,
+      "detail": "first line found at [84]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e06-forced-frequency-vs-exact-dispersion",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L120-L120 (64 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e06-forced-frequency-vs-exact-dispersion",
+      "ok": true,
+      "detail": "07e956ccc7652dee"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e06-forced-frequency-vs-exact-dispersion",
+      "ok": true,
+      "detail": "first line found at [120]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e07-swe-frequency-validity-bound",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L118-L118 (64 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e07-swe-frequency-validity-bound",
+      "ok": true,
+      "detail": "3a23ed82513095f9"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e07-swe-frequency-validity-bound",
+      "ok": true,
+      "detail": "first line found at [118]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e08-swe-frequency-validity-bound",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L119-L119 (71 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e08-swe-frequency-validity-bound",
+      "ok": true,
+      "detail": "4c324cca59bea85c"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e08-swe-frequency-validity-bound",
+      "ok": true,
+      "detail": "first line found at [119]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e09-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L100-L100 (59 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e09-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "938fb1d39b1d071e"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e09-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "first line found at [100]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e10-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L96-L96 (47 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e10-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "1c432433a6fd8d1a"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e10-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "first line found at [96]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e11-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L102-L102 (72 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e11-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "0d7238e45cca1b8c"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e11-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "first line found at [102]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e12-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "artifacts/sloshing_impact_lbm/report.json#L99-L105 (222 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e12-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "5ef144a0613381ae"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e12-mass-conservation-vs-hydrostatic-pressure",
+      "ok": true,
+      "detail": "first line found at [99]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e13-bore-reflection-shock-condition",
+      "ok": true,
+      "detail": "src/tensorlbm/sloshing_impact_calibration.py#L193-L201 (388 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e13-bore-reflection-shock-condition",
+      "ok": true,
+      "detail": "71d4dd674df1892f"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e13-bore-reflection-shock-condition",
+      "ok": true,
+      "detail": "first line found at [193]"
+    },
+    {
+      "name": "quote:tke:sloshing-lbm:e14-bore-reflection-shock-condition",
+      "ok": true,
+      "detail": "docs/SLOSHING_IMPACT_LBM_CALIBRATION.md#L28-L28 (61 chars)"
+    },
+    {
+      "name": "hash:tke:sloshing-lbm:e14-bore-reflection-shock-condition",
+      "ok": true,
+      "detail": "6607f106b4eef93c"
+    },
+    {
+      "name": "grep:tke:sloshing-lbm:e14-bore-reflection-shock-condition",
+      "ok": true,
+      "detail": "first line found at [28]"
+    },
+    {
+      "name": "num:nc-01-omega-exact",
+      "ok": true,
+      "detail": "ref=0.9262031964108087 got=0.9262031964108087 rel=+0.000e+00 tol=1e-12"
+    },
+    {
+      "name": "lit:nc-01-omega-exact:0.9262",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-02-relative-depth-kh",
+      "ok": true,
+      "detail": "ref=0.6283185307179586 got=0.6283185307179586 rel=+0.000e+00 tol=1e-12"
+    },
+    {
+      "name": "lit:nc-02-relative-depth-kh:0.6283",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-03-swe-frequency-ratio",
+      "ok": true,
+      "detail": "ref=1.062194222899288 got=1.062194222899288 rel=+0.000e+00 tol=1e-09"
+    },
+    {
+      "name": "lit:nc-03-swe-frequency-ratio:1.0622",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-04-swe-frequency-excess-percent",
+      "ok": true,
+      "detail": "ref=6.2194222899288 got=6.2194222899288 rel=+0.000e+00 tol=1e-09"
+    },
+    {
+      "name": "lit:nc-04-swe-frequency-excess-percent:6.22",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-05-kh-bound-3pct",
+      "ok": true,
+      "detail": "ref=0.4300474077499152 got=0.4300474077499157 rel=+1.162e-15 tol=1e-09"
+    },
+    {
+      "name": "lit:nc-05-kh-bound-3pct:0.4300",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-06-kh-bound-5pct",
+      "ok": true,
+      "detail": "ref=0.560247783871624 got=0.560247783871624 rel=+0.000e+00 tol=1e-09"
+    },
+    {
+      "name": "lit:nc-06-kh-bound-5pct:0.5602",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-07-kh-bound-10pct",
+      "ok": true,
+      "detail": "ref=0.8106136627593723 got=0.8106136627593727 rel=+5.478e-16 tol=1e-09"
+    },
+    {
+      "name": "lit:nc-07-kh-bound-10pct:0.8106",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-08-bore-reflection-ratio",
+      "ok": true,
+      "detail": "ref=3.4939592074348815 got=3.4939592074349344 rel=+1.513e-14 tol=1e-09"
+    },
+    {
+      "name": "lit:nc-08-bore-reflection-ratio:3.4940",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-09-surge-front-speed",
+      "ok": true,
+      "detail": "ref=12.526228482667877 got=12.526228482667877 rel=+0.000e+00 tol=1e-12"
+    },
+    {
+      "name": "lit:nc-09-surge-front-speed:12.5262",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-10-reflected-depth",
+      "ok": true,
+      "detail": "derived-only got=13.975836829739738 (source reports no such value)"
+    },
+    {
+      "name": "lit:nc-10-reflected-depth:13.9758",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-11-impact-peak-filtered",
+      "ok": true,
+      "detail": "ref=0.5442166866487241 got=0.5442166866487241 rel=+0.000e+00 tol=1e-12"
+    },
+    {
+      "name": "lit:nc-11-impact-peak-filtered:0.5442",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-12-impact-peak-raw",
+      "ok": true,
+      "detail": "ref=1.690257340669632 got=1.690257340669632 rel=+0.000e+00 tol=1e-12"
+    },
+    {
+      "name": "lit:nc-12-impact-peak-raw:1.6903",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-13-swe-surge-anchor",
+      "ok": true,
+      "detail": "reported-only ref=0.8246704285644378 (re-derivation not possible)"
+    },
+    {
+      "name": "lit:nc-13-swe-surge-anchor:0.8247",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-14-mass-drift",
+      "ok": true,
+      "detail": "ref=0.00079498291015625 got=0.00079498291015625 rel=+0.000e+00 tol=1e-12"
+    },
+    {
+      "name": "lit:nc-14-mass-drift:7.95e-04",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-15-mass-drift-settled",
+      "ok": true,
+      "detail": "reported-only ref=0.001134112202314627 (re-derivation not possible)"
+    },
+    {
+      "name": "lit:nc-15-mass-drift-settled:1.13e-03",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-16-hydrostatic-l2",
+      "ok": true,
+      "detail": "reported-only ref=0.10564851391625638 (re-derivation not possible)"
+    },
+    {
+      "name": "lit:nc-16-hydrostatic-l2:0.1056",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-17-hydrostatic-max",
+      "ok": true,
+      "detail": "reported-only ref=0.3297713906865536 (re-derivation not possible)"
+    },
+    {
+      "name": "lit:nc-17-hydrostatic-max:0.3298",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-18-forced-omega-source",
+      "ok": true,
+      "detail": "ref=0.9243371577912496 got=0.9228695890815268 rel=-1.588e-03 tol=5e-03"
+    },
+    {
+      "name": "lit:nc-18-forced-omega-source:0.9243",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "lit:nc-18-forced-omega-source:0.9229",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "num:nc-19-lbm-over-exact",
+      "ok": true,
+      "detail": "ref=0.9979852816025788 got=0.9964007818778858 rel=-1.588e-03 tol=5e-03"
+    },
+    {
+      "name": "lit:nc-19-lbm-over-exact:0.9980",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "lit:nc-19-lbm-over-exact:0.9964",
+      "ok": true,
+      "detail": "in-statement=True rendering=True"
+    },
+    {
+      "name": "bench:has-rederived",
+      "ok": true,
+      "detail": "15 items re-derived"
+    },
+    {
+      "name": "bench:has-numbers",
+      "ok": true,
+      "detail": "19 rows, 14 with ref and got"
+    },
+    {
+      "name": "bench:worst-error",
+      "ok": true,
+      "detail": "max |rel error| = 1.588e-03"
+    },
+    {
+      "name": "bench:exact-reproductions",
+      "ok": true,
+      "detail": "12/15 reproduce the source value to <=1e-9"
+    }
+  ],
+  "extra": {
+    "benchmark": {
+      "package": "sloshing-impact-lbm",
+      "source": {
+        "repo": "TensorLBM",
+        "sha": "aecabea25cc776b211f372d225ab3a5aa4d09cdc"
+      },
+      "n_items": 19,
+      "n_rederived": 15,
+      "n_compared": 14,
+      "n_reported_only": 4,
+      "worst_abs_rel_error": 0.0015876984900505188,
+      "items": [
+        {
+          "id": "nc-01-omega-exact",
+          "quantity": "first-mode natural frequency omega_1 [rad/s]",
+          "claim": "tkc:sloshing-lbm:forced-frequency-vs-exact-dispersion",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"omega_exact_theory\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.9262031964108087,
+          "got": 0.9262031964108087,
+          "rel_error": 0.0,
+          "tol_rel": 1e-12,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-02-relative-depth-kh",
+          "quantity": "relative depth kh = k h [-]",
+          "claim": "tkc:sloshing-lbm:swe-frequency-validity-bound",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/hydrostatic_nx40.json",
+            "regex": "\"kh\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.6283185307179586,
+          "got": 0.6283185307179586,
+          "rel_error": 0.0,
+          "tol_rel": 1e-12,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-03-swe-frequency-ratio",
+          "quantity": "omega_SWE / omega_exact [-]",
+          "claim": "tkc:sloshing-lbm:swe-frequency-validity-bound",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"omega_ratio_swe_over_exact\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 1.062194222899288,
+          "got": 1.062194222899288,
+          "rel_error": 0.0,
+          "tol_rel": 1e-09,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-04-swe-frequency-excess-percent",
+          "quantity": "SWE frequency excess [%]",
+          "claim": "tkc:sloshing-lbm:swe-frequency-validity-bound",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"omega_ratio_swe_over_exact\":\\s*([-0-9.eE+]+)",
+            "transform": "percent_from_ratio"
+          },
+          "ref": 6.2194222899288,
+          "got": 6.2194222899288,
+          "rel_error": 0.0,
+          "tol_rel": 1e-09,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-05-kh-bound-3pct",
+          "quantity": "kh bound for <=3% SWE frequency error [-]",
+          "claim": "tkc:sloshing-lbm:swe-frequency-validity-bound",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"kh_max_for_3pct\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.4300474077499152,
+          "got": 0.4300474077499157,
+          "rel_error": 1.1617332230772388e-15,
+          "tol_rel": 1e-09,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-06-kh-bound-5pct",
+          "quantity": "kh bound for <=5% SWE frequency error [-]",
+          "claim": "tkc:sloshing-lbm:swe-frequency-validity-bound",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"kh_max_for_5pct\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.560247783871624,
+          "got": 0.560247783871624,
+          "rel_error": 0.0,
+          "tol_rel": 1e-09,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-07-kh-bound-10pct",
+          "quantity": "kh bound for <=10% SWE frequency error [-]",
+          "claim": "tkc:sloshing-lbm:swe-frequency-validity-bound",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"kh_max_for_10pct\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.8106136627593723,
+          "got": 0.8106136627593727,
+          "rel_error": 5.478432331603678e-16,
+          "tol_rel": 1e-09,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-08-bore-reflection-ratio",
+          "quantity": "h_r / h_l for a wall-stopped Ritter surge [-]",
+          "claim": "tkc:sloshing-lbm:bore-reflection-shock-condition",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"p_bore_over_p_hydrostatic\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 3.4939592074348815,
+          "got": 3.4939592074349344,
+          "rel_error": 1.5125138227058818e-14,
+          "tol_rel": 1e-09,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-09-surge-front-speed",
+          "quantity": "Ritter surge front speed u_front [m/s]",
+          "claim": "tkc:sloshing-lbm:bore-reflection-shock-condition",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"u_front\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 12.526228482667877,
+          "got": 12.526228482667877,
+          "rel_error": 0.0,
+          "tol_rel": 1e-12,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-10-reflected-depth",
+          "quantity": "reflected depth h_r [m]",
+          "claim": "tkc:sloshing-lbm:bore-reflection-shock-condition",
+          "ref_source": null,
+          "ref": null,
+          "got": 13.975836829739738,
+          "rel_error": null,
+          "tol_rel": null,
+          "rederived": true,
+          "verdict": "derived-only",
+          "note": "the source reports the ratio only; h_r follows from it times h_l"
+        },
+        {
+          "id": "nc-11-impact-peak-filtered",
+          "quantity": "filtered impact peak P_peak/(rho g h_l) [-]",
+          "claim": "tkc:sloshing-lbm:impact-peak-below-low-order-band",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"p_peak_filtered\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.5442166866487241,
+          "got": 0.5442166866487241,
+          "rel_error": 0.0,
+          "tol_rel": 1e-12,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-12-impact-peak-raw",
+          "quantity": "raw impact peak P_peak/(rho g h_l) [-]",
+          "claim": "tkc:sloshing-lbm:impact-peak-below-low-order-band",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"p_peak_raw\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 1.690257340669632,
+          "got": 1.690257340669632,
+          "rel_error": 0.0,
+          "tol_rel": 1e-12,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-13-swe-surge-anchor",
+          "quantity": "SWE surge-release impact anchor P_peak/(rho g h_l) [-]",
+          "claim": "tkc:sloshing-lbm:impact-peak-below-low-order-band",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"swe_surge_anchor\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.8246704285644378,
+          "got": null,
+          "rel_error": null,
+          "tol_rel": null,
+          "rederived": false,
+          "verdict": "reported-only",
+          "note": "SWE surge anchor comes from the read-only IN48-N07 chain import, not from an LBM artefact"
+        },
+        {
+          "id": "nc-14-mass-drift",
+          "quantity": "mass drift max|dM|/M from t=0 [-]",
+          "claim": "tkc:sloshing-lbm:mass-conservation-vs-hydrostatic-pressure",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"g_mass_conservation\":\\s*\\{\\s*\"metric\":[^}]*?\"value\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.00079498291015625,
+          "got": 0.00079498291015625,
+          "rel_error": 0.0,
+          "tol_rel": 1e-12,
+          "rederived": true,
+          "verdict": "pass",
+          "note": ""
+        },
+        {
+          "id": "nc-15-mass-drift-settled",
+          "quantity": "mass drift after 100-step envelope relaxation [-]",
+          "claim": "tkc:sloshing-lbm:mass-conservation-vs-hydrostatic-pressure",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"value_settled\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.001134112202314627,
+          "got": null,
+          "rel_error": null,
+          "tol_rel": null,
+          "rederived": false,
+          "verdict": "reported-only",
+          "note": "second convention is source-reported only (needs the settle window of the run)"
+        },
+        {
+          "id": "nc-16-hydrostatic-l2",
+          "quantity": "hydrostatic pressure-profile L2 relative error [-]",
+          "claim": "tkc:sloshing-lbm:mass-conservation-vs-hydrostatic-pressure",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/hydrostatic_nx40.json",
+            "regex": "\"l2_rel_error\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.10564851391625638,
+          "got": null,
+          "rel_error": null,
+          "tol_rel": null,
+          "rederived": false,
+          "verdict": "reported-only",
+          "note": "artefact stores the breadth-averaged profile only; interior-cell L2 is not re-derivable"
+        },
+        {
+          "id": "nc-17-hydrostatic-max",
+          "quantity": "hydrostatic pressure-profile max relative error [-]",
+          "claim": "tkc:sloshing-lbm:mass-conservation-vs-hydrostatic-pressure",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/hydrostatic_nx40.json",
+            "regex": "\"max_rel_error\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.3297713906865536,
+          "got": null,
+          "rel_error": null,
+          "tol_rel": null,
+          "rederived": false,
+          "verdict": "reported-only",
+          "note": "same reason as nc-16"
+        },
+        {
+          "id": "nc-18-forced-omega-source",
+          "quantity": "forced-case spectral peak omega [rad/s] as recorded by the source",
+          "claim": "tkc:sloshing-lbm:forced-frequency-vs-exact-dispersion",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"omega_measured_wall_pressure\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.9243371577912496,
+          "got": 0.9228695890815268,
+          "rel_error": -0.0015876984900505188,
+          "tol_rel": 0.005,
+          "rederived": true,
+          "verdict": "pass",
+          "note": "estimator-class item: tolerance 0.5% because the spectral maximum is flat"
+        },
+        {
+          "id": "nc-19-lbm-over-exact",
+          "quantity": "omega_LBM / omega_exact [-]",
+          "claim": "tkc:sloshing-lbm:forced-frequency-vs-exact-dispersion",
+          "ref_source": {
+            "path": "artifacts/sloshing_impact_lbm/report.json",
+            "regex": "\"lbm_over_exact\":\\s*([-0-9.eE+]+)"
+          },
+          "ref": 0.9979852816025788,
+          "got": 0.9964007818778858,
+          "rel_error": -0.0015876984900504518,
+          "tol_rel": 0.005,
+          "rederived": true,
+          "verdict": "pass",
+          "note": "estimator-class item, same flat-spectrum caveat as nc-18"
+        }
+      ]
+    },
+    "quotes": {
+      "tkc:sloshing-lbm:impact-peak-below-low-order-band": 3,
+      "tkc:sloshing-lbm:forced-frequency-vs-exact-dispersion": 3,
+      "tkc:sloshing-lbm:swe-frequency-validity-bound": 2,
+      "tkc:sloshing-lbm:mass-conservation-vs-hydrostatic-pressure": 4,
+      "tkc:sloshing-lbm:bore-reflection-shock-condition": 2
+    }
+  }
+}

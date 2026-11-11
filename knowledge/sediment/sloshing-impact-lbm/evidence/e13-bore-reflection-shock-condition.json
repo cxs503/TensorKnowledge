@@ -1,0 +1,23 @@
+{
+  "id": "tke:sloshing-lbm:e13-bore-reflection-shock-condition",
+  "claim_refs": [
+    "tkc:sloshing-lbm:bore-reflection-shock-condition"
+  ],
+  "source": {
+    "source_type": "internal-artifact",
+    "citation": "TensorLBM@aecabea25cc7 src/tensorlbm/sloshing_impact_calibration.py (platform mission 7437, branch agent/m7437, PR 1221)",
+    "persistent_id": "TensorLBM@aecabea25cc776b211f372d225ab3a5aa4d09cdc:src/tensorlbm/sloshing_impact_calibration.py#L193-L201"
+  },
+  "relation": "supports",
+  "locator": {
+    "locator_type": "code-location",
+    "value": "TensorLBM@aecabea25cc776b211f372d225ab3a5aa4d09cdc:src/tensorlbm/sloshing_impact_calibration.py#L193-L201",
+    "quote": "def bore_reflection_depth(h_i: float, u_i: float, g: float = 9.80665) -> float:\n    \"\"\"Reflected depth ``h_r`` of a uniform stream ``(h_i, u_i)`` stopped by a wall.\n\n    Exact Saint-Venant shock (Rankine-Hugoniot) condition with ``u_r = 0``::\n\n        u_i = (h_r - h_i) sqrt( g (h_r + h_i) / (2 h_r h_i) )\n\n    solved here by a monotone bisection in ``h_r`` (no SciPy dependency).\n    \"\"\"",
+    "content_hash": "71d4dd674df1892fb49cf8820e0d4eb593030c0ab58f80fcea6c628ca23253cf"
+  },
+  "extraction_method": "direct-quotation",
+  "captured_at": "2026-11-11T00:00:00Z",
+  "captured_by": "tkc-agent:m14530",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+}
