@@ -1,0 +1,95 @@
+{
+  "benchmarks": {
+    "poiseuille_bb_exact": {
+      "case": "poiseuille_bb_exact",
+      "ny": 5,
+      "tau": 0.9330127018922193,
+      "ref_l2": 0.0,
+      "got_l2": 7.568e-16,
+      "rel_error": 7.568e-16,
+      "rel_error_pct": 7.568e-14,
+      "threshold": 1e-12,
+      "passed": true,
+      "claim_id": "tkc:oss-lbm:kruger-poiseuille-bb-exactness-scope"
+    },
+    "couette_bb": {
+      "case": "couette_bb",
+      "ny": 10,
+      "ref_l2": 0.0,
+      "got_l2": 2.319e-15,
+      "rel_error": 2.319e-15,
+      "rel_error_pct": 2.319e-13,
+      "threshold": 1e-12,
+      "passed": true,
+      "claim_id": "tkc:oss-lbm:kruger-couette-bb-moving-wall"
+    },
+    "taylor_green_convergence": {
+      "case": "taylor_green_convergence",
+      "ref_order": 2.0,
+      "got_orders": [
+        2.0018354230340614,
+        2.0028317860615927
+      ],
+      "avg_order": 2.002333604547827,
+      "rel_error_pct": 0.11668022739135253,
+      "threshold_pct": 10.0,
+      "passed": true,
+      "claim_id": "tkc:oss-lbm:kruger-tg-analytic-solution"
+    },
+    "taylor_green_energy": {
+      "case": "taylor_green_energy",
+      "nx": 128,
+      "ref_rel_dev_pct": 0.0,
+      "got_rel_dev_pct": -0.0957575272335034,
+      "abs_error_pct": 0.0957575272335034,
+      "threshold_pct": 3.0,
+      "passed": true,
+      "claim_id": "tkc:oss-lbm:kruger-tg-analytic-solution"
+    },
+    "young_laplace_consistency": {
+      "case": "young_laplace_consistency",
+      "gamma_r15": 0.020722628856999995,
+      "gamma_r12": 0.020392250004,
+      "ref_consistency": 0.0,
+      "got_rel_diff_pct": 1.607101186492275,
+      "threshold_pct": 3.0,
+      "passed": true,
+      "claim_id": "tkc:oss-lbm:kruger-shanchen-laplace"
+    },
+    "ib_lbm_poiseuille": {
+      "case": "ib_lbm_poiseuille",
+      "ref_u_max": 0.00175568,
+      "got_u_centre": 0.0016420499999999993,
+      "rel_error_pct": -6.472136152374046,
+      "threshold_pct": 3.0,
+      "passed": false,
+      "note": "Known ~6.5% deviation at Ny=20; recorded as honest negative result",
+      "claim_id": "tkc:oss-lbm:kruger-ib-lbm-poiseuille"
+    },
+    "trt_magic": {
+      "case": "trt_magic",
+      "magic_6": {
+        "omega": 0.3,
+        "magic": 0.16666666666666666,
+        "ref_omega_plus": 1.7894736842105263,
+        "got_omega_plus": 1.7894736842105263,
+        "match": true
+      },
+      "magic_12": {
+        "omega": 0.5,
+        "magic": 0.08333333333333333,
+        "ref_omega_plus": 1.7999999999999998,
+        "got_omega_plus": 1.7999999999999998,
+        "match": true
+      },
+      "all_passed": true,
+      "claim_id": "tkc:oss-lbm:kruger-trt-magic-parameter"
+    }
+  },
+  "summary": {
+    "total": 7,
+    "passed": 5,
+    "failed": 2,
+    "pass_rate": 0.7142857142857143
+  }
+}
