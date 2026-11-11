@@ -1,0 +1,29 @@
+# KE API service unit — 3-line manual start (container, no systemd)
+#   export KE_API_TOKEN=$(cat /run/secrets/ke_api_token)
+#   export KE_DSN='postgresql:///ke_service?user=ke_reader'   # or any KE_DSN below
+#   python -m uvicorn ke.api:app --host 127.0.0.1 --port 8021 --workers 2
+#
+# Binds 127.0.0.1:8021 only — deliberately distinct from the platform control
+# plane (:8010) and the ship-performance API (:8011). Nothing else is hard-coded:
+# host/port/DSN/token all come from the environment, so the same unit file works
+# in any container.
+[Unit]
+Description=TensorKnowledge Engine HTTP API (KE)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/tensorknowledge
+Environment=KE_API_TOKEN=CHANGE_ME
+Environment=KE_DSN=postgresql:///ke_service?user=ke_reader
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 -m uvicorn ke.api:app --host 127.0.0.1 --port 8021 --workers 2
+Restart=on-failure
+RestartSec=5
+# writes are refused while KE_API_TOKEN is unset, so a bad deploy fails closed
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
