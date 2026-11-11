@@ -1,0 +1,33 @@
+{
+  "id": "tkc:sph-m5054:shear-verdict-fail-is-a-coverage-failure",
+  "statement": "The 3-D unsteady-Stokes shear benchmark reports verdict 'fail' although all six of its criteria are true: the failure is missing case h1.8 in missing_cases. Its headline number (decay-rate error within 2.7 %) holds only on the finest rung (n = 24, -2.68 %); n = 12 is -12.62 %, and at n = 20 the unrenormalised operator is +11.46 % while the renormalised one is -4.18 %. Any citation of the 2.7 % figure must carry kh and the operator variant.",
+  "claim_type": "interpretive",
+  "scope": {
+    "domain": "SPH viscous decay validation",
+    "system": "3-D double-shear (unsteady Stokes) on a triply periodic cube, nu = 0.05, k = 2*pi, amplitude 0.1, c0 = 10 m/s",
+    "conditions": [
+      "n = 12/16/20/24",
+      "h/dx = 1.3",
+      "raw vs second-moment-renormalised viscous operator"
+    ],
+    "exclusions": [
+      "does not cover free-surface or wall-bounded shear"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "draft",
+  "evidence_refs": [
+    "tke:sph-m5054:shear-verdict",
+    "tke:sph-m5054:shear-missing-cases",
+    "tke:sph-m5054:shear-decay-n24",
+    "tke:sph-m5054:shear-decay-n12",
+    "tke:sph-m5054:shear-raw-n20"
+  ],
+  "created_at": "2026-11-11T00:00:00Z",
+  "created_by": "ke.sediment_extract (mission m14526)",
+  "version": "1.0.0",
+  "notes": [
+    "verdict 'fail' + all criteria true is the artifact's structural signature: verdict folds in coverage (missing cases), criteria fold in physics. Both must be read.",
+    "Re-derived reference: 2*nu*k^2 = 2*0.05*(2*pi)^2 = 3.9478417604357 1/s."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "tke:sph-m5054:dc-guard-asserts-pass",
+  "claim_refs": [
+    "tkc:sph-m5054:delivery-contract-broken-honest-fail"
+  ],
+  "source": {
+    "source_type": "internal-artifact",
+    "citation": "TensorSPH tests/test_threed_artifacts.py at 82b72a15c044259d1e7c8d638e9273705fa42e7b (mission m5054)"
+  },
+  "relation": "refutes",
+  "locator": {
+    "locator_type": "code-location",
+    "value": "TensorSPH@82b72a15:tests/test_threed_artifacts.py#test_shear_report_meets_its_criteria#L56-L59",
+    "start_offset": 2235,
+    "end_offset": 2404,
+    "quote": "def test_shear_report_meets_its_criteria():\n    report = _load(SHEAR)\n    assert report[\"missing_cases\"] == []\n    assert report[\"verdict\"] == \"pass\", report[\"criteria\"]",
+    "quote_language": "text",
+    "content_hash": "abd9decef77d6620d175ff8823fdb6919d21fd3fa4fba7138cf00e642703f98e"
+  },
+  "extraction_method": "automated-extraction",
+  "captured_at": "2026-11-11T00:00:00Z",
+  "captured_by": "ke.sediment_extract (mission m14526)",
+  "assessment_status": "unassessed",
+  "version": "1.0.0"
+}
