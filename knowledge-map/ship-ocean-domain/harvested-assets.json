@@ -1,0 +1,189 @@
+{
+  "version": "1.0.0",
+  "created": "2026-11-10",
+  "mission": "m8817",
+  "title": "既有资产收割对账表",
+  "description": "从ship-performance-platform、TensorPhysics、TensorLBM/TensorPlatform等仓收割的资产映射到领域树节点",
+  "harvest_sources": [
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/code-examples/ch08_polar/ice_resistance.py",
+      "asset_type": "code",
+      "description": "Lindqvist冰阻力公式实现 + IACS冰级分类",
+      "maps_to": ["ice-resistance-lindqvist", "ice-class-iacs"],
+      "evidence": "calc_ice_resistance() 含 Lindqvist 半经验公式; calc_ice_class() 含 IA/IB/IC/IA Super 冰级参数"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/code-examples/ch02_dynamics/resistance.py",
+      "asset_type": "code",
+      "description": "阻力性能计算模块",
+      "maps_to": ["resistance-prediction-holtrop", "resistance-friction-ittc57"],
+      "evidence": "阻力计算代码，含Holtrop方法调用"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/code-examples/ch02_dynamics/propulsion.py",
+      "asset_type": "code",
+      "description": "推进性能计算模块",
+      "maps_to": ["propulsion-propeller-openwater", "propulsion-hull-wake"],
+      "evidence": "推进计算代码"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/code-examples/ch03_maneuvering/maneuvering.py",
+      "asset_type": "code",
+      "description": "操纵性能计算模块",
+      "maps_to": ["maneuvering-model-mmg", "maneuvering-test-zigzag"],
+      "evidence": "操纵性计算代码"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/code-examples/ch04_seakeeping/seakeeping.py",
+      "asset_type": "code",
+      "description": "耐波性能计算模块",
+      "maps_to": ["seakeeping-motion-rao", "seakeeping-wave-raft"],
+      "evidence": "耐波性计算代码"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/code-examples/ch05_structure/structural.py",
+      "asset_type": "code",
+      "description": "结构性能计算模块",
+      "maps_to": ["structural-hydro-fatigue-spectral"],
+      "evidence": "结构计算代码"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/code-examples/ch07_energy/eedi.py",
+      "asset_type": "code",
+      "description": "EEDI能效计算（绿色航行）",
+      "maps_to": ["resistance-friction-ittc57"],
+      "evidence": "EEDI计算含ITTC摩擦线"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "backend/data/geometry/ships/DTMB5415_Hull_exact.stl",
+      "asset_type": "geometry",
+      "description": "DTMB5415精确水密几何（exact match 100%+水密全流形）",
+      "maps_to": ["seatrial-experiment-benchmark-dtmb"],
+      "evidence": "STL几何文件，exact版本通过水密性验证"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "backend/api/holtrop1984.py",
+      "asset_type": "code",
+      "description": "Holtrop-1984阻力预报API",
+      "maps_to": ["resistance-prediction-holtrop"],
+      "evidence": "holtrop1984.py API实现"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "backend/tests/test_holtrop1984_prereg.py",
+      "asset_type": "test",
+      "description": "Holtrop-1984预注册测试",
+      "maps_to": ["resistance-prediction-holtrop"],
+      "evidence": "测试含golden reference数据"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "backend/tests/data/holtrop1984_golden.json",
+      "asset_type": "data",
+      "description": "Holtrop-1984黄金参考数据",
+      "maps_to": ["resistance-prediction-holtrop"],
+      "evidence": "预注册golden数据集"
+    },
+    {
+      "source_repo": "TensorPhysics",
+      "source_path": "benchmarks/icebreaking/adfreeze_breakout.py",
+      "asset_type": "benchmark",
+      "description": "W3-N02冻结强度与被困船脱困基准",
+      "maps_to": ["ice-mechanics-frederking", "ice-operation-beset"],
+      "evidence": "Frederking 1984校准3.3%误差; 含脱困判据与船型参数"
+    },
+    {
+      "source_repo": "TensorPhysics",
+      "source_path": "src/tensorphysics/ice/__init__.py",
+      "asset_type": "code",
+      "description": "冰区物理域核心模块（FREDERKING_ADFREEZE等）",
+      "maps_to": ["ice-mechanics-frederking", "ice-mechanics-vibration"],
+      "evidence": "含adfreeze_strength, calibrate_reference_strength, frederking_strengths等函数"
+    },
+    {
+      "source_repo": "TensorPhysics",
+      "source_path": "artifacts/ice_anchor/validation_report.json",
+      "asset_type": "report",
+      "description": "冰区锚定验证报告",
+      "maps_to": ["ice-mechanics-frederking", "ice-resistance-lindqvist"],
+      "evidence": "含覆盖率热力图、断裂载荷-厚度曲线、强度-温度曲线"
+    },
+    {
+      "source_repo": "TensorLBM",
+      "source_path": "docs/SUBOFF_VALIDATION.md",
+      "asset_type": "doc",
+      "description": "SUBOFF潜艇标准体验证文档",
+      "maps_to": ["seatrial-experiment-benchmark-suboff"],
+      "evidence": "SUBOFF几何与阻力验证记录"
+    },
+    {
+      "source_repo": "TensorPlatform",
+      "source_path": "docs/SUBOFF_RESISTANCE_VALIDATION.md",
+      "asset_type": "doc",
+      "description": "SUBOFF阻力验证文档",
+      "maps_to": ["seatrial-experiment-benchmark-suboff"],
+      "evidence": "SUBOFF阻力计算与实验对比"
+    },
+    {
+      "source_repo": "TensorPlatform",
+      "source_path": "docs/sir-pc2/SIR_PC2_FULL_CHAIN_INTEGRATION.md",
+      "asset_type": "doc",
+      "description": "SIR场景PC2全链集成文档",
+      "maps_to": ["seatrial-experiment-benchmark-dtmb"],
+      "evidence": "DTMB5415全链验证集成"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/books/chapters/船舶总体性能与AI赋能框架_第十二章_冰区航行与智能技术.md",
+      "asset_type": "book",
+      "description": "冰区航行与智能技术章节",
+      "maps_to": ["ice-navigation", "ice-resistance", "ice-class", "ice-mechanics", "ice-operation"],
+      "evidence": "第十二章完整覆盖冰区航行各子域"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/books/chapters/船舶总体性能与AI赋能框架_第三章_阻力性能与AI赋能.md",
+      "asset_type": "book",
+      "description": "阻力性能与AI赋能章节",
+      "maps_to": ["resistance", "resistance-friction", "resistance-wave", "resistance-viscous", "resistance-prediction"],
+      "evidence": "第三章完整覆盖阻力各子域"
+    },
+    {
+      "source_repo": "ship-performance-platform-incoming",
+      "source_path": "knowledge-center/books/chapters/船舶总体性能与AI赋能框架_第十一章_绿色航行与AI赋能.md",
+      "asset_type": "book",
+      "description": "绿色航行与AI赋能章节",
+      "maps_to": ["resistance-friction-ittc57"],
+      "evidence": "第十一章含EEDI/EEXI能效指标"
+    }
+  ],
+  "harvest_summary": {
+    "total_assets": 20,
+    "by_type": {
+      "code": 8,
+      "geometry": 1,
+      "test": 1,
+      "data": 1,
+      "benchmark": 1,
+      "doc": 3,
+      "report": 1,
+      "book": 3
+    },
+    "by_source": {
+      "ship-performance-platform-incoming": 13,
+      "TensorPhysics": 3,
+      "TensorLBM": 1,
+      "TensorPlatform": 2
+    },
+    "coverage": "覆盖8大分支中的6个（阻力/推进/耐波/操纵/冰区/实船实验），多相流与结构水动力待补充"
+  }
+}
