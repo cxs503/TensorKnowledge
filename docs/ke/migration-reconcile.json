@@ -1,0 +1,139 @@
+{
+  "assertions": {
+    "match": true,
+    "source": {
+      "claims_without_evidence": 0,
+      "orphan_evidence": 0,
+      "unresolved_claim_refs": 0,
+      "unresolved_evidence_refs": 0,
+      "unresolved_gap_refs": 10
+    },
+    "source_violations_total": 10,
+    "stats": {
+      "claim_evidence_edges": 150,
+      "claims": 102,
+      "claims_by_status": {
+        "contested": 7,
+        "established": 70,
+        "provisional": 10,
+        "well-supported": 15
+      },
+      "evidence": 142,
+      "evidence_by_assessment": {
+        "unassessed": 142
+      },
+      "evidence_by_relation": {
+        "refutes": 2,
+        "supports": 140
+      },
+      "evidence_claims_edges": 150,
+      "gap_anchors": 6,
+      "gap_claims_edges": 27,
+      "provenance": 7
+    },
+    "stats_match": true,
+    "target": {
+      "claims_without_evidence": 0,
+      "orphan_evidence": 0,
+      "unresolved_claim_refs": 0,
+      "unresolved_evidence_refs": 0,
+      "unresolved_gap_refs": 10
+    },
+    "target_violations_total": 10
+  },
+  "check_only": true,
+  "generated_at": "2026-11-10T03:36:52Z",
+  "pg_dsn": "postgresql+psycopg:///tensorknowledge?host=/var/run/postgresql",
+  "pg_schema": "ke",
+  "rows": [
+    {
+      "digest_match": true,
+      "group": "object",
+      "label": "claims (claim-record)",
+      "rows_match": true,
+      "source_rows": 102,
+      "source_sha256": "350c82c78a3df1fe36884367d9d37d3d4f383c2569b4438dccb7196b7ef439f7",
+      "table": "claims",
+      "target_rows": 102,
+      "target_sha256": "350c82c78a3df1fe36884367d9d37d3d4f383c2569b4438dccb7196b7ef439f7"
+    },
+    {
+      "digest_match": true,
+      "group": "object",
+      "label": "evidence (evidence-record)",
+      "rows_match": true,
+      "source_rows": 142,
+      "source_sha256": "320be2646a39cc9016b7ee852ee0e6e80431aff7fb915b403cac654e999866f3",
+      "table": "evidence",
+      "target_rows": 142,
+      "target_sha256": "320be2646a39cc9016b7ee852ee0e6e80431aff7fb915b403cac654e999866f3"
+    },
+    {
+      "digest_match": true,
+      "group": "object",
+      "label": "provenance (provenance-record)",
+      "rows_match": true,
+      "source_rows": 7,
+      "source_sha256": "f50a59978639a841cc0dcbc57dc25839a83630be515500680db1255f96e7b820",
+      "table": "provenance",
+      "target_rows": 7,
+      "target_sha256": "f50a59978639a841cc0dcbc57dc25839a83630be515500680db1255f96e7b820"
+    },
+    {
+      "digest_match": true,
+      "group": "object",
+      "label": "gap anchors (gap-anchor)",
+      "rows_match": true,
+      "source_rows": 6,
+      "source_sha256": "bd63bd7d09e39304f88c23d0bffcafdd6d9f4ea181e2956613e8cde417cae514",
+      "table": "gap_anchors",
+      "target_rows": 6,
+      "target_sha256": "bd63bd7d09e39304f88c23d0bffcafdd6d9f4ea181e2956613e8cde417cae514"
+    },
+    {
+      "digest_match": true,
+      "group": "relation",
+      "label": "claim → evidence 边",
+      "rows_match": true,
+      "source_rows": 150,
+      "source_sha256": "9c7c544b3923cb57695ac34c8cbf48136d48e04c656a400b041daf3a6c2f337f",
+      "table": "claim_evidence",
+      "target_rows": 150,
+      "target_sha256": "9c7c544b3923cb57695ac34c8cbf48136d48e04c656a400b041daf3a6c2f337f"
+    },
+    {
+      "digest_match": true,
+      "group": "relation",
+      "label": "evidence → claim 边",
+      "rows_match": true,
+      "source_rows": 150,
+      "source_sha256": "fe3ebf6aa00909de9fcf04c6f5044395421dc82fa6fc5ba56f9b673189f3f907",
+      "table": "evidence_claims",
+      "target_rows": 150,
+      "target_sha256": "fe3ebf6aa00909de9fcf04c6f5044395421dc82fa6fc5ba56f9b673189f3f907"
+    },
+    {
+      "digest_match": true,
+      "group": "relation",
+      "label": "gap → claim 边",
+      "rows_match": true,
+      "source_rows": 27,
+      "source_sha256": "a7a265cf010de3388a7f08a331400d5b541b9204584530005c5dbe46c0ec31bd",
+      "table": "gap_claims",
+      "target_rows": 27,
+      "target_sha256": "a7a265cf010de3388a7f08a331400d5b541b9204584530005c5dbe46c0ec31bd"
+    }
+  ],
+  "source": "/root/tp-agent/work/m8800/knowledge/oss-lbm",
+  "source_db": "/tmp/ke-migrate-67rzl38n/source.db",
+  "tool": "ke.migrate",
+  "totals": {
+    "assertion_violations_source": 10,
+    "assertion_violations_target": 10,
+    "objects_source": 257,
+    "objects_target": 257,
+    "relations_source": 327,
+    "relations_target": 327
+  },
+  "verdict": "PASS"
+}

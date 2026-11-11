@@ -18,6 +18,11 @@ hold.
 
 ``export`` produces training/eval/triple artifacts for physical-AI training
 with epistemic hard gates and manifests.
+
+Backend selection (same code path for both, see docs/ke/backends.md)::
+
+    ke ingest <pilot> --db /tmp/ke.db                  # sqlite fixture
+    ke ingest <pilot> --backend pg --schema ke         # PostgreSQL (KE_PG_DSN)
 """
 from __future__ import annotations
 
@@ -47,26 +52,34 @@ def _run_query(conn, qtype: str, value: str | None) -> object:
         return q.provenance_chain(conn, value)
     if qtype == "claim":
         return q.evidence_for_claim(conn, value)
+    if qtype == "gaps":
+        return q.gap_anchors(conn)
     if qtype == "stats":
         return q.stats(conn)
     raise SystemExit(f"unknown query type: {qtype}")
 
 
+def _connect(args):
+    """Open the store selected by --backend/--db/--dsn/--schema."""
+    return store.connect(args.db, backend=args.backend, dsn=args.dsn,
+                         schema=args.schema, create_schema=bool(args.schema))
+
+
 def cmd_ingest(args) -> int:
-    conn = store.connect(args.db)
+    conn = _connect(args)
     counts = store.ingest_pilot(args.pilot, conn)
     _print_json({"ingested": counts, "db": str(Path(args.db).resolve())})
     return 0
 
 
 def cmd_query(args) -> int:
-    conn = store.connect(args.db)
+    conn = _connect(args)
     _print_json(_run_query(conn, args.type, args.value))
     return 0
 
 
 def cmd_validate(args) -> int:
-    conn = store.connect(args.db)
+    conn = _connect(args)
     lines = validate.validate_package(args.pilot, conn)
     fails = [n for n, ok, _ in lines if not ok]
     for name, ok, detail in lines:
@@ -79,7 +92,7 @@ def cmd_validate(args) -> int:
 
 def cmd_demo(args) -> int:
     db = args.db or tempfile.mktemp(suffix=".ke.db")
-    conn = store.connect(db)
+    conn = _connect(args)
     counts = store.ingest_pilot(args.pilot, conn)
     print(f"# ingest: {json.dumps(counts, sort_keys=True)}")
 
@@ -99,12 +112,12 @@ def cmd_demo(args) -> int:
                 "status": chain["claim"]["epistemic_status"],
                 "links": [
                     {
-                        "evidence": l["evidence_id"],
-                        "relation": l["relation"],
-                        "source_url": l["source"]["url"],
-                        "locator": l["locator"]["value"],
+                        "evidence": link["evidence_id"],
+                        "relation": link["relation"],
+                        "source_url": link["source"]["url"],
+                        "locator": link["locator"]["value"],
                     }
-                    for l in chain["links"]
+                    for link in chain["links"]
                 ],
             }
             for cid, chain in (
@@ -155,29 +168,44 @@ def cmd_export(args) -> int:
     return 0
 
 
+def _add_backend_args(p) -> None:
+    p.add_argument("--backend", default=None, choices=list(store.BACKENDS),
+                   help="storage backend (default: inferred from --db)")
+    p.add_argument("--dsn", default=None,
+                   help="PostgreSQL DSN (default: $KE_PG_DSN)")
+    p.add_argument("--schema", default=None,
+                   help="PostgreSQL schema to create/use (default: search_path)")
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="ke", description="TensorKnowledge Knowledge Engine prototype")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("ingest", help="ingest a pilot package into SQLite")
+    parsers = []
+
+    p = sub.add_parser("ingest", help="ingest a pilot package")
+    parsers.append(p)
     p.add_argument("pilot")
     p.add_argument("--db", required=True)
     p.set_defaults(fn=cmd_ingest)
 
     p = sub.add_parser("query", help="run one query class")
+    parsers.append(p)
     p.add_argument("pilot")
     p.add_argument("--db", required=True)
     p.add_argument("--type", required=True,
-                   choices=["status", "relation", "domain", "chain", "claim", "stats"])
+                   choices=["status", "relation", "domain", "chain", "claim", "gaps", "stats"])
     p.add_argument("--value", default=None)
     p.set_defaults(fn=cmd_query)
 
     p = sub.add_parser("validate", help="schema + xref validation (validate_pilot.py semantics)")
+    parsers.append(p)
     p.add_argument("pilot")
     p.add_argument("--db", required=True)
     p.set_defaults(fn=cmd_validate)
 
     p = sub.add_parser("demo", help="full closed loop: ingest + queries + validation")
+    parsers.append(p)
     p.add_argument("pilot")
     p.add_argument("--db", default=None)
     p.set_defaults(fn=cmd_demo)
@@ -189,6 +217,9 @@ def main(argv=None) -> int:
     p.add_argument("--out", required=True, help="Output directory for JSONL + manifest")
     p.add_argument("--db", default=None, help="Optional existing KE database path")
     p.set_defaults(fn=cmd_export)
+
+    for p in parsers:
+        _add_backend_args(p)
 
     args = ap.parse_args(argv)
     if args.cmd == "query" and args.type != "stats" and not args.value:

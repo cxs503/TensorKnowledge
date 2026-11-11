@@ -1,10 +1,15 @@
-"""KE prototype — reproducibility & consistency tests (m8620).
+"""KE prototype — reproducibility & consistency tests, both backends (m8800).
 
-Ground truth = the m8554 epistemic pilot package
-(platform-test/epistemic-benchmark/pilots/m8554/). Every expected value
-below is pinned from the pilot records themselves; the tests prove the
-SQLite-backed query layer reproduces them exactly, and that the KE's
-xref invariants match the semantics of pilots/m8554/validate_pilot.py.
+Ground truth = the frozen m8554 epistemic pilot package, now vendored at
+``tests/fixtures/ke-pilot/`` (byte-identical copy of the package added by
+commit ``ba59c4e`` on branch ``agent/m8554``; that branch never reached
+``main``, which is why the original ``platform-test/.../pilots/m8554`` path is
+absent here — see ``docs/ops/filter-audit.md``).
+
+Every expected value below is pinned from the pilot records themselves.  The
+``conn`` fixture (``tests/conftest.py``) is parameterized over the two
+supported backends — PostgreSQL (authoritative) and SQLite (fixture) — so each
+test runs twice and any behavioural divergence between them fails the suite.
 """
 from __future__ import annotations
 
@@ -17,21 +22,11 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-PILOT = REPO / "platform-test" / "epistemic-benchmark" / "pilots" / "m8554"
+PILOT = REPO / "tests" / "fixtures" / "ke-pilot"
 
 sys.path.insert(0, str(REPO))
 from ke import queries as q  # noqa: E402
 from ke import store, validate  # noqa: E402
-
-
-# ---------------------------------------------------------------- fixtures
-@pytest.fixture(scope="module")
-def conn(tmp_path_factory):
-    db = tmp_path_factory.mktemp("ke") / "ke.db"
-    c = store.connect(db)
-    store.ingest_pilot(PILOT, c)
-    yield c
-    c.close()
 
 
 # ------------------------------------------------------------------ ingest
@@ -89,16 +84,16 @@ def test_q2_evidence_by_relation(conn):
 def test_q3_provenance_chain_scientific(conn):
     chain = q.provenance_chain(conn, "tkc:prov-o:wasattributedto-signature")
     assert chain["claim"]["epistemic_status"] == "established"
-    assert [l["evidence_id"] for l in chain["links"]] == [
+    assert [link["evidence_id"] for link in chain["links"]] == [
         "tke:prov-o:entry6-wasattributedto",
         "tke:prov-o:section31-agent-responsibility",
     ]
     assert chain["links"][0]["relation"] == "supports"
     assert chain["links"][1]["relation"] == "contextualizes"
-    for l in chain["links"]:
-        assert l["source"]["url"] == "https://www.w3.org/TR/prov-o/"
-        assert l["source"]["persistent_id"] == "http://www.w3.org/TR/2013/REC-prov-o-20130430/"
-        assert l["locator"]["quote"]  # non-empty direct quotation
+    for link in chain["links"]:
+        assert link["source"]["url"] == "https://www.w3.org/TR/prov-o/"
+        assert link["source"]["persistent_id"] == "http://www.w3.org/TR/2013/REC-prov-o-20130430/"
+        assert link["locator"]["quote"]  # non-empty direct quotation
     # chain must agree with the claim's own evidence_refs
     refs = json.loads(
         conn.execute(
@@ -106,12 +101,12 @@ def test_q3_provenance_chain_scientific(conn):
             ("tkc:prov-o:wasattributedto-signature",),
         ).fetchone()[0]
     )
-    assert sorted(l["evidence_id"] for l in chain["links"]) == sorted(refs)
+    assert sorted(link["evidence_id"] for link in chain["links"]) == sorted(refs)
 
 
 def test_q3_provenance_chain_contested(conn):
     chain = q.provenance_chain(conn, "tkc:fair:requires-open-access")
-    rels = {l["evidence_id"]: l["relation"] for l in chain["links"]}
+    rels = {link["evidence_id"]: link["relation"] for link in chain["links"]}
     assert rels == {
         "tke:fair:a1-2-auth-protocol": "refutes",
         "tke:fair:preamble-machine-actionability": "contextualizes",
@@ -216,8 +211,13 @@ def test_ke_validation_all_pass(conn):
     assert any(n.startswith("xref:") for n in names)
 
 
-def test_reference_validator_passes():
-    """The pilot's own reference validator must pass (ties KE semantics to it)."""
+def test_reference_validator_passes(conn):
+    """The pilot's own reference validator must pass *and* agree with the KE.
+
+    Runs the file-based reference validator, then asserts the KE's SQL-based
+    validator reaches the same verdict on the same package — on whichever
+    backend this test instance is bound to.
+    """
     r = subprocess.run(
         [sys.executable, str(PILOT / "validate_pilot.py")],
         capture_output=True,
@@ -226,12 +226,13 @@ def test_reference_validator_passes():
     )
     assert r.returncode == 0, r.stdout + r.stderr
     assert "ALL PASS" in r.stdout
+    ke_fails = [name for name, ok, _ in validate.validate_package(PILOT, conn) if not ok]
+    assert ke_fails == [], ke_fails
 
 
 # ------------------------------------------------------------- reproducibility
-def test_reproducible_double_ingest(tmp_path):
-    db1, db2 = tmp_path / "a.db", tmp_path / "b.db"
-    c1, c2 = store.connect(db1), store.connect(db2)
+def test_reproducible_double_ingest(new_conn):
+    c1, c2 = new_conn(), new_conn()
     store.ingest_pilot(PILOT, c1)
     store.ingest_pilot(PILOT, c2)
     snap = lambda c: json.dumps(  # noqa: E731
@@ -248,8 +249,6 @@ def test_reproducible_double_ingest(tmp_path):
         sort_keys=True,
     )
     assert snap(c1) == snap(c2)
-    c1.close()
-    c2.close()
 
 
 def test_ingest_idempotent(conn):
@@ -259,7 +258,7 @@ def test_ingest_idempotent(conn):
 
 
 # ------------------------------------------------------- negative control
-def test_negative_corrupted_package_detected(tmp_path):
+def test_negative_corrupted_package_detected(new_conn, tmp_path):
     """Injected violations must be caught: proves invariants are not vacuous."""
     bad = tmp_path / "bad-pilot"
     shutil.copytree(PILOT, bad)
@@ -287,7 +286,7 @@ def test_negative_corrupted_package_detected(tmp_path):
     rec["evidence_refs"].append("tke:ghost:missing")
     cf.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
 
-    conn = store.connect(":memory:")
+    conn = new_conn()
     store.ingest_pilot(bad, conn)
     rep = validate.xref_report(conn)
     assert rep["unresolved_claim_refs"] == [("tkc:fair:a1-protocol-conditions", "tke:ghost:missing")]
@@ -298,4 +297,3 @@ def test_negative_corrupted_package_detected(tmp_path):
     failed = [n for n, ok, _ in lines if not ok]
     assert "xref:all_evidence_refs_resolve" in failed
     assert "xref:no_orphan_evidence" in failed
-    conn.close()
