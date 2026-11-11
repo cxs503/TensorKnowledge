@@ -1,0 +1,26 @@
+{
+  "id": "tkc:oss-lbm:sailfish-free-energy-binary",
+  "statement": "sailfish 实现了自由能二元流体（Cahn-Hilliard 型）：体自由能压强 pb = ρ/3 + A(−φ²/2 + 3φ⁴/4)，化学势 μ = A(−φ + φ³) − κ∇²φ，κ 各向异性通过二阶矩系数 wxx/wyy/wzz 注入。",
+  "claim_type": "descriptive",
+  "scope": {
+    "domain": "lattice Boltzmann multiphase/multicomponent methods",
+    "conditions": [
+      "格子=D2Q9/D3Q19",
+      "模型=自由能 Cahn-Hilliard",
+      "自由能=φ⁴ 双阱"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+    "tke:oss-lbm:sailfish-free-energy-eq",
+    "tke:oss-lbm:sailfish-chemical-potential"
+  ],
+  "created_at": "2026-11-09T12:00:00Z",
+  "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+  "version": "1.0.0",
+  "notes": [
+    "映射 feature_ledger: 自由能多相（非 MCMP SC 系）",
+    "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+  ]
+}
