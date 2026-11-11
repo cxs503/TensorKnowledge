@@ -24,6 +24,11 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = REPO_ROOT / "scripts"
 VERIFIER = SCRIPTS / "verify_sediment_m7485.py"
 PACKAGE = REPO_ROOT / "knowledge" / "sediment" / "m7485"
+
+if not PACKAGE.is_dir():
+    # Honest NOT_RUN: the package is not in this checkout (see audit P2, orphan
+    # scaffold), so the verifier has nothing to verify.
+    pytest.skip(f"m7485 package not present in this checkout ({PACKAGE})", allow_module_level=True)
 SOURCE_REPO = Path(os.environ.get("M7485_SRC_REPO", "/root/tp-agent/work/m7485"))
 SOURCE_SHA = "80ad52a8236030e2343d5a88131bea3190088c09"
 

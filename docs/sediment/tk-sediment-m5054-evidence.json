@@ -1,0 +1,176 @@
+{
+  "scope": "TensorKnowledge sediment package for mission m5054 (task_key tk-sediment-m5054, source TensorSPH PR 338 @ 82b72a15c044259d1e7c8d638e9273705fa42e7b)",
+  "repo": "TensorKnowledge",
+  "mission_id": 14526,
+  "rework_of": 8824,
+  "source_mission": 5054,
+  "claimed_level": 5,
+  "tests": [
+    "tests/test_sediment_m5054.py::test_package_shape_and_producer_contract",
+    "tests/test_sediment_m5054.py::test_delivery_paths_survive_the_push_gate",
+    "tests/test_sediment_m5054.py::test_stale_quote_aborts_the_build",
+    "tests/test_sediment_m5054.py::test_committed_package_is_byte_identical_to_a_fresh_build",
+    "tests/test_sediment_m5054.py::test_every_quote_resolves_once_at_the_pin",
+    "tests/test_sediment_m5054.py::test_benchmark_references_are_recomputed_not_copied",
+    "tests/test_sediment_m5054.py::test_build_entry_point_runs_end_to_end",
+    "tests/test_sediment_m5054.py::test_validator_catches_a_tampered_quote",
+    "tests/test_sediment_m5054.py::test_source_guard_run_artifact_is_recorded",
+    "tests/test_sediment_m5054.py::test_validator_passes_and_all_checks_execute"
+  ],
+  "impl_files": [
+    "/root/tp-agent/work/m14526/ke/sediment_extract.py",
+    "/root/tp-agent/work/m14526/ke/sediment_verify.py"
+  ],
+  "entry": "/root/tp-agent/work/m14526/knowledge/sediment/tk-sediment-m5054/validate_m5054.py",
+  "run_artifacts": [
+    "/root/tp-agent/work/m14526/docs/sediment/tk-sediment-m5054/runs/extract/run_manifest.json",
+    "/root/tp-agent/work/m14526/docs/sediment/tk-sediment-m5054/runs/extract/extract.txt",
+    "/root/tp-agent/work/m14526/docs/sediment/tk-sediment-m5054/runs/validate/validate_report.json",
+    "/root/tp-agent/work/m14526/docs/sediment/tk-sediment-m5054/runs/source_guard/source_guard.json",
+    "/root/tp-agent/work/m14526/docs/sediment/tk-sediment-m5054/runs/source_guard/pytest_output.txt",
+    "/root/tp-agent/work/m14526/docs/sediment/tk-sediment-m5054/figures/manifest.json"
+  ],
+  "integration_callers": [
+    "scripts/sediment_m5054_build.py",
+    "validate_m5054.py",
+    "ke.sediment_extract.extract_package"
+  ],
+  "benchmark": {
+    "rows": [
+      {
+        "id": "kernel-integral",
+        "ref_label": "int W dV = 1 (analytic)",
+        "ref": 1.0,
+        "got": 1.000000000000004,
+        "abs_error": 3.9968028886505635e-15,
+        "rel_error": 3.9968028886505635e-15,
+        "rel_error_pct": 3.9968028886505635e-13,
+        "within_tolerance": true
+      },
+      {
+        "id": "kernel-second-moment",
+        "ref_label": "int r^2 laplacian(W) dV = 6 (analytic)",
+        "ref": 6.0,
+        "got": 5.99999999985,
+        "abs_error": -1.5000001241105565e-10,
+        "rel_error": -2.5000002068509275e-11,
+        "rel_error_pct": -2.5000002068509275e-09,
+        "within_tolerance": true
+      },
+      {
+        "id": "kernel-laplacian-origin",
+        "ref_label": "-9*(1/(pi h^3))/h^2 (cubic-spline Laplacian at r=0)",
+        "ref": -7715709630.006805,
+        "got": -7715709630.006805,
+        "abs_error": 0.0,
+        "rel_error": -0.0,
+        "rel_error_pct": -0.0,
+        "within_tolerance": true
+      },
+      {
+        "id": "shear-decay-n24",
+        "ref_label": "2*nu*(2*pi/L)^2 (unsteady-Stokes decay rate)",
+        "ref": 3.947841760435743,
+        "got": 3.842136631721668,
+        "abs_error": -0.10570512871407534,
+        "rel_error": -0.02677542189593945,
+        "rel_error_pct": -2.677542189593945,
+        "within_tolerance": true
+      },
+      {
+        "id": "shear-decay-n12",
+        "ref_label": "2*nu*(2*pi/L)^2 (unsteady-Stokes decay rate)",
+        "ref": 3.947841760435743,
+        "got": 3.449615226334117,
+        "abs_error": -0.4982265341016263,
+        "rel_error": -0.12620225539299088,
+        "rel_error_pct": -12.620225539299087,
+        "within_tolerance": true
+      },
+      {
+        "id": "shear-raw-n20",
+        "ref_label": "2*nu*(2*pi/L)^2, raw Laplacian, n = 20",
+        "ref": 3.947841760435743,
+        "got": 4.40031743576077,
+        "abs_error": 0.45247567532502675,
+        "rel_error": 0.1146134274832446,
+        "rel_error_pct": 11.46134274832446,
+        "within_tolerance": false
+      },
+      {
+        "id": "shear-renorm-n20",
+        "ref_label": "2*nu*(2*pi/L)^2, renormalised Laplacian, n = 20",
+        "ref": 3.947841760435743,
+        "got": 3.7830066203366384,
+        "abs_error": -0.16483514009910483,
+        "rel_error": -0.04175322875172969,
+        "rel_error_pct": -4.175322875172969,
+        "within_tolerance": false
+      },
+      {
+        "id": "hydro-bottom-best",
+        "ref_label": "rho0*g*(H - dx/2) (hydrostatic bottom load)",
+        "ref": 1520.55,
+        "got": 1478.7719570524944,
+        "abs_error": -41.77804294750558,
+        "rel_error": -0.027475612737171144,
+        "rel_error_pct": -2.7475612737171144,
+        "within_tolerance": true
+      },
+      {
+        "id": "hydro-bottom-tait",
+        "ref_label": "rho0*g*(H - dx/2), Tait-only wall model (control run)",
+        "ref": 1520.55,
+        "got": 1136.9277857634372,
+        "abs_error": -383.62221423656274,
+        "rel_error": -0.2522917459054702,
+        "rel_error_pct": -25.22917459054702,
+        "within_tolerance": false
+      },
+      {
+        "id": "hydro-core-max",
+        "ref_label": "0 (exact hydrostatic profile), core layers",
+        "ref": 0.0,
+        "got": 0.4317410388718815,
+        "abs_error": 0.4317410388718815,
+        "rel_error": null,
+        "rel_error_pct": null,
+        "within_tolerance": false
+      },
+      {
+        "id": "lattice-second-moment-K",
+        "ref_label": "continuum second moment K = 2 (lattice value may differ)",
+        "ref": 2.0,
+        "got": 2.3468535456329125,
+        "abs_error": 0.3468535456329125,
+        "rel_error": 0.17342677281645624,
+        "rel_error_pct": 17.342677281645624,
+        "within_tolerance": false
+      }
+    ],
+    "summary": {
+      "rows": 11,
+      "rows_with_tolerance": 11,
+      "rows_within_tolerance": 6,
+      "rows_outside_tolerance": [
+        "shear-raw-n20",
+        "shear-renorm-n20",
+        "hydro-bottom-tait",
+        "hydro-core-max",
+        "lattice-second-moment-K"
+      ],
+      "max_abs_rel_error_pct": 25.22917459054702,
+      "worst_row": "hydro-bottom-tait"
+    },
+    "recomputed_by": "ke.sediment_extract.build_benchmarks (formulas stored per row)",
+    "table_file": "/root/tp-agent/work/m14526/knowledge/sediment/tk-sediment-m5054/benchmarks.json"
+  },
+  "repro_cmd": "python3 -m ke.sediment_extract --spec knowledge/sediment/tk-sediment-m5054/spec.json --source-repo /root/tensor-ecosystem/TensorSPH --out knowledge/sediment/tk-sediment-m5054 --run-dir docs/sediment/tk-sediment-m5054/runs/extract && python3 -m ke.sediment_verify --package knowledge/sediment/tk-sediment-m5054 --spec knowledge/sediment/tk-sediment-m5054/spec.json --source-repo /root/tensor-ecosystem/TensorSPH --run-dir docs/sediment/tk-sediment-m5054/runs/extract --report docs/sediment/tk-sediment-m5054/runs/validate/validate_report.json",
+  "external_anchor": "/root/tp-agent/work/m14526/docs/sediment/tk-sediment-m5054-anchors.md",
+  "report": "/root/tp-agent/work/m14526/docs/sediment/tk-sediment-m5054-report.md",
+  "report_sha256": "2a9a66847a78136e36dd7bcf4ca865167e10251fe54301d51968cfcdc09121df",
+  "notes": [
+    "Paths are absolute in this build worktree; the same files after merge live at TensorKnowledge/ke/sediment_extract.py, TensorKnowledge/knowledge/sediment/tk-sediment-m5054/validate_m5054.py, TensorKnowledge/docs/sediment/tk-sediment-m5054/runs/.",
+    "Package directory is named by task_key, not by the source mission, because the push gate drops paths containing an /m<digits>/ segment from another mission."
+  ]
+}

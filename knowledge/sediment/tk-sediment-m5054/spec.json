@@ -1,0 +1,501 @@
+{
+  "schema": "sediment-spec/1",
+  "mission": {
+    "id": 5054,
+    "repo": "TensorSPH",
+    "branch": "agent/m5054",
+    "pr": 338,
+    "head_sha": "82b72a15c044259d1e7c8d638e9273705fa42e7b",
+    "model": "deepseek-v4-flash",
+    "status": "succeeded",
+    "finished_at": "2026-11-07T05:28:57.180211+00:00"
+  },
+  "task_key": "tk-sediment-m5054",
+  "namespace": "sph-m5054",
+  "created_by": "ke.sediment_extract (mission m14526)",
+  "extraction_date": "2026-11-11",
+  "source": {
+    "repo": "TensorSPH",
+    "sha": "82b72a15c044259d1e7c8d638e9273705fa42e7b",
+    "default_path": "/root/tensor-ecosystem/TensorSPH"
+  },
+  "package": {
+    "slug": "m5054",
+    "title": "TensorSPH 3-D operators: what the analytic benchmarks actually verify (mission m5054)",
+    "spec_path": "knowledge/sediment/tk-sediment-m5054/spec.json",
+    "out_dir": "knowledge/sediment/tk-sediment-m5054",
+    "run_dir": "docs/sediment/tk-sediment-m5054/runs/extract",
+    "repro_cmd": "python3 -m ke.sediment_extract --spec knowledge/sediment/tk-sediment-m5054/spec.json --source-repo /root/tensor-ecosystem/TensorSPH --out knowledge/sediment/tk-sediment-m5054 --run-dir docs/sediment/tk-sediment-m5054/runs/extract && python3 -m ke.sediment_verify --package knowledge/sediment/tk-sediment-m5054 --spec knowledge/sediment/tk-sediment-m5054/spec.json --source-repo /root/tensor-ecosystem/TensorSPH --run-dir docs/sediment/tk-sediment-m5054/runs/extract --report docs/sediment/tk-sediment-m5054/runs/validate/validate_report.json"
+  },
+  "activity": {
+    "description": "Spec-driven extraction of the 3-D SPH operator verification delivered by mission m5054: every quote is located programmatically in the pinned blobs of TensorSPH@82b72a15, every reference value in the benchmark table is recomputed from the committed report JSON with the formula stored beside it (2*nu*k^2 for the unsteady-Stokes decay rate, rho0*g*(H-dx/2) for the hydrostatic bottom pressure, the analytic kernel normalisation integrals). Producer writes draft/unassessed records only; independent review is not performed here."
+  },
+  "claims": [
+    {
+      "id": "kernel-quadrature-exact",
+      "claim_type": "mathematical",
+      "modality": "asserted",
+      "statement": "At TensorSPH@82b72a15 the 3-D cubic-spline kernel satisfies both normalisation identities to double precision on the source lattice: sum(W*dV) = 1 with error 4.0e-15 and sum(r^2*laplacian(W)*dV) = 6 with error -1.5e-10; the discrete Laplacian at the origin equals the analytic value digit for digit. Residual error in the 3-D operators therefore cannot be blamed on the kernel.",
+      "scope": {
+        "domain": "SPH kernel normalisation",
+        "system": "tensorsph.threed.kernel3 cubic-spline kernel",
+        "conditions": [
+          "lattice quadrature with h = 0.013, dx = h/1.3",
+          "double precision"
+        ],
+        "exclusions": [
+          "does not cover boundary truncation of the kernel support",
+          "does not cover the 2-D kernel (10/(7 pi h^2) normalisation)"
+        ]
+      },
+      "notes": [
+        "The two identities are the standard admissibility conditions for an SPH kernel (Monaghan 1992).",
+        "Values are the committed artifact's, re-derived by the benchmark table (rows kernel-integral, kernel-second-moment, kernel-laplacian-origin)."
+      ],
+      "evidence": [
+        {
+          "id": "kq-kernel-integral",
+          "path": "benchmarks/threed_kernel/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_kernel/report.json#/quadrature/kernel_integral",
+          "line_needle": "\"kernel_integral\": 1.000000000000004",
+          "relation": "supports"
+        },
+        {
+          "id": "kq-second-moment",
+          "path": "benchmarks/threed_kernel/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_kernel/report.json#/quadrature/second_moment",
+          "line_needle": "\"second_moment\": 5.99999999985",
+          "relation": "supports"
+        },
+        {
+          "id": "kq-laplacian-origin",
+          "path": "benchmarks/threed_kernel/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_kernel/report.json#/quadrature/laplacian_at_zero",
+          "line_needle": "\"laplacian_at_zero\": -7715709630.006805",
+          "relation": "supports"
+        }
+      ]
+    },
+    {
+      "id": "mass-calibration-lattice-constant",
+      "claim_type": "methodological",
+      "modality": "asserted",
+      "statement": "The lattice mass-calibration constant C is identical to all digits on every resolution of the dx ladder (dx = 0.02 -> 0.0025, spread exactly 0.0), and at h/dx = 1 the residual mass bias is -2.75e-5 on the tension side, where the Tait equation clamps it to p = 0. The bias is therefore a property of the lattice geometry, not a discretisation error that shrinks with dx: one calibration per lattice suffices.",
+      "scope": {
+        "domain": "SPH volume/mass consistency",
+        "system": "tensorsph.threed lattice calibration + Tait equation of state",
+        "conditions": [
+          "cubic lattice",
+          "h/dx in {1.0, 1.1, ..., 2.0}",
+          "single-phase weakly compressible"
+        ],
+        "exclusions": [
+          "does not cover disordered particle packing"
+        ]
+      },
+      "notes": [
+        "Practical consequence: resolution studies must not re-tune C, or the ladder measures the calibration, not the scheme."
+      ],
+      "evidence": [
+        {
+          "id": "mc-dx-spread",
+          "path": "benchmarks/threed_kernel/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_kernel/report.json#/dx_independence/spread",
+          "relation": "supports",
+          "quote": "        \"dx\": 0.0025,\n        \"C\": 0.9972618283038777\n      }\n    ],\n    \"spread\": 0.0"
+        },
+        {
+          "id": "mc-bias-h1",
+          "path": "benchmarks/threed_kernel/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_kernel/report.json#/lattice_sweep/0/bias",
+          "line_needle": "\"bias\": -2.753390895693375e-05",
+          "relation": "supports"
+        }
+      ]
+    },
+    {
+      "id": "laplacian-renorm-scope",
+      "claim_type": "descriptive",
+      "modality": "asserted",
+      "statement": "On the operator ladder the second-moment-renormalised Laplacian is monotone in kh (relative L2 error 19.37 % -> 11.36 % -> 5.20 % -> 2.96 % for kh = 0.681, 0.511, 0.340, 0.255) while the raw Laplacian is not (5.38 % -> 4.01 % -> 11.24 % -> 13.87 %): the raw operator is twice as accurate at kh = 0.681 and only the renormalised one converges. Renormalisation is thus a fine-kh measure (kh <~ 0.34 on this lattice), not a blanket improvement.",
+      "scope": {
+        "domain": "SPH viscous operator",
+        "system": "symmetric pressure force + second-moment-renormalised viscous Laplacian on a periodic cubic lattice",
+        "conditions": [
+          "analytic field sin(kx)sin(ky)sin(kz)",
+          "k h from 0.255 to 0.681",
+          "h/dx = 1.3"
+        ],
+        "exclusions": [
+          "does not test wall-bounded or free-surface truncation"
+        ]
+      },
+      "notes": [
+        "Belytschko/Randles corrected-SPH literature predicts convergence, not coarse-grid superiority; the coarse-grid crossover is the part worth remembering.",
+        "The source's own criterion only asks for < 5 % at the finest grid, so a reader of criteria alone would miss the crossover."
+      ],
+      "evidence": [
+        {
+          "id": "lap-corrected-n12",
+          "path": "benchmarks/threed_kernel/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_kernel/report.json#/operator_ladder/0/laplacian_corrected_rel_l2",
+          "line_needle": "\"laplacian_corrected_rel_l2\": 0.1936682433608387",
+          "relation": "supports"
+        },
+        {
+          "id": "lap-raw-n12",
+          "path": "benchmarks/threed_kernel/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_kernel/report.json#/operator_ladder/0/laplacian_raw_rel_l2",
+          "line_needle": "\"laplacian_raw_rel_l2\": 0.05382872898748473",
+          "relation": "supports"
+        },
+        {
+          "id": "lap-raw-n24",
+          "path": "benchmarks/threed_kernel/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_kernel/report.json#/operator_ladder/2/laplacian_raw_rel_l2",
+          "line_needle": "\"laplacian_raw_rel_l2\": 0.11235365976913649",
+          "relation": "supports"
+        },
+        {
+          "id": "lap-corrected-n32",
+          "path": "benchmarks/threed_kernel/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_kernel/report.json#/operator_ladder/3/laplacian_corrected_rel_l2",
+          "line_needle": "\"laplacian_corrected_rel_l2\": 0.029589610986152298",
+          "relation": "supports"
+        }
+      ]
+    },
+    {
+      "id": "shear-verdict-fail-is-a-coverage-failure",
+      "claim_type": "interpretive",
+      "modality": "asserted",
+      "statement": "The 3-D unsteady-Stokes shear benchmark reports verdict 'fail' although all six of its criteria are true: the failure is missing case h1.8 in missing_cases. Its headline number (decay-rate error within 2.7 %) holds only on the finest rung (n = 24, -2.68 %); n = 12 is -12.62 %, and at n = 20 the unrenormalised operator is +11.46 % while the renormalised one is -4.18 %. Any citation of the 2.7 % figure must carry kh and the operator variant.",
+      "scope": {
+        "domain": "SPH viscous decay validation",
+        "system": "3-D double-shear (unsteady Stokes) on a triply periodic cube, nu = 0.05, k = 2*pi, amplitude 0.1, c0 = 10 m/s",
+        "conditions": [
+          "n = 12/16/20/24",
+          "h/dx = 1.3",
+          "raw vs second-moment-renormalised viscous operator"
+        ],
+        "exclusions": [
+          "does not cover free-surface or wall-bounded shear"
+        ]
+      },
+      "notes": [
+        "verdict 'fail' + all criteria true is the artifact's structural signature: verdict folds in coverage (missing cases), criteria fold in physics. Both must be read.",
+        "Re-derived reference: 2*nu*k^2 = 2*0.05*(2*pi)^2 = 3.9478417604357 1/s."
+      ],
+      "evidence": [
+        {
+          "id": "shear-verdict",
+          "path": "benchmarks/threed_shear/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_shear/report.json#/verdict",
+          "relation": "supports",
+          "quote": "\"missing_cases\": [\n    \"h1.8\"\n  ],\n  \"verdict\": \"fail\""
+        },
+        {
+          "id": "shear-missing-cases",
+          "path": "benchmarks/threed_shear/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_shear/report.json#/missing_cases",
+          "relation": "supports",
+          "quote": "  \"missing_cases\": [\n    \"h1.8\"\n  ],"
+        },
+        {
+          "id": "shear-decay-n24",
+          "path": "benchmarks/threed_shear/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_shear/report.json#/resolution_ladder/3/decay/rel_error",
+          "line_needle": "\"rel_error\": -0.02677542189593945",
+          "relation": "supports"
+        },
+        {
+          "id": "shear-decay-n12",
+          "path": "benchmarks/threed_shear/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_shear/report.json#/resolution_ladder/0/decay/rel_error",
+          "line_needle": "\"rel_error\": -0.12620225539299088",
+          "relation": "supports"
+        },
+        {
+          "id": "shear-raw-n20",
+          "path": "benchmarks/threed_shear/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_shear/report.json#/raw_vs_renormalised/raw/decay/rel_error",
+          "line_needle": "\"rel_error\": 0.1146134274832446",
+          "relation": "supports"
+        }
+      ]
+    },
+    {
+      "id": "hydrostatic-headline-is-a-single-point",
+      "claim_type": "interpretive",
+      "modality": "asserted",
+      "statement": "The hydrostatic-column benchmark reports verdict 'fail' with 4 of 8 criteria false. Its 2.75 % bottom-pressure error exists only for the best run (Adami wall, c0 = 20): c0 = 10 gives -4.30 %, c0 = 5 gives -8.74 %, the Tait-only wall model gives -25.23 %, and the per-layer core maximum relative error is 43.17 %. The 2.7 % figure is therefore a single bottom-load number and must not be read as per-layer pressure accuracy.",
+      "scope": {
+        "domain": "SPH hydrostatic pressure / wall boundary condition",
+        "system": "3-D wall-bounded column at rest, 8x8 base, nz in {12,16,24}, rho0 = 1000 kg/m^3, g = 9.81 m/s^2",
+        "conditions": [
+          "Adami vs Tait wall model",
+          "c0 in {5,10,20} m/s",
+          "t_end = 0.3 s"
+        ],
+        "exclusions": [
+          "does not cover dynamic free-surface cases"
+        ]
+      },
+      "notes": [
+        "The failed criteria are interior_pressure_within_15pct_best, bottom_pressure_within_15pct_all, column_settled_window_drift_below_2pct and centre_of_mass_drift_below_1pct.",
+        "Re-derived reference: p_bottom = rho0*g*(H - dx/2) = 1000*9.81*0.155 = 1520.55 Pa."
+      ],
+      "evidence": [
+        {
+          "id": "hydro-bottom-best",
+          "path": "benchmarks/threed_hydrostatic/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_hydrostatic/report.json#/runs/0/pressure/bottom_rel_error",
+          "line_needle": "\"bottom_rel_error\": -0.027475612737171144",
+          "relation": "supports"
+        },
+        {
+          "id": "hydro-bottom-tait",
+          "path": "benchmarks/threed_hydrostatic/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_hydrostatic/report.json#/runs/3/pressure/bottom_rel_error",
+          "line_needle": "\"bottom_rel_error\": -0.2522917459054702",
+          "relation": "supports"
+        },
+        {
+          "id": "hydro-core-max",
+          "path": "benchmarks/threed_hydrostatic/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_hydrostatic/report.json#/runs/0/pressure/max_rel_error_core",
+          "line_needle": "\"max_rel_error_core\": 0.4317410388718815",
+          "relation": "supports"
+        },
+        {
+          "id": "hydro-verdict",
+          "path": "benchmarks/threed_hydrostatic/report.json",
+          "locator_type": "dataset-variable",
+          "value": "TensorSPH@82b72a15:benchmarks/threed_hydrostatic/report.json#/verdict",
+          "relation": "supports",
+          "quote": "\"missing_cases\": [],\n  \"verdict\": \"fail\""
+        }
+      ]
+    },
+    {
+      "id": "delivery-contract-broken-honest-fail",
+      "claim_type": "interpretive",
+      "modality": "asserted",
+      "statement": "Mission m5054 is an honest partial delivery, not a closed one: at its pinned commit the README advertises the 3 %-level 3-D verification and links docs/verification_threed.md, but that file does not exist at 82b72a15 (git cat-file -e exits 128), and the committed guard test tests/test_threed_artifacts.py asserts verdict == 'pass' for the shear and hydrostatic reports while both committed reports say 'fail'. Executing that guard file against the pinned artifacts gives 2 failed / 1 passed (runs/m5054/source_guard/source_guard.json). Operator core is verified; documentation and the artifact/guard contract are not.",
+      "scope": {
+        "domain": "research-delivery integrity",
+        "system": "TensorSPH 3-D branch (tensorsph.threed) as delivered by mission m5054",
+        "conditions": [
+          "pinned commit 82b72a15c044259d1e7c8d638e9273705fa42e7b",
+          "tree materialised with git archive"
+        ],
+        "exclusions": [
+          "does not assert that the physics tests fail; the operator tests pass at the pin"
+        ]
+      },
+      "notes": [
+        "This is the recomputed counterpart of the mission's own honest-FAIL statement, so the negative result is registered rather than overwritten.",
+        "Reproduction: see runs/m5054/source_guard/repro.sh and the run JSON."
+      ],
+      "evidence": [
+        {
+          "id": "dc-readme-27pct",
+          "path": "README.md",
+          "locator_type": "other",
+          "value": "TensorSPH@82b72a15:README.md#3-D status table",
+          "quote": "shear-wave decay within 2.7 %, hydrostatic bottom pressure within 2.7 %",
+          "relation": "contextualizes"
+        },
+        {
+          "id": "dc-readme-missing-doc",
+          "path": "README.md",
+          "locator_type": "other",
+          "value": "TensorSPH@82b72a15:README.md#3-D status table (doc link)",
+          "quote": "multiphase (see [`docs/verification_threed.md`](docs/verification_threed.md))",
+          "relation": "refutes"
+        },
+        {
+          "id": "dc-guard-asserts-pass",
+          "path": "tests/test_threed_artifacts.py",
+          "locator_type": "code-location",
+          "value": "TensorSPH@82b72a15:tests/test_threed_artifacts.py#test_shear_report_meets_its_criteria",
+          "quote": "def test_shear_report_meets_its_criteria():\n    report = _load(SHEAR)\n    assert report[\"missing_cases\"] == []\n    assert report[\"verdict\"] == \"pass\", report[\"criteria\"]",
+          "relation": "refutes"
+        }
+      ]
+    }
+  ],
+  "benchmarks": {
+    "name": "tensorsph-threed-operator-benchmarks",
+    "description": "Every reference value below is recomputed by ke.sediment_extract from the pinned report JSON: exact kernel normalisation integrals, the analytic Laplace symbol -9*(1/(pi h^3))/h^2, the unsteady-Stokes decay rate 2*nu*(2*pi/L)^2, the hydrostatic bottom load rho0*g*(H-dx/2). 'got' is the committed artifact number. Rows outside tolerance are kept, not dropped.",
+    "rows": [
+      {
+        "id": "kernel-integral",
+        "source": "benchmarks/threed_kernel/report.json",
+        "ref_label": "int W dV = 1 (analytic)",
+        "ref_expr": "1.0",
+        "ref_vars": {},
+        "got_path": "quadrature.kernel_integral",
+        "tolerance_pct": 1e-09
+      },
+      {
+        "id": "kernel-second-moment",
+        "source": "benchmarks/threed_kernel/report.json",
+        "ref_label": "int r^2 laplacian(W) dV = 6 (analytic)",
+        "ref_expr": "6.0",
+        "ref_vars": {},
+        "got_path": "quadrature.second_moment",
+        "tolerance_pct": 1e-06
+      },
+      {
+        "id": "kernel-laplacian-origin",
+        "source": "benchmarks/threed_kernel/report.json",
+        "ref_label": "-9*(1/(pi h^3))/h^2 (cubic-spline Laplacian at r=0)",
+        "ref_expr": "-9.0*(1.0/(pi*h**3))/h**2",
+        "ref_vars": {
+          "h": "quadrature.h"
+        },
+        "got_path": "quadrature.laplacian_at_zero",
+        "tolerance_pct": 1e-09
+      },
+      {
+        "id": "shear-decay-n24",
+        "source": "benchmarks/threed_shear/report.json",
+        "ref_label": "2*nu*(2*pi/L)^2 (unsteady-Stokes decay rate)",
+        "ref_expr": "2*nu*(2*pi/box)**2",
+        "ref_vars": {
+          "nu": "params.nu",
+          "box": "params.box"
+        },
+        "got_path": "resolution_ladder[3].decay.fit_rate",
+        "tolerance_pct": 3.0
+      },
+      {
+        "id": "shear-decay-n12",
+        "source": "benchmarks/threed_shear/report.json",
+        "ref_label": "2*nu*(2*pi/L)^2 (unsteady-Stokes decay rate)",
+        "ref_expr": "2*nu*(2*pi/box)**2",
+        "ref_vars": {
+          "nu": "params.nu",
+          "box": "params.box"
+        },
+        "got_path": "resolution_ladder[0].decay.fit_rate",
+        "tolerance_pct": 15.0
+      },
+      {
+        "id": "shear-raw-n20",
+        "source": "benchmarks/threed_shear/report.json",
+        "ref_label": "2*nu*(2*pi/L)^2, raw Laplacian, n = 20",
+        "ref_expr": "2*nu*(2*pi/box)**2",
+        "ref_vars": {
+          "nu": "params.nu",
+          "box": "params.box"
+        },
+        "got_path": "raw_vs_renormalised.raw.decay.fit_rate",
+        "tolerance_pct": 3.0
+      },
+      {
+        "id": "shear-renorm-n20",
+        "source": "benchmarks/threed_shear/report.json",
+        "ref_label": "2*nu*(2*pi/L)^2, renormalised Laplacian, n = 20",
+        "ref_expr": "2*nu*(2*pi/box)**2",
+        "ref_vars": {
+          "nu": "params.nu",
+          "box": "params.box"
+        },
+        "got_path": "raw_vs_renormalised.renormalised.decay.fit_rate",
+        "tolerance_pct": 3.0
+      },
+      {
+        "id": "hydro-bottom-best",
+        "source": "benchmarks/threed_hydrostatic/report.json",
+        "ref_label": "rho0*g*(H - dx/2) (hydrostatic bottom load)",
+        "ref_expr": "rho0*g*(H-dx/2)",
+        "ref_vars": {
+          "rho0": "params.rho0",
+          "g": "params.gravity",
+          "H": "runs[0].height",
+          "dx": "runs[0].dx"
+        },
+        "got_path": "runs[0].pressure.bottom_measured",
+        "tolerance_pct": 3.0
+      },
+      {
+        "id": "hydro-bottom-tait",
+        "source": "benchmarks/threed_hydrostatic/report.json",
+        "ref_label": "rho0*g*(H - dx/2), Tait-only wall model (control run)",
+        "ref_expr": "rho0*g*(H-dx/2)",
+        "ref_vars": {
+          "rho0": "params.rho0",
+          "g": "params.gravity",
+          "H": "runs[3].height",
+          "dx": "runs[3].dx"
+        },
+        "got_path": "runs[3].pressure.bottom_measured",
+        "tolerance_pct": 15.0
+      },
+      {
+        "id": "hydro-core-max",
+        "source": "benchmarks/threed_hydrostatic/report.json",
+        "ref_label": "0 (exact hydrostatic profile), core layers",
+        "ref_expr": "0.0",
+        "ref_vars": {},
+        "got_path": "runs[0].pressure.max_rel_error_core",
+        "tolerance_abs": 0.15
+      },
+      {
+        "id": "lattice-second-moment-K",
+        "source": "benchmarks/threed_kernel/report.json",
+        "ref_label": "continuum second moment K = 2 (lattice value may differ)",
+        "ref_expr": "2.0",
+        "ref_vars": {},
+        "got_path": "operator_ladder[0].second_moment_K",
+        "tolerance_pct": 15.0
+      }
+    ]
+  },
+  "external_anchors": [
+    {
+      "label": "Monaghan 1992, Smoothed Particle Hydrodynamics, Annu. Rev. Astron. Astrophys. 30:543-574",
+      "doi": "10.1146/annurev.aa.30.090192.002551",
+      "why": "defines the kernel admissibility conditions (unity and second-moment normalisation) used by claims kernel-quadrature-exact and mass-calibration-lattice-constant"
+    },
+    {
+      "label": "Morris, Fox & Zhu 1997, Modeling low Reynolds number incompressible flows using SPH, J. Comput. Phys. 136:214-263",
+      "doi": "10.1006/jcph.1997.5732",
+      "why": "source of the renormalised viscous operator family against which laplacian-renorm-scope is judged"
+    },
+    {
+      "label": "Randles & Libersky 1996, Smoothed Particle Hydrodynamics: some recent improvements and applications, CMAME 139:375-408",
+      "doi": "10.1016/S0045-7825(96)01090-0",
+      "why": "corrected-SPH / reproducing-condition lineage behind the second-moment normalisation"
+    },
+    {
+      "label": "Adami, Hu & Adams 2012, A generalized wall boundary condition for smoothed particle hydrodynamics, J. Comput. Phys. 231:7057-7075",
+      "doi": "10.1016/j.jcp.2012.06.034",
+      "why": "defines the wall model whose hydrostatic bottom load is the headline of hydrostatic-headline-is-a-single-point"
+    },
+    {
+      "label": "Colagrossi & Landrini 2003, Numerical simulation of interfacial flows by smoothed particle hydrodynamics, J. Comput. Phys. 191:448-475",
+      "doi": "10.1016/S0021-9991(03)00398-3",
+      "why": "documents the spurious pressure / odd-even mode at free surfaces that the hydrostatic per-layer table exposes"
+    }
+  ]
+}

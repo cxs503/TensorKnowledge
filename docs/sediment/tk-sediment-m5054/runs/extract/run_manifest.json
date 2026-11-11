@@ -1,0 +1,446 @@
+{
+  "task_key": "tk-sediment-m5054",
+  "spec": "knowledge/sediment/tk-sediment-m5054/spec.json",
+  "spec_sha256": "a945f113b5a17011324daf0f16f2613b761439c846859b60ade74f5bd06df8e5",
+  "source": {
+    "repo": "/root/tensor-ecosystem/TensorSPH",
+    "sha": "82b72a15c044259d1e7c8d638e9273705fa42e7b",
+    "commit_time": "2026-11-07T05:31:53+00:00",
+    "mission": 5054,
+    "branch": "agent/m5054",
+    "pr": 338
+  },
+  "counts": {
+    "claims": 6,
+    "evidence": 21,
+    "provenance": 6,
+    "benchmark_rows": 11
+  },
+  "benchmark_summary": {
+    "rows": 11,
+    "rows_with_tolerance": 11,
+    "rows_within_tolerance": 6,
+    "rows_outside_tolerance": [
+      "shear-raw-n20",
+      "shear-renorm-n20",
+      "hydro-bottom-tait",
+      "hydro-core-max",
+      "lattice-second-moment-K"
+    ],
+    "max_abs_rel_error_pct": 25.22917459054702,
+    "worst_row": "hydro-bottom-tait"
+  },
+  "evidence_spans": {
+    "kq-kernel-integral": {
+      "path": "benchmarks/threed_kernel/report.json",
+      "start": 302,
+      "end": 339,
+      "lines": [
+        12,
+        12
+      ],
+      "quote": "\"kernel_integral\": 1.000000000000004,"
+    },
+    "kq-second-moment": {
+      "path": "benchmarks/threed_kernel/report.json",
+      "start": 397,
+      "end": 428,
+      "lines": [
+        14,
+        14
+      ],
+      "quote": "\"second_moment\": 5.99999999985,"
+    },
+    "kq-laplacian-origin": {
+      "path": "benchmarks/threed_kernel/report.json",
+      "start": 485,
+      "end": 525,
+      "lines": [
+        16,
+        16
+      ],
+      "quote": "\"laplacian_at_zero\": -7715709630.006805,"
+    },
+    "mc-dx-spread": {
+      "path": "benchmarks/threed_kernel/report.json",
+      "start": 3825,
+      "end": 3911,
+      "lines": [
+        121,
+        125
+      ],
+      "quote": "        \"dx\": 0.0025,\n        \"C\": 0.9972618283038777\n      }\n    ],\n    \"spread\": 0.0"
+    },
+    "mc-bias-h1": {
+      "path": "benchmarks/threed_kernel/report.json",
+      "start": 945,
+      "end": 976,
+      "lines": [
+        27,
+        27
+      ],
+      "quote": "\"bias\": -2.753390895693375e-05,"
+    },
+    "lap-corrected-n12": {
+      "path": "benchmarks/threed_kernel/report.json",
+      "start": 4167,
+      "end": 4216,
+      "lines": [
+        136,
+        136
+      ],
+      "quote": "\"laplacian_corrected_rel_l2\": 0.1936682433608387,"
+    },
+    "lap-raw-n12": {
+      "path": "benchmarks/threed_kernel/report.json",
+      "start": 4116,
+      "end": 4160,
+      "lines": [
+        135,
+        135
+      ],
+      "quote": "\"laplacian_raw_rel_l2\": 0.05382872898748473,"
+    },
+    "lap-raw-n24": {
+      "path": "benchmarks/threed_kernel/report.json",
+      "start": 4966,
+      "end": 5010,
+      "lines": [
+        161,
+        161
+      ],
+      "quote": "\"laplacian_raw_rel_l2\": 0.11235365976913649,"
+    },
+    "lap-corrected-n32": {
+      "path": "benchmarks/threed_kernel/report.json",
+      "start": 5444,
+      "end": 5495,
+      "lines": [
+        175,
+        175
+      ],
+      "quote": "\"laplacian_corrected_rel_l2\": 0.029589610986152298,"
+    },
+    "shear-verdict": {
+      "path": "benchmarks/threed_shear/report.json",
+      "start": 30923,
+      "end": 30977,
+      "lines": [
+        1057,
+        1060
+      ],
+      "quote": "\"missing_cases\": [\n    \"h1.8\"\n  ],\n  \"verdict\": \"fail\""
+    },
+    "shear-missing-cases": {
+      "path": "benchmarks/threed_shear/report.json",
+      "start": 30921,
+      "end": 30957,
+      "lines": [
+        1057,
+        1059
+      ],
+      "quote": "  \"missing_cases\": [\n    \"h1.8\"\n  ],"
+    },
+    "shear-decay-n24": {
+      "path": "benchmarks/threed_shear/report.json",
+      "start": 11036,
+      "end": 11070,
+      "lines": [
+        376,
+        376
+      ],
+      "quote": "\"rel_error\": -0.02677542189593945,"
+    },
+    "shear-decay-n12": {
+      "path": "benchmarks/threed_shear/report.json",
+      "start": 886,
+      "end": 920,
+      "lines": [
+        33,
+        33
+      ],
+      "quote": "\"rel_error\": -0.12620225539299088,"
+    },
+    "shear-raw-n20": {
+      "path": "benchmarks/threed_shear/report.json",
+      "start": 29980,
+      "end": 30012,
+      "lines": [
+        1029,
+        1029
+      ],
+      "quote": "\"rel_error\": 0.1146134274832446,"
+    },
+    "hydro-bottom-best": {
+      "path": "benchmarks/threed_hydrostatic/report.json",
+      "start": 916,
+      "end": 958,
+      "lines": [
+        35,
+        35
+      ],
+      "quote": "\"bottom_rel_error\": -0.027475612737171144,"
+    },
+    "hydro-bottom-tait": {
+      "path": "benchmarks/threed_hydrostatic/report.json",
+      "start": 23733,
+      "end": 23773,
+      "lines": [
+        710,
+        710
+      ],
+      "quote": "\"bottom_rel_error\": -0.2522917459054702,"
+    },
+    "hydro-core-max": {
+      "path": "benchmarks/threed_hydrostatic/report.json",
+      "start": 994,
+      "end": 1035,
+      "lines": [
+        37,
+        37
+      ],
+      "quote": "\"max_rel_error_core\": 0.4317410388718815,"
+    },
+    "hydro-verdict": {
+      "path": "benchmarks/threed_hydrostatic/report.json",
+      "start": 47971,
+      "end": 48011,
+      "lines": [
+        1425,
+        1426
+      ],
+      "quote": "\"missing_cases\": [],\n  \"verdict\": \"fail\""
+    },
+    "dc-readme-27pct": {
+      "path": "README.md",
+      "start": 1168,
+      "end": 1239,
+      "lines": [
+        19,
+        19
+      ],
+      "quote": "shear-wave decay within 2.7 %, hydrostatic bottom pressure within 2.7 %"
+    },
+    "dc-readme-missing-doc": {
+      "path": "README.md",
+      "start": 1285,
+      "end": 1362,
+      "lines": [
+        19,
+        19
+      ],
+      "quote": "multiphase (see [`docs/verification_threed.md`](docs/verification_threed.md))"
+    },
+    "dc-guard-asserts-pass": {
+      "path": "tests/test_threed_artifacts.py",
+      "start": 2235,
+      "end": 2404,
+      "lines": [
+        56,
+        59
+      ],
+      "quote": "def test_shear_report_meets_its_criteria():\n    report = _load(SHEAR)\n    assert report[\"missing_cases\"] == []\n    assert report[\"verdict\"] == \"pass\", report[\"criteria\"]"
+    }
+  },
+  "files": [
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/claims/kernel-quadrature-exact.json",
+      "bytes": 1457,
+      "sha256": "acf09e03f9534452c83eae7e0fe7b800fa9310bc8125d4b03165e9f6cafc7bde"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/claims/mass-calibration-lattice-constant.json",
+      "bytes": 1278,
+      "sha256": "bcb5f8bf6bf9ec824b4af933bcb0f8b3bb3fa6d3fe8d2c6bead17e18a69aa347"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/claims/laplacian-renorm-scope.json",
+      "bytes": 1578,
+      "sha256": "23e5053f24323b6470d8d1f0e6d68aa7534de5158a3c917ab553bbaec1ebfa85"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/claims/shear-verdict-fail-is-a-coverage-failure.json",
+      "bytes": 1620,
+      "sha256": "cb33f972a51183a0e4c4e8091324d7019b49cc5d1b6fc1f8d323e8f61e842b61"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/claims/hydrostatic-headline-is-a-single-point.json",
+      "bytes": 1562,
+      "sha256": "173c3b2472c884e73a736236b2424696c36df09c669bdb9be718c15d8cac0917"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/claims/delivery-contract-broken-honest-fail.json",
+      "bytes": 1696,
+      "sha256": "3dcde1f459dfab437952e86b50fd12291c43d864084ae68909a473999d4a820c"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/kq-kernel-integral.json",
+      "bytes": 917,
+      "sha256": "fdd8761eacb35f92fb0da59b06890335ce8947c16051b54e9036586babbbed8d"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/kq-second-moment.json",
+      "bytes": 907,
+      "sha256": "997a9481f8e419ffbb503d53258da494fc7f9f37e757dbddc12496a23985eda6"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/kq-laplacian-origin.json",
+      "bytes": 923,
+      "sha256": "54915c639ec4e78c452fe5dc79719e9dfcecf95cac530453b69c7927f8649517"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/mc-dx-spread.json",
+      "bytes": 978,
+      "sha256": "dc48ffb3f41381c65bfbc397a44d28b71194073184a17f8bd6f847a331a7e6c6"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/mc-bias-h1.json",
+      "bytes": 907,
+      "sha256": "9fdb825e487b84cefb413ac99da86dd43266cb9b32004dd2139c43134e22d6d0"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/lap-corrected-n12.json",
+      "bytes": 949,
+      "sha256": "10eb8812407f54131cfeae2680bd1ceaaae28c5e85c5edfc6382a682e5766f45"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/lap-raw-n12.json",
+      "bytes": 932,
+      "sha256": "3bbd932caeae069b1e5a0a33505b238970055a81e75230453342051731cda676"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/lap-raw-n24.json",
+      "bytes": 932,
+      "sha256": "f4040d63ba45558140a91d13ac80dd58609cefe5a08a829603a22b95dd57db12"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/lap-corrected-n32.json",
+      "bytes": 951,
+      "sha256": "a874513c587543d01b329c37c17bec273bc50d3f2f20847a4ece20c155383203"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/shear-verdict.json",
+      "bytes": 942,
+      "sha256": "f26f1ca16763abe07e9177e759e3055bf44dcd319fa604d31c419440b5dbc9e9"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/shear-missing-cases.json",
+      "bytes": 931,
+      "sha256": "3049cbea0b39e3f9d46877e28754415763abbb5ca3935d22a55d6e5f56c969f4"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/shear-decay-n24.json",
+      "bytes": 941,
+      "sha256": "ca3e1b6f7a825494576a5822f2c3ab8f78cb68a8ce405c9958ab27ebba17f450"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/shear-decay-n12.json",
+      "bytes": 935,
+      "sha256": "30b31f57db7f943f9c4d51d84bc32671ebc7a3bac345710424e146710c9713d7"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/shear-raw-n20.json",
+      "bytes": 943,
+      "sha256": "b3ab170d3f4a2e458dd3e2111bc55c12afa75635f3441aed48b4dd216d5850e5"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/hydro-bottom-best.json",
+      "bytes": 952,
+      "sha256": "8988aa22e83d4ba6c181af2ba7f60a16df84d38cd13f176db76898eaf6005ff9"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/hydro-bottom-tait.json",
+      "bytes": 956,
+      "sha256": "b318d201a43be43272eb71239424b0968af84528baa105d72b91fa4d6395e3c3"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/hydro-core-max.json",
+      "bytes": 951,
+      "sha256": "2fc151ea89017475aaab2d95e9ffb9416794e0edfae82e1a47424a166fb39e79"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/hydro-verdict.json",
+      "bytes": 934,
+      "sha256": "cc42075eec0d4f79b7eb7db699a090cdfa08624331ba9e4b59cd261510f8ea91"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/dc-readme-27pct.json",
+      "bytes": 891,
+      "sha256": "3386fad6d63715f46f6384570e14de5ce896576712e7f94a16a771df2383b75c"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/dc-readme-missing-doc.json",
+      "bytes": 907,
+      "sha256": "508233c9596b9e4aa2288ea2e2d2bcce3b73dc32ee6f0ed78f07c0aa569edeff"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/evidence/dc-guard-asserts-pass.json",
+      "bytes": 1069,
+      "sha256": "beb11d4f9bc47748aab1e33ad76fa921833076f6a0f3e3f89bbc4db5ebb5ddf3"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/provenance/kernel-quadrature-exact.json",
+      "bytes": 1859,
+      "sha256": "0fba564791700ba20b95908abb9946e4cb1eaf74a4b8dfd851b5fef91fadda14"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/provenance/mass-calibration-lattice-constant.json",
+      "bytes": 1889,
+      "sha256": "6c904beb10fd7c039840cb86378f38fe2af54527acceea4c0e0a73d0f150fb9c"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/provenance/laplacian-renorm-scope.json",
+      "bytes": 1856,
+      "sha256": "f24475ab7926588c7f5af011e5b356d77245086fdfbc1a7fc41043f1defb96aa"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/provenance/shear-verdict-fail-is-a-coverage-failure.json",
+      "bytes": 1910,
+      "sha256": "157bf3c8cc4431a7bdefaad51bbd021e40d76919c494502fa7ea8588908c0559"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/provenance/hydrostatic-headline-is-a-single-point.json",
+      "bytes": 1904,
+      "sha256": "ea7f995443a2d252fcd7246c22bb5c8f89886b5d2197f15767242c02d6691735"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/provenance/delivery-contract-broken-honest-fail.json",
+      "bytes": 1898,
+      "sha256": "8209d70475e86e1602b9aa4030909ce13481b778cab90f6641c79a10f990c6c7"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/benchmarks.json",
+      "bytes": 7047,
+      "sha256": "b7c243ac647f3dca01d2f3825973231d451a54e3e138a3347098a0db1fa0d4e7"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/INDEX.md",
+      "bytes": 9464,
+      "sha256": "37ff34b8f9200aa8f132ce654769f9368a6c2ff8095cfc3e035bdc29d36fabfa"
+    },
+    {
+      "path": "knowledge/sediment/tk-sediment-m5054/anchors.json",
+      "bytes": 1560,
+      "sha256": "563e31eedcd1008fe25325472ada49330132a4e70c672876f601b7ca1f4f99c2"
+    }
+  ],
+  "build": {
+    "tool": "ke.sediment_extract",
+    "version": "1.0.0",
+    "python": "3.11.6",
+    "argv": [
+      "/root/tp-agent/work/m14526/ke/sediment_extract.py",
+      "--spec",
+      "knowledge/sediment/tk-sediment-m5054/spec.json",
+      "--source-repo",
+      "/root/tensor-ecosystem/TensorSPH",
+      "--out",
+      "knowledge/sediment/tk-sediment-m5054",
+      "--run-dir",
+      "docs/sediment/tk-sediment-m5054/runs/extract"
+    ],
+    "cwd": "/root/tp-agent/work/m14526",
+    "built_at": "2026-11-11T07:53:54Z"
+  },
+  "repro_cmd": "python3 -m ke.sediment_extract --spec knowledge/sediment/tk-sediment-m5054/spec.json --source-repo /root/tensor-ecosystem/TensorSPH --out knowledge/sediment/tk-sediment-m5054 --run-dir docs/sediment/tk-sediment-m5054/runs/extract && python3 -m ke.sediment_verify --package knowledge/sediment/tk-sediment-m5054 --spec knowledge/sediment/tk-sediment-m5054/spec.json --source-repo /root/tensor-ecosystem/TensorSPH --run-dir docs/sediment/tk-sediment-m5054/runs/extract --report docs/sediment/tk-sediment-m5054/runs/validate/validate_report.json"
+}

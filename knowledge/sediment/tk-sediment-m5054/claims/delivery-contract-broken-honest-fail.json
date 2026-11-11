@@ -1,0 +1,30 @@
+{
+  "id": "tkc:sph-m5054:delivery-contract-broken-honest-fail",
+  "statement": "Mission m5054 is an honest partial delivery, not a closed one: at its pinned commit the README advertises the 3 %-level 3-D verification and links docs/verification_threed.md, but that file does not exist at 82b72a15 (git cat-file -e exits 128), and the committed guard test tests/test_threed_artifacts.py asserts verdict == 'pass' for the shear and hydrostatic reports while both committed reports say 'fail'. Executing that guard file against the pinned artifacts gives 2 failed / 1 passed (runs/m5054/source_guard/source_guard.json). Operator core is verified; documentation and the artifact/guard contract are not.",
+  "claim_type": "interpretive",
+  "scope": {
+    "domain": "research-delivery integrity",
+    "system": "TensorSPH 3-D branch (tensorsph.threed) as delivered by mission m5054",
+    "conditions": [
+      "pinned commit 82b72a15c044259d1e7c8d638e9273705fa42e7b",
+      "tree materialised with git archive"
+    ],
+    "exclusions": [
+      "does not assert that the physics tests fail; the operator tests pass at the pin"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "draft",
+  "evidence_refs": [
+    "tke:sph-m5054:dc-readme-27pct",
+    "tke:sph-m5054:dc-readme-missing-doc",
+    "tke:sph-m5054:dc-guard-asserts-pass"
+  ],
+  "created_at": "2026-11-11T00:00:00Z",
+  "created_by": "ke.sediment_extract (mission m14526)",
+  "version": "1.0.0",
+  "notes": [
+    "This is the recomputed counterpart of the mission's own honest-FAIL statement, so the negative result is registered rather than overwritten.",
+    "Reproduction: see runs/m5054/source_guard/repro.sh and the run JSON."
+  ]
+}
