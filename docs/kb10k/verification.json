@@ -1,0 +1,124 @@
+{
+  "verdict": "PASS",
+  "checks": 10,
+  "failed": [],
+  "not_run": [],
+  "knowledge_objects": 10000,
+  "ke_stats": {
+    "claims": 10000,
+    "evidence": 10000,
+    "provenance": 10000,
+    "gap_anchors": 0,
+    "claim_evidence_edges": 10000,
+    "evidence_claims_edges": 10000,
+    "gap_claims_edges": 0,
+    "claims_by_status": {
+      "provisional": 10000
+    },
+    "evidence_by_relation": {
+      "supports": 10000
+    },
+    "evidence_by_assessment": {
+      "unassessed": 10000
+    }
+  },
+  "unclassified_files": [
+    "manifest.json"
+  ],
+  "results": [
+    {
+      "check": "C1 four_contract_coverage",
+      "ok": true,
+      "detail": {
+        "claims": 10000,
+        "evidence": 10000,
+        "provenance": 10000,
+        "claims_without_full_coverage": [],
+        "n_incomplete": 0
+      }
+    },
+    {
+      "check": "C2 schema_all_records",
+      "ok": true,
+      "detail": {
+        "records_validated": 30000,
+        "failures": []
+      }
+    },
+    {
+      "check": "C3 xref_invariants",
+      "ok": true,
+      "detail": {
+        "unresolved_gap_refs": [],
+        "unresolved_claim_refs": [],
+        "unresolved_evidence_refs": [],
+        "orphan_evidence": [],
+        "claims_without_evidence": []
+      }
+    },
+    {
+      "check": "C4 unique_ids",
+      "ok": true,
+      "detail": {
+        "total_ids": 30000,
+        "unique": 30000
+      }
+    },
+    {
+      "check": "C5 quote_content_hash",
+      "ok": true,
+      "detail": {
+        "n_bad": 0,
+        "examples": []
+      }
+    },
+    {
+      "check": "C6 target_count",
+      "ok": true,
+      "detail": {
+        "knowledge_objects": 10000,
+        "target": 10000
+      }
+    },
+    {
+      "check": "C7 push_budget",
+      "ok": true,
+      "detail": {
+        "files": 31,
+        "over_size": [],
+        "max_bytes": 4194304,
+        "largest": 966403
+      }
+    },
+    {
+      "check": "C8 manifest_reconciliation",
+      "ok": true,
+      "detail": {
+        "problems": [],
+        "tiers": {
+          "A": 8804,
+          "B": 850,
+          "C": 346
+        }
+      }
+    },
+    {
+      "check": "C9 online_reproduction",
+      "ok": true,
+      "detail": {
+        "checked": 9602,
+        "mismatched": 0,
+        "unavailable": 52,
+        "examples": []
+      }
+    },
+    {
+      "check": "C10 no_collapsed_duplicates",
+      "ok": true,
+      "detail": {
+        "duplicates": 0,
+        "examples": []
+      }
+    }
+  ]
+}
