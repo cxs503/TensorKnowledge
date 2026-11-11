@@ -1,0 +1,293 @@
+{
+  "checks": 19,
+  "passed": 19,
+  "failed": 0,
+  "results": [
+    {
+      "id": "A1",
+      "check": "mapping document validates against schemas/ke-mapping.schema.json",
+      "pass": true,
+      "detail": "Draft 2020-12 validation passed",
+      "evidence": {}
+    },
+    {
+      "id": "A2",
+      "check": "every record's raw_sha256 matches the frozen snapshot",
+      "pass": true,
+      "detail": "19 records compared, 0 drifted",
+      "evidence": {
+        "drift": []
+      }
+    },
+    {
+      "id": "A3",
+      "check": "projection rule set reproduces the mapping's leaf coverage",
+      "pass": true,
+      "detail": "19 records re-projected, 0 mismatched",
+      "evidence": {
+        "mismatched": []
+      }
+    },
+    {
+      "id": "A4",
+      "check": "no leaf path is silently dropped",
+      "pass": true,
+      "detail": "509 leaf paths, 0 uncovered",
+      "evidence": {
+        "uncovered": []
+      }
+    },
+    {
+      "id": "A5",
+      "check": "every over-grade flag has a matching disclosure entry",
+      "pass": true,
+      "detail": "2 over-grade claims, 2 listed in D-06",
+      "evidence": {
+        "over_grade": [
+          "tkc:fair:a1-protocol-conditions",
+          "tkc:prov-o:wasattributedto-signature"
+        ],
+        "in_disclosure": [
+          "tkc:fair:a1-protocol-conditions",
+          "tkc:prov-o:wasattributedto-signature"
+        ]
+      }
+    },
+    {
+      "id": "A6",
+      "check": "disclosure ids are contiguous and unique",
+      "pass": true,
+      "detail": "11 entries: D-01..D-11",
+      "evidence": {}
+    },
+    {
+      "id": "B1",
+      "check": "every recorded producer identity is blocked from approving its own object",
+      "pass": true,
+      "detail": "3 attempt(s) on tkc:fair:a1-protocol-conditions, all refused",
+      "evidence": {
+        "attempts": [
+          {
+            "reviewer": "claude-code-session-6f76cd3d",
+            "outcome": "SELF_APPROVAL_BLOCKED"
+          },
+          {
+            "reviewer": "cc-session-6f76cd3d",
+            "outcome": "SELF_APPROVAL_BLOCKED"
+          },
+          {
+            "reviewer": "bg-job-6f76cd3d",
+            "outcome": "SELF_APPROVAL_BLOCKED"
+          }
+        ]
+      }
+    },
+    {
+      "id": "B2",
+      "check": "state-machine conformance suite passes",
+      "pass": true,
+      "detail": "9/9 cases",
+      "evidence": {
+        "cases": [
+          {
+            "case": "C1 producer cannot approve own object",
+            "observed": "SELF_APPROVAL_BLOCKED"
+          },
+          {
+            "case": "C2 alias id of producer cannot approve (fail-closed)",
+            "observed": "SELF_APPROVAL_BLOCKED"
+          },
+          {
+            "case": "C3 approve straight from draft refused",
+            "observed": "INVALID_TRANSITION"
+          },
+          {
+            "case": "C4 independent reviewer approves after submit",
+            "observed": "OK_APPROVED"
+          },
+          {
+            "case": "C5 request-changes without findings refused",
+            "observed": "FINDINGS_REQUIRED"
+          },
+          {
+            "case": "C6 review event may not write epistemic_status (A3)",
+            "observed": "AXIS_VIOLATION_A3"
+          },
+          {
+            "case": "C7 revoke reopens to in-review and needs supersedes_event",
+            "observed": "OK_REVOKED"
+          },
+          {
+            "case": "C8 stale policy version is refused, not silently applied",
+            "observed": "POLICY_MISMATCH"
+          },
+          {
+            "case": "C9 rejected object cannot be approved without re-submit",
+            "observed": "INVALID_TRANSITION"
+          }
+        ]
+      }
+    },
+    {
+      "id": "B3",
+      "check": "review_status is a fold of the review ledger, never of Platform state",
+      "pass": true,
+      "detail": "platform_state='completed', ko review_status=['draft'], review events=0",
+      "evidence": {}
+    },
+    {
+      "id": "B4",
+      "check": "recorded epistemic_status is never silently rewritten and caps are stored",
+      "pass": true,
+      "detail": "4 claims carry recorded+cap+delta",
+      "evidence": {
+        "rows": [
+          {
+            "entity_id": "tkc:fair:a1-protocol-conditions",
+            "recorded": "well-supported",
+            "cap": "provisional",
+            "over_grade": true,
+            "delta": 1
+          },
+          {
+            "entity_id": "tkc:fair:requires-open-access",
+            "recorded": "contested",
+            "cap": "contested",
+            "over_grade": false,
+            "delta": null
+          },
+          {
+            "entity_id": "tkc:prov-o:wasattributedto-signature",
+            "recorded": "established",
+            "cap": "provisional",
+            "over_grade": true,
+            "delta": 2
+          },
+          {
+            "entity_id": "tkc:tkrepo:rocrate-export-production",
+            "recorded": "not-assessed",
+            "cap": "not-assessed",
+            "over_grade": false,
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "B5",
+      "check": "absent epistemic_status is rejected at ingest, not coerced to not-assessed",
+      "pass": true,
+      "detail": "1 explicit not-assessed record(s); stripped copy -> missing:epistemic_status",
+      "evidence": {
+        "not_assessed": [
+          "tkc:tkrepo:rocrate-export-production"
+        ]
+      }
+    },
+    {
+      "id": "B6",
+      "check": "recorded-axis and valid-axis queries return different, non-fabricated answers",
+      "pass": true,
+      "detail": "recorded@2026-11-09 -> 4 claims; valid@2020-01-01 -> 1 (['tkc:prov-o:wasattributedto-signature']), 3 unknown-validity",
+      "evidence": {
+        "recorded_axis": [
+          "tkc:fair:a1-protocol-conditions",
+          "tkc:fair:requires-open-access",
+          "tkc:prov-o:wasattributedto-signature",
+          "tkc:tkrepo:rocrate-export-production"
+        ],
+        "valid_axis": [
+          "tkc:prov-o:wasattributedto-signature"
+        ],
+        "unknown_validity": [
+          "tkc:fair:a1-protocol-conditions",
+          "tkc:fair:requires-open-access",
+          "tkc:tkrepo:rocrate-export-production"
+        ]
+      }
+    },
+    {
+      "id": "B7",
+      "check": "evidence has no validity time; published_at is not promoted to one",
+      "pass": true,
+      "detail": "8 evidence rows all not-applicable",
+      "evidence": {}
+    },
+    {
+      "id": "B8",
+      "check": "contested question returns both sides; the API cannot ask for one side",
+      "pass": true,
+      "detail": "1 contested pair(s) with both sides; expand keys=['claims', 'evidence', 'provenance', 'review_events', 'sources']",
+      "evidence": {
+        "pairs": [
+          {
+            "question": "tko:epistemics:fair-accessibility-two-readings",
+            "contested": "tkc:fair:requires-open-access",
+            "against": 3,
+            "surviving": [
+              "tkc:fair:a1-protocol-conditions"
+            ],
+            "both_sides_retained": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "B9",
+      "check": "vector facets are exactly claim.statement / evidence.quote / ko.summary",
+      "pass": true,
+      "detail": "15 facets: {'claim.statement': 4, 'evidence.quote': 8, 'ko.summary': 3}; similarity score is never stored as a support relation",
+      "evidence": {
+        "per_kind": {
+          "claim.statement": 4,
+          "evidence.quote": 8,
+          "ko.summary": 3
+        }
+      }
+    },
+    {
+      "id": "B10",
+      "check": "every record keeps its verbatim raw payload addressable",
+      "pass": true,
+      "detail": "19 records with raw_sha256 + raw_bytes",
+      "evidence": {}
+    },
+    {
+      "id": "C1",
+      "check": "every demonstrated response validates against schemas/ke-query.schema.json",
+      "pass": true,
+      "detail": "7 responses, 0 invalid",
+      "evidence": {
+        "failures": []
+      }
+    },
+    {
+      "id": "A7",
+      "check": "loss-class counts quoted in the spec match the mapping",
+      "pass": true,
+      "detail": "spec={'L0': 304, 'L1': 41, 'L2': 128, 'L3': 36} mapping={'L0': 304, 'L2': 128, 'L1': 41, 'L3': 36}",
+      "evidence": {
+        "spec": {
+          "L0": 304,
+          "L1": 41,
+          "L2": 128,
+          "L3": 36
+        },
+        "mapping": {
+          "L0": 304,
+          "L2": 128,
+          "L1": 41,
+          "L3": 36
+        }
+      }
+    },
+    {
+      "id": "D1",
+      "check": "loss ledger reconciles",
+      "pass": true,
+      "detail": "509+0=509 leaf paths; 11 disclosures",
+      "evidence": {}
+    }
+  ],
+  "mapping": "mappings/m8554.json"
+}
