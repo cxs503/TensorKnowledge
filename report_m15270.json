@@ -1,0 +1,9 @@
+{
+  "title": "m15255 KBM-CONSUME-W1 交差审计 — KB读路径基准验证 L4",
+  "summary": "对 m15255 (KBM-CONSUME-W1) 进行交差审计：核验 ke/consume.py KB读路径实现的基准验证结果。20题预注册基准全部达标（precision@1=0.85≥0.8, recall@5=0.9≥0.9, mrr@5=0.875≥0.7），比旧行为(naive_overlap)三项指标均提升+0.20。46个单元测试全部通过。判定 L4（基准验证级）。",
+  "scenario_key": "KBM-CONSUME-W1",
+  "mission_id": 15270,
+  "tags": ["board-audit", "kb-consumption", "benchmark-verification", "maturity-L4", "TensorKnowledge"],
+  "markdown": "# m15255 KBM-CONSUME-W1 交差审计报告\n\n## 案例介绍\nKB读路径（知识卡消费面）是 TensorKnowledge 平台的核心能力：agent 通过自然语言查询检索知识卡，命中后自动落注入台账实现消费计量。m15255 实现了 `ke/consume.py`（374行）和 `ke/api.py`（433行），提供确定性检索 + 注入计量功能。\n\n## 方法\n- **检索算法**: 中文 bigram 分词 + ASCII 词提取 + 标题/元数据/正文三面 BM25 加权 + 域过滤\n- **对照组**: naive_overlap（空白分词 + 全库无过滤 + 命中词数排序）\n- **基准题集**: 20题预注册（benchmarks/kb_retrieval_gold_v1.json），sha256 入档\n- **阈值**: precision@1≥0.8, recall@5≥0.9, mrr@5≥0.7（看到结果前写定）\n\n## 计算结果\n| 指标 | ref（旧行为） | got（新读路径） | 阈值 | 判定 |\n|---|---|---|---|---|\n| precision_at_1 | 0.65 | 0.85 | ≥0.8 | PASS |\n| recall_at_5 | 0.70 | 0.90 | ≥0.9 | PASS |\n| mrr_at_5 | 0.675 | 0.875 | ≥0.7 | PASS |\n\n## 误差判定\n- 三项指标均超过阈值，最大 margin: mrr@5 超出 25%\n- 3题未命中（q16/q17/q20）：capability 卡缺少 keywords 面，属数据层问题非检索器 bug\n- holdout 集（n=10）同样全部 PASS\n\n## 注意点\n- got_domain 表现差（precision@1=0.0）：仅2题带 domain 提示，样本不足\n- 负例题 n02 有假阳性：词面检索的已知局限\n- report_m15255.json 未通过 tensor/reports API 发布（API 不可达）\n\n## 成熟度判定\n**L4** — 基准验证级：完整算例 + 预注册阈值 + ref vs got 对照 + 可复现 + 46个测试通过",
+  "figures": []
+}
