@@ -1,0 +1,32 @@
+{
+  "id": "tkc:sloshing-lbm:impact-peak-below-low-order-band",
+  "statement": "IN48-N07 锚（L=20 m, B=12 m, H=8 m, h_l=4 m, rho=1025 kg/m^3, g=9.80665 m/s^2）的涌潮冲击算例上，三维自由面 LBM（Korner/D3Q19，L/40 即 dx=0.5 m、dt=0.0031933 s、15360 单元、1879 步）的壁压峰值 P_peak/(rho g h_l) = 0.5442（0.1 s 滑动平均），原始峰值 1.6903；该值低于由浅水闭式滞止 4.0000 rho g h_l与精确涌潮反射 3.4940 rho g h_l 构成的参照带 [3, 5]，同构型 SWE 自身冲击锚为 0.8247 rho g h_l。判据 (b) 因此 FAIL：该低阶链冲击峰值不可用作此类晃荡冲击的标定基准。",
+  "claim_type": "descriptive",
+  "scope": {
+    "domain": "vessel-motion / tank sloshing",
+    "system": "three-dimensional free-surface LBM (Korner model) vs shallow-water chain",
+    "conditions": [
+      "rectangular tank 20 m x 12 m x 8 m, still-water depth h_l = 4 m (fill 0.5)",
+      "dam-break style surge release from a 5 m water column in a 15 m dry tank",
+      "lattice L/40 (dx = 0.5 m), effective Re = 2000 with Smagorinsky subgrid closure"
+    ],
+    "exclusions": [
+      "no grid-convergence statement: the L/40-L/60-L/80 triple was not monotone",
+      "no air-cushion (closed ullage compressibility) negative control"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "draft",
+  "evidence_refs": [
+    "tke:sloshing-lbm:e01-impact-peak-below-low-order-band",
+    "tke:sloshing-lbm:e02-impact-peak-below-low-order-band",
+    "tke:sloshing-lbm:e03-impact-peak-below-low-order-band"
+  ],
+  "created_at": "2026-11-11T00:00:00Z",
+  "created_by": "tkc-agent:m14530",
+  "version": "1.0.0",
+  "notes": [
+    "honest FAIL: criterion (b) of the source calibration report",
+    "the reference band is a low-order-chain anchor, not an experimental measurement"
+  ]
+}
