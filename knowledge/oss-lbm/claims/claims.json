@@ -1,688 +1,877 @@
 [
-  {
-    "id": "tkc:oss-lbm:pylbm-equiv-eq",
-    "statement": "pylbm implements symbolic equivalent equation derivation to second order in the lattice spacing using SymPy, computing coeff_order1 (convective fluxes) and coeff_order2 (diffusion tensor B_ij) for arbitrary DdQq schemes.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "pylbm",
-      "conditions": [
-        "SymPy-based symbolic computation",
-        "schemes without conserved_polynomials"
-      ]
+    {
+        "id": "tkc:oss-lbm:pylbm-equiv-eq",
+        "statement": "pylbm implements symbolic equivalent equation derivation to second order in the lattice spacing using SymPy, computing coeff_order1 (convective fluxes) and coeff_order2 (diffusion tensor B_ij) for arbitrary DdQq schemes.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "pylbm",
+            "conditions": [
+                "SymPy-based symbolic computation",
+                "schemes without conserved_polynomials"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:pylbm-equiv-eq-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 可参考 pylbm 的符号推导框架为 TensorLBM 建立自动等价方程分析工具，用于精度验证和格式选型。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:pylbm-equiv-eq-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 可参考 pylbm 的符号推导框架为 TensorLBM 建立自动等价方程分析工具，用于精度验证和格式选型。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:pylbm-stability",
-    "statement": "pylbm implements von Neumann stability analysis by constructing the amplification matrix from the symbolic relaxation matrix and computing its eigenvalues over a discretized wave-vector space, classifying modes as inside/on/outside the unit circle.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "pylbm",
-      "conditions": [
-        "numerical evaluation after symbolic construction",
-        "supports relative velocity frames"
-      ]
+    {
+        "id": "tkc:oss-lbm:pylbm-stability",
+        "statement": "pylbm implements von Neumann stability analysis by constructing the amplification matrix from the symbolic relaxation matrix and computing its eigenvalues over a discretized wave-vector space, classifying modes as inside/on/outside the unit circle.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "pylbm",
+            "conditions": [
+                "numerical evaluation after symbolic construction",
+                "supports relative velocity frames"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:pylbm-stability-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 可为 TensorLBM 引入类似的稳定性分析模块，在格式设计阶段自动筛选松弛参数范围。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:pylbm-stability-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 可为 TensorLBM 引入类似的稳定性分析模块，在格式设计阶段自动筛选松弛参数范围。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:pylbm-bfl-bounce-back",
-    "statement": "pylbm implements the Bouzidi-Firdaouss-Lallemand (BFL01) interpolated bounce-back boundary condition, with separate treatment for δ<0.5 (wall closer than half link) and δ≥0.5, using symmetric velocity indices from neighboring fluid nodes.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "pylbm",
-      "conditions": [
-        "curved boundary",
-        "Dirichlet velocity condition"
-      ]
+    {
+        "id": "tkc:oss-lbm:pylbm-bfl-bounce-back",
+        "statement": "pylbm implements the Bouzidi-Firdaouss-Lallemand (BFL01) interpolated bounce-back boundary condition, with separate treatment for δ<0.5 (wall closer than half link) and δ≥0.5, using symmetric velocity indices from neighboring fluid nodes.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "pylbm",
+            "conditions": [
+                "curved boundary",
+                "Dirichlet velocity condition"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:pylbm-bfl-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: BFL 插值反弹格式可直接移植到 TensorLBM 的边界模块，提升曲面边界精度到二阶。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:pylbm-bfl-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: BFL 插值反弹格式可直接移植到 TensorLBM 的边界模块，提升曲面边界精度到二阶。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:pylbm-linear-bb-family",
-    "statement": "pylbm provides a unified LinearBounceBack base class parametrized by α(δ), with concrete subclasses CLIBounceBack (α=4/(1+2δ)), YLIBounceBack (α=2/(1+δ)), and BFL variants, each optionally supporting post-collision correction for TRT parametrization.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "pylbm",
-      "conditions": [
-        "steady-state solutions",
-        "TRT collision with Λ⁺Λ⁻ parametrization"
-      ]
+    {
+        "id": "tkc:oss-lbm:pylbm-linear-bb-family",
+        "statement": "pylbm provides a unified LinearBounceBack base class parametrized by α(δ), with concrete subclasses CLIBounceBack (α=4/(1+2δ)), YLIBounceBack (α=2/(1+δ)), and BFL variants, each optionally supporting post-collision correction for TRT parametrization.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "pylbm",
+            "conditions": [
+                "steady-state solutions",
+                "TRT collision with Λ⁺Λ⁻ parametrization"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:pylbm-linear-bb-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 统一 α(δ) 参数化框架可作为 TensorLBM 边界格式族的模板，便于系统对比精度。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:pylbm-linear-bb-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 统一 α(δ) 参数化框架可作为 TensorLBM 边界格式族的模板，便于系统对比精度。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:pylbm-sympy-scheme",
-    "statement": "pylbm uses SymPy throughout for symbolic scheme definition: the EquivalentEquation class constructs transformation matrices M, inverse M, velocity diagonal matrices Λ, and relaxation polynomials σ symbolically before numerical evaluation.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "pylbm",
-      "conditions": [
-        "all analysis modules",
-        "code generation pipeline"
-      ]
+    {
+        "id": "tkc:oss-lbm:pylbm-sympy-scheme",
+        "statement": "pylbm uses SymPy throughout for symbolic scheme definition: the EquivalentEquation class constructs transformation matrices M, inverse M, velocity diagonal matrices Λ, and relaxation polynomials σ symbolically before numerical evaluation.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "pylbm",
+            "conditions": [
+                "all analysis modules",
+                "code generation pipeline"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:pylbm-sympy-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: SymPy 符号管线可复用于 TensorLBM 的格式自动推导与代码生成。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:pylbm-sympy-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: SymPy 符号管线可复用于 TensorLBM 的格式自动推导与代码生成。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:lettuce-torch-context",
-    "statement": "lettuce uses a Context object wrapping torch.device and torch.dtype, with all field data stored as PyTorch tensors, making the entire simulation pipeline differentiable through torch.autograd.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "lettuce",
-      "conditions": [
-        "CPU and CUDA devices",
-        "float16/32/64 dtypes"
-      ]
+    {
+        "id": "tkc:oss-lbm:lettuce-torch-context",
+        "statement": "lettuce uses a Context object wrapping torch.device and torch.dtype, with all field data stored as PyTorch tensors, making the entire simulation pipeline differentiable through torch.autograd.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lettuce",
+            "conditions": [
+                "CPU and CUDA devices",
+                "float16/32/64 dtypes"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lettuce-context-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: lettuce 的 Context 抽象可指导 TensorLBM 设计统一的后端/精度上下文管理。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:lettuce-context-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: lettuce 的 Context 抽象可指导 TensorLBM 设计统一的后端/精度上下文管理。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:lettuce-bgk-differentiable",
-    "statement": "lettuce BGKCollision is implemented as a plain Python __call__ returning torch.Tensor operations (flow.f - 1/tau * (flow.f - feq) + si), with no detached computations, enabling gradient flow through the collision step for adjoint-based optimization.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "lettuce",
-      "conditions": [
-        "standard BGK",
-        "optional force term"
-      ]
+    {
+        "id": "tkc:oss-lbm:lettuce-bgk-differentiable",
+        "statement": "lettuce BGKCollision is implemented as a plain Python __call__ returning torch.Tensor operations (flow.f - 1/tau * (flow.f - feq) + si), with no detached computations, enabling gradient flow through the collision step for adjoint-based optimization.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lettuce",
+            "conditions": [
+                "standard BGK",
+                "optional force term"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lettuce-bgk-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 可微碰撞算子设计模式可直接用于 TensorLBM 的伴随优化/反问题模块。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:lettuce-bgk-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 可微碰撞算子设计模式可直接用于 TensorLBM 的伴随优化/反问题模块。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:lettuce-native-cuda",
-    "statement": "lettuce provides a cuda_native extension that generates optimized CUDA kernels from Python collision/boundary/streaming definitions via a code Generator, with automatic JIT compilation and installation.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "lettuce",
-      "conditions": [
-        "CUDA-capable hardware",
-        "components with native_generator method"
-      ]
+    {
+        "id": "tkc:oss-lbm:lettuce-native-cuda",
+        "statement": "lettuce provides a cuda_native extension that generates optimized CUDA kernels from Python collision/boundary/streaming definitions via a code Generator, with automatic JIT compilation and installation.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lettuce",
+            "conditions": [
+                "CUDA-capable hardware",
+                "components with native_generator method"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lettuce-cuda-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Python→CUDA 代码生成管线可参考用于 TensorLBM 的 GPU kernel 自动优化。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:lettuce-cuda-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: Python→CUDA 代码生成管线可参考用于 TensorLBM 的 GPU kernel 自动优化。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:lbmpy-chapman-enskog",
-    "statement": "lbmpy implements Chapman-Enskog analysis that symbolically derives the macroscopic equations (continuity + Navier-Stokes) from the LBM collision rule, computing the viscous stress tensor σ and kinematic viscosity by matching to the Navier-Stokes equations.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "lbmpy",
-      "conditions": [
-        "arbitrary moment/cumulant methods",
-        "symbolic relaxation rates"
-      ]
+    {
+        "id": "tkc:oss-lbm:lbmpy-chapman-enskog",
+        "statement": "lbmpy implements Chapman-Enskog analysis that symbolically derives the macroscopic equations (continuity + Navier-Stokes) from the LBM collision rule, computing the viscous stress tensor σ and kinematic viscosity by matching to the Navier-Stokes equations.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbmpy",
+            "conditions": [
+                "arbitrary moment/cumulant methods",
+                "symbolic relaxation rates"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbmpy-ce-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Chapman-Enskog 符号推导可集成到 TensorLBM 的格式验证流程，自动确认 NS 一致性。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:lbmpy-ce-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: Chapman-Enskog 符号推导可集成到 TensorLBM 的格式验证流程，自动确认 NS 一致性。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:lbmpy-pipeline",
-    "statement": "lbmpy uses a 4-stage kernel generation pipeline: (1) create_lb_method defines collision in moment/cumulant space, (2) create_lb_collision_rule generates symbolic post-collision expressions, (3) create_lb_ast builds the abstract syntax tree with loops, (4) create_lb_function compiles to executable CPU/GPU code via pystencils.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "lbmpy",
-      "conditions": [
-        "pystencils backend",
-        "LBMConfig/LBMOptimisation dataclasses"
-      ]
+    {
+        "id": "tkc:oss-lbm:lbmpy-pipeline",
+        "statement": "lbmpy uses a 4-stage kernel generation pipeline: (1) create_lb_method defines collision in moment/cumulant space, (2) create_lb_collision_rule generates symbolic post-collision expressions, (3) create_lb_ast builds the abstract syntax tree with loops, (4) create_lb_function compiles to executable CPU/GPU code via pystencils.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbmpy",
+            "conditions": [
+                "pystencils backend",
+                "LBMConfig/LBMOptimisation dataclasses"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbmpy-pipeline-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 4 阶段管线设计可指导 TensorLBM 构建从格式定义到可执行代码的自动化流程。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:lbmpy-pipeline-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 4 阶段管线设计可指导 TensorLBM 构建从格式定义到可执行代码的自动化流程。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:lbmpy-method-spaces",
-    "statement": "lbmpy supports multiple collision spaces through its methods module: SRT, TRT, MRT (orthogonal and raw), central moments, and cumulant methods, all constructed via a unified AbstractLbMethod interface with symbolic relaxation rates.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "lbmpy",
-      "conditions": [
-        "all standard LB stencils"
-      ]
+    {
+        "id": "tkc:oss-lbm:lbmpy-method-spaces",
+        "statement": "lbmpy supports multiple collision spaces through its methods module: SRT, TRT, MRT (orthogonal and raw), central moments, and cumulant methods, all constructed via a unified AbstractLbMethod interface with symbolic relaxation rates.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbmpy",
+            "conditions": [
+                "all standard LB stencils"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbmpy-methods-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 统一方法接口+多碰撞空间设计可作为 TensorLBM 方法模块的架构参考。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:lbmpy-methods-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 统一方法接口+多碰撞空间设计可作为 TensorLBM 方法模块的架构参考。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:xlb-warp-kernel",
-    "statement": "XLB uses NVIDIA Warp for GPU kernel compilation, with streaming implemented as a @wp.kernel function operating on f_0/f_1 double-buffered arrays (array4d), where each thread reads populations from upstream neighbors via pull-scheme indexing.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "XLB",
-      "conditions": [
-        "Warp compute backend",
-        "pull streaming scheme"
-      ]
+    {
+        "id": "tkc:oss-lbm:xlb-warp-kernel",
+        "statement": "XLB uses NVIDIA Warp for GPU kernel compilation, with streaming implemented as a @wp.kernel function operating on f_0/f_1 double-buffered arrays (array4d), where each thread reads populations from upstream neighbors via pull-scheme indexing.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "XLB",
+            "conditions": [
+                "Warp compute backend",
+                "pull streaming scheme"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:xlb-warp-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Warp kernel 的 f_0/f_1 双缓冲+pull 模式可作为 TensorLBM GPU 实现的参考架构。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:xlb-warp-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: Warp kernel 的 f_0/f_1 双缓冲+pull 模式可作为 TensorLBM GPU 实现的参考架构。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:xlb-jax-distribute",
-    "statement": "XLB implements distributed parallelism via JAX shard_map with rank-slab decomposition along the first spatial axis, using lax.ppermute for halo exchange of left/right velocity populations between devices.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "XLB",
-      "conditions": [
-        "JAX backend",
-        "multi-GPU/multi-device",
-        "1D slab decomposition"
-      ]
+    {
+        "id": "tkc:oss-lbm:xlb-jax-distribute",
+        "statement": "XLB implements distributed parallelism via JAX shard_map with rank-slab decomposition along the first spatial axis, using lax.ppermute for halo exchange of left/right velocity populations between devices.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "XLB",
+            "conditions": [
+                "JAX backend",
+                "multi-GPU/multi-device",
+                "1D slab decomposition"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:xlb-distribute-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: JAX shard_map 分布式方案可为 TensorLBM 的多 GPU 扩展提供无 MPI 的替代路径。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:xlb-distribute-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: JAX shard_map 分布式方案可为 TensorLBM 的多 GPU 扩展提供无 MPI 的替代路径。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:xlb-operator-pattern",
-    "statement": "XLB uses an Operator base class with @register_backend decorators dispatching to JAX/Warp/Neon implementations, providing a unified interface for collision, streaming, equilibrium, macroscopic, and boundary condition operators.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "XLB",
-      "conditions": [
-        "all operator types",
-        "three compute backends"
-      ]
+    {
+        "id": "tkc:oss-lbm:xlb-operator-pattern",
+        "statement": "XLB uses an Operator base class with @register_backend decorators dispatching to JAX/Warp/Neon implementations, providing a unified interface for collision, streaming, equilibrium, macroscopic, and boundary condition operators.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "XLB",
+            "conditions": [
+                "all operator types",
+                "three compute backends"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:xlb-operator-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Operator+backend 注册模式可指导 TensorLBM 构建多后端可插拔架构。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:xlb-operator-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: Operator+backend 注册模式可指导 TensorLBM 构建多后端可插拔架构。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:lettuce-test-invariants",
-    "statement": "lettuce tests verify physical invariants per collision operator: mass conservation (test_collision_conserves_mass.py), momentum conservation (test_collision_conserves_momentum.py), fixpoint property (test_collision_fixpoint_2x.py), shear moment relaxation (test_collision_relaxes_shear_moments.py), and pseudo-entropy optimization.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "lettuce",
-      "conditions": [
-        "pytest framework",
-        "parametrized over stencils and dtypes"
-      ]
+    {
+        "id": "tkc:oss-lbm:lettuce-test-invariants",
+        "statement": "lettuce tests verify physical invariants per collision operator: mass conservation (test_collision_conserves_mass.py), momentum conservation (test_collision_conserves_momentum.py), fixpoint property (test_collision_fixpoint_2x.py), shear moment relaxation (test_collision_relaxes_shear_moments.py), and pseudo-entropy optimization.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lettuce",
+            "conditions": [
+                "pytest framework",
+                "parametrized over stencils and dtypes"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lettuce-tests-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 不变量测试模式可直接移植到 TensorLBM 的回归测试面，确保碰撞算子物理一致性。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:lettuce-tests-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 不变量测试模式可直接移植到 TensorLBM 的回归测试面，确保碰撞算子物理一致性。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:lettuce-test-parametrize",
-    "statement": "lettuce conftest.py defines systematic pytest parametrization over stencils (D1Q3, D2Q9, D3Q15/19/27), dtypes (float32/64), devices (CPU/CUDA), transforms, and collision operators, enabling combinatorial coverage testing.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "lettuce",
-      "conditions": [
-        "pytest framework"
-      ]
+    {
+        "id": "tkc:oss-lbm:lettuce-test-parametrize",
+        "statement": "lettuce conftest.py defines systematic pytest parametrization over stencils (D1Q3, D2Q9, D3Q15/19/27), dtypes (float32/64), devices (CPU/CUDA), transforms, and collision operators, enabling combinatorial coverage testing.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lettuce",
+            "conditions": [
+                "pytest framework"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lettuce-conftest-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 参数化 fixture 模式可用于 TensorLBM 的多格式×多精度×多后端系统测试。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:lettuce-conftest-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 参数化 fixture 模式可用于 TensorLBM 的多格式×多精度×多后端系统测试。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:xlb-test-organization",
-    "statement": "XLB organizes tests by kernel type (collision, equilibrium, macroscopic, stream) under tests/kernels/ and by backend (neon) under tests/backends/, separating algorithmic correctness from backend-specific behavior.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "XLB",
-      "conditions": [
-        "pytest framework"
-      ]
+    {
+        "id": "tkc:oss-lbm:xlb-test-organization",
+        "statement": "XLB organizes tests by kernel type (collision, equilibrium, macroscopic, stream) under tests/kernels/ and by backend (neon) under tests/backends/, separating algorithmic correctness from backend-specific behavior.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "XLB",
+            "conditions": [
+                "pytest framework"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:xlb-tests-src"
+        ],
+        "created_at": "2026-11-09T14:30:00Z",
+        "created_by": "agent-m8635",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 按 kernel 类型+后端分层的测试组织可作为 TensorLBM 测试面重构的参考。"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:xlb-tests-src"
-    ],
-    "created_at": "2026-11-09T14:30:00Z",
-    "created_by": "agent-m8635",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 按 kernel 类型+后端分层的测试组织可作为 TensorLBM 测试面重构的参考。"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-csf-multiphase",
-    "statement": "MF-LBM implements a color-gradient multiphase model with Continuum-Surface-Force (CSF) and geometrical wetting models to reduce spurious currents, enabling DNS of scCO2-brine displacement in porous media with inertial effects.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "D3Q19 lattice",
-        "double precision only",
-        "porous media DNS"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-csf-multiphase",
+        "statement": "MF-LBM implements a color-gradient multiphase model with Continuum-Surface-Force (CSF) and geometrical wetting models to reduce spurious currents, enabling DNS of scCO2-brine displacement in porous media with inertial effects.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "D3Q19 lattice",
+                "double precision only",
+                "porous media DNS"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-csf-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: CSF+几何润湿模型可直接参考用于 TensorLBM 的多相流模块，降低虚假电流。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-csf-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: CSF+几何润湿模型可直接参考用于 TensorLBM 的多相流模块，降低虚假电流。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-aa-streaming",
-    "statement": "MF-LBM employs the AA (Anti-Array) pattern streaming method (pull-type) to significantly reduce memory access and memory consumption, reading distribution functions from upstream neighbors rather than pushing to downstream.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "D3Q19 lattice",
-        "Fortran 90",
-        "SoA data layout"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-aa-streaming",
+        "statement": "MF-LBM employs the AA (Anti-Array) pattern streaming method (pull-type) to significantly reduce memory access and memory consumption, reading distribution functions from upstream neighbors rather than pushing to downstream.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "D3Q19 lattice",
+                "Fortran 90",
+                "SoA data layout"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-aa-streaming-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: AA pull streaming 模式可作为 TensorLBM GPU kernel 的内存优化参考，减少全局内存访问。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-aa-streaming-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: AA pull streaming 模式可作为 TensorLBM GPU kernel 的内存优化参考，减少全局内存访问。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-mpi-openacc-hybrid",
-    "statement": "MF-LBM uses an MPI-OpenACC/OpenMP hybrid programming model with directive-based parallelism (not CUDA) to maintain portability across NVIDIA GPU, Intel Xeon Phi (MIC), and CPU platforms with AVX512.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "Fortran 90",
-        "NVIDIA/Intel/GCC compilers",
-        "CPU/GPU/MIC targets"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-mpi-openacc-hybrid",
+        "statement": "MF-LBM uses an MPI-OpenACC/OpenMP hybrid programming model with directive-based parallelism (not CUDA) to maintain portability across NVIDIA GPU, Intel Xeon Phi (MIC), and CPU platforms with AVX512.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "Fortran 90",
+                "NVIDIA/Intel/GCC compilers",
+                "CPU/GPU/MIC targets"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-mpi-openacc-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: MPI+OpenACC 混合编程模式为 TensorLBM 提供跨平台 GPU/CPU 统一的并行策略参考。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-mpi-openacc-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: MPI+OpenACC 混合编程模式为 TensorLBM 提供跨平台 GPU/CPU 统一的并行策略参考。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-comm-compute-overlap",
-    "statement": "MF-LBM overlaps MPI communication with computation using async OpenACC kernels for halo data packing/unpacking and MPI_Isend/MPI_Irecv non-blocking calls, with separate async labels for PDF and phase-field (phi) data along Y and Z faces and edges.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "multi-GPU/multi-node",
-        "Y/Z domain decomposition",
-        "async OpenACC kernels"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-comm-compute-overlap",
+        "statement": "MF-LBM overlaps MPI communication with computation using async OpenACC kernels for halo data packing/unpacking and MPI_Isend/MPI_Irecv non-blocking calls, with separate async labels for PDF and phase-field (phi) data along Y and Z faces and edges.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "multi-GPU/multi-node",
+                "Y/Z domain decomposition",
+                "async OpenACC kernels"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-comm-overlap-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 通信-计算重叠模式（async OpenACC + MPI_Irecv/Isend）可直接用于 TensorLBM 的分布式扩展。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-comm-overlap-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 通信-计算重叠模式（async OpenACC + MPI_Irecv/Isend）可直接用于 TensorLBM 的分布式扩展。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-soa-layout",
-    "statement": "MF-LBM uses Structure of Arrays (SoA) data layout for distribution functions (f0-f18, g0-g18 as separate 3D arrays) to achieve coalesced memory access on GPUs and maximize vectorization on CPUs with AVX512.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "D3Q19",
-        "GPU and CPU targets",
-        "Fortran column-major"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-soa-layout",
+        "statement": "MF-LBM uses Structure of Arrays (SoA) data layout for distribution functions (f0-f18, g0-g18 as separate 3D arrays) to achieve coalesced memory access on GPUs and maximize vectorization on CPUs with AVX512.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "D3Q19",
+                "GPU and CPU targets",
+                "Fortran column-major"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-soa-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: SoA 数据布局是 GPU 合并访问的关键，TensorLBM 应采用相同布局策略。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-soa-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: SoA 数据布局是 GPU 合并访问的关键，TensorLBM 应采用相同布局策略。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-mrt-collision",
-    "statement": "MF-LBM implements MRT (Multiple Relaxation Time) collision in moment space for both single-phase (f populations) and multiphase (g populations) with 19 moments, using symbolic relaxation parameters s_e, s_e2, s_q, s_nu, s_pi, s_t.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "D3Q19 MRT",
-        "moment-space collision",
-        "two-fluid color-gradient"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-mrt-collision",
+        "statement": "MF-LBM implements MRT (Multiple Relaxation Time) collision in moment space for both single-phase (f populations) and multiphase (g populations) with 19 moments, using symbolic relaxation parameters s_e, s_e2, s_q, s_nu, s_pi, s_t.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "D3Q19 MRT",
+                "moment-space collision",
+                "two-fluid color-gradient"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-mrt-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: MRT 碰撞的矩空间松弛参数化可作为 TensorLBM 多松弛时间格式的参考实现。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-mrt-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: MRT 碰撞的矩空间松弛参数化可作为 TensorLBM 多松弛时间格式的参考实现。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-domain-decomposition",
-    "statement": "MF-LBM uses 3D MPI domain decomposition along Y and Z directions only (X-direction decomposition disabled due to non-vectorized data packing), with face, edge, and corner halo exchanges for PDF and phase-field variables.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "MPI parallel",
-        "Y/Z decomposition",
-        "face+edge+corner halos"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-domain-decomposition",
+        "statement": "MF-LBM uses 3D MPI domain decomposition along Y and Z directions only (X-direction decomposition disabled due to non-vectorized data packing), with face, edge, and corner halo exchanges for PDF and phase-field variables.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "MPI parallel",
+                "Y/Z decomposition",
+                "face+edge+corner halos"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-decomp-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Y/Z 二维分解+面/边/角 halo 交换模式可作为 TensorLBM 分布式域分解的参考架构。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-decomp-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: Y/Z 二维分解+面/边/角 halo 交换模式可作为 TensorLBM 分布式域分解的参考架构。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-contact-angle-akail",
-    "statement": "MF-LBM implements the contact angle alteration scheme from Akai et al. (2018) to allow contact angles >90 degrees, removing the earlier limitation where fluid1/fluid2 were fixed as nonwetting/wetting phases.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "geometrical wetting model",
-        "arbitrary contact angle",
-        "Akai et al. 2018 scheme"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-contact-angle-akail",
+        "statement": "MF-LBM implements the contact angle alteration scheme from Akai et al. (2018) to allow contact angles >90 degrees, removing the earlier limitation where fluid1/fluid2 were fixed as nonwetting/wetting phases.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "geometrical wetting model",
+                "arbitrary contact angle",
+                "Akai et al. 2018 scheme"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-contact-angle-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Akai 接触角方案可直接集成到 TensorLBM 的润湿边界模块，支持任意接触角。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-contact-angle-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: Akai 接触角方案可直接集成到 TensorLBM 的润湿边界模块，支持任意接触角。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-checkpoint-restart",
-    "statement": "MF-LBM supports checkpoint/restart via job_status.txt and binary checkpoint files (out2.checkpoint), with states: new_simulation, continue_simulation, simulation_done, simulation_failed, simulation_reached_max_step.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "long-running DNS",
-        "binary checkpoint I/O",
-        "double precision"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-checkpoint-restart",
+        "statement": "MF-LBM supports checkpoint/restart via job_status.txt and binary checkpoint files (out2.checkpoint), with states: new_simulation, continue_simulation, simulation_done, simulation_failed, simulation_reached_max_step.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "long-running DNS",
+                "binary checkpoint I/O",
+                "double precision"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-checkpoint-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 检查点/重启机制可作为 TensorLBM 长时间运行的容错参考。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-checkpoint-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: 检查点/重启机制可作为 TensorLBM 长时间运行的容错参考。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  },
-  {
-    "id": "tkc:oss-lbm:mflbm-bsd3-license",
-    "statement": "MF-LBM is distributed under the BSD-3-Clause license by Los Alamos National Laboratory (Triad National Security, LLC), making it freely reusable for commercial and academic purposes with attribution.",
-    "claim_type": "descriptive",
-    "scope": {
-      "domain": "lattice-Boltzmann-method",
-      "system": "MF-LBM",
-      "conditions": [
-        "LANL copyright 2021",
-        "BSD-3-Clause",
-        "U.S. Government contract"
-      ]
+    {
+        "id": "tkc:oss-lbm:mflbm-bsd3-license",
+        "statement": "MF-LBM is distributed under the BSD-3-Clause license by Los Alamos National Laboratory (Triad National Security, LLC), making it freely reusable for commercial and academic purposes with attribution.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "MF-LBM",
+            "conditions": [
+                "LANL copyright 2021",
+                "BSD-3-Clause",
+                "U.S. Government contract"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mflbm-license-src"
+        ],
+        "created_at": "2026-11-09T16:00:00Z",
+        "created_by": "agent-m8678",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: BSD-3 许可使 MF-LBM 算法模式可安全复用于 TensorLBM，无 GPL 传染性风险。"
+        ],
+        "gap_anchors": [
+            "GAP-LBM-HPC-SCALING"
+        ]
     },
-    "modality": "asserted",
-    "epistemic_status": "established",
-    "evidence_refs": [
-      "tke:oss-lbm:mflbm-license-src"
-    ],
-    "created_at": "2026-11-09T16:00:00Z",
-    "created_by": "agent-m8678",
-    "version": "1.0.0",
-    "notes": [
-      "TensorLBM 可服务改进点: BSD-3 许可使 MF-LBM 算法模式可安全复用于 TensorLBM，无 GPL 传染性风险。"
-    ],
-    "gap_anchors": [
-      "GAP-LBM-HPC-SCALING"
-    ]
-  }
+    {
+        "id": "tkc:oss-lbm:lbm-principles-practice-set-equi",
+        "statement": "lbm-principles-practice implements D2Q9 lattice with standard equilibrium distribution using weights t[n] and velocity vectors v[n], following the textbook formulation from Thuerey's PhD thesis.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbm-principles-practice",
+            "conditions": []
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbm-principles-practice-set-equi-src"
+        ],
+        "created_at": "2026-11-11T07:45:06.782130Z",
+        "created_by": "agent-extractor",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 可作为教学参考实现，用于验证 D2Q9 格子和平衡态分布的正确性。"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbm-principles-practice-collide",
+        "statement": "lbm-principles-practice implements BGK collision operator with single relaxation time omega, including gravitational force coupling through velocity-weighted source terms.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbm-principles-practice",
+            "conditions": []
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbm-principles-practice-collide-src"
+        ],
+        "created_at": "2026-11-11T07:45:06.782498Z",
+        "created_by": "agent-extractor",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: BGK 碰撞算子的简洁实现可作为基准参考，用于验证更复杂碰撞模型的正确性。"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbm-principles-practice-get-epsilon",
+        "statement": "lbm-principles-practice implements free-surface LBM with mass-based interface tracking, computing cell fill fraction epsilon from mass/density ratio with clipping to [0,1].",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbm-principles-practice",
+            "conditions": []
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbm-principles-practice-get-epsilon-src"
+        ],
+        "created_at": "2026-11-11T07:45:06.782766Z",
+        "created_by": "agent-extractor",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 自由表面 LBM 的质量交换方法可用于多相流扩展，提供界面追踪的参考实现。"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbm-principles-practice-get-normal",
+        "statement": "lbm-principles-practice computes interface normals from fill fraction gradients using central differences, enabling surface tension effects through normal-dependent streaming correction.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbm-principles-practice",
+            "conditions": []
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbm-principles-practice-get-normal-src"
+        ],
+        "created_at": "2026-11-11T07:45:06.783026Z",
+        "created_by": "agent-extractor",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 界面法向量的有限差分计算可用于表面张力模型的实现参考。"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbm-principles-practice-interface-mass-exchange",
+        "statement": "lbm-principles-practice implements mass exchange between interface and neighboring cells (fluid/interface/gas) with neighbor-type-dependent flux computation, conserving mass across the interface.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbm-principles-practice",
+            "conditions": []
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbm-principles-practice-interface-mass-exchange-src"
+        ],
+        "created_at": "2026-11-11T07:45:06.785012Z",
+        "created_by": "agent-extractor",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 界面质量交换算法可用于发展守恒的多相流 LBM 方法。"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbm-principles-practice-update-rho-u",
+        "statement": "lbm-principles-practice uses Numba @jit decorator for performance-critical kernels (streaming, collision, density/velocity update) and implements velocity magnitude limiting to sqrt(2/3) to maintain low Mach number and numerical stability, demonstrating Python+JIT approach to LBM acceleration.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbm-principles-practice",
+            "conditions": []
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbm-principles-practice-update-rho-u-src"
+        ],
+        "created_at": "2026-11-11T07:45:06.785273Z",
+        "created_by": "agent-extractor",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Numba JIT 优化策略可作为 Python 性能优化的参考，平衡开发效率与运行性能。"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbm-principles-practice-set-inlet",
+        "statement": "lbm-principles-practice implements Zou-He style inlet boundary condition, computing density from velocity and incoming distributions for pressure/velocity inlet.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbm-principles-practice",
+            "conditions": []
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbm-principles-practice-set-inlet-src"
+        ],
+        "created_at": "2026-11-11T07:45:06.785681Z",
+        "created_by": "agent-extractor",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: Zou-He 边界条件的实现可用于验证 TensorLBM 的边界处理精度。"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbm-principles-practice-set-outlet",
+        "statement": "lbm-principles-practice implements simple outlet boundary condition by copying distributions from upstream neighbor, providing zero-gradient outflow.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbm-principles-practice",
+            "conditions": []
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbm-principles-practice-set-outlet-src"
+        ],
+        "created_at": "2026-11-11T07:45:06.785933Z",
+        "created_by": "agent-extractor",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 简单出口边界可作为基准测试用例，验证更复杂出口条件的必要性。"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbm-principles-practice-evolve",
+        "statement": "lbm-principles-practice organizes time evolution as a separate module with evolve() function, demonstrating clean separation of time stepping from physics kernels.",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice-Boltzmann-method",
+            "system": "lbm-principles-practice",
+            "conditions": []
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbm-principles-practice-evolve-src"
+        ],
+        "created_at": "2026-11-11T07:45:06.786133Z",
+        "created_by": "agent-extractor",
+        "version": "1.0.0",
+        "notes": [
+            "TensorLBM 可服务改进点: 时间演化的模块化组织可用于 TensorLBM 的求解器架构设计参考。"
+        ]
+    }
 ]

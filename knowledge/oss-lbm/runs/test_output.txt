@@ -1,0 +1,46 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.6, pytest-9.2.0, pluggy-1.7.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.6', 'Platform': 'Linux-6.6.52-1.7.lns23.loongarch64-loongarch64-with-glibc2.38', 'Packages': {'pytest': '9.2.0', 'pluggy': '1.7.0'}, 'Plugins': {'anyio': '4.13.0', 'xdist': '3.8.0', 'timeout': '2.4.0', 'cov': '7.1.0', 'platformdirs': '4.14.5', 'metadata': '3.1.1', 'json-report': '1.5.0'}}
+rootdir: /root/tp-agent/work/m14523/knowledge/oss-lbm
+plugins: anyio-4.13.0, xdist-3.8.0, timeout-2.4.0, cov-7.1.0, platformdirs-4.14.5, metadata-3.1.1, json-report-1.5.0
+collecting ... collected 27 items
+
+tests/test_oss_lbm_package.py::TestPackageStructure::test_claims_file_exists PASSED [  3%]
+tests/test_oss_lbm_package.py::TestPackageStructure::test_evidence_file_exists PASSED [  7%]
+tests/test_oss_lbm_package.py::TestPackageStructure::test_provenance_file_exists PASSED [ 11%]
+tests/test_oss_lbm_package.py::TestPackageStructure::test_readme_exists PASSED [ 14%]
+tests/test_oss_lbm_package.py::TestPackageStructure::test_validator_exists PASSED [ 18%]
+tests/test_oss_lbm_package.py::TestClaimsContent::test_minimum_claim_count PASSED [ 22%]
+tests/test_oss_lbm_package.py::TestClaimsContent::test_claim_ids_unique PASSED [ 25%]
+tests/test_oss_lbm_package.py::TestClaimsContent::test_claim_id_pattern PASSED [ 29%]
+tests/test_oss_lbm_package.py::TestClaimsContent::test_claim_required_fields PASSED [ 33%]
+tests/test_oss_lbm_package.py::TestClaimsContent::test_claim_epistemic_status_valid PASSED [ 37%]
+tests/test_oss_lbm_package.py::TestClaimsContent::test_claim_has_tensorlbm_notes PASSED [ 40%]
+tests/test_oss_lbm_package.py::TestEvidenceContent::test_evidence_ids_unique PASSED [ 44%]
+tests/test_oss_lbm_package.py::TestEvidenceContent::test_evidence_id_pattern PASSED [ 48%]
+tests/test_oss_lbm_package.py::TestEvidenceContent::test_evidence_required_fields PASSED [ 51%]
+tests/test_oss_lbm_package.py::TestEvidenceContent::test_evidence_assessment_status PASSED [ 55%]
+tests/test_oss_lbm_package.py::TestEvidenceContent::test_evidence_has_code_location PASSED [ 59%]
+tests/test_oss_lbm_package.py::TestEvidenceContent::test_evidence_has_quote PASSED [ 62%]
+tests/test_oss_lbm_package.py::TestCrossReferences::test_claims_reference_valid_evidence PASSED [ 66%]
+tests/test_oss_lbm_package.py::TestCrossReferences::test_evidence_references_valid_claims PASSED [ 70%]
+tests/test_oss_lbm_package.py::TestEpistemicDiscipline::test_no_self_approval PASSED [ 74%]
+tests/test_oss_lbm_package.py::TestEpistemicDiscipline::test_all_evidence_unassessed PASSED [ 77%]
+tests/test_oss_lbm_package.py::TestValidator::test_validator_initialization PASSED [ 81%]
+tests/test_oss_lbm_package.py::TestValidator::test_validator_package_validation PASSED [ 85%]
+tests/test_oss_lbm_package.py::TestClaimExtractor::test_extractor_initialization PASSED [ 88%]
+tests/test_oss_lbm_package.py::TestClaimExtractor::test_extractor_get_results PASSED [ 92%]
+tests/test_oss_lbm_package.py::TestEvidenceBuilder::test_builder_initialization PASSED [ 96%]
+tests/test_oss_lbm_package.py::TestEvidenceBuilder::test_builder_get_evidence PASSED [100%]
+
+=============================== warnings summary ===============================
+../../../../../../usr/lib/python3.11/site-packages/anyio/pytest_plugin.py:14
+  /usr/lib/python3.11/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 27 passed, 1 warning in 0.32s =========================
