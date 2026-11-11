@@ -31,12 +31,15 @@ PSQL = ["psql", "-U", "postgres", "-d", "tensorplatform", "-h", "/var/run/postgr
 
 
 def env_cfg(path="/root/tp-agent/agent.env"):
+    """读 agent.env；文件不存在时退回进程环境（CI/异地机器不该因缺文件而 import 失败）。"""
     cfg = {}
-    for line in open(path):
+    for line in (open(path) if os.path.exists(path) else []):
         line = line.strip()
         if line and not line.startswith("#") and "=" in line:
             k, v = line.split("=", 1)
             cfg[k.strip()] = v.strip()
+    for k in ("LLM_BASE_URL", "LLM_API_KEY", "LLM_MODEL"):
+        cfg.setdefault(k, os.environ.get(k, ""))
     return cfg
 
 

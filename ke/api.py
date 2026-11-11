@@ -23,6 +23,8 @@ Endpoints (see docs/ke/api.md for the full contract + curl examples):
     GET    /query/claim-evidence        Q5 claim -> evidence
     GET    /query/stats                 Q6 aggregate statistics
     GET    /search                      claim text + domain + status filtering
+    GET    /kb/search                   knowledge_base 卡检索（ke.consume 读路径）
+                                        — 命中即落注入台账，KB 消费从此可计量
 
 Auth: ``Authorization: Bearer $KE_API_TOKEN`` on every mutating call.  When
 ``KE_API_TOKEN`` is unset the write surface is *disabled* (503) rather than
@@ -381,6 +383,41 @@ def q_claim_evidence(claim_id: str) -> dict:
 @app.get("/query/stats")
 def q_stats() -> dict:
     return get_store().stats()
+
+
+@app.get("/kb/search")
+def kb_search(
+    q: str = Query(min_length=1),
+    domain: str | None = None,
+    ktype: str | None = None,
+    limit: int = Query(default=5, ge=1, le=50),
+    status_value: str = Query(default="active", alias="status"),
+    log: bool = True,
+    mission_id: int | None = None,
+    consumer: str | None = "ke-api",
+) -> dict:
+    """``knowledge_base`` 读路径：确定性词面检索 + 注入计量（``ke/consume.py``）。
+
+    ``KB_DSN`` 优先，否则与 KE 本体同库（``KE_DSN``/SQLite）。默认 ``log=True``：
+    命中即写一行 ``knowledge_injections`` 并 bump ``injected_count`` —— 消费侧的
+    「谁在什么时候拿了哪张卡」不再依赖人工打包（现状：44 张卡仅 3 条注入记录）。
+    """
+    from . import consume as C
+
+    dsn = os.environ.get("KB_DSN") or S.default_dsn()
+    try:
+        conn = C.connect(dsn)
+    except Exception as e:  # 读面不可达要显式报，不要静默返回空
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE,
+                            f"kb_store_unavailable: {type(e).__name__}: {e}"[:200]) from e
+    try:
+        return C.retrieve(conn, q, domain=domain, ktype=ktype, limit=limit, status=status_value,
+                          mission_id=mission_id, consumer=consumer, log=log)
+    finally:
+        try:
+            conn.close()
+        except Exception:
+            pass
 
 
 @app.get("/search")
