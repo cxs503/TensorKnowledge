@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/code-pointer-card.schema.json",
+  "title": "Code Pointer Card",
+  "description": "A code pointer card captures: which repo, which module, implements what, plus artifact paths. It is a specialization of the claim record (claim_type=methodological) for code-to-knowledge mapping.",
+  "type": "object",
+  "required": [
+    "id",
+    "card_type",
+    "code_location",
+    "implements",
+    "created_at",
+    "version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkc:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "card_type": {
+      "const": "code-pointer"
+    },
+    "code_location": {
+      "type": "object",
+      "required": ["repo", "path"],
+      "properties": {
+        "repo": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "commit": { "type": "string" },
+        "branch": { "type": "string" },
+        "line_range": {
+          "type": "object",
+          "properties": {
+            "start": { "type": "integer", "minimum": 1 },
+            "end": { "type": "integer", "minimum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "symbol": { "type": "string" },
+        "symbol_type": { "enum": ["function", "class", "module", "method", "variable", "other"] }
+      },
+      "additionalProperties": false
+    },
+    "implements": {
+      "type": "object",
+      "required": ["description"],
+      "properties": {
+        "description": { "type": "string", "minLength": 1 },
+        "algorithm": { "type": "string" },
+        "equation_reference": { "type": "string" },
+        "input_parameters": { "type": "array", "items": { "type": "string" } },
+        "output_quantities": { "type": "array", "items": { "type": "string" } },
+        "dependencies": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "artifact_paths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "type"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "type": { "enum": ["source", "test", "config", "data", "document", "other"] },
+          "checksum": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "test_coverage": { "type": "string" },
+        "verified_by": { "type": "string" },
+        "verification_date": { "type": "string", "format": "date" },
+        "verification_method": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "claim_type": {
+      "const": "methodological"
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "epistemic_status": {
+      "enum": ["draft", "established", "well-supported", "provisional", "contested", "speculative", "superseded", "not-assessed"]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^tke:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$" },
+      "uniqueItems": true
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "domain": { "type": "string", "minLength": 1 },
+        "system": { "type": "string" },
+        "conditions": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "modality": {
+      "enum": ["asserted", "conditional", "probabilistic", "hypothetical", "normative", "question"]
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "created_by": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "supersedes": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "notes": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}
