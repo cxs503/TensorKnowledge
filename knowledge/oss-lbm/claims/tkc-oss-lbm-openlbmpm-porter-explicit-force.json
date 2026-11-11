@@ -1,0 +1,26 @@
+{
+  "id": "tkc:oss-lbm:openlbmpm-porter-explicit-force",
+  "statement": "openLBMPM 实现了 Porter 2012 显式力格式：碰撞前 f ← f − ½F，碰撞中 f ← f + (f_eq − f − ½F)/τ + F，总速度 u = [ΣΣfc + ½(F₀+F₁)]/ρ_tot，平衡速度 u_eq = Σ[(Σfc+½F)/τ]/Σ(ρ/τ)。",
+  "claim_type": "descriptive",
+  "scope": {
+    "domain": "lattice Boltzmann multiphase/multicomponent methods",
+    "conditions": [
+      "格子=D2Q9",
+      "模型=MCMP Shan-Chen",
+      "力格式=Porter 2012 显式分裂",
+      "参数域=两组分"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+    "tke:oss-lbm:openlbmpm-porter-force-collision",
+    "tke:oss-lbm:openlbmpm-porter-velocity"
+  ],
+  "created_at": "2026-11-09T12:00:00Z",
+  "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+  "version": "1.0.0",
+  "notes": [
+    "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（显式力四件套）"
+  ]
+}

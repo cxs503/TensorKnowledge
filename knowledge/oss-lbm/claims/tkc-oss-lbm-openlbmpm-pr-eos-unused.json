@@ -1,0 +1,24 @@
+{
+  "id": "tkc:oss-lbm:openlbmpm-pr-eos-unused",
+  "statement": "openLBMPM 中 P-R 状态方程（Yuan & Schaefer 2002）有完整实现但从未被调用，ExplicitD2Q9GPU.py 中 calEffectiveMassPR 为空壳函数体，高密度比能力代码层未启用。",
+  "claim_type": "descriptive",
+  "scope": {
+    "domain": "lattice Boltzmann multiphase/multicomponent methods",
+    "conditions": [
+      "格子=D2Q9",
+      "EOS=P-R（未启用）",
+      "密度比=未实现"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+    "tke:oss-lbm:openlbmpm-pr-eos-code"
+  ],
+  "created_at": "2026-11-09T12:00:00Z",
+  "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+  "version": "1.0.0",
+  "notes": [
+    "映射 feature_ledger: NEW:GAP-LBM-MCMP-HIGHDENSITY（高密度比，本仓未启用）"
+  ]
+}

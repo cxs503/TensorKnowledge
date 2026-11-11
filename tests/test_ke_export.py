@@ -269,7 +269,10 @@ class TestCLIExport:
 # ---------------------------------------------------------------- Helper tests
 class TestHelpers:
     def test_get_scope_from_db_row(self, conn):
-        claim = q.all_claims(conn)[0]
+        # select by id, not by row order: the package holds two generations of
+        # OSS-LBM claims and `all_claims` orders by id, so [0] is not stable.
+        claim = next(c for c in q.all_claims(conn)
+                     if c["id"] == "tkc:oss-lbm:lbmpy-chapman-enskog")
         scope = exp._get_scope(claim, conn)
         assert "domain" in scope
         assert scope["domain"] == "lattice-Boltzmann-method"

@@ -1,0 +1,27 @@
+{
+  "id": "tkc:oss-lbm:mcmp-lbm-mrt-taichi",
+  "statement": "mcmp-lbm (geoelements) 实现 3D D3Q19 MRT 多组元 Shan-Chen 求解器，基于 Taichi 后端（CPU/GPU 一键切换），稀疏存储用 ti.root.pointer 2×2×2 block 仅激活流体节点。",
+  "claim_type": "descriptive",
+  "scope": {
+    "domain": "lattice Boltzmann multiphase/multicomponent methods",
+    "conditions": [
+      "格子=D3Q19",
+      "碰撞=MRT",
+      "后端=Taichi",
+      "存储=稀疏 pointer"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+    "tke:oss-lbm:mcmp-lbm-mrt",
+    "tke:oss-lbm:mcmp-lbm-taichi"
+  ],
+  "created_at": "2026-11-09T12:00:00Z",
+  "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+  "version": "1.0.0",
+  "notes": [
+    "映射 feature_ledger: MRT 碰撞+稀疏存储",
+    "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+  ]
+}

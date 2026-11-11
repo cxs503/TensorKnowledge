@@ -1,0 +1,271 @@
+{
+  "report_version": "1.0.0",
+  "package": "knowledge/oss-lbm",
+  "generations": {
+    "gen1_aggregate": {
+      "layout": "claims/claims.json + evidence/evidence.json + provenance/provenance.json",
+      "claims": 50,
+      "evidence": 57,
+      "provenance": 10,
+      "claims_not_from_m8634": 27
+    },
+    "gen2_per_record": {
+      "source_branch": "agent/m8634",
+      "source_commit": "ce6cad548d58bb9e514913f31b7717616432d2f0",
+      "layout": "claims/tkc-*.json + evidence/tke-*.json + provenance/tkp-*.json",
+      "claims": 23,
+      "evidence": 30,
+      "provenance": 8,
+      "claims_located_in_aggregate": 23,
+      "evidence_located_in_aggregate": 30,
+      "provenance_located_in_aggregate": 8
+    },
+    "gen1_sub_packages": {
+      "count": 7,
+      "claims": 101,
+      "evidence": 131,
+      "packages": {
+        "fingering": {
+          "claims_file": "fingering/claims/claims.json",
+          "claims": 12,
+          "evidence": 23,
+          "shared_claim_ids_with_aggregate": 0,
+          "claim_id_namespaces": [
+            "tkc:oss-lbm"
+          ]
+        },
+        "freesurf": {
+          "claims_file": "freesurf/claims/claims.json",
+          "claims": 16,
+          "evidence": 16,
+          "shared_claim_ids_with_aggregate": 0,
+          "claim_id_namespaces": [
+            "tkc:oss-lbm-freesurf"
+          ]
+        },
+        "kruger": {
+          "claims_file": "kruger/claims/claims.json",
+          "claims": 16,
+          "evidence": 40,
+          "shared_claim_ids_with_aggregate": 0,
+          "claim_id_namespaces": [
+            "tkc:oss-lbm"
+          ]
+        },
+        "ludwig": {
+          "claims_file": "ludwig/claims/claims.json",
+          "claims": 17,
+          "evidence": 22,
+          "shared_claim_ids_with_aggregate": 0,
+          "claim_id_namespaces": [
+            "tkc:oss-lbm"
+          ]
+        },
+        "mflbm": {
+          "claims_file": "mflbm/claims.json",
+          "claims": 10,
+          "evidence": 0,
+          "shared_claim_ids_with_aggregate": 10,
+          "claim_id_namespaces": [
+            "tkc:oss-lbm"
+          ]
+        },
+        "openlb": {
+          "claims_file": "openlb/claims/claims.json",
+          "claims": 13,
+          "evidence": 13,
+          "shared_claim_ids_with_aggregate": 0,
+          "claim_id_namespaces": [
+            "tkc:oss-lbm"
+          ]
+        },
+        "thermalmulti": {
+          "claims_file": "thermalmulti/claims/claims.json",
+          "claims": 17,
+          "evidence": 17,
+          "shared_claim_ids_with_aggregate": 0,
+          "claim_id_namespaces": [
+            "tkc:oss-lbm"
+          ]
+        }
+      }
+    }
+  },
+  "id_collisions": {
+    "gen2_vs_aggregate": [],
+    "gen2_claim_ids_are_additive": true
+  },
+  "coverage_by_repository": {
+    "kruger": 5,
+    "lbmpy": 4,
+    "ludwig": 1,
+    "luma": 1,
+    "mcmp": 2,
+    "mplbm": 3,
+    "openlbmpm": 4,
+    "sailfish": 3
+  },
+  "claim_locator_index": [
+    {
+      "id": "tkc:oss-lbm:kruger-guo-force-term",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-guo-force-term.json",
+      "sha256": "e1d3b5bfb26f35948539ad2628f1b714ad55612212bbd5ade47faf5d3070c8b4",
+      "statement_sha256_prefix": "7fffd42ad371be69"
+    },
+    {
+      "id": "tkc:oss-lbm:kruger-poiseuille-validation",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-poiseuille-validation.json",
+      "sha256": "d05e7c4b5f972d553ddbd08e4bedeb097906c57a34c95a471f8055749b364756",
+      "statement_sha256_prefix": "8eb0851afcbf5fbd"
+    },
+    {
+      "id": "tkc:oss-lbm:kruger-shan-chen-twocomponent",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-shan-chen-twocomponent.json",
+      "sha256": "660b90afb51b5e92b7d31df322ae8d03a482dde19453f7dde8d43084a8a9adc8",
+      "statement_sha256_prefix": "d33139aadba8f99d"
+    },
+    {
+      "id": "tkc:oss-lbm:kruger-taylor-green-decay",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-taylor-green-decay.json",
+      "sha256": "8a216409eb4d1d423ce5be8dd8083737729c69aa72e21604b51a459429bd1c44",
+      "statement_sha256_prefix": "337b5e21cded28b9"
+    },
+    {
+      "id": "tkc:oss-lbm:kruger-young-laplace-calibrator",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-young-laplace-calibrator.json",
+      "sha256": "c02f8aab661b8d5a492a37299439edba7ea3b43c6812995f23a7047fb4d92d93",
+      "statement_sha256_prefix": "a781cc78a1c45de1"
+    },
+    {
+      "id": "tkc:oss-lbm:lbmpy-collision-spectrum",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-lbmpy-collision-spectrum.json",
+      "sha256": "11e7a5efc03d3242b9dac0b68706f7a3fc9680adcadf70748b56a4c36f4b22e0",
+      "statement_sha256_prefix": "6c45718b689c2cd9"
+    },
+    {
+      "id": "tkc:oss-lbm:lbmpy-force-models",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-lbmpy-force-models.json",
+      "sha256": "958eaa124601f52d931cbaadeb52a5cad9218b9bfc9584e8f8d47e6952707ee7",
+      "statement_sha256_prefix": "34eba750028b4418"
+    },
+    {
+      "id": "tkc:oss-lbm:lbmpy-mcmp-barycentric",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-lbmpy-mcmp-barycentric.json",
+      "sha256": "95d94dcb45995beff238ecbeaa6e6156d8256ecc12bf3dc21fa9616ee437ca8f",
+      "statement_sha256_prefix": "6de025ea04da0fe3"
+    },
+    {
+      "id": "tkc:oss-lbm:lbmpy-scmp-density-ratio",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-lbmpy-scmp-density-ratio.json",
+      "sha256": "1d8e2b6d4b084e88fef76acb9d9be66d8a201829c01c4a563a14246e1c333793",
+      "statement_sha256_prefix": "63e569efffd638ed"
+    },
+    {
+      "id": "tkc:oss-lbm:ludwig-free-energy-colloid",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-ludwig-free-energy-colloid.json",
+      "sha256": "547ffb6bfb71e5051f0e52ba804f4b44bfd691f1feff526c5d2791fdc8e7e630",
+      "statement_sha256_prefix": "9c15d0350516d7f2"
+    },
+    {
+      "id": "tkc:oss-lbm:luma-multiphase-kernels",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-luma-multiphase-kernels.json",
+      "sha256": "1516785031fab15bfb460b91ab9d4c2315bdbe69cbeee2fab4ec1516aa075ccb",
+      "statement_sha256_prefix": "c5a60f1b33573896"
+    },
+    {
+      "id": "tkc:oss-lbm:mcmp-lbm-cs-eos",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-mcmp-lbm-cs-eos.json",
+      "sha256": "892d4881bed2c06be7f77a4845b19a2d7a4bd899e9965b5189953e5ba69d12fc",
+      "statement_sha256_prefix": "5dc17e2e9ea60740"
+    },
+    {
+      "id": "tkc:oss-lbm:mcmp-lbm-mrt-taichi",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-mcmp-lbm-mrt-taichi.json",
+      "sha256": "dcc9e7143454b616f3f81cef6efff7a6b94161dbedd05e53579de8cd7ffe4f0a",
+      "statement_sha256_prefix": "8b92b82e0a67acba"
+    },
+    {
+      "id": "tkc:oss-lbm:mplbm-ut-no-high-density",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-mplbm-ut-no-high-density.json",
+      "sha256": "76250d8eeee5cd5e8e9ba6852307b3a298bcfce8c9c6928b8388d1a0d2fec28c",
+      "statement_sha256_prefix": "0890e0f6296f0c5e"
+    },
+    {
+      "id": "tkc:oss-lbm:mplbm-ut-two-lattice-sc",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-mplbm-ut-two-lattice-sc.json",
+      "sha256": "b7fa5e705003f9bbf3da095ee12df218cf431227c89bcf8cac570232e1c2eff2",
+      "statement_sha256_prefix": "dbd49ff58d422719"
+    },
+    {
+      "id": "tkc:oss-lbm:mplbm-ut-wetting-bounceback",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-mplbm-ut-wetting-bounceback.json",
+      "sha256": "e549bb42be6bf00b12d584e37f9d5228ed3e1211b027d6dd328104b0cbcd0a7d",
+      "statement_sha256_prefix": "148321e6d231bcaa"
+    },
+    {
+      "id": "tkc:oss-lbm:openlbmpm-color-gradient-csf",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-openlbmpm-color-gradient-csf.json",
+      "sha256": "ad747a85511af01f59e404f803a53b5b8f6a4fa44b1601d5c276ada2de46f207",
+      "statement_sha256_prefix": "be7152034021daa0"
+    },
+    {
+      "id": "tkc:oss-lbm:openlbmpm-isotropy-stencil",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-openlbmpm-isotropy-stencil.json",
+      "sha256": "3d73f975c56c01b691e68163a509d21eee483909b195e29567f72b88a9f35d23",
+      "statement_sha256_prefix": "8207c3e14457e407"
+    },
+    {
+      "id": "tkc:oss-lbm:openlbmpm-porter-explicit-force",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-openlbmpm-porter-explicit-force.json",
+      "sha256": "cff50de2718096891fc77b6172d005c6b286cc940d31709a58bfa718da3634f4",
+      "statement_sha256_prefix": "dc8c876e5ccca540"
+    },
+    {
+      "id": "tkc:oss-lbm:openlbmpm-pr-eos-unused",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-openlbmpm-pr-eos-unused.json",
+      "sha256": "158976651d59a1a49f520eadaf8c6322afc66603e41d6fa340697600bd6602cc",
+      "statement_sha256_prefix": "42132a8af34dbc2a"
+    },
+    {
+      "id": "tkc:oss-lbm:sailfish-free-energy-binary",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-sailfish-free-energy-binary.json",
+      "sha256": "56c71bc932f3601b8dffa49e4c85b16622cbacbd1c7fbb3964872a4ecdd79d0f",
+      "statement_sha256_prefix": "5ce70766e0e7376a"
+    },
+    {
+      "id": "tkc:oss-lbm:sailfish-shan-chen-binary",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-sailfish-shan-chen-binary.json",
+      "sha256": "3a3dbafb3f58f2ad4e3faac525dbe4a261d4df2e599c07d69050a40125a41446",
+      "statement_sha256_prefix": "555f35031f4f1889"
+    },
+    {
+      "id": "tkc:oss-lbm:sailfish-sympy-codegen",
+      "aggregate": "claims/claims.json",
+      "ingress_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-sailfish-sympy-codegen.json",
+      "sha256": "29e5ce1459e0847d2ec34f7077ff4fddf0e0f39d0cb7ee1e7fae4302ee48732b",
+      "statement_sha256_prefix": "c8019133c25d71c6"
+    }
+  ]
+}
