@@ -1,0 +1,87 @@
+{
+  "run_id": "oss-lbm-validation-2026-11-11",
+  "timestamp": "2026-11-11T08:00:00Z",
+  "package": "knowledge/oss-lbm",
+  "validation_results": {
+    "entry_validate": {
+      "status": "PASSED",
+      "claims": 36,
+      "evidence": 36,
+      "provenance": 2,
+      "output_file": "runs/validation_output.txt"
+    },
+    "pytest_suite": {
+      "status": "PASSED",
+      "tests_run": 27,
+      "tests_passed": 27,
+      "tests_failed": 0,
+      "output_file": "runs/test_output.txt"
+    },
+    "validate_oss_lbm": {
+      "status": "PASSED",
+      "claims": 36,
+      "evidence": 36,
+      "provenance": 2,
+      "cross_references": "valid",
+      "epistemic_discipline": "compliant",
+      "output_file": "runs/validate_oss_lbm_output.txt"
+    },
+    "validate_epistemic_benchmark": {
+      "status": "PASSED",
+      "benchmark_cases": 12,
+      "schemas": 5,
+      "note": "12-case count undisturbed"
+    }
+  },
+  "claims_summary": {
+    "total": 36,
+    "by_framework": {
+      "pylbm": 5,
+      "lettuce": 5,
+      "lbmpy": 3,
+      "xlb": 4,
+      "mflbm": 9,
+      "lbm-principles-practice": 10
+    },
+    "epistemic_status": {
+      "established": 36
+    }
+  },
+  "artifacts": [
+    "knowledge/oss-lbm/claims/claims.json",
+    "knowledge/oss-lbm/evidence/evidence.json",
+    "knowledge/oss-lbm/provenance/provenance.json",
+    "knowledge/oss-lbm/validate_oss_lbm.py",
+    "knowledge/oss-lbm/entry.py",
+    "knowledge/oss-lbm/lib/__init__.py",
+    "knowledge/oss-lbm/lib/claim_extractor.py",
+    "knowledge/oss-lbm/lib/evidence_builder.py",
+    "knowledge/oss-lbm/lib/validator.py",
+    "knowledge/oss-lbm/tests/test_oss_lbm_package.py",
+    "knowledge/oss-lbm/update_verified_claims.py",
+    "knowledge/oss-lbm/runs/validation_output.txt",
+    "knowledge/oss-lbm/runs/test_output.txt",
+    "knowledge/oss-lbm/runs/validate_oss_lbm_output.txt",
+    "knowledge/oss-lbm/runs/run_summary.json"
+  ],
+  "maturity_level": "L2",
+  "maturity_evidence": {
+    "impl_files": [
+      "lib/claim_extractor.py",
+      "lib/evidence_builder.py",
+      "lib/validator.py",
+      "entry.py",
+      "update_verified_claims.py"
+    ],
+    "entry": "entry.py",
+    "run_artifacts": [
+      "runs/validation_output.txt",
+      "runs/test_output.txt",
+      "runs/validate_oss_lbm_output.txt",
+      "runs/run_summary.json"
+    ],
+    "tests": [
+      "tests/test_oss_lbm_package.py"
+    ]
+  }
+}
