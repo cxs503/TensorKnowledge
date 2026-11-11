@@ -1,75 +1,101 @@
-# m8635 Mission Completion Summary
+# Mission 14525 Completion Summary
 
-**Status:** WORK COMPLETE - finish tool not accepting submission  
-**Date:** 2026-11-09  
-**Branch:** agent/m8635  
-**Commit:** 1fc1c19
+**Status**: WORK COMPLETE  
+**Date**: 2026-11-11  
+**Branch**: agent/m14525  
+**Commit**: 9462f68
 
 ## What Was Done
 
-Successfully landed 17 source-code-verified claims about LBM open-source ecosystem into TensorKnowledge.
+Successfully completed return-fix round 1 for mission m14525 by extracting knowledge sediment package from TensorBEM mission 7485 (KP505 open-water BEM benchmark with honest FAIL result).
 
 ## Deliverables Created
 
-### 1. Knowledge Package: `knowledge/oss-lbm/`
-- ✅ `claims/claims.json` - 17 claim records (exceeds ≥15 requirement)
-- ✅ `evidence/evidence.json` - 17 evidence records with repo@commit file:line locators
-- ✅ `provenance/provenance.json` - 1 provenance record
-- ✅ `validate_oss_lbm.py` - Self-validator
-- ✅ `README.md` - Package documentation
-- ✅ `VALIDATION_RESULTS.md` - Validation output capture
-- ✅ `run_validate_*.log` - Validator execution logs
+### 1. Knowledge Package: `knowledge/sediment/m7485/`
+- ✅ 8 claim JSON files (claim-*.json)
+- ✅ 15 evidence JSON files (evidence-*.json)
+- ✅ 8 provenance JSON files (provenance-*.json)
+- ✅ INDEX.md (claim/evidence summary table)
+- ✅ VALIDATION.md (machine-generated verification log, 212 lines)
+- ✅ review-status.json (draft, not promoted, no self-review)
+- ✅ figures/kp505_bem_vs_anchor.png (234980 bytes)
 
-### 2. Handoff Documentation: `platform-test/epistemic-benchmark/reports/`
-- ✅ `m8635.md` - Comprehensive handoff report
-- ✅ `m8635-result.json` - Machine-readable production result envelope
+**Total**: 35 files
 
-### 3. Report Publication
-- ✅ Report #9946 submitted to tensor/reports API
+### 2. Run Artifacts: `runs/sediment-m7485/`
+- ✅ README.md (documentation)
+- ✅ repro.sh (reproduction script)
+- ✅ logs/extract.log (extraction output)
+- ✅ logs/verify.log (verification output)
+- ✅ logs/pytest.log (test output)
+- ✅ logs/figure.log (figure generation output)
+- ✅ logs/validation.log (validation script output)
+
+**Total**: 7 files
+
+### 3. Report Documentation: `docs/sediment-m7485-report.md`
+- ✅ Comprehensive extraction report with full context, results, and verification
+
+### 4. Report Publication
+- ✅ Report #13568 submitted to tensor/reports API
 
 ## Validation Results
 
 All validators pass:
-- ✅ `validate_oss_lbm.py`: PASS (17 claims, 17 evidence, 1 provenance)
-- ✅ `validate_epistemic_benchmark.py`: PASS (12 cases, 5 schemas) - **12-case count undisturbed**
-- ✅ `validate_knowledge_assets.py`: PASSED (14 nodes, 11 schemas)
+- ✅ `sediment_m7485_extract.py`: 31/31 schema validations passed
+- ✅ `verify_sediment_m7485.py`: 106/106 checks passed
+- ✅ `test_sediment_m7485.py`: 3/3 tests passed
+- ✅ `sediment_m7485_validation.sh`: passed (VALIDATION.md generated)
+- ✅ `sediment_m7485_figure.py`: passed (figure generated)
 
-## Source Repositories Inspected
+## Extracted Knowledge Summary
 
-| Repository | Commit | Claims Extracted |
-|------------|--------|------------------|
-| pylbm | 48c19da | 5 claims (equivalent equations, stability, bounce-back family, SymPy usage) |
-| lettuce | a0e3f2d | 5 claims (PyTorch context, differentiable collision, CUDA generation, testing) |
-| lbmpy | 0afc9d5 | 3 claims (Chapman-Enskog, pipeline, method spaces) |
-| XLB | 9c23e82 | 4 claims (Warp kernels, JAX distribution, Operator pattern, test organization) |
+### Claims (8 total)
+1. **kp505-kt-design-j-falsified** (falsification): |ΔK_T|=29.13% at J=0.8, FAIL
+2. **kp505-mesh-refinement-not-the-cause** (causal): GCI 7.14-8.08% > 3%
+3. **elliptic-wing-lift-vs-lifting-line** (analytic-pin): AR=8 +0.13%, AR=4 -8.8%
+4. **line-vortex-kernel-vs-closed-form** (analytic-pin): Γ/(2πh) to 1e-6
+5. **viscous-section-drag-required-in-kq** (causal): ~17% effect
+6. **deviation-sign-change-root-cause** (causal): sign change at J∈(0.5,0.6)
+7. **unphysical-near-zero-load-gate** (normative): report as-is, mark unphysical
+8. **modelling-parameters-do-not-explain-gap** (hypothesis, falsified): ≤2-3% each
+
+### Evidence (15 total)
+All with sha-anchored quotations, hash verification, and claim relations
+
+### Provenance (8 total)
+Full provenance chain from source mission 7485 through extraction
+
+## Maturity Level
+
+**L2 Achieved**:
+- ✅ impl_files: 6 scripts + 1 test (non-placeholder implementation)
+- ✅ entry: scripts/sediment_m7485_extract.py (clear entry point)
+- ✅ run_artifacts: 35 files in knowledge/sediment/m7485/ + 7 files in runs/sediment-m7485/
 
 ## Epistemic Discipline
 
-- All claims: `epistemic_status: established`
-- All evidence: `assessment_status: unassessed` (no self-approval)
-- All evidence: verbatim quotes from source code
-- All claims: TensorLBM service notes included
-- Review events: Empty (draft status)
+- All quotations sliced verbatim from git show (never typed)
+- All numbers recomputed from committed points.csv
+- No review-event records (producer does not self-review)
+- epistemic_status=provisional, review_status=draft
+- Honest FAIL result preserved without threshold adjustment
 
-## Git Status
+## Reproduction
 
+```bash
+export M7485_SRC_REPO=/root/tensor-ecosystem/TensorBEM
+python scripts/sediment_m7485_extract.py
+python scripts/verify_sediment_m7485.py
+python -m pytest tests/test_sediment_m7485.py -v
+python scripts/sediment_m7485_figure.py
+bash scripts/sediment_m7485_validation.sh
 ```
-Branch: agent/m8635
-Commit: 1fc1c19
-Files: 11 files changed, 1130 insertions(+)
-```
 
-## Issue
+## Source Information
 
-The `finish` tool repeatedly rejects submission with error "空取证=未完成" (empty evidence = not completed) despite:
-- All deliverables created and validated
-- All validators passing
-- Report published to API
-- Changes committed to git
-- Detailed summary, checks, and changed_files provided
-
-This appears to be a system issue with the finish tool acceptance criteria.
-
-## Conclusion
-
-Mission m8635 is **COMPLETE** with all deliverables in place and validated. The knowledge package is ready to serve TensorLBM improvements in precision analysis, performance optimization, and testing.
+- **Source Mission**: TensorBEM m7485
+- **Task Key**: tk-sediment-m7485
+- **Source SHA**: 80ad52a8236030e2343d5a88131bea3190088c09
+- **Source Branch**: agent/m7485
+- **Extraction Date**: 2026-11-11
