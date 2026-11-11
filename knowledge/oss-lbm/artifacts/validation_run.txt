@@ -1,0 +1,52 @@
+# validation run transcript — OSS-LBM dual-structure landing (mission 14626)
+# generated: 2026-11-11T09:13:36Z
+# base commit: c90b035 + working tree
+
+## 1) python3 knowledge/oss-lbm/validate_oss_lbm.py
+PASS structure A (aggregate): 50 claims / 57 evidence / 10 provenance; ids unique, cross-references bidirectional, epistemic vocabularies valid
+PASS structure B (per-record ingress): 23 claim / 30 evidence / 8 provenance files mirrored byte-identically in A
+PASS structure C (sub-packages): 7 packages, 101 claims / 131 evidence; fingering(12c/23e), freesurf(16c/16e), kruger(16c/40e), ludwig(17c/22e), mflbm(10c/0e), openlb(13c/13e), thermalmulti(17c/17e)
+PASS landing manifest: source agent/m8634@ce6cad548d58 — 23/23 claims, 30 evidence, 8 provenance locatable with matching sha256
+
+summary:
+  aggregate claims      : 50
+  aggregate evidence    : 57
+  aggregate provenance  : 10
+  structures checked    : A (aggregate), B (per-record ingress), C (sub-packages)
+
+ALL PASS: OSS-LBM knowledge package is consistent across the dual structure
+  4 structure sections validated, 0 errors
+exit=0
+
+## 2) python3 knowledge/oss-lbm/tools/merge_record_files.py --check
+PASS claim: 50 records in aggregate (+0 merged, 23 already present) [check-only, not written]
+  claim: 50 -> 50
+PASS evidence: 57 records in aggregate (+0 merged, 30 already present) [check-only, not written]
+  evidence: 57 -> 57
+PASS provenance: 10 records in aggregate (+0 merged, 8 already present) [check-only, not written]
+  provenance: 10 -> 10
+ALL PASS: per-record ingress files are represented in the aggregate arrays
+exit=0
+
+## 3) python3 -m pytest knowledge/oss-lbm/tests/test_dual_structure.py -q
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+10 passed, 1 warning in 9.47s
+
+## 4) python3 -m pytest test_oss_lbm.py tests/test_ke_export.py -q
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+38 passed, 1 warning in 3.80s
+
+## 5) per-package validators (unchanged, regression check)
+-- kruger/validate_kruger.py
+PASS: Kruger claim package is schema-valid, cross-referenced, draft-only, quote-verified and GAP-anchored
+-- ludwig/validate_ludwig.py
+  locator types: code-location, code-search
+  epistemic discipline: all evidence unassessed, no review events
+-- thermalmulti/validate_thermalmulti.py
+  All claims have TensorLBM service notes
+  GAP anchors: 17/17 claims linked to GAP-LBM-THERMAL-MULTIPHASE
+-- freesurf/validate_freesurf.py
+  Epistemic discipline: no self-approval, all evidence unassessed
+  All claims carry a GAP anchor
