@@ -1,0 +1,30 @@
+{
+  "id": "tkc:sloshing-lbm:forced-frequency-vs-exact-dispersion",
+  "statement": "精确一阶固有频率 omega_1 = sqrt(g k tanh(k h)) = 0.9262 rad/s（k = pi/L，kh = 0.6283）；L/40 受迫算例（A = 0.25 m，6 个周期）壁压时历谱峰 0.9243 rad/s（源记录，FFT 首极大 + 抛物线细化），相对精确色散 0.9980（偏差 0.20%）。本包以细网格直接求极大独立复算得 0.9229 rad/s，比值 0.9964：两个估计器相差 0.16%，因为该谱峰在 0.90-0.94 rad/s 区间极其平坦（谱幅值起伏 < 0.4%）。两种估计均远在 3% 以内，故自由面 LBM 的一阶频率标定通过，但受迫信号谱峰只支撑到约 0.2% 的频率结论粒度。",
+  "claim_type": "descriptive",
+  "scope": {
+    "domain": "vessel-motion / tank sloshing",
+    "system": "forced standing wave in a rectangular tank, wall-pressure history",
+    "conditions": [
+      "excitation a(t) = A omega^2 sin(omega t) at omega = omega_1, A = 0.25 m",
+      "wall-pressure panel averaged over the lower half depth of the impacted wall"
+    ],
+    "exclusions": [
+      "single grid (L/40); no grid-refinement of the frequency estimate"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "draft",
+  "evidence_refs": [
+    "tke:sloshing-lbm:e04-forced-frequency-vs-exact-dispersion",
+    "tke:sloshing-lbm:e05-forced-frequency-vs-exact-dispersion",
+    "tke:sloshing-lbm:e06-forced-frequency-vs-exact-dispersion"
+  ],
+  "created_at": "2026-11-11T00:00:00Z",
+  "created_by": "tkc-agent:m14530",
+  "version": "1.0.0",
+  "notes": [
+    "estimator-class difference documented rather than hidden: the source uses the first FFT bin maximum plus parabolic refinement, this package a two-stage direct scan",
+    "the sampling interval is slightly non-uniform (t[1]-t[0] = 0.0159665 s vs mean 0.0159615 s), a further 0.03% on the frequency axis"
+  ]
+}
