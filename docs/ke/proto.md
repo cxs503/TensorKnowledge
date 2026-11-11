@@ -5,6 +5,14 @@
 > 试点包：`platform-test/epistemic-benchmark/pilots/m8554/`（branch agent/m8554
 > 的认知试点工件，owner 2026-11-09 验收通过；本分支将其收编为可复现夹具）。
 
+## 0. 后端收口（m8800 更新）
+
+原型的 SQLite 存储已收口为**单一权威路线**：PostgreSQL 是权威存储，SQLite 只作单测/离线
+夹具，两者共用一份数据契约与一套查询接口；差异清单与迁移工具见
+[`docs/ke/backends.md`](backends.md)。试点包夹具同时从
+`platform-test/.../pilots/m8554/`（他单号段路径，推送门禁会滤除）迁到
+`tests/fixtures/ke-pilot/`，见其 `PROVENANCE.md`。
+
 ## 1. 是什么
 
 对 epistemic 记录包（claim / evidence / provenance JSON）的**最小闭环**：

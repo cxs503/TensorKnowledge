@@ -1,0 +1,194 @@
+{
+  "contract_version": "0.1.0",
+  "package_id": "tk-epistemic-pilot-m8554",
+  "platform_task_id": "m8554",
+  "execution_state": "completed",
+  "completed_at": "2026-11-09T12:30:00Z",
+  "outcome": "accepted-for-review",
+  "summary": "TensorKnowledge 认知质量试点（owner 亲自接管线）：三场景交付 4 claim + 8 evidence（三真实规范源 direct-quotation）+ 3 provenance + 报告 + 本信封。科学命题=PROV-O wasAttributedTo 规范签名（established，版本锚定）；争议命题=FAIR 开放获取宽窄两读两边保留（contested/well-supported）；证据不足=RO-Crate 导出实现状态 not-assessed（P0 规划行不蕴涵实现）。全部 draft/无自批；三验证器全绿。",
+  "proposed_objects": [
+    {
+      "id": "tko:epistemics:prov-o-attribution-signature",
+      "title": "PROV-O wasAttributedTo 的规范签名（定义句/父属性/域程）",
+      "object_type": "claim",
+      "domains": [
+        "provenance",
+        "knowledge-representation"
+      ],
+      "summary": "W3C PROV-O REC-prov-o-20130430 §4.1 条目(6)：prov:wasAttributedTo 定义为将实体归属于代理（Attribution is the ascribing of an entity to an agent），为 prov:wasInfluencedBy 子属性，domain=prov:Entity，range=prov:Agent。版本锚定的定义性命题。",
+      "evidence_status": "established",
+      "review_status": "draft",
+      "publication_status": "internal",
+      "version": "1.0.0",
+      "relations": [
+        {
+          "relation_type": "supported-by-claim",
+          "target_id": "tkc:prov-o:wasattributedto-signature"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "standard",
+          "citation": "Lebo, Sahoo, McGuinness (eds.). PROV-O: The PROV Ontology. W3C Recommendation 30 April 2013.",
+          "url": "https://www.w3.org/TR/prov-o/",
+          "locator": "Section 4.1, cross reference entry (6)",
+          "accessed_at": "2026-11-09",
+          "supports": "定义句+超属性+domain/range 逐字",
+          "license_or_rights": "W3C document use rules"
+        }
+      ],
+      "provenance": {
+        "created_by": "claude-code-session-6f76cd3d (glm-5.3)",
+        "created_at": "2026-11-09T12:10:00Z",
+        "method": "owner 接管线：webReader 实抓三源 → direct-quotation 证据 → claim/evidence/provenance 记录 → 三验证器",
+        "agent_assisted": true,
+        "work_package_id": "m8554"
+      }
+    },
+    {
+      "id": "tko:epistemics:fair-accessibility-two-readings",
+      "title": "FAIR 可及性要求的两种解读（开放获取蕴涵 vs 协议可及+受控访问）— 争议登记",
+      "object_type": "claim",
+      "domains": [
+        "research-data-stewardship",
+        "epistemology"
+      ],
+      "summary": "宽解读『满足 FAIR 即蕴涵数据对任何人开放获取』与 FAIR 文本冲突：A1.2 明示协议可含认证与授权（where necessary），R1.1 仅要求清晰可达的使用许可。可辩护的窄解读=A1/A1.1/A1.2 三条构成（标准化协议检索+协议开放免费可普遍实现+必要时允许认证授权）。两边证据并存保留，未裁决。",
+      "evidence_status": "contested",
+      "review_status": "draft",
+      "publication_status": "internal",
+      "version": "1.0.0",
+      "relations": [
+        {
+          "relation_type": "contested-claim",
+          "target_id": "tkc:fair:requires-open-access"
+        },
+        {
+          "relation_type": "narrowed-claim",
+          "target_id": "tkc:fair:a1-protocol-conditions"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "website",
+          "citation": "GO FAIR. FAIR Principles（FAIR Guiding Principles, Wilkinson et al. 2016 的社区呈现页）.",
+          "url": "https://www.go-fair.org/fair-principles/",
+          "locator": "Accessible 节 A1/A1.1/A1.2；Reusable 节 R1.1；前言首段",
+          "accessed_at": "2026-11-09",
+          "supports": "A1.2 反驳宽解读；A1 块支持窄解读"
+        }
+      ],
+      "provenance": {
+        "created_by": "claude-code-session-6f76cd3d (glm-5.3)",
+        "created_at": "2026-11-09T12:10:00Z",
+        "method": "owner 接管线：webReader 实抓三源 → direct-quotation 证据 → claim/evidence/provenance 记录 → 三验证器",
+        "agent_assisted": true,
+        "work_package_id": "m8554"
+      }
+    },
+    {
+      "id": "tko:epistemics:tk-rocrate-implementation-unassessed",
+      "title": "TensorKnowledge RO-Crate 1.3 导出实现状态 = 未评估（规划证据不蕴涵实现）",
+      "object_type": "observation",
+      "domains": [
+        "software-engineering",
+        "epistemology"
+      ],
+      "summary": "『已实现 RO-Crate 1.3 导出剖面并投产』命题当前唯一可得源=仓内 STANDARDS_MAPPING.md 的 P0 规划行，属建议/优先级陈述，不构成实现或投产证据；裁定 not-assessed 而非否定（未做代码审计）。示范『诱人不蕴涵源』纪律。",
+      "evidence_status": "not-assessed",
+      "review_status": "draft",
+      "publication_status": "internal",
+      "version": "1.0.0",
+      "relations": [
+        {
+          "relation_type": "status-claim",
+          "target_id": "tkc:tkrepo:rocrate-export-production"
+        }
+      ],
+      "sources": [
+        {
+          "source_type": "internal-artifact",
+          "citation": "TensorKnowledge research/global-landscape/STANDARDS_MAPPING.md (main@71fb803)",
+          "locator": "Mapping 表第 14 行；Semantic distinctions 第 38-39 行",
+          "accessed_at": "2026-11-09",
+          "supports": "仅规划优先级（P0），不蕴涵实现"
+        },
+        {
+          "source_type": "standard",
+          "citation": "RO-Crate 1.3 Specification, Root Data Entity section.",
+          "url": "https://www.researchobject.org/ro-crate/specification/1.3/root-data-entity.html",
+          "locator": "Direct properties of the Root Data Entity",
+          "accessed_at": "2026-11-09",
+          "supports": "实现一个导出剖面需满足的 MUST 条款（语境）"
+        }
+      ],
+      "provenance": {
+        "created_by": "claude-code-session-6f76cd3d (glm-5.3)",
+        "created_at": "2026-11-09T12:10:00Z",
+        "method": "owner 接管线：webReader 实抓三源 → direct-quotation 证据 → claim/evidence/provenance 记录 → 三验证器",
+        "agent_assisted": true,
+        "work_package_id": "m8554"
+      }
+    }
+  ],
+  "artifact_references": [
+    "platform-test/epistemic-benchmark/pilots/m8554/claims/",
+    "platform-test/epistemic-benchmark/pilots/m8554/evidence/",
+    "platform-test/epistemic-benchmark/pilots/m8554/provenance/",
+    "platform-test/epistemic-benchmark/pilots/m8554/scenario-scientific.json",
+    "platform-test/epistemic-benchmark/pilots/m8554/scenario-contested.json",
+    "platform-test/epistemic-benchmark/pilots/m8554/scenario-insufficient.json",
+    "platform-test/epistemic-benchmark/pilots/m8554/validate_pilot.py",
+    "platform-test/epistemic-benchmark/reports/8554.md"
+  ],
+  "evidence_and_sources": [
+    "https://www.w3.org/TR/prov-o/  (W3C Recommendation 30 April 2013; §4.1 entry 6; §3.1)",
+    "https://www.go-fair.org/fair-principles/  (Accessible A1/A1.1/A1.2; Reusable R1.1; preamble)",
+    "https://www.researchobject.org/ro-crate/specification/1.3/root-data-entity.html  (RO-Crate 1.3, published 2026-06-22)",
+    "research/global-landscape/STANDARDS_MAPPING.md@71fb803  (line 14 mapping row; lines 38-39)"
+  ],
+  "checks": [
+    {
+      "check": "scripts/validate_epistemic_benchmark.py",
+      "status": "passed",
+      "evidence": "PASS: 10 benchmark cases; 5 Draft 2020-12 schemas; cross-references and epistemic invariants valid. (exit 0)"
+    },
+    {
+      "check": "scripts/validate_knowledge_assets.py",
+      "status": "passed",
+      "evidence": "Knowledge asset validation PASSED: 14 nodes, 1 tutorial metadata file(s), 2 pathway(s), 11 schemas. (exit 0)"
+    },
+    {
+      "check": "pilots/m8554/validate_pilot.py (schema+xref+scenario invariants, 41 checks)",
+      "status": "passed",
+      "evidence": "== pilot validation: ALL PASS (exit 0)"
+    },
+    {
+      "check": "deliverable counts vs AGENT_TASK floors (3 claims/6 evidence/1 provenance)",
+      "status": "passed",
+      "evidence": "4 claims / 8 evidence / 3 provenance"
+    },
+    {
+      "check": "no self-approval; objects draft/in-review; conservative evidence_status",
+      "status": "passed",
+      "evidence": "review_events all empty; 3 KOs draft; scenario-3 evidence all insufficient"
+    }
+  ],
+  "unresolved_issues": [
+    "FAIR 原始论文（Wilkinson et al. 2016, Scientific Data）未直接核验——证据引社区呈现页 go-fair.org，差异已披露",
+    "独立评审未发生：epistemic_status 均为生产者自标；判据 7 仅『可核验性』成立",
+    "RO-Crate 导出实现状态的最终裁定需代码级审计（本试点按证据不足登记）",
+    "平台任务 m8554 仍 suspended，终态处置待 owner 裁（复钉 glm-5.2 / 改钉 / 以本包收单）"
+  ],
+  "limitations": [
+    "单会话单读者：引文核对为抓取当场目视比对，无第二读者",
+    "webReader 为文本转换中间层，非浏览器 DOM 原文（转换伪影概率极低但非零）",
+    "go-fair.org 为活页，引文以 captured_at=2026-11-09 时点为准",
+    "命题陈述为中英混排（源文本英文），独立评审时以英文原文为准"
+  ],
+  "confidence_statement": "结构面高置信：schema/xref/场景不变量 41 项机器验证全过、三验证器全绿。内容面中高置信：全部引文 direct-quotation 且当场核对、命题显式条件域。总体置信不越权：无独立评审，所有 epistemic_status 待复核；场景三按设计保持 not-assessed。",
+  "agent_attribution": [
+    "Claude Code 后台会话（glm-5.3）— 源抓取/记录撰写/验证执行",
+    "平台 owner — 2026-11-09 亲自接管令（授权与方向）；归责 attribution=tp-owner"
+  ]
+}

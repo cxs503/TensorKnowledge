@@ -1,0 +1,79 @@
+name: KE dual-backend contract (PostgreSQL authoritative + SQLite fixture)
+
+# Gate for the KE storage unification (m8800):
+#   * one data contract (ke/contract.py) exercised against BOTH backends;
+#   * PostgreSQL is the authoritative track -> the job runs a real PostgreSQL
+#     service and sets KE_PG_REQUIRE=1, so the PG track can never silently
+#     degrade into "skipped" (that would make the dual-backend claim vacuous);
+#   * the knowledge package is migrated SQLite -> PostgreSQL and the
+#     reconciliation table must report identical object/relation/assertion
+#     counts, otherwise `python -m ke.migrate` exits non-zero.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ke/**"
+      - "tests/conftest.py"
+      - "tests/test_ke_proto.py"
+      - "tests/test_ke_migrate.py"
+      - "tests/fixtures/ke-pilot/**"
+      - "knowledge/oss-lbm/**"
+      - "artifacts/ke/**"
+      - ".github/workflows/ke-backends.yml"
+  pull_request:
+    paths:
+      - "ke/**"
+      - "tests/conftest.py"
+      - "tests/test_ke_proto.py"
+      - "tests/test_ke_migrate.py"
+      - "tests/fixtures/ke-pilot/**"
+      - "knowledge/oss-lbm/**"
+      - "artifacts/ke/**"
+      - ".github/workflows/ke-backends.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  dual-backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ke
+          POSTGRES_PASSWORD: ke
+          POSTGRES_DB: tensorknowledge
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ke -d tensorknowledge"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      KE_PG_DSN: postgresql+psycopg://ke:ke@localhost:5432/tensorknowledge
+      KE_PG_REQUIRE: "1"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-validation.txt pytest "psycopg[binary]>=3.1"
+
+      - name: Migrate knowledge/oss-lbm into PostgreSQL + reconcile (fail on drift)
+        run: python -m ke.migrate --source knowledge/oss-lbm --pg-schema ke --out /tmp/reconcile.json --md /tmp/reconcile.md
+
+      - name: Dual-backend KE test suite (>=15 prototype tests x 2 backends)
+        run: python -m pytest -q tests/test_ke_proto.py tests/test_ke_migrate.py
+
+      - name: Repository knowledge-asset validators (no regression)
+        run: python scripts/validate_knowledge_assets.py

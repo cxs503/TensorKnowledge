@@ -1,259 +1,300 @@
-"""KE prototype — SQLite storage layer (stdlib only, zero hand-copying).
+"""KE storage facade — one contract, one query interface, two backends.
 
-Ingests a pilot package of epistemic records into SQLite:
+The Knowledge Engine persists into exactly two places:
 
-    <pilot>/claims/*.json       -> claims
-    <pilot>/evidence/*.json     -> evidence
-    <pilot>/provenance/*.json   -> provenance
+``pg`` (authoritative, production)
+    PostgreSQL via ``psycopg`` (v3).  This is the *authoritative* track: every
+    produced KE state lives here.  Connection string comes from the
+    ``KE_PG_DSN`` environment variable — no credentials are ever hard-coded::
 
-Design rules
-------------
-* ``raw_json`` keeps the exact ingested document, so every query result
-  is traceable back to the source bytes (provenance discipline).
-* Cross-reference fields (``claim.evidence_refs`` / ``evidence.claim_refs``)
-  are normalized into join tables ``claim_evidence`` / ``evidence_claims``
-  so the xref invariants of ``pilots/m8554/validate_pilot.py`` can be
-  checked with plain SQL.
-* Ingest is idempotent per (db, pilot): re-ingesting the same package
-  replaces the previous state (DELETE + re-INSERT, single transaction).
+        KE_PG_DSN=postgresql+psycopg:///tensorknowledge?host=/var/run/postgresql
+
+``sqlite`` (lightweight fixture, unit tests / offline)
+    ``sqlite3`` from the standard library, ``:memory:`` or a file.  This is a
+    *test/offline fixture*, not a second knowledge system: it shares the same
+    contract (:mod:`ke.contract`), the same six query classes and the same
+    validator, so it can never drift away from what production runs.
+
+No third dialect is allowed (``docs/ke/backends.md`` records the rationale and
+the complete list of behavioural differences).
+
+Usage::
+
+    from ke import store, queries, validate
+
+    conn = store.connect(":memory:")                     # sqlite fixture
+    conn = store.connect(backend="pg")                   # KE_PG_DSN
+    conn = store.connect(backend="pg", schema="ke_test", create_schema=True)
+
+    store.ingest_pilot("path/to/package", conn)
+    queries.stats(conn)
+    validate.validate_package("path/to/package", conn)
+
+Dialect translation is confined to :class:`Store`:
+
+* ``?`` placeholders  -> ``%s`` (psycopg pyformat), literal ``%`` escaped;
+* ``INSERT OR IGNORE`` -> ``INSERT ... ON CONFLICT DO NOTHING``;
+* ``KeRow`` rows expose both integer (``row[0]``) and name (``row["id"]``)
+  access so every query/validator line is written once, for both backends.
 """
 from __future__ import annotations
 
-import json
+import os
+import re
 import sqlite3
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
-SCHEMA = """
-CREATE TABLE IF NOT EXISTS claims (
-    id               TEXT PRIMARY KEY,
-    statement        TEXT NOT NULL,
-    claim_type       TEXT NOT NULL,
-    epistemic_status TEXT NOT NULL,
-    modality         TEXT,
-    domain           TEXT,
-    scope_json       TEXT,
-    evidence_refs_json TEXT NOT NULL,
-    valid_time_json  TEXT,
-    created_at       TEXT NOT NULL,
-    created_by       TEXT,
-    version          TEXT NOT NULL,
-    notes_json       TEXT,
-    source_file      TEXT NOT NULL,
-    raw_json         TEXT NOT NULL
-);
-CREATE TABLE IF NOT EXISTS evidence (
-    id                  TEXT PRIMARY KEY,
-    relation            TEXT NOT NULL,
-    assessment_status   TEXT NOT NULL,
-    source_type         TEXT,
-    source_citation     TEXT,
-    source_url          TEXT,
-    source_persistent_id TEXT,
-    locator_type        TEXT,
-    locator_value       TEXT,
-    locator_quote       TEXT,
-    extraction_method   TEXT,
-    captured_at         TEXT NOT NULL,
-    captured_by         TEXT,
-    version             TEXT NOT NULL,
-    source_file         TEXT NOT NULL,
-    raw_json            TEXT NOT NULL
-);
-CREATE TABLE IF NOT EXISTS provenance (
-    id                  TEXT PRIMARY KEY,
-    generated_entity_id TEXT,
-    entity_type         TEXT,
-    activity_id         TEXT,
-    activity_type       TEXT,
-    attributed_to_json  TEXT,
-    derived_from_json   TEXT,
-    recorded_at         TEXT NOT NULL,
-    version             TEXT NOT NULL,
-    source_file         TEXT NOT NULL,
-    raw_json            TEXT NOT NULL
-);
--- NOTE: no FK constraints on the join tables on purpose. Unresolvable refs
--- must be *storable* so the xref invariants (ke.validate.xref_report,
--- mirroring validate_pilot.py) can detect and report them. Enforcing them
--- here would make the validator vacuous.
-CREATE TABLE IF NOT EXISTS claim_evidence (
-    claim_id    TEXT NOT NULL,
-    evidence_id TEXT NOT NULL,
-    PRIMARY KEY (claim_id, evidence_id)
-);
-CREATE TABLE IF NOT EXISTS evidence_claims (
-    evidence_id TEXT NOT NULL,
-    claim_id    TEXT NOT NULL,
-    PRIMARY KEY (evidence_id, claim_id)
-);
-CREATE TABLE IF NOT EXISTS ingest_meta (
-    key   TEXT PRIMARY KEY,
-    value TEXT
-);
-"""
+from . import contract
+
+#: default authoritative DSN (peer auth inside the container)
+DEFAULT_PG_DSN = "postgresql+psycopg:///tensorknowledge?host=/var/run/postgresql"
+
+#: kept for backwards compatibility
+SCHEMA = contract.SCHEMA
+
+BACKENDS = ("sqlite", "pg")
+
+_SAFE_IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 
-def connect(db_path: str | Path = ":memory:") -> sqlite3.Connection:
-    """Open (and initialize) the KE database. ``:memory:`` supported."""
-    conn = sqlite3.connect(str(db_path))
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA foreign_keys = ON")
-    conn.executescript(SCHEMA)
-    return conn
+def default_pg_dsn() -> str:
+    """``KE_PG_DSN`` (env) or :data:`DEFAULT_PG_DSN`. Read at call time."""
+    return os.environ.get("KE_PG_DSN") or DEFAULT_PG_DSN
 
 
-def _jdump(obj: Any) -> str | None:
-    return None if obj is None else json.dumps(obj, ensure_ascii=False, sort_keys=True)
+def _normalize_dsn(dsn: str) -> str:
+    """Accept SQLAlchemy-style ``postgresql+psycopg://`` as well as libpq form."""
+    return dsn.replace("postgresql+psycopg://", "postgresql://").replace(
+        "postgres+psycopg://", "postgres://"
+    )
 
 
-def _load_dir(pilot: Path, sub: str) -> dict[str, tuple[dict, str]]:
-    """Load <pilot>/<sub>/*.json -> {record_id: (record, rel_source_file)}."""
-    out: dict[str, tuple[dict, str]] = {}
-    d = pilot / sub
-    if not d.is_dir():
-        return out
-    for p in sorted(d.glob("*.json")):
-        rec = json.loads(p.read_text(encoding="utf-8"))
-        rid = rec.get("id")
-        if not rid:
-            raise ValueError(f"record without id: {p}")
-        if rid in out:
-            raise ValueError(f"duplicate record id {rid!r} in {d}")
-        out[rid] = (rec, str(p.relative_to(pilot)))
-    return out
+class KeRow(dict):
+    """Row supporting both ``row["col"]`` and ``row[0]`` (sqlite3.Row parity)."""
+
+    __slots__ = ("_order",)
+
+    def __init__(self, data: dict):
+        super().__init__(data)
+        self._order = tuple(data)
+
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            key = self._order[key]
+        return super().__getitem__(key)
+
+    def keys(self):  # keep dict(row) / iteration semantics explicit
+        return self._order
 
 
-def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
-    """Ingest one pilot package into ``conn``. Returns record counts.
+class KeCursor:
+    """Thin cursor wrapper normalizing result rows to :class:`KeRow`."""
 
-    Idempotent: previous rows for the same pilot are removed first.
+    def __init__(self, cur):
+        self._cur = cur
+
+    def fetchone(self) -> KeRow | None:
+        row = self._cur.fetchone()
+        return None if row is None else KeRow(dict(row))
+
+    def fetchall(self) -> list[KeRow]:
+        return [KeRow(dict(r)) for r in self._cur.fetchall()]
+
+    def __iter__(self):
+        for row in self._cur:
+            yield KeRow(dict(row))
+
+    @property
+    def rowcount(self) -> int:
+        return self._cur.rowcount
+
+
+class Store:
+    """Backend-neutral connection handle used by queries/validate/migrate."""
+
+    def __init__(self, raw, backend: str, *, db_path: str | None = None,
+                 dsn: str | None = None, schema: str | None = None):
+        self._raw = raw
+        self.backend = backend
+        self.db_path = db_path
+        self.dsn = dsn
+        self.schema = schema
+        self._ctx = None
+
+    # -- dialect shim ------------------------------------------------------
+    def _sql(self, sql: str) -> str:
+        if self.backend == "sqlite":
+            return sql
+        stripped = sql.lstrip()
+        if stripped.upper().startswith("INSERT OR IGNORE"):
+            sql = re.sub(r"^\s*INSERT\s+OR\s+IGNORE\s+INTO", "INSERT INTO", sql,
+                         flags=re.I | re.S)
+            if "ON CONFLICT" not in sql.upper():
+                sql = sql.rstrip().rstrip(";") + " ON CONFLICT DO NOTHING"
+        return sql.replace("%", "%%").replace("?", "%s")
+
+    # -- query interface ---------------------------------------------------
+    @property
+    def collate_c(self) -> str:
+        """Collation clause giving byte-order sorting on *this* backend.
+
+        PostgreSQL sorts TEXT with the database locale (e.g. ``en_US.UTF-8``,
+        where punctuation is ignored); SQLite sorts with ``BINARY`` (byte
+        order).  Pinning both to C / BINARY is what makes ``ORDER BY id``
+        return the same sequence on both backends.  Used as
+        ``ORDER BY {conn.collate("id")}``.
+        """
+        return 'COLLATE "C"' if self.backend == "pg" else "COLLATE BINARY"
+
+    def collate(self, expr: str) -> str:
+        """``expr`` ordered by byte value on either backend (see collate_c)."""
+        return f"{expr} {self.collate_c}"
+
+    def execute(self, sql: str, params: Iterable[Any] | None = None) -> KeCursor:
+        cur = self._raw.cursor()
+        if params is None:
+            cur.execute(self._sql(sql))
+        else:
+            cur.execute(self._sql(sql), tuple(params))
+        return KeCursor(cur)
+
+    def executemany(self, sql: str, seq_of_params: Iterable[Iterable[Any]]) -> None:
+        cur = self._raw.cursor()
+        cur.executemany(self._sql(sql), [tuple(p) for p in seq_of_params])
+
+    def scripts(self, script: str) -> None:
+        """Run a multi-statement DDL script (dialect-neutral statements)."""
+        statements = [s.strip() for s in script.split(";") if s.strip()]
+        if self.backend == "sqlite":
+            self._raw.executescript(";\n".join(statements) + ";\n")
+            return
+        cur = self._raw.cursor()
+        for stmt in statements:
+            cur.execute(stmt)
+
+    # -- transaction / lifecycle ------------------------------------------
+    def commit(self) -> None:
+        self._raw.commit()
+
+    def rollback(self) -> None:
+        self._raw.rollback()
+
+    def __enter__(self) -> "Store":
+        """Begin a transaction block (``with store: ...``).
+
+        Implemented explicitly instead of delegating to the driver context
+        managers: ``with psycopg.connect(...)`` *closes* the connection on
+        exit, while ``with sqlite3.Connection`` only commits — the KE needs
+        one semantic on both backends (commit on success, rollback on error,
+        connection stays open).
+        """
+        self._raw.commit()  # close any pending implicit transaction
+        self._ctx = True
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        try:
+            if exc_type is None:
+                self._raw.commit()
+            else:
+                self._raw.rollback()
+        finally:
+            self._ctx = None
+        return False
+
+    def close(self) -> None:
+        self._raw.close()
+
+    def drop_schema(self) -> None:
+        """Drop the PG schema created for this store (test isolation)."""
+        if self.backend != "pg" or not self.schema:
+            return
+        cur = self._raw.cursor()
+        cur.execute(f'DROP SCHEMA IF EXISTS "{self.schema}" CASCADE')
+        self._raw.commit()
+
+    def __repr__(self) -> str:  # pragma: no cover - debugging aid
+        where = self.db_path if self.backend == "sqlite" else f"{self.dsn} schema={self.schema}"
+        return f"<Store backend={self.backend} {where}>"
+
+
+def _check_ident(name: str, what: str) -> str:
+    if not _SAFE_IDENT.match(name):
+        raise ValueError(f"unsafe {what} identifier: {name!r}")
+    return name
+
+
+def connect(db_path: str | Path = ":memory:", *, backend: str | None = None,
+            dsn: str | None = None, schema: str | None = None,
+            create_schema: bool = False) -> Store:
+    """Open (and initialize) the KE store.
+
+    ``backend`` defaults to ``"pg"`` when ``db_path`` looks like a PostgreSQL
+    DSN, else ``"sqlite"``.  For ``pg`` the DSN is ``dsn`` > ``KE_PG_DSN`` >
+    :data:`DEFAULT_PG_DSN`; the tables are created in ``schema`` when given
+    (``search_path``), which is how tests isolate themselves.
     """
-    pilot = Path(pilot_dir).resolve()
-    if not pilot.is_dir():
-        raise FileNotFoundError(f"pilot dir not found: {pilot}")
+    if backend is None:
+        backend = "pg" if str(db_path).startswith(("postgres", "postgresql")) else "sqlite"
+    if backend == "sqlite":
+        conn = sqlite3.connect(str(db_path))
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA foreign_keys = ON")
+        store = Store(conn, "sqlite", db_path=str(db_path))
+        store.scripts(contract.SCHEMA)
+        conn.commit()
+        return store
+    if backend != "pg":
+        raise ValueError(f"unknown backend {backend!r}; allowed: {BACKENDS}")
 
-    claims = _load_dir(pilot, "claims")
-    evidence = _load_dir(pilot, "evidence")
-    provenance = _load_dir(pilot, "provenance")
+    import psycopg
+    from psycopg.rows import dict_row
 
-    with conn:  # single transaction
-        conn.execute("DELETE FROM claim_evidence")
-        conn.execute("DELETE FROM evidence_claims")
-        conn.execute("DELETE FROM claims")
-        conn.execute("DELETE FROM evidence")
-        conn.execute("DELETE FROM provenance")
-        conn.execute("DELETE FROM ingest_meta")
-
-        for rid, (rec, src) in claims.items():
-            scope = rec.get("scope") or {}
-            conn.execute(
-                """INSERT INTO claims (id, statement, claim_type, epistemic_status,
-                       modality, domain, scope_json, evidence_refs_json, valid_time_json,
-                       created_at, created_by, version, notes_json, source_file, raw_json)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                (
-                    rid,
-                    rec["statement"],
-                    rec["claim_type"],
-                    rec["epistemic_status"],
-                    rec.get("modality"),
-                    scope.get("domain"),
-                    _jdump(scope),
-                    json.dumps(rec.get("evidence_refs", []), ensure_ascii=False),
-                    _jdump(rec.get("valid_time")),
-                    rec["created_at"],
-                    rec.get("created_by"),
-                    rec["version"],
-                    _jdump(rec.get("notes")),
-                    src,
-                    json.dumps(rec, ensure_ascii=False, sort_keys=True),
-                ),
-            )
-        for eid, (rec, src) in evidence.items():
-            src_obj = rec.get("source") or {}
-            loc = rec.get("locator") or {}
-            conn.execute(
-                """INSERT INTO evidence (id, relation, assessment_status, source_type,
-                       source_citation, source_url, source_persistent_id, locator_type,
-                       locator_value, locator_quote, extraction_method, captured_at,
-                       captured_by, version, source_file, raw_json)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                (
-                    eid,
-                    rec["relation"],
-                    rec["assessment_status"],
-                    src_obj.get("source_type"),
-                    src_obj.get("citation"),
-                    src_obj.get("url"),
-                    src_obj.get("persistent_id"),
-                    loc.get("locator_type"),
-                    loc.get("value"),
-                    loc.get("quote"),
-                    rec.get("extraction_method"),
-                    rec["captured_at"],
-                    rec.get("captured_by"),
-                    rec["version"],
-                    src,
-                    json.dumps(rec, ensure_ascii=False, sort_keys=True),
-                ),
-            )
-        for pid, (rec, src) in provenance.items():
-            ge = rec.get("generated_entity") or {}
-            act = rec.get("activity") or {}
-            conn.execute(
-                """INSERT INTO provenance (id, generated_entity_id, entity_type,
-                       activity_id, activity_type, attributed_to_json, derived_from_json,
-                       recorded_at, version, source_file, raw_json)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
-                (
-                    pid,
-                    ge.get("id"),
-                    ge.get("entity_type"),
-                    act.get("id"),
-                    act.get("activity_type"),
-                    _jdump(rec.get("attributed_to")),
-                    _jdump(rec.get("derived_from")),
-                    rec["recorded_at"],
-                    rec["version"],
-                    src,
-                    json.dumps(rec, ensure_ascii=False, sort_keys=True),
-                ),
-            )
-
-        # join tables last: base rows must exist for FK integrity
-        for rid, (rec, _src) in claims.items():
-            for eref in rec.get("evidence_refs", []):
-                conn.execute(
-                    "INSERT OR IGNORE INTO claim_evidence (claim_id, evidence_id) VALUES (?,?)",
-                    (rid, eref),
-                )
-        for eid, (rec, _src) in evidence.items():
-            for cref in rec.get("claim_refs", []):
-                conn.execute(
-                    "INSERT OR IGNORE INTO evidence_claims (evidence_id, claim_id) VALUES (?,?)",
-                    (eid, cref),
-                )
-
-        conn.execute(
-            "INSERT INTO ingest_meta (key, value) VALUES ('pilot_dir', ?)",
-            (str(pilot),),
+    resolved = dsn or default_pg_dsn()
+    raw = psycopg.connect(_normalize_dsn(resolved), row_factory=dict_row)
+    # Encoding gate: on a non-UTF8 database psycopg returns bytes for TEXT
+    # columns, i.e. the same query would yield different *types* than SQLite.
+    # That is a contract violation, so fail fast instead of silently drifting.
+    enc = raw.execute("SHOW server_encoding").fetchone()["server_encoding"]
+    if enc.upper() not in ("UTF8", "UTF-8"):
+        raw.close()
+        raise RuntimeError(
+            f"KE requires a UTF8 PostgreSQL database, got server_encoding={enc!r} "
+            f"({resolved!r}); create it with: createdb -E UTF8 -T template0 <db>"
         )
-        conn.execute(
-            "INSERT INTO ingest_meta (key, value) VALUES ('record_counts', ?)",
-            (
-                json.dumps(
-                    {
-                        "claims": len(claims),
-                        "evidence": len(evidence),
-                        "provenance": len(provenance),
-                    },
-                    sort_keys=True,
-                ),
-            ),
-        )
-    return {
-        "claims": len(claims),
-        "evidence": len(evidence),
-        "provenance": len(provenance),
-    }
+    store = Store(raw, "pg", dsn=resolved, schema=schema)
+    if schema:
+        _check_ident(schema, "schema")
+        cur = raw.cursor()
+        if create_schema:
+            cur.execute(f'CREATE SCHEMA IF NOT EXISTS "{schema}"')
+        cur.execute(f'SET search_path TO "{schema}"')
+    raw.commit()
+    store.scripts(contract.SCHEMA)
+    raw.commit()
+    return store
+
+
+def pg_available(dsn: str | None = None, timeout: int = 3) -> bool:
+    """True iff the configured PostgreSQL server accepts a connection."""
+    try:
+        import psycopg
+
+        with psycopg.connect(_normalize_dsn(dsn or default_pg_dsn()),
+                             connect_timeout=timeout):
+            return True
+    except Exception:
+        return False
+
+
+# --------------------------------------------------------------------------
+# backwards-compatible ingest entry point (the contract owns the logic)
+# --------------------------------------------------------------------------
+def ingest_pilot(pilot_dir: str | Path, conn: Store) -> dict[str, int]:
+    """Ingest one package directory into ``conn``. Returns per-kind counts.
+
+    Kept as ``store.ingest_pilot`` for the original KE prototype API; the
+    implementation (and therefore the contract) lives in :mod:`ke.contract`.
+    """
+    return contract.ingest_source(pilot_dir, conn)
