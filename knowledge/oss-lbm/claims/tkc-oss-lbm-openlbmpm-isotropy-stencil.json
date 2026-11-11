@@ -1,0 +1,24 @@
+{
+  "id": "tkc:oss-lbm:openlbmpm-isotropy-stencil",
+  "statement": "openLBMPM 显式力支持各向同性 4/8/10 阶 stencil 切换：iso4 仅到 4 阶（A6=0.600，偏差 40%），iso8/iso10 到 8 阶（与理论差 <1e-12），用于压制 spurious current。",
+  "claim_type": "descriptive",
+  "scope": {
+    "domain": "lattice Boltzmann multiphase/multicomponent methods",
+    "conditions": [
+      "格子=D2Q9 扩展",
+      "各向同性阶=4/8/10",
+      "用途=压制 spurious current"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "established",
+  "evidence_refs": [
+    "tke:oss-lbm:openlbmpm-isotropy-weights"
+  ],
+  "created_at": "2026-11-09T12:00:00Z",
+  "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+  "version": "1.0.0",
+  "notes": [
+    "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（各向同性 stencil）"
+  ]
+}
