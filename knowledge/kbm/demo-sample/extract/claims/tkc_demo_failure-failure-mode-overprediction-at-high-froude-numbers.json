@@ -1,0 +1,45 @@
+{
+  "id": "tkc:demo:failure-failure-mode-overprediction-at-high-froude-numbers",
+  "card_type": "failure",
+  "statement": "Failure mode: Overprediction at high Froude numbers",
+  "claim_type": "hypothesis",
+  "epistemic_status": "draft",
+  "scope": {},
+  "evidence_refs": [
+    "tke:demo:failure-ev-cbe83019"
+  ],
+  "created_at": "2026-11-11T20:15:47Z",
+  "created_by": "agent-m15180",
+  "version": "1.0.0",
+  "failure_mode": {
+    "description": "Overprediction at high Froude numbers",
+    "symptom": "Resistance 5-10% above measured values",
+    "severity": "major",
+    "trigger_conditions": [
+      "Fr > 0.45"
+    ]
+  },
+  "root_cause": {
+    "description": "Empirical formulation not calibrated for high-speed regime",
+    "category": "model"
+  },
+  "workaround": {
+    "description": "Use CFD for Fr > 0.45",
+    "effectiveness": "full"
+  },
+  "resolution": {
+    "status": "accepted-limitation"
+  },
+  "verification": {
+    "quotes_verified": [
+      {
+        "ok": true,
+        "start": 834,
+        "end": 865,
+        "content_hash": "d7d76d24b4892af9122bef0991e97aa5f745989149c7edbe25e3512a78947cbd"
+      }
+    ],
+    "numbers_verified": [],
+    "source_path": "knowledge/kbm/demo-sample/report.md"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/method-card.schema.json",
+  "title": "Method Card",
+  "description": "A method card captures: problem → method → equation/format source → applicable domain. It is a specialization of the claim record (claim_type=methodological) with structured content for numerical methods.",
+  "type": "object",
+  "required": [
+    "id",
+    "card_type",
+    "problem",
+    "method",
+    "equations",
+    "applicable_domain",
+    "created_at",
+    "version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tkc:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"
+    },
+    "card_type": {
+      "const": "method"
+    },
+    "problem": {
+      "type": "object",
+      "required": ["description"],
+      "properties": {
+        "description": { "type": "string", "minLength": 1 },
+        "governing_equation": { "type": "string" },
+        "boundary_conditions": { "type": "array", "items": { "type": "string" } },
+        "regime": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "method": {
+      "type": "object",
+      "required": ["name", "description"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "family": { "type": "string", "enum": ["LBM", "FVM", "FEM", "BEM", "DEM", "SPH", "DG", "spectral", "finite-difference", "other"] },
+        "order_of_accuracy": { "type": "string" },
+        "stability_condition": { "type": "string" },
+        "computational_complexity": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "equations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["formula", "source"],
+        "properties": {
+          "formula": { "type": "string", "minLength": 1 },
+          "source": { "type": "string", "minLength": 1 },
+          "source_type": { "enum": ["paper", "book", "standard", "derivation", "other"] },
+          "doi": { "type": "string" },
+          "equation_number": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "applicable_domain": {
+      "type": "object",
+      "required": ["domain"],
+      "properties": {
+        "domain": { "type": "string", "minLength": 1 },
+        "sub_domain": { "type": "string" },
+        "valid_range": { "type": "object" },
+        "limitations": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "claim_type": {
+      "const": "methodological"
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "epistemic_status": {
+      "enum": ["draft", "established", "well-supported", "provisional", "contested", "speculative", "superseded", "not-assessed"]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^tke:[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$" },
+      "uniqueItems": true
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "domain": { "type": "string", "minLength": 1 },
+        "system": { "type": "string" },
+        "conditions": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "modality": {
+      "enum": ["asserted", "conditional", "probabilistic", "hypothetical", "normative", "question"]
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "created_by": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "supersedes": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "notes": { "type": "array", "items": { "type": "string" } },
+    "artifact_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact_type", "uri"],
+        "properties": {
+          "artifact_type": { "enum": ["code", "document", "dataset", "report", "other"] },
+          "uri": { "type": "string", "minLength": 1 },
+          "checksum": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
