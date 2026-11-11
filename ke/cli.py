@@ -11,6 +11,8 @@ Usage:
     python -m ke.cli validate <pilot_dir> --db <path>
     python -m ke.cli demo     <pilot_dir> [--db <path>]
     python -m ke.cli export   <pilot_dir> --kind sft|eval|triples --out DIR [--db <path>]
+    python -m ke.cli assets   list|show|register-ko|review|deprecate|report \
+                              --db <path> [subcommand args]
 
 ``demo`` runs the full closed loop (ingest -> all query classes -> xref
 validation) and prints deterministic JSON; exit code 0 iff all invariants
@@ -32,6 +34,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+from . import assets as asset_mgr
 from . import export as exp
 from . import queries as q
 from . import store, validate
@@ -168,6 +171,147 @@ def cmd_export(args) -> int:
     return 0
 
 
+# ---------------------------------------------------------------------------
+# assets: knowledge asset life-cycle (see ke/assets.py + docs/ASSET-MANAGEMENT.md)
+# ---------------------------------------------------------------------------
+def _assets_store(args):
+    return _connect(args)
+
+
+def cmd_assets_list(args) -> int:
+    conn = _assets_store(args)
+    try:
+        versions = asset_mgr.list_ko_versions(conn, args.ko_id)
+    finally:
+        conn.close()
+    _print_json({"total": len(versions), "ko_versions": versions})
+    return 0
+
+
+def cmd_assets_show(args) -> int:
+    conn = _assets_store(args)
+    try:
+        payload = (asset_mgr.get_ko_lineage(conn, args.ko_id) if args.lineage
+                   else asset_mgr.get_ko_latest(conn, args.ko_id))
+    finally:
+        conn.close()
+    if not payload:
+        print(f"KO not found: {args.ko_id}", file=sys.stderr)
+        return 1
+    _print_json({"ko_id": args.ko_id, "lineage": payload} if args.lineage else payload)
+    return 0
+
+
+def cmd_assets_register_ko(args) -> int:
+    conn = _assets_store(args)
+    try:
+        content = json.loads(args.content) if args.content else None
+        vid = asset_mgr.register_ko_version(
+            conn, args.ko_id, args.version, title=args.title,
+            object_type=args.object_type, summary=args.summary, content=content,
+            state=args.state, created_by=args.created_by, source_file=args.source_file,
+        )
+        conn.commit()
+    except ValueError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        conn.close()
+    _print_json({"registered": vid})
+    return 0
+
+
+def cmd_assets_review(args) -> int:
+    conn = _assets_store(args)
+    try:
+        event_id = asset_mgr.record_review(
+            conn, args.object_ref, args.decision,
+            reviewer={"kind": args.reviewer_kind, "id": args.reviewer},
+            policy_version=args.policy_version, rationale=args.rationale,
+            findings=args.finding, supersedes_event=args.supersedes_event,
+        )
+        conn.commit()
+    except ValueError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        conn.close()
+    _print_json({"review_event": event_id, "decision": args.decision})
+    return 0
+
+
+def cmd_assets_deprecate(args) -> int:
+    conn = _assets_store(args)
+    try:
+        event_id = asset_mgr.deprecate_ko(
+            conn, args.object_ref,
+            reviewer={"kind": args.reviewer_kind, "id": args.reviewer},
+            rationale=args.rationale,
+        )
+        conn.commit()
+    except ValueError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        conn.close()
+    _print_json({"deprecated": args.object_ref, "review_event": event_id})
+    return 0
+
+
+def cmd_assets_register_dataset(args) -> int:
+    conn = _assets_store(args)
+    try:
+        asset_id = asset_mgr.register_dataset_asset(
+            conn, args.asset_id, args.type, args.version, args.count, args.sha256,
+            status_dist=json.loads(args.status_dist) if args.status_dist else None,
+            gen_params=json.loads(args.gen_params) if args.gen_params else None,
+            upstream_commit=args.upstream_commit, created_by=args.created_by,
+        )
+        conn.commit()
+    except ValueError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        conn.close()
+    _print_json({"registered": asset_id})
+    return 0
+
+
+def cmd_assets_datasets(args) -> int:
+    conn = _assets_store(args)
+    try:
+        assets = asset_mgr.list_dataset_assets(conn)
+    finally:
+        conn.close()
+    _print_json({"total": len(assets), "dataset_assets": assets})
+    return 0
+
+
+def cmd_assets_report(args) -> int:
+    conn = _assets_store(args)
+    try:
+        report = asset_mgr.get_quality_report(conn, stale_days=args.stale_days)
+        conn.commit()
+    finally:
+        conn.close()
+    _print_json(report)
+    return 0
+
+
+def cmd_assets_export_index(args) -> int:
+    conn = _assets_store(args)
+    try:
+        text = asset_mgr.export_asset_index_json(conn)
+    finally:
+        conn.close()
+    if args.output:
+        Path(args.output).write_text(text, encoding="utf-8")
+        print(f"written: {args.output}", file=sys.stderr)
+    else:
+        sys.stdout.write(text)
+    return 0
+
+
 def _add_backend_args(p) -> None:
     p.add_argument("--backend", default=None, choices=list(store.BACKENDS),
                    help="storage backend (default: inferred from --db)")
@@ -217,6 +361,79 @@ def main(argv=None) -> int:
     p.add_argument("--out", required=True, help="Output directory for JSONL + manifest")
     p.add_argument("--db", default=None, help="Optional existing KE database path")
     p.set_defaults(fn=cmd_export)
+
+    # --- assets subcommand group (knowledge asset life-cycle) ---
+    assets_p = sub.add_parser("assets", help="knowledge asset management "
+                              "(KO versions, review gate, quality ledger)")
+    assets_sub = assets_p.add_subparsers(dest="assets_cmd", required=True)
+
+    p = assets_sub.add_parser("list", help="list registered KO versions")
+    p.add_argument("--ko-id", default=None, help="restrict to one KO")
+    p.set_defaults(fn=cmd_assets_list)
+
+    p = assets_sub.add_parser("show", help="show the latest version (or --lineage)")
+    p.add_argument("ko_id")
+    p.add_argument("--lineage", action="store_true", help="show the full version chain")
+    p.set_defaults(fn=cmd_assets_show)
+
+    p = assets_sub.add_parser("register-ko", help="register a new immutable KO version")
+    p.add_argument("ko_id")
+    p.add_argument("--version", required=True)
+    p.add_argument("--title", default="")
+    p.add_argument("--object-type", default="")
+    p.add_argument("--summary", default="")
+    p.add_argument("--content", default=None, help="JSON payload (domains, ...)")
+    p.add_argument("--state", default="draft",
+                   choices=["draft", "in_review", "published"])
+    p.add_argument("--created-by", default="")
+    p.add_argument("--source-file", default="")
+    p.set_defaults(fn=cmd_assets_register_ko)
+
+    p = assets_sub.add_parser("review", help="append a review decision (audited gate)")
+    p.add_argument("object_ref", help="version id (<ko_id>:v<semver>) or ko_id")
+    p.add_argument("--decision", required=True, choices=list(asset_mgr.DECISIONS))
+    p.add_argument("--rationale", default="")
+    p.add_argument("--reviewer", default="unattributed")
+    p.add_argument("--reviewer-kind", default="human", choices=["human", "agent", "org"])
+    p.add_argument("--policy-version", default="review-policy-v1")
+    p.add_argument("--finding", action="append", default=None)
+    p.add_argument("--supersedes-event", default=None)
+    p.set_defaults(fn=cmd_assets_review)
+
+    p = assets_sub.add_parser("deprecate", help="deprecate a version (audited)")
+    p.add_argument("object_ref")
+    p.add_argument("--rationale", default="deprecated")
+    p.add_argument("--reviewer", default="unattributed")
+    p.add_argument("--reviewer-kind", default="human", choices=["human", "agent", "org"])
+    p.set_defaults(fn=cmd_assets_deprecate)
+
+    p = assets_sub.add_parser("register-dataset", help="register a versioned dataset asset")
+    p.add_argument("--asset-id", required=True)
+    p.add_argument("--type", required=True, choices=["sft", "eval", "triples"])
+    p.add_argument("--version", required=True)
+    p.add_argument("--count", type=int, required=True)
+    p.add_argument("--sha256", required=True)
+    p.add_argument("--status-dist", default=None, help="JSON {\"train\": N, ...}")
+    p.add_argument("--gen-params", default=None, help="JSON generation parameters")
+    p.add_argument("--upstream-commit", default="")
+    p.add_argument("--created-by", default="")
+    p.set_defaults(fn=cmd_assets_register_dataset)
+
+    p = assets_sub.add_parser("datasets", help="list dataset assets")
+    p.set_defaults(fn=cmd_assets_datasets)
+
+    p = assets_sub.add_parser("report", help="quality ledger + health summary")
+    p.add_argument("--stale-days", type=int, default=30)
+    p.set_defaults(fn=cmd_assets_report)
+
+    p = assets_sub.add_parser("export-index", help="export asset-index-v1 JSON")
+    p.add_argument("--output", default=None, help="write to file instead of stdout")
+    p.set_defaults(fn=cmd_assets_export_index)
+
+    assets_leaves = [sp for name, sp in assets_sub.choices.items()]
+    for sp in assets_leaves:
+        sp.add_argument("--db", required=True, help="KE sqlite path or PostgreSQL DSN")
+        parsers.append(sp)
 
     for p in parsers:
         _add_backend_args(p)
