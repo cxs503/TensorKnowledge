@@ -1,0 +1,29 @@
+{
+  "id": "tkc:sph-m5054:mass-calibration-lattice-constant",
+  "statement": "The lattice mass-calibration constant C is identical to all digits on every resolution of the dx ladder (dx = 0.02 -> 0.0025, spread exactly 0.0), and at h/dx = 1 the residual mass bias is -2.75e-5 on the tension side, where the Tait equation clamps it to p = 0. The bias is therefore a property of the lattice geometry, not a discretisation error that shrinks with dx: one calibration per lattice suffices.",
+  "claim_type": "methodological",
+  "scope": {
+    "domain": "SPH volume/mass consistency",
+    "system": "tensorsph.threed lattice calibration + Tait equation of state",
+    "conditions": [
+      "cubic lattice",
+      "h/dx in {1.0, 1.1, ..., 2.0}",
+      "single-phase weakly compressible"
+    ],
+    "exclusions": [
+      "does not cover disordered particle packing"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "draft",
+  "evidence_refs": [
+    "tke:sph-m5054:mc-dx-spread",
+    "tke:sph-m5054:mc-bias-h1"
+  ],
+  "created_at": "2026-11-11T00:00:00Z",
+  "created_by": "ke.sediment_extract (mission m14526)",
+  "version": "1.0.0",
+  "notes": [
+    "Practical consequence: resolution studies must not re-tune C, or the ladder measures the calibration, not the scheme."
+  ]
+}

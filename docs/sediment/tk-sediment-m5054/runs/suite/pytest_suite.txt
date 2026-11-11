@@ -1,0 +1,640 @@
+........................................................................ [ 66%]
+.........EEEEEEEEEEEFFEF.............                                    [100%]
+==================================== ERRORS ====================================
+_____________________ ERROR at setup of test_ingest_counts _____________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+________________ ERROR at setup of test_raw_record_traceability ________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+__________________ ERROR at setup of test_q1_claims_by_status __________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+________________ ERROR at setup of test_q2_evidence_by_relation ________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+____________ ERROR at setup of test_q3_provenance_chain_scientific _____________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+_____________ ERROR at setup of test_q3_provenance_chain_contested _____________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+__________________ ERROR at setup of test_q4_claims_by_domain __________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+_________________ ERROR at setup of test_q5_evidence_for_claim _________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+________________ ERROR at setup of test_q6_stats_distributions _________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+_______ ERROR at setup of test_xref_invariants_match_file_recomputation ________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+________________ ERROR at setup of test_ke_validation_all_pass _________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+___________________ ERROR at setup of test_ingest_idempotent ___________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7fffef26e290>, _basetemp=PosixPath('/tmp/pytest-of-root/pytest-621'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def conn(tmp_path_factory):
+        db = tmp_path_factory.mktemp("ke") / "ke.db"
+        c = store.connect(db)
+>       store.ingest_pilot(PILOT, c)
+
+tests/test_ke_proto.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7fffef2447c0>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+=================================== FAILURES ===================================
+_______________________ test_reference_validator_passes ________________________
+
+    def test_reference_validator_passes():
+        """The pilot's own reference validator must pass (ties KE semantics to it)."""
+>       r = subprocess.run(
+            [sys.executable, str(PILOT / "validate_pilot.py")],
+            capture_output=True,
+            text=True,
+            cwd=PILOT,
+        )
+
+tests/test_ke_proto.py:221: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib64/python3.11/subprocess.py:548: in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib64/python3.11/subprocess.py:1026: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Popen: returncode: 255 args: ['/usr/bin/python3', '/root/tp-agent/work/m145...>
+args = ['/usr/bin/python3', '/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554/validate_pilot.py']
+executable = b'/usr/bin/python3', preexec_fn = None, close_fds = True
+pass_fds = ()
+cwd = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+env = None, startupinfo = None, creationflags = 0, shell = False, p2cread = -1
+p2cwrite = -1, c2pread = 12, c2pwrite = 13, errread = 14, errwrite = 15
+restore_signals = True, gid = None, gids = None, uid = None, umask = -1
+start_new_session = False, process_group = -1
+
+    def _execute_child(self, args, executable, preexec_fn, close_fds,
+                       pass_fds, cwd, env,
+                       startupinfo, creationflags, shell,
+                       p2cread, p2cwrite,
+                       c2pread, c2pwrite,
+                       errread, errwrite,
+                       restore_signals,
+                       gid, gids, uid, umask,
+                       start_new_session, process_group):
+        """Execute program (POSIX version)"""
+    
+        if isinstance(args, (str, bytes)):
+            args = [args]
+        elif isinstance(args, os.PathLike):
+            if shell:
+                raise TypeError('path-like args is not allowed when '
+                                'shell is true')
+            args = [args]
+        else:
+            args = list(args)
+    
+        if shell:
+            # On Android the default shell is at '/system/bin/sh'.
+            unix_shell = ('/system/bin/sh' if
+                      hasattr(sys, 'getandroidapilevel') else '/bin/sh')
+            args = [unix_shell, "-c"] + args
+            if executable:
+                args[0] = executable
+    
+        if executable is None:
+            executable = args[0]
+    
+        sys.audit("subprocess.Popen", executable, args, cwd, env)
+    
+        if (_USE_POSIX_SPAWN
+                and os.path.dirname(executable)
+                and preexec_fn is None
+                and not close_fds
+                and not pass_fds
+                and cwd is None
+                and (p2cread == -1 or p2cread > 2)
+                and (c2pwrite == -1 or c2pwrite > 2)
+                and (errwrite == -1 or errwrite > 2)
+                and not start_new_session
+                and process_group == -1
+                and gid is None
+                and gids is None
+                and uid is None
+                and umask < 0):
+            self._posix_spawn(args, executable, env, restore_signals,
+                              p2cread, p2cwrite,
+                              c2pread, c2pwrite,
+                              errread, errwrite)
+            return
+    
+        orig_executable = executable
+    
+        # For transferring possible exec failure from child to parent.
+        # Data format: "exception name:hex errno:description"
+        # Pickle is not used; it is complex and involves memory allocation.
+        errpipe_read, errpipe_write = os.pipe()
+        # errpipe_write must not be in the standard io 0, 1, or 2 fd range.
+        low_fds_to_close = []
+        while errpipe_write < 3:
+            low_fds_to_close.append(errpipe_write)
+            errpipe_write = os.dup(errpipe_write)
+        for low_fd in low_fds_to_close:
+            os.close(low_fd)
+        try:
+            try:
+                # We must avoid complex work that could involve
+                # malloc or free in the child process to avoid
+                # potential deadlocks, thus we do all this here.
+                # and pass it to fork_exec()
+    
+                if env is not None:
+                    env_list = []
+                    for k, v in env.items():
+                        k = os.fsencode(k)
+                        if b'=' in k:
+                            raise ValueError("illegal environment variable name")
+                        env_list.append(k + b'=' + os.fsencode(v))
+                else:
+                    env_list = None  # Use execv instead of execve.
+                executable = os.fsencode(executable)
+                if os.path.dirname(executable):
+                    executable_list = (executable,)
+                else:
+                    # This matches the behavior of os._execvpe().
+                    executable_list = tuple(
+                        os.path.join(os.fsencode(dir), executable)
+                        for dir in os.get_exec_path(env))
+                fds_to_keep = set(pass_fds)
+                fds_to_keep.add(errpipe_write)
+                self.pid = _fork_exec(
+                        args, executable_list,
+                        close_fds, tuple(sorted(map(int, fds_to_keep))),
+                        cwd, env_list,
+                        p2cread, p2cwrite, c2pread, c2pwrite,
+                        errread, errwrite,
+                        errpipe_read, errpipe_write,
+                        restore_signals, start_new_session,
+                        process_group, gid, gids, uid, umask,
+                        preexec_fn, _USE_VFORK)
+                self._child_created = True
+            finally:
+                # be sure the FD is closed no matter what
+                os.close(errpipe_write)
+    
+            self._close_pipe_fds(p2cread, p2cwrite,
+                                 c2pread, c2pwrite,
+                                 errread, errwrite)
+    
+            # Wait for exec to fail or succeed; possibly raising an
+            # exception (limited in size)
+            errpipe_data = bytearray()
+            while True:
+                part = os.read(errpipe_read, 50000)
+                errpipe_data += part
+                if not part or len(errpipe_data) > 50000:
+                    break
+        finally:
+            # be sure the FD is closed no matter what
+            os.close(errpipe_read)
+    
+        if errpipe_data:
+            try:
+                pid, sts = os.waitpid(self.pid, 0)
+                if pid == self.pid:
+                    self._handle_exitstatus(sts)
+                else:
+                    self.returncode = sys.maxsize
+            except ChildProcessError:
+                pass
+    
+            try:
+                exception_name, hex_errno, err_msg = (
+                        errpipe_data.split(b':', 2))
+                # The encoding here should match the encoding
+                # written in by the subprocess implementations
+                # like _posixsubprocess
+                err_msg = err_msg.decode()
+            except ValueError:
+                exception_name = b'SubprocessError'
+                hex_errno = b'0'
+                err_msg = 'Bad exception data from child: {!r}'.format(
+                              bytes(errpipe_data))
+            child_exception_type = getattr(
+                    builtins, exception_name.decode('ascii'),
+                    SubprocessError)
+            if issubclass(child_exception_type, OSError) and hex_errno:
+                errno_num = int(hex_errno, 16)
+                child_exec_never_called = (err_msg == "noexec")
+                if child_exec_never_called:
+                    err_msg = ""
+                    # The error must be from chdir(cwd).
+                    err_filename = cwd
+                else:
+                    err_filename = orig_executable
+                if errno_num != 0:
+                    err_msg = os.strerror(errno_num)
+>               raise child_exception_type(errno_num, err_msg, err_filename)
+E               FileNotFoundError: [Errno 2] No such file or directory: PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+
+/usr/lib64/python3.11/subprocess.py:1950: FileNotFoundError
+_______________________ test_reproducible_double_ingest ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-621/test_reproducible_double_inges0')
+
+    def test_reproducible_double_ingest(tmp_path):
+        db1, db2 = tmp_path / "a.db", tmp_path / "b.db"
+        c1, c2 = store.connect(db1), store.connect(db2)
+>       store.ingest_pilot(PILOT, c1)
+
+tests/test_ke_proto.py:235: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pilot_dir = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+conn = <sqlite3.Connection object at 0x7ffeaaf2d030>
+
+    def ingest_pilot(pilot_dir: str | Path, conn: sqlite3.Connection) -> dict[str, int]:
+        """Ingest one pilot package into ``conn``. Returns record counts.
+    
+        Idempotent: previous rows for the same pilot are removed first.
+        """
+        pilot = Path(pilot_dir).resolve()
+        if not pilot.is_dir():
+>           raise FileNotFoundError(f"pilot dir not found: {pilot}")
+E           FileNotFoundError: pilot dir not found: /root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554
+
+ke/store.py:134: FileNotFoundError
+___________________ test_negative_corrupted_package_detected ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-621/test_negative_corrupted_packag0')
+
+    def test_negative_corrupted_package_detected(tmp_path):
+        """Injected violations must be caught: proves invariants are not vacuous."""
+        bad = tmp_path / "bad-pilot"
+>       shutil.copytree(PILOT, bad)
+
+tests/test_ke_proto.py:265: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554')
+dst = PosixPath('/tmp/pytest-of-root/pytest-621/test_negative_corrupted_packag0/bad-pilot')
+symlinks = False, ignore = None
+copy_function = <function copy2 at 0x7ffff09f8040>
+ignore_dangling_symlinks = False, dirs_exist_ok = False
+
+    def copytree(src, dst, symlinks=False, ignore=None, copy_function=copy2,
+                 ignore_dangling_symlinks=False, dirs_exist_ok=False):
+        """Recursively copy a directory tree and return the destination directory.
+    
+        If exception(s) occur, an Error is raised with a list of reasons.
+    
+        If the optional symlinks flag is true, symbolic links in the
+        source tree result in symbolic links in the destination tree; if
+        it is false, the contents of the files pointed to by symbolic
+        links are copied. If the file pointed by the symlink doesn't
+        exist, an exception will be added in the list of errors raised in
+        an Error exception at the end of the copy process.
+    
+        You can set the optional ignore_dangling_symlinks flag to true if you
+        want to silence this exception. Notice that this has no effect on
+        platforms that don't support os.symlink.
+    
+        The optional ignore argument is a callable. If given, it
+        is called with the `src` parameter, which is the directory
+        being visited by copytree(), and `names` which is the list of
+        `src` contents, as returned by os.listdir():
+    
+            callable(src, names) -> ignored_names
+    
+        Since copytree() is called recursively, the callable will be
+        called once for each directory that is copied. It returns a
+        list of names relative to the `src` directory that should
+        not be copied.
+    
+        The optional copy_function argument is a callable that will be used
+        to copy each file. It will be called with the source path and the
+        destination path as arguments. By default, copy2() is used, but any
+        function that supports the same signature (like copy()) can be used.
+    
+        If dirs_exist_ok is false (the default) and `dst` already exists, a
+        `FileExistsError` is raised. If `dirs_exist_ok` is true, the copying
+        operation will continue if it encounters existing directories, and files
+        within the `dst` tree will be overwritten by corresponding files from the
+        `src` tree.
+        """
+        sys.audit("shutil.copytree", src, dst)
+>       with os.scandir(src) as itr:
+             ^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/root/tp-agent/work/m14526/platform-test/epistemic-benchmark/pilots/m8554'
+
+/usr/lib64/python3.11/shutil.py:559: FileNotFoundError
+=============================== warnings summary ===============================
+../../../../usr/lib/python3.11/site-packages/anyio/pytest_plugin.py:14
+  /usr/lib/python3.11/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_ke_proto.py::test_reference_validator_passes - FileNotFound...
+FAILED tests/test_ke_proto.py::test_reproducible_double_ingest - FileNotFound...
+FAILED tests/test_ke_proto.py::test_negative_corrupted_package_detected - Fil...
+ERROR tests/test_ke_proto.py::test_ingest_counts - FileNotFoundError: pilot d...
+ERROR tests/test_ke_proto.py::test_raw_record_traceability - FileNotFoundErro...
+ERROR tests/test_ke_proto.py::test_q1_claims_by_status - FileNotFoundError: p...
+ERROR tests/test_ke_proto.py::test_q2_evidence_by_relation - FileNotFoundErro...
+ERROR tests/test_ke_proto.py::test_q3_provenance_chain_scientific - FileNotFo...
+ERROR tests/test_ke_proto.py::test_q3_provenance_chain_contested - FileNotFou...
+ERROR tests/test_ke_proto.py::test_q4_claims_by_domain - FileNotFoundError: p...
+ERROR tests/test_ke_proto.py::test_q5_evidence_for_claim - FileNotFoundError:...
+ERROR tests/test_ke_proto.py::test_q6_stats_distributions - FileNotFoundError...
+ERROR tests/test_ke_proto.py::test_xref_invariants_match_file_recomputation
+ERROR tests/test_ke_proto.py::test_ke_validation_all_pass - FileNotFoundError...
+ERROR tests/test_ke_proto.py::test_ingest_idempotent - FileNotFoundError: pil...
+3 failed, 94 passed, 3 skipped, 1 warning, 12 errors in 32.14s
+rc=1

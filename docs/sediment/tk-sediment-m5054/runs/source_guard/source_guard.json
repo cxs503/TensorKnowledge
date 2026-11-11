@@ -1,0 +1,43 @@
+{
+  "probe": "source guard tests at the pinned commit",
+  "source": {
+    "repo": "/root/tensor-ecosystem/TensorSPH",
+    "sha": "82b72a15c044259d1e7c8d638e9273705fa42e7b",
+    "commit_time": "2026-11-07T05:31:53+00:00"
+  },
+  "archive_paths": [
+    "tests/test_threed_artifacts.py",
+    "benchmarks/threed_kernel/report.json",
+    "benchmarks/threed_shear/report.json",
+    "benchmarks/threed_hydrostatic/report.json"
+  ],
+  "doc_link_check": {
+    "path": "docs/verification_threed.md",
+    "command": "git -C /root/tensor-ecosystem/TensorSPH cat-file -e 82b72a15c044259d1e7c8d638e9273705fa42e7b:docs/verification_threed.md",
+    "returncode": 128,
+    "exists": false
+  },
+  "pytest": {
+    "command": "/usr/bin/python3 -m pytest tests/test_threed_artifacts.py -v --no-header -p no:cacheprovider --tb=no",
+    "cwd": "/tmp/m5054-guard-m3a77ovz",
+    "returncode": 1,
+    "summary": "2 failed, 1 passed, 1 warning in 0.18s",
+    "passed": 1,
+    "failed": 2,
+    "cases": [
+      {
+        "test": "tests/test_threed_artifacts.py::test_kernel_report_meets_its_criteria",
+        "status": "PASSED"
+      },
+      {
+        "test": "tests/test_threed_artifacts.py::test_shear_report_meets_its_criteria",
+        "status": "FAILED"
+      },
+      {
+        "test": "tests/test_threed_artifacts.py::test_hydrostatic_report_meets_its_criteria",
+        "status": "FAILED"
+      }
+    ]
+  },
+  "conclusion": "guard tests cannot pass at this commit: committed reports say verdict=fail while the guard asserts verdict=pass"
+}

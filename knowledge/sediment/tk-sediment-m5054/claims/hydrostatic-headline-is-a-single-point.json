@@ -1,0 +1,32 @@
+{
+  "id": "tkc:sph-m5054:hydrostatic-headline-is-a-single-point",
+  "statement": "The hydrostatic-column benchmark reports verdict 'fail' with 4 of 8 criteria false. Its 2.75 % bottom-pressure error exists only for the best run (Adami wall, c0 = 20): c0 = 10 gives -4.30 %, c0 = 5 gives -8.74 %, the Tait-only wall model gives -25.23 %, and the per-layer core maximum relative error is 43.17 %. The 2.7 % figure is therefore a single bottom-load number and must not be read as per-layer pressure accuracy.",
+  "claim_type": "interpretive",
+  "scope": {
+    "domain": "SPH hydrostatic pressure / wall boundary condition",
+    "system": "3-D wall-bounded column at rest, 8x8 base, nz in {12,16,24}, rho0 = 1000 kg/m^3, g = 9.81 m/s^2",
+    "conditions": [
+      "Adami vs Tait wall model",
+      "c0 in {5,10,20} m/s",
+      "t_end = 0.3 s"
+    ],
+    "exclusions": [
+      "does not cover dynamic free-surface cases"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "draft",
+  "evidence_refs": [
+    "tke:sph-m5054:hydro-bottom-best",
+    "tke:sph-m5054:hydro-bottom-tait",
+    "tke:sph-m5054:hydro-core-max",
+    "tke:sph-m5054:hydro-verdict"
+  ],
+  "created_at": "2026-11-11T00:00:00Z",
+  "created_by": "ke.sediment_extract (mission m14526)",
+  "version": "1.0.0",
+  "notes": [
+    "The failed criteria are interior_pressure_within_15pct_best, bottom_pressure_within_15pct_all, column_settled_window_drift_below_2pct and centre_of_mass_drift_below_1pct.",
+    "Re-derived reference: p_bottom = rho0*g*(H - dx/2) = 1000*9.81*0.155 = 1520.55 Pa."
+  ]
+}
