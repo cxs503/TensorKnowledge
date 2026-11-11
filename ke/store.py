@@ -45,7 +45,7 @@ import sqlite3
 from pathlib import Path
 from typing import Any, Iterable
 
-from . import contract
+from . import assets, contract
 
 #: default authoritative DSN (peer auth inside the container)
 DEFAULT_PG_DSN = "postgresql+psycopg:///tensorknowledge?host=/var/run/postgresql"
@@ -243,6 +243,7 @@ def connect(db_path: str | Path = ":memory:", *, backend: str | None = None,
         conn.execute("PRAGMA foreign_keys = ON")
         store = Store(conn, "sqlite", db_path=str(db_path))
         store.scripts(contract.SCHEMA)
+        store.scripts(assets.ASSET_SCHEMA)
         conn.commit()
         return store
     if backend != "pg":
@@ -272,6 +273,7 @@ def connect(db_path: str | Path = ":memory:", *, backend: str | None = None,
         cur.execute(f'SET search_path TO "{schema}"')
     raw.commit()
     store.scripts(contract.SCHEMA)
+    store.scripts(assets.ASSET_SCHEMA)
     raw.commit()
     return store
 
