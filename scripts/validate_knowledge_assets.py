@@ -248,6 +248,24 @@ def main() -> int:
         except ValueError as exc:
             errors.append(str(exc))
 
+    # ---- sediment packages: each declares its own verifier in manifest.json ----
+    # A package that cannot reach its read-only source repository is reported as
+    # skipped (never counted as passed); a package whose verifier exits non-zero
+    # for any other reason fails this validator.
+    sediment_status: dict[str, str] = {}
+    sediment_root = ROOT / "knowledge" / "sediment"
+    if sediment_root.is_dir():
+        import validate_sediment_packages as sediment_runner
+
+        for pkg in sediment_runner.packages(sediment_root):
+            result = sediment_runner.run_package(pkg)
+            sediment_status[pkg.name] = result["status"]
+            if result["status"] == "fail":
+                errors.append(
+                    f"knowledge/sediment/{pkg.name}: verifier {result.get('entry')} "
+                    f"failed (rc={result['returncode']})"
+                )
+
     if errors:
         print("Knowledge asset validation FAILED")
         for error in errors:
@@ -258,7 +276,10 @@ def main() -> int:
         "Knowledge asset validation PASSED: "
         f"{len(nodes)} nodes, {len(tutorials)} tutorial metadata file(s), "
         f"{len(pathways)} pathway(s), "
-        f"{len(list(SCHEMA_DIR.glob('*.schema.json')))} schemas."
+        f"{len(list(SCHEMA_DIR.glob('*.schema.json')))} schemas, "
+        f"{len(sediment_status)} sediment package(s) "
+        f"({sum(1 for v in sediment_status.values() if v == 'pass')} verified, "
+        f"{sum(1 for v in sediment_status.values() if v.startswith('skipped'))} skipped)."
     )
     print("Note: integrity checks do not establish domain accuracy or learning effectiveness.")
     return 0

@@ -1,0 +1,27 @@
+{
+  "id": "tkc:sloshing-lbm:swe-frequency-validity-bound",
+  "statement": "浅水（SWE）链与精确色散的一阶频率比 = sqrt(kh / tanh(kh))，在 kh = 0.6283 时取 1.0622，即 SWE 快 6.22%。频率误差 <= 3%/5%/10% 的 kh 上限分别为 0.4300/0.5602/0.8106，由单调二分 swe_ratio(kh) = 1.03/1.05/1.10 独立求得。故在 IN48-N07 深度上浅水链的一阶频率误差超出 3% 判据，该低阶链只有在 kh < 0.4300 时才能作为频率参照。",
+  "claim_type": "methodological",
+  "scope": {
+    "domain": "vessel-motion / tank sloshing",
+    "system": "shallow-water equations vs exact linear dispersion",
+    "conditions": [
+      "first sloshing mode, rectangular tank, finite relative depth kh"
+    ],
+    "exclusions": [
+      "frequency only: no amplitude/phase statement is made by this bound"
+    ]
+  },
+  "modality": "asserted",
+  "epistemic_status": "draft",
+  "evidence_refs": [
+    "tke:sloshing-lbm:e07-swe-frequency-validity-bound",
+    "tke:sloshing-lbm:e08-swe-frequency-validity-bound"
+  ],
+  "created_at": "2026-11-11T00:00:00Z",
+  "created_by": "tkc-agent:m14530",
+  "version": "1.0.0",
+  "notes": [
+    "this bound is the transferable part of the mission: it is geometry independent"
+  ]
+}
