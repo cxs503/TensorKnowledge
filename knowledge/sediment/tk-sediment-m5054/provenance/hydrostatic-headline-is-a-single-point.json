@@ -1,0 +1,48 @@
+{
+  "id": "tkp:sph-m5054:hydrostatic-headline-is-a-single-point",
+  "generated_entity": {
+    "id": "tkc:sph-m5054:hydrostatic-headline-is-a-single-point",
+    "entity_type": "claim",
+    "version": "1.0.0"
+  },
+  "activity": {
+    "id": "tk-sediment-m5054-hydrostatic-headline-is-a-single-point",
+    "activity_type": "extraction",
+    "description": "Spec-driven extraction of the 3-D SPH operator verification delivered by mission m5054: every quote is located programmatically in the pinned blobs of TensorSPH@82b72a15, every reference value in the benchmark table is recomputed from the committed report JSON with the formula stored beside it (2*nu*k^2 for the unsteady-Stokes decay rate, rho0*g*(H-dx/2) for the hydrostatic bottom pressure, the analytic kernel normalisation integrals). Producer writes draft/unassessed records only; independent review is not performed here.",
+    "started_at": "2026-11-11T00:00:00Z",
+    "used_entities": [
+      "TensorSPH@82b72a15c044259d1e7c8d638e9273705fa42e7b"
+    ],
+    "software": [
+      {
+        "name": "ke.sediment_extract",
+        "version": "1.0.0"
+      }
+    ],
+    "parameters": {
+      "task_key": "tk-sediment-m5054",
+      "source_repo": "TensorSPH",
+      "source_sha": "82b72a15c044259d1e7c8d638e9273705fa42e7b",
+      "source_branch": "agent/m5054",
+      "source_pr": 338,
+      "spec_sha256": "a945f113b5a17011324daf0f16f2613b761439c846859b60ade74f5bd06df8e5"
+    }
+  },
+  "agents": [
+    {
+      "id": "ke.sediment_extract (mission m14526)",
+      "agent_type": "software-agent",
+      "role": "producer (spec-driven extraction, no self-review)"
+    }
+  ],
+  "derived_from": [
+    "TensorSPH mission m5054",
+    "TensorSPH@82b72a15c044259d1e7c8d638e9273705fa42e7b",
+    "task_key:tk-sediment-m5054"
+  ],
+  "attributed_to": [
+    "mission m5054 (deepseek-v4-flash)"
+  ],
+  "recorded_at": "2026-11-11T00:00:00Z",
+  "version": "1.0.0"
+}

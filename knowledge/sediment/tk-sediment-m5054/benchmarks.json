@@ -1,0 +1,232 @@
+{
+  "name": "tensorsph-threed-operator-benchmarks",
+  "description": "Every reference value below is recomputed by ke.sediment_extract from the pinned report JSON: exact kernel normalisation integrals, the analytic Laplace symbol -9*(1/(pi h^3))/h^2, the unsteady-Stokes decay rate 2*nu*(2*pi/L)^2, the hydrostatic bottom load rho0*g*(H-dx/2). 'got' is the committed artifact number. Rows outside tolerance are kept, not dropped.",
+  "source": "TensorSPH@82b72a15c044259d1e7c8d638e9273705fa42e7b",
+  "rows": [
+    {
+      "id": "kernel-integral",
+      "source": "benchmarks/threed_kernel/report.json",
+      "ref_label": "int W dV = 1 (analytic)",
+      "ref_expr": "1.0",
+      "ref_vars": {},
+      "ref": 1.0,
+      "got": 1.000000000000004,
+      "abs_error": 3.9968028886505635e-15,
+      "rel_error": 3.9968028886505635e-15,
+      "rel_error_pct": 3.9968028886505635e-13,
+      "tolerance": {
+        "kind": "percent",
+        "value": 1e-09
+      },
+      "within_tolerance": true
+    },
+    {
+      "id": "kernel-second-moment",
+      "source": "benchmarks/threed_kernel/report.json",
+      "ref_label": "int r^2 laplacian(W) dV = 6 (analytic)",
+      "ref_expr": "6.0",
+      "ref_vars": {},
+      "ref": 6.0,
+      "got": 5.99999999985,
+      "abs_error": -1.5000001241105565e-10,
+      "rel_error": -2.5000002068509275e-11,
+      "rel_error_pct": -2.5000002068509275e-09,
+      "tolerance": {
+        "kind": "percent",
+        "value": 1e-06
+      },
+      "within_tolerance": true
+    },
+    {
+      "id": "kernel-laplacian-origin",
+      "source": "benchmarks/threed_kernel/report.json",
+      "ref_label": "-9*(1/(pi h^3))/h^2 (cubic-spline Laplacian at r=0)",
+      "ref_expr": "-9.0*(1.0/(pi*h**3))/h**2",
+      "ref_vars": {
+        "h": "quadrature.h"
+      },
+      "ref": -7715709630.006805,
+      "got": -7715709630.006805,
+      "abs_error": 0.0,
+      "rel_error": -0.0,
+      "rel_error_pct": -0.0,
+      "tolerance": {
+        "kind": "percent",
+        "value": 1e-09
+      },
+      "within_tolerance": true
+    },
+    {
+      "id": "shear-decay-n24",
+      "source": "benchmarks/threed_shear/report.json",
+      "ref_label": "2*nu*(2*pi/L)^2 (unsteady-Stokes decay rate)",
+      "ref_expr": "2*nu*(2*pi/box)**2",
+      "ref_vars": {
+        "nu": "params.nu",
+        "box": "params.box"
+      },
+      "ref": 3.947841760435743,
+      "got": 3.842136631721668,
+      "abs_error": -0.10570512871407534,
+      "rel_error": -0.02677542189593945,
+      "rel_error_pct": -2.677542189593945,
+      "tolerance": {
+        "kind": "percent",
+        "value": 3.0
+      },
+      "within_tolerance": true
+    },
+    {
+      "id": "shear-decay-n12",
+      "source": "benchmarks/threed_shear/report.json",
+      "ref_label": "2*nu*(2*pi/L)^2 (unsteady-Stokes decay rate)",
+      "ref_expr": "2*nu*(2*pi/box)**2",
+      "ref_vars": {
+        "nu": "params.nu",
+        "box": "params.box"
+      },
+      "ref": 3.947841760435743,
+      "got": 3.449615226334117,
+      "abs_error": -0.4982265341016263,
+      "rel_error": -0.12620225539299088,
+      "rel_error_pct": -12.620225539299087,
+      "tolerance": {
+        "kind": "percent",
+        "value": 15.0
+      },
+      "within_tolerance": true
+    },
+    {
+      "id": "shear-raw-n20",
+      "source": "benchmarks/threed_shear/report.json",
+      "ref_label": "2*nu*(2*pi/L)^2, raw Laplacian, n = 20",
+      "ref_expr": "2*nu*(2*pi/box)**2",
+      "ref_vars": {
+        "nu": "params.nu",
+        "box": "params.box"
+      },
+      "ref": 3.947841760435743,
+      "got": 4.40031743576077,
+      "abs_error": 0.45247567532502675,
+      "rel_error": 0.1146134274832446,
+      "rel_error_pct": 11.46134274832446,
+      "tolerance": {
+        "kind": "percent",
+        "value": 3.0
+      },
+      "within_tolerance": false
+    },
+    {
+      "id": "shear-renorm-n20",
+      "source": "benchmarks/threed_shear/report.json",
+      "ref_label": "2*nu*(2*pi/L)^2, renormalised Laplacian, n = 20",
+      "ref_expr": "2*nu*(2*pi/box)**2",
+      "ref_vars": {
+        "nu": "params.nu",
+        "box": "params.box"
+      },
+      "ref": 3.947841760435743,
+      "got": 3.7830066203366384,
+      "abs_error": -0.16483514009910483,
+      "rel_error": -0.04175322875172969,
+      "rel_error_pct": -4.175322875172969,
+      "tolerance": {
+        "kind": "percent",
+        "value": 3.0
+      },
+      "within_tolerance": false
+    },
+    {
+      "id": "hydro-bottom-best",
+      "source": "benchmarks/threed_hydrostatic/report.json",
+      "ref_label": "rho0*g*(H - dx/2) (hydrostatic bottom load)",
+      "ref_expr": "rho0*g*(H-dx/2)",
+      "ref_vars": {
+        "rho0": "params.rho0",
+        "g": "params.gravity",
+        "H": "runs[0].height",
+        "dx": "runs[0].dx"
+      },
+      "ref": 1520.55,
+      "got": 1478.7719570524944,
+      "abs_error": -41.77804294750558,
+      "rel_error": -0.027475612737171144,
+      "rel_error_pct": -2.7475612737171144,
+      "tolerance": {
+        "kind": "percent",
+        "value": 3.0
+      },
+      "within_tolerance": true
+    },
+    {
+      "id": "hydro-bottom-tait",
+      "source": "benchmarks/threed_hydrostatic/report.json",
+      "ref_label": "rho0*g*(H - dx/2), Tait-only wall model (control run)",
+      "ref_expr": "rho0*g*(H-dx/2)",
+      "ref_vars": {
+        "rho0": "params.rho0",
+        "g": "params.gravity",
+        "H": "runs[3].height",
+        "dx": "runs[3].dx"
+      },
+      "ref": 1520.55,
+      "got": 1136.9277857634372,
+      "abs_error": -383.62221423656274,
+      "rel_error": -0.2522917459054702,
+      "rel_error_pct": -25.22917459054702,
+      "tolerance": {
+        "kind": "percent",
+        "value": 15.0
+      },
+      "within_tolerance": false
+    },
+    {
+      "id": "hydro-core-max",
+      "source": "benchmarks/threed_hydrostatic/report.json",
+      "ref_label": "0 (exact hydrostatic profile), core layers",
+      "ref_expr": "0.0",
+      "ref_vars": {},
+      "ref": 0.0,
+      "got": 0.4317410388718815,
+      "abs_error": 0.4317410388718815,
+      "rel_error": null,
+      "rel_error_pct": null,
+      "tolerance": {
+        "kind": "absolute",
+        "value": 0.15
+      },
+      "within_tolerance": false
+    },
+    {
+      "id": "lattice-second-moment-K",
+      "source": "benchmarks/threed_kernel/report.json",
+      "ref_label": "continuum second moment K = 2 (lattice value may differ)",
+      "ref_expr": "2.0",
+      "ref_vars": {},
+      "ref": 2.0,
+      "got": 2.3468535456329125,
+      "abs_error": 0.3468535456329125,
+      "rel_error": 0.17342677281645624,
+      "rel_error_pct": 17.342677281645624,
+      "tolerance": {
+        "kind": "percent",
+        "value": 15.0
+      },
+      "within_tolerance": false
+    }
+  ],
+  "summary": {
+    "rows": 11,
+    "rows_with_tolerance": 11,
+    "rows_within_tolerance": 6,
+    "rows_outside_tolerance": [
+      "shear-raw-n20",
+      "shear-renorm-n20",
+      "hydro-bottom-tait",
+      "hydro-core-max",
+      "lattice-second-moment-K"
+    ],
+    "max_abs_rel_error_pct": 25.22917459054702,
+    "worst_row": "hydro-bottom-tait"
+  }
+}
