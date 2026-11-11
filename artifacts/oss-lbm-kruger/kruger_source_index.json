@@ -1,0 +1,277 @@
+{
+  "repo": "lbm-principles-practice/code",
+  "commit": "6e2c592fdc3592c14dfd52f860fc1ceea930bcb0",
+  "commit_short": "6e2c592",
+  "files": {
+    "chapter5/poiseuille_BB.m": {
+      "sha256": "d10553e939ea671cd952a15e6270f630a115bc84f78ed7302a1afebde2be8589",
+      "lines": 150,
+      "quoted_spans": [
+        {
+          "line_start": 24,
+          "line_end": 24,
+          "quote": "tau=sqrt(3/16)+0.5;     % relaxation time (BGK model) (tau=sqrt(3/16)+0.5 gives exact solution)"
+        },
+        {
+          "line_start": 48,
+          "line_end": 50,
+          "quote": "ybottom=0;\nytop=NY;\nu_analy=-4*u_max/(NY^2).*(y-ybottom).*(y-ytop);"
+        },
+        {
+          "line_start": 100,
+          "line_end": 102,
+          "quote": "        f(1,:,k) = w(k)*(rho_inlet+...\n            3*(cx(k)*u(NX-1,:)+cy(k)*v(NX-1,:)))...\n             +(f(NX-1,:,k)-feq(NX-1,:,k));"
+        },
+        {
+          "line_start": 93,
+          "line_end": 93,
+          "quote": "        feq(:,:,k)=w(k)*(rho + 3*(u*cx(k)+v*cy(k)));"
+        }
+      ]
+    },
+    "chapter5/couette_wetnode.m": {
+      "sha256": "f344e5578d333f5fb17e305791762d1389543d4297652dcae8b4e6e0676a08a7",
+      "lines": 163,
+      "quoted_spans": [
+        {
+          "line_start": 43,
+          "line_end": 45,
+          "quote": "% 1) Equilibrium scheme:                        wetnode=1 \n% 2) Non-equilibrium extrapolation method:      wetnode=2 \n% 3) Non-equilibrium bounce-back method:        wetnode=else "
+        }
+      ]
+    },
+    "chapter5/couette_BB.m": {
+      "sha256": "6398f42f660f81e1fced77e871aa65809b93fde8ad9569f6c3ea989b495660b4",
+      "lines": 132,
+      "quoted_spans": [
+        {
+          "line_start": 106,
+          "line_end": 108,
+          "quote": "    % Top wall (moving with tangential velocity u_max)\n    fprop(:,NY,4)=f(:,NY,2);\n    fprop(:,NY,7)=f(:,NY,5)-(1/6)*u_max;"
+        },
+        {
+          "line_start": 43,
+          "line_end": 43,
+          "quote": "u_analy=u_max/NY.*y;"
+        }
+      ]
+    },
+    "chapter5/poiseuille_wetnode.m": {
+      "sha256": "1eace2b94ddadac2ddab2fd91ca238b40ebdd0f2039c2d84dfc427b0c0a9f872",
+      "lines": 187,
+      "quoted_spans": [
+        {
+          "line_start": 56,
+          "line_end": 58,
+          "quote": "gradP=8*nu*u_max/(ytop-ybottom)^2;\nrho_outlet=1;\nrho_inlet=3.*(NX-1).*gradP+rho_outlet;"
+        },
+        {
+          "line_start": 42,
+          "line_end": 44,
+          "quote": "% Wall locations\nybottom=1;\nytop=NY;"
+        }
+      ]
+    },
+    "chapter6/force_poiseuille_BB.m": {
+      "sha256": "28214d46fd324032699602343105dd782d220e3f664298bfd79d7bd4a5769c20",
+      "lines": 240,
+      "quoted_spans": [
+        {
+          "line_start": 52,
+          "line_end": 54,
+          "quote": "% First order discretisation in time/configuration space:                  force_spatial_order=1\n% Second order discretisation in time/configuration space:                 force_spatial_order=2\n% First order discretisation in velocity space (Buick and Greated):        force_velocity_order=1"
+        },
+        {
+          "line_start": 61,
+          "line_end": 63,
+          "quote": "% 1) Constant body force and Zero pressure gradient:                        select_combination=1 \n% 2) Constant body force (50%) and Constant pressure gradient (50%):        select_combination=2 \n% 3) Linearly varying body force (50%) and Linearly varying pressure gradient (50%):select_combination=else "
+        },
+        {
+          "line_start": 103,
+          "line_end": 103,
+          "quote": "        feq(i,:,k)=w(k)-0.5*w(k)*3*(cx(k)*forcex(i)+cy(k)*forcey(i)); "
+        }
+      ]
+    },
+    "chapter13/python3/vortexdecay.py": {
+      "sha256": "bc21ebea57c8f52c2708da969f158f03de0d2f33e51c425a2cb86df29b74ecb4",
+      "lines": 143,
+      "quoted_spans": [
+        {
+          "line_start": 55,
+          "line_end": 55,
+          "quote": "    td = 1/(nu*(kx*kx+ky*ky))"
+        },
+        {
+          "line_start": 57,
+          "line_end": 58,
+          "quote": "    u = np.array([-u_max*np.sqrt(ky/kx)*np.cos(kx*X)*np.sin(ky*Y)*np.exp(-t/td),\n                   u_max*np.sqrt(kx/ky)*np.sin(kx*X)*np.cos(ky*Y)*np.exp(-t/td)])"
+        },
+        {
+          "line_start": 114,
+          "line_end": 116,
+          "quote": "        L2rho = np.sqrt( sumrhoe2  / sumrhoa2 )\n        L2ux  = np.sqrt( sumue2[0] / sumua2[0] )\n        L2uy  = np.sqrt( sumue2[1] / sumua2[1] )"
+        }
+      ]
+    },
+    "chapter13/cpu/LBM.h": {
+      "sha256": "455b6f2b698669f94f168400a9746e3eaa39ed9e6c3f0e9d15166fe7f82b32d4",
+      "lines": 71,
+      "quoted_spans": [
+        {
+          "line_start": 29,
+          "line_end": 30,
+          "quote": "const double nu = 1.0/6.0;\nconst double tau = 3.0*nu+0.5;"
+        },
+        {
+          "line_start": 17,
+          "line_end": 18,
+          "quote": "const unsigned int NX = 32*scale;\nconst unsigned int NY = NX;"
+        }
+      ]
+    },
+    "chapter13/gpu/compile.sh": {
+      "sha256": "d8fef9c4ef21637df14b0a5b218b73df4caaa1075ba084c4a2300e570566d8a0",
+      "lines": 10,
+      "quoted_spans": [
+        {
+          "line_start": 9,
+          "line_end": 9,
+          "quote": "nvcc -arch sm_20 -v --ptxas-options=-v -O3 seconds.cpp main.cu -o sim"
+        }
+      ]
+    },
+    "chapter13/mpi/blocking/compile.sh": {
+      "sha256": "d48ba3760e7c2870a7516bcde7a30352c3190f578db97280fa97e2da34f473a2",
+      "lines": 15,
+      "quoted_spans": [
+        {
+          "line_start": 7,
+          "line_end": 7,
+          "quote": "mpic++ ${CXXFLAGS} -c LBM.cpp -o LBM.o"
+        }
+      ]
+    },
+    "chapter13/openmp/compile.sh": {
+      "sha256": "ba2efab28b0ae05d21a8ff283d845eb56f373abf15b6faf1e1ab1d2da65d2370",
+      "lines": 15,
+      "quoted_spans": [
+        {
+          "line_start": 7,
+          "line_end": 7,
+          "quote": "g++ ${CXXFLAGS} -fopenmp -c LBM.cpp -o LBM.o"
+        }
+      ]
+    },
+    "chapter9/shanchen.cpp": {
+      "sha256": "216029bb79d532d15587dca34f20eb33bc3b95690f971e3c31adb4e798537bfd",
+      "lines": 429,
+      "quoted_spans": [
+        {
+          "line_start": 74,
+          "line_end": 76,
+          "quote": "double psi(double dens) {\n  return rho0 * (1. - exp(-dens / rho0));\n}"
+        },
+        {
+          "line_start": 99,
+          "line_end": 100,
+          "quote": "          fxtemp *= (-g[s][ss] * psiloc);\n          fytemp *= (-g[s][ss] * psiloc);"
+        },
+        {
+          "line_start": 134,
+          "line_end": 134,
+          "quote": "          press[k] += (g[s][ss] * psi(rho[s][k]) * psi(rho[ss][k]) / 6.);"
+        },
+        {
+          "line_start": 369,
+          "line_end": 369,
+          "quote": "  const double gamma = delta_press * rad;"
+        },
+        {
+          "line_start": 40,
+          "line_end": 40,
+          "quote": "const double radius = 15.; // initial droplet radius"
+        }
+      ]
+    },
+    "chapter11/IBLBM_2D_Poiseuille.cpp": {
+      "sha256": "ba7d042704a373958a1699a1722927ac7e05f5f13c9dffa0573628c94f7fa63a",
+      "lines": 777,
+      "quoted_spans": [
+        {
+          "line_start": 15,
+          "line_end": 15,
+          "quote": " * It uses the D2Q9 lattice with Guo's forcing term."
+        },
+        {
+          "line_start": 70,
+          "line_end": 70,
+          "quote": "int IBM_stencil = 2; // interpolation stencil; available values: 2, 4"
+        },
+        {
+          "line_start": 73,
+          "line_end": 73,
+          "quote": "const double wall_stiffness = 1; // IBM spring constant"
+        },
+        {
+          "line_start": 71,
+          "line_end": 71,
+          "quote": "const int wall_num_nodes = 19; // number of IBM nodes along each wall"
+        }
+      ]
+    },
+    "chapter8/gaussian_1d_magic12.cpp": {
+      "sha256": "438b269a145bac1768c962ab27baa61ea4771ffaef2bcef64b962d414ba0e2cb",
+      "lines": 167,
+      "quoted_spans": [
+        {
+          "line_start": 122,
+          "line_end": 122,
+          "quote": "        double omega_plus_phase=1.0/(magic/(1.0/omega-0.5)+0.5);"
+        },
+        {
+          "line_start": 46,
+          "line_end": 47,
+          "quote": "double magic=1.0/12.0;\ndouble omega=0.5;"
+        }
+      ]
+    },
+    "chapter8/gaussian_1d_magic6.cpp": {
+      "sha256": "36c450be32fc1360f9d02c438709d6bad090ffb0a145cfbfcbf2342e52b8e276",
+      "lines": 166,
+      "quoted_spans": [
+        {
+          "line_start": 46,
+          "line_end": 47,
+          "quote": "double magic=1.0/6.0;\ndouble omega=0.3;"
+        }
+      ]
+    },
+    "chapter8/cylinder.cpp": {
+      "sha256": "374484238f9aa9d64224fad9fb0cff6dc9488e0222ab8d0a878168d5da19f357",
+      "lines": 388,
+      "quoted_spans": [
+        {
+          "line_start": 51,
+          "line_end": 52,
+          "quote": "double omega=1.0/(0.5+0.5/32.0);\ndouble omega_plus=2.0-omega;"
+        },
+        {
+          "line_start": 52,
+          "line_end": 53,
+          "quote": "double omega_plus=2.0-omega;\ndouble omega_minus=omega;"
+        },
+        {
+          "line_start": 231,
+          "line_end": 232,
+          "quote": "    NY=129;\n    NX=129;"
+        },
+        {
+          "line_start": 238,
+          "line_end": 238,
+          "quote": "    radius=40;"
+        }
+      ]
+    }
+  }
+}

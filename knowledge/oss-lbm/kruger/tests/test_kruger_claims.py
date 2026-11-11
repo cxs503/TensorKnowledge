@@ -139,8 +139,15 @@ def test_run_evidence_matches_run_artifacts():
 def _repo() -> Path | None:
     for cand in [os.environ.get("KRUGER_REPO"), "/root/oss-cache/lbm-principles-practice-code",
                  "/root/oss-cache/code"]:
-        if cand and Path(cand, "chapter5").is_dir():
-            return Path(cand)
+        if not cand:
+            continue
+        try:
+            if Path(cand, "chapter5").is_dir():
+                return Path(cand)
+        except OSError:
+            # unreadable parent (e.g. hosted runners cannot traverse /root):
+            # treat as absent so the live tier skips instead of erroring out
+            continue
     return None
 
 
