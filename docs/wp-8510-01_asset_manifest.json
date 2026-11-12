@@ -1,0 +1,213 @@
+{
+  "package_id": "wp-8510-01",
+  "task_type": "01-asset-registration",
+  "report_id": 8510,
+  "source_uri": "tensor://reports/8510",
+  "source_hash": "sha256:89c40d5daaece7b52882a5d137706680a8132e886aa8922092461a8d15208ad7",
+  "source_hash_verified": true,
+  "source_field": "markdown",
+  "source_length_chars": 10454,
+  "title": "P248-N07 绿色航行 EEXI 达到值量纲缺陷修复与单位账本门成熟化（缺陷因子 1852，修后误差 5.1e-14%）",
+  "scenario_key": "green_navigation_eexi_units",
+  "report_status": "published",
+  "report_created_at": "2026-11-08T12:21:20.965413+00:00",
+  "report_tags": [
+    "EEXI",
+    "EEDI",
+    "量纲账本",
+    "green_navigation",
+    "P248-N07",
+    "defect_fix",
+    "unit_ledger"
+  ],
+  "sections": [
+    {
+      "heading": "1 案例介绍（物理背景 / 参数 / 量纲）",
+      "locator": "markdown lines 12-61",
+      "contains": ["physical_background", "defect_mechanism", "parameter_table", "dimensional_analysis"]
+    },
+    {
+      "heading": "2 怎么做的（方法 / 流程 / 工具链）",
+      "locator": "markdown lines 62-81",
+      "contains": ["method_steps", "toolchain_references"]
+    },
+    {
+      "heading": "3 计算结果（数字表）",
+      "locator": "markdown lines 82-137",
+      "contains": ["gate_results_table", "test_summary", "code_audit_table"]
+    },
+    {
+      "heading": "4 结果图",
+      "locator": "markdown lines 138-146",
+      "contains": ["figure_reference"]
+    },
+    {
+      "heading": "5 影响清单（impact list）",
+      "locator": "markdown lines 147-168",
+      "contains": ["impact_table", "behavioral_changes"]
+    },
+    {
+      "heading": "6 注意点（踩过的坑 / 局限 / 适用范围）",
+      "locator": "markdown lines 169-188",
+      "contains": ["caveats", "limitations", "scope"]
+    },
+    {
+      "heading": "7 误差判定（逐项，显式回答是否 < 3%）",
+      "locator": "markdown lines 189-206",
+      "contains": ["error_judgment_table", "baseline_declaration"]
+    },
+    {
+      "heading": "8 复现 / 验证 / 回滚",
+      "locator": "markdown lines 207-234",
+      "contains": ["reproduction_commands", "verification_ledger", "rollback_procedure"]
+    },
+    {
+      "heading": "9 审计链",
+      "locator": "markdown lines 235-248",
+      "contains": ["audit_chain_table", "honest_declaration"]
+    }
+  ],
+  "tables": [
+    {
+      "id": "tbl-8510-params",
+      "caption": "算例参数表",
+      "locator": "markdown section 1.3",
+      "columns": ["参数", "值", "单位/来源"],
+      "rows": 3,
+      "quoted_keys": ["SFOC", "C_F_HFO", "auxiliary_power_formula"]
+    },
+    {
+      "id": "tbl-8510-gates",
+      "caption": "门禁结果表",
+      "locator": "markdown section 3",
+      "columns": ["门禁", "结果", "数值"],
+      "rows": 6,
+      "quoted_keys": ["attained_matches_hand_calc", "defect_factor_1852", "ledger_rejects_legacy", "mutation_negative_control", "caliber_dedup", "api_endpoint_units"]
+    },
+    {
+      "id": "tbl-8510-cases",
+      "caption": "3 条算例修前/修后对照",
+      "locator": "markdown section 3",
+      "columns": ["算例", "修前值", "修后值", "规范值", "缺陷因子"],
+      "rows": 3,
+      "quoted_keys": ["case_1", "case_2", "case_3"]
+    },
+    {
+      "id": "tbl-8510-code-audit",
+      "caption": "代码审计表（修前/修后关键行）",
+      "locator": "markdown section 3 末",
+      "columns": ["文件", "行号", "角色", "代码片段"],
+      "rows": 11,
+      "quoted_keys": ["green_shipping.py", "generate.py", "test_mepc.py", "test_eexi_units_m1895.py", "test_green_efficiency_m1895.py"]
+    },
+    {
+      "id": "tbl-8510-impact",
+      "caption": "影响清单",
+      "locator": "markdown section 5",
+      "columns": ["类别", "位置", "影响", "处理"],
+      "rows": 11,
+      "quoted_keys": ["defect_body", "same_caliber_cii", "same_caliber_eedi", "same_caliber_ice_cii", "new_units_ledger", "new_scan_tool", "downstream_read", "legacy_duplicate_1", "legacy_duplicate_2", "test_threshold", "adjacent_defect"]
+    },
+    {
+      "id": "tbl-8510-errors",
+      "caption": "误差判定表",
+      "locator": "markdown section 7",
+      "columns": ["关键量", "基准", "误差", "是否<3%"],
+      "rows": 4,
+      "quoted_keys": ["attained_post_3cases", "attained_pre_3cases", "ratio_post", "mutation_negative_control"]
+    },
+    {
+      "id": "tbl-8510-audit-chain",
+      "caption": "审计链",
+      "locator": "markdown section 9",
+      "columns": ["判据", "证据", "位置"],
+      "rows": 7,
+      "quoted_keys": ["attained_matches_hand_calc", "defect_factor_1852", "ledger_rejects_legacy", "mutation_negative_control", "caliber_dedup", "api_endpoint_units", "before_after_comparison"]
+    }
+  ],
+  "figures": [
+    {
+      "id": "fig-8510-eexi-before-after",
+      "name": "eexi_units_before_after",
+      "caption": "左：3 条算例的对数坐标柱状对比（修前 / 修后 / 规则要求值），修前恒为修后 1/1852；右：相对独立手算的误差随 V_ref 扫描——修前为常数 −99.946%，修后为 0。",
+      "has_embedded_png": false,
+      "note": "figures 数组仅有 name+caption 元数据，无 png_base64 内嵌数据；原始 PNG 位于 artifacts/p248_n07_eexi_units/eexi_units_before_after.png"
+    }
+  ],
+  "code_references": [
+    {
+      "id": "code-8510-green-shipping",
+      "file": "backend/api/green_shipping.py",
+      "function": "_gn_attained_index",
+      "context": "缺陷本体：分母口径修复",
+      "locator": "markdown section 5 影响清单"
+    },
+    {
+      "id": "code-8510-units-ledger",
+      "file": "backend/physics/units.py",
+      "context": "新增能力：量纲账本",
+      "locator": "markdown section 5 影响清单"
+    },
+    {
+      "id": "code-8510-green-index",
+      "file": "backend/physics/green_index.py",
+      "context": "新增能力：唯一实现",
+      "locator": "markdown section 5 影响清单"
+    },
+    {
+      "id": "code-8510-scan-tool",
+      "file": "tools/scan_green_index_sinks.py",
+      "context": "新增能力：口径去重门",
+      "locator": "markdown section 5 影响清单"
+    },
+    {
+      "id": "code-8510-test-eexi",
+      "file": "backend/tests/test_eexi_units_m1895.py",
+      "context": "新增门测试：修前 15 failed / 7 passed → 修后 22 passed",
+      "locator": "markdown section 8 验证台账"
+    },
+    {
+      "id": "code-8510-test-units",
+      "file": "backend/tests/test_physics_units.py",
+      "context": "量纲账本测试：17 passed",
+      "locator": "markdown section 8 验证台账"
+    },
+    {
+      "id": "code-8510-generate",
+      "file": "artifacts/p248_n07_eexi_units/generate.py",
+      "context": "重算 gate_numbers.json + 图",
+      "locator": "markdown section 8 复现"
+    }
+  ],
+  "claims": [],
+  "claims_note": "本工作包为 01-asset-registration（源资产登记），不做抽取。claims 留空，由后续工作包（如 02-claim-extraction）填充。",
+  "unresolved_assets": [
+    {
+      "id": "ua-8510-fig-png",
+      "description": "报告引用了 eexi_units_before_after.png，但 figures 数组无 png_base64 数据，原始 PNG 文件位于 artifacts/p248_n07_eexi_units/ 但未在工作树内",
+      "status": "unresolved"
+    },
+    {
+      "id": "ua-8510-gate-numbers",
+      "description": "gate_numbers.json 被多次引用为数字源，但文件位于 artifacts/p248_n07_eexi_units/ 未在工作树内",
+      "status": "unresolved"
+    },
+    {
+      "id": "ua-8510-legacy-duplicate",
+      "description": "platforms/energy-efficiency/backend/src/python/main.py 被标记为遗留重复服务，加弃用横幅但未在本节点修复",
+      "status": "unresolved"
+    },
+    {
+      "id": "ua-8510-adjacent-defect",
+      "description": "backend/api/virtual_data_models.py:20 字符串未闭合导致文件无法 parse，与本节点无关但记录在案",
+      "status": "unresolved"
+    },
+    {
+      "id": "ua-8510-rule-coefficients",
+      "description": "规则系数（a, c, 折减率）为转录值，离线未回读 IMO 原文，要求值层仍为 WITHHELD",
+      "status": "unresolved"
+    }
+  ],
+  "registration_timestamp": "2026-11-12T01:30:00Z",
+  "registered_by": "agent-wp-8510-01"
+}
