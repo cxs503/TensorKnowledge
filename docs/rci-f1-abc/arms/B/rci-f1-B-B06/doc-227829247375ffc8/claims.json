@@ -1,0 +1,296 @@
+[
+ {
+  "claim_id": "227829247375ffc8-c01",
+  "statement": "- 合并前基线：`ad3d19ae6e5f55f02ac691f6719d4a5ae68f4cdc`。",
+  "claim_form": "descriptive",
+  "faithfulness": {
+   "quote": "- 合并前基线：`ad3d19ae6e5f55f02ac691f6719d4a5ae68f4cdc`。",
+   "span": [
+    13,
+    13
+   ],
+   "lines": 1,
+   "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080"
+  },
+  "conditions": {
+   "stated_in_source": false,
+   "scope": "not-stated-in-source",
+   "text": ""
+  },
+  "quality": {
+   "locator_precision": 5,
+   "propositional_content": 3,
+   "numeric_grounding": 5,
+   "context_sufficiency": 3,
+   "scope_disclosure": 2,
+   "traceability": 5,
+   "rubric": {
+    "locator_precision": "5=quote is one line; 4=2-3 lines; 3=4-6; 2=7-10; 1=>10 lines in span",
+    "propositional_content": "5=quantitative result/capability, 4=requirement/verification/assumption, 3=descriptive, 2=plan/limitation hint, 0=no proposition",
+    "numeric_grounding": "5=>=2 numeric tokens; 4=1 numeric token; 2=only unit/range hint; 0=none",
+    "context_sufficiency": "5=quote >=120 chars and self-contained; 4=>=80; 3=>=50; 2=<50",
+    "scope_disclosure": "5=sentence states its own scope/assumption; 2=scope absent but explicitly marked not-stated-in-source; 0=scope implied by us (forbidden -> claim dropped)",
+    "traceability": "5=quote names a concrete artifact (path/file/test) or code pointer; 3=refers to an internal section/table; 1=none"
+   }
+  },
+  "ko_state": {
+   "mission": "succeeded",
+   "review": "not-reviewed",
+   "scientific_verification": "not-verified",
+   "verified": false
+  },
+  "drop_history": []
+ },
+ {
+  "claim_id": "227829247375ffc8-c02",
+  "statement": "均通过。**这只证明 Ruff 两步通过，不等于整个 lint job 已通过。** 本地另跑 mypy core gate，在旧 PyTorch 类型定义下发现 `src/tensorlbm/solver.py:437 [no-any-return]`，尚未处理；",
+  "claim_form": "descriptive",
+  "faithfulness": {
+   "quote": "均通过。**这只证明 Ruff 两步通过，不等于整个 lint job 已通过。**\n本地另跑 mypy core gate，在旧 PyTorch 类型定义下发现\n`src/tensorlbm/solver.py:437 [no-any-return]`，尚未处理；",
+   "span": [
+    78,
+    80
+   ],
+   "lines": 3,
+   "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080"
+  },
+  "conditions": {
+   "stated_in_source": false,
+   "scope": "not-stated-in-source",
+   "text": ""
+  },
+  "quality": {
+   "locator_precision": 4,
+   "propositional_content": 3,
+   "numeric_grounding": 4,
+   "context_sufficiency": 5,
+   "scope_disclosure": 2,
+   "traceability": 5,
+   "rubric": {
+    "locator_precision": "5=quote is one line; 4=2-3 lines; 3=4-6; 2=7-10; 1=>10 lines in span",
+    "propositional_content": "5=quantitative result/capability, 4=requirement/verification/assumption, 3=descriptive, 2=plan/limitation hint, 0=no proposition",
+    "numeric_grounding": "5=>=2 numeric tokens; 4=1 numeric token; 2=only unit/range hint; 0=none",
+    "context_sufficiency": "5=quote >=120 chars and self-contained; 4=>=80; 3=>=50; 2=<50",
+    "scope_disclosure": "5=sentence states its own scope/assumption; 2=scope absent but explicitly marked not-stated-in-source; 0=scope implied by us (forbidden -> claim dropped)",
+    "traceability": "5=quote names a concrete artifact (path/file/test) or code pointer; 3=refers to an internal section/table; 1=none"
+   }
+  },
+  "ko_state": {
+   "mission": "succeeded",
+   "review": "not-reviewed",
+   "scientific_verification": "not-verified",
+   "verified": false
+  },
+  "drop_history": []
+ },
+ {
+  "claim_id": "227829247375ffc8-c03",
+  "statement": "实际触发 `NameError`， 影响 `TestResistanceBreakdown3D` 的三个用例。",
+  "claim_form": "quantitative-result",
+  "faithfulness": {
+   "quote": "实际触发 `NameError`，\n影响 `TestResistanceBreakdown3D` 的三个用例。",
+   "span": [
+    88,
+    89
+   ],
+   "lines": 2,
+   "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080"
+  },
+  "conditions": {
+   "stated_in_source": false,
+   "scope": "not-stated-in-source",
+   "text": ""
+  },
+  "quality": {
+   "locator_precision": 4,
+   "propositional_content": 5,
+   "numeric_grounding": 4,
+   "context_sufficiency": 3,
+   "scope_disclosure": 2,
+   "traceability": 5,
+   "rubric": {
+    "locator_precision": "5=quote is one line; 4=2-3 lines; 3=4-6; 2=7-10; 1=>10 lines in span",
+    "propositional_content": "5=quantitative result/capability, 4=requirement/verification/assumption, 3=descriptive, 2=plan/limitation hint, 0=no proposition",
+    "numeric_grounding": "5=>=2 numeric tokens; 4=1 numeric token; 2=only unit/range hint; 0=none",
+    "context_sufficiency": "5=quote >=120 chars and self-contained; 4=>=80; 3=>=50; 2=<50",
+    "scope_disclosure": "5=sentence states its own scope/assumption; 2=scope absent but explicitly marked not-stated-in-source; 0=scope implied by us (forbidden -> claim dropped)",
+    "traceability": "5=quote names a concrete artifact (path/file/test) or code pointer; 3=refers to an internal section/table; 1=none"
+   }
+  },
+  "ko_state": {
+   "mission": "succeeded",
+   "review": "not-reviewed",
+   "scientific_verification": "not-verified",
+   "verified": false
+  },
+  "drop_history": []
+ },
+ {
+  "claim_id": "227829247375ffc8-c04",
+  "statement": "下表统计修复后的 **47 failed + 8 errors**，分类用于安排调查，不代替每项契约审查。",
+  "claim_form": "limitation",
+  "faithfulness": {
+   "quote": "下表统计修复后的 **47 failed + 8 errors**，分类用于安排调查，不代替每项契约审查。",
+   "span": [
+    106,
+    106
+   ],
+   "lines": 1,
+   "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080"
+  },
+  "conditions": {
+   "stated_in_source": false,
+   "scope": "not-stated-in-source",
+   "text": ""
+  },
+  "quality": {
+   "locator_precision": 5,
+   "propositional_content": 3,
+   "numeric_grounding": 5,
+   "context_sufficiency": 3,
+   "scope_disclosure": 2,
+   "traceability": 1,
+   "rubric": {
+    "locator_precision": "5=quote is one line; 4=2-3 lines; 3=4-6; 2=7-10; 1=>10 lines in span",
+    "propositional_content": "5=quantitative result/capability, 4=requirement/verification/assumption, 3=descriptive, 2=plan/limitation hint, 0=no proposition",
+    "numeric_grounding": "5=>=2 numeric tokens; 4=1 numeric token; 2=only unit/range hint; 0=none",
+    "context_sufficiency": "5=quote >=120 chars and self-contained; 4=>=80; 3=>=50; 2=<50",
+    "scope_disclosure": "5=sentence states its own scope/assumption; 2=scope absent but explicitly marked not-stated-in-source; 0=scope implied by us (forbidden -> claim dropped)",
+    "traceability": "5=quote names a concrete artifact (path/file/test) or code pointer; 3=refers to an internal section/table; 1=none"
+   }
+  },
+  "ko_state": {
+   "mission": "succeeded",
+   "review": "not-reviewed",
+   "scientific_verification": "not-verified",
+   "verified": false
+  },
+  "drop_history": []
+ },
+ {
+  "claim_id": "227829247375ffc8-c05",
+  "statement": "- 修复前 `--collect-only -m 'not slow'` 成功收集 6702 项、取消选择 14 项；",
+  "claim_form": "descriptive",
+  "faithfulness": {
+   "quote": "- 修复前 `--collect-only -m 'not slow'` 成功收集 6702 项、取消选择 14 项；",
+   "span": [
+    144,
+    144
+   ],
+   "lines": 1,
+   "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080"
+  },
+  "conditions": {
+   "stated_in_source": false,
+   "scope": "not-stated-in-source",
+   "text": ""
+  },
+  "quality": {
+   "locator_precision": 5,
+   "propositional_content": 3,
+   "numeric_grounding": 5,
+   "context_sufficiency": 3,
+   "scope_disclosure": 2,
+   "traceability": 5,
+   "rubric": {
+    "locator_precision": "5=quote is one line; 4=2-3 lines; 3=4-6; 2=7-10; 1=>10 lines in span",
+    "propositional_content": "5=quantitative result/capability, 4=requirement/verification/assumption, 3=descriptive, 2=plan/limitation hint, 0=no proposition",
+    "numeric_grounding": "5=>=2 numeric tokens; 4=1 numeric token; 2=only unit/range hint; 0=none",
+    "context_sufficiency": "5=quote >=120 chars and self-contained; 4=>=80; 3=>=50; 2=<50",
+    "scope_disclosure": "5=sentence states its own scope/assumption; 2=scope absent but explicitly marked not-stated-in-source; 0=scope implied by us (forbidden -> claim dropped)",
+    "traceability": "5=quote names a concrete artifact (path/file/test) or code pointer; 3=refers to an internal section/table; 1=none"
+   }
+  },
+  "ko_state": {
+   "mission": "succeeded",
+   "review": "not-reviewed",
+   "scientific_verification": "not-verified",
+   "verified": false
+  },
+  "drop_history": []
+ },
+ {
+  "claim_id": "227829247375ffc8-c06",
+  "statement": "- 尝试全 fast suite（maxfail=3、单测 timeout=30），总执行等待超过 180 秒。",
+  "claim_form": "quantitative-result",
+  "faithfulness": {
+   "quote": "- 尝试全 fast suite（maxfail=3、单测 timeout=30），总执行等待超过 180 秒。",
+   "span": [
+    146,
+    146
+   ],
+   "lines": 1,
+   "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080"
+  },
+  "conditions": {
+   "stated_in_source": false,
+   "scope": "not-stated-in-source",
+   "text": ""
+  },
+  "quality": {
+   "locator_precision": 5,
+   "propositional_content": 5,
+   "numeric_grounding": 5,
+   "context_sufficiency": 3,
+   "scope_disclosure": 2,
+   "traceability": 1,
+   "rubric": {
+    "locator_precision": "5=quote is one line; 4=2-3 lines; 3=4-6; 2=7-10; 1=>10 lines in span",
+    "propositional_content": "5=quantitative result/capability, 4=requirement/verification/assumption, 3=descriptive, 2=plan/limitation hint, 0=no proposition",
+    "numeric_grounding": "5=>=2 numeric tokens; 4=1 numeric token; 2=only unit/range hint; 0=none",
+    "context_sufficiency": "5=quote >=120 chars and self-contained; 4=>=80; 3=>=50; 2=<50",
+    "scope_disclosure": "5=sentence states its own scope/assumption; 2=scope absent but explicitly marked not-stated-in-source; 0=scope implied by us (forbidden -> claim dropped)",
+    "traceability": "5=quote names a concrete artifact (path/file/test) or code pointer; 3=refers to an internal section/table; 1=none"
+   }
+  },
+  "ko_state": {
+   "mission": "succeeded",
+   "review": "not-reviewed",
+   "scientific_verification": "not-verified",
+   "verified": false
+  },
+  "drop_history": []
+ },
+ {
+  "claim_id": "227829247375ffc8-c07",
+  "statement": "**这是中断结果，不是完整回归通过，也不是 timeout=30 能限制全套测试总时间的证明。** - 完整数值回归、GPU、前端构建未执行；",
+  "claim_form": "quantitative-result",
+  "faithfulness": {
+   "quote": "**这是中断结果，不是完整回归通过，也不是 timeout=30 能限制全套测试总时间的证明。**\n- 完整数值回归、GPU、前端构建未执行；",
+   "span": [
+    149,
+    150
+   ],
+   "lines": 2,
+   "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080"
+  },
+  "conditions": {
+   "stated_in_source": false,
+   "scope": "not-stated-in-source",
+   "text": ""
+  },
+  "quality": {
+   "locator_precision": 4,
+   "propositional_content": 5,
+   "numeric_grounding": 4,
+   "context_sufficiency": 3,
+   "scope_disclosure": 2,
+   "traceability": 1,
+   "rubric": {
+    "locator_precision": "5=quote is one line; 4=2-3 lines; 3=4-6; 2=7-10; 1=>10 lines in span",
+    "propositional_content": "5=quantitative result/capability, 4=requirement/verification/assumption, 3=descriptive, 2=plan/limitation hint, 0=no proposition",
+    "numeric_grounding": "5=>=2 numeric tokens; 4=1 numeric token; 2=only unit/range hint; 0=none",
+    "context_sufficiency": "5=quote >=120 chars and self-contained; 4=>=80; 3=>=50; 2=<50",
+    "scope_disclosure": "5=sentence states its own scope/assumption; 2=scope absent but explicitly marked not-stated-in-source; 0=scope implied by us (forbidden -> claim dropped)",
+    "traceability": "5=quote names a concrete artifact (path/file/test) or code pointer; 3=refers to an internal section/table; 1=none"
+   }
+  },
+  "ko_state": {
+   "mission": "succeeded",
+   "review": "not-reviewed",
+   "scientific_verification": "not-verified",
+   "verified": false
+  },
+  "drop_history": []
+ }
+]
