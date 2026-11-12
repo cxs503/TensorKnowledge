@@ -1,0 +1,130 @@
+{
+  "report_id": "1610",
+  "source_hash": "sha256:c426979905fa50a5cd372e8e7b300ad931596c437ea1cbabb79df59c7aaa41de",
+  "source_hash_matches": true,
+  "quotes_checked": 15,
+  "quotes_resolvable": 15,
+  "unresolved": [],
+  "checks": [
+    {
+      "locator_id": "q01",
+      "meaning": "report has a reproduction section",
+      "quote": "## 6. 复现",
+      "resolvable": true,
+      "char_offset": 5524,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q02",
+      "meaning": "stated check count and runtime environment",
+      "quote": "运行环境：8 项检查，host loadavg [140.46, 109.14, 121.32]，总墙钟 51.8 s（纯 numpy，无 GPU，全部可单机复现）。",
+      "resolvable": true,
+      "char_offset": 5799,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q03",
+      "meaning": "test file + case count",
+      "quote": "落地为 `tests/test_cmaes_literature_verification.py`（15 个用例）。",
+      "resolvable": true,
+      "char_offset": 1296,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q04",
+      "meaning": "repro command / pass count",
+      "quote": "python -m pytest tests/test_cmaes_literature_verification.py -q  # 15 passed",
+      "resolvable": true,
+      "char_offset": 5643,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q05",
+      "meaning": "convergence acceptance statement",
+      "quote": "达标工况 9/9，最坏比值 1.800（判据 ≤3）。",
+      "resolvable": true,
+      "char_offset": 3041,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q06",
+      "meaning": "closed-form parameter agreement statement",
+      "quote": "全部维度最坏值 **0**",
+      "resolvable": true,
+      "char_offset": 2229,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q07",
+      "meaning": "defect-fix block heading (B1-B4)",
+      "quote": "复核中定位并修复的 4 处偏差（最小改动）",
+      "resolvable": true,
+      "char_offset": 1356,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q08",
+      "meaning": "declared artifact path 1",
+      "quote": "artifacts/cmaes_verification/cmaes_convergence_vs_reference.png",
+      "resolvable": true,
+      "char_offset": 3960,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q09",
+      "meaning": "declared artifact path 2",
+      "quote": "artifacts/cmaes_verification/cmaes_evals_to_target.png",
+      "resolvable": true,
+      "char_offset": 4191,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q10",
+      "meaning": "declared artifact path 3",
+      "quote": "artifacts/cmaes_verification/cmaes_achieved_precision.png",
+      "resolvable": true,
+      "char_offset": 4371,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q11",
+      "meaning": "declared limitation (multimodal not covered)",
+      "quote": "多峰函数（rastrigin/ackley）在 N=10、4e4 评价内两者都停在局部极小",
+      "resolvable": true,
+      "char_offset": 4527,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q12",
+      "meaning": "sampling-fidelity figure in the property table",
+      "quote": "经验协方差相对 Frobenius 误差 0.002",
+      "resolvable": true,
+      "char_offset": 3143,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q13",
+      "meaning": "sampling-fidelity row of the error table",
+      "quote": "采样协方差",
+      "resolvable": true,
+      "char_offset": 5146,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q14",
+      "meaning": "B1 A/B table column",
+      "quote": "修复后评价数",
+      "resolvable": true,
+      "char_offset": 3537,
+      "occurrences": 1
+    },
+    {
+      "locator_id": "q15",
+      "meaning": "closed-form parameter table caption",
+      "quote": "闭式策略参数（Hansen 2016 式 49-55）",
+      "resolvable": true,
+      "char_offset": 1729,
+      "occurrences": 1
+    }
+  ]
+}
