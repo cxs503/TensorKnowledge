@@ -1,0 +1,65 @@
+{
+  "ok": true,
+  "platform_gate_module": "/root/tp-agent/kf/ops/knowledge_factory/gates.py",
+  "structure": [
+    {
+      "gate": "g1_valid_json",
+      "ok": true
+    },
+    {
+      "gate": "g2_schema_pass",
+      "ok": true
+    },
+    {
+      "gate": "g3_identity",
+      "ok": true,
+      "mismatched": []
+    }
+  ],
+  "structure_ok": true,
+  "evidence": [
+    {
+      "gate": "g4_source_hash_matches",
+      "ok": true,
+      "claimed": "sha256:bdd7bb0e76c1",
+      "actual": "sha256:bdd7bb0e76c1"
+    },
+    {
+      "gate": "g4b_source_field",
+      "ok": true
+    },
+    {
+      "gate": "g5_source_locator_resolvable",
+      "ok": true,
+      "checked": 0,
+      "resolved": 0,
+      "unresolved": [],
+      "too_short": []
+    },
+    {
+      "gate": "g5b_all_claims_located_or_unresolved",
+      "ok": true,
+      "offenders": []
+    },
+    {
+      "gate": "g6_no_duplicate_ids",
+      "ok": true,
+      "intra": [],
+      "cross": [],
+      "n_claims": 0
+    },
+    {
+      "gate": "g7_claim_namespace",
+      "ok": true,
+      "foreign": []
+    }
+  ],
+  "evidence_ok": true,
+  "evidence_stats": {
+    "n_claims": 0,
+    "locators_checked": 0,
+    "locators_resolved": 0,
+    "locator_rate": null
+  },
+  "note": "claims=0 时 g5/g5b/g6 为空真：stats.locator_rate=None 表示无可定位 claim，平台按“零 claim 合法”处理，不得读作定位率 100%"
+}
