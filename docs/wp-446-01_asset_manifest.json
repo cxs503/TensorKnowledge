@@ -1,0 +1,116 @@
+{
+  "package_id": "wp-446-01",
+  "task_type": "01-asset-registration",
+  "report_id": 446,
+  "source_uri": "tensor://reports/446",
+  "source_hash": "sha256:38f1af2420fb2db5d1f12878daec9382dc83c2a59d155f86f0ad47e7450df596",
+  "source_hash_verified": true,
+  "source_field": "markdown",
+  "source_length_chars": 1859,
+  "title": "CAESES 参数化船型方法论对标吸收：特征曲线驱动变形 + 约束保持局部编辑",
+  "scenario_key": "tensorcad_caeses_absorption",
+  "report_status": "published",
+  "report_created_at": "2026-10-30T19:48:52.659209+00:00",
+  "report_tags": [
+    "CAESES",
+    "parametric-hull",
+    "feature-curve",
+    "constraint-preservation",
+    "TensorCAD"
+  ],
+  "sections": [
+    {
+      "heading": "① 案例介绍",
+      "locator": "markdown lines 3-18",
+      "contains": ["physical_background", "geometry_description", "parameter_table"]
+    },
+    {
+      "heading": "② 方法",
+      "locator": "markdown lines 20-27",
+      "contains": ["method_steps", "mechanism_references"]
+    },
+    {
+      "heading": "③ 计算结果",
+      "locator": "markdown lines 29-36",
+      "contains": ["gate_results_table", "unit_test_summary"]
+    },
+    {
+      "heading": "④ 结果图",
+      "locator": "markdown lines 38-39",
+      "contains": ["figure_reference"]
+    },
+    {
+      "heading": "⑤ 注意点",
+      "locator": "markdown lines 41-46",
+      "contains": ["limitations", "caveats"]
+    },
+    {
+      "heading": "⑥ 误差判定",
+      "locator": "markdown lines 48-55",
+      "contains": ["error_judgment_table"]
+    },
+    {
+      "heading": "治理升级 (RPT-REWORK m583)",
+      "locator": "markdown lines 59-75",
+      "contains": ["governance_metadata", "pending_supplement_table"]
+    }
+  ],
+  "tables": [
+    {
+      "id": "tbl-446-params",
+      "caption": "参数表",
+      "locator": "markdown section ①",
+      "columns": ["参数", "值", "单位"],
+      "rows": 5,
+      "quoted_keys": ["base_radius", "resolution", "edit_radius", "blend_width", "num_test_rays"]
+    },
+    {
+      "id": "tbl-446-gates",
+      "caption": "门禁结果表",
+      "locator": "markdown section ③",
+      "columns": ["门禁", "结果", "数值"],
+      "rows": 3,
+      "quoted_keys": ["non_edit_deviation_zero", "feature_curve_editability", "feature_curve_locality"]
+    },
+    {
+      "id": "tbl-446-errors",
+      "caption": "误差判定表",
+      "locator": "markdown section ⑥",
+      "columns": ["关键量", "基准", "误差", "是否<3%"],
+      "rows": 3
+    }
+  ],
+  "figures": [
+    {
+      "id": "fig-446-caeses-mechanisms",
+      "name": "caeses_mechanisms",
+      "caption": "左：特征曲线骨架（waterline/profile/keel）+ 编辑影响域（橙色圆）。右：约束保持编辑——球面（黑）+ 编辑后球面（红虚线）+ 编辑区域（橙色）+ 非编辑测试点（绿色），非编辑区偏差=0。",
+      "has_embedded_png": false,
+      "note": "figures 数组仅有 name+caption 元数据，无 png_base64 内嵌数据"
+    }
+  ],
+  "code_references": [
+    {
+      "id": "code-446-test",
+      "file": "test_caeses_mechanisms.py",
+      "context": "单元测试 13/13 passed",
+      "locator": "markdown section ③ 末行"
+    }
+  ],
+  "claims": [],
+  "claims_note": "本工作包为 01-asset-registration（源资产登记），不做抽取。claims 留空，由后续工作包（如 02-claim-extraction）填充。",
+  "unresolved_assets": [
+    {
+      "id": "ua-446-fig-png",
+      "description": "报告引用了特征曲线骨架图和约束保持编辑图，但 figures 数组无 png_base64 数据，原始 PNG 文件位置未知",
+      "status": "unresolved"
+    },
+    {
+      "id": "ua-446-test-source",
+      "description": "test_caeses_mechanisms.py 被引用但仓库内路径未给出，需后续定位",
+      "status": "unresolved"
+    }
+  ],
+  "registration_timestamp": "2026-11-12T00:50:00Z",
+  "registered_by": "agent-wp-446-01"
+}
