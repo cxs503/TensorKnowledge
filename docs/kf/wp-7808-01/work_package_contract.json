@@ -1,0 +1,49 @@
+{
+  "package_id": "wp-7808-01",
+  "task_type": "01-asset-registration",
+  "contract_version": "1.0",
+  "mission_id": null,
+  "lane": "C",
+  "input": {
+    "report_id": "7808",
+    "source_uri": "tensor://reports/7808",
+    "source_field": "markdown",
+    "source_hash": "sha256:ffc30cee99ff03d89aff6a284c91acc4fa94497cbcf63c03cb10b3ecc0f4df7e",
+    "title": "DDES/SAS 混合湍流模块单元测试验证（G21 缺口填补）",
+    "scenario_key": "ddes_unit_verification",
+    "chars": 3389
+  },
+  "objective": {
+    "register_assets": true,
+    "classify_report_type": false
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true
+  },
+  "output": {
+    "asset_manifest.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_locator_resolvable": true,
+    "source_hash_matches": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true
+  },
+  "review": {
+    "required": false,
+    "independent_reviewer": false,
+    "reviewer_role": "evidence-auditor"
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "draft"
+  },
+  "notes": "登记源资产：确认 report_id 与其 markdown 的字节哈希，列出可解析的附件/工件，不做抽取。claims 允许为空数组。 ｜分层=G21|ddes_unit_verification|m",
+  "_transcription_note": "JSON transcription of the YAML work-package contract issued for wp-7808-01 (field names/values unchanged; only the mapping syntax differs so the generator has no YAML dependency at runtime)."
+}
