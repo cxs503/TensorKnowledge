@@ -1,0 +1,51 @@
+{
+  "package_id": "wp-7216-01",
+  "verified_at": "2026-11-12T01:31:36.356633+00:00",
+  "extra_checks": {
+    "db_cross_channel": {
+      "status": "not_run",
+      "detail": "ERROR:  permission denied for table tensor_reports\n"
+    }
+  },
+  "acceptance": {
+    "valid_json": {
+      "ok": true,
+      "detail": "asset_manifest.json + kf_result.json parsed by json.loads"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": "kf_result.v1.schema.json (Draft2020-12) errors=0; local asset_manifest.schema.json (Draft-07) errors=0",
+      "envelope_errors": [],
+      "manifest_errors": [],
+      "schemas": [
+        "schemas/kf_result.v1.schema.json",
+        "docs/kf/wp-7216-01/asset_manifest.schema.json"
+      ]
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": "40/40 locators re-resolved on the live markdown (char span + verbatim + quote sha256)",
+      "failures": [],
+      "unique_quotes": 40
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": "live=sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b manifest=sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b contract=sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b",
+      "chars": {
+        "live": 11338,
+        "manifest": 11338,
+        "contract": 11338
+      }
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": "40 ids / 40 keys; duplicate ids=[] duplicate keys=[]"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": "0 claims; every claim with evidence/unresolved: True; empty-claims reason stated: True"
+    }
+  },
+  "all_ok": true,
+  "note": "Self-check only -- nothing here is a platform verification. No claim is marked verified; the platform gate recomputes hash/locators/taxonomy independently."
+}

@@ -1,0 +1,1392 @@
+{
+  "schema": "asset_manifest.v1",
+  "manifest_version": "1.0",
+  "package_id": "wp-7216-01",
+  "task_type": "01-asset-registration",
+  "report_id": "7216",
+  "lane": "C",
+  "producer": "kf-worker/m15594",
+  "generated_at": "2026-11-12T01:30:05.436212+00:00",
+  "source": {
+    "report_id": "7216",
+    "source_uri": "tensor://reports/7216",
+    "source_field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b",
+    "source_hash": "sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b",
+    "contract_source_hash": "sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b",
+    "hash_match": true,
+    "chars": 11338,
+    "contract_chars": 11338,
+    "chars_match_contract": true,
+    "bytes_utf8": 17984,
+    "lines": 210,
+    "has_crlf": false,
+    "has_trailing_newline": true,
+    "line_counting": "1-based; logical lines = markdown.rstrip(chr(10)).split(chr(10)); char spans index the full markdown string",
+    "fetched_via": "GET /api/v1/tensor/reports/7216",
+    "title": "IN31-N12: LBM Rayleigh-Benard discrete linear stability + two-phase lambda/rho decoupling and Hadamard-Rybczynski comparison",
+    "scenario_key": "lbm_rb_hr_validation",
+    "mission_id": 5628,
+    "status": "published",
+    "created_at": "2026-11-07T16:09:38.005378+00:00",
+    "tags": [
+      "TensorLBM",
+      "Rayleigh-Benard",
+      "linear-stability",
+      "pseudopotential",
+      "Hadamard-Rybczynski",
+      "IN31-N12"
+    ],
+    "contract_title": "IN31-N12: LBM Rayleigh-Benard discrete linear stability + two-phase lambda/rho decoupling and Hadamard-Rybczynski comparison",
+    "contract_scenario_key": "lbm_rb_hr_validation",
+    "title_matches_contract": true,
+    "scenario_matches_contract": true,
+    "platform_figures": [
+      "hr_decoupling_settling.png",
+      "rb_base_profile.png",
+      "rb_eig_vs_sim.png",
+      "rb_growth_rate.png",
+      "rb_ra_c_convergence.png"
+    ],
+    "platform_tags": [
+      "TensorLBM",
+      "Rayleigh-Benard",
+      "linear-stability",
+      "pseudopotential",
+      "Hadamard-Rybczynski",
+      "IN31-N12"
+    ]
+  },
+  "counts": {
+    "assets": 40,
+    "by_class": {
+      "api_symbol_reference": 17,
+      "benchmark_script_reference": 3,
+      "data_artifact_reference": 6,
+      "directory_reference": 1,
+      "figure_reference": 6,
+      "git_branch_reference": 1,
+      "report_markdown": 1,
+      "source_code_reference": 3,
+      "test_reference": 2
+    },
+    "by_resolution": {
+      "referenced_unresolved": 39,
+      "resolved_in_source": 1
+    },
+    "resolved_in_source": 1,
+    "referenced_unresolved": 39,
+    "declared_absent": 0,
+    "figure_declarations_in_prose": 6,
+    "record_figures": 5
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_key": "report-7216:source-markdown",
+      "asset_class": "report_markdown",
+      "label": "report-7216-markdown",
+      "in_report_section": "# IN31-N12 · LBM Rayleigh–Bénard 离散线性稳定性 + 双相黏度比/密度比解耦与 Hadamard–Rybczynski 对拍",
+      "locator": {
+        "method": "document",
+        "source_field": "markdown",
+        "char_start": 0,
+        "char_end": 11338,
+        "line_start": 1,
+        "line_end": 210,
+        "quote": "# IN31-N12 · LBM Rayleigh–Bénard 离散线性稳定性 + 双相黏度比/密度比解耦与 Hadamard–Rybczynski 对拍",
+        "quote_sha256": "sha256:f69b9107e3ee932ec36cb639a333a713ba1bbd96d1d875a688ded83ac2aae033",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(UTF-8 bytes) == contract source_hash",
+        "result": "resolved"
+      },
+      "bytes": 17984,
+      "chars": 11338,
+      "lines": 210,
+      "sha256": "sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b",
+      "hash_scope": "UTF-8 bytes of the `markdown` field served by GET /api/v1/tensor/reports/7216",
+      "local_copy": "runs/wp-7216-01/source_7216.md",
+      "note": "source asset; hash recomputed locally and compared to the contract value"
+    },
+    {
+      "asset_id": "A02",
+      "asset_key": "report-7216:ref:agent/m5628",
+      "asset_class": "git_branch_reference",
+      "label": "branch",
+      "token": "agent/m5628",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "(before first ## heading)",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 80,
+        "char_end": 152,
+        "line_start": 3,
+        "line_end": 3,
+        "quote": "**节点**: IN31-N12（战役 DAG，物理域） · **仓库**: TensorLBM · **分支**: `agent/m5628`",
+        "quote_sha256": "sha256:3d9bfb49ebb5031ebd3270bb59dd0af22e0934c7d70d7952d8b2110ab2644a45",
+        "unique": true
+      },
+      "occurrence_lines": [
+        3
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "git_branch_named_in_prose",
+        "result": "unresolved",
+        "note": "producing branch name only; this工序 does not query the LBM repository refs (out of contract scope)"
+      },
+      "note": "code/test/benchmark pointer declared in the report; bytes unavailable in this worktree"
+    },
+    {
+      "asset_id": "A03",
+      "asset_key": "report-7216:ref:tensorlbm.rb_discrete_stability",
+      "asset_class": "api_symbol_reference",
+      "label": "dotted_symbol",
+      "token": "tensorlbm.rb_discrete_stability",
+      "symbol_key": "tensorlbm.rb_discrete_stability",
+      "form": "backticked_dotted",
+      "in_report_section": "(before first ## heading)",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 154,
+        "char_end": 634,
+        "line_start": 5,
+        "line_end": 5,
+        "quote": "**结论速览**: (1) RB 起稳判据升级为**同一格子算子上的离散线性稳定性特征值**：本仓库新增 `tensorlbm.rb_discrete_stability`（矩阵无关 Jacobian + 谱），其主导特征值与真实非线性 LBM 时间推进的增长率在 ny=16/32 上一致到 **0.01% / 0.06%**（判据 <3% 通过）；离散临界 Rayleigh 数在 ny=16/32/64 上分别为 2687.3/2101.0/1883.6（相对 1707.76 上移 +57.36%/+23.03%/+10.30%）。(2) 双相伪势引擎**库层**已实现 λ=μ_d/μ_c 与 ρ_d/ρ_c 解耦（剪切波实测 λ 误差 ≤0.113%；λ 对密度比的斜率 ≈ 0）。(3) **LBM 端 Hadamard–Rybczynski 对拍 honest FAIL**：伪势双相液滴的沉降被界面寄生流（spurious current ~5e-2）完全淹没，与 HR 解析速度相差 3 个量级以上，未达 15% 判据——详见 §5、§6。",
+        "quote_sha256": "sha256:ff74f8f8896a76c0e5da8441bca1d03d2471ac8d8a7e23c37763a29dd8daea7b",
+        "unique": true
+      },
+      "occurrence_lines": [
+        5
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A04",
+      "asset_key": "report-7216:ref:benchmarks/pending/rayleigh_benard",
+      "asset_class": "directory_reference",
+      "label": "directory",
+      "token": "benchmarks/pending/rayleigh_benard",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 1.1 Rayleigh–Bénard 起稳（2D，刚–刚等温壁）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 899,
+        "char_end": 1215,
+        "line_start": 13,
+        "line_end": 13,
+        "quote": "格子与物理参数（与 `benchmarks/pending/rayleigh_benard` 的基准设置一致）：ν=(τ−1/2)/3=0.11833，α=(τ_T−1/2)/3=0.16667，Pr=ν/α=0.7100，间隙 H=ny（benchmark 约定），水平周期长度 nx=2ny（单卷，a=2πH/nx=π≈3.1416）。Boussinesq 浮力用 Guo 力格式（`thermal.buoyancy_force` + `thermal.collide_bgk_force`），温度用 D2Q5 + 上下壁 anti-bounce-back（ABB），速度用 D2Q9 + pre-streaming 半程反弹。",
+        "quote_sha256": "sha256:6437715523ce4cdd0125f7f9e005d8f3d27a9715f8e87a3d828458a941150863",
+        "unique": true
+      },
+      "occurrence_lines": [
+        13
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "directory/glob reference; no single file to hash"
+    },
+    {
+      "asset_id": "A05",
+      "asset_key": "report-7216:ref:thermal.buoyancy_force",
+      "asset_class": "api_symbol_reference",
+      "label": "dotted_symbol",
+      "token": "thermal.buoyancy_force",
+      "symbol_key": "thermal.buoyancy_force",
+      "form": "backticked_dotted",
+      "in_report_section": "### 1.1 Rayleigh–Bénard 起稳（2D，刚–刚等温壁）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 899,
+        "char_end": 1215,
+        "line_start": 13,
+        "line_end": 13,
+        "quote": "格子与物理参数（与 `benchmarks/pending/rayleigh_benard` 的基准设置一致）：ν=(τ−1/2)/3=0.11833，α=(τ_T−1/2)/3=0.16667，Pr=ν/α=0.7100，间隙 H=ny（benchmark 约定），水平周期长度 nx=2ny（单卷，a=2πH/nx=π≈3.1416）。Boussinesq 浮力用 Guo 力格式（`thermal.buoyancy_force` + `thermal.collide_bgk_force`），温度用 D2Q5 + 上下壁 anti-bounce-back（ABB），速度用 D2Q9 + pre-streaming 半程反弹。",
+        "quote_sha256": "sha256:6437715523ce4cdd0125f7f9e005d8f3d27a9715f8e87a3d828458a941150863",
+        "unique": true
+      },
+      "occurrence_lines": [
+        13
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A06",
+      "asset_key": "report-7216:ref:thermal.collide_bgk_force",
+      "asset_class": "api_symbol_reference",
+      "label": "dotted_symbol",
+      "token": "thermal.collide_bgk_force",
+      "symbol_key": "thermal.collide_bgk_force",
+      "form": "backticked_dotted",
+      "in_report_section": "### 1.1 Rayleigh–Bénard 起稳（2D，刚–刚等温壁）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 899,
+        "char_end": 1215,
+        "line_start": 13,
+        "line_end": 13,
+        "quote": "格子与物理参数（与 `benchmarks/pending/rayleigh_benard` 的基准设置一致）：ν=(τ−1/2)/3=0.11833，α=(τ_T−1/2)/3=0.16667，Pr=ν/α=0.7100，间隙 H=ny（benchmark 约定），水平周期长度 nx=2ny（单卷，a=2πH/nx=π≈3.1416）。Boussinesq 浮力用 Guo 力格式（`thermal.buoyancy_force` + `thermal.collide_bgk_force`），温度用 D2Q5 + 上下壁 anti-bounce-back（ABB），速度用 D2Q9 + pre-streaming 半程反弹。",
+        "quote_sha256": "sha256:6437715523ce4cdd0125f7f9e005d8f3d27a9715f8e87a3d828458a941150863",
+        "unique": true
+      },
+      "occurrence_lines": [
+        13
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A07",
+      "asset_key": "report-7216:ref:tensorlbm.hadamard_rybczynski",
+      "asset_class": "api_symbol_reference",
+      "label": "dotted_symbol",
+      "token": "tensorlbm.hadamard_rybczynski",
+      "symbol_key": "tensorlbm.hadamard_rybczynski",
+      "form": "backticked_dotted",
+      "in_report_section": "### 1.2 双相液滴沉降（Hadamard–Rybczynski）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 1635,
+        "char_end": 1844,
+        "line_start": 30,
+        "line_end": 30,
+        "quote": "λ→0 给出 Rybczynski 气泡（U=ΔρgR²/3μ_c），λ→∞ 给出 Stokes 固体球（U=2ΔρgR²/9μ_c）。本仓已有 `tensorlbm.hadamard_rybczynski`（解析律 + 轴对称有限元 Stokes 求解器，属**已验收**的解析/有限元验证，本节点不重复）；本节点的对象是**伪势（Shan–Chen）双相 LBM 引擎**能否独立设定 λ 与 ρ 比并按该律沉降。",
+        "quote_sha256": "sha256:c261e2b442985caadba19306fa0fd386a071be328d2986ac61a314004575df97",
+        "unique": true
+      },
+      "occurrence_lines": [
+        30,
+        210
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A08",
+      "asset_key": "report-7216:ref:src/tensorlbm/rb_discrete_stability.py",
+      "asset_class": "source_code_reference",
+      "label": "source_module",
+      "token": "src/tensorlbm/rb_discrete_stability.py",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 2.1 离散线性稳定性求解器（新增 `src/tensorlbm/rb_discrete_stability.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 1992,
+        "char_end": 2055,
+        "line_start": 36,
+        "line_end": 36,
+        "quote": "### 2.1 离散线性稳定性求解器（新增 `src/tensorlbm/rb_discrete_stability.py`）",
+        "quote_sha256": "sha256:65634013618db8ecebf28db038a59da2461d0c44c0bcbab3490d6605bb3e74c0",
+        "unique": true
+      },
+      "occurrence_lines": [
+        36,
+        206
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "code/test/benchmark pointer declared in the report; bytes unavailable in this worktree"
+    },
+    {
+      "asset_id": "A09",
+      "asset_key": "report-7216:ref:buoyancy_force",
+      "asset_class": "api_symbol_reference",
+      "label": "identifier",
+      "token": "buoyancy_force",
+      "symbol_key": "buoyancy_force",
+      "form": "backticked_identifier",
+      "in_report_section": "### 2.1 离散线性稳定性求解器（新增 `src/tensorlbm/rb_discrete_stability.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 2231,
+        "char_end": 2499,
+        "line_start": 40,
+        "line_end": 40,
+        "quote": "2. **Jacobian**：步进算子 = 库内原语组合（`temperature_collision`→`temperature_stream`→ABB 壁面→`buoyancy_force`→`collide_bgk_force`(Guo)→`pre_streaming_bounce_back`→`stream`），与 benchmark 主循环逐步同序。Jacobian 用 float64 有限差分 `Jv≈(F(x0+εv)−F(x0))/ε`（ε=1e-6）**矩阵无关**求取，因此不存在\"手推算子与代码脱节\"的风险。",
+        "quote_sha256": "sha256:ce10ee0e87f37f24b74ec4593675ef03aedadcf54ed2591bc8009c16abfbeec0",
+        "unique": true
+      },
+      "occurrence_lines": [
+        40
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A10",
+      "asset_key": "report-7216:ref:collide_bgk_force",
+      "asset_class": "api_symbol_reference",
+      "label": "identifier",
+      "token": "collide_bgk_force",
+      "symbol_key": "collide_bgk_force",
+      "form": "backticked_identifier",
+      "in_report_section": "### 2.1 离散线性稳定性求解器（新增 `src/tensorlbm/rb_discrete_stability.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 2231,
+        "char_end": 2499,
+        "line_start": 40,
+        "line_end": 40,
+        "quote": "2. **Jacobian**：步进算子 = 库内原语组合（`temperature_collision`→`temperature_stream`→ABB 壁面→`buoyancy_force`→`collide_bgk_force`(Guo)→`pre_streaming_bounce_back`→`stream`），与 benchmark 主循环逐步同序。Jacobian 用 float64 有限差分 `Jv≈(F(x0+εv)−F(x0))/ε`（ε=1e-6）**矩阵无关**求取，因此不存在\"手推算子与代码脱节\"的风险。",
+        "quote_sha256": "sha256:ce10ee0e87f37f24b74ec4593675ef03aedadcf54ed2591bc8009c16abfbeec0",
+        "unique": true
+      },
+      "occurrence_lines": [
+        40
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A11",
+      "asset_key": "report-7216:ref:pre_streaming_bounce_back",
+      "asset_class": "api_symbol_reference",
+      "label": "identifier",
+      "token": "pre_streaming_bounce_back",
+      "symbol_key": "pre_streaming_bounce_back",
+      "form": "backticked_identifier",
+      "in_report_section": "### 2.1 离散线性稳定性求解器（新增 `src/tensorlbm/rb_discrete_stability.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 2231,
+        "char_end": 2499,
+        "line_start": 40,
+        "line_end": 40,
+        "quote": "2. **Jacobian**：步进算子 = 库内原语组合（`temperature_collision`→`temperature_stream`→ABB 壁面→`buoyancy_force`→`collide_bgk_force`(Guo)→`pre_streaming_bounce_back`→`stream`），与 benchmark 主循环逐步同序。Jacobian 用 float64 有限差分 `Jv≈(F(x0+εv)−F(x0))/ε`（ε=1e-6）**矩阵无关**求取，因此不存在\"手推算子与代码脱节\"的风险。",
+        "quote_sha256": "sha256:ce10ee0e87f37f24b74ec4593675ef03aedadcf54ed2591bc8009c16abfbeec0",
+        "unique": true
+      },
+      "occurrence_lines": [
+        40
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A12",
+      "asset_key": "report-7216:ref:temperature_collision",
+      "asset_class": "api_symbol_reference",
+      "label": "identifier",
+      "token": "temperature_collision",
+      "symbol_key": "temperature_collision",
+      "form": "backticked_identifier",
+      "in_report_section": "### 2.1 离散线性稳定性求解器（新增 `src/tensorlbm/rb_discrete_stability.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 2231,
+        "char_end": 2499,
+        "line_start": 40,
+        "line_end": 40,
+        "quote": "2. **Jacobian**：步进算子 = 库内原语组合（`temperature_collision`→`temperature_stream`→ABB 壁面→`buoyancy_force`→`collide_bgk_force`(Guo)→`pre_streaming_bounce_back`→`stream`），与 benchmark 主循环逐步同序。Jacobian 用 float64 有限差分 `Jv≈(F(x0+εv)−F(x0))/ε`（ε=1e-6）**矩阵无关**求取，因此不存在\"手推算子与代码脱节\"的风险。",
+        "quote_sha256": "sha256:ce10ee0e87f37f24b74ec4593675ef03aedadcf54ed2591bc8009c16abfbeec0",
+        "unique": true
+      },
+      "occurrence_lines": [
+        40
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A13",
+      "asset_key": "report-7216:ref:temperature_stream",
+      "asset_class": "api_symbol_reference",
+      "label": "identifier",
+      "token": "temperature_stream",
+      "symbol_key": "temperature_stream",
+      "form": "backticked_identifier",
+      "in_report_section": "### 2.1 离散线性稳定性求解器（新增 `src/tensorlbm/rb_discrete_stability.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 2231,
+        "char_end": 2499,
+        "line_start": 40,
+        "line_end": 40,
+        "quote": "2. **Jacobian**：步进算子 = 库内原语组合（`temperature_collision`→`temperature_stream`→ABB 壁面→`buoyancy_force`→`collide_bgk_force`(Guo)→`pre_streaming_bounce_back`→`stream`），与 benchmark 主循环逐步同序。Jacobian 用 float64 有限差分 `Jv≈(F(x0+εv)−F(x0))/ε`（ε=1e-6）**矩阵无关**求取，因此不存在\"手推算子与代码脱节\"的风险。",
+        "quote_sha256": "sha256:ce10ee0e87f37f24b74ec4593675ef03aedadcf54ed2591bc8009c16abfbeec0",
+        "unique": true
+      },
+      "occurrence_lines": [
+        40
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A14",
+      "asset_key": "report-7216:ref:src/tensorlbm/rb_continuum_stability.py",
+      "asset_class": "source_code_reference",
+      "label": "source_module",
+      "token": "src/tensorlbm/rb_continuum_stability.py",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 2.2 连续谱参考（新增 `src/tensorlbm/rb_continuum_stability.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 2971,
+        "char_end": 3030,
+        "line_start": 48,
+        "line_end": 48,
+        "quote": "### 2.2 连续谱参考（新增 `src/tensorlbm/rb_continuum_stability.py`）",
+        "quote_sha256": "sha256:49ef15620aa61fbad59c3a90fbad62129d69995853cb9e616fc095f1bdbfce07",
+        "unique": true
+      },
+      "occurrence_lines": [
+        48,
+        206
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "code/test/benchmark pointer declared in the report; bytes unavailable in this worktree"
+    },
+    {
+      "asset_id": "A15",
+      "asset_key": "report-7216:ref:src/tensorlbm/pseudopotential_hr.py",
+      "asset_class": "source_code_reference",
+      "label": "source_module",
+      "token": "src/tensorlbm/pseudopotential_hr.py",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 2.3 伪势双相 λ/ρ 解耦（新增 `src/tensorlbm/pseudopotential_hr.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 3606,
+        "char_end": 3667,
+        "line_start": 62,
+        "line_end": 62,
+        "quote": "### 2.3 伪势双相 λ/ρ 解耦（新增 `src/tensorlbm/pseudopotential_hr.py`）",
+        "quote_sha256": "sha256:c07d30edd16a8d078aead1933c17f1bc06741a02591e05db78609dbd06f389f2",
+        "unique": true
+      },
+      "occurrence_lines": [
+        62,
+        206
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "code/test/benchmark pointer declared in the report; bytes unavailable in this worktree"
+    },
+    {
+      "asset_id": "A16",
+      "asset_key": "report-7216:ref:multiphase3d.collide_sc_two_component_3d",
+      "asset_class": "api_symbol_reference",
+      "label": "dotted_symbol",
+      "token": "multiphase3d.collide_sc_two_component_3d",
+      "symbol_key": "multiphase3d.collide_sc_two_component_3d",
+      "form": "backticked_dotted",
+      "in_report_section": "### 2.3 伪势双相 λ/ρ 解耦（新增 `src/tensorlbm/pseudopotential_hr.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 3669,
+        "char_end": 3794,
+        "line_start": 64,
+        "line_end": 64,
+        "quote": "- 单松弛 BGK 的单元动力黏度 μ=ρ c_s²(τ−1/2)。若两相同 τ，则 λ 被密度比锁死（λ=ρ_d/ρ_c）。双组分核 `multiphase3d.collide_sc_two_component_3d` 对每个组分独立给 τ，故可由",
+        "quote_sha256": "sha256:791aac0ff848facac7673fc3675e3556aab7244d3e2b9f4c3464498a8bc0a506",
+        "unique": true
+      },
+      "occurrence_lines": [
+        64
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A17",
+      "asset_key": "report-7216:ref:two_phase_viscosity.shear_wave_decay",
+      "asset_class": "api_symbol_reference",
+      "label": "dotted_symbol",
+      "token": "two_phase_viscosity.shear_wave_decay",
+      "symbol_key": "two_phase_viscosity.shear_wave_decay",
+      "form": "backticked_dotted",
+      "in_report_section": "### 2.3 伪势双相 λ/ρ 解耦（新增 `src/tensorlbm/pseudopotential_hr.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 3854,
+        "char_end": 3989,
+        "line_start": 67,
+        "line_end": 67,
+        "quote": "- 解耦不是断言而是**测量**：对每个 (λ, ρ_d/ρ_c) 组合，用 `two_phase_viscosity.shear_wave_decay` 在真实 D2Q9 BGK 核上分别测两相的运动黏度，再按 μ=ρν 组成 λ_measured，与给定 λ 比较。",
+        "quote_sha256": "sha256:5e805e0a969c761490030b0af226f3a333ef3b607dc71a278aa0e963f789470e",
+        "unique": true
+      },
+      "occurrence_lines": [
+        67
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A18",
+      "asset_key": "report-7216:ref:collide_sc_two_component_3d",
+      "asset_class": "api_symbol_reference",
+      "label": "identifier",
+      "token": "collide_sc_two_component_3d",
+      "symbol_key": "collide_sc_two_component_3d",
+      "form": "backticked_identifier",
+      "in_report_section": "### 2.3 伪势双相 λ/ρ 解耦（新增 `src/tensorlbm/pseudopotential_hr.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 3991,
+        "char_end": 4214,
+        "line_start": 69,
+        "line_end": 69,
+        "quote": "- 已定位的库层缺口与补丁：`collide_sc_two_component_3d` 只接受**同一个** gz 给两个组分，无法表达\"只给液滴加重力\"（浮力问题的必需形式）。新增 `collide_two_component_with_gravity(f1,f2,G_12,τ1,τ2,gz1,gz2,u_eq)` 按库内约定逐组分施力，并用单测证明：当 gz1=gz2 且 τ 相同/不同时它**逐位等于**库内核（max|Δ|=0.0）。",
+        "quote_sha256": "sha256:aec3d8638d582e74ffcb5a3403895cc86e07b6fd93a7d1b00d91b9054610850f",
+        "unique": true
+      },
+      "occurrence_lines": [
+        69
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A19",
+      "asset_key": "report-7216:ref:collide_two_component_with_gravity",
+      "asset_class": "api_symbol_reference",
+      "label": "callable",
+      "token": "collide_two_component_with_gravity(f1,f2,G_12,τ1,τ2,gz1,gz2,u_eq)",
+      "symbol_key": "collide_two_component_with_gravity",
+      "form": "backticked_call",
+      "in_report_section": "### 2.3 伪势双相 λ/ρ 解耦（新增 `src/tensorlbm/pseudopotential_hr.py`）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 3991,
+        "char_end": 4214,
+        "line_start": 69,
+        "line_end": 69,
+        "quote": "- 已定位的库层缺口与补丁：`collide_sc_two_component_3d` 只接受**同一个** gz 给两个组分，无法表达\"只给液滴加重力\"（浮力问题的必需形式）。新增 `collide_two_component_with_gravity(f1,f2,G_12,τ1,τ2,gz1,gz2,u_eq)` 按库内约定逐组分施力，并用单测证明：当 gz1=gz2 且 τ 相同/不同时它**逐位等于**库内核（max|Δ|=0.0）。",
+        "quote_sha256": "sha256:aec3d8638d582e74ffcb5a3403895cc86e07b6fd93a7d1b00d91b9054610850f",
+        "unique": true
+      },
+      "occurrence_lines": [
+        69
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A20",
+      "asset_key": "report-7216:ref:benchmarks/rb_discrete_stability/make_figures.py",
+      "asset_class": "benchmark_script_reference",
+      "label": "benchmark_script",
+      "token": "benchmarks/rb_discrete_stability/make_figures.py",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 3.6 图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 7436,
+        "char_end": 7517,
+        "line_start": 152,
+        "line_end": 152,
+        "quote": "见随报告提交的 PNG（全部由 `benchmarks/rb_discrete_stability/make_figures.py` 从 JSON 程序化生成）：",
+        "quote_sha256": "sha256:df39024ee061317aa25077a72664bdf278ee2507ac2839ca7d0858bfd3f80da8",
+        "unique": true
+      },
+      "occurrence_lines": [
+        152,
+        203
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": [
+          "demos/ke_eval/make_figures.py"
+        ]
+      },
+      "note": "code/test/benchmark pointer declared in the report; bytes unavailable in this worktree"
+    },
+    {
+      "asset_id": "A21",
+      "asset_key": "report-7216:ref:rb_growth_rate.png",
+      "asset_class": "figure_reference",
+      "label": "figure",
+      "token": "rb_growth_rate.png",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 3.6 图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 7519,
+        "char_end": 7576,
+        "line_start": 154,
+        "line_end": 154,
+        "quote": "- `rb_growth_rate.png`：γ̂(Ra) 格子 vs 连续谱（等 Ra、等 a）；右图为相对差。",
+        "quote_sha256": "sha256:d7f58acfbd9ce9dd27d0244ed405b80c249b7a88e968c3db411273c080fd26e6",
+        "unique": true
+      },
+      "occurrence_lines": [
+        154
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform_figure_endpoint",
+        "result": "unresolved",
+        "http_status": 404,
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /api/v1/tensor/reports/7216/figures/rb_growth_rate.png",
+        "note": "declared in record.figures, bytes not served by the platform"
+      },
+      "note": "figure bytes are not served by the platform figure endpoint; identity is the record.figures declaration plus the prose reference (probe recorded in resolution_check)"
+    },
+    {
+      "asset_id": "A22",
+      "asset_key": "report-7216:ref:rb_ra_c_convergence.png",
+      "asset_class": "figure_reference",
+      "label": "figure",
+      "token": "rb_ra_c_convergence.png",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 3.6 图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 7577,
+        "char_end": 7639,
+        "line_start": 155,
+        "line_end": 155,
+        "quote": "- `rb_ra_c_convergence.png`：Ra_c^lat 随 ny 的收敛与 (ny/(ny−1))³ 锚。",
+        "quote_sha256": "sha256:543deeeb578fcd90fa724b172a3cadda0918cde5d2e1d5a483d784339e323ed5",
+        "unique": true
+      },
+      "occurrence_lines": [
+        155
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform_figure_endpoint",
+        "result": "unresolved",
+        "http_status": 404,
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /api/v1/tensor/reports/7216/figures/rb_ra_c_convergence.png",
+        "note": "declared in record.figures, bytes not served by the platform"
+      },
+      "note": "figure bytes are not served by the platform figure endpoint; identity is the record.figures declaration plus the prose reference (probe recorded in resolution_check)"
+    },
+    {
+      "asset_id": "A23",
+      "asset_key": "report-7216:ref:rb_eig_vs_sim.png",
+      "asset_class": "figure_reference",
+      "label": "figure",
+      "token": "rb_eig_vs_sim.png",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 3.6 图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 7640,
+        "char_end": 7693,
+        "line_start": 156,
+        "line_end": 156,
+        "quote": "- `rb_eig_vs_sim.png`：特征值 γ 与非线性时间推进 γ 的对角一致性（±1% 带）。",
+        "quote_sha256": "sha256:9f090f0ac16bf158456bb1dea3a9f58daa59ba3af8525c9ab2b887bf95b7a044",
+        "unique": true
+      },
+      "occurrence_lines": [
+        156
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform_figure_endpoint",
+        "result": "unresolved",
+        "http_status": 404,
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /api/v1/tensor/reports/7216/figures/rb_eig_vs_sim.png",
+        "note": "declared in record.figures, bytes not served by the platform"
+      },
+      "note": "figure bytes are not served by the platform figure endpoint; identity is the record.figures declaration plus the prose reference (probe recorded in resolution_check)"
+    },
+    {
+      "asset_id": "A24",
+      "asset_key": "report-7216:ref:rb_base_profile.png",
+      "asset_class": "figure_reference",
+      "label": "figure",
+      "token": "rb_base_profile.png",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 3.6 图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 7694,
+        "char_end": 7735,
+        "line_start": 157,
+        "line_end": 157,
+        "quote": "- `rb_base_profile.png`：实测 H_eff=ny−1 证据。",
+        "quote_sha256": "sha256:d65d8317f6d0a424bbc0a467ef2323542ecaa38e5fb6f0a371cafb60af2e5d19",
+        "unique": true
+      },
+      "occurrence_lines": [
+        157
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform_figure_endpoint",
+        "result": "unresolved",
+        "http_status": 404,
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /api/v1/tensor/reports/7216/figures/rb_base_profile.png",
+        "note": "declared in record.figures, bytes not served by the platform"
+      },
+      "note": "figure bytes are not served by the platform figure endpoint; identity is the record.figures declaration plus the prose reference (probe recorded in resolution_check)"
+    },
+    {
+      "asset_id": "A25",
+      "asset_key": "report-7216:ref:hr_decoupling_settling.png",
+      "asset_class": "figure_reference",
+      "label": "figure",
+      "token": "hr_decoupling_settling.png",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "### 3.6 图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 7736,
+        "char_end": 7805,
+        "line_start": 158,
+        "line_end": 158,
+        "quote": "- `hr_decoupling_settling.png`：λ 解耦实测（左）与沉降速度 vs HR（右，含 honest FAIL）。",
+        "quote_sha256": "sha256:68503c5405cd89186afecdfcb6679230e3d53584d6d989bdbaec104c5492cf7b",
+        "unique": true
+      },
+      "occurrence_lines": [
+        158,
+        192
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform_figure_endpoint",
+        "result": "unresolved",
+        "http_status": 404,
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /api/v1/tensor/reports/7216/figures/hr_decoupling_settling.png",
+        "note": "declared in record.figures, bytes not served by the platform"
+      },
+      "note": "figure bytes are not served by the platform figure endpoint; identity is the record.figures declaration plus the prose reference (probe recorded in resolution_check)"
+    },
+    {
+      "asset_id": "A26",
+      "asset_key": "report-7216:ref:artifacts/in31_n12/rb_lattice_nyN.json",
+      "asset_class": "data_artifact_reference",
+      "label": "data_artifact",
+      "token": "artifacts/in31_n12/rb_lattice_nyN.json",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10165,
+        "char_end": 10287,
+        "line_start": 198,
+        "line_end": 198,
+        "quote": "| RB 生产（每分辨率） | `python benchmarks/rb_discrete_stability/run_bench.py --ny N` | `artifacts/in31_n12/rb_lattice_nyN.json` |",
+        "quote_sha256": "sha256:6538d3b72dff6b81a546c4404848dc129704ad4cb81ca9c2abe14d191e8d0fd3",
+        "unique": true
+      },
+      "occurrence_lines": [
+        198
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "artifact produced outside this repository (evidence chain §6 of the report); bytes unavailable in the delivery worktree"
+    },
+    {
+      "asset_id": "A27",
+      "asset_key": "report-7216:ref:benchmarks/rb_discrete_stability/run_bench.py",
+      "asset_class": "benchmark_script_reference",
+      "label": "benchmark_script",
+      "token": "benchmarks/rb_discrete_stability/run_bench.py",
+      "symbol_key": null,
+      "form": "path_in_backticked_command",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10165,
+        "char_end": 10287,
+        "line_start": 198,
+        "line_end": 198,
+        "quote": "| RB 生产（每分辨率） | `python benchmarks/rb_discrete_stability/run_bench.py --ny N` | `artifacts/in31_n12/rb_lattice_nyN.json` |",
+        "quote_sha256": "sha256:6538d3b72dff6b81a546c4404848dc129704ad4cb81ca9c2abe14d191e8d0fd3",
+        "unique": true
+      },
+      "occurrence_lines": [
+        198
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "code/test/benchmark pointer declared in the report; bytes unavailable in this worktree"
+    },
+    {
+      "asset_id": "A28",
+      "asset_key": "report-7216:ref:artifacts/in31_n12/continuum.json",
+      "asset_class": "data_artifact_reference",
+      "label": "data_artifact",
+      "token": "artifacts/in31_n12/continuum.json",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10288,
+        "char_end": 10392,
+        "line_start": 199,
+        "line_end": 199,
+        "quote": "| RB 连续谱参考 | `critical_rayleigh_continuous(M_list=(50,100,200))` | `artifacts/in31_n12/continuum.json` |",
+        "quote_sha256": "sha256:a1dad22171425194d7fc9596d92afbeaad974edac34e7a6e3d46766f262edfee",
+        "unique": true
+      },
+      "occurrence_lines": [
+        199
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "artifact produced outside this repository (evidence chain §6 of the report); bytes unavailable in the delivery worktree"
+    },
+    {
+      "asset_id": "A29",
+      "asset_key": "report-7216:ref:critical_rayleigh_continuous",
+      "asset_class": "api_symbol_reference",
+      "label": "callable",
+      "token": "critical_rayleigh_continuous(M_list=(50,100,200))",
+      "symbol_key": "critical_rayleigh_continuous",
+      "form": "backticked_call",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10288,
+        "char_end": 10392,
+        "line_start": 199,
+        "line_end": 199,
+        "quote": "| RB 连续谱参考 | `critical_rayleigh_continuous(M_list=(50,100,200))` | `artifacts/in31_n12/continuum.json` |",
+        "quote_sha256": "sha256:a1dad22171425194d7fc9596d92afbeaad974edac34e7a6e3d46766f262edfee",
+        "unique": true
+      },
+      "occurrence_lines": [
+        199
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A30",
+      "asset_key": "report-7216:ref:artifacts/in31_n12/base_profile.json",
+      "asset_class": "data_artifact_reference",
+      "label": "data_artifact",
+      "token": "artifacts/in31_n12/base_profile.json",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10393,
+        "char_end": 10502,
+        "line_start": 200,
+        "line_end": 200,
+        "quote": "| 基态/等效间隙诊断 | `conductive_base_state` 基态温度剖面拟合（见 `make_report` 说明） | `artifacts/in31_n12/base_profile.json` |",
+        "quote_sha256": "sha256:4700d17a16f5054d9e0b7e39248f1c8d2ec83756d17e80d8e353358cec53daf3",
+        "unique": true
+      },
+      "occurrence_lines": [
+        200
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "artifact produced outside this repository (evidence chain §6 of the report); bytes unavailable in the delivery worktree"
+    },
+    {
+      "asset_id": "A31",
+      "asset_key": "report-7216:ref:conductive_base_state",
+      "asset_class": "api_symbol_reference",
+      "label": "identifier",
+      "token": "conductive_base_state",
+      "symbol_key": "conductive_base_state",
+      "form": "backticked_identifier",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10393,
+        "char_end": 10502,
+        "line_start": 200,
+        "line_end": 200,
+        "quote": "| 基态/等效间隙诊断 | `conductive_base_state` 基态温度剖面拟合（见 `make_report` 说明） | `artifacts/in31_n12/base_profile.json` |",
+        "quote_sha256": "sha256:4700d17a16f5054d9e0b7e39248f1c8d2ec83756d17e80d8e353358cec53daf3",
+        "unique": true
+      },
+      "occurrence_lines": [
+        200
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A32",
+      "asset_key": "report-7216:ref:make_report",
+      "asset_class": "api_symbol_reference",
+      "label": "identifier",
+      "token": "make_report",
+      "symbol_key": "make_report",
+      "form": "backticked_identifier",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10393,
+        "char_end": 10502,
+        "line_start": 200,
+        "line_end": 200,
+        "quote": "| 基态/等效间隙诊断 | `conductive_base_state` 基态温度剖面拟合（见 `make_report` 说明） | `artifacts/in31_n12/base_profile.json` |",
+        "quote_sha256": "sha256:4700d17a16f5054d9e0b7e39248f1c8d2ec83756d17e80d8e353358cec53daf3",
+        "unique": true
+      },
+      "occurrence_lines": [
+        200
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    },
+    {
+      "asset_id": "A33",
+      "asset_key": "report-7216:ref:artifacts/in31_n12/hr_decoupling.json",
+      "asset_class": "data_artifact_reference",
+      "label": "data_artifact",
+      "token": "artifacts/in31_n12/hr_decoupling.json",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10503,
+        "char_end": 10633,
+        "line_start": 201,
+        "line_end": 201,
+        "quote": "| 双相解耦实测 | `python benchmarks/rb_discrete_stability/run_hr_bench.py --mode decoupling` | `artifacts/in31_n12/hr_decoupling.json` |",
+        "quote_sha256": "sha256:e4dee3848d337162a6005b7222f6888f7c3d336ea07168f2a880d6434147fc89",
+        "unique": true
+      },
+      "occurrence_lines": [
+        201
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "artifact produced outside this repository (evidence chain §6 of the report); bytes unavailable in the delivery worktree"
+    },
+    {
+      "asset_id": "A34",
+      "asset_key": "report-7216:ref:benchmarks/rb_discrete_stability/run_hr_bench.py",
+      "asset_class": "benchmark_script_reference",
+      "label": "benchmark_script",
+      "token": "benchmarks/rb_discrete_stability/run_hr_bench.py",
+      "symbol_key": null,
+      "form": "path_in_backticked_command",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10503,
+        "char_end": 10633,
+        "line_start": 201,
+        "line_end": 201,
+        "quote": "| 双相解耦实测 | `python benchmarks/rb_discrete_stability/run_hr_bench.py --mode decoupling` | `artifacts/in31_n12/hr_decoupling.json` |",
+        "quote_sha256": "sha256:e4dee3848d337162a6005b7222f6888f7c3d336ea07168f2a880d6434147fc89",
+        "unique": true
+      },
+      "occurrence_lines": [
+        201
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "code/test/benchmark pointer declared in the report; bytes unavailable in this worktree"
+    },
+    {
+      "asset_id": "A35",
+      "asset_key": "report-7216:ref:artifacts/in31_n12/hr_settling.json",
+      "asset_class": "data_artifact_reference",
+      "label": "data_artifact",
+      "token": "artifacts/in31_n12/hr_settling.json",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10634,
+        "char_end": 10708,
+        "line_start": 202,
+        "line_end": 202,
+        "quote": "| 双相沉降对拍 | `... --mode settling` | `artifacts/in31_n12/hr_settling.json` |",
+        "quote_sha256": "sha256:3c9c4107fd452e8b62bf080463009586c1010d9ecfcccc1f954b3d8d858b8662",
+        "unique": true
+      },
+      "occurrence_lines": [
+        202
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "artifact produced outside this repository (evidence chain §6 of the report); bytes unavailable in the delivery worktree"
+    },
+    {
+      "asset_id": "A36",
+      "asset_key": "report-7216:ref:artifacts/in31_n12/criteria.json",
+      "asset_class": "data_artifact_reference",
+      "label": "data_artifact",
+      "token": "artifacts/in31_n12/criteria.json",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10709,
+        "char_end": 10842,
+        "line_start": 203,
+        "line_end": 203,
+        "quote": "| 图/判据汇总 | `python benchmarks/rb_discrete_stability/make_figures.py` | `figures/in31_n12/*.png`, `artifacts/in31_n12/criteria.json` |",
+        "quote_sha256": "sha256:4811b0c5781467dd3841db63c1206ce36781929ee2ef23139c90e366b293fd42",
+        "unique": true
+      },
+      "occurrence_lines": [
+        203
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "artifact produced outside this repository (evidence chain §6 of the report); bytes unavailable in the delivery worktree"
+    },
+    {
+      "asset_id": "A37",
+      "asset_key": "report-7216:ref:figures/in31_n12/*.png",
+      "asset_class": "figure_reference",
+      "label": "figure_glob",
+      "token": "figures/in31_n12/*.png",
+      "symbol_key": null,
+      "form": "backticked_path",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10709,
+        "char_end": 10842,
+        "line_start": 203,
+        "line_end": 203,
+        "quote": "| 图/判据汇总 | `python benchmarks/rb_discrete_stability/make_figures.py` | `figures/in31_n12/*.png`, `artifacts/in31_n12/criteria.json` |",
+        "quote_sha256": "sha256:4811b0c5781467dd3841db63c1206ce36781929ee2ef23139c90e366b293fd42",
+        "unique": true
+      },
+      "occurrence_lines": [
+        203
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "glob_reference_no_single_file",
+        "result": "unresolved",
+        "detail": "glob pattern; no single file to hash or fetch"
+      },
+      "note": "figure bytes are not served by the platform figure endpoint; identity is the record.figures declaration plus the prose reference (probe recorded in resolution_check)"
+    },
+    {
+      "asset_id": "A38",
+      "asset_key": "report-7216:ref:tests/test_pseudopotential_hr.py",
+      "asset_class": "test_reference",
+      "label": "test",
+      "token": "tests/test_pseudopotential_hr.py",
+      "symbol_key": null,
+      "form": "path_in_backticked_command",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10843,
+        "char_end": 10936,
+        "line_start": 204,
+        "line_end": 204,
+        "quote": "| 单测 | `pytest -q tests/test_rb_discrete_stability.py tests/test_pseudopotential_hr.py` | – |",
+        "quote_sha256": "sha256:8ef17a43e47067ce799e87c8c0b2756d7123adc51f7bc87897043ba0bf68a3b3",
+        "unique": true
+      },
+      "occurrence_lines": [
+        204
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "code/test/benchmark pointer declared in the report; bytes unavailable in this worktree"
+    },
+    {
+      "asset_id": "A39",
+      "asset_key": "report-7216:ref:tests/test_rb_discrete_stability.py",
+      "asset_class": "test_reference",
+      "label": "test",
+      "token": "tests/test_rb_discrete_stability.py",
+      "symbol_key": null,
+      "form": "path_in_backticked_command",
+      "in_report_section": "## 6. 审计链与产物路径",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 10843,
+        "char_end": 10936,
+        "line_start": 204,
+        "line_end": 204,
+        "quote": "| 单测 | `pytest -q tests/test_rb_discrete_stability.py tests/test_pseudopotential_hr.py` | – |",
+        "quote_sha256": "sha256:8ef17a43e47067ce799e87c8c0b2756d7123adc51f7bc87897043ba0bf68a3b3",
+        "unique": true
+      },
+      "occurrence_lines": [
+        204
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_delivery_worktree",
+        "result": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge (report 7216 is a TensorLBM asset, repo layering=LBM|research|A)",
+        "same_basename_hits": []
+      },
+      "note": "code/test/benchmark pointer declared in the report; bytes unavailable in this worktree"
+    },
+    {
+      "asset_id": "A40",
+      "asset_key": "report-7216:ref:tensorlbm.two_phase_viscosity",
+      "asset_class": "api_symbol_reference",
+      "label": "dotted_symbol",
+      "token": "tensorlbm.two_phase_viscosity",
+      "symbol_key": "tensorlbm.two_phase_viscosity",
+      "form": "backticked_dotted",
+      "in_report_section": "### 与既有成果的边界（避免重复 verified/）",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "char_start": 11132,
+        "char_end": 11337,
+        "line_start": 210,
+        "line_end": 210,
+        "quote": "- `tensorlbm.hadamard_rybczynski`（解析律 + 轴对称有限元 Stokes）与 `tensorlbm.two_phase_viscosity`（λ/ρ 解耦映射）已存在且未修改；本节点的增量是：RB 离散谱求解器（全新）、仓库内可复现的连续谱参考（替代外部 Chebyshev 数值）、逐组分施力核与 λ 解耦的**实测**验证、以及伪势引擎 HR 对拍的定量 FAIL 诊断。",
+        "quote_sha256": "sha256:7c0f9e87c12de45bec2bf6be213dd62504e2707f46abb95f5e3f2e4b6c9e4fef",
+        "unique": true
+      },
+      "occurrence_lines": [
+        210
+      ],
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "symbol_declared_in_markdown_no_byte_asset",
+        "result": "unresolved",
+        "note": "library symbol named in prose; registration does not open the producing repo (out of contract scope)"
+      },
+      "note": "declared library symbol / callable; this工序 registers the pointer only and does not read the producing repository"
+    }
+  ],
+  "claims": [],
+  "claims_empty_reason": "objective.classify_report_type=false and this package is registration-only (no extraction): claims are legitimately empty per contract.output.asset_manifest.json + constraints.no_forced_claim_generation. Report 7216's own numeric claims are NOT re-stated here; they stay in the source markdown and are untouched (no verified marks).",
+  "integrity": {
+    "quote_uniqueness": {
+      "locators": 40,
+      "unique_quotes": 40,
+      "note": "non-unique quotes are still exactly resolvable via their char span; uniqueness is reported, not forced"
+    },
+    "hash_recomputed_locally": "sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b",
+    "hash_matches_contract": true,
+    "assets_with_locator": 40,
+    "assets_without_locator": 0,
+    "verified_marks_emitted": 0
+  }
+}
