@@ -1,0 +1,1038 @@
+{
+  "schema": "asset_manifest.v1",
+  "manifest_version": "1.0",
+  "package_id": "wp-5949-01",
+  "task_type": "01-asset-registration",
+  "report_id": "5949",
+  "generated_at": "2026-11-12T01:24:52.990505+00:00",
+  "source": {
+    "uri": "tensor://reports/5949",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002",
+    "chars": 12605,
+    "bytes_utf8": 17867,
+    "title": "IN25-T2 多样性引擎：40 席氏族矩阵 + 盲预测锁 + 同族查重门（4 族 × 5 框架 × 2 角色）",
+    "scenario_key": "IN25-T2-diversity-engine",
+    "platform_tags": [
+      "IN25-T2",
+      "多样性引擎",
+      "氏族矩阵",
+      "盲预测prereg",
+      "同族查重",
+      "锦标赛军"
+    ],
+    "platform_figures": [
+      {
+        "index": 0,
+        "name": "fig1_coverage_matrix.png",
+        "caption": "图1 氏族覆盖矩阵：左攻坚者/右破坏者，格子数字为该(族,框架)格席位数——20 格全部有席位，每格一攻一破。",
+        "has_payload": false
+      },
+      {
+        "index": 1,
+        "name": "fig2_similarity_separation.png",
+        "caption": "图2 相似度门分离度：蓝=独立方案对、橙=克隆对、黑虚线为骨架阈值 0.72；分离约两个数量级，嵌长文类克隆由包含度兜住。",
+        "has_payload": false
+      }
+    ]
+  },
+  "provenance": {
+    "source_uri": "tensor://reports/5949",
+    "source_field": "markdown",
+    "source_hash": "sha256:c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002",
+    "hash_algo": "sha256",
+    "hashed_bytes": "markdown encoded as utf-8",
+    "source_chars": 12605,
+    "source_bytes_utf8": 17867,
+    "fetched_via": "GET /api/v1/tensor/reports/5949",
+    "generator": "scripts/kf/build_asset_manifest_5949.py",
+    "contract_version": "1.0",
+    "report_title": "IN25-T2 多样性引擎：40 席氏族矩阵 + 盲预测锁 + 同族查重门（4 族 × 5 框架 × 2 角色）",
+    "report_scenario_key": "IN25-T2-diversity-engine",
+    "report_tags": [
+      "IN25-T2",
+      "多样性引擎",
+      "氏族矩阵",
+      "盲预测prereg",
+      "同族查重",
+      "锦标赛军"
+    ]
+  },
+  "counts": {
+    "assets": 23,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 2,
+      "code_block": 1,
+      "source_code_reference": 8,
+      "directory_reference": 1,
+      "module_reference": 1,
+      "data_artifact_reference": 9
+    },
+    "by_resolution": {
+      "resolved_in_source": 4,
+      "referenced_unresolved": 19
+    },
+    "resolved_in_source": 4,
+    "referenced_unresolved": 19,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "报告 5949 的 markdown 源本体",
+      "in_report_section": "全文",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 12605,
+        "start_line": 1,
+        "end_line": 260,
+        "quote": "# IN25-T2 · 多样性引擎：氏族矩阵 / 盲预测锁 / 同族查重",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(markdown.encode('utf-8')) == contract source_hash",
+        "result": "resolved"
+      },
+      "note": "全文字节哈希与契约 source_hash 一致；字符数 12605 与契约 chars 一致。",
+      "uri": "tensor://reports/5949",
+      "source_field": "markdown",
+      "chars": 12605,
+      "bytes_utf8": 17867,
+      "sha256": "c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002",
+      "title": "IN25-T2 多样性引擎：40 席氏族矩阵 + 盲预测锁 + 同族查重门（4 族 × 5 框架 × 2 角色）",
+      "resolution_detail": {
+        "uri": "tensor://reports/5949",
+        "field": "markdown",
+        "chars": 12605,
+        "bytes_utf8": 17867,
+        "sha256": "c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002"
+      }
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "报告内嵌图 1：图1 氏族覆盖矩阵：左攻坚者/右破坏者，格子数字为该(族,框架)格席位数——20 格全部有席位，",
+      "in_report_section": "④ 图",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 12605,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "# IN25-T2 · 多样性引擎：氏族矩阵 / 盲预测锁 / 同族查重",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "figures[0] exists in report record; png_base64 decodes",
+        "result": "present"
+      },
+      "note": "图字节随报告记录提供（figures[0]）；未抽取、未改写。",
+      "uri": "tensor://reports/5949#figures[0]",
+      "resolution_detail": {
+        "index": 0,
+        "name": "fig1_coverage_matrix.png",
+        "caption": "图1 氏族覆盖矩阵：左攻坚者/右破坏者，格子数字为该(族,框架)格席位数——20 格全部有席位，每格一攻一破。",
+        "bytes": null,
+        "sha256": null
+      }
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure",
+      "label": "报告内嵌图 2：图2 相似度门分离度：蓝=独立方案对、橙=克隆对、黑虚线为骨架阈值 0.72；分离约两个数量级，",
+      "in_report_section": "④ 图",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 12605,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "# IN25-T2 · 多样性引擎：氏族矩阵 / 盲预测锁 / 同族查重",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "figures[1] exists in report record; png_base64 decodes",
+        "result": "present"
+      },
+      "note": "图字节随报告记录提供（figures[1]）；未抽取、未改写。",
+      "uri": "tensor://reports/5949#figures[1]",
+      "resolution_detail": {
+        "index": 1,
+        "name": "fig2_similarity_separation.png",
+        "caption": "图2 相似度门分离度：蓝=独立方案对、橙=克隆对、黑虚线为骨架阈值 0.72；分离约两个数量级，嵌长文类克隆由包含度兜住。",
+        "bytes": null,
+        "sha256": null
+      }
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "code_block",
+      "label": "围栏代码块（审计链/复算命令，行 249-257）",
+      "in_report_section": "审计链",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11945,
+        "end_char": 12467,
+        "start_line": 249,
+        "end_line": 257,
+        "quote": "```\n目标文本 ──► build_seats() ──► 40 席 (族×框架×角色) ──► plan_digest\n                        │                                   │\n                        ├──► coverage.json / seed_divergence.json\n                        └──► seal(predictions) ──► prereg_lock.json (lock_hash 1b96a171b6000fb9…)\n                                                   │\n                         结果 recorded_utc ──────────┴──► score_blind() ──► blind_scores.json\n方案文本 ──► normalize/skeleton/number ──► 三层判据 ──► dedup_ledger.json ──► population.json\n```",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "fenced block bytes located at recorded char span",
+        "result": "resolved"
+      },
+      "note": "代码块按原文整块定位；块内命令原样登记，未执行（不属于本工作包职责）。",
+      "resolution_detail": {
+        "start_line": 249,
+        "end_line": 257,
+        "chars": 522,
+        "sha256": "83ae3a75eee32ea3e2ebe88a5cddc277a2363d90ad46f66e4b5cb9e59b8e6878"
+      }
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "source_code_reference",
+      "label": "tools/diversity/gen_doc.py",
+      "in_report_section": "正文/误引处（行 4）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 89,
+        "end_char": 154,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "> `tools/diversity/gen_doc.py` 从 `artifacts/in25_t2/` 程序化注入，无一手抄；",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "tools/diversity/gen_doc.py",
+      "uri": "tensor://reports/5949#line=4",
+      "resolution_detail": {
+        "targets": [
+          "tools/diversity/gen_doc.py"
+        ],
+        "form": null,
+        "resolved": {
+          "tools/diversity/gen_doc.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "directory_reference",
+      "label": "artifacts/in25_t2/",
+      "in_report_section": "正文/误引处（行 4）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 89,
+        "end_char": 154,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "> `tools/diversity/gen_doc.py` 从 `artifacts/in25_t2/` 程序化注入，无一手抄；",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "artifacts/in25_t2/",
+      "uri": "tensor://reports/5949#line=4",
+      "resolution_detail": {
+        "targets": [
+          "artifacts/in25_t2/"
+        ],
+        "form": null,
+        "resolved": {
+          "artifacts/in25_t2/": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "module_reference",
+      "label": "tools/diversity/{roster,prereg,dedup,run_node}.py",
+      "in_report_section": "正文/误引处（行 9）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 366,
+        "end_char": 459,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "> 代码：`tools/diversity/{roster,prereg,dedup,run_node}.py`；测试：`tests/test_diversity_engine.py`。",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/4 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "tools/diversity/{roster,prereg,dedup,run_node}.py",
+      "uri": "tensor://reports/5949#line=9",
+      "resolution_detail": {
+        "targets": [
+          "tools/diversity/roster.py",
+          "tools/diversity/prereg.py",
+          "tools/diversity/dedup.py",
+          "tools/diversity/run_node.py"
+        ],
+        "form": "brace_expansion",
+        "resolved": {
+          "tools/diversity/roster.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          },
+          "tools/diversity/prereg.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          },
+          "tools/diversity/dedup.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          },
+          "tools/diversity/run_node.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_diversity_engine.py",
+      "in_report_section": "正文/误引处（行 9）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 366,
+        "end_char": 459,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "> 代码：`tools/diversity/{roster,prereg,dedup,run_node}.py`；测试：`tests/test_diversity_engine.py`。",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "tests/test_diversity_engine.py",
+      "uri": "tensor://reports/5949#line=9",
+      "resolution_detail": {
+        "targets": [
+          "tests/test_diversity_engine.py"
+        ],
+        "form": null,
+        "resolved": {
+          "tests/test_diversity_engine.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "source_code_reference",
+      "label": "roster.py",
+      "in_report_section": "正文/误引处（行 40）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1347,
+        "end_char": 1413,
+        "start_line": 40,
+        "end_line": 40,
+        "quote": "1. **氏族矩阵**（`roster.py`）：`build_seats()` 取 族×框架×角色 的**完整乘积**，构造完立即",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "roster.py",
+      "uri": "tensor://reports/5949#line=40",
+      "resolution_detail": {
+        "targets": [
+          "roster.py"
+        ],
+        "form": null,
+        "resolved": {
+          "roster.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "source_code_reference",
+      "label": "prereg.py",
+      "in_report_section": "正文/误引处（行 48）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1795,
+        "end_char": 1846,
+        "start_line": 48,
+        "end_line": 48,
+        "quote": "4. **盲预测锁**（`prereg.py`）：三条时序硬门——①结果已存在则拒锁（先跑后锁=抄）；",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "prereg.py",
+      "uri": "tensor://reports/5949#line=48",
+      "resolution_detail": {
+        "targets": [
+          "prereg.py"
+        ],
+        "form": null,
+        "resolved": {
+          "prereg.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "source_code_reference",
+      "label": "dedup.py",
+      "in_report_section": "正文/误引处（行 52）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2019,
+        "end_char": 2078,
+        "start_line": 52,
+        "end_line": 52,
+        "quote": "5. **同族查重**（`dedup.py`）：三层表征 —— 表层令牌（拉丁词 + CJK 二元组 + 数字指纹）、",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "dedup.py",
+      "uri": "tensor://reports/5949#line=52",
+      "resolution_detail": {
+        "targets": [
+          "dedup.py"
+        ],
+        "form": null,
+        "resolved": {
+          "dedup.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "source_code_reference",
+      "label": "ops/taskplane/campaign_dispatcher.py::_hollow()",
+      "in_report_section": "正文/误引处（行 59）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2299,
+        "end_char": 2366,
+        "start_line": 59,
+        "end_line": 59,
+        "quote": "   令牌为空），与 `ops/taskplane/campaign_dispatcher.py::_hollow()` 同一打法——",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "ops/taskplane/campaign_dispatcher.py::_hollow()",
+      "uri": "tensor://reports/5949#line=59",
+      "resolution_detail": {
+        "targets": [
+          "ops/taskplane/campaign_dispatcher.py"
+        ],
+        "form": "symbol_reference",
+        "resolved": {
+          "ops/taskplane/campaign_dispatcher.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/in25_t2/coverage.json",
+      "in_report_section": "正文/误引处（行 66）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2484,
+        "end_char": 2570,
+        "start_line": 66,
+        "end_line": 66,
+        "quote": "| 氏族覆盖矩阵全格有席位 | 20/20 格 = 100%，每格 2 席 | 1.00 | ✅ | `artifacts/in25_t2/coverage.json` |",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "artifacts/in25_t2/coverage.json",
+      "uri": "tensor://reports/5949#line=66",
+      "resolution_detail": {
+        "targets": [
+          "artifacts/in25_t2/coverage.json"
+        ],
+        "form": null,
+        "resolved": {
+          "artifacts/in25_t2/coverage.json": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/in25_t2/roster_check.json",
+      "in_report_section": "正文/误引处（行 67）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2571,
+        "end_char": 2638,
+        "start_line": 67,
+        "end_line": 67,
+        "quote": "| 模型族数（现场） | 4 族 | ≥3 | ✅ | `artifacts/in25_t2/roster_check.json` |",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "artifacts/in25_t2/roster_check.json",
+      "uri": "tensor://reports/5949#line=67",
+      "resolution_detail": {
+        "targets": [
+          "artifacts/in25_t2/roster_check.json"
+        ],
+        "form": null,
+        "resolved": {
+          "artifacts/in25_t2/roster_check.json": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/in25_t2/seats.json",
+      "in_report_section": "正文/误引处（行 68）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2639,
+        "end_char": 2696,
+        "start_line": 68,
+        "end_line": 68,
+        "quote": "| 框架变体数 | 5 种 | ≥4 | ✅ | `artifacts/in25_t2/seats.json` |",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "artifacts/in25_t2/seats.json",
+      "uri": "tensor://reports/5949#line=68",
+      "resolution_detail": {
+        "targets": [
+          "artifacts/in25_t2/seats.json"
+        ],
+        "form": null,
+        "resolved": {
+          "artifacts/in25_t2/seats.json": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/in25_t2/coverage.json",
+      "in_report_section": "正文/误引处（行 69）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2697,
+        "end_char": 2780,
+        "start_line": 69,
+        "end_line": 69,
+        "quote": "| 角色齐备 | attacker 20 / breaker 20 | 两者 >0 | ✅ | `artifacts/in25_t2/coverage.json` |",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "artifacts/in25_t2/coverage.json",
+      "uri": "tensor://reports/5949#line=69",
+      "resolution_detail": {
+        "targets": [
+          "artifacts/in25_t2/coverage.json"
+        ],
+        "form": null,
+        "resolved": {
+          "artifacts/in25_t2/coverage.json": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/in25_t2/seed_divergence.json",
+      "in_report_section": "正文/误引处（行 70）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2781,
+        "end_char": 2900,
+        "start_line": 70,
+        "end_line": 70,
+        "quote": "| 先验种子差异 | 40/40 各异；汉明 min/中位/max = 21/31/42；碰撞 0 | 碰撞 0 且 min ≥16 bit | ✅ | `artifacts/in25_t2/seed_divergence.json` |",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "artifacts/in25_t2/seed_divergence.json",
+      "uri": "tensor://reports/5949#line=70",
+      "resolution_detail": {
+        "targets": [
+          "artifacts/in25_t2/seed_divergence.json"
+        ],
+        "form": null,
+        "resolved": {
+          "artifacts/in25_t2/seed_divergence.json": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/in25_t2/prereg_lock.json",
+      "in_report_section": "正文/误引处（行 71）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2901,
+        "end_char": 3022,
+        "start_line": 71,
+        "end_line": 71,
+        "quote": "| 盲预测锁定工件 | lock_hash `1b96a171b6000fb9…`，40 条预测，复算 ✅，篡改检出 ✅，先跑后锁被拒 ✅ | 三项全真 | ✅ | `artifacts/in25_t2/prereg_lock.json` |",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "artifacts/in25_t2/prereg_lock.json",
+      "uri": "tensor://reports/5949#line=71",
+      "resolution_detail": {
+        "targets": [
+          "artifacts/in25_t2/prereg_lock.json"
+        ],
+        "form": null,
+        "resolved": {
+          "artifacts/in25_t2/prereg_lock.json": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/in25_t2/dedup_ledger.json",
+      "in_report_section": "正文/误引处（行 72）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3023,
+        "end_char": 3161,
+        "start_line": 72,
+        "end_line": 72,
+        "quote": "| 克隆方案 MUST 拒 | 语料 TPR 1.00 / FPR 0.00；端到端 24/24 拒；fail-closed 负例 3/3 拒 | TPR=1.00 且端到端 100% | ✅ | `artifacts/in25_t2/dedup_ledger.json` |",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "artifacts/in25_t2/dedup_ledger.json",
+      "uri": "tensor://reports/5949#line=72",
+      "resolution_detail": {
+        "targets": [
+          "artifacts/in25_t2/dedup_ledger.json"
+        ],
+        "form": null,
+        "resolved": {
+          "artifacts/in25_t2/dedup_ledger.json": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_diversity_engine.py",
+      "in_report_section": "正文/误引处（行 73）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3162,
+        "end_char": 3273,
+        "start_line": 73,
+        "end_line": 73,
+        "quote": "| pytest | **22 passed**（`tests/test_diversity_engine.py`） | ≥8 | ✅ | `artifacts/in25_t2/pytest_summary.json` |",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "tests/test_diversity_engine.py",
+      "uri": "tensor://reports/5949#line=73",
+      "resolution_detail": {
+        "targets": [
+          "tests/test_diversity_engine.py"
+        ],
+        "form": null,
+        "resolved": {
+          "tests/test_diversity_engine.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/in25_t2/pytest_summary.json",
+      "in_report_section": "正文/误引处（行 73）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3162,
+        "end_char": 3273,
+        "start_line": 73,
+        "end_line": 73,
+        "quote": "| pytest | **22 passed**（`tests/test_diversity_engine.py`） | ≥8 | ✅ | `artifacts/in25_t2/pytest_summary.json` |",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "artifacts/in25_t2/pytest_summary.json",
+      "uri": "tensor://reports/5949#line=73",
+      "resolution_detail": {
+        "targets": [
+          "artifacts/in25_t2/pytest_summary.json"
+        ],
+        "form": null,
+        "resolved": {
+          "artifacts/in25_t2/pytest_summary.json": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "data_artifact_reference",
+      "label": "blind_scores.json",
+      "in_report_section": "正文/误引处（行 220）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10822,
+        "end_char": 10888,
+        "start_line": 220,
+        "end_line": 220,
+        "quote": "5. **合成 dry-run 不是能力证据**：本节点的 seat\"结果\"由种子确定性生成（`blind_scores.json`",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "blind_scores.json",
+      "uri": "tensor://reports/5949#line=220",
+      "resolution_detail": {
+        "targets": [
+          "blind_scores.json"
+        ],
+        "form": null,
+        "resolved": {
+          "blind_scores.json": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "source_code_reference",
+      "label": "roster.py",
+      "in_report_section": "正文/误引处（行 229）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11288,
+        "end_char": 11350,
+        "start_line": 229,
+        "end_line": 229,
+        "quote": "8. **`roster.py` 的族清单会过期**：中继模型会增减，`verify_roster()` 每轮实测，不缓存。",
+        "unique": true,
+        "quote_exact": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "resolve each expanded target inside the delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "按原文内联代码逐字登记；0/1 个目标在 TensorKnowledge 工作树内命中。",
+      "path_reference": "roster.py",
+      "uri": "tensor://reports/5949#line=229",
+      "resolution_detail": {
+        "targets": [
+          "roster.py"
+        ],
+        "form": null,
+        "resolved": {
+          "roster.py": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path is not present in the TensorKnowledge delivery worktree (report 5949 describes TensorPlatform/report-side artifacts outside this package's boundary)"
+          }
+        }
+      }
+    }
+  ],
+  "claims": [],
+  "claims_note": "合同 output 允许 claims 为空数组；本工序只登记资产，不做抽取、不生成 claim、不标 verified。",
+  "integrity": {
+    "quote_uniqueness": {
+      "checked": 20,
+      "non_unique": [],
+      "note": "document 级 locator 不参与唯一性判定（quote 取首行，仅作锚点）。"
+    },
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "chars_match_contract": true,
+    "quotes_are_verbatim_substrings": true
+  },
+  "block_internal_names": {
+    "note": "只出现在围栏代码块内部、未被正文内联引用的文件名：由整块代码块资产（A04）覆盖，不单独登记为资产（同一字节不应产生两条身份）；此处列出以免读者以为漏登记。",
+    "names": [
+      "coverage.json",
+      "dedup_ledger.json",
+      "population.json",
+      "prereg_lock.json",
+      "seed_divergence.json"
+    ]
+  },
+  "declared_digests": {
+    "note": "报告正文声明的工件快照哈希（内联代码中的十六进制前缀）。仅登记声明值，前缀不足 64 位或带省略号者标注 truncated=true 且 verifiable=false——不据此宣称任何币级一致。",
+    "count": 7,
+    "verifiable": 0,
+    "items": [
+      {
+        "label": "coverage",
+        "digest_prefix": "fddd78dbd6e61b17",
+        "declared_hex_chars": 16,
+        "truncated": true,
+        "line": 5,
+        "quote": "> 工件快照 sha256（前 16 位）：coverage `fddd78dbd6e61b17` · seats",
+        "start_char": 31,
+        "end_char": 49,
+        "verifiable": false
+      },
+      {
+        "label": "seats",
+        "digest_prefix": "d8ee5d316df9aa40",
+        "declared_hex_chars": 16,
+        "truncated": true,
+        "line": 6,
+        "quote": "> `d8ee5d316df9aa40` · prereg_lock `cc97b74b46f65d44` · calibration",
+        "start_char": 2,
+        "end_char": 20,
+        "verifiable": false
+      },
+      {
+        "label": "prereg_lock",
+        "digest_prefix": "cc97b74b46f65d44",
+        "declared_hex_chars": 16,
+        "truncated": true,
+        "line": 6,
+        "quote": "> `d8ee5d316df9aa40` · prereg_lock `cc97b74b46f65d44` · calibration",
+        "start_char": 35,
+        "end_char": 53,
+        "verifiable": false
+      },
+      {
+        "label": "calibration",
+        "digest_prefix": "694b8fe358e207c8",
+        "declared_hex_chars": 16,
+        "truncated": true,
+        "line": 7,
+        "quote": "> `694b8fe358e207c8` · dedup_ledger `9ece8a74de549404` ·",
+        "start_char": 2,
+        "end_char": 20,
+        "verifiable": false
+      },
+      {
+        "label": "dedup_ledger",
+        "digest_prefix": "9ece8a74de549404",
+        "declared_hex_chars": 16,
+        "truncated": true,
+        "line": 7,
+        "quote": "> `694b8fe358e207c8` · dedup_ledger `9ece8a74de549404` ·",
+        "start_char": 36,
+        "end_char": 54,
+        "verifiable": false
+      },
+      {
+        "label": "blind",
+        "digest_prefix": "0439b915d213c62f",
+        "declared_hex_chars": 16,
+        "truncated": true,
+        "line": 8,
+        "quote": "> blind `0439b915d213c62f`。",
+        "start_char": 8,
+        "end_char": 26,
+        "verifiable": false
+      },
+      {
+        "label": "lock_hash",
+        "digest_prefix": "1b96a171b6000fb9",
+        "declared_hex_chars": 16,
+        "truncated": true,
+        "line": 71,
+        "quote": "| 盲预测锁定工件 | lock_hash `1b96a171b6000fb9…`，40 条预测，复算 ✅，篡改检出 ✅，先跑后锁被拒 ✅ | 三项全真 | ✅ | `artifacts/in25_t2/prereg_lock.json` |",
+        "start_char": 22,
+        "end_char": 41,
+        "verifiable": false
+      }
+    ]
+  },
+  "limitations": [
+    "仅登记资产：不抽取正文、不生成 claim、不写 verified（verification 由平台门计算）。",
+    "登记边界=report_id 5949；未读写任何其它 report_id。",
+    "报告所述 TensorPlatform 侧工件（tools/diversity/*、artifacts/in25_t2/*、tests/test_diversity_engine.py）不在本仓工作树内，一律登记为 referenced_unresolved，未凭记忆补内容。",
+    "内联代码之外的裸文本不解析为路径，避免把数学/散文误登记成资产。",
+    "平台 figures[] 只登记名称/说明与是否存在字节负载，不把图字节复制进 manifest。"
+  ]
+}
