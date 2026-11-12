@@ -1,0 +1,91 @@
+{
+  "published_report_id": "14692",
+  "source_report_id": "7883",
+  "audited_at_epoch": 1794447237,
+  "published_markdown_sha256": "a1284be446f0261933fddf789c4185a4c3a4d28be668779b8706bf1bf39b3d4f",
+  "findings": {
+    "publish_title": {
+      "pass": true,
+      "detail": "KF-RESULT wp-7883-01"
+    },
+    "publish_tag": {
+      "pass": true,
+      "detail": [
+        "KF",
+        "asset-registration",
+        "wp-7883-01",
+        "kf-wp:wp-7883-01",
+        "knowledge-factory",
+        "report-7883",
+        "provenance",
+        "sha256"
+      ]
+    },
+    "publish_scenario": {
+      "pass": true,
+      "detail": "green_compliance_eedi_eexi_cii"
+    },
+    "publish_mission": {
+      "pass": true,
+      "detail": 15604
+    },
+    "single_json_fence": {
+      "pass": true,
+      "detail": "json_fences=1 total_fences=4 (non-json fenced blocks=1)"
+    },
+    "fence_parses": {
+      "pass": true,
+      "detail": "keys=['claims', 'outputs', 'package_id', 'provenance', 'report_id', 'task_type']"
+    },
+    "envelope_ids": {
+      "pass": true,
+      "detail": "wp-7883-01/01-asset-registration/7883"
+    },
+    "source_hash_matches_live": {
+      "pass": true,
+      "detail": "live=fc4d21ec4e30740b declared=fc4d21ec4e30740b contract=fc4d21ec4e30740b"
+    },
+    "embedded_manifest_equals_disk": {
+      "pass": true,
+      "detail": "assets_embedded=21 assets_disk=21 generated_at_embedded=2026-11-12T01:30:47.766100+00:00 generated_at_disk=2026-11-12T01:30:47.766100+00:00"
+    },
+    "locators_resolve_in_live_source": {
+      "pass": true,
+      "detail": "unresolvable=[]"
+    },
+    "unique_asset_ids": {
+      "pass": true,
+      "detail": "n=21 unique=21"
+    },
+    "claims_empty_no_extraction": {
+      "pass": true,
+      "detail": "manifest_claims=[] envelope_claims=[]"
+    },
+    "no_verified_marks": {
+      "pass": true,
+      "detail": "no 'verified' status anywhere in the envelope"
+    },
+    "figure_metadata_present": {
+      "pass": true,
+      "detail": [
+        "fig1_asset_coverage_map.png"
+      ]
+    },
+    "scope_single_report": {
+      "pass": true,
+      "detail": "foreign_report_ids=[]"
+    }
+  },
+  "observations": {
+    "markdown_fences": {
+      "json": 1,
+      "all": 4
+    },
+    "figure_payload_retained": {
+      "observed": false,
+      "note": "platform returns figures[] with name+caption only; png_base64 is stripped on ingest (same shape as source report 7883), so embedded figure bytes are not hash-verifiable via the API; the authoritative copy is the repo file docs/kf/wp-7883-01/fig1_asset_coverage_map.png",
+      "repo_png_sha256": "5934ff98fb6a3b81243867a413785df6bce6de15374b8b59f89a6610b0e8c4ca"
+    }
+  },
+  "all_pass": true
+}
