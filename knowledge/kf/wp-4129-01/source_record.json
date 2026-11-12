@@ -1,0 +1,28 @@
+{
+  "id": 4129,
+  "title": "PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）",
+  "summary": "PR #77 冲突仅 CHANGELOG.md：文本合并保住全部行却把 Cook 段 4 条条目挂进 plane-strain 段并继承重复 ## Unreleased。按段归属重建后，对 main 父丢失 0 行、对分支父仅丢 1 个重复标题，结构发现 0；重放未解冲合并被判负（4 项）。新 SHA b7bbe3707。",
+  "scenario_key": "benchmark-closure",
+  "mission_id": 3369,
+  "stage": null,
+  "tags": [
+    "TensorFEM",
+    "merge-resolution",
+    "changelog",
+    "audit",
+    "verification-debt"
+  ],
+  "figures": [
+    {
+      "name": "merge_audit.png",
+      "caption": "四种状态的 CHANGELOG 结构发现数（左）与两侧父提交的内容保全（右）：文本合并行不丢但结构被判负。"
+    },
+    {
+      "name": "plate_gate.png",
+      "caption": "本 PR 携带的 Q4 Mindlin 板均布压力锚点误差（对数轴），最大 0.4886 %，声明门 3 %。"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-05T04:00:32.361154+00:00"
+}
