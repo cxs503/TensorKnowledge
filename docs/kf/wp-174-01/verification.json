@@ -1,0 +1,156 @@
+{
+  "package_id": "wp-174-01",
+  "report_id": "174",
+  "verified_at": "2026-11-12T00:52:16Z",
+  "verifier": "scripts/kf/wp_174_01_verify.py",
+  "independence": {
+    "source_refetched": true,
+    "hash_recomputed_from_api_response": true,
+    "manifest_self_reported_hash_not_trusted": true,
+    "note": "平台门仍为最终裁决方；本文件只是本包自检，不构成 verified 标记"
+  },
+  "gate_replica_reference": {
+    "platform_gate_source": "TensorPlatform ops/knowledge_factory/gates.py",
+    "min_quote_chars": 12
+  },
+  "checks": [
+    {
+      "check": "c1_valid_json",
+      "ok": true,
+      "files": [
+        "kf_result.json",
+        "asset_manifest.json"
+      ]
+    },
+    {
+      "check": "c2_schema_pass",
+      "ok": true,
+      "validator": "jsonschema.Draft202012Validator",
+      "schema_sha256": "sha256:170dba8b0b5d54012490aaadc0b68647a9520ecb869e9d03f873afb99b74c076",
+      "n_errors": 0,
+      "first_error": null
+    },
+    {
+      "check": "c3_identity",
+      "ok": true,
+      "mismatched": []
+    },
+    {
+      "check": "c4_source_hash_matches",
+      "ok": true,
+      "claimed": "sha256:80399c1b032528fcf6e3e1a9cf08ad6b68bb68920b622223fc5062ec4f0287e3",
+      "recomputed": "sha256:80399c1b032528fcf6e3e1a9cf08ad6b68bb68920b622223fc5062ec4f0287e3",
+      "contract": "sha256:80399c1b032528fcf6e3e1a9cf08ad6b68bb68920b622223fc5062ec4f0287e3"
+    },
+    {
+      "check": "c4b_source_field",
+      "ok": true,
+      "field": "markdown"
+    },
+    {
+      "check": "c4c_source_chars",
+      "ok": true,
+      "recomputed_chars": 4258,
+      "contract_chars": 4258,
+      "manifest_chars": 4258
+    },
+    {
+      "check": "c5_source_locator_resolvable",
+      "ok": true,
+      "checked": 9,
+      "resolved": 9,
+      "locator_rate": 1.0,
+      "missing": [],
+      "too_short": []
+    },
+    {
+      "check": "c5c_all_claims_have_evidence_or_explicit_unresolved_status",
+      "ok": true,
+      "n_claims": 0,
+      "offenders": [],
+      "note": "01 工序合同允许 claims=[]（不抽取），零条即为完整结果"
+    },
+    {
+      "check": "c6_no_duplicate_ids",
+      "ok": true,
+      "n_ids": 29,
+      "duplicates": [],
+      "claim_namespace_violations": []
+    },
+    {
+      "check": "c7_occurrence_counts_crosschecked",
+      "ok": true,
+      "scope": "backticked_literal",
+      "mismatches": [],
+      "counts": [
+        {
+          "ref_id": "174-ref-01",
+          "manifest": 1,
+          "backticked_count": 1,
+          "raw_substring_count": 2
+        },
+        {
+          "ref_id": "174-ref-02",
+          "manifest": 2,
+          "backticked_count": 2,
+          "raw_substring_count": 3
+        },
+        {
+          "ref_id": "174-ref-03",
+          "manifest": 1,
+          "backticked_count": 1,
+          "raw_substring_count": 2
+        },
+        {
+          "ref_id": "174-ref-04",
+          "manifest": 1,
+          "backticked_count": 1,
+          "raw_substring_count": 1
+        },
+        {
+          "ref_id": "174-ref-05",
+          "manifest": 1,
+          "backticked_count": 1,
+          "raw_substring_count": 1
+        },
+        {
+          "ref_id": "174-ref-06",
+          "manifest": 1,
+          "backticked_count": 1,
+          "raw_substring_count": 1
+        },
+        {
+          "ref_id": "174-ref-07",
+          "manifest": 1,
+          "backticked_count": 1,
+          "raw_substring_count": 1
+        }
+      ]
+    },
+    {
+      "check": "c10_sections_partition_markdown",
+      "ok": true,
+      "section_chars_sum": 4258,
+      "markdown_chars": 4258,
+      "delta": 0,
+      "note": "段字符含分隔换行；相等 ⇒ 索引无遗漏无重叠"
+    },
+    {
+      "check": "c8_attachments_recount",
+      "ok": true,
+      "manifest_count": 0,
+      "record_figures": 0,
+      "markdown_image_hits": 0
+    },
+    {
+      "check": "c9_boundary_single_report",
+      "ok": true,
+      "touched": [
+        "174"
+      ]
+    }
+  ],
+  "ok": true,
+  "n_checks": 13,
+  "n_failed": 0
+}
