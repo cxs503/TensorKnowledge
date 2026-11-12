@@ -1,0 +1,1146 @@
+{
+  "package_id": "wp-4129-01",
+  "task_type": "01-asset-registration",
+  "report_id": "4129",
+  "provenance": {
+    "source_uri": "tensor://reports/4129",
+    "source_field": "markdown",
+    "source_hash": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+    "producer": "kf-worker/m15534",
+    "emitted_at": "2026-11-12T00:56:30.446587+00:00",
+    "notes": "hash recomputed from GET /api/v1/tensor/reports/4129 field `markdown` (UTF-8 bytes); matches contract source_hash sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "manifest_version": "1.0",
+      "package_id": "wp-4129-01",
+      "task_type": "01-asset-registration",
+      "report_id": "4129",
+      "lane": "C",
+      "generated_at": "2026-11-12T00:56:30.446587+00:00",
+      "producer": "kf-worker/m15534",
+      "repro_cmd": "python3 scripts/kf_wp_4129_01_register.py  # API mode; python3 scripts/kf_wp_4129_01_register.py --offline  # snapshot mode",
+      "source": {
+        "report_id": "4129",
+        "source_uri": "tensor://reports/4129",
+        "source_field": "markdown",
+        "source_hash": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+        "contract_source_hash": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+        "hash_algo": "sha256",
+        "hash_match": true,
+        "chars": 3969,
+        "contract_chars": 3969,
+        "chars_match_contract": true,
+        "bytes": 6901,
+        "lines": 109,
+        "has_crlf": false,
+        "has_trailing_newline": true,
+        "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based",
+        "fetched_via": "GET /api/v1/tensor/reports/4129",
+        "record_fields": {
+          "title": "PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）",
+          "scenario_key": "benchmark-closure",
+          "mission_id": 3369,
+          "status": "published",
+          "created_at": "2026-11-05T04:00:32.361154+00:00",
+          "tags": [
+            "TensorFEM",
+            "merge-resolution",
+            "changelog",
+            "audit",
+            "verification-debt"
+          ],
+          "title_matches_contract": true,
+          "scenario_matches_contract": true
+        },
+        "platform_attachment_probes": {
+          "GET /tensor/reports/4129/artifacts": {
+            "http_status": 404,
+            "bytes": 22
+          }
+        }
+      },
+      "assets": [
+        {
+          "asset_id": "r4129:source-markdown",
+          "kind": "report_markdown",
+          "name": "report-4129-markdown",
+          "source_uri": "tensor://reports/4129",
+          "media_type": "text/markdown",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1,
+            "quote": "# PR #77 三方合并：`CHANGELOG.md` 语义并集，以及「行保全 ≠ 文档正确」的可复现审计"
+          },
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/4129 -> field `markdown`",
+            "local_copy": "knowledge/kf/wp-4129-01/source_report_4129.md",
+            "byte_identical_to_contract_hash": true,
+            "reason": "markdown fetched live and its UTF-8 byte sha256 equals the contract source_hash"
+          },
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r4129:figure:01",
+          "kind": "embedded_figure",
+          "name": "merge_audit.png",
+          "caption": "四种状态的 CHANGELOG 结构发现数（左）与两侧父提交的内容保全（右）：文本合并行不丢但结构被判负。",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/0/name",
+            "quote": "merge_audit.png"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/4129/figures/merge_audit.png",
+            "http_status": 404,
+            "bytes": 29,
+            "reason": "record exposes name/caption only and the figure endpoint returns no byte payload, so no hash is claimed"
+          },
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:figure:02",
+          "kind": "embedded_figure",
+          "name": "plate_gate.png",
+          "caption": "本 PR 携带的 Q4 Mindlin 板均布压力锚点误差（对数轴），最大 0.4886 %，声明门 3 %。",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/1/name",
+            "quote": "plate_gate.png"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/4129/figures/plate_gate.png",
+            "http_status": 404,
+            "bytes": 29,
+            "reason": "record exposes name/caption only and the figure endpoint returns no byte payload, so no hash is claimed"
+          },
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:01",
+          "kind": "file_reference",
+          "name": "CHANGELOG.md",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 15,
+            "quote": "| 冲突文件 | **1**（`CHANGELOG.md`） |"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "the single conflicted file of PR #77",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:02",
+          "kind": "file_reference",
+          "name": "CHANGELOG.md",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 17,
+            "quote": "| 两侧改动路径交集 | 仅 `CHANGELOG.md` |"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "same path, second occurrence (intersection of touched paths)",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:03",
+          "kind": "file_reference",
+          "name": "CHANGELOG.md",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 28,
+            "quote": "冲突只有 `CHANGELOG.md`，而**行级并集并不足以保证正确**。做法是「以 `main` 为骨架的按段归属重建」："
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "same path, third occurrence (conflict reconstruction target)",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:04",
+          "kind": "data_artifact_reference",
+          "name": "benchmarks/plate_uniform_load_evidence.json",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 20,
+            "quote": "被并集保护的物理案例参数（读取 `benchmarks/plate_uniform_load_evidence.json`，非手抄）："
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "evidence file the plate benchmark parameters are read from",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:05",
+          "kind": "source_code_reference",
+          "name": "scripts/audit_changelog_merge.py",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 38,
+            "quote": "审计工具化（入仓）：`scripts/audit_changelog_merge.py` 三类检查——结构不变量（唯一"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "the audit tool committed by the PR",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:06",
+          "kind": "test_reference",
+          "name": "tests/test_changelog_integrity.py",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 40,
+            "quote": "条目掩盖）、以及**重放未解冲的文本合并并要求它被判负**。`tests/test_changelog_integrity.py`"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "integrity gate with 2 negative controls",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:07",
+          "kind": "file_reference",
+          "name": "CHANGELOG.md",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 65,
+            "quote": "图 1（左）四种状态的 `CHANGELOG.md` 结构发现数（0 = 干净），柱顶标注 `U:`（`## Unreleased`"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "same path, fourth occurrence (figure 1 caption)",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:08",
+          "kind": "source_code_reference",
+          "name": "src/tensorfem/plate_uniform_load.py",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 104,
+            "quote": "`git diff 7accc4b HEAD -- src/` 只有新增 `src/tensorfem/plate_uniform_load.py`（445 行），"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "the only new source module of the merge tree",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:09",
+          "kind": "directory_reference",
+          "name": "src/",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 104,
+            "quote": "`git diff 7accc4b HEAD -- src/` 只有新增 `src/tensorfem/plate_uniform_load.py`（445 行），"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "tree-identity diff scope",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:10",
+          "kind": "directory_reference",
+          "name": "tests/",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 105,
+            "quote": "`main` 既有模块一行未改；`tests/` 同样只新增 2 个文件——既有测试的执行环境与 `main` 逐字节"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": true,
+            "reason": "a same-named path exists in the delivery worktree but belongs to TensorKnowledge, not the declaring repository; identity not assertable"
+          },
+          "note": "tree-identity diff scope for tests",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:11",
+          "kind": "test_reference",
+          "name": "tests/test_plate_uniform_load.py",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 108,
+            "quote": "`tests/test_plate_uniform_load.py` 本机进度 6 passed / 0 failed"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "plate anchor gate test",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:12",
+          "kind": "test_reference",
+          "name": "tests/test_changelog_integrity.py",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 107,
+            "quote": "`tests/test_changelog_integrity.py` 7 passed（含 2 负控）；"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "same path, second occurrence (measured 7 passed)",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:ref:13",
+          "kind": "worktree_path_reference",
+          "name": "/root/tp-agent/work/m3182/src",
+          "declared_repository": "host",
+          "locator": {
+            "source_field": "markdown",
+            "line": 80,
+            "quote": "   `/root/tp-agent/work/m3182/src`；验证必须 `PYTHONPATH=<本 worktree>/src` 并打印"
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "via": "filesystem probe in worktree /root/tp-agent/work/m15534",
+            "path_present_in_worktree": false,
+            "reason": "path not present in delivery worktree TensorKnowledge"
+          },
+          "note": "foreign worktree on the build host; the wrong import target the report warns about",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:figbody:01",
+          "kind": "figure_reference",
+          "name": "merge_audit.png",
+          "locator": {
+            "source_field": "markdown",
+            "line": 65,
+            "quote": "图 1（左）四种状态的 `CHANGELOG.md` 结构发现数（0 = 干净），柱顶标注 `U:`（`## Unreleased`"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "mapping_confidence": "inferred_from_caption_text",
+            "reason": "the body names the figure as `图 1` and describes it, but carries no path/link to merge_audit.png; the mapping to the record figure is an inference, not an assertion"
+          },
+          "note": "body caption (structure findings + content preservation) matches the record caption of merge_audit.png thematically; no path link exists in the body",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r4129:figbody:02",
+          "kind": "figure_reference",
+          "name": "plate_gate.png",
+          "locator": {
+            "source_field": "markdown",
+            "line": 69,
+            "quote": "图 2 本 PR 携带的板锚点误差（对数横轴）：蓝柱为相对精确 Navier 级数 / 可分离 Ritz 参考的"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "mapping_confidence": "inferred_from_caption_text",
+            "reason": "the body names the figure as `图 2` and describes it, but carries no path/link to plate_gate.png; the mapping to the record figure is an inference, not an assertion"
+          },
+          "note": "body caption (plate anchor errors, max 0.4886 %) matches the record caption of plate_gate.png; no path link exists in the body",
+          "existence_asserted_by_worker": false
+        }
+      ],
+      "symbol_references": [
+        {
+          "symbol_id": "r4129:sym:01",
+          "kind": "module_reference",
+          "token": "tensorfem",
+          "locator": {
+            "source_field": "markdown",
+            "line": 79,
+            "quote": "3. **`import tensorfem` 可能指向别的 worktree。** 本机多 worktree 并行，默认解析到"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "named in the report prose; this work package registers the reference, it does not import TensorFEM"
+          },
+          "note": "the package whose import resolution the report warns about",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "symbol_id": "r4129:sym:02",
+          "kind": "module_attribute_reference",
+          "token": "tensorfem.__file__",
+          "locator": {
+            "source_field": "markdown",
+            "line": 80,
+            "quote": "   `/root/tp-agent/work/m3182/src`；验证必须 `PYTHONPATH=<本 worktree>/src` 并打印"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "named in the report prose; this work package registers the reference, it does not import TensorFEM"
+          },
+          "note": "the self-证明 print used by the verification protocol",
+          "existence_asserted_by_worker": false
+        }
+      ],
+      "vcs_references": [
+        {
+          "ref_id": "r4129:vcs:01",
+          "kind": "commit_reference",
+          "token": "b7bbe3707838",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3,
+            "quote": "**仓库** TensorFEM · **分支** `agent/m3369` · **合并提交** `b7bbe3707838`"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "git object/ref named in the report; the TensorFEM object store is not available in this worktree, so existence is not asserted"
+          },
+          "note": "abbreviated merge commit of PR #77",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "ref_id": "r4129:vcs:02",
+          "kind": "commit_reference",
+          "token": "b7bbe3707838bc8bb25af16c77134efd58b2b75e",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 61,
+            "quote": "`all_passed = True`。新 SHA `b7bbe3707838bc8bb25af16c77134efd58b2b75e`（旧 `c441d91`）。"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "git object/ref named in the report; the TensorFEM object store is not available in this worktree, so existence is not asserted"
+          },
+          "note": "full merge commit id",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "ref_id": "r4129:vcs:03",
+          "kind": "commit_reference",
+          "token": "c441d91",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 4,
+            "quote": "（父 `c441d91` = 分支旧头，`7accc4b9c` = `main`）"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "git object/ref named in the report; the TensorFEM object store is not available in this worktree, so existence is not asserted"
+          },
+          "note": "branch old head (first parent)",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "ref_id": "r4129:vcs:04",
+          "kind": "commit_reference",
+          "token": "7accc4b9c",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 4,
+            "quote": "（父 `c441d91` = 分支旧头，`7accc4b9c` = `main`）"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "git object/ref named in the report; the TensorFEM object store is not available in this worktree, so existence is not asserted"
+          },
+          "note": "main head after 52 commits (second parent), 9-hex form",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "ref_id": "r4129:vcs:05",
+          "kind": "commit_reference",
+          "token": "7accc4b",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 11,
+            "quote": "`main` 此后前进 52 个提交（→ `7accc4b`），PR 因此 `mergeable=false`。"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "git object/ref named in the report; the TensorFEM object store is not available in this worktree, so existence is not asserted"
+          },
+          "note": "same main head in 7-hex form; identity beyond the prefix is NOT asserted",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "ref_id": "r4129:vcs:06",
+          "kind": "pull_request_reference",
+          "token": "PR #77",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 8,
+            "quote": "PR #77（`agent/m3369` → `main`）携带的是 **Q4 Mindlin 板在均布压力下的精度复核**：此前该"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "git object/ref named in the report; the TensorFEM object store is not available in this worktree, so existence is not asserted"
+          },
+          "note": "the pull request under audit",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "ref_id": "r4129:vcs:07",
+          "kind": "branch_reference",
+          "token": "agent/m3369",
+          "declared_repository": "TensorFEM",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3,
+            "quote": "**仓库** TensorFEM · **分支** `agent/m3369` · **合并提交** `b7bbe3707838`"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "git object/ref named in the report; the TensorFEM object store is not available in this worktree, so existence is not asserted"
+          },
+          "note": "source branch of PR #77",
+          "existence_asserted_by_worker": false
+        }
+      ],
+      "identity_facts": [
+        {
+          "fact_id": "title-line",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1,
+            "quote": "# PR #77 三方合并：`CHANGELOG.md` 语义并集，以及「行保全 ≠ 文档正确」的可复现审计"
+          },
+          "quote_sha256": "sha256:76a4732b39f7d3d8fa496bcfa4659dfb37f1d75325f5fd1cc8d783d3311185e9",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "repo-branch-merge-commit-line",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3,
+            "quote": "**仓库** TensorFEM · **分支** `agent/m3369` · **合并提交** `b7bbe3707838`"
+          },
+          "quote_sha256": "sha256:7567e032fdc4ddeff4d3a5376e227b50ef7deba2bce2dfacbb9ea7d63fef30f3",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "record-scenario-key",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/scenario_key",
+            "quote": "benchmark-closure"
+          },
+          "quote_sha256": "sha256:a28afbf204b489fc68f9fd1acb38c11e067cd644991958ccd636a179e6a510f1",
+          "matches_contract": true
+        },
+        {
+          "fact_id": "record-mission-id",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/mission_id",
+            "quote": "3369"
+          },
+          "quote_sha256": "sha256:9eb06127e27d1bf4a69a478aecb89c3f8b99dd4beeca843efd903b24586b1f4e",
+          "matches_contract": null
+        }
+      ],
+      "ref_consistency_checks": {
+        "merge_commit_short_is_prefix_of_full": true,
+        "main_head_7hex_is_prefix_of_9hex": true,
+        "branch_head_prefix_of_merge_commit": false,
+        "note": "`c441d91` (branch head) is a *parent* of the merge commit, not a prefix of it; the report states this relation, the worker only checks prefix arithmetic."
+      },
+      "locators": [
+        {
+          "id": "r4129:source-markdown",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1
+          },
+          "quote": "# PR #77 三方合并：`CHANGELOG.md` 语义并集，以及「行保全 ≠ 文档正确」的可复现审计",
+          "quote_sha256": "sha256:76a4732b39f7d3d8fa496bcfa4659dfb37f1d75325f5fd1cc8d783d3311185e9",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:figure:01",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/0/name"
+          },
+          "quote": "merge_audit.png",
+          "quote_sha256": "sha256:250e9383f7f8e662d963f6a8cb7170540b00270a80f9d91ed3f022e5358539b7",
+          "quote_in_source": false,
+          "quote_on_declared_line": false,
+          "pointer_resolved": true,
+          "value_at_pointer": "merge_audit.png",
+          "value_equals_quote": true,
+          "occurrences_in_source": 0,
+          "resolved": true
+        },
+        {
+          "id": "r4129:figure:02",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/1/name"
+          },
+          "quote": "plate_gate.png",
+          "quote_sha256": "sha256:71fec749e80e96c254e8591d3cdb10dc62d419cc019b5c78ef9c0b2f0439c486",
+          "quote_in_source": false,
+          "quote_on_declared_line": false,
+          "pointer_resolved": true,
+          "value_at_pointer": "plate_gate.png",
+          "value_equals_quote": true,
+          "occurrences_in_source": 0,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:01",
+          "locator": {
+            "source_field": "markdown",
+            "line": 15
+          },
+          "quote": "| 冲突文件 | **1**（`CHANGELOG.md`） |",
+          "quote_sha256": "sha256:65c8ef0a214458ba19359a0f6ba6c90fc1ffa971051217be518c92c97cc1fc8e",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:02",
+          "locator": {
+            "source_field": "markdown",
+            "line": 17
+          },
+          "quote": "| 两侧改动路径交集 | 仅 `CHANGELOG.md` |",
+          "quote_sha256": "sha256:a2f5cf60c0026b38f39d10fa684bb59d926d2b5c9cab778f105dd203b5e25217",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:03",
+          "locator": {
+            "source_field": "markdown",
+            "line": 28
+          },
+          "quote": "冲突只有 `CHANGELOG.md`，而**行级并集并不足以保证正确**。做法是「以 `main` 为骨架的按段归属重建」：",
+          "quote_sha256": "sha256:19a7f44edba73dfba33dccdae2168d125381515012cc73395407a8655aad5113",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:04",
+          "locator": {
+            "source_field": "markdown",
+            "line": 20
+          },
+          "quote": "被并集保护的物理案例参数（读取 `benchmarks/plate_uniform_load_evidence.json`，非手抄）：",
+          "quote_sha256": "sha256:c34832b5921b0242b2e958b36e505eb4092065637e31255c0c076bdc027b9d6d",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:05",
+          "locator": {
+            "source_field": "markdown",
+            "line": 38
+          },
+          "quote": "审计工具化（入仓）：`scripts/audit_changelog_merge.py` 三类检查——结构不变量（唯一",
+          "quote_sha256": "sha256:4b2e372a4e83abbe453c558c720135474fda345761b702959551846900dcafa1",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:06",
+          "locator": {
+            "source_field": "markdown",
+            "line": 40
+          },
+          "quote": "条目掩盖）、以及**重放未解冲的文本合并并要求它被判负**。`tests/test_changelog_integrity.py`",
+          "quote_sha256": "sha256:2294c8413b8e355b4f7193414956e3da0d0de4104ca14a30635191d7bfbe692d",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:07",
+          "locator": {
+            "source_field": "markdown",
+            "line": 65
+          },
+          "quote": "图 1（左）四种状态的 `CHANGELOG.md` 结构发现数（0 = 干净），柱顶标注 `U:`（`## Unreleased`",
+          "quote_sha256": "sha256:84d7dd302911462770002d4064da3e837d483faf2095a19dac772666781aba70",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:08",
+          "locator": {
+            "source_field": "markdown",
+            "line": 104
+          },
+          "quote": "`git diff 7accc4b HEAD -- src/` 只有新增 `src/tensorfem/plate_uniform_load.py`（445 行），",
+          "quote_sha256": "sha256:24f6c748105e8f66406fa5f7ac444d9fc38638c3f7f14871e02398b0c990a631",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:09",
+          "locator": {
+            "source_field": "markdown",
+            "line": 104
+          },
+          "quote": "`git diff 7accc4b HEAD -- src/` 只有新增 `src/tensorfem/plate_uniform_load.py`（445 行），",
+          "quote_sha256": "sha256:24f6c748105e8f66406fa5f7ac444d9fc38638c3f7f14871e02398b0c990a631",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:10",
+          "locator": {
+            "source_field": "markdown",
+            "line": 105
+          },
+          "quote": "`main` 既有模块一行未改；`tests/` 同样只新增 2 个文件——既有测试的执行环境与 `main` 逐字节",
+          "quote_sha256": "sha256:67ef1790e00e0dcc1c850c5c09ddb6bc3be008f6808bd762eab0f0c492796297",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:11",
+          "locator": {
+            "source_field": "markdown",
+            "line": 108
+          },
+          "quote": "`tests/test_plate_uniform_load.py` 本机进度 6 passed / 0 failed",
+          "quote_sha256": "sha256:dd6faaaa4d234c8b5918c9437e9714a8629d2decaf2a478a5c7032c4d4731937",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:12",
+          "locator": {
+            "source_field": "markdown",
+            "line": 107
+          },
+          "quote": "`tests/test_changelog_integrity.py` 7 passed（含 2 负控）；",
+          "quote_sha256": "sha256:f5c322fcda97f5d53383239e178e00233b6a7887a91893e4695f166685cd7efa",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:ref:13",
+          "locator": {
+            "source_field": "markdown",
+            "line": 80
+          },
+          "quote": "   `/root/tp-agent/work/m3182/src`；验证必须 `PYTHONPATH=<本 worktree>/src` 并打印",
+          "quote_sha256": "sha256:b894827e782a9526ae136f553006936c22dbcc2b80dad7265d4683de90c074f0",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:figbody:01",
+          "locator": {
+            "source_field": "markdown",
+            "line": 65
+          },
+          "quote": "图 1（左）四种状态的 `CHANGELOG.md` 结构发现数（0 = 干净），柱顶标注 `U:`（`## Unreleased`",
+          "quote_sha256": "sha256:84d7dd302911462770002d4064da3e837d483faf2095a19dac772666781aba70",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:figbody:02",
+          "locator": {
+            "source_field": "markdown",
+            "line": 69
+          },
+          "quote": "图 2 本 PR 携带的板锚点误差（对数横轴）：蓝柱为相对精确 Navier 级数 / 可分离 Ritz 参考的",
+          "quote_sha256": "sha256:0bc387a898955ef3e5c71848120a7553d6e04301341c936d8e51c819b90a6040",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:sym:01",
+          "locator": {
+            "source_field": "markdown",
+            "line": 79
+          },
+          "quote": "3. **`import tensorfem` 可能指向别的 worktree。** 本机多 worktree 并行，默认解析到",
+          "quote_sha256": "sha256:ec4399313c4d50ce8206071943c8ea6a41de1512e7bcd5046a502aba822e9273",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:sym:02",
+          "locator": {
+            "source_field": "markdown",
+            "line": 80
+          },
+          "quote": "   `/root/tp-agent/work/m3182/src`；验证必须 `PYTHONPATH=<本 worktree>/src` 并打印",
+          "quote_sha256": "sha256:b894827e782a9526ae136f553006936c22dbcc2b80dad7265d4683de90c074f0",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:vcs:01",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3
+          },
+          "quote": "**仓库** TensorFEM · **分支** `agent/m3369` · **合并提交** `b7bbe3707838`",
+          "quote_sha256": "sha256:7567e032fdc4ddeff4d3a5376e227b50ef7deba2bce2dfacbb9ea7d63fef30f3",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:vcs:02",
+          "locator": {
+            "source_field": "markdown",
+            "line": 61
+          },
+          "quote": "`all_passed = True`。新 SHA `b7bbe3707838bc8bb25af16c77134efd58b2b75e`（旧 `c441d91`）。",
+          "quote_sha256": "sha256:4356d7eee233321382c096e1d0a7f957e9d12a6bfb02187f3c29228c2b476129",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:vcs:03",
+          "locator": {
+            "source_field": "markdown",
+            "line": 4
+          },
+          "quote": "（父 `c441d91` = 分支旧头，`7accc4b9c` = `main`）",
+          "quote_sha256": "sha256:7870e1b1c974abb97a928ec095516ef54ad44827e565e89b5cc79a981adbe7d8",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:vcs:04",
+          "locator": {
+            "source_field": "markdown",
+            "line": 4
+          },
+          "quote": "（父 `c441d91` = 分支旧头，`7accc4b9c` = `main`）",
+          "quote_sha256": "sha256:7870e1b1c974abb97a928ec095516ef54ad44827e565e89b5cc79a981adbe7d8",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:vcs:05",
+          "locator": {
+            "source_field": "markdown",
+            "line": 11
+          },
+          "quote": "`main` 此后前进 52 个提交（→ `7accc4b`），PR 因此 `mergeable=false`。",
+          "quote_sha256": "sha256:4f338cdd3ba4ae3887a10bb5c397389632e1c7d92eaf6f358d01126b0b7dc93c",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:vcs:06",
+          "locator": {
+            "source_field": "markdown",
+            "line": 8
+          },
+          "quote": "PR #77（`agent/m3369` → `main`）携带的是 **Q4 Mindlin 板在均布压力下的精度复核**：此前该",
+          "quote_sha256": "sha256:51301e5aba2d0662b63b14579de33c49511adfcae56515d96c6cb27ab4aef80e",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r4129:vcs:07",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3
+          },
+          "quote": "**仓库** TensorFEM · **分支** `agent/m3369` · **合并提交** `b7bbe3707838`",
+          "quote_sha256": "sha256:7567e032fdc4ddeff4d3a5376e227b50ef7deba2bce2dfacbb9ea7d63fef30f3",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        }
+      ],
+      "claims": [],
+      "claims_empty_reason": "Contract wp-4129-01 objective is register_assets=true / classify_report_type=false and notes state `claims 允许为空数组`, with constraints no_forced_claim_generation=true and do_not_mark_claims_as_verified=true. This work package registers asset identity only (report_id, markdown byte hash, declared attachments/artefacts); claim extraction is a downstream work package, so an empty claims array is the complete result, not an omission.",
+      "counts": {
+        "source_documents": 1,
+        "figures_declared_in_record": 2,
+        "figures_with_bytes": 0,
+        "body_path_references": 13,
+        "distinct_referenced_paths": 9,
+        "figure_body_anchors": 2,
+        "assets_total": 18,
+        "assets_resolved": 1,
+        "assets_metadata_only": 2,
+        "assets_declared_only": 2,
+        "assets_unresolved": 13,
+        "locators": 27,
+        "locators_resolved": 27,
+        "symbol_references": 2,
+        "vcs_references": 7,
+        "claims": 0,
+        "kind_status_histogram": {
+          "data_artifact_reference/unresolved": 1,
+          "directory_reference/unresolved": 2,
+          "embedded_figure/metadata_only": 2,
+          "figure_reference/declared_only": 2,
+          "file_reference/unresolved": 4,
+          "report_markdown/resolved": 1,
+          "source_code_reference/unresolved": 2,
+          "test_reference/unresolved": 3,
+          "worktree_path_reference/unresolved": 1
+        }
+      },
+      "id_integrity": {
+        "ids_checked": 27,
+        "duplicates": [],
+        "unique": true
+      },
+      "unresolved": [
+        {
+          "asset_id": "r4129:ref:01",
+          "name": "CHANGELOG.md",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:02",
+          "name": "CHANGELOG.md",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:03",
+          "name": "CHANGELOG.md",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:04",
+          "name": "benchmarks/plate_uniform_load_evidence.json",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:05",
+          "name": "scripts/audit_changelog_merge.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:06",
+          "name": "tests/test_changelog_integrity.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:07",
+          "name": "CHANGELOG.md",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:08",
+          "name": "src/tensorfem/plate_uniform_load.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:09",
+          "name": "src/",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:10",
+          "name": "tests/",
+          "reason": "a same-named path exists in the delivery worktree but belongs to TensorKnowledge, not the declaring repository; identity not assertable"
+        },
+        {
+          "asset_id": "r4129:ref:11",
+          "name": "tests/test_plate_uniform_load.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:12",
+          "name": "tests/test_changelog_integrity.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:ref:13",
+          "name": "/root/tp-agent/work/m3182/src",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r4129:figbody:01",
+          "name": "merge_audit.png",
+          "reason": "the body names the figure as `图 1` and describes it, but carries no path/link to merge_audit.png; the mapping to the record figure is an inference, not an assertion"
+        },
+        {
+          "asset_id": "r4129:figbody:02",
+          "name": "plate_gate.png",
+          "reason": "the body names the figure as `图 2` and describes it, but carries no path/link to plate_gate.png; the mapping to the record figure is an inference, not an assertion"
+        }
+      ],
+      "findings": [
+        {
+          "finding_id": "structure-inconsistency-inherited-on-main",
+          "anchors_in_source": [
+            "main",
+            "结构审计"
+          ],
+          "anchor_a_present": true,
+          "anchor_b_present": true,
+          "interpretation": "registered as reported by the source; not re-derived here"
+        },
+        {
+          "finding_id": "honest-incomplete-local-suite",
+          "anchors_in_source": [
+            "本地没有跑完全量套件",
+            "不能声明全绿"
+          ],
+          "anchor_a_present": true,
+          "anchor_b_present": true,
+          "interpretation": "registered as reported by the source; not re-derived here"
+        }
+      ],
+      "observations": [
+        "The report is a merge/audit record for TensorFEM PR #77; its own acceptance table (section ⑥) already carries one honest `未完成` row (local full suite not finished) which this work package preserves verbatim instead of upgrading.",
+        "Both figures are declared in the record (name+caption) but the figure endpoints return 404, so they stay metadata_only and no hash is claimed for them.",
+        "All body references point at TensorFEM artefacts (CHANGELOG.md, benchmarks/*, scripts/*, src/tensorfem/*, tests/*) plus one foreign absolute worktree path; none of them is asserted to exist by this worker."
+      ],
+      "limitations": [
+        "Registration only: no claim/evidence extraction, no report-type classification, no verified marks (verification is computed by the platform gate).",
+        "source_hash scope = UTF-8 bytes of the markdown string returned by the platform API; a whitespace change in the stored markdown invalidates it.",
+        "Direct psql read of tensor_reports was denied (permission denied for table tensor_reports), so the API is the only source channel used.",
+        "Reference resolution is limited to the delivery worktree (TensorKnowledge); a missing path here is reported as unresolved, never as a broken upstream artefact.",
+        "The mapping 图 1/图 2 -> record figures is inferred from caption wording, not from a link in the prose."
+      ],
+      "checks": {
+        "source_hash_matches_contract": true,
+        "chars_match_contract": true,
+        "all_locators_resolved": true,
+        "no_duplicate_ids": true,
+        "claims_empty_by_contract": true,
+        "no_verified_marks_emitted": true,
+        "single_report_scope": true
+      }
+    }
+  }
+}
