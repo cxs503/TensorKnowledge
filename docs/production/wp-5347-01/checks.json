@@ -1,0 +1,103 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "check": "A1.valid_json",
+      "status": "passed",
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "check": "A2.schema_pass",
+      "status": "passed",
+      "evidence": {
+        "schema": "schemas/kf_result.v1.schema.json",
+        "schema_sha256": "sha256:170dba8b0b5d54012490aaadc0b68647a9520ecb869e9d03f873afb99b74c076",
+        "errors": []
+      }
+    },
+    {
+      "check": "A3.source_hash_matches",
+      "status": "passed",
+      "evidence": {
+        "contract": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1",
+        "recomputed": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1",
+        "envelope": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1",
+        "manifest": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1",
+        "chars": {
+          "contract": 4206,
+          "actual": 4206,
+          "manifest": 4206
+        }
+      }
+    },
+    {
+      "check": "A4.source_locator_resolvable",
+      "status": "passed",
+      "evidence": {
+        "char_span_locators": 24,
+        "span_mismatches": [],
+        "path_not_in_quote": [],
+        "min_quote_chars": 12
+      }
+    },
+    {
+      "check": "A5.no_duplicate_ids",
+      "status": "passed",
+      "evidence": {
+        "n_assets": 26,
+        "duplicate_assets": [],
+        "n_claims": 0,
+        "duplicate_claims": []
+      }
+    },
+    {
+      "check": "A6.claims_have_evidence_or_unresolved",
+      "status": "vacuous",
+      "evidence": {
+        "reason": "process 01 extracts no claims (objective.register_assets only); empty claim set is contract-legal, so this acceptance line is vacuously satisfied — NOT evidence that anything was verified",
+        "n_claims": 0
+      }
+    },
+    {
+      "check": "A7.envelope_integrity",
+      "status": "passed",
+      "evidence": {
+        "problems": []
+      }
+    },
+    {
+      "check": "A8.no_self_verification",
+      "status": "passed",
+      "evidence": {
+        "offenders": []
+      }
+    },
+    {
+      "check": "A9.report_channel",
+      "status": "passed",
+      "evidence": {
+        "json_blocks": 1,
+        "issues": [],
+        "report": "KF-RESULT-wp-5347-01.md",
+        "chars": 35788
+      }
+    },
+    {
+      "check": "A10.figure_honesty",
+      "status": "passed",
+      "evidence": {
+        "record_figures": 2,
+        "metadata_only": 2,
+        "problems": []
+      }
+    }
+  ],
+  "counts": {
+    "passed": 9,
+    "vacuous": 1,
+    "failed": 0,
+    "not_run": 0
+  }
+}
