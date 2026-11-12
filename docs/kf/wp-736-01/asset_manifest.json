@@ -1,0 +1,456 @@
+{
+  "schema_version": "kf-asset-manifest/1.0",
+  "package_id": "wp-736-01",
+  "task_type": "01-asset-registration",
+  "report_id": "736",
+  "generated_at": "2026-11-12T00:50:52Z",
+  "generator": "scripts/kf_wp736_01_asset_manifest.py",
+  "source": {
+    "uri": "tensor://reports/736",
+    "field": "markdown",
+    "hash": {
+      "algorithm": "sha256",
+      "value": "sha256:9726d9bcd05657bd5cf0833a4c47a855d683bc5c5ae19b89f6ca49af4b945ef0",
+      "recomputed_in_run": true,
+      "matches_contract": true
+    },
+    "size": {
+      "chars": 8500,
+      "bytes": 11451
+    },
+    "report_facts": {
+      "title": "E2E-1b 失败路径负测试：16/18 攻击被拦，2 道门失守（D2/D3）· honest FAIL",
+      "scenario_key": "e2e1_negative_tests",
+      "mission_id": 810,
+      "status": "published",
+      "created_at": "2026-10-31T15:31:32.991973+00:00",
+      "tags": [
+        "E2E-1b",
+        "negative-testing",
+        "gate-defect",
+        "lineage",
+        "data-governance",
+        "LBM-stability",
+        "honest-FAIL"
+      ]
+    }
+  },
+  "channel_probes": [
+    {
+      "path": "/tensor/reports/736/figures/gate_matrix.png",
+      "http_status": 404,
+      "detail": "{\"detail\":\"figure not found\"}"
+    },
+    {
+      "path": "/tensor/reports/736/figures/tau_nu_domain.png",
+      "http_status": 404,
+      "detail": "{\"detail\":\"figure not found\"}"
+    },
+    {
+      "path": "/tensor/reports/736/attachments",
+      "http_status": 404,
+      "detail": "{\"detail\":\"Not Found\"}"
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "ast-736-report-markdown",
+      "kind": "report_markdown",
+      "role": "primary_source",
+      "declared_uri": "tensor://reports/736#markdown",
+      "locator": {
+        "field": "markdown",
+        "char_start": 0,
+        "char_end": 42,
+        "quote": "# E2E-1b · 失败路径负测试：验证「门必须能失败」（mission 810）"
+      },
+      "covers": {
+        "field": "markdown",
+        "char_start": 0,
+        "char_end": 8500
+      },
+      "hash": {
+        "algorithm": "sha256",
+        "value": "sha256:9726d9bcd05657bd5cf0833a4c47a855d683bc5c5ae19b89f6ca49af4b945ef0",
+        "scope": "utf-8 bytes of the markdown field"
+      },
+      "size": {
+        "chars": 8500,
+        "bytes": 11451
+      },
+      "status": "registered",
+      "extraction": {
+        "performed": false,
+        "reason": "package objective is registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-fig01",
+      "kind": "figure",
+      "role": "report_figure",
+      "declared_uri": "tensor://reports/736/figures/gate_matrix.png",
+      "figure_name": "gate_matrix.png",
+      "caption": "攻击 × 门 拦截矩阵：绿=拦住、红斜纹=失守（D2 API 运行时层、D3 样本库入库）、蓝=合法对照放行（证明门非恒拒绝）。",
+      "caption_source": "report metadata figures[].caption (verbatim)",
+      "locator": {
+        "field": "markdown",
+        "char_start": 2189,
+        "char_end": 2205,
+        "quote": "图 1 为攻击 × 门 拦截矩阵"
+      },
+      "hash": null,
+      "payload_status": "declared_not_fetched",
+      "payload_probe": {
+        "path": "/tensor/reports/736/figures/gate_matrix.png",
+        "http_status": 404,
+        "detail": "{\"detail\":\"figure not found\"}"
+      },
+      "status": "unresolved",
+      "unresolved_reason": "figure bytes are not retrievable through this package's declared channel (tensor://reports/736 markdown field); name+caption registered, payload not ingested",
+      "extraction": {
+        "performed": false,
+        "reason": "no extraction in this package"
+      }
+    },
+    {
+      "asset_id": "ast-736-fig02",
+      "kind": "figure",
+      "role": "report_figure",
+      "declared_uri": "tensor://reports/736/figures/tau_nu_domain.png",
+      "figure_name": "tau_nu_domain.png",
+      "caption": "左：τ–ν 判据域，ν=c_s²(τ−1/2)，允许带 τ∈(0.5,5.0]，攻击点 τ=0.4/τ=0.5 落在禁区，对照点 τ=0.516 在带内；右：Ma=√3·u_lb 与不可压上限 0.3，攻击点 u_lb=0.45 对应 Ma=0.779。",
+      "caption_source": "report metadata figures[].caption (verbatim)",
+      "locator": {
+        "field": "markdown",
+        "char_start": 2284,
+        "char_end": 2304,
+        "quote": "图 2 为 τ–ν 判据域与 Ma 上限"
+      },
+      "hash": null,
+      "payload_status": "declared_not_fetched",
+      "payload_probe": {
+        "path": "/tensor/reports/736/figures/tau_nu_domain.png",
+        "http_status": 404,
+        "detail": "{\"detail\":\"figure not found\"}"
+      },
+      "status": "unresolved",
+      "unresolved_reason": "figure bytes are not retrievable through this package's declared channel (tensor://reports/736 markdown field); name+caption registered, payload not ingested",
+      "extraction": {
+        "performed": false,
+        "reason": "no extraction in this package"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref01",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "backend/services/control_project_runtime.py",
+      "locator": {
+        "field": "markdown",
+        "char_start": 2448,
+        "char_end": 2491,
+        "quote": "backend/services/control_project_runtime.py"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref02",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "contracts/tensorphysics-run-manifest-v1.schema.json",
+      "locator": {
+        "field": "markdown",
+        "char_start": 2781,
+        "char_end": 2832,
+        "quote": "contracts/tensorphysics-run-manifest-v1.schema.json"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref03",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "docs/benchmarks/e2e1_negative_tests/DEFECTS.md",
+      "locator": {
+        "field": "markdown",
+        "char_start": 3845,
+        "char_end": 3891,
+        "quote": "docs/benchmarks/e2e1_negative_tests/DEFECTS.md"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref04",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "docs/benchmarks/e2e1_negative_tests/VERDICTS.md",
+      "locator": {
+        "field": "markdown",
+        "char_start": 1485,
+        "char_end": 1532,
+        "quote": "docs/benchmarks/e2e1_negative_tests/VERDICTS.md"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref05",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "examples/lineage_baseline_no_version.json",
+      "locator": {
+        "field": "markdown",
+        "char_start": 829,
+        "char_end": 870,
+        "quote": "examples/lineage_baseline_no_version.json"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref06",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "examples/lineage_couette_pass.json",
+      "locator": {
+        "field": "markdown",
+        "char_start": 784,
+        "char_end": 818,
+        "quote": "examples/lineage_couette_pass.json"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref07",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "outputs/e2e1b_negative/evidence.json",
+      "locator": {
+        "field": "markdown",
+        "char_start": 1882,
+        "char_end": 1918,
+        "quote": "outputs/e2e1b_negative/evidence.json"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref08",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "scripts/e2e1b_negative_runner.py",
+      "locator": {
+        "field": "markdown",
+        "char_start": 908,
+        "char_end": 940,
+        "quote": "scripts/e2e1b_negative_runner.py"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref09",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "scripts/validate_lineage.py",
+      "locator": {
+        "field": "markdown",
+        "char_start": 1050,
+        "char_end": 1077,
+        "quote": "scripts/validate_lineage.py"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref10",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "src.validation.run_admission",
+      "locator": {
+        "field": "markdown",
+        "char_start": 996,
+        "char_end": 1024,
+        "quote": "src.validation.run_admission"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref11",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "src.validation.solver_config",
+      "locator": {
+        "field": "markdown",
+        "char_start": 956,
+        "char_end": 984,
+        "quote": "src.validation.solver_config"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref12",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "tests/e2e1b_negative/attack_cases.py",
+      "locator": {
+        "field": "markdown",
+        "char_start": 635,
+        "char_end": 671,
+        "quote": "tests/e2e1b_negative/attack_cases.py"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    },
+    {
+      "asset_id": "ast-736-ref13",
+      "kind": "inline_artifact_reference",
+      "role": "referenced_artifact",
+      "declared_uri": null,
+      "referenced_path": "tools/sample_db/backfill.py",
+      "locator": {
+        "field": "markdown",
+        "char_start": 1128,
+        "char_end": 1155,
+        "quote": "tools/sample_db/backfill.py"
+      },
+      "markup_context": "quoted as a code span in the report body",
+      "hash": null,
+      "payload_status": "not_ingested",
+      "status": "unresolved",
+      "reason": "referenced path is relative to the producing repo (mission 810 worktree); no copy exists on this host and the package declares no retrieval channel for it in this worktree — recorded as a declarative reference only",
+      "extraction": {
+        "performed": false,
+        "reason": "reference registration only"
+      }
+    }
+  ],
+  "asset_count": 16,
+  "registered_count": 1,
+  "unresolved_count": 15,
+  "unresolved_asset_ids": [
+    "ast-736-fig01",
+    "ast-736-fig02",
+    "ast-736-ref01",
+    "ast-736-ref02",
+    "ast-736-ref03",
+    "ast-736-ref04",
+    "ast-736-ref05",
+    "ast-736-ref06",
+    "ast-736-ref07",
+    "ast-736-ref08",
+    "ast-736-ref09",
+    "ast-736-ref10",
+    "ast-736-ref11",
+    "ast-736-ref12",
+    "ast-736-ref13"
+  ],
+  "claims": [],
+  "claims_note": "empty by contract: objective.register_assets=true, objective.classify_report_type=false, no_forced_claim_generation=true — this package registers assets and does not extract claims",
+  "verification": {
+    "marked_verified_claims": 0,
+    "note": "verification is computed by the platform gate; this manifest marks nothing verified"
+  }
+}
