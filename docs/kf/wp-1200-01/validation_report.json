@@ -1,0 +1,58 @@
+{
+  "schema": "kf_result.v1.schema.json",
+  "schema_sha256": "sha256:170dba8b0b5d54012490aaadc0b68647a9520ecb869e9d03f873afb99b74c076",
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "PASS",
+      "detail": "manifest/envelope 均可被 json 解析（本函数入参即解析结果）"
+    },
+    {
+      "check": "schema_pass",
+      "result": "PASS",
+      "detail": "jsonschema(draft2020-12) 对 kf_result.v1.schema.json 校验通过"
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "PASS",
+      "detail": "sha256:c75f5f263be1e61a6f4b6a557c31c743488e8c6c03364675567aef5fd44ede48"
+    },
+    {
+      "check": "artifact_anchor_in_locator",
+      "result": "PASS",
+      "detail": "8 个工件路径 token 均逐字落在其引用行内"
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "PASS",
+      "detail": "21 个 locator 全部为逐字切片且行号自洽"
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "PASS",
+      "detail": "10 个 claim_id 唯一"
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "PASS",
+      "detail": "10 条 claim 均有 quote 证据或显式 unresolved_reason"
+    },
+    {
+      "check": "claim_quotes_verbatim",
+      "result": "PASS",
+      "detail": "全部 quote ⊆ markdown"
+    },
+    {
+      "check": "no_verified_marking",
+      "result": "PASS",
+      "detail": "envelope 内无 verified:true；verification 由平台门计算"
+    },
+    {
+      "check": "report_id_scope",
+      "result": "PASS",
+      "detail": "仅 report_id=1200；未读写其它 report"
+    }
+  ],
+  "locators_checked": 21,
+  "all_pass": true
+}
