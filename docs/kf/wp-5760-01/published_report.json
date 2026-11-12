@@ -1,0 +1,74 @@
+{
+  "id": 14662,
+  "title": "KF-RESULT wp-5760-01",
+  "summary": "wp-5760-01 资产登记（报告 5760）：确认 report_id 与 markdown 字节哈希一致，登记 52 个可解析资产（20 resolved / 31 unresolved / 1 absent），claims 为空，不做抽取。",
+  "scenario_key": "IN20-R5",
+  "mission_id": 15580,
+  "stage": null,
+  "tags": [
+    "kf-wp:wp-5760-01",
+    "kf-result",
+    "asset-registration",
+    "IN20-R5",
+    "TensorKnowledge"
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-12T01:26:08.973807+00:00",
+  "ownership": {
+    "mission_id": 15580,
+    "owner": "1",
+    "bypass": null,
+    "figures_checked": 1
+  },
+  "readback": {
+    "submission_id": "e84d741cdfa84046a30987d2b29b05de",
+    "report_id": 14662,
+    "ok": true,
+    "readback": {
+      "ok": true,
+      "record_missing": false,
+      "codes": [],
+      "checks": [
+        {
+          "field": "markdown",
+          "ok": true,
+          "expected_digest": "4b7fd0bdc48b92419c2f9bfe2622b92605c9e1b86abb3f8a21d823726e45c706",
+          "observed_digest": "4b7fd0bdc48b92419c2f9bfe2622b92605c9e1b86abb3f8a21d823726e45c706",
+          "code": "",
+          "detail": ""
+        },
+        {
+          "field": "figures",
+          "ok": true,
+          "expected_digest": "c3e039982d8a249ff15085faa7828c4cf043632e8d50ee5d60781d932377caea",
+          "observed_digest": "c3e039982d8a249ff15085faa7828c4cf043632e8d50ee5d60781d932377caea",
+          "code": "",
+          "detail": ""
+        },
+        {
+          "field": "mission_id",
+          "ok": true,
+          "expected_digest": "ac7655d15078eb68752f08d092f6e2e20eb5bec0c2015ff85122d47305116311",
+          "observed_digest": "ac7655d15078eb68752f08d092f6e2e20eb5bec0c2015ff85122d47305116311",
+          "code": "",
+          "detail": ""
+        }
+      ],
+      "checked_fields": [
+        "markdown",
+        "figures",
+        "mission_id"
+      ]
+    },
+    "ledger_ok": true,
+    "ledger_error": null
+  },
+  "figure_roundtrip": {
+    "endpoint": "GET /api/v1/tensor/reports/14662/figures/asset_inventory.png",
+    "bytes": 97178,
+    "sha256": "f5fa25c25c82fbf4786a8a8f0d8921172aafce4ce545deae8f3c2c44232eae4c",
+    "identical_to_local_artifact": true,
+    "note": "report GET omits png_base64 by design; the figure bytes are served by the figures endpoint and match the local artifact"
+  }
+}
