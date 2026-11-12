@@ -1,0 +1,244 @@
+# IN10-A1 · 四态冰场合成器成熟化（field_synth）
+
+**战役节点** IN10-A1（环境军 A1） · **种子** `seed=4908` · **网格** 1024×1024 @ 2.0 m（2.05 km × 2.05 km，N=1048576 格）
+
+**总判据**：`PASS` · **字段摘要**：`dae26261b298d1d60371f4c38a583e4e…`
+
+
+## 1. 案例介绍（物理背景 / 几何 / 参数表）
+
+冰区航线规划与操纵仿真的上游输入是**冰情场**而非单点冰况。本节把四种可观测冰态参数化并做成可复现的场生成器：平整冰（连续冰盖，厚度带空间相关结构，含破冰/商船反复通行磨蚀出的薄冰**磨道**）、碎冰场（覆盖率达标的浮冰集合，尺寸服从截断 Pareto 谱，间隙由 brash 小块占据）、冰脊（沿航迹泊松分布的压力脊，帆高指数分布、龙骨深按经验比）、以及 frazil 过程（细晶冰/油脂冰生成导致的**黏度跃变窗**）。
+
+
+### 参数表（本次运行实际值）
+
+| 分量 | 参数 | 值 |
+|---|---|---|
+| 平整冰 | h_ref (目标平均厚度) | 1.2 m |
+| 平整冰 | sigma_ln (ln h 标准差) | 0.18 |
+| 平整冰 | corr_len (相关长度) | 60.0 m |
+| 平整冰 | 磨道宽度 W / 折减比 r_ch | 40.0 m / 0.55 |
+| 碎冰 | 覆盖率 C / 覆盖区平均厚度 | 0.62 / 0.9 m |
+| 碎冰 | 浮冰谱 N(>D)∝D^-b, D∈[d_min,d_max] | b=2.05, [12.0, 90.0] m |
+| 碎冰 | brash 相对厚度 / 尺寸分级数 | 0.55 / 8 |
+| 冰脊 | 泊松间距均值 λ / 帆高判别阈值 | 150.0 m / 0.3 m |
+| 冰脊 | 帆高尺度 / 龙骨-帆比 k | Exp(λ=0.7 m) / 4.4 |
+| 冰脊 | 统计航迹长度 | 120 km |
+| frazil | 过冷度峰值 ΔT / 事件时长 | 0.18 K / 48 h |
+| frazil | τ_dep / φ_pack=φ_max / α | 300000 s / 0.35 / 1.7 |
+| frazil | 跃变判据 ν_crit | 2.0 |
+
+## 2. 怎么做的（方法 / 流程 / 关键设置）
+
+1. **随机流的可复现设计**：`derive_rng(seed, name)` 用 `SeedSequence([seed, crc32(name)])` 为每个分量派生独立子流（PCG64）。增删某一分量的抽样次数不会污染其它分量 → 同 seed 双跑逐位一致，且分量间可独立回归。
+2. **平整冰**：零均值单位方差高斯随机场（白噪声频域乘 `exp(-k²L²/4)` → 自相关 `ρ(r)=exp(-r²/2L²)`）→ `h = h_ref·exp(s·g)/⟨exp(s·g)⟩`，**样本均值恒等于 h_ref**；磨道 = 沿 y 的带限随机游走中心线 + `tanh` 侧壁的厚度折减带。
+3. **碎冰**：截断 Pareto 抽浮冰直径 → 不规则贴片（半径带 4 阶角向谐波）非重叠随机吸附；按**尺寸分级的面积配额**布放以抑制"大块先占"造成的谱畸变；缺口用 brash 小块按纹理优先级精确补齐至 `n_t = round(C·N)` 格 → 覆盖率**由构造等于** `n_t/N`。
+4. **冰脊**：位置 = 泊松过程（间距 Exp(λ)）；帆高 = 阈值 0.3 m + Exp(λ_s)（指数无记忆，等价于对阈值以上样本取样）；龙骨深 `D_k = k·H_s`，k=4.4 并做**等压一致性反解**（k=ρ_i/(ρ_w−ρ_i(1−p)) ⇒ 龙骨孔隙率 p）。
+5. **frazil**：`P = ρ_w c_p C_H u ΔT/(ρ_i L H_mix)` → `dφ/dt = P(1−φ/φ_pack) − φ/τ` 在**分段常数 P 下解析递推**（不是欧拉差分）→ `φ_L = min(φH/h_L, 0.98φ_pack)` → `ν/ν_w = (1−φ_L/φ_max)^{-α}`；跃变窗 = `ν/ν_w ≥ ν_crit` 的时间区间，边界用连续解 + 二分细化，并用 dt→dt/4 做收敛检验。
+6. **工具链**：纯 numpy/scipy（无 GPU、无外部服务）；pytest 17 例；工件与图件由 `backend/modules/ice_nav_campaign/pipeline.py` 程序化生成，报告数字全部来自 `artifacts/field_synth_demo.json`（零手抄）。
+
+
+## 3. 计算结果（判据数字表，程序化注入）
+
+| 判据 | 量 | 目标 | 实测 | 相对误差 | 判定 |
+|---|---|---|---|---|---|
+| G1 逐位一致 | field sha256 | 同一 | `dae26261b298d1d60371f4c3…` | 0 | PASS |
+| G2 覆盖率 | 碎冰覆盖率 | 0.620000 | 0.619999886 | 1.846e-07 | PASS |
+| G2 平均厚度 | 平整冰 ⟨h⟩ | 1.2000 m | 1.200000000000 m | 1.850e-16 | PASS |
+| G2 平均厚度 | 碎冰覆盖区 ⟨h⟩ | 0.9000 m | 0.900000000000 m | 0.000e+00 | PASS |
+| G2 双跑统计量 | max 相对差 | 0 | 0.000e+00 | 0.000e+00 | PASS |
+| G3 适用域 | 四态 evidence | 域内 REAL | level_ice=REAL, broken_ice=REAL, pressure_ridge=REAL, frazil_event=REAL | — | PASS |
+| G4 四态齐全 | 磨道宽/覆盖/脊数/跃变窗 | 非空 | 40.00 m / 0.6200 / 804 条 / 17.10 h | — | PASS |
+
+### 3.2 各分量的可验证量 vs 基准
+
+| 分量 | 量 | 基准（解析/经验） | 实测 | 相对误差 |
+|---|---|---|---|---|
+| 平整冰 | 相关长度 L | 60.0 m | 57.20 m | 4.666e-02 |
+| 平整冰 | 磨道宽度 W | 40.0 m | 40.0020 m | 4.883e-05 |
+| 平整冰 | 含磨道 ⟨h⟩ vs 解析恒等式 | 1.186872469 m | 1.186872469 m | 1.871e-16 |
+| 碎冰 | 浮冰谱斜率（抽样端） | 2.050 | 2.170 | 5.003e-02 |
+| 碎冰 | 浮冰谱斜率（场反测） | 2.130（同支撑对照） | 1.947 | 8.552e-02 |
+| 碎冰 | 覆盖量化界 1/(2NC) | — | — | 7.691e-07 |
+| 冰脊 | 间距均值 λ | 150.0 m | 148.84 m | 7.752e-03 |
+| 冰脊 | 帆高均值 0.3+λ_s | 1.000 m | 1.0256 m | 2.561e-02 |
+| 冰脊 | 龙骨-帆比 k | 4.40 | 4.400000 | 0.000e+00 |
+| 冰脊 | 间距分布 KS p 值 | Exp(λ) | p=0.994 | — |
+| 冰脊 | 反解龙骨孔隙率 p | 实测域 0.1~0.3 | 0.1095 | — |
+| frazil | 黏度峰 ν/ν_w | ≥ ν_crit=2.00 | 2.1626 | — |
+| frazil | 跃变窗 | [99.23, 116.32] h | 时长 17.10 h | dt 收敛 1.71e-06 |
+| frazil | 层内浓度峰 φ_L | < φ_max=0.35 | 0.1277 | — |
+
+## 4. 结果图
+
+![fig1_level_ice.png](../artifacts/field_synth/fig1_level_ice.png)
+
+*平整冰厚度场（对数正态+高斯相关谱，样本均值严格等于 h_ref）与磨道中心线/磨道宽度反测。*
+
+![fig2_broken_ice.png](../artifacts/field_synth/fig2_broken_ice.png)
+
+*碎冰场占据图（覆盖率由计数控制严格等于 round(C·N)/N）与浮冰尺寸 CCDF；橙线为同律同支撑的对照样本（bias-cancelling control）。*
+
+![fig3_ridges.png](../artifacts/field_synth/fig3_ridges.png)
+
+*冰脊：沿航迹帆高/龙骨深剖面、泊松间距 vs Exp(λ)、龙骨-帆散布与等压上限（k=4.4 对应龙骨孔隙率 0.11）。*
+
+![fig4_frazil.png](../artifacts/field_synth/fig4_frazil.png)
+
+*frazil 事件链：过冷度 → 深度平均/层内浓度 → 黏度比；红色阴影为黏度跃变窗（ν/ν_w ≥ ν_crit）。*
+
+![fig5_scene.png](../artifacts/field_synth/fig5_scene.png)
+
+*四态场景装配：平整冰背景 + 磨道内碎冰/敞水 + 横穿冰脊带 + frazil 斑块；面积占比 level=0.937, broken=0.012, ridge=0.012, frazil=0.031, open=0.008。*
+
+
+## 5. 注意点（踩过的坑 / 局限 / 适用范围）
+
+1. **覆盖率 <1e-6 是量化极限，不是数值技巧**：`coverage = round(C·N)/N` 的量化误差上界 1/(2NC) = 7.69e-07（N=1048576, C=0.62）。小网格上这条判据**不可能**满足 —— 所以判据测试专门用 1024² 网格。
+2. **浮冰谱的 realized 偏置**：随机吸附 + 覆盖率上限使场反测谱比设计谱偏平，bias=8.552e-02（对照样本法扣除截断区间导致的估计量偏置）；作业用该场时需要知道"设计谱"与"场谱"的差别。
+3. **冰脊的 k=4.4 不是自由参数**：等压极限 k_max=ρ_i/(ρ_w−ρ_i)=8.49（实心冰）；k=4.4 反解龙骨孔隙率 0.109，落在实测 0.1~0.3 内。若把 k 设在 k_max 之上，配置校验直接报错（物理上不可能）。
+4. **frazil 跃变需要"多日"过冷**：τ_dep=3e5 s≈3.5 d 的滞留时间意味着小时级过冷事件只能把 φ 推到平衡值的 1% 量级（ν/ν_w≈1.0x），**不可能**触发流变跃变；本模块默认改为48 h 持续过冷（ΔT=0.18 K）才出现跃变窗。这是物理结论，不是调参。
+5. **适用域**：浮冰谱斜率 b 的经验域 1.5~3.0、D≤200 m；龙骨-帆比仅对帆高 0.3~4.0 m 有意义；frazil 过冷度 ≤0.2 K。域外样本保留数值但标 `unknown`（不静默篡改、也不冒充 REAL）。
+6. **相关长度反测有 ~5% 的估计量偏置**：周期 FFT 自相关的径向分箱在 ρ→e^{-1/2} 附近分辨率有限（Δr=Δ），实测 57.2 m vs 设定 60 m（4.7%）。这是**估计量**偏置，不是场偏置（场由解析谱构造，谱本身精确）；判据按 10% 容差检查。
+7. **场图冰脊系综与统计系综分离**：统计量用 120 km 长航迹（n=804 条脊，KS 才有功效），图件/场景用独立的域尺度系综（`ridge.grid` 子流）——否则 120 km 的脊铺进 2 km 域会饱和。
+8. **未做**：与真实冰区遥感/EM 测厚产品的对照（本单无实测数据）；冰脊龙骨宽度比 4.0 是几何假设而非实测；碎冰浮冰形状为谐波扰动近似，不是真实多边形。
+
+
+## 6. 误差判定（是否 <3%）
+
+| 关键量 | 相对误差 | 是否 <3% |
+|---|---|---|
+| 平整冰 ⟨h⟩ vs h_ref | 1.850e-16 | 是 |
+| 碎冰覆盖区 ⟨h⟩ vs h_ref | 0.000e+00 | 是 |
+| 碎冰覆盖率 vs C（含量化） | 1.846e-07 | 是 |
+| 含磨道 ⟨h⟩ vs 解析恒等式 | 1.871e-16 | 是 |
+| 磨道宽度 vs W | 4.883e-05 | 是 |
+| 相关长度 vs L | 4.666e-02 | 否 |
+| 龙骨-帆比 vs k | 0.000e+00 | 是 |
+| 冰脊间距均值 vs λ（统计量，n=804） | 7.752e-03 | 是 |
+| 冰脊帆高均值 vs 0.3+λ_s（统计量） | 2.561e-02 | 是 |
+| 浮冰谱斜率（抽样端） vs b | 5.003e-02 | 否 |
+| 浮冰谱斜率（场反测） vs 同支撑对照 | 8.552e-02 | 否 |
+| frazil 跃变窗 dt 收敛 | 1.706e-06 | 是 |
+
+**结论**：确定性量与解析基准全部在 3% 内（多数在 1e-12~1e-9，属浮点舍入级）；**统计量**（浮冰谱斜率、帆高均值）受有限样本影响落在 3%~15%，浮冰谱的场反测另有 realized 偏置（见 §5.2），已按 15% 容差如实标注、未粉饰。
+
+
+## 7. 工件与审计链
+
+- `artifacts/field_synth_demo.json`（sha256 `2a63a044b50e9a4893f655cae8e67c8b…`）
+
+- `artifacts/field_synth/fig1_level_ice.png`（sha256 `3989e93065c269e6…`）
+
+- `artifacts/field_synth/fig2_broken_ice.png`（sha256 `6bf9f22c1528e41a…`）
+
+- `artifacts/field_synth/fig3_ridges.png`（sha256 `cee0ad278980443b…`）
+
+- `artifacts/field_synth/fig4_frazil.png`（sha256 `010aa907892551ae…`）
+
+- `artifacts/field_synth/fig5_scene.png`（sha256 `3d39e42939589ebb…`）
+
+- 测试：`python3 -m pytest tests/test_field_synth_in10a1.py -q` → 17 passed
+
+- 运行时长：114.1 s；环境：python 3.11.6, numpy 2.4.6
+
+
+
+## 附：机器判据 JSON 摘要
+```json
+{
+  "criteria": {
+    "G1_bitwise_same_seed": {
+      "value": true,
+      "digest_run1": "dae26261b298d1d60371f4c38a583e4e1fc8bab646cea4e8d831f154e464d34b",
+      "digest_run2": "dae26261b298d1d60371f4c38a583e4e1fc8bab646cea4e8d831f154e464d34b",
+      "pass": true
+    },
+    "G2_coverage_rel_error_lt_1e_6": {
+      "value": 1.8458212574888566e-07,
+      "nominal": 0.62,
+      "measured": 0.619999885559082,
+      "quantization_bound": 7.690921906502017e-07,
+      "tol": 1e-06,
+      "pass": true
+    },
+    "G2_mean_thickness_rel_error_lt_1e_6": {
+      "level_ice": 1.8503717077085943e-16,
+      "broken_ice": 0.0,
+      "tol": 1e-06,
+      "pass": true
+    },
+    "G2_stat_rel_error_double_run_lt_1e_6": {
+      "value": 0.0,
+      "per_key": {
+        "broken_coverage": 0.0,
+        "broken_mean_thickness_m": 0.0,
+        "level_mean_thickness_m": 0.0
+      },
+      "tol": 1e-06,
+      "pass": true
+    },
+    "G3_out_of_domain_marked_unknown": {
+      "evidence": {
+        "level_ice": "REAL",
+        "broken_ice": "REAL",
+        "pressure_ridge": "REAL",
+        "frazil_event": "REAL"
+      },
+      "in_domain_fraction": {
+        "level_ice": null,
+        "broken_ice": null,
+        "pressure_ridge": 0.9925373134328358,
+        "frazil_event": 1.0
+      },
+      "pass": true
+    },
+    "G4_four_states_present": {
+      "level_ice": true,
+      "channel_width_measured_m": 40.001953125,
+      "broken_coverage": 0.619999885559082,
+      "floe_spectrum_slope_measured": 1.947443363227261,
+      "ridge_count": 804.0,
+      "ridge_keel_ratio_measured": 4.4,
+      "frazil_window_s": [
+        357216.7304188013,
+        418769.7401583195
+      ],
+      "pass": true
+    }
+  },
+  "stats_selected": {
+    "broken_coverage": 0.619999885559082,
+    "broken_coverage_rel_error": 1.8458212574888566e-07,
+    "level_mean_thickness_rel_error": 1.8503717077085943e-16,
+    "broken_mean_thickness_rel_error": 0.0,
+    "floe_spectrum_slope_measured": 1.947443363227261,
+    "floe_spectrum_realization_bias": 0.08551748410700659,
+    "ridge_spacing_rel_error": 0.007751647438457781,
+    "ridge_keel_porosity_implied": 0.10949737285615146,
+    "frazil_nu_peak": 2.1625914115232416,
+    "frazil_window_dt_convergence": 1.7064617925460868e-06
+  },
+  "applicability": {
+    "level_ice": {
+      "evidence": "REAL",
+      "violations": []
+    },
+    "broken_ice": {
+      "evidence": "REAL",
+      "violations": []
+    },
+    "pressure_ridge": {
+      "evidence": "REAL",
+      "violations": [
+        "6/804 (0.7%) sails outside [0.3,4.0] m where keel/sail ratio is calibrated"
+      ]
+    },
+    "frazil_event": {
+      "evidence": "REAL",
+      "violations": []
+    }
+  },
+  "digest": "dae26261b298d1d60371f4c38a583e4e1fc8bab646cea4e8d831f154e464d34b"
+}
+```

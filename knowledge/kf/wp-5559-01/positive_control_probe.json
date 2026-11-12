@@ -1,0 +1,14 @@
+{
+  "purpose": "positive control for the artefact-byte probes recorded in asset_manifest.json",
+  "claim_under_test": "the HTTP 404s on every /tensor/reports/5559/figures/<name> endpoint mean the bytes are absent from the report store, not that the endpoint does not exist",
+  "control": {
+    "path": "/tensor/reports/14656/figures/asset_registration_overview.png",
+    "http_status": 200,
+    "bytes": 190663,
+    "sha256": "sha256:6ccc1e479b51d26b904ddd7d8dd1bd1161a81c55b6b9eade0c39e9fd78229644",
+    "is_png": true,
+    "byte_identical_to_local_artifact": true
+  },
+  "source_record_note": "GET /tensor/reports/<id> returns figures with an empty png_base64 field even when bytes are stored (observed on 5559 and on the report of this package, 14656); the byte endpoint is therefore the only channel that can decide presence.",
+  "conclusion": "endpoint serves bytes when they exist -> the 5559 404s are a genuine absence of artefact bytes in the store, which is what the manifest's `unresolved` status for the six declared artefacts rests on"
+}
