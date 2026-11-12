@@ -1,0 +1,619 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-7920-01",
+  "task_type": "01-asset-registration",
+  "report_id": "7920",
+  "provenance": {
+    "source_uri": "tensor://reports/7920",
+    "source_field": "markdown",
+    "source_hash": "sha256:6e60d3f3ab63e2553858f7a08344e5c87ea0c7275bceefbd16a9cd254493961b",
+    "hash_algo": "sha256",
+    "hashed_bytes": "markdown encoded as utf-8",
+    "source_chars": 6421,
+    "source_bytes_utf8": 10592,
+    "title": "IN154-P4 混合推进能量管理（电池-柴油并联）验证：功率分配/峰值削减/负荷优化/能量平衡闭环",
+    "scenario_key": "green_shipping.hybrid_propulsion_energy_management",
+    "platform_tags": [
+      "IN154-P4",
+      "混合推进",
+      "能量管理",
+      "EMS",
+      "绿色航行",
+      "SOC",
+      "动态规划",
+      "peak-shaving"
+    ],
+    "fetched_via": "GET /tensor/reports/7920",
+    "generator": "scripts/kf/register_assets.py",
+    "generated_at": "2026-11-12T01:29:49.130364+00:00",
+    "contract_version": "1.0"
+  },
+  "counts": {
+    "assets": 19,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure_metadata": 5,
+      "source_code_reference": 2,
+      "data_artifact_reference": 4,
+      "module_reference": 2,
+      "figure_reference": 5
+    },
+    "by_resolution": {
+      "resolved": 1,
+      "metadata_only": 5,
+      "unresolved": 13
+    },
+    "distinct_referenced_paths": 12
+  },
+  "assets": [
+    {
+      "asset_id": "A00",
+      "asset_class": "report_markdown",
+      "label": "tensor://reports/7920#markdown",
+      "in_report_section": "整个字段",
+      "locator": {
+        "scheme": "report_field",
+        "field": "markdown",
+        "chars": 6421,
+        "bytes_utf8": 10592,
+        "sha256": "6e60d3f3ab63e2553858f7a08344e5c87ea0c7275bceefbd16a9cd254493961b"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/7920"
+      },
+      "resolution_check": {
+        "check": "sha256(utf8 bytes) == contract source_hash",
+        "result": "resolved"
+      },
+      "note": "byte identity confirmed against the work-package contract source_hash"
+    },
+    {
+      "asset_id": "A01",
+      "asset_class": "embedded_figure_metadata",
+      "label": "fig1_power_split_soc.png",
+      "in_report_section": "平台记录 figures[0]",
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 0,
+        "name": "fig1_power_split_soc.png",
+        "caption": "24 h 混合营运循环功率分配与 SOC（等水平/滚动等水平 + 电池功率）"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "reason": "platform stores name+caption; PNG bytes are not part of the report record"
+      },
+      "resolution_check": {
+        "check": "figures[index] present in GET /tensor/reports/7920",
+        "result": "present"
+      },
+      "note": "caption reproduced verbatim from the platform record"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure_metadata",
+      "label": "fig2_peak_shaving.png",
+      "in_report_section": "平台记录 figures[1]",
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 1,
+        "name": "fig2_peak_shaving.png",
+        "caption": "2 h 波浪扰动航段峰值削减时程与柴油功率标准差（判据 b：降幅 69.66%）"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "reason": "platform stores name+caption; PNG bytes are not part of the report record"
+      },
+      "resolution_check": {
+        "check": "figures[index] present in GET /tensor/reports/7920",
+        "result": "present"
+      },
+      "note": "caption reproduced verbatim from the platform record"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure_metadata",
+      "label": "fig3_load_optimization.png",
+      "in_report_section": "平台记录 figures[2]",
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 2,
+        "name": "fig3_load_optimization.png",
+        "caption": "负荷-SFOC 曲线与运行点 + 循环油耗 vs DP 全局最优"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "reason": "platform stores name+caption; PNG bytes are not part of the report record"
+      },
+      "resolution_check": {
+        "check": "figures[index] present in GET /tensor/reports/7920",
+        "result": "present"
+      },
+      "note": "caption reproduced verbatim from the platform record"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "embedded_figure_metadata",
+      "label": "fig4_battery_and_criteria.png",
+      "in_report_section": "平台记录 figures[3]",
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 3,
+        "name": "fig4_battery_and_criteria.png",
+        "caption": "电池 SOC 三路对照（库仑计数/RK4/逐步精确积分）与六项判据实测"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "reason": "platform stores name+caption; PNG bytes are not part of the report record"
+      },
+      "resolution_check": {
+        "check": "figures[index] present in GET /tensor/reports/7920",
+        "result": "present"
+      },
+      "note": "caption reproduced verbatim from the platform record"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "embedded_figure_metadata",
+      "label": "fig5_efficiency_sensitivity.png",
+      "in_report_section": "平台记录 figures[4]",
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 4,
+        "name": "fig5_efficiency_sensitivity.png",
+        "caption": "储能效率敏感性：η=1 vs 0.95 的循环节油"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "reason": "platform stores name+caption; PNG bytes are not part of the report record"
+      },
+      "resolution_check": {
+        "check": "figures[index] present in GET /tensor/reports/7920",
+        "result": "present"
+      },
+      "note": "caption reproduced verbatim from the platform record"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "source_code_reference",
+      "label": "backend/modules/hybrid_propulsion/report_md.py",
+      "in_report_section": "markdown 第 3 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 3,
+        "start_char": 36,
+        "end_char": 149,
+        "quote": "> 本文件由 `backend/modules/hybrid_propulsion/report_md.py` 从 `artifacts/hybrid_propulsion/results.json` 程序化生成，数字零手抄。",
+        "via": "inline_code_path",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/backend/modules/hybrid_propulsion/report_md.py)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/hybrid_propulsion/results.json",
+      "in_report_section": "markdown 第 3 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 3,
+        "start_char": 36,
+        "end_char": 149,
+        "quote": "> 本文件由 `backend/modules/hybrid_propulsion/report_md.py` 从 `artifacts/hybrid_propulsion/results.json` 程序化生成，数字零手抄。",
+        "via": "inline_code_path",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/artifacts/hybrid_propulsion/results.json)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "module_reference",
+      "label": "reference.dp_optimal",
+      "in_report_section": "markdown 第 54 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 54,
+        "start_char": 2013,
+        "end_char": 2092,
+        "quote": "- 参考解：SOC 网格 + 功率决策网格的**动态规划**（`reference.dp_optimal`），给出全局最优目标值，并对网格分辨率做灵敏度自证。",
+        "via": "inline_code_module"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "dotted module name, not a file path; importable only in the producer runtime"
+      },
+      "resolution_check": {
+        "check": "file-system resolution",
+        "result": "unresolved"
+      },
+      "note": "registered so the code dependency is visible; no cross-repo import attempted"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "source_code_reference",
+      "label": "pipeline.py",
+      "in_report_section": "markdown 第 56 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 56,
+        "start_char": 2094,
+        "end_char": 2214,
+        "quote": "**工具链**：numpy（向量化 DP/积分）、scipy（无——DP 自实现）、matplotlib（图件）、FastAPI（端点）、pytest（回归）。全部判据由 `pipeline.py` 一次跑完并落 JSON/CSV/PNG。",
+        "via": "inline_code_path",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/pipeline.py)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "figure_reference",
+      "label": "artifacts/hybrid_propulsion/fig1_power_split_soc.png",
+      "in_report_section": "markdown 第 115 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 115,
+        "start_char": 4026,
+        "end_char": 4107,
+        "quote": "![fig1_power_split_soc.png](artifacts/hybrid_propulsion/fig1_power_split_soc.png)",
+        "via": "markdown_image",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/artifacts/hybrid_propulsion/fig1_power_split_soc.png)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "figure_reference",
+      "label": "artifacts/hybrid_propulsion/fig2_peak_shaving.png",
+      "in_report_section": "markdown 第 119 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 119,
+        "start_char": 4188,
+        "end_char": 4263,
+        "quote": "![fig2_peak_shaving.png](artifacts/hybrid_propulsion/fig2_peak_shaving.png)",
+        "via": "markdown_image",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/artifacts/hybrid_propulsion/fig2_peak_shaving.png)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "figure_reference",
+      "label": "artifacts/hybrid_propulsion/fig3_load_optimization.png",
+      "in_report_section": "markdown 第 123 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 123,
+        "start_char": 4327,
+        "end_char": 4412,
+        "quote": "![fig3_load_optimization.png](artifacts/hybrid_propulsion/fig3_load_optimization.png)",
+        "via": "markdown_image",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/artifacts/hybrid_propulsion/fig3_load_optimization.png)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "figure_reference",
+      "label": "artifacts/hybrid_propulsion/fig4_battery_and_criteria.png",
+      "in_report_section": "markdown 第 127 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 127,
+        "start_char": 4481,
+        "end_char": 4572,
+        "quote": "![fig4_battery_and_criteria.png](artifacts/hybrid_propulsion/fig4_battery_and_criteria.png)",
+        "via": "markdown_image",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/artifacts/hybrid_propulsion/fig4_battery_and_criteria.png)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "figure_reference",
+      "label": "artifacts/hybrid_propulsion/fig5_efficiency_sensitivity.png",
+      "in_report_section": "markdown 第 131 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 131,
+        "start_char": 4643,
+        "end_char": 4738,
+        "quote": "![fig5_efficiency_sensitivity.png](artifacts/hybrid_propulsion/fig5_efficiency_sensitivity.png)",
+        "via": "markdown_image",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/artifacts/hybrid_propulsion/fig5_efficiency_sensitivity.png)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/hybrid_propulsion/results.json",
+      "in_report_section": "markdown 第 160 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 160,
+        "start_char": 6190,
+        "end_char": 6420,
+        "quote": "**审计链**：`artifacts/hybrid_propulsion/results.json`（全部数值）、`timeseries_mixed_24h.csv`（24 h 时程，含 SOC/SFOC）、`report.json`（判据→数字→工件路径）、`fig1–fig5`（PNG，matplotlib 程序化生成）。复算命令：`cd backend && python -m modules.hybrid_propulsion.pipeline`。",
+        "via": "inline_code_path",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/artifacts/hybrid_propulsion/results.json)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "data_artifact_reference",
+      "label": "timeseries_mixed_24h.csv",
+      "in_report_section": "markdown 第 160 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 160,
+        "start_char": 6190,
+        "end_char": 6420,
+        "quote": "**审计链**：`artifacts/hybrid_propulsion/results.json`（全部数值）、`timeseries_mixed_24h.csv`（24 h 时程，含 SOC/SFOC）、`report.json`（判据→数字→工件路径）、`fig1–fig5`（PNG，matplotlib 程序化生成）。复算命令：`cd backend && python -m modules.hybrid_propulsion.pipeline`。",
+        "via": "inline_code_path",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/timeseries_mixed_24h.csv)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "data_artifact_reference",
+      "label": "report.json",
+      "in_report_section": "markdown 第 160 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 160,
+        "start_char": 6190,
+        "end_char": 6420,
+        "quote": "**审计链**：`artifacts/hybrid_propulsion/results.json`（全部数值）、`timeseries_mixed_24h.csv`（24 h 时程，含 SOC/SFOC）、`report.json`（判据→数字→工件路径）、`fig1–fig5`（PNG，matplotlib 程序化生成）。复算命令：`cd backend && python -m modules.hybrid_propulsion.pipeline`。",
+        "via": "inline_code_path",
+        "pin": null
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "not present in delivery worktree (TensorKnowledge)"
+      },
+      "resolution_check": {
+        "check": "os.path.isfile(<delivery worktree>/report.json)",
+        "result": "unresolved"
+      },
+      "external_readonly_probe": {
+        "roots_probed": [
+          "/root/tensor-ecosystem/ship-performance-platform",
+          "/root/ice_docs/ship-performance-platform",
+          "/root/ship-performance-platform-incoming/ship-performance-platform"
+        ],
+        "exists": false,
+        "authoritative": false
+      },
+      "note": "referenced by the report body; producer is the ship-performance-platform repo, which is outside this work package's boundary"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "module_reference",
+      "label": "modules.hybrid_propulsion.pipeline",
+      "in_report_section": "markdown 第 160 行",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 160,
+        "start_char": 6190,
+        "end_char": 6420,
+        "quote": "**审计链**：`artifacts/hybrid_propulsion/results.json`（全部数值）、`timeseries_mixed_24h.csv`（24 h 时程，含 SOC/SFOC）、`report.json`（判据→数字→工件路径）、`fig1–fig5`（PNG，matplotlib 程序化生成）。复算命令：`cd backend && python -m modules.hybrid_propulsion.pipeline`。",
+        "via": "inline_code_module"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "reason": "dotted module name, not a file path; importable only in the producer runtime"
+      },
+      "resolution_check": {
+        "check": "file-system resolution",
+        "result": "unresolved"
+      },
+      "note": "registered so the code dependency is visible; no cross-repo import attempted"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": {
+      "method": "count of occurrences of each locator.quote in the source markdown",
+      "assets_with_quote": 13,
+      "assets_with_unique_quote": 13,
+      "assets_sharing_a_line_quote": 0,
+      "note": "quotes are verbatim full lines; several assets on the same line necessarily share one quote, so 'unique' is measured, not asserted. Locator correctness (line + char span + substring) is what verify() enforces for every asset."
+    },
+    "hash_recomputed_locally": "6e60d3f3ab63e2553858f7a08344e5c87ea0c7275bceefbd16a9cd254493961b",
+    "hash_matches_contract": true,
+    "identity_granularity": "occurrence-level (path, markdown_line); same file cited on two lines = two assets"
+  },
+  "artifact_endpoint_probe": {
+    "/tensor/reports/7920/artifacts": {
+      "status": "http_404"
+    },
+    "/tensor/artifacts?report_id=7920": {
+      "status": "http_404"
+    }
+  },
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no verified marks.",
+    "Reference resolution is limited to the delivery worktree (TensorKnowledge); the report's producer (ship-performance-platform) is outside this work package's boundary, so its files stay unresolved here and the read-only probe is recorded as non-authoritative.",
+    "No attachment bytes were copied; platform figure entries are metadata only.",
+    "claims is empty by contract (objective.classify_report_type=false, no extraction)."
+  ]
+}
