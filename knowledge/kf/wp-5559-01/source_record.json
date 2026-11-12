@@ -1,0 +1,39 @@
+{
+  "id": 5559,
+  "title": "IN10-A1 · 四态冰场合成器成熟化（field_synth）：可复现冰情场 + 判据全过",
+  "summary": "IN10-A1 四态冰场合成器落地：平整冰(厚度场+磨道)/碎冰(覆盖率+浮冰尺寸谱)/冰脊(泊松间距+帆高-龙骨经验比)/frazil(黏度跃变窗)四态全部实现并 seed 可复现。同 seed 双跑逐位一致(sha256=dae26261b298d1d6…)，覆盖率相对误差 1.85e-07、平均厚度 1.85e-16 （判据均 <1e-6），pytest 17 passed，总判定 PASS。",
+  "scenario_key": "ice_nav_campaign",
+  "mission_id": 4908,
+  "stage": null,
+  "tags": [
+    "IN10-A1",
+    "ice_field",
+    "field_synth",
+    "reproducibility",
+    "frazil",
+    "ice_ridge",
+    "brash_ice",
+    "ship-performance-platform"
+  ],
+  "figures": [
+    {
+      "name": "fig1_level_ice.png",
+      "caption": "平整冰厚度场（对数正态+高斯相关谱，样本均值严格等于 h_ref）与磨道中心线/磨道宽度反测。"
+    },
+    {
+      "name": "fig2_broken_ice.png",
+      "caption": "碎冰场占据图（覆盖率由计数控制严格等于 round(C·N)/N）与浮冰尺寸 CCDF；橙线为同律同支撑的对照样本（bias-cancelling control）。"
+    },
+    {
+      "name": "fig4_frazil.png",
+      "caption": "frazil 事件链：过冷度 → 深度平均/层内浓度 → 黏度比；红色阴影为黏度跃变窗（ν/ν_w ≥ ν_crit）。"
+    },
+    {
+      "name": "fig5_scene.png",
+      "caption": "四态场景装配：平整冰背景 + 磨道内碎冰/敞水 + 横穿冰脊带 + frazil 斑块；面积占比 level=0.937, broken=0.012, ridge=0.012, frazil=0.031, open=0.008。"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-06T23:51:00.664613+00:00"
+}
