@@ -1,0 +1,119 @@
+{
+  "package_id": "wp-2506-01",
+  "task_type": "01-asset-registration",
+  "report_id": "2506",
+  "generated_at": "2026-11-12T01:01:54+00:00",
+  "all_pass": true,
+  "checks": [
+    {
+      "name": "source_hash_matches",
+      "passed": true,
+      "detail": {
+        "contract": "sha256:c62850b3dacd416bd9d535fec206f6e8427fb10121f439c7b865b2165e5138b0",
+        "recomputed": "sha256:c62850b3dacd416bd9d535fec206f6e8427fb10121f439c7b865b2165e5138b0"
+      }
+    },
+    {
+      "name": "chars_match_contract",
+      "passed": true,
+      "detail": {
+        "contract": 3382,
+        "measured": 3382
+      }
+    },
+    {
+      "name": "report_id_locked",
+      "passed": true,
+      "detail": {
+        "report_id": 2506
+      }
+    },
+    {
+      "name": "source_locator_resolvable",
+      "passed": true,
+      "detail": {
+        "assets": 25,
+        "bad_quotes": [],
+        "offset_mismatch": []
+      }
+    },
+    {
+      "name": "no_duplicate_ids",
+      "passed": true,
+      "detail": {
+        "assets": 26,
+        "unique": 26
+      }
+    },
+    {
+      "name": "unresolved_have_reasons",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "passed": true,
+      "detail": {
+        "claims": 0,
+        "unresolved": 4,
+        "note": "claims 为空数组（契约允许）；4 条不可得工件均带 reason"
+      }
+    },
+    {
+      "name": "title_scenario_match_contract",
+      "passed": true,
+      "detail": {
+        "title_matches": true,
+        "scenario_matches": true
+      }
+    },
+    {
+      "name": "no_extraction_no_verification",
+      "passed": true,
+      "detail": {
+        "extraction_performed": false,
+        "claims_emitted": 0,
+        "verification_performed": false,
+        "note": "工序 01 只登记资产与指纹：不抽取知识、不判定 verified、不重跑上游算例；claims 允许为空数组，本单为空。"
+      }
+    },
+    {
+      "name": "schema_pass",
+      "passed": true,
+      "detail": {
+        "manifest_errors": [],
+        "kf_result_errors": [],
+        "schema": [
+          "schemas/asset_manifest.v1.schema.json",
+          "schemas/kf_result.v1.schema.json"
+        ],
+        "validator": "jsonschema Draft2020-12"
+      }
+    },
+    {
+      "name": "valid_json",
+      "passed": true,
+      "detail": {
+        "files": [
+          "asset_manifest.json",
+          "kf_result.json"
+        ],
+        "reloaded": true,
+        "reload_errors": []
+      }
+    }
+  ],
+  "acceptance": {
+    "source_hash_matches": true,
+    "chars_match_contract": true,
+    "report_id_locked": true,
+    "source_locator_resolvable": true,
+    "no_duplicate_ids": true,
+    "unresolved_have_reasons": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true,
+    "title_scenario_match_contract": true,
+    "no_extraction_no_verification": true,
+    "schema_pass": true,
+    "valid_json": true
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "package_id": "wp-2506-01",
+  "published_report_id": "14616",
+  "verified_at": "2026-11-12T01:02:08+00:00",
+  "recomputed_source_sha256": "sha256:c62850b3dacd416bd9d535fec206f6e8427fb10121f439c7b865b2165e5138b0",
+  "checks": {
+    "single_json_block": true,
+    "json_block_equals_local_envelope": true,
+    "tags_contain_package_tag": true,
+    "title_ok": true,
+    "mission_id_ok": true,
+    "provenance_hash_matches_source_snapshot": true,
+    "provenance_hash_equals_contract": true,
+    "figure_route_shape_valid_control": true,
+    "upstream_2506_figure_still_unreachable": true
+  },
+  "all_pass": true,
+  "figure_probes": {
+    "own_report": {
+      "endpoint": "/tensor/reports/14616/figures/wp2506_01_asset_registry.png",
+      "http_status": 200,
+      "bytes": 349306
+    },
+    "upstream_2506": {
+      "endpoint": "/tensor/reports/2506/figures/dissipativity-sweep.png",
+      "http_status": 404,
+      "bytes": 0
+    }
+  },
+  "note": "post-delivery 自验：把发布后的报告读回来独立复核唯一 json 块、tags、mission_id、provenance 哈希；图件路由以本工序自己发布的报告作对照（200），据此判定 report 2506 图件 404 属上游载荷缺失而非路由形状问题。"
+}
