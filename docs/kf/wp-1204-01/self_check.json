@@ -1,0 +1,58 @@
+{
+  "package_id": "wp-1204-01",
+  "report_id": "1204",
+  "checks": {
+    "valid_json": {
+      "pass": true,
+      "detail": "both kf_result.json and asset_manifest.json parse via json.loads"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": "jsonschema schemas/kf_result.v1.schema.json OK (envelope); missing_top=[] missing_provenance=[] declared_output_asset_manifest.json=True"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": "source=live GET /api/v1/tensor/reports/1204; recomputed=437b758c609448aa2141812afb6f27f323b30f83e08399f4befdb53e397ea2ef envelope=437b758c609448aa2141812afb6f27f323b30f83e08399f4befdb53e397ea2ef manifest=437b758c609448aa2141812afb6f27f323b30f83e08399f4befdb53e397ea2ef contract=437b758c609448aa2141812afb6f27f323b30f83e08399f4befdb53e397ea2ef chars=5853 bytes=9016"
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "detail": "checked 15 locators against live GET /api/v1/tensor/reports/1204; problems=[]"
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "detail": "assets=15 unique=15; claims=0 unique=0"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "detail": "claims=0 violating=[] (empty array: vacuously satisfied per contract 'claims 允许为空数组')"
+    },
+    "do_not_mark_claims_as_verified": {
+      "pass": true,
+      "detail": "claims carrying status='verified': []"
+    },
+    "report_scope": {
+      "pass": true,
+      "detail": "envelope report_id=1204 manifest report_id=1204 (single-report scope, nothing else read or written)"
+    },
+    "envelope_matches_manifest": {
+      "pass": true,
+      "detail": "outputs['asset_manifest.json'] deep-equals asset_manifest.json on disk"
+    },
+    "manifest_self_hash": {
+      "pass": true,
+      "detail": "sha256(asset_manifest.json bytes) = 28045e526d60e0c6f2f9b37afe9b50efc3fbe6238a911827d0fe5bf68fdd93f2 (recorded for provenance)"
+    },
+    "unresolved_assets_explain_themselves": {
+      "pass": true,
+      "detail": "every non-resolved asset carries an explicit reason string"
+    }
+  },
+  "meta": {
+    "package_id": "wp-1204-01",
+    "checked_at": "2026-11-12T00:57:42.698155+00:00",
+    "source_mode": "live GET /api/v1/tensor/reports/1204",
+    "kind": "worker self-check (authoritative verification is the platform gate)",
+    "manifest_sha256": "28045e526d60e0c6f2f9b37afe9b50efc3fbe6238a911827d0fe5bf68fdd93f2"
+  },
+  "all_pass": true
+}
