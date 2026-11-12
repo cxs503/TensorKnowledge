@@ -1,0 +1,454 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-615-01",
+  "task_type": "01-asset-registration",
+  "report_id": "615",
+  "lane": "C",
+  "generated_at": "2026-11-12T00:54:43+00:00",
+  "producer": "kf-worker/tp-native-1",
+  "source": {
+    "report_id": "615",
+    "source_uri": "tensor://reports/615",
+    "source_field": "markdown",
+    "source_hash": "sha256:3c1b5f9dc373359c9ca5692b5f822bc1ee8c13b50dc015b9b84c7530e29b7e75",
+    "contract_source_hash": "sha256:3c1b5f9dc373359c9ca5692b5f822bc1ee8c13b50dc015b9b84c7530e29b7e75",
+    "hash_algo": "sha256",
+    "hash_scope": "UTF-8 bytes of tensor_reports.markdown",
+    "hash_match": true,
+    "chars": 2125,
+    "contract_chars": 2125,
+    "chars_match_contract": true,
+    "bytes": 3310,
+    "lines": 87,
+    "fetched_via": "GET /api/v1/tensor/reports/615 (Bearer token)",
+    "record_fields": {
+      "title": "SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework",
+      "scenario_key": "SIR-PC2|F06",
+      "mission_id": 706,
+      "status": "published",
+      "created_at": "2026-10-31T04:20:06.619069+00:00",
+      "tags": [
+        "DEM",
+        "fluid-coupling",
+        "momentum-conservation",
+        "Stokes",
+        "ice-navigation",
+        "L1_foundation"
+      ],
+      "contract_title": "SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework",
+      "contract_scenario_key": "SIR-PC2|F06",
+      "title_matches_contract": true,
+      "scenario_matches_contract": true,
+      "title_matches_markdown_h1": true
+    }
+  },
+  "assets": [
+    {
+      "asset_id": "asset-615-01-report-markdown",
+      "kind": "report_markdown",
+      "uri": "tensor://reports/615#markdown",
+      "status": "resolved",
+      "retrieval": {
+        "endpoint": "GET /api/v1/tensor/reports/615",
+        "field": "markdown",
+        "http_status": 200
+      },
+      "sha256": "sha256:3c1b5f9dc373359c9ca5692b5f822bc1ee8c13b50dc015b9b84c7530e29b7e75",
+      "chars": 2125,
+      "bytes": 3310,
+      "locator": {
+        "source_field": "markdown",
+        "section": "H1",
+        "quote": "# SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework",
+        "quote_verified": true,
+        "offset_chars": 1,
+        "note": "markdown 首行 H1，全文指纹载体"
+      },
+      "notes": "哈希口径=markdown 字段 UTF-8 字节；生产者独立重算后与契约 source_hash 对齐。"
+    },
+    {
+      "asset_id": "asset-615-02-report-record",
+      "kind": "report_record_metadata",
+      "uri": "tensor://reports/615#record",
+      "status": "resolved",
+      "retrieval": {
+        "endpoint": "GET /api/v1/tensor/reports/615",
+        "field": "record",
+        "http_status": 200
+      },
+      "fields": {
+        "id": 615,
+        "title": "SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework",
+        "scenario_key": "SIR-PC2|F06",
+        "mission_id": 706,
+        "status": "published",
+        "created_at": "2026-10-31T04:20:06.619069+00:00",
+        "tags": [
+          "DEM",
+          "fluid-coupling",
+          "momentum-conservation",
+          "Stokes",
+          "ice-navigation",
+          "L1_foundation"
+        ]
+      },
+      "locator": {
+        "source_field": "markdown",
+        "section": "record.title",
+        "quote": "SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework",
+        "quote_verified": true,
+        "offset_chars": 3,
+        "note": "记录 title 在 markdown H1 行内逐字出现"
+      }
+    },
+    {
+      "asset_id": "asset-615-03-section-physics-background",
+      "kind": "section_prose",
+      "uri": "tensor://reports/615#markdown/§1-物理背景",
+      "status": "resolved",
+      "chars": 84,
+      "locator": {
+        "source_field": "markdown",
+        "section": "① 案例介绍 / 物理背景",
+        "quote": "冰区航行中，碎冰颗粒与流场（海水/船体边界层）的双向耦合是预测冰载荷的关键。本任务实现DEM颗粒与LBM/CFD流场的双向动量交换框架，为冰区航行战役提供基础耦合能力。",
+        "quote_verified": true,
+        "offset_chars": 102,
+        "note": "物理背景段首句（原文首行）"
+      }
+    },
+    {
+      "asset_id": "asset-615-04-table-geometry-parameters",
+      "kind": "parameter_table",
+      "uri": "tensor://reports/615#markdown/§1-几何与参数",
+      "status": "resolved",
+      "rows": 7,
+      "fields": {
+        "n_cols": 3,
+        "header": "| 参数 | 值 | 单位 |"
+      },
+      "locator": {
+        "source_field": "markdown",
+        "section": "① 案例介绍 / 几何与参数",
+        "quote": "| 颗粒密度 ρ_p | 1100 | kg/m³ |",
+        "quote_verified": true,
+        "offset_chars": 237,
+        "note": "表首个数据行"
+      }
+    },
+    {
+      "asset_id": "asset-615-05-equation-stokes-terminal-velocity",
+      "kind": "equation",
+      "uri": "tensor://reports/615#markdown/§1-Stokes终端速度解析解",
+      "status": "resolved",
+      "chars": 81,
+      "locator": {
+        "source_field": "markdown",
+        "section": "① 案例介绍 / Stokes终端速度解析解",
+        "quote": "$$v_t = \\frac{2}{9}\\frac{(\\rho_p - \\rho_f)\\,g\\,R^2}{\\mu} = 0.054500 \\text{ m/s}$$",
+        "quote_verified": true,
+        "offset_chars": 439,
+        "note": "LaTeX 解析解行"
+      }
+    },
+    {
+      "asset_id": "asset-615-06-method-coupling-steps",
+      "kind": "method_steps",
+      "uri": "tensor://reports/615#markdown/§2-耦合算法",
+      "status": "resolved",
+      "items": 5,
+      "locator": {
+        "source_field": "markdown",
+        "section": "② 方法 / 耦合算法",
+        "quote": "4. **力分配**：使用与速度采样相同的三线性权重将力分配到流体网格（伴随操作）",
+        "quote_verified": true,
+        "offset_chars": 683,
+        "note": "第 4 步（力分配/伴随操作）"
+      }
+    },
+    {
+      "asset_id": "asset-615-07-equation-momentum-conservation",
+      "kind": "equation",
+      "uri": "tensor://reports/615#markdown/§2-动量守恒保证",
+      "status": "resolved",
+      "chars": 49,
+      "locator": {
+        "source_field": "markdown",
+        "section": "② 方法 / 动量守恒保证",
+        "quote": "由于使用相同的插值权重进行速度采样和力分配，且严格遵循Newton第三定律，离散动量守恒精确成立：",
+        "quote_verified": true,
+        "offset_chars": 779
+      }
+    },
+    {
+      "asset_id": "asset-615-08-toolchain-list",
+      "kind": "toolchain_list",
+      "uri": "tensor://reports/615#markdown/§2-工具链",
+      "status": "resolved",
+      "items": 3,
+      "locator": {
+        "source_field": "markdown",
+        "section": "② 方法 / 工具链",
+        "quote": "- PyTorch (float64) 用于数值精度",
+        "quote_verified": true,
+        "offset_chars": 933
+      }
+    },
+    {
+      "asset_id": "asset-615-09-table-acceptance-criteria",
+      "kind": "acceptance_table",
+      "uri": "tensor://reports/615#markdown/§3-验收判据",
+      "status": "resolved",
+      "rows": 3,
+      "fields": {
+        "n_cols": 5,
+        "header": "| 判据 | 计算值 | 阈值 | 单位 | 状态 |"
+      },
+      "locator": {
+        "source_field": "markdown",
+        "section": "③ 计算结果 / 验收判据",
+        "quote": "| momentum_exchange_conservation | 0.0 | < 1e-10 | kg·m/s | ✅ PASS |",
+        "quote_verified": true,
+        "offset_chars": 1095,
+        "note": "表首个数据行"
+      }
+    },
+    {
+      "asset_id": "asset-615-10-table-stokes-benchmark",
+      "kind": "result_table",
+      "uri": "tensor://reports/615#markdown/§3-Stokes沉降基准",
+      "status": "resolved",
+      "rows": 5,
+      "fields": {
+        "n_cols": 2,
+        "header": "| 量 | 值 |"
+      },
+      "locator": {
+        "source_field": "markdown",
+        "section": "③ 计算结果 / Stokes沉降基准",
+        "quote": "| 模拟终端速度 v_t | 0.054461 m/s |",
+        "quote_verified": true,
+        "offset_chars": 1375,
+        "note": "模拟终端速度行"
+      }
+    },
+    {
+      "asset_id": "asset-615-11-test-suite-summary",
+      "kind": "test_evidence_summary",
+      "uri": "tensor://reports/615#markdown/§3-测试套件",
+      "status": "resolved",
+      "locator": {
+        "source_field": "markdown",
+        "section": "③ 计算结果 / 测试套件",
+        "quote": "- 12 tests collected, 12 passed, 0 failed",
+        "quote_verified": true,
+        "offset_chars": 1491,
+        "note": "报告内自述的 pytest 汇总行（无原始日志附件）"
+      }
+    },
+    {
+      "asset_id": "asset-615-12-limitations-list",
+      "kind": "limitations_list",
+      "uri": "tensor://reports/615#markdown/§5-注意点",
+      "status": "resolved",
+      "items": 5,
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑤ 注意点（Limitations）",
+        "quote": "4. **润滑力**：未包含近壁颗粒的润滑力模型",
+        "quote_verified": true,
+        "offset_chars": 1803,
+        "note": "第 4 条（润滑力缺失）"
+      }
+    },
+    {
+      "asset_id": "asset-615-13-table-error-judgement",
+      "kind": "result_table",
+      "uri": "tensor://reports/615#markdown/§6-误差判定",
+      "status": "resolved",
+      "rows": 3,
+      "fields": {
+        "n_cols": 5,
+        "header": "| 关键量 | 基准 | 计算值 | 误差 | < 3%? |"
+      },
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑥ 误差判定",
+        "quote": "| 终端速度 v_t | Stokes解析 0.05450 m/s | 0.05446 m/s | 0.07% | ✅ YES |",
+        "quote_verified": true,
+        "offset_chars": 1933,
+        "note": "表首个数据行"
+      }
+    },
+    {
+      "asset_id": "asset-615-14-figure-settling_velocity",
+      "kind": "figure",
+      "uri": "tensor://reports/615/figures/settling_velocity",
+      "status": "declared_unresolvable",
+      "retrieval": {
+        "endpoint": "GET /api/v1/tensor/reports/615/figures/settling_velocity",
+        "http_status": 404,
+        "body": {
+          "detail": "figure not found"
+        }
+      },
+      "sha256": null,
+      "bytes": 0,
+      "caption": "Single-particle settling: DEM↔fluid coupling (blue) vs Stokes analytical (red dashed). Terminal velocity ratio converges to 1.0 within 0.07% error.",
+      "fields": {
+        "figure_record_keys": [
+          "caption",
+          "name"
+        ],
+        "png_base64_present": false
+      },
+      "locator": {
+        "source_field": "markdown",
+        "section": "④ 结果图",
+        "quote": "见内嵌图：单颗粒沉降速度时间历程与Stokes解析解对比。",
+        "quote_verified": true,
+        "offset_chars": 1603,
+        "note": "正文引用了图件"
+      }
+    }
+  ],
+  "unresolved": [
+    {
+      "asset_id": "asset-615-14-figure-settling_velocity",
+      "kind": "figure",
+      "reason": "记录 figures 只有 ['caption', 'name']（无 png_base64 载荷），图件端点 HTTP 404 = figure not found，字节不可经 API 取得；本工序不重绘、不代上游补图，保留未解析。"
+    },
+    {
+      "asset_id": "asset-615-15-test-run-artifact",
+      "kind": "run_artifact",
+      "reason": "§3 自述 12 tests collected / 12 passed，但报告未附原始 pytest 日志、trace 或测试文件路径，工件字节不可得；工序 01 不重跑上游算例，故保留未解析（断言可定位：asset-615-11）。"
+    },
+    {
+      "asset_id": "asset-615-16-codebase-pointer",
+      "kind": "codebase_pointer",
+      "reason": "报告 markdown 正文不含代码仓库路径、分支或提交号，无法把「工具链/12 项测试」绑定到具体文件；仅能由记录 mission_id=706 解析到 mission 记录 repo=TensorDEM，属记录级间接线索，不认定为工件绑定。"
+    }
+  ],
+  "counts": {
+    "assets_total": 14,
+    "by_status": {
+      "resolved": 13,
+      "declared_unresolvable": 1
+    },
+    "unresolved_total": 3
+  },
+  "locator_checks": {
+    "asset-615-01-report-markdown": {
+      "quote": "# SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework",
+      "resolvable_in_markdown": true,
+      "offset_chars": 1,
+      "count_occurrences": 1
+    },
+    "asset-615-02-report-record": {
+      "quote": "SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework",
+      "resolvable_in_markdown": true,
+      "offset_chars": 3,
+      "count_occurrences": 1
+    },
+    "asset-615-03-section-physics-background": {
+      "quote": "冰区航行中，碎冰颗粒与流场（海水/船体边界层）的双向耦合是预测冰载荷的关键。本任务实现DEM颗粒与LBM/CFD流场的双向动量交换框架，为冰区航行战役提供基础耦合能力。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 102,
+      "count_occurrences": 1
+    },
+    "asset-615-04-table-geometry-parameters": {
+      "quote": "| 颗粒密度 ρ_p | 1100 | kg/m³ |",
+      "resolvable_in_markdown": true,
+      "offset_chars": 237,
+      "count_occurrences": 1
+    },
+    "asset-615-05-equation-stokes-terminal-velocity": {
+      "quote": "$$v_t = \\frac{2}{9}\\frac{(\\rho_p - \\rho_f)\\,g\\,R^2}{\\mu} = 0.054500 \\text{ m/s}$$",
+      "resolvable_in_markdown": true,
+      "offset_chars": 439,
+      "count_occurrences": 1
+    },
+    "asset-615-06-method-coupling-steps": {
+      "quote": "4. **力分配**：使用与速度采样相同的三线性权重将力分配到流体网格（伴随操作）",
+      "resolvable_in_markdown": true,
+      "offset_chars": 683,
+      "count_occurrences": 1
+    },
+    "asset-615-07-equation-momentum-conservation": {
+      "quote": "由于使用相同的插值权重进行速度采样和力分配，且严格遵循Newton第三定律，离散动量守恒精确成立：",
+      "resolvable_in_markdown": true,
+      "offset_chars": 779,
+      "count_occurrences": 1
+    },
+    "asset-615-08-toolchain-list": {
+      "quote": "- PyTorch (float64) 用于数值精度",
+      "resolvable_in_markdown": true,
+      "offset_chars": 933,
+      "count_occurrences": 1
+    },
+    "asset-615-09-table-acceptance-criteria": {
+      "quote": "| momentum_exchange_conservation | 0.0 | < 1e-10 | kg·m/s | ✅ PASS |",
+      "resolvable_in_markdown": true,
+      "offset_chars": 1095,
+      "count_occurrences": 1
+    },
+    "asset-615-10-table-stokes-benchmark": {
+      "quote": "| 模拟终端速度 v_t | 0.054461 m/s |",
+      "resolvable_in_markdown": true,
+      "offset_chars": 1375,
+      "count_occurrences": 1
+    },
+    "asset-615-11-test-suite-summary": {
+      "quote": "- 12 tests collected, 12 passed, 0 failed",
+      "resolvable_in_markdown": true,
+      "offset_chars": 1491,
+      "count_occurrences": 1
+    },
+    "asset-615-12-limitations-list": {
+      "quote": "4. **润滑力**：未包含近壁颗粒的润滑力模型",
+      "resolvable_in_markdown": true,
+      "offset_chars": 1803,
+      "count_occurrences": 1
+    },
+    "asset-615-13-table-error-judgement": {
+      "quote": "| 终端速度 v_t | Stokes解析 0.05450 m/s | 0.05446 m/s | 0.07% | ✅ YES |",
+      "resolvable_in_markdown": true,
+      "offset_chars": 1933,
+      "count_occurrences": 1
+    },
+    "asset-615-14-figure-settling_velocity": {
+      "quote": "见内嵌图：单颗粒沉降速度时间历程与Stokes解析解对比。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 1603,
+      "count_occurrences": 1
+    }
+  },
+  "identity_facts": {
+    "markdown_h1": "SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework",
+    "record_title": "SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework",
+    "title_consistent": true,
+    "scenario_key": "SIR-PC2|F06",
+    "mission_id": 706,
+    "mission_probe": {
+      "endpoint": "GET /api/v1/tensor/missions/706",
+      "http_status": 200,
+      "mission_repo": "TensorDEM"
+    },
+    "figures_declared": 1,
+    "figure_payload_present": false,
+    "markdown_sha256": "sha256:3c1b5f9dc373359c9ca5692b5f822bc1ee8c13b50dc015b9b84c7530e29b7e75",
+    "chars": 2125,
+    "bytes_utf8": 3310
+  },
+  "scope": {
+    "extraction_performed": false,
+    "claims_emitted": 0,
+    "verification_performed": false,
+    "note": "工序 01 只登记资产与指纹：不抽取知识、不判定 verified、不重跑上游算例；claims 允许为空数组，本单为空。"
+  },
+  "limitations": [
+    "图件字节不可得：figures 记录仅 name/caption，端点 404；未重绘、未代上游补图。",
+    "报告正文无代码路径/提交号：代码级绑定不可解析，仅记录级 mission 线索。",
+    "pytest 12/12 为报告自述断言，无原始日志工件；本工序不重跑上游，不作为通过证据。",
+    "本清单不评价报告结论真伪；误差/守恒量的裁决权在平台验证门。"
+  ]
+}
