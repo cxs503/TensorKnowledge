@@ -1,0 +1,45 @@
+{
+  "package_id": "wp-5656-01",
+  "task_type": "01-asset-registration",
+  "report_id": "5656",
+  "provenance": {
+    "source_uri": "tensor://reports/5656",
+    "source_field": "markdown",
+    "source_hash": "sha256:0e698f7d7f4fb439b5c47b210d0a2b3cc8d94cd44852b3693e6b5895befd8e51",
+    "hash_algo": "sha256",
+    "hashed_bytes": "markdown encoded as utf-8",
+    "source_chars": 2506,
+    "source_bytes_utf8": 2530,
+    "fetched_via": "GET /api/v1/tensor/reports/5656",
+    "generator": "scripts/kf/build_asset_manifest_5656.py",
+    "contract_version": "1.0"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "path": "docs/kf/wp-5656-01/asset_manifest.json",
+      "sha256": "d7b10f7e6a0db220aec9abe27bdeac0668c46bf96fd53a217b8e12cad9df374a",
+      "bytes": 21724,
+      "asset_count": 17,
+      "claims": 0
+    }
+  },
+  "coupling_contract": {
+    "addressed_task": "wp-5656-01",
+    "depends_on": [],
+    "observes": "tensor://reports/5656",
+    "produces_field": "outputs.asset_manifest.json",
+    "guarantees": [
+      "source hash re-computable from provenance.source_hash",
+      "every asset locator resolves to a unique verbatim substring of source markdown",
+      "no claim marked verified"
+    ],
+    "reserved_fields": [
+      "claims[]",
+      "outputs[]"
+    ],
+    "produces_metrics_level": 3,
+    "does_not_encode": [
+      "task_level_metrics"
+    ]
+  }
+}
