@@ -1,0 +1,714 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-2506-01",
+  "task_type": "01-asset-registration",
+  "report_id": "2506",
+  "lane": "C",
+  "generated_at": "2026-11-12T01:01:54+00:00",
+  "producer": "kf-worker/tp-native-1",
+  "source": {
+    "report_id": "2506",
+    "source_uri": "tensor://reports/2506",
+    "source_field": "markdown",
+    "source_hash": "sha256:c62850b3dacd416bd9d535fec206f6e8427fb10121f439c7b865b2165e5138b0",
+    "contract_source_hash": "sha256:c62850b3dacd416bd9d535fec206f6e8427fb10121f439c7b865b2165e5138b0",
+    "hash_algo": "sha256",
+    "hash_scope": "UTF-8 bytes of tensor_reports.markdown",
+    "hash_match": true,
+    "chars": 3382,
+    "contract_chars": 3382,
+    "chars_match_contract": true,
+    "bytes": 5171,
+    "lines": 59,
+    "fetched_via": "GET /api/v1/tensor/reports/2506 (Bearer token)",
+    "record_fields": {
+      "title": "TensorFVM 粘性算子耗散性定因：非正交修正被证伪 + 能量相容(Galerkin)装配 PSD 证书（41 几何扫掠）",
+      "scenario_key": "tensorfvm/verification/compatible-viscous-dissipativity",
+      "mission_id": 2488,
+      "status": "published",
+      "created_at": "2026-11-03T11:27:21.025547+00:00",
+      "tags": [
+        "TensorFVM",
+        "verification",
+        "viscous-operator",
+        "dissipativity",
+        "PSD",
+        "sum-by-parts"
+      ],
+      "contract_title": "TensorFVM 粘性算子耗散性定因：非正交修正被证伪 + 能量相容(Galerkin)装配 PSD 证书（41 几何扫掠）",
+      "contract_scenario_key": "tensorfvm/verification/compatible-viscous-dissipativity",
+      "title_matches_contract": true,
+      "scenario_matches_contract": true,
+      "title_matches_markdown_h1": false
+    }
+  },
+  "assets": [
+    {
+      "asset_id": "asset-2506-01-report-markdown",
+      "kind": "report_markdown",
+      "uri": "tensor://reports/2506#markdown/H1",
+      "status": "resolved",
+      "chars": 64,
+      "locator": {
+        "source_field": "markdown",
+        "section": "H1",
+        "quote": "# TensorFVM 粘性算子耗散性定因与能量相容装配（native compatible viscous operator）",
+        "quote_verified": true,
+        "offset_chars": 0,
+        "count_occurrences": 1,
+        "note": "markdown 首行 H1，全文指纹载体"
+      }
+    },
+    {
+      "asset_id": "asset-2506-02-report-record",
+      "kind": "report_record_metadata",
+      "uri": "tensor://reports/2506#markdown/record.title",
+      "status": "declared_unresolvable",
+      "unresolved_reason": "记录 title（=契约 title）未在 markdown 中逐字出现：markdown H1 措辞为「TensorFVM 粘性算子耗散性定因与能量相容装配（native compatible viscous operator）」，与记录 title「…定因：非正交修正被证伪 + 能量相容(Galerkin)装配 PSD 证书（41 几何扫掠）」不同。按零手抄纪律不改写、不强行匹配，登记为记录级元数据不可在正文定位（title_matches_markdown_h1=False）。",
+      "notes": "记录级元数据：title/scenario_key/mission_id 见 source.record_fields；正文无同形串"
+    },
+    {
+      "asset_id": "asset-2506-03-section-case-defect",
+      "kind": "section_prose",
+      "uri": "tensor://reports/2506#markdown/① 案例介绍 / 悬案缺陷",
+      "status": "resolved",
+      "chars": 87,
+      "locator": {
+        "source_field": "markdown",
+        "section": "① 案例介绍 / 悬案缺陷",
+        "quote": "仓库长期挂 `xfail(strict=True)` 开放缺陷 `test_two_cell_skew_viscosity_must_dissipate`：两单元非正交网格上",
+        "quote_verified": true,
+        "offset_chars": 76,
+        "count_occurrences": 1,
+        "note": "§1 首行：strict xfail 开放缺陷"
+      }
+    },
+    {
+      "asset_id": "asset-2506-04-section-geometry-family",
+      "kind": "section_prose",
+      "uri": "tensor://reports/2506#markdown/① 案例介绍 / 几何族",
+      "status": "resolved",
+      "chars": 68,
+      "locator": {
+        "source_field": "markdown",
+        "section": "① 案例介绍 / 几何族",
+        "quote": "离散粘性算子会**造动能**。几何族 `two_tetrahedra(skew)`：两共享面四面体，5 顶点 / 2 单元 / 7 面，",
+        "quote_verified": true,
+        "offset_chars": 164,
+        "count_occurrences": 1,
+        "note": "§1 次行：two_tetrahedra(skew) 几何族与规模"
+      }
+    },
+    {
+      "asset_id": "asset-2506-05-parameter-sweep-grid",
+      "kind": "parameter_statement",
+      "uri": "tensor://reports/2506#markdown/① 案例介绍 / 扫掠参数",
+      "status": "resolved",
+      "chars": 72,
+      "locator": {
+        "source_field": "markdown",
+        "section": "① 案例介绍 / 扫掠参数",
+        "quote": "全部静止 Dirichlet，μ=ρ=1，单元 0 速度规定为 (1,0,0)；skew∈[0,1] 共 41 点（skew>1 面定向非法）。",
+        "quote_verified": true,
+        "offset_chars": 233,
+        "count_occurrences": 1,
+        "note": "§1 第三行：边界条件、μ=ρ=1、41 点扫掠与合法域上界"
+      }
+    },
+    {
+      "asset_id": "asset-2506-06-criterion-statement",
+      "kind": "criterion_statement",
+      "uri": "tensor://reports/2506#markdown/① 案例介绍 / 判据",
+      "status": "resolved",
+      "chars": 51,
+      "locator": {
+        "source_field": "markdown",
+        "section": "① 案例介绍 / 判据",
+        "quote": "判据：动能变化率 E = uᵀA u（A 为融合槽位矩阵，E<0 = 耗散），以及对称部分特征值证书。",
+        "quote_verified": true,
+        "offset_chars": 306,
+        "count_occurrences": 1,
+        "note": "§1 末行：E=uᵀAu 与对称部分特征值判据"
+      }
+    },
+    {
+      "asset_id": "asset-2506-07-method-damping-sweep",
+      "kind": "method_steps",
+      "uri": "tensor://reports/2506#markdown/② 方法 / 步骤1",
+      "status": "resolved",
+      "chars": 88,
+      "locator": {
+        "source_field": "markdown",
+        "section": "② 方法 / 步骤1",
+        "quote": "1. 给 `NativeViscous3D` 增加**逐面非正交修正阻尼** `correction_damping∈[0,1]`（默认 1.0 → 与 HEAD 逐位相同），",
+        "quote_verified": true,
+        "offset_chars": 369,
+        "count_occurrences": 1,
+        "note": "§2 步骤1：correction_damping 扫掠用于检验既有归因"
+      }
+    },
+    {
+      "asset_id": "asset-2506-08-equation-galerkin-assembly",
+      "kind": "equation",
+      "uri": "tensor://reports/2506#markdown/② 方法 / Galerkin 装配式",
+      "status": "resolved",
+      "chars": 79,
+      "locator": {
+        "source_field": "markdown",
+        "section": "② 方法 / Galerkin 装配式",
+        "quote": "   `K = Σ_c 2 μ_c V_c [Σ_i S_iiᵀS_ii + 2Σ_{i<j} S_ijᵀS_ij]`，`S = sym(∇u)`（可去偏）。",
+        "quote_verified": true,
+        "offset_chars": 587,
+        "count_occurrences": 1,
+        "note": "§2 步骤2：能量（Galerkin）装配的平方和形式"
+      }
+    },
+    {
+      "asset_id": "asset-2506-09-method-psd-by-construction",
+      "kind": "method_steps",
+      "uri": "tensor://reports/2506#markdown/② 方法 / 半正定由构造保证",
+      "status": "resolved",
+      "chars": 49,
+      "locator": {
+        "source_field": "markdown",
+        "section": "② 方法 / 半正定由构造保证",
+        "quote": "   该矩阵是平方和，故对任意网格、任意 u 恒为**对称半正定**，耗散性由构造保证；边界数据经",
+        "quote_verified": true,
+        "offset_chars": 667,
+        "count_occurrences": 1,
+        "note": "§2 步骤2：PSD 由平方和构造保证"
+      }
+    },
+    {
+      "asset_id": "asset-2506-10-toolchain-list",
+      "kind": "toolchain_list",
+      "uri": "tensor://reports/2506#markdown/② 方法 / 工具链",
+      "status": "resolved",
+      "chars": 91,
+      "locator": {
+        "source_field": "markdown",
+        "section": "② 方法 / 工具链",
+        "quote": "3. 工具链：`scripts/audit_compatible_viscous_dissipativity.py`（41 点扫掠 → JSON/CSV/表/PNG）+ pytest",
+        "quote_verified": true,
+        "offset_chars": 764,
+        "count_occurrences": 1,
+        "note": "§2 步骤3：审计脚本 + pytest + matplotlib 工具链"
+      }
+    },
+    {
+      "asset_id": "asset-2506-11-table-sweep-result",
+      "kind": "result_table",
+      "uri": "tensor://reports/2506#markdown/③ 计算结果 / 41 点扫掠表",
+      "status": "resolved",
+      "chars": 111,
+      "locator": {
+        "source_field": "markdown",
+        "section": "③ 计算结果 / 41 点扫掠表",
+        "quote": "| skew | 最大非正交角° | legacy E (α=1) | legacy E (α=0.5) | legacy E (α=0) | 相容 E | legacy λmin(-DAG) | 相容 λmin(K) |",
+        "quote_verified": true,
+        "offset_chars": 956,
+        "count_occurrences": 1,
+        "note": "§3 表头行；数据行数由 stats.data_rows 程序化统计"
+      },
+      "stats": {
+        "data_rows": 14,
+        "header_quote": "| skew | 最大非正交角° | legacy E (α=1) | legacy E (α=0.5) | legacy E (α=0) | 相容 E | legacy λmin(-DAG) | 相容 λmin(K) |"
+      }
+    },
+    {
+      "asset_id": "asset-2506-12-table-sweep-row0",
+      "kind": "result_table_row",
+      "uri": "tensor://reports/2506#markdown/③ 计算结果 / 首行数据",
+      "status": "resolved",
+      "chars": 90,
+      "locator": {
+        "source_field": "markdown",
+        "section": "③ 计算结果 / 首行数据",
+        "quote": "| 0.000 | 25.24 | -10.764444 | -5.862222 | -0.960000 | -2.111111 | +8.906667 | +0.535005 |",
+        "quote_verified": true,
+        "offset_chars": 1102,
+        "count_occurrences": 1,
+        "note": "§3 表首个数据行（skew=0.000 代表行）"
+      },
+      "stats": {
+        "data_rows": 14
+      }
+    },
+    {
+      "asset_id": "asset-2506-13-summary-legacy-default",
+      "kind": "result_summary_bullet",
+      "uri": "tensor://reports/2506#markdown/③ 扫描汇总 / legacy 默认装配",
+      "status": "resolved",
+      "chars": 64,
+      "locator": {
+        "source_field": "markdown",
+        "section": "③ 扫描汇总 / legacy 默认装配",
+        "quote": "- legacy 默认装配（α=1）在 **2 个几何**上造能，首个失效 skew=0.975（非正交角 86.22° 起）。",
+        "quote_verified": true,
+        "offset_chars": 2382,
+        "count_occurrences": 1,
+        "note": "§3 汇总第1条：默认装配造能几何数"
+      }
+    },
+    {
+      "asset_id": "asset-2506-14-summary-alpha0",
+      "kind": "result_summary_bullet",
+      "uri": "tensor://reports/2506#markdown/③ 扫描汇总 / α=0 反证",
+      "status": "resolved",
+      "chars": 59,
+      "locator": {
+        "source_field": "markdown",
+        "section": "③ 扫描汇总 / α=0 反证",
+        "quote": "- **α=0（纯两点通量，既有报告称为\"延迟修正、恒耗散\"）反而在 20 个几何上造能** → 非正交修正不是主因。",
+        "quote_verified": true,
+        "offset_chars": 2447,
+        "count_occurrences": 1,
+        "note": "§3 汇总第2条：α=0 反而造能（归因被证伪）"
+      }
+    },
+    {
+      "asset_id": "asset-2506-15-summary-compatible-extrema",
+      "kind": "result_summary_bullet",
+      "uri": "tensor://reports/2506#markdown/③ 扫描汇总 / 相容装配极值",
+      "status": "resolved",
+      "chars": 63,
+      "locator": {
+        "source_field": "markdown",
+        "section": "③ 扫描汇总 / 相容装配极值",
+        "quote": "- 相容装配：E 的最小值 = -3.935422（41 点全为负），λmin(K) 最小值 = +0.360339 > 0。",
+        "quote_verified": true,
+        "offset_chars": 2507,
+        "count_occurrences": 1,
+        "note": "§3 汇总第3条：相容装配 E 与 λmin 极值"
+      }
+    },
+    {
+      "asset_id": "asset-2506-16-figure-dissipativity-sweep",
+      "kind": "figure",
+      "uri": "tensor://reports/2506#markdown/④ 图 / dissipativity-sweep.png",
+      "status": "declared_unresolvable",
+      "chars": 78,
+      "locator": {
+        "source_field": "markdown",
+        "section": "④ 图 / dissipativity-sweep.png",
+        "quote": "![sweep](dissipativity-sweep.png)：左=E(skew)（legacy 三条阻尼曲线与相容装配）；右=对称部分最小特征值证书。",
+        "quote_verified": true,
+        "offset_chars": 2579,
+        "count_occurrences": 1,
+        "note": "§4 图引用行：正文以 markdown 图片语法指向该 png"
+      },
+      "unresolved_reason": "记录 figures 仅 name/caption（figure_payload_present=False），图件端点 GET /tensor/reports/2506/figures/dissipativity-sweep(.png) 返回 HTTP 404；本工序不重绘、不代上游补图，保留未解析（正文引用行仍可逐字定位）。"
+    },
+    {
+      "asset_id": "asset-2506-17-limitation-attribution",
+      "kind": "limitations_list",
+      "uri": "tensor://reports/2506#markdown/⑤ 局限 / 归因修正",
+      "status": "resolved",
+      "chars": 66,
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑤ 局限 / 归因修正",
+        "quote": "- **归因修正**：m2431 把造能归给非正交修正（\"延迟修正恒耗散\"）。本单用逐面阻尼扫掠证明该结论在其自己的几何族上不成立：",
+        "quote_verified": true,
+        "offset_chars": 2671,
+        "count_occurrences": 1,
+        "note": "§5 第1条：主因改判为 sum-by-parts 不成立"
+      }
+    },
+    {
+      "asset_id": "asset-2506-18-limitation-default-path",
+      "kind": "limitations_list",
+      "uri": "tensor://reports/2506#markdown/⑤ 局限 / 默认路径未改",
+      "status": "resolved",
+      "chars": 90,
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑤ 局限 / 默认路径未改",
+        "quote": "- **默认路径未改**：`correction_damping=1.0` 与 HEAD 矩阵逐位相同（有回归用例），仓库唯一 strict xfail 保持红灯（诚实保留欠账）。",
+        "quote_verified": true,
+        "offset_chars": 2819,
+        "count_occurrences": 1,
+        "note": "§5 第2条：默认路径逐位不变、strict xfail 保留"
+      }
+    },
+    {
+      "asset_id": "asset-2506-19-limitation-dissipativity-only",
+      "kind": "limitations_list",
+      "uri": "tensor://reports/2506#markdown/⑤ 局限 / 只认证耗散性",
+      "status": "resolved",
+      "chars": 64,
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑤ 局限 / 只认证耗散性",
+        "quote": "- **只认证耗散性，不认证标度**：native 单元梯度模板未做体积归一（本单实测其仿射场梯度偏离解析值，最大 6.17），",
+        "quote_verified": true,
+        "offset_chars": 2910,
+        "count_occurrences": 1,
+        "note": "§5 第3条：标度/一致性未认证，如实留白"
+      }
+    },
+    {
+      "asset_id": "asset-2506-20-limitation-sparsity",
+      "kind": "limitations_list",
+      "uri": "tensor://reports/2506#markdown/⑤ 局限 / 稀疏度",
+      "status": "resolved",
+      "chars": 38,
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑤ 局限 / 稀疏度",
+        "quote": "- K 的模板是两跳（单元梯度用邻居的邻居），引入求解器需评估稀疏度/带宽。",
+        "quote_verified": true,
+        "offset_chars": 3075,
+        "count_occurrences": 1,
+        "note": "§5 第4条：两跳模板的稀疏度/带宽需评估"
+      }
+    },
+    {
+      "asset_id": "asset-2506-21-error-basis",
+      "kind": "error_judgement",
+      "uri": "tensor://reports/2506#markdown/⑥ 误差判定 / 判据性质",
+      "status": "resolved",
+      "chars": 59,
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑥ 误差判定 / 判据性质",
+        "quote": "本单判据是**符号/特征值证书**而非与解析解的相对误差，无文献基准可比，故不适用「<3%」条款（显式声明，不含糊）：",
+        "quote_verified": true,
+        "offset_chars": 3125,
+        "count_occurrences": 1,
+        "note": "§6 显式声明不适用 <3% 条款及原因"
+      }
+    },
+    {
+      "asset_id": "asset-2506-22-error-energy-bound",
+      "kind": "error_judgement",
+      "uri": "tensor://reports/2506#markdown/⑥ 误差判定 / E 证书",
+      "status": "resolved",
+      "chars": 51,
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑥ 误差判定 / E 证书",
+        "quote": "- 相容装配 E ≤ 0：41/41 点满足，最坏值 -3.935422（距 0 的余量 100%）。",
+        "quote_verified": true,
+        "offset_chars": 3185,
+        "count_occurrences": 1,
+        "note": "§6：41/41 点 E≤0 与最坏值"
+      }
+    },
+    {
+      "asset_id": "asset-2506-23-error-lambda-min",
+      "kind": "error_judgement",
+      "uri": "tensor://reports/2506#markdown/⑥ 误差判定 / λmin 证书",
+      "status": "resolved",
+      "chars": 43,
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑥ 误差判定 / λmin 证书",
+        "quote": "- 相容装配 λmin(K) > 0：41/41 点满足，最小值 +0.360339。",
+        "quote_verified": true,
+        "offset_chars": 3237,
+        "count_occurrences": 1,
+        "note": "§6：41/41 点 λmin>0 与最小值"
+      }
+    },
+    {
+      "asset_id": "asset-2506-24-test-evidence-summary",
+      "kind": "test_evidence_summary",
+      "uri": "tensor://reports/2506#markdown/② 工具链 / pytest 用例数",
+      "status": "resolved",
+      "chars": 91,
+      "locator": {
+        "source_field": "markdown",
+        "section": "② 工具链 / pytest 用例数",
+        "quote": "3. 工具链：`scripts/audit_compatible_viscous_dissipativity.py`（41 点扫掠 → JSON/CSV/表/PNG）+ pytest",
+        "quote_verified": true,
+        "offset_chars": 764,
+        "count_occurrences": 1,
+        "note": "§2 唯一给出用例数的一行（6 条用例）；与 asset-10 同源行，如实登记为文字自述"
+      }
+    },
+    {
+      "asset_id": "asset-2506-25-run-artifact-pytest-log",
+      "kind": "run_artifact",
+      "uri": "tensor://reports/2506#markdown/⑤ 局限 / 回归用例",
+      "status": "declared_unresolvable",
+      "chars": 90,
+      "locator": {
+        "source_field": "markdown",
+        "section": "⑤ 局限 / 回归用例",
+        "quote": "- **默认路径未改**：`correction_damping=1.0` 与 HEAD 矩阵逐位相同（有回归用例），仓库唯一 strict xfail 保持红灯（诚实保留欠账）。",
+        "quote_verified": true,
+        "offset_chars": 2819,
+        "count_occurrences": 1,
+        "note": "§5 第2条同一行（回归用例文字断言）：只登记可定位性，不作通过证据"
+      },
+      "unresolved_reason": "报告仅以文字提及「有回归用例」与 pytest 6 条用例，未附原始 pytest 日志/trace/运行记录，工件字节不可得；工序 01 不重跑上游算例，故保留未解析。"
+    },
+    {
+      "asset_id": "asset-2506-26-codebase-pointer",
+      "kind": "codebase_pointer",
+      "uri": "tensor://reports/2506#markdown/② 工具链 / 代码路径",
+      "status": "declared_unresolvable",
+      "chars": 91,
+      "locator": {
+        "source_field": "markdown",
+        "section": "② 工具链 / 代码路径",
+        "quote": "3. 工具链：`scripts/audit_compatible_viscous_dissipativity.py`（41 点扫掠 → JSON/CSV/表/PNG）+ pytest",
+        "quote_verified": true,
+        "offset_chars": 764,
+        "count_occurrences": 1,
+        "note": "代码指针：路径文本可定位，字节与 commit 不可得"
+      },
+      "unresolved_reason": "正文给出仓库内相对路径（src/tensorfvm/native_compatible_viscous3d.py、scripts/audit_compatible_viscous_dissipativity.py、tests/test_native_compatible_viscous3d.py）但无分支/提交号，字节不可经报告信道取得，亦无法绑定到具体 commit；仅由记录 mission_id=2488 探到 mission 记录 repo=TensorFVM，属记录级间接线索，不认定为工件绑定。"
+    }
+  ],
+  "unresolved": [
+    {
+      "asset_id": "asset-2506-02-report-record",
+      "kind": "report_record_metadata",
+      "reason": "记录 title（=契约 title）未在 markdown 中逐字出现：markdown H1 措辞为「TensorFVM 粘性算子耗散性定因与能量相容装配（native compatible viscous operator）」，与记录 title「…定因：非正交修正被证伪 + 能量相容(Galerkin)装配 PSD 证书（41 几何扫掠）」不同。按零手抄纪律不改写、不强行匹配，登记为记录级元数据不可在正文定位（title_matches_markdown_h1=False）。"
+    },
+    {
+      "asset_id": "asset-2506-16-figure-dissipativity-sweep",
+      "kind": "figure",
+      "reason": "记录 figures 仅 name/caption（figure_payload_present=False），图件端点 GET /tensor/reports/2506/figures/dissipativity-sweep(.png) 返回 HTTP 404；本工序不重绘、不代上游补图，保留未解析（正文引用行仍可逐字定位）。"
+    },
+    {
+      "asset_id": "asset-2506-25-run-artifact-pytest-log",
+      "kind": "run_artifact",
+      "reason": "报告仅以文字提及「有回归用例」与 pytest 6 条用例，未附原始 pytest 日志/trace/运行记录，工件字节不可得；工序 01 不重跑上游算例，故保留未解析。"
+    },
+    {
+      "asset_id": "asset-2506-26-codebase-pointer",
+      "kind": "codebase_pointer",
+      "reason": "正文给出仓库内相对路径（src/tensorfvm/native_compatible_viscous3d.py、scripts/audit_compatible_viscous_dissipativity.py、tests/test_native_compatible_viscous3d.py）但无分支/提交号，字节不可经报告信道取得，亦无法绑定到具体 commit；仅由记录 mission_id=2488 探到 mission 记录 repo=TensorFVM，属记录级间接线索，不认定为工件绑定。"
+    }
+  ],
+  "locator_checks": {
+    "asset-2506-01-report-markdown": {
+      "quote": "# TensorFVM 粘性算子耗散性定因与能量相容装配（native compatible viscous operator）",
+      "resolvable_in_markdown": true,
+      "offset_chars": 0,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-03-section-case-defect": {
+      "quote": "仓库长期挂 `xfail(strict=True)` 开放缺陷 `test_two_cell_skew_viscosity_must_dissipate`：两单元非正交网格上",
+      "resolvable_in_markdown": true,
+      "offset_chars": 76,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-04-section-geometry-family": {
+      "quote": "离散粘性算子会**造动能**。几何族 `two_tetrahedra(skew)`：两共享面四面体，5 顶点 / 2 单元 / 7 面，",
+      "resolvable_in_markdown": true,
+      "offset_chars": 164,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-05-parameter-sweep-grid": {
+      "quote": "全部静止 Dirichlet，μ=ρ=1，单元 0 速度规定为 (1,0,0)；skew∈[0,1] 共 41 点（skew>1 面定向非法）。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 233,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-06-criterion-statement": {
+      "quote": "判据：动能变化率 E = uᵀA u（A 为融合槽位矩阵，E<0 = 耗散），以及对称部分特征值证书。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 306,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-07-method-damping-sweep": {
+      "quote": "1. 给 `NativeViscous3D` 增加**逐面非正交修正阻尼** `correction_damping∈[0,1]`（默认 1.0 → 与 HEAD 逐位相同），",
+      "resolvable_in_markdown": true,
+      "offset_chars": 369,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-08-equation-galerkin-assembly": {
+      "quote": "   `K = Σ_c 2 μ_c V_c [Σ_i S_iiᵀS_ii + 2Σ_{i<j} S_ijᵀS_ij]`，`S = sym(∇u)`（可去偏）。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 587,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-09-method-psd-by-construction": {
+      "quote": "   该矩阵是平方和，故对任意网格、任意 u 恒为**对称半正定**，耗散性由构造保证；边界数据经",
+      "resolvable_in_markdown": true,
+      "offset_chars": 667,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-10-toolchain-list": {
+      "quote": "3. 工具链：`scripts/audit_compatible_viscous_dissipativity.py`（41 点扫掠 → JSON/CSV/表/PNG）+ pytest",
+      "resolvable_in_markdown": true,
+      "offset_chars": 764,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-11-table-sweep-result": {
+      "quote": "| skew | 最大非正交角° | legacy E (α=1) | legacy E (α=0.5) | legacy E (α=0) | 相容 E | legacy λmin(-DAG) | 相容 λmin(K) |",
+      "resolvable_in_markdown": true,
+      "offset_chars": 956,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-12-table-sweep-row0": {
+      "quote": "| 0.000 | 25.24 | -10.764444 | -5.862222 | -0.960000 | -2.111111 | +8.906667 | +0.535005 |",
+      "resolvable_in_markdown": true,
+      "offset_chars": 1102,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-13-summary-legacy-default": {
+      "quote": "- legacy 默认装配（α=1）在 **2 个几何**上造能，首个失效 skew=0.975（非正交角 86.22° 起）。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 2382,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-14-summary-alpha0": {
+      "quote": "- **α=0（纯两点通量，既有报告称为\"延迟修正、恒耗散\"）反而在 20 个几何上造能** → 非正交修正不是主因。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 2447,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-15-summary-compatible-extrema": {
+      "quote": "- 相容装配：E 的最小值 = -3.935422（41 点全为负），λmin(K) 最小值 = +0.360339 > 0。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 2507,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-16-figure-dissipativity-sweep": {
+      "quote": "![sweep](dissipativity-sweep.png)：左=E(skew)（legacy 三条阻尼曲线与相容装配）；右=对称部分最小特征值证书。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 2579,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-17-limitation-attribution": {
+      "quote": "- **归因修正**：m2431 把造能归给非正交修正（\"延迟修正恒耗散\"）。本单用逐面阻尼扫掠证明该结论在其自己的几何族上不成立：",
+      "resolvable_in_markdown": true,
+      "offset_chars": 2671,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-18-limitation-default-path": {
+      "quote": "- **默认路径未改**：`correction_damping=1.0` 与 HEAD 矩阵逐位相同（有回归用例），仓库唯一 strict xfail 保持红灯（诚实保留欠账）。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 2819,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-19-limitation-dissipativity-only": {
+      "quote": "- **只认证耗散性，不认证标度**：native 单元梯度模板未做体积归一（本单实测其仿射场梯度偏离解析值，最大 6.17），",
+      "resolvable_in_markdown": true,
+      "offset_chars": 2910,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-20-limitation-sparsity": {
+      "quote": "- K 的模板是两跳（单元梯度用邻居的邻居），引入求解器需评估稀疏度/带宽。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 3075,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-21-error-basis": {
+      "quote": "本单判据是**符号/特征值证书**而非与解析解的相对误差，无文献基准可比，故不适用「<3%」条款（显式声明，不含糊）：",
+      "resolvable_in_markdown": true,
+      "offset_chars": 3125,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-22-error-energy-bound": {
+      "quote": "- 相容装配 E ≤ 0：41/41 点满足，最坏值 -3.935422（距 0 的余量 100%）。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 3185,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-23-error-lambda-min": {
+      "quote": "- 相容装配 λmin(K) > 0：41/41 点满足，最小值 +0.360339。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 3237,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-24-test-evidence-summary": {
+      "quote": "3. 工具链：`scripts/audit_compatible_viscous_dissipativity.py`（41 点扫掠 → JSON/CSV/表/PNG）+ pytest",
+      "resolvable_in_markdown": true,
+      "offset_chars": 764,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-25-run-artifact-pytest-log": {
+      "quote": "- **默认路径未改**：`correction_damping=1.0` 与 HEAD 矩阵逐位相同（有回归用例），仓库唯一 strict xfail 保持红灯（诚实保留欠账）。",
+      "resolvable_in_markdown": true,
+      "offset_chars": 2819,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    },
+    "asset-2506-26-codebase-pointer": {
+      "quote": "3. 工具链：`scripts/audit_compatible_viscous_dissipativity.py`（41 点扫掠 → JSON/CSV/表/PNG）+ pytest",
+      "resolvable_in_markdown": true,
+      "offset_chars": 764,
+      "back_read_ok": true,
+      "count_occurrences": 1
+    }
+  },
+  "identity_facts": {
+    "markdown_h1": "# TensorFVM 粘性算子耗散性定因与能量相容装配（native compatible viscous operator）",
+    "record_title": "TensorFVM 粘性算子耗散性定因：非正交修正被证伪 + 能量相容(Galerkin)装配 PSD 证书（41 几何扫掠）",
+    "title_consistent": false,
+    "scenario_key": "tensorfvm/verification/compatible-viscous-dissipativity",
+    "mission_id": 2488,
+    "mission_probe": {
+      "endpoint": "/tensor/missions/2488",
+      "http_status": 200,
+      "mission_repo": "TensorFVM",
+      "mission_status": "succeeded",
+      "mission_campaign_id": null
+    },
+    "figures_declared": 1,
+    "figure_payload_present": false,
+    "figure_endpoint_probes": [
+      {
+        "endpoint": "/tensor/reports/2506/figures/dissipativity-sweep",
+        "http_status": 404,
+        "bytes": 0
+      },
+      {
+        "endpoint": "/tensor/reports/2506/figures/dissipativity-sweep.png",
+        "http_status": 404,
+        "bytes": 0
+      }
+    ],
+    "markdown_sha256": "sha256:c62850b3dacd416bd9d535fec206f6e8427fb10121f439c7b865b2165e5138b0",
+    "chars": 3382,
+    "bytes_utf8": 5171,
+    "lines": 59,
+    "asset_count": 26,
+    "asset_status_distribution": {
+      "resolved": 22,
+      "declared_unresolvable": 4
+    }
+  },
+  "scope": {
+    "extraction_performed": false,
+    "claims_emitted": 0,
+    "verification_performed": false,
+    "note": "工序 01 只登记资产与指纹：不抽取知识、不判定 verified、不重跑上游算例；claims 允许为空数组，本单为空。"
+  },
+  "limitations": [
+    "图件字节不可得：记录 figures 仅 name/caption（figure_payload_present=False），端点探针 404；未重绘、未代上游补图。",
+    "pytest 6 条用例为报告文字自述，无原始日志/trace 工件；本工序不重跑上游，只登记可定位性。",
+    "正文给出仓库内相对路径但无分支/提交号，代码级绑定不可解析；仅记录级 mission_id=2488 → repo=TensorFVM 间接线索。",
+    "本清单不评价报告结论真伪（含 α=0 反证与 PSD 证书）；数值裁决权在平台验证门与下游工序。",
+    "引文口径=整行原文，不裁不改；跨行段落取其中代表行，不做字符串拼接（避免二次转录误差）。"
+  ]
+}
