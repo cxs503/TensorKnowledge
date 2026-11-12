@@ -1,0 +1,406 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/work-package-contract.schema.json",
+  "title": "Standard Work Package Contract v1",
+  "description": "Machine-checkable contract for one bounded work package of the report-to-knowledge production line. Owner YAML (2026-11-12 production order) is the normative source; this file is its JSON-Schema encoding so validators can $ref it directly. The five task types are the five processes of the line (01 asset registration, 02 classification/parse, 03 knowledge extraction, 04 independent review, 05 synthesis). Process 03 is the fully specified branch: five objectives, four output files, five constraints, six acceptance checks, mandatory independent review, delivery as draft. A contract passing this schema asserts only that the package is well formed; it says nothing about execution state, review state or scientific truth.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "package_id",
+    "task_type",
+    "version",
+    "input",
+    "objective",
+    "constraints",
+    "output",
+    "acceptance",
+    "review",
+    "delivery"
+  ],
+  "properties": {
+    "package_id": {
+      "type": "string",
+      "pattern": "^wp-[a-z0-9][a-z0-9-]{2,63}$",
+      "description": "Stable package identity. One package = one (report, process) unit of work; ids are never reused for a different report."
+    },
+    "task_type": {
+      "enum": [
+        "01-asset-registration",
+        "02-classification-parse",
+        "03-knowledge-extraction",
+        "04-independent-review",
+        "05-synthesis-research"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "const": "1.0.0",
+      "description": "Contract version (semver). Bump the major on any incompatible change to required keys."
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "description": "Optional TensorPlatform mission that produced the package."
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["report_id", "source_uri"],
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "description": "tensor_reports.id of the source report. The evidence gate resolves locators against this record only."
+        },
+        "source_uri": {
+          "type": "string",
+          "pattern": "^(https?://\\S+|file://\\S+|tensor://\\S+)$",
+          "description": "Where the source bytes live, e.g. tensor://reports/14537. The report_id must be recoverable from it."
+        },
+        "source_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "description": "sha256 of the source text as selected by source_field, byte-exact UTF-8 (no newline normalisation)."
+        },
+        "source_field": {
+          "enum": ["markdown", "summary", "record"],
+          "description": "Which part of the report record source_hash covers. 'markdown' is the canonical report body and the only field claims may be extracted from."
+        },
+        "attachments": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/attachment" },
+          "description": "Attachments are resolved through the manifest named by attachments_manifest, never by ad-hoc guessing."
+        },
+        "attachments_manifest": {
+          "type": "string",
+          "minLength": 1,
+          "description": "URI of the machine-readable attachment manifest (filename -> uri/sha256)."
+        },
+        "upstream_packages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["package_id", "status"],
+            "properties": {
+              "package_id": { "type": "string", "pattern": "^wp-[a-z0-9][a-z0-9-]{2,63}$" },
+              "status": {
+                "enum": ["completed", "pending", "failed"],
+                "description": "Declared by the caller and re-checked by the gate from the upstream gate report; a claim of 'completed' without a passing upstream report is a gate failure, not a schema failure."
+              }
+            }
+          }
+        },
+        "reviewed_package": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["package_id", "claims_sha256", "evidence_sha256"],
+          "properties": {
+            "package_id": { "type": "string", "pattern": "^wp-[a-z0-9][a-z0-9-]{2,63}$" },
+            "claims_sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+            "evidence_sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+          }
+        }
+      }
+    },
+    "objective": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "identify_research_question": { "type": "boolean" },
+        "extract_methods_and_claims": { "type": "boolean" },
+        "extract_evidence": { "type": "boolean" },
+        "identify_assumptions": { "type": "boolean" },
+        "identify_limitations": { "type": "boolean" },
+        "register_assets": { "type": "boolean" },
+        "classify_report_type": { "type": "boolean" },
+        "judge_semantic_fidelity": { "type": "boolean" },
+        "cross_report_synthesis": { "type": "boolean" },
+        "contradiction_detection": { "type": "boolean" },
+        "gap_identification": { "type": "boolean" }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "every_claim_must_have_source_locator",
+        "do_not_invent_missing_information",
+        "preserve_uncertainty",
+        "no_forced_claim_generation",
+        "do_not_mark_claims_as_verified"
+      ],
+      "properties": {
+        "every_claim_must_have_source_locator": { "const": true },
+        "do_not_invent_missing_information": { "const": true },
+        "preserve_uncertainty": { "const": true },
+        "no_forced_claim_generation": {
+          "const": true,
+          "description": "Zero claims is a legal, complete outcome. A report with no reusable conclusion returns an empty claim set with a stated reason; producing knowledge to fill a KPI is forbidden."
+        },
+        "do_not_mark_claims_as_verified": {
+          "const": true,
+          "description": "Producers never write a verified/verification_status field. Verification level is computed by the gate from gate results plus platform verification tickets."
+        },
+        "reviewer_context_excludes_producer_explanation": { "const": true },
+        "review_prompt_not_copied_from_producer": { "const": true }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "claims.json": { "const": true },
+        "evidence.json": { "const": true },
+        "provenance.json": { "const": true },
+        "extraction_summary.json": { "const": true },
+        "asset_manifest.json": { "const": true },
+        "classification.json": { "const": true },
+        "review_report.json": { "const": true },
+        "synthesis.json": { "const": true }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "valid_json": { "const": true },
+        "schema_pass": { "const": true },
+        "source_locator_resolvable": { "const": true },
+        "source_hash_matches": { "const": true },
+        "no_duplicate_ids": { "const": true },
+        "all_claims_have_evidence_or_explicit_unresolved_status": { "const": true },
+        "upstream_packages_completed": { "const": true },
+        "reviewer_independent": { "const": true }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "independent_reviewer"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "independent_reviewer": { "type": "boolean" },
+        "reviewer_role": {
+          "enum": [
+            "document-analyst",
+            "scientific-extractor",
+            "evidence-auditor",
+            "domain-specialist",
+            "knowledge-integrator",
+            "red-team-reviewer"
+          ]
+        },
+        "sample_rate": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "description": "Fraction of claims the independent reviewer must open. 1.0 = full review."
+        },
+        "strong_model_sample_rate": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "description": "Fraction of the reviewed sample re-checked by a strong model."
+        }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repo", "status"],
+      "properties": {
+        "repo": { "const": "TensorKnowledge" },
+        "status": { "enum": ["draft", "in-review", "approved", "published"] },
+        "path": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string" }
+      }
+    },
+    "notes": { "type": "string" }
+  },
+  "$defs": {
+    "attachment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["filename", "uri", "sha256"],
+      "properties": {
+        "filename": { "type": "string", "minLength": 1 },
+        "uri": { "type": "string", "pattern": "^(https?://\\S+|file://\\S+|tensor://\\S+)$" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "mime_type": { "type": "string", "minLength": 3 },
+        "role": { "enum": ["figure", "table", "dataset", "code", "appendix", "other"] }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$comment": "Process 03 — knowledge extraction: the fully specified branch (owner YAML).",
+      "if": {
+        "required": ["task_type"],
+        "properties": { "task_type": { "const": "03-knowledge-extraction" } }
+      },
+      "then": {
+        "properties": {
+          "input": {
+            "required": ["report_id", "source_uri", "source_hash", "source_field"],
+            "properties": { "source_field": { "const": "markdown" } }
+          },
+          "objective": {
+            "additionalProperties": false,
+            "required": [
+              "identify_research_question",
+              "extract_methods_and_claims",
+              "extract_evidence",
+              "identify_assumptions",
+              "identify_limitations"
+            ],
+            "properties": {
+              "identify_research_question": { "const": true },
+              "extract_methods_and_claims": { "const": true },
+              "extract_evidence": { "const": true },
+              "identify_assumptions": { "const": true },
+              "identify_limitations": { "const": true }
+            }
+          },
+          "output": {
+            "additionalProperties": false,
+            "required": [
+              "claims.json",
+              "evidence.json",
+              "provenance.json",
+              "extraction_summary.json"
+            ],
+            "properties": {
+              "claims.json": { "const": true },
+              "evidence.json": { "const": true },
+              "provenance.json": { "const": true },
+              "extraction_summary.json": { "const": true }
+            }
+          },
+          "acceptance": {
+            "additionalProperties": false,
+            "required": [
+              "valid_json",
+              "schema_pass",
+              "source_locator_resolvable",
+              "source_hash_matches",
+              "no_duplicate_ids",
+              "all_claims_have_evidence_or_explicit_unresolved_status"
+            ],
+            "properties": {
+              "valid_json": { "const": true },
+              "schema_pass": { "const": true },
+              "source_locator_resolvable": { "const": true },
+              "source_hash_matches": { "const": true },
+              "no_duplicate_ids": { "const": true },
+              "all_claims_have_evidence_or_explicit_unresolved_status": { "const": true }
+            }
+          },
+          "review": {
+            "required": ["required", "independent_reviewer"],
+            "properties": {
+              "required": { "const": true },
+              "independent_reviewer": { "const": true }
+            }
+          },
+          "delivery": {
+            "properties": { "status": { "const": "draft" } }
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Process 04 — independent review: reviewer sees source + knowledge objects only; prompt is not the producer prompt.",
+      "if": {
+        "required": ["task_type"],
+        "properties": { "task_type": { "const": "04-independent-review" } }
+      },
+      "then": {
+        "properties": {
+          "input": { "required": ["reviewed_package"] },
+          "objective": { "required": ["judge_semantic_fidelity"] },
+          "constraints": {
+            "required": [
+              "reviewer_context_excludes_producer_explanation",
+              "review_prompt_not_copied_from_producer"
+            ],
+            "properties": {
+              "reviewer_context_excludes_producer_explanation": { "const": true },
+              "review_prompt_not_copied_from_producer": { "const": true }
+            }
+          },
+          "output": {
+            "additionalProperties": false,
+            "required": ["review_report.json"],
+            "properties": { "review_report.json": { "const": true } }
+          },
+          "acceptance": {
+            "required": ["reviewer_independent"],
+            "properties": { "reviewer_independent": { "const": true } }
+          },
+          "review": {
+            "properties": {
+              "required": { "const": true },
+              "independent_reviewer": { "const": true }
+            }
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Process 05 — synthesis: may only start after upstream basic processing is complete.",
+      "if": {
+        "required": ["task_type"],
+        "properties": { "task_type": { "const": "05-synthesis-research" } }
+      },
+      "then": {
+        "properties": {
+          "input": { "required": ["upstream_packages"] },
+          "objective": { "required": ["cross_report_synthesis"] },
+          "output": {
+            "additionalProperties": false,
+            "required": ["synthesis.json"],
+            "properties": { "synthesis.json": { "const": true } }
+          },
+          "acceptance": {
+            "required": ["upstream_packages_completed"],
+            "properties": { "upstream_packages_completed": { "const": true } }
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Process 01 — asset registration: artefacts arriving with attachments must name their manifest.",
+      "if": {
+        "required": ["task_type"],
+        "properties": { "task_type": { "const": "01-asset-registration" } }
+      },
+      "then": {
+        "properties": {
+          "objective": { "required": ["register_assets"] },
+          "output": {
+            "additionalProperties": false,
+            "required": ["asset_manifest.json"],
+            "properties": { "asset_manifest.json": { "const": true } }
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Attachments are resolved by manifest: a non-empty attachment list without a manifest is malformed.",
+      "if": {
+        "properties": {
+          "input": { "required": ["attachments"], "properties": { "attachments": { "minItems": 1 } } }
+        }
+      },
+      "then": { "properties": { "input": { "required": ["attachments_manifest"] } } }
+    }
+  ]
+}

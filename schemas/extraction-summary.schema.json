@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/extraction-summary.schema.json",
+  "title": "Extraction Summary",
+  "description": "extraction_summary.json of a knowledge-extraction work package: the producer's own coverage statement. It records what was attempted, what was found, and where the extraction is empty or incomplete. It must NOT record verification: verification level is computed by the gate (ke/wp_gate.py) from gate results and platform verification tickets, and a producer-written verified flag is a gate failure (constraint do_not_mark_claims_as_verified).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "package_id",
+    "report_id",
+    "report_type",
+    "source",
+    "objective_coverage",
+    "counts",
+    "empty_result",
+    "producer"
+  ],
+  "properties": {
+    "package_id": { "type": "string", "pattern": "^wp-[a-z0-9][a-z0-9-]{2,63}$" },
+    "report_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "report_type": {
+      "enum": [
+        "literature-review",
+        "scientific-computation",
+        "algorithm-implementation",
+        "software-engineering",
+        "technical-proposal",
+        "experimental-validation",
+        "unclassified"
+      ],
+      "description": "One of the six report types of the Extraction Skill Library; 'unclassified' is legal and must be stated rather than guessed."
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["report_id", "source_uri", "source_hash", "source_field"],
+      "properties": {
+        "report_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "source_uri": { "type": "string", "pattern": "^(https?://\\S+|file://\\S+|tensor://\\S+)$" },
+        "source_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "source_field": { "enum": ["markdown", "summary", "record"] }
+      }
+    },
+    "objective_coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identify_research_question",
+        "extract_methods_and_claims",
+        "extract_evidence",
+        "identify_assumptions",
+        "identify_limitations"
+      ],
+      "properties": {
+        "identify_research_question": { "$ref": "#/$defs/coverage" },
+        "extract_methods_and_claims": { "$ref": "#/$defs/coverage" },
+        "extract_evidence": { "$ref": "#/$defs/coverage" },
+        "identify_assumptions": { "$ref": "#/$defs/coverage" },
+        "identify_limitations": { "$ref": "#/$defs/coverage" }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claims", "evidence", "provenance", "unresolved_claims"],
+      "properties": {
+        "claims": { "type": "integer", "minimum": 0 },
+        "evidence": { "type": "integer", "minimum": 0 },
+        "provenance": { "type": "integer", "minimum": 0 },
+        "unresolved_claims": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Claims that were identified in the source but whose evidence could not be located. They are reported, never silently dropped and never promoted by guessing."
+        }
+      }
+    },
+    "empty_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["is_empty", "reason"],
+      "properties": {
+        "is_empty": { "type": "boolean" },
+        "reason": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Required whenever is_empty is true: why no claim could be extracted (e.g. the report holds no reusable conclusion). Empty is a legal outcome; an unexplained empty is not."
+        }
+      }
+    },
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skill_id", "skill_version"],
+      "properties": {
+        "skill_id": { "type": "string", "pattern": "^xsk-[a-z0-9][a-z0-9-]{1,63}$" },
+        "skill_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "lifecycle_state": {
+          "enum": ["candidate", "template-created", "sample-tested", "independent-review", "registered", "deprecated"]
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Extraction-level limitations (ambiguous passages, figures not readable, claims needing domain expertise)."
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Assumptions the source makes that were carried over verbatim rather than resolved."
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "produced_at", "producer_prompt_id"],
+      "properties": {
+        "agent_id": { "type": "string", "minLength": 1 },
+        "produced_at": { "type": "string", "format": "date-time" },
+        "producer_prompt_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Identifier of the production prompt/skill revision. The independent reviewer prompt must not copy this prompt; the gate compares the two."
+        }
+      }
+    },
+    "self_assessment": { "enum": ["complete", "partial"] },
+    "notes": { "type": "string" }
+  },
+  "$defs": {
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["done", "partial", "not-applicable"] },
+        "note": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$comment": "no_forced_claim_generation: an empty claim set must state why it is empty.",
+      "if": {
+        "required": ["counts"],
+        "properties": { "counts": { "properties": { "claims": { "const": 0 } } } }
+      },
+      "then": {
+        "properties": {
+          "empty_result": {
+            "properties": { "is_empty": { "const": true }, "reason": { "minLength": 20 } }
+          }
+        }
+      },
+      "else": {
+        "properties": { "empty_result": { "properties": { "is_empty": { "const": false } } } }
+      }
+    },
+    {
+      "$comment": "A registered skill state may not be asserted without the registry counters the gate re-checks.",
+      "if": {
+        "required": ["skill"],
+        "properties": { "skill": { "properties": { "lifecycle_state": { "const": "registered" } } } }
+      },
+      "then": { "properties": { "skill": { "required": ["lifecycle_state"] } } }
+    }
+  ]
+}
