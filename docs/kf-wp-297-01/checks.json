@@ -1,0 +1,92 @@
+{
+  "all_ok": true,
+  "checks": [
+    {
+      "check": "valid_json",
+      "ok": true,
+      "detail": "manifest serialised and re-parsed with json.loads"
+    },
+    {
+      "check": "source_hash_matches",
+      "ok": true,
+      "detail": {
+        "recomputed": "426c49ee6920408fa082092a086ef85edf1da0d566a63dfad66dba81549cc77a",
+        "expected": "426c49ee6920408fa082092a086ef85edf1da0d566a63dfad66dba81549cc77a"
+      }
+    },
+    {
+      "check": "source_chars_matches",
+      "ok": true,
+      "detail": {
+        "recomputed": 1633,
+        "expected": 1633
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "ok": true,
+      "detail": {
+        "n_ids": 9,
+        "n_unique": 9
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "ok": true,
+      "detail": {
+        "n_locators": 7,
+        "failures": []
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "ok": true,
+      "detail": {
+        "C-297-0001": "supported",
+        "C-297-0002": "supported",
+        "C-297-0003": "supported"
+      }
+    },
+    {
+      "check": "contract_input_fields_present",
+      "ok": true,
+      "detail": [
+        "chars",
+        "chars_verified",
+        "declared_scenario_key",
+        "declared_title",
+        "hash_verified",
+        "platform_metadata",
+        "report_id",
+        "retrieval_channel",
+        "scenario_key",
+        "snapshot_path",
+        "source_field",
+        "source_hash",
+        "source_uri",
+        "title"
+      ]
+    },
+    {
+      "check": "no_claim_marked_verified",
+      "ok": true,
+      "detail": [
+        "supported"
+      ]
+    },
+    {
+      "check": "single_report_scope",
+      "ok": true,
+      "detail": {
+        "report_ids": [
+          "297"
+        ]
+      }
+    }
+  ],
+  "result_written": {
+    "path": "artifacts/kf-wp-297-01/kf_result.wp-297-01.json",
+    "package_id": "wp-297-01",
+    "task_type": "01-asset-registration"
+  }
+}
