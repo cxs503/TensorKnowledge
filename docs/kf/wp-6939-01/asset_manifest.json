@@ -1,0 +1,372 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-6939-01",
+  "task_type": "01-asset-registration",
+  "report_id": "6939",
+  "source": {
+    "uri": "tensor://reports/6939",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246",
+    "chars": 2002,
+    "bytes_utf8": 3149,
+    "title": "TensorLBM共轭传热(CHT)验证阶梯：四重解析锚+界面连续+负控",
+    "scenario_key": "IN45-N04",
+    "platform_figures": [
+      {
+        "name": "composite_wall",
+        "caption": "复合壁稳态导热温度分布：解析解(串联热阻) vs 数值解(Thomas算法)"
+      },
+      {
+        "name": "erf_penetration",
+        "caption": "半无限大固体瞬态热渗透：erf解析解 vs 有限差分数值解"
+      },
+      {
+        "name": "graetz_nusselt",
+        "caption": "Graetz问题Nu数随无量纲长度变化：入口段→充分发展段"
+      },
+      {
+        "name": "churchill_chu",
+        "caption": "Churchill-Chu竖板自然对流关联式：Nu-Ra关系(Pr=0.71)"
+      },
+      {
+        "name": "interface_continuity",
+        "caption": "流固界面温度连续性：耦合前后温度分布对比"
+      }
+    ],
+    "platform_tags": [
+      "CHT",
+      "conjugate_heat_transfer",
+      "validation",
+      "TensorLBM",
+      "thermal",
+      "analytical_anchor"
+    ]
+  },
+  "counts": {
+    "assets": 10,
+    "by_class": {
+      "report_markdown": 1,
+      "figure_reference": 1,
+      "embedded_figure_declared": 5,
+      "code_symbol_reference": 3
+    },
+    "by_resolution": {
+      "resolved_in_source": 2,
+      "metadata_only": 5,
+      "referenced_unresolved": 3
+    },
+    "resolved_in_source": 2,
+    "referenced_unresolved": 3,
+    "declared_absent": 0,
+    "metadata_only": 5
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "report markdown body of report_id=6939 (tensor://reports/6939#markdown)",
+      "in_report_section": "document",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2002,
+        "start_line": 1,
+        "end_line": 68,
+        "quote": "# TensorLBM 共轭传热(CHT)验证阶梯",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(markdown utf-8) == input.source_hash of the work-package contract",
+        "result": "resolved",
+        "observed_sha256": "8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246",
+        "expected_sha256": "8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246",
+        "chars": 2002,
+        "bytes_utf8": 3149
+      },
+      "note": "Platform field record_id=6939, title='TensorLBM共轭传热(CHT)验证阶梯：四重解析锚+界面连续+负控', scenario_key='IN45-N04'; meta snapshot in source_record_meta.json."
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "figure_reference",
+      "label": "figure-set reference in §4 结果图 (declares 5 figures, names no file/path)",
+      "in_report_section": "4. 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1664,
+        "end_char": 1671,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "见附图 1-5",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim reference located in markdown body; no path/filename syntax attached",
+        "result": "resolved"
+      },
+      "note": "The reference carries no path, URL or attachment filename, so it cannot be byte-resolved from the body alone; the platform record's figures[] is handled in A03-A07."
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure_declared",
+      "label": "composite_wall — 复合壁稳态导热温度分布：解析解(串联热阻) vs 数值解(Thomas算法)",
+      "in_report_section": "4. 结果图",
+      "locator": {
+        "method": "record_field",
+        "start_char": 1664,
+        "end_char": 1671,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "见附图 1-5",
+        "unique": true,
+        "shared_anchor": true,
+        "record_field": "figures",
+        "record_index": 0,
+        "record_name": "composite_wall",
+        "record_caption": "复合壁稳态导热温度分布：解析解(串联热阻) vs 数值解(Thomas算法)"
+      },
+      "resolution": "metadata_only",
+      "resolution_check": {
+        "check": "does figures[0] carry a png_base64 payload that can be byte-hashed?",
+        "result": "absent"
+      },
+      "note": "caption='复合壁稳态导热温度分布：解析解(串联热阻) vs 数值解(Thomas算法)'; record holds name+caption only (keys=['caption', 'name']); probe GET /tensor/reports/6939/figures/composite_wall returns http_404, and GET /tensor/reports/6939/artifacts + /tensor/artifacts?report_id=6939 also 404 (artifact_probe.json) — no bytes exist to hash, so this figure is registered as metadata_only, NOT as a resolved binary."
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "embedded_figure_declared",
+      "label": "erf_penetration — 半无限大固体瞬态热渗透：erf解析解 vs 有限差分数值解",
+      "in_report_section": "4. 结果图",
+      "locator": {
+        "method": "record_field",
+        "start_char": 1664,
+        "end_char": 1671,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "见附图 1-5",
+        "unique": true,
+        "shared_anchor": true,
+        "record_field": "figures",
+        "record_index": 1,
+        "record_name": "erf_penetration",
+        "record_caption": "半无限大固体瞬态热渗透：erf解析解 vs 有限差分数值解"
+      },
+      "resolution": "metadata_only",
+      "resolution_check": {
+        "check": "does figures[1] carry a png_base64 payload that can be byte-hashed?",
+        "result": "absent"
+      },
+      "note": "caption='半无限大固体瞬态热渗透：erf解析解 vs 有限差分数值解'; record holds name+caption only (keys=['caption', 'name']); probe GET /tensor/reports/6939/figures/erf_penetration returns http_404, and GET /tensor/reports/6939/artifacts + /tensor/artifacts?report_id=6939 also 404 (artifact_probe.json) — no bytes exist to hash, so this figure is registered as metadata_only, NOT as a resolved binary."
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "embedded_figure_declared",
+      "label": "graetz_nusselt — Graetz问题Nu数随无量纲长度变化：入口段→充分发展段",
+      "in_report_section": "4. 结果图",
+      "locator": {
+        "method": "record_field",
+        "start_char": 1664,
+        "end_char": 1671,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "见附图 1-5",
+        "unique": true,
+        "shared_anchor": true,
+        "record_field": "figures",
+        "record_index": 2,
+        "record_name": "graetz_nusselt",
+        "record_caption": "Graetz问题Nu数随无量纲长度变化：入口段→充分发展段"
+      },
+      "resolution": "metadata_only",
+      "resolution_check": {
+        "check": "does figures[2] carry a png_base64 payload that can be byte-hashed?",
+        "result": "absent"
+      },
+      "note": "caption='Graetz问题Nu数随无量纲长度变化：入口段→充分发展段'; record holds name+caption only (keys=['caption', 'name']); probe GET /tensor/reports/6939/figures/graetz_nusselt returns http_404, and GET /tensor/reports/6939/artifacts + /tensor/artifacts?report_id=6939 also 404 (artifact_probe.json) — no bytes exist to hash, so this figure is registered as metadata_only, NOT as a resolved binary."
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "embedded_figure_declared",
+      "label": "churchill_chu — Churchill-Chu竖板自然对流关联式：Nu-Ra关系(Pr=0.71)",
+      "in_report_section": "4. 结果图",
+      "locator": {
+        "method": "record_field",
+        "start_char": 1664,
+        "end_char": 1671,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "见附图 1-5",
+        "unique": true,
+        "shared_anchor": true,
+        "record_field": "figures",
+        "record_index": 3,
+        "record_name": "churchill_chu",
+        "record_caption": "Churchill-Chu竖板自然对流关联式：Nu-Ra关系(Pr=0.71)"
+      },
+      "resolution": "metadata_only",
+      "resolution_check": {
+        "check": "does figures[3] carry a png_base64 payload that can be byte-hashed?",
+        "result": "absent"
+      },
+      "note": "caption='Churchill-Chu竖板自然对流关联式：Nu-Ra关系(Pr=0.71)'; record holds name+caption only (keys=['caption', 'name']); probe GET /tensor/reports/6939/figures/churchill_chu returns http_404, and GET /tensor/reports/6939/artifacts + /tensor/artifacts?report_id=6939 also 404 (artifact_probe.json) — no bytes exist to hash, so this figure is registered as metadata_only, NOT as a resolved binary."
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "embedded_figure_declared",
+      "label": "interface_continuity — 流固界面温度连续性：耦合前后温度分布对比",
+      "in_report_section": "4. 结果图",
+      "locator": {
+        "method": "record_field",
+        "start_char": 1664,
+        "end_char": 1671,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "见附图 1-5",
+        "unique": true,
+        "shared_anchor": true,
+        "record_field": "figures",
+        "record_index": 4,
+        "record_name": "interface_continuity",
+        "record_caption": "流固界面温度连续性：耦合前后温度分布对比"
+      },
+      "resolution": "metadata_only",
+      "resolution_check": {
+        "check": "does figures[4] carry a png_base64 payload that can be byte-hashed?",
+        "result": "absent"
+      },
+      "note": "caption='流固界面温度连续性：耦合前后温度分布对比'; record holds name+caption only (keys=['caption', 'name']); probe GET /tensor/reports/6939/figures/interface_continuity returns http_404, and GET /tensor/reports/6939/artifacts + /tensor/artifacts?report_id=6939 also 404 (artifact_probe.json) — no bytes exist to hash, so this figure is registered as metadata_only, NOT as a resolved binary."
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "code_symbol_reference",
+      "label": "cht_solid_diffusion_step",
+      "in_report_section": "5. 已知局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1691,
+        "end_char": 1715,
+        "start_line": 61,
+        "end_line": 61,
+        "quote": "cht_solid_diffusion_step",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "grep for the identifier verbatim across this delivery worktree (TensorKnowledge), excluding the frozen source fixture and this package's own deliverables",
+        "result": "unresolved",
+        "hits": []
+      },
+      "note": "referenced symbol is defined in the TensorLBM solver package, which is outside this delivery worktree (repo=TensorKnowledge); not resolvable here — no cross-repo guess made."
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "code_symbol_reference",
+      "label": "F.conv2d(padding=1)",
+      "in_report_section": "5. 已知局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1723,
+        "end_char": 1742,
+        "start_line": 61,
+        "end_line": 61,
+        "quote": "F.conv2d(padding=1)",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "grep for the identifier verbatim across this delivery worktree (TensorKnowledge), excluding the frozen source fixture and this package's own deliverables",
+        "result": "unresolved",
+        "hits": []
+      },
+      "note": "referenced symbol is defined in the TensorLBM solver package, which is outside this delivery worktree (repo=TensorKnowledge); not resolvable here — no cross-repo guess made."
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "code_symbol_reference",
+      "label": "apply_cht_interface",
+      "in_report_section": "5. 已知局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1787,
+        "end_char": 1806,
+        "start_line": 62,
+        "end_line": 62,
+        "quote": "apply_cht_interface",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "grep for the identifier verbatim across this delivery worktree (TensorKnowledge), excluding the frozen source fixture and this package's own deliverables",
+        "result": "unresolved",
+        "hits": []
+      },
+      "note": "referenced symbol is defined in the TensorLBM solver package, which is outside this delivery worktree (repo=TensorKnowledge); not resolvable here — no cross-repo guess made."
+    }
+  ],
+  "artifact_probe": {
+    "report_id": "6939",
+    "generated_at": "2026-11-12T01:31:01.955397+00:00",
+    "endpoints": [
+      {
+        "status": "http_404",
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /tensor/reports/6939/figures/composite_wall",
+        "figure": "composite_wall"
+      },
+      {
+        "status": "http_404",
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /tensor/reports/6939/figures/erf_penetration",
+        "figure": "erf_penetration"
+      },
+      {
+        "status": "http_404",
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /tensor/reports/6939/figures/graetz_nusselt",
+        "figure": "graetz_nusselt"
+      },
+      {
+        "status": "http_404",
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /tensor/reports/6939/figures/churchill_chu",
+        "figure": "churchill_chu"
+      },
+      {
+        "status": "http_404",
+        "detail": "{\"detail\":\"figure not found\"}",
+        "endpoint": "GET /tensor/reports/6939/figures/interface_continuity",
+        "figure": "interface_continuity"
+      },
+      {
+        "status": "http_404",
+        "detail": "{\"detail\":\"Not Found\"}",
+        "endpoint": "GET /tensor/reports/6939/artifacts"
+      },
+      {
+        "status": "http_404",
+        "detail": "{\"detail\":\"Not Found\"}",
+        "endpoint": "GET /tensor/artifacts?report_id=6939"
+      }
+    ],
+    "any_payload_bytes": false,
+    "figures_with_png_base64": 0
+  },
+  "claims": [],
+  "claims_rationale": "objective.classify_report_type=false and constraints.no_forced_claim_generation=true: this package registers assets only, it does not extract knowledge. An empty claims array is an explicitly legal complete result per the contract (notes: 'claims 允许为空数组'), so no claim was minted to fill a quota. The report's numeric anchors (25/25 pytest, RMS 0.02%..18%) are left to a downstream extraction package and are NOT restated here.",
+  "integrity": {
+    "quote_uniqueness": "all locator quotes sliced from the source bytes; duplicates flagged per asset via locator.unique",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "hash_source": "fetched via GET /api/v1/tensor/reports/6939, frozen as tests/fixtures/kf/6939_markdown.md",
+    "fixture_path": "tests/fixtures/kf/6939_markdown.md",
+    "fixture_sha256": "8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246"
+  },
+  "provenance": {
+    "source_hash": "sha256:8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246",
+    "source_field": "markdown",
+    "generated_at": "2026-11-12T01:31:02.705006+00:00",
+    "generator": "scripts/kf/wp6939_register.py build"
+  }
+}
