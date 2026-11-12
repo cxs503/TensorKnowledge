@@ -1,0 +1,41 @@
+{
+  "id": 6939,
+  "title": "TensorLBM共轭传热(CHT)验证阶梯：四重解析锚+界面连续+负控",
+  "summary": "建立TensorLBM CHT验证阶梯，覆盖复合壁热阻(C1<3%)、erf热渗透(C2<2%)、Graetz-Nusselt(C3<5%)、Churchill-Chu(C4<10%)、界面温度连续(C5)、界面热流连续(C6)、负控等温(C7)共7类判据，25项pytest全部通过。",
+  "scenario_key": "IN45-N04",
+  "mission_id": 5693,
+  "stage": null,
+  "tags": [
+    "CHT",
+    "conjugate_heat_transfer",
+    "validation",
+    "TensorLBM",
+    "thermal",
+    "analytical_anchor"
+  ],
+  "figures": [
+    {
+      "name": "composite_wall",
+      "caption": "复合壁稳态导热温度分布：解析解(串联热阻) vs 数值解(Thomas算法)"
+    },
+    {
+      "name": "erf_penetration",
+      "caption": "半无限大固体瞬态热渗透：erf解析解 vs 有限差分数值解"
+    },
+    {
+      "name": "graetz_nusselt",
+      "caption": "Graetz问题Nu数随无量纲长度变化：入口段→充分发展段"
+    },
+    {
+      "name": "churchill_chu",
+      "caption": "Churchill-Chu竖板自然对流关联式：Nu-Ra关系(Pr=0.71)"
+    },
+    {
+      "name": "interface_continuity",
+      "caption": "流固界面温度连续性：耦合前后温度分布对比"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-07T15:24:02.472906+00:00"
+}

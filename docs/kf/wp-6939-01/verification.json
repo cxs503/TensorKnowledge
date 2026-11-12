@@ -1,0 +1,60 @@
+{
+  "package_id": "wp-6939-01",
+  "report_id": "6939",
+  "generated_at": "2026-11-12T01:31:41.969537+00:00",
+  "checks": [
+    {
+      "acceptance_item": "valid_json",
+      "status": "pass",
+      "detail": "asset_manifest.json parses as JSON (15836 bytes)"
+    },
+    {
+      "acceptance_item": "schema_pass",
+      "status": "pass",
+      "detail": "asset_manifest validates against docs/kf/wp-6939-01/asset_manifest.v1.schema.json"
+    },
+    {
+      "acceptance_item": "schema_pass_envelope",
+      "status": "pass",
+      "detail": "kf_result.json validates against schemas/kf_result.v1.schema.json"
+    },
+    {
+      "acceptance_item": "source_hash_matches",
+      "status": "pass",
+      "detail": "recomputed fixture sha256=8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246 chars=2002 vs manifest 8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246 / contract 8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246"
+    },
+    {
+      "acceptance_item": "source_locator_resolvable",
+      "status": "pass",
+      "detail": "all 10 locators re-resolved against the frozen source"
+    },
+    {
+      "acceptance_item": "artifact_probe_recorded",
+      "status": "pass",
+      "detail": "probe: False; per-figure statuses {'composite_wall': 'http_404', 'erf_penetration': 'http_404', 'graetz_nusselt': 'http_404', 'churchill_chu': 'http_404', 'interface_continuity': 'http_404'}"
+    },
+    {
+      "acceptance_item": "no_duplicate_ids",
+      "status": "pass",
+      "detail": "asset_id list ['A01', 'A02', 'A03', 'A04', 'A05', 'A06', 'A07', 'A08', 'A09', 'A10']"
+    },
+    {
+      "acceptance_item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "status": "pass",
+      "detail": "claims=0 (empty is legal for task_type=01; rationale recorded in claims_rationale); no claim marked verified"
+    },
+    {
+      "acceptance_item": "no_verified_marks",
+      "status": "pass",
+      "detail": "no 'verified' field/value emitted anywhere in the deliverables"
+    },
+    {
+      "acceptance_item": "no_foreign_report_ids",
+      "status": "pass",
+      "detail": "manifest references report_id=6939 only"
+    }
+  ],
+  "passed": 10,
+  "failed": 0,
+  "verdict": "pass"
+}
