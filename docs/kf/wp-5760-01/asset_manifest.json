@@ -1,0 +1,1447 @@
+{
+  "schema": "asset_manifest.v1",
+  "schema_ref": "docs/kf/wp-5760-01/asset_manifest.schema.json",
+  "package_id": "wp-5760-01",
+  "task_type": "01-asset-registration",
+  "report_id": "5760",
+  "generator": "scripts/kf/build_asset_manifest_5760.py",
+  "generated_at": "2026-11-12T01:24:06.146867+00:00",
+  "source": {
+    "uri": "tensor://reports/5760",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "95a6ffec44f492fe4f7f39f8d6bb989d845f6a781cd5749197177b6c05308bfe",
+    "hashed_bytes": "markdown encoded as utf-8",
+    "chars": 6808,
+    "bytes_utf8": 10847,
+    "title": "IN20-R5 停摆自检自愈：从 2026-11-07 停摆时间线到会话无关的 daemon 级机制替身",
+    "scenario_key": "IN20-R5",
+    "mission_id": 5055,
+    "report_status": "published",
+    "report_created_at": "2026-11-07T03:38:57.543655+00:00",
+    "platform_figures": [
+      {
+        "name": "fig_stall_timeline.png",
+        "caption": "2026-11-07 停摆回放：上=脉搏老化与 30 min 门（R3 fire 01:23）；下=idle/online 与在线/忙碌/可派节点（R1 fire 01:10）；红色阴影为实测断档 147.55 min"
+      }
+    ],
+    "platform_tags": [
+      "IN20-R5",
+      "stall-detector",
+      "observability",
+      "mechanism",
+      "TensorPlatform",
+      "daemon"
+    ]
+  },
+  "counts": {
+    "assets": 52,
+    "by_class": {
+      "source_document": 1,
+      "section": 11,
+      "table": 7,
+      "figure_reference": 1,
+      "figure_metadata": 1,
+      "file_reference": 20,
+      "artifact_directory_reference": 5,
+      "bare_filename_reference": 5,
+      "repro_command_block": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 20,
+      "referenced_unresolved": 31,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 20,
+    "referenced_unresolved": 31,
+    "declared_absent": 1,
+    "distinct_referenced_paths": 19
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "source_document",
+      "label": "report 5760 markdown (source_field=markdown, 6808 chars / 10847 bytes utf-8)",
+      "in_report_section": "(document head)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 6808,
+        "start_line": 1,
+        "end_line": 186,
+        "quote": "# IN20-R5 · 停摆自检自愈（stall detector，daemon 级机制替身）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(markdown.encode('utf-8')) == contract source_hash",
+        "result": "resolved"
+      },
+      "note": "The registered asset itself. quote pinned to the H1 title line; method=document covers the whole charset span 0..6808.",
+      "sha256": "95a6ffec44f492fe4f7f39f8d6bb989d845f6a781cd5749197177b6c05308bfe",
+      "chars": 6808,
+      "bytes_utf8": 10847
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "section",
+      "label": "section heading ## ① 案例介绍（问题 / 数据 / 参数）",
+      "in_report_section": "① 案例介绍（问题 / 数据 / 参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 308,
+        "end_char": 331,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "## ① 案例介绍（问题 / 数据 / 参数）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 9 onward)."
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "section",
+      "label": "section heading ## ② 怎么做的（方法 / 工具链 / 关键设置）",
+      "in_report_section": "② 怎么做的（方法 / 工具链 / 关键设置）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1098,
+        "end_char": 1124,
+        "start_line": 33,
+        "end_line": 33,
+        "quote": "## ② 怎么做的（方法 / 工具链 / 关键设置）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 33 onward)."
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "section",
+      "label": "section heading ## ③ 计算结果（数字表）",
+      "in_report_section": "③ 计算结果（数字表）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2395,
+        "end_char": 2409,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "## ③ 计算结果（数字表）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 57 onward)."
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "section",
+      "label": "section heading ### 3.1 阳性回放：历史停摆必须报警并触发",
+      "in_report_section": "③ 计算结果（数字表）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2411,
+        "end_char": 2435,
+        "start_line": 59,
+        "end_line": 59,
+        "quote": "### 3.1 阳性回放：历史停摆必须报警并触发",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 59 onward)."
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "section",
+      "label": "section heading ### 3.2 检出延迟（本交付的核心精度量）",
+      "in_report_section": "③ 计算结果（数字表）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2870,
+        "end_char": 2893,
+        "start_line": 71,
+        "end_line": 71,
+        "quote": "### 3.2 检出延迟（本交付的核心精度量）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 71 onward)."
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "section",
+      "label": "section heading ### 3.3 阴性控制",
+      "in_report_section": "③ 计算结果（数字表）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3265,
+        "end_char": 3277,
+        "start_line": 86,
+        "end_line": 86,
+        "quote": "### 3.3 阴性控制",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 86 onward)."
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "section",
+      "label": "section heading ### 3.4 审计链与判据数字",
+      "in_report_section": "③ 计算结果（数字表）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3888,
+        "end_char": 3904,
+        "start_line": 112,
+        "end_line": 112,
+        "quote": "### 3.4 审计链与判据数字",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 112 onward)."
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "section",
+      "label": "section heading ## ④ 结果图说明",
+      "in_report_section": "④ 结果图说明",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4233,
+        "end_char": 4243,
+        "start_line": 126,
+        "end_line": 126,
+        "quote": "## ④ 结果图说明",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 126 onward)."
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "section",
+      "label": "section heading ## ⑤ 注意点（坑 / 局限 / 适用范围）",
+      "in_report_section": "⑤ 注意点（坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4398,
+        "end_char": 4421,
+        "start_line": 132,
+        "end_line": 132,
+        "quote": "## ⑤ 注意点（坑 / 局限 / 适用范围）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 132 onward)."
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "section",
+      "label": "section heading ## ⑥ 误差判定（对照基准逐项）",
+      "in_report_section": "⑥ 误差判定（对照基准逐项）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5250,
+        "end_char": 5267,
+        "start_line": 152,
+        "end_line": 152,
+        "quote": "## ⑥ 误差判定（对照基准逐项）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 152 onward)."
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "section",
+      "label": "section heading ## 附：产物与复现命令",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5728,
+        "end_char": 5740,
+        "start_line": 165,
+        "end_line": 165,
+        "quote": "## 附：产物与复现命令",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; the body extent runs to the next heading of equal or higher level (locator line 165 onward)."
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "table",
+      "label": "markdown table: 项 | 值",
+      "in_report_section": "① 案例介绍（问题 / 数据 / 参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 536,
+        "end_char": 941,
+        "start_line": 17,
+        "end_line": 26,
+        "quote": "| 项 | 值 |\n|---|---|\n| 回归样例 | 2026-11-07T00:35:00+00:00 → 2026-11-07T03:30:00+00:00（176 个分钟样本） |\n| 实测断档 | 2026-11-07T00:52:35 → 2026-11-07T03:20:08（147.55 min） |\n| 断档内证据等级 | WITHHELD（缺口内无任何观测行） |\n| 规则 1 断粮 | pending=0 且 queued≤0 且 idle≥8 且 idle/online≥0.5，持续 900 s |\n| 规则 2 舰队心跳丢失 | 失联比≥0.5 且席位≥5，持续 300 s |\n| 规则 3 脉搏停滞 | `saturation_pulse.max(ts)` 老化 ≥1800 s |\n| 冷却 | 1800 s（同一事件不重复轰击） |\n| 心跳新鲜窗 | 300 s |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote (header row .. last data row)",
+        "result": "resolved"
+      },
+      "note": "8 data rows, 2 columns (lines 17-26).",
+      "columns": [
+        "项",
+        "值"
+      ],
+      "rows": 8
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "table",
+      "label": "markdown table: 规则 | fire？ | 首次 fire | 动作",
+      "in_report_section": "3.1 阳性回放：历史停摆必须报警并触发",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2437,
+        "end_char": 2694,
+        "start_line": 61,
+        "end_line": 65,
+        "quote": "| 规则 | fire？ | 首次 fire | 动作 | 动作回执 |\n|---|---|---|---|---|\n| R1 断粮 | True | 2026-11-07T01:10:00+00:00 | `refill` | `already_running` |\n| R2 舰队心跳丢失 | False | — | — | 本案例应沉默（负控） |\n| R3 脉搏停滞 | True | 2026-11-07T01:23:00+00:00 | `selfproof` | `beacon_written` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote (header row .. last data row)",
+        "result": "resolved"
+      },
+      "note": "3 data rows, 5 columns (lines 61-65).",
+      "columns": [
+        "规则",
+        "fire？",
+        "首次 fire",
+        "动作",
+        "动作回执"
+      ],
+      "rows": 3
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "table",
+      "label": "markdown table: 量 | 值",
+      "in_report_section": "3.2 检出延迟（本交付的核心精度量）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2895,
+        "end_char": 3204,
+        "start_line": 73,
+        "end_line": 81,
+        "quote": "| 量 | 值 |\n|---|---|\n| 断粮条件首次成立 | 2026-11-07T00:55:00+00:00 |\n| R1 fire | 2026-11-07T01:10:00+00:00（持续门 900 s） |\n| R1 检出延迟 | 0 s = 阈值 0.00% · 停摆开始后 1045 s |\n| R3 老化门到达 | 2026-11-07T01:22:35+00:00（老化 1800 s） |\n| R3 fire | 2026-11-07T01:23:00+00:00 |\n| R3 检出延迟 | 25 s = 阈值 1.39% · 停摆开始后 1825 s |\n| 采样分辨率 | 60 s |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote (header row .. last data row)",
+        "result": "resolved"
+      },
+      "note": "7 data rows, 2 columns (lines 73-81).",
+      "columns": [
+        "量",
+        "值"
+      ],
+      "rows": 7
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "table",
+      "label": "markdown table: 场景 | 结果",
+      "in_report_section": "3.3 阴性控制",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3279,
+        "end_char": 3522,
+        "start_line": 88,
+        "end_line": 93,
+        "quote": "| 场景 | 结果 |\n|---|---|\n| 健康态 2 h（120 样本，有活/心跳新鲜/脉搏新鲜） | fire=0，`observations=120`（「不告警」可数） |\n| 真实台账单次体检（2026-11-07T03:36:35+00:00） | alarm=False，fires=0 |\n| 10 min 断粮即恢复 | 只有 onset+recovered，无 fire |\n| 脉搏行缺失（观测盲区） | 只出 1 条 P2 `unknown`，不 fire |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote (header row .. last data row)",
+        "result": "resolved"
+      },
+      "note": "4 data rows, 2 columns (lines 88-93).",
+      "columns": [
+        "场景",
+        "结果"
+      ],
+      "rows": 4
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "table",
+      "label": "markdown table: 量 | 值",
+      "in_report_section": "3.3 阴性控制",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3571,
+        "end_char": 3753,
+        "start_line": 97,
+        "end_line": 106,
+        "quote": "| 量 | 值 |\n|---|---|\n| pending DAG 节点 | 0 |\n| 排队任务 queued | 6 |\n| 在线席位 online | 40 |\n| 空闲席位 idle | 24 |\n| idle/online | 0.6 |\n| 心跳新鲜/登记 | 40/53 |\n| 失联比 | 0.2453 |\n| 脉搏老化 (s) | 111.9 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote (header row .. last data row)",
+        "result": "resolved"
+      },
+      "note": "8 data rows, 2 columns (lines 97-106).",
+      "columns": [
+        "量",
+        "值"
+      ],
+      "rows": 8
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "table",
+      "label": "markdown table: 项 | 值",
+      "in_report_section": "3.4 审计链与判据数字",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3906,
+        "end_char": 4095,
+        "start_line": 114,
+        "end_line": 119,
+        "quote": "| 项 | 值 |\n|---|---|\n| replay 审计记录 | 213 条，链验证 ok=True |\n| live 审计记录 | 1 条，链验证 ok=True |\n| pytest | 16 passed（16 passed, 1 warning in 6.27s） |\n| 判据 JSON | `artifacts/in20_r5/criteria.json` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote (header row .. last data row)",
+        "result": "resolved"
+      },
+      "note": "4 data rows, 2 columns (lines 114-119).",
+      "columns": [
+        "项",
+        "值"
+      ],
+      "rows": 4
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "table",
+      "label": "markdown table: 关键量 | 基准 | 本实现 | 误差",
+      "in_report_section": "⑥ 误差判定（对照基准逐项）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5269,
+        "end_char": 5639,
+        "start_line": 154,
+        "end_line": 160,
+        "quote": "| 关键量 | 基准 | 本实现 | 误差 | 是否 <3% |\n|---|---|---|---|---|\n| R1 检出时刻 | 条件成立 + 900 s | 2026-11-07T01:10:00+00:00（延迟 0 s） | 0.00% | 是（≤1 采样周期） |\n| R3 检出时刻 | 脉搏末行 + 1800 s | 2026-11-07T01:23:00+00:00（延迟 25 s） | 1.39% | 是（≤1 采样周期） |\n| 断档时长 | 实测 147.55 min | 回放断言 147.55 min | 0（同源实测） | 是 |\n| 阴性误报率 | 0 次/2 h 健康态 | 0 次（120 样本） | 0 | 是 |\n| 审计链完整性 | 全链 hash 一致 | 213 条全通过 | 0 | 是 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote (header row .. last data row)",
+        "result": "resolved"
+      },
+      "note": "5 data rows, 5 columns (lines 154-160).",
+      "columns": [
+        "关键量",
+        "基准",
+        "本实现",
+        "误差",
+        "是否 <3%"
+      ],
+      "rows": 5
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "figure_reference",
+      "label": "inline image reference: fig_stall_timeline.png",
+      "in_report_section": "3.4 审计链与判据数字",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4097,
+        "end_char": 4137,
+        "start_line": 121,
+        "end_line": 121,
+        "quote": "![stop timeline](fig_stall_timeline.png)",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "image bytes present in report payload or delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "Figure is referenced by filename only; no PNG bytes travel with the markdown and no such file exists in this worktree, so the figure cannot be hashed from here.",
+      "path_reference": "fig_stall_timeline.png",
+      "alt_text": "stop timeline",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "figure_metadata",
+      "label": "platform figures[0] metadata: fig_stall_timeline.png",
+      "in_report_section": "3.4 审计链与判据数字",
+      "locator": {
+        "method": "report_field",
+        "field": "figures",
+        "index": 0,
+        "quote": "fig_stall_timeline.png",
+        "unique": false,
+        "start_char": 4114,
+        "end_char": 4136,
+        "start_line": 121,
+        "end_line": 121
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "figures[0].png_base64 present",
+        "result": "absent"
+      },
+      "note": "Platform stores name+caption only (no png_base64 payload), so zero bytes are claimable; caption kept verbatim in note: '2026-11-07 停摆回放：上=脉搏老化与 30 min 门（R3 fire 01:23）；下=idle/online 与在线/忙碌/可派节点（R1 fire 01:10）；红色阴影为实测断档 147.55 min'",
+      "caption": "2026-11-07 停摆回放：上=脉搏老化与 30 min 门（R3 fire 01:23）；下=idle/online 与在线/忙碌/可派节点（R1 fire 01:10）；红色阴影为实测断档 147.55 min"
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "file_reference",
+      "label": "tools/stall_detector_report.py",
+      "in_report_section": "(document head)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 86,
+        "end_char": 116,
+        "start_line": 3,
+        "end_line": 3,
+        "quote": "tools/stall_detector_report.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 3; resolution checked inside this delivery worktree only.",
+      "path_reference": "tools/stall_detector_report.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "file_reference",
+      "label": "artifacts/in20_r5/criteria.json",
+      "in_report_section": "(document head)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 129,
+        "end_char": 160,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "artifacts/in20_r5/criteria.json",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 4; resolution checked inside this delivery worktree only.",
+      "path_reference": "artifacts/in20_r5/criteria.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "file_reference",
+      "label": "deploy/taskplane/tp-stall-detector.service",
+      "in_report_section": "(document head)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 245,
+        "end_char": 287,
+        "start_line": 6,
+        "end_line": 6,
+        "quote": "deploy/taskplane/tp-stall-detector.service",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 6; resolution checked inside this delivery worktree only.",
+      "path_reference": "deploy/taskplane/tp-stall-detector.service",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "artifact_directory_reference",
+      "label": "tools/pulse",
+      "in_report_section": "② 怎么做的（方法 / 工具链 / 关键设置）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1355,
+        "end_char": 1366,
+        "start_line": 38,
+        "end_line": 38,
+        "quote": "tools/pulse",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Directory/glob reference at line 38; no file-level bytes are addressable from it.",
+      "path_reference": "tools/pulse",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A26",
+      "asset_class": "bare_filename_reference",
+      "label": "selfstarter.py",
+      "in_report_section": "② 怎么做的（方法 / 工具链 / 关键设置）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1621,
+        "end_char": 1635,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "selfstarter.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Filename without a directory at line 43: the enclosing path is not stated in the source, so it cannot be bound to a unique location (recorded unresolved rather than guessed).",
+      "path_reference": "selfstarter.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A27",
+      "asset_class": "bare_filename_reference",
+      "label": "beacon.json",
+      "in_report_section": "② 怎么做的（方法 / 工具链 / 关键设置）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1967,
+        "end_char": 1978,
+        "start_line": 48,
+        "end_line": 48,
+        "quote": "beacon.json",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Filename without a directory at line 48: the enclosing path is not stated in the source, so it cannot be bound to a unique location (recorded unresolved rather than guessed).",
+      "path_reference": "beacon.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A28",
+      "asset_class": "file_reference",
+      "label": "tests/fixtures/stall_20261107_0052_0318.json",
+      "in_report_section": "② 怎么做的（方法 / 工具链 / 关键设置）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2232,
+        "end_char": 2276,
+        "start_line": 53,
+        "end_line": 53,
+        "quote": "tests/fixtures/stall_20261107_0052_0318.json",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 53; resolution checked inside this delivery worktree only.",
+      "path_reference": "tests/fixtures/stall_20261107_0052_0318.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A29",
+      "asset_class": "file_reference",
+      "label": "tools/stall_fixture_20261107.py",
+      "in_report_section": "② 怎么做的（方法 / 工具链 / 关键设置）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2284,
+        "end_char": 2315,
+        "start_line": 54,
+        "end_line": 54,
+        "quote": "tools/stall_fixture_20261107.py",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 54; resolution checked inside this delivery worktree only.",
+      "path_reference": "tools/stall_fixture_20261107.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A30",
+      "asset_class": "file_reference",
+      "label": "artifacts/in20_r5/live/alerts.json",
+      "in_report_section": "3.3 阴性控制",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3532,
+        "end_char": 3566,
+        "start_line": 95,
+        "end_line": 95,
+        "quote": "artifacts/in20_r5/live/alerts.json",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 95; resolution checked inside this delivery worktree only.",
+      "path_reference": "artifacts/in20_r5/live/alerts.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A31",
+      "asset_class": "file_reference",
+      "label": "artifacts/in20_r5/criteria.json",
+      "in_report_section": "3.4 审计链与判据数字",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4061,
+        "end_char": 4092,
+        "start_line": 119,
+        "end_line": 119,
+        "quote": "artifacts/in20_r5/criteria.json",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 119; resolution checked inside this delivery worktree only.",
+      "path_reference": "artifacts/in20_r5/criteria.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A32",
+      "asset_class": "bare_filename_reference",
+      "label": "fig_stall_timeline.png",
+      "in_report_section": "④ 结果图说明",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4253,
+        "end_char": 4275,
+        "start_line": 128,
+        "end_line": 128,
+        "quote": "fig_stall_timeline.png",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Filename without a directory at line 128: the enclosing path is not stated in the source, so it cannot be bound to a unique location (recorded unresolved rather than guessed). This is a textual re-citation of the figure already registered as figure_reference / figure_metadata.",
+      "path_reference": "fig_stall_timeline.png",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A33",
+      "asset_class": "bare_filename_reference",
+      "label": "alerts.json",
+      "in_report_section": "⑤ 注意点（坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5138,
+        "end_char": 5149,
+        "start_line": 149,
+        "end_line": 149,
+        "quote": "alerts.json",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Filename without a directory at line 149: the enclosing path is not stated in the source, so it cannot be bound to a unique location (recorded unresolved rather than guessed).",
+      "path_reference": "alerts.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A34",
+      "asset_class": "bare_filename_reference",
+      "label": "digest.md",
+      "in_report_section": "⑤ 注意点（坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5153,
+        "end_char": 5162,
+        "start_line": 149,
+        "end_line": 149,
+        "quote": "digest.md",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Filename without a directory at line 149: the enclosing path is not stated in the source, so it cannot be bound to a unique location (recorded unresolved rather than guessed).",
+      "path_reference": "digest.md",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A35",
+      "asset_class": "file_reference",
+      "label": "ops/taskplane/stall_detector.py",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5746,
+        "end_char": 5777,
+        "start_line": 168,
+        "end_line": 168,
+        "quote": "ops/taskplane/stall_detector.py",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 168; resolution checked inside this delivery worktree only.",
+      "path_reference": "ops/taskplane/stall_detector.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A36",
+      "asset_class": "file_reference",
+      "label": "tools/stall_fixture_20261107.py",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5821,
+        "end_char": 5852,
+        "start_line": 169,
+        "end_line": 169,
+        "quote": "tools/stall_fixture_20261107.py",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 169; resolution checked inside this delivery worktree only.",
+      "path_reference": "tools/stall_fixture_20261107.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A37",
+      "asset_class": "file_reference",
+      "label": "tests/fixtures/stall_20261107_0052_0318.json",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5895,
+        "end_char": 5939,
+        "start_line": 170,
+        "end_line": 170,
+        "quote": "tests/fixtures/stall_20261107_0052_0318.json",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 170; resolution checked inside this delivery worktree only.",
+      "path_reference": "tests/fixtures/stall_20261107_0052_0318.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A38",
+      "asset_class": "file_reference",
+      "label": "tests/test_stall_detector_in20_r5.py",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5959,
+        "end_char": 5995,
+        "start_line": 171,
+        "end_line": 171,
+        "quote": "tests/test_stall_detector_in20_r5.py",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 171; resolution checked inside this delivery worktree only.",
+      "path_reference": "tests/test_stall_detector_in20_r5.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A39",
+      "asset_class": "file_reference",
+      "label": "deploy/taskplane/tp-stall-detector.service",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6020,
+        "end_char": 6062,
+        "start_line": 172,
+        "end_line": 172,
+        "quote": "deploy/taskplane/tp-stall-detector.service",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 172; resolution checked inside this delivery worktree only.",
+      "path_reference": "deploy/taskplane/tp-stall-detector.service",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A40",
+      "asset_class": "artifact_directory_reference",
+      "label": "artifacts/in20_r5/{replay,live}/",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6096,
+        "end_char": 6128,
+        "start_line": 173,
+        "end_line": 173,
+        "quote": "artifacts/in20_r5/{replay,live}/",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Directory/glob reference at line 173; no file-level bytes are addressable from it.",
+      "path_reference": "artifacts/in20_r5/{replay,live}/",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A41",
+      "asset_class": "file_reference",
+      "label": "artifacts/in20_r5/criteria.json",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6179,
+        "end_char": 6210,
+        "start_line": 174,
+        "end_line": 174,
+        "quote": "artifacts/in20_r5/criteria.json",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 174; resolution checked inside this delivery worktree only.",
+      "path_reference": "artifacts/in20_r5/criteria.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A42",
+      "asset_class": "file_reference",
+      "label": "ops/taskplane/stall_detector.py",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6261,
+        "end_char": 6292,
+        "start_line": 178,
+        "end_line": 178,
+        "quote": "ops/taskplane/stall_detector.py",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 178; resolution checked inside this delivery worktree only.",
+      "path_reference": "ops/taskplane/stall_detector.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A43",
+      "asset_class": "file_reference",
+      "label": "tests/fixtures/stall_20261107_0052_0318.json",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6303,
+        "end_char": 6347,
+        "start_line": 178,
+        "end_line": 178,
+        "quote": "tests/fixtures/stall_20261107_0052_0318.json",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 178; resolution checked inside this delivery worktree only.",
+      "path_reference": "tests/fixtures/stall_20261107_0052_0318.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A44",
+      "asset_class": "artifact_directory_reference",
+      "label": "artifacts/in20_r5/replay",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6369,
+        "end_char": 6393,
+        "start_line": 179,
+        "end_line": 179,
+        "quote": "artifacts/in20_r5/replay",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Directory/glob reference at line 179; no file-level bytes are addressable from it.",
+      "path_reference": "artifacts/in20_r5/replay",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A45",
+      "asset_class": "file_reference",
+      "label": "ops/taskplane/stall_detector.py",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6440,
+        "end_char": 6471,
+        "start_line": 180,
+        "end_line": 180,
+        "quote": "ops/taskplane/stall_detector.py",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 180; resolution checked inside this delivery worktree only.",
+      "path_reference": "ops/taskplane/stall_detector.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A46",
+      "asset_class": "artifact_directory_reference",
+      "label": "artifacts/in20_r5/live",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6501,
+        "end_char": 6523,
+        "start_line": 181,
+        "end_line": 181,
+        "quote": "artifacts/in20_r5/live",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Directory/glob reference at line 181; no file-level bytes are addressable from it.",
+      "path_reference": "artifacts/in20_r5/live",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A47",
+      "asset_class": "file_reference",
+      "label": "tests/test_stall_detector_in20_r5.py",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6590,
+        "end_char": 6626,
+        "start_line": 182,
+        "end_line": 182,
+        "quote": "tests/test_stall_detector_in20_r5.py",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 182; resolution checked inside this delivery worktree only.",
+      "path_reference": "tests/test_stall_detector_in20_r5.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A48",
+      "asset_class": "file_reference",
+      "label": "ops/taskplane/stall_detector.py",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6638,
+        "end_char": 6669,
+        "start_line": 183,
+        "end_line": 183,
+        "quote": "ops/taskplane/stall_detector.py",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 183; resolution checked inside this delivery worktree only.",
+      "path_reference": "ops/taskplane/stall_detector.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A49",
+      "asset_class": "file_reference",
+      "label": "artifacts/in20_r5/live/beacon.json",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6685,
+        "end_char": 6719,
+        "start_line": 183,
+        "end_line": 183,
+        "quote": "artifacts/in20_r5/live/beacon.json",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 183; resolution checked inside this delivery worktree only.",
+      "path_reference": "artifacts/in20_r5/live/beacon.json",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A50",
+      "asset_class": "file_reference",
+      "label": "ops/taskplane/stall_detector.py",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6728,
+        "end_char": 6759,
+        "start_line": 184,
+        "end_line": 184,
+        "quote": "ops/taskplane/stall_detector.py",
+        "unique": false
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Path cited at line 184; resolution checked inside this delivery worktree only.",
+      "path_reference": "ops/taskplane/stall_detector.py",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A51",
+      "asset_class": "artifact_directory_reference",
+      "label": "runs/stall_detector",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6777,
+        "end_char": 6796,
+        "start_line": 184,
+        "end_line": 184,
+        "quote": "runs/stall_detector",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "target bytes resolvable from this package",
+        "result": "unresolved"
+      },
+      "note": "Directory/glob reference at line 184; no file-level bytes are addressable from it.",
+      "path_reference": "runs/stall_detector",
+      "local_resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree; the report's artifacts live in the producing repository (TensorPlatform), which is outside this work package's boundary"
+      }
+    },
+    {
+      "asset_id": "A52",
+      "asset_class": "repro_command_block",
+      "label": "fenced bash block: reproduction commands (lines 178-184)",
+      "in_report_section": "附：产物与复现命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6253,
+        "end_char": 6803,
+        "start_line": 178,
+        "end_line": 184,
+        "quote": "python3 ops/taskplane/stall_detector.py --fixture tests/fixtures/stall_20261107_0052_0318.json \\\n    --replay --out artifacts/in20_r5/replay --action-mode dry        # rc=2（有 P1）\npython3 ops/taskplane/stall_detector.py --from-db --once \\\n    --out artifacts/in20_r5/live --action-mode dry                   # rc=0（健康态）\npython3 -m pytest tests/test_stall_detector_in20_r5.py -q\npython3 ops/taskplane/stall_detector.py --check-beacon artifacts/in20_r5/live/beacon.json\npython3 ops/taskplane/stall_detector.py --rollback --out runs/stall_detector   # 回滚",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Upstream probe/verification commands quoted verbatim; NOT executed by this package (upstream artifacts are outside the boundary).",
+      "lang": "bash",
+      "body_lines": 7
+    }
+  ],
+  "claims": [],
+  "claims_note": "Contract notes allow an empty claims array for task_type 01-asset-registration (objective.classify_report_type=false, '不做抽取'); no claim was generated, so none can be overstated and none is marked verified.",
+  "integrity": {
+    "quote_uniqueness": {
+      "checked": 52,
+      "unique": 30,
+      "non_unique_assets": [
+        "A21",
+        "A23",
+        "A24",
+        "A27",
+        "A28",
+        "A29",
+        "A31",
+        "A32",
+        "A33",
+        "A35",
+        "A36",
+        "A37",
+        "A38",
+        "A39",
+        "A41",
+        "A42",
+        "A43",
+        "A45",
+        "A46",
+        "A47",
+        "A48",
+        "A50"
+      ]
+    },
+    "hash_recomputed_locally": "95a6ffec44f492fe4f7f39f8d6bb989d845f6a781cd5749197177b6c05308bfe",
+    "hash_matches_contract": true,
+    "no_duplicate_ids": true,
+    "char_span_exact": 50,
+    "char_span_assets": 50,
+    "identity_granularity": "Reference assets are occurrence-level: identity is (path, markdown offset), so one file cited twice yields two asset ids with their own spans; distinct_referenced_paths is the deduplicated view."
+  },
+  "artifact_endpoint_probe": {
+    "/tensor/reports/5760/artifacts": {
+      "status": "http_404"
+    },
+    "/tensor/reports/5760/attachments": {
+      "status": "http_404"
+    },
+    "/tensor/artifacts?report_id=5760": {
+      "status": "http_404"
+    }
+  },
+  "limitations": [
+    "Registration only: no extraction, no claim generation, no verified marks (verification is platform-gated).",
+    "Referenced paths are resolved strictly inside the TensorKnowledge delivery worktree; the report's artifacts/code belong to the producing repository (TensorPlatform) and stay unresolved by design.",
+    "No PNG bytes exist for fig_stall_timeline.png in the report payload (figures array carries name+caption only) and no such file exists in this worktree, so the figure is registered metadata-only.",
+    "SQL table / free-text names quoted in the report (campaign DAG node table, saturation_pulse, factory_resident_workers, thresholds) are data sources rather than byte-addressable attachments, so they are deliberately NOT registered as assets.",
+    "The bash reproduction block is registered as text, not executed: running it would touch upstream artifacts outside this work package's boundary.",
+    "Output location docs/kf/wp-5760-01/ because .gitignore drops artifacts/ and docs/ops/filter-audit.md records that the mission-push gate filters artifacts/**; outputs there would be silently lost."
+  ]
+}
