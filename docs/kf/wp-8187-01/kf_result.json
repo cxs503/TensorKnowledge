@@ -1,0 +1,473 @@
+{
+  "package_id": "wp-8187-01",
+  "task_type": "01-asset-registration",
+  "report_id": "8187",
+  "provenance": {
+    "source_hash": "sha256:123060fc65159890ea043d0ce52dc0d565538b3f73043be6da2b1e82ba220789",
+    "source_field": "markdown",
+    "producer": "agent/m15608",
+    "emitted_at": "2026-11-12T02:12:11.439762+00:00",
+    "notes": "Asset registration for report 8187 (P35-N2 wet-ice capillary-bridge cohesion, TensorDEM). Source hash recomputed from live API markdown and matches contract. 17 referenced artifacts located with verbatim char_span locators; claims=[] per contract (classify_report_type=false, no extraction). Nothing marked verified."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-8187-01",
+      "task_type": "01-asset-registration",
+      "report_id": "8187",
+      "source": {
+        "uri": "tensor://reports/8187",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "123060fc65159890ea043d0ce52dc0d565538b3f73043be6da2b1e82ba220789",
+        "chars": 9206,
+        "bytes_utf8": 14982,
+        "title": "P35-N2 湿冰颗粒团聚的毛细桥 cohesion 模型：解析锚 + 团聚体尺寸演化 + 冰阻力增强因子（TensorDEM）",
+        "scenario_key": "wet_ice_cohesion",
+        "platform_figures": [
+          {
+            "name": "fig1_capillary_bridge.png",
+            "caption": "图1 (a) 液桥力 F/(2πγR) 随 s/R：模型（实线，calibrated）、留出集精确 Young-Laplace 解（空心圆）、任务书种子闭式（红点划线，恒 ≤ 0，即无吸引）；(b) 峰值力 parity，留出集最大误差 0.32%。"
+          },
+          {
+            "name": "fig2_agglomeration_smoluchowski.png",
+            "caption": "图2 (a) 剪切流团聚体平均尺寸 <D>/D0：DEM 粒子模型 vs Smoluchowski 正交剪切核平均场，含 dt/2 与 N×2 两条收敛算例，后半程最大偏差 5.88%；(b) 三个时刻的团簇尺寸分布 n(D,t)。"
+          },
+          {
+            "name": "fig3_cohesion_cell.png",
+            "caption": "图3 (a) 2D 拉伸池墙牵引力时程：湿（有毛细桥，c = 0.6189）vs 干（γ = 0，c = −0.0）；(b) 实测内聚力 vs 平面投影微观参考（0.5460）与 virial/Rumpf 上界（0.8576）。"
+          },
+          {
+            "name": "fig4_enhancement_vs_size.png",
+            "caption": "图4 冰阻力增强因子 F_wet/F_dry 随颗粒半径（σ_n = 1 kPa）：毛细内聚只在 Bond 数 ≲ 1（R ≲ 2.9 mm）窗口显著；cm 级碎冰体只有百分之几。标出 DEM 2D 池值与 Timco-Weeks 关系分支。"
+          }
+        ],
+        "platform_tags": [
+          "TensorDEM",
+          "P35-N2",
+          "wet-ice",
+          "capillary-bridge",
+          "cohesion",
+          "Smoluchowski",
+          "agglomeration",
+          "ice-resistance",
+          "honest-FAIL"
+        ],
+        "contract_source_hash": "sha256:123060fc65159890ea043d0ce52dc0d565538b3f73043be6da2b1e82ba220789",
+        "hash_match": true,
+        "contract_chars": 9206,
+        "chars_match_contract": true,
+        "title_matches_contract": true,
+        "scenario_matches_contract": true,
+        "fetched_via": "GET /api/v1/tensor/reports/8187",
+        "record_fields": {
+          "id": 8187,
+          "mission_id": 6796,
+          "status": "published",
+          "created_at": "2026-11-08T09:16:27.307740+00:00"
+        },
+        "platform_figure_probes": {
+          "fig1_capillary_bridge.png": {
+            "http_status": 404,
+            "bytes": 29
+          },
+          "fig2_agglomeration_smoluchowski.png": {
+            "http_status": 404,
+            "bytes": 29
+          },
+          "fig3_cohesion_cell.png": {
+            "http_status": 404,
+            "bytes": 29
+          },
+          "fig4_enhancement_vs_size.png": {
+            "http_status": 404,
+            "bytes": 29
+          }
+        },
+        "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based"
+      },
+      "counts": {
+        "assets": 17,
+        "by_class": {
+          "capability": 1,
+          "source_code": 7,
+          "script": 2,
+          "data": 2,
+          "test": 1,
+          "figure": 4
+        },
+        "by_resolution": {
+          "resolved_in_source": 17
+        },
+        "resolved_in_source": 17,
+        "referenced_unresolved": 0,
+        "declared_absent": 0
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "capability",
+          "label": "新增能力标识（领域目录 4 模块 + 1 study + 1 figures）",
+          "in_report_section": "报告头（标题下元信息行）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 117,
+            "end_char": 143,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "tensordem.wet_ice_cohesion",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:tensordem.wet_ice_cohesion",
+            "result": "resolved"
+          },
+          "note": "Referenced in 报告头（标题下元信息行）; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "source_code",
+          "label": "毛细桥力律模块（任务书闭式/小液桥解析锚/DEM 级闭式）",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 887,
+            "end_char": 899,
+            "start_line": 27,
+            "end_line": 27,
+            "quote": "capillary.py",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:capillary.py",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "source_code",
+          "label": "精确轴对称 Young–Laplace 求解器（判定基准，零重力精确自由面）",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1611,
+            "end_char": 1660,
+            "start_line": 46,
+            "end_line": 46,
+            "quote": "tensordem.liquid_bridge.solve_axisymmetric_bridge",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:tensordem.liquid_bridge.solve_axisymmetric_bridge",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "source_code",
+          "label": "YL 求解器文件（自带一阶积分自洽检查）",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1673,
+            "end_char": 1689,
+            "start_line": 46,
+            "end_line": 46,
+            "quote": "liquid_bridge.py",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:liquid_bridge.py",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "script",
+          "label": "毛细桥参考表生成脚本（R/γ/n_steps 记入 meta，可一键重算）",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1893,
+            "end_char": 1935,
+            "start_line": 52,
+            "end_line": 52,
+            "quote": "scripts/gen_wet_ice_capillary_reference.py",
+            "unique": false
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:scripts/gen_wet_ice_capillary_reference.py",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 4 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "data",
+          "label": "毛细桥参考表 JSON（train/validate 行 + converged 标记）",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1945,
+            "end_char": 1996,
+            "start_line": 53,
+            "end_line": 53,
+            "quote": "artifacts/wet_ice_cohesion/capillary_reference.json",
+            "unique": false
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:artifacts/wet_ice_cohesion/capillary_reference.json",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 2 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "source_code",
+          "label": "团聚粒子级模型（仿射剪切 + Lees–Edwards 镜像 + 等价球合并）",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2059,
+            "end_char": 2073,
+            "start_line": 56,
+            "end_line": 56,
+            "quote": "aggregation.py",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:aggregation.py",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "source_code",
+          "label": "2D 拉伸池内聚力测量（行沉积+位置式压缩+顶墙上拉）",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2379,
+            "end_char": 2395,
+            "start_line": 65,
+            "end_line": 65,
+            "quote": "cohesion_cell.py",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:cohesion_cell.py",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "source_code",
+          "label": "冰阻力增强因子 F_enh 计算",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2400,
+            "end_char": 2417,
+            "start_line": 65,
+            "end_line": 65,
+            "quote": "ice_resistance.py",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:ice_resistance.py",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "script",
+          "label": "全判据 study 脚本（判据 → campaign.json + 4 张图）",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2803,
+            "end_char": 2836,
+            "start_line": 78,
+            "end_line": 78,
+            "quote": "scripts/wet_ice_cohesion_study.py",
+            "unique": false
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:scripts/wet_ice_cohesion_study.py",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 3 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "data",
+          "label": "全判据结果 JSON（含参考自洽最大偏差 1.22 %/1.39 % 汇总）",
+          "in_report_section": "7. 审计链",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8639,
+            "end_char": 8679,
+            "start_line": 218,
+            "end_line": 218,
+            "quote": "artifacts/wet_ice_cohesion/campaign.json",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:artifacts/wet_ice_cohesion/campaign.json",
+            "result": "resolved"
+          },
+          "note": "Referenced in 7. 审计链; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "test",
+          "label": "pytest 断言面（18 项断言，130 s）",
+          "in_report_section": "2. 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2878,
+            "end_char": 2908,
+            "start_line": 79,
+            "end_line": 79,
+            "quote": "tests/test_wet_ice_cohesion.py",
+            "unique": false
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:tests/test_wet_ice_cohesion.py",
+            "result": "resolved"
+          },
+          "note": "Referenced in 2. 怎么做的（方法 / 流程 / 工具链）; 3 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "figure",
+          "label": "图1 液桥力律 F/(2πγR) vs s/R + 峰值力 parity（留出集最大误差 0.32 %）",
+          "in_report_section": "4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5602,
+            "end_char": 5654,
+            "start_line": 151,
+            "end_line": 151,
+            "quote": "artifacts/wet_ice_cohesion/fig1_capillary_bridge.png",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:artifacts/wet_ice_cohesion/fig1_capillary_bridge.png",
+            "result": "resolved"
+          },
+          "note": "Referenced in 4. 结果图; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "figure",
+          "label": "图2 团聚体平均尺寸 ⟨D⟩/D0：DEM vs Smoluchowski + 团簇尺寸分布",
+          "in_report_section": "4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5762,
+            "end_char": 5824,
+            "start_line": 154,
+            "end_line": 154,
+            "quote": "artifacts/wet_ice_cohesion/fig2_agglomeration_smoluchowski.png",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:artifacts/wet_ice_cohesion/fig2_agglomeration_smoluchowski.png",
+            "result": "resolved"
+          },
+          "note": "Referenced in 4. 结果图; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "figure",
+          "label": "图3 拉伸池墙牵引力时程（湿 vs 干）+ 实测 c vs 参考/上界",
+          "in_report_section": "4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5896,
+            "end_char": 5945,
+            "start_line": 156,
+            "end_line": 156,
+            "quote": "artifacts/wet_ice_cohesion/fig3_cohesion_cell.png",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:artifacts/wet_ice_cohesion/fig3_cohesion_cell.png",
+            "result": "resolved"
+          },
+          "note": "Referenced in 4. 结果图; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "figure",
+          "label": "图4 增强因子 F_wet/F_dry 随颗粒半径（Bond 数 ≲1 窗口）",
+          "in_report_section": "4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6005,
+            "end_char": 6060,
+            "start_line": 158,
+            "end_line": 158,
+            "quote": "artifacts/wet_ice_cohesion/fig4_enhancement_vs_size.png",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:artifacts/wet_ice_cohesion/fig4_enhancement_vs_size.png",
+            "result": "resolved"
+          },
+          "note": "Referenced in 4. 结果图; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "source_code",
+          "label": "图生成入口 make_all（只读 campaign.json）",
+          "in_report_section": "7. 审计链",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8690,
+            "end_char": 8731,
+            "start_line": 219,
+            "end_line": 219,
+            "quote": "src/tensordem/wet_ice_cohesion/figures.py",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "substring_search:src/tensordem/wet_ice_cohesion/figures.py",
+            "result": "resolved"
+          },
+          "note": "Referenced in 7. 审计链; 1 occurrence(s) in report; file lives in TensorDEM (branch agent/m6796 per report header), not in this worktree; existence not asserted"
+        }
+      ],
+      "claims": [],
+      "integrity": {
+        "quote_uniqueness": "all_locators_verified",
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true
+      }
+    }
+  }
+}
