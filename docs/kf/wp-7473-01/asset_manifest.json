@@ -1,0 +1,1031 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-7473-01",
+  "task_type": "01-asset-registration",
+  "report_id": "7473",
+  "lane": "C",
+  "generated_at": "2026-11-12T01:28:44.404650+00:00",
+  "generator": "scripts/kf/build_asset_manifest_7473.py",
+  "source": {
+    "report_id": "7473",
+    "source_uri": "tensor://reports/7473",
+    "source_field": "markdown",
+    "source_hash": "sha256:c3b3d0954d289cf1f7849f83889e995c71c39bbc15122ddf9f823f5d698d0f6b",
+    "contract_source_hash": "sha256:c3b3d0954d289cf1f7849f83889e995c71c39bbc15122ddf9f823f5d698d0f6b",
+    "hash_algo": "sha256",
+    "hashed_bytes": "markdown encoded as utf-8",
+    "hash_match": true,
+    "chars": 5942,
+    "contract_chars": 5942,
+    "chars_match_contract": true,
+    "bytes_utf8": 8934,
+    "lines": 131,
+    "line_counting": "logical lines = markdown.split(chr(10)); 1-based",
+    "fetched_via": "GET /api/v1/tensor/reports/7473",
+    "record_fields": {
+      "title": "TensorLBM 湍流槽道求解器验证欠账清偿 R1：Guo 力项 TRT 分裂缺陷（战役驱动力仅 0.63%）修复 + 层流解析锚阶梯",
+      "scenario_key": "tensorlbm/turbulent-channel3d-verification-r1",
+      "mission_id": 6291,
+      "status": "published",
+      "created_at": "2026-11-07T20:38:12.737892+00:00",
+      "tags": [
+        "TensorLBM",
+        "verification-debt",
+        "turbulent-channel",
+        "TRT",
+        "Guo-forcing",
+        "analytic-anchor",
+        "negative-control"
+      ],
+      "contract_title": "TensorLBM 湍流槽道求解器验证欠账清偿 R1：Guo 力项 TRT 分裂缺陷（战役驱动力仅 0.63%）修复 + 层流解析锚阶梯",
+      "contract_scenario_key": "tensorlbm/turbulent-channel3d-verification-r1",
+      "title_matches_contract": true,
+      "scenario_matches_contract": true
+    }
+  },
+  "counts": {
+    "assets": 38,
+    "by_class": {
+      "source_document": 1,
+      "platform_figure_record": 2,
+      "source_code_reference": 3,
+      "reference": 12,
+      "probe_script_reference": 2,
+      "data_artifact_reference": 2,
+      "test_reference": 2,
+      "figure_reference": 4,
+      "literature_reference": 4,
+      "declared_absent_asset": 2,
+      "declared_open_defect": 1,
+      "in_source_table": 3
+    },
+    "by_resolution": {
+      "resolved_in_source": 4,
+      "referenced_unresolved": 32,
+      "declared_absent": 2
+    },
+    "resolved_in_source": 4,
+    "referenced_unresolved": 32,
+    "declared_absent": 2,
+    "distinct_referenced_paths": 14,
+    "claims": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "source_document",
+      "label": "report 7473 markdown（唯一源资产，5942 chars / 8934 bytes utf-8）",
+      "in_report_section": "document",
+      "locator": {
+        "scheme": "markdown_document",
+        "field": "markdown",
+        "start_char": 0,
+        "end_char": 5942,
+        "start_line": 1,
+        "end_line": 131,
+        "quote": "# D3Q19 TRT 湍流槽道求解器：解析验证阶梯与力项缺陷清偿（R1）",
+        "unique": true
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "check": "sha256 over markdown utf-8 bytes",
+        "result": "resolved",
+        "detail": {
+          "chars": 5942,
+          "bytes": 8934,
+          "sha256": "c3b3d0954d289cf1f7849f83889e995c71c39bbc15122ddf9f823f5d698d0f6b"
+        }
+      },
+      "note": "Hash recomputed locally from GET /tensor/reports/7473; contract source_hash compared in verify()."
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "platform_figure_record",
+      "label": "figures[0].name=fig1_force_source.png",
+      "in_report_section": "record.figures",
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 0,
+        "start_char": null,
+        "end_char": null,
+        "start_line": null,
+        "end_line": null,
+        "quote": "figures[0]=fig1_force_source.png | caption=Guo 力项动量源 vs TRT 分裂：trt_split 恒等于 a（≤0.06%），guo_sp 随 s+ 漂移并在 s+→2（战役工作点）趋于 0",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "GET /tensor/reports/7473/figures/fig1_force_source.png",
+        "result": "unresolved",
+        "detail": {
+          "path": "/tensor/reports/7473/figures/fig1_force_source.png",
+          "http_status": 404,
+          "bytes": 0,
+          "sha256": null
+        }
+      },
+      "note": "Metadata (name+caption) lives in the report record; bytes are not served (HTTP 404), so no figure hash is claimable by the figure endpoint."
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "platform_figure_record",
+      "label": "figures[1].name=fig2_laminar_twin.png",
+      "in_report_section": "record.figures",
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 1,
+        "start_char": null,
+        "end_char": null,
+        "start_line": null,
+        "end_line": null,
+        "quote": "figures[1]=fig2_laminar_twin.png | caption=层流孪生 vs 闭式 Poiseuille（左：halfway，L2 0.68%/max 0.94%；右：interpolated q=0.625，L2 2.46%/max 5.62%）",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "GET /tensor/reports/7473/figures/fig2_laminar_twin.png",
+        "result": "unresolved",
+        "detail": {
+          "path": "/tensor/reports/7473/figures/fig2_laminar_twin.png",
+          "http_status": 404,
+          "bytes": 0,
+          "sha256": null
+        }
+      },
+      "note": "Metadata (name+caption) lives in the report record; bytes are not served (HTTP 404), so no figure hash is claimable by the figure endpoint."
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "source_code_reference",
+      "label": "src/tensorlbm/turbulence/turbulent_channel3d.py",
+      "in_report_section": "preamble",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 3,
+        "start_char": 39,
+        "end_char": 125,
+        "quote": "> 对象：`src/tensorlbm/turbulence/turbulent_channel3d.py`（随 merge #891 合入 main 的 832 行模块，",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "src/tensorlbm/turbulence/turbulent_channel3d.py",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 3 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "reference",
+      "label": "src/tensorlbm/turbulence/",
+      "in_report_section": "preamble",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 3,
+        "start_char": 39,
+        "end_char": 125,
+        "quote": "> 对象：`src/tensorlbm/turbulence/turbulent_channel3d.py`（随 merge #891 合入 main 的 832 行模块，",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "src/tensorlbm/turbulence",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 3 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "reference",
+      "label": "benchmarks/pending/channel_turb_3d/",
+      "in_report_section": "preamble",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 4,
+        "start_char": 126,
+        "end_char": 209,
+        "quote": "> **合入时无任何 pytest 用例、无验证文档**，benchmark 仍停留在 `benchmarks/pending/channel_turb_3d/`）。",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "benchmarks/pending/channel_turb_3d",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 4 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "probe_script_reference",
+      "label": "artifacts/turbulent_channel3d_verification/run_probe.py",
+      "in_report_section": "preamble",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 6,
+        "start_char": 261,
+        "end_char": 332,
+        "quote": "> 所有数字由 `artifacts/turbulent_channel3d_verification/run_probe.py` 程序化生成",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "artifacts/turbulent_channel3d_verification/run_probe.py",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 6 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "reference",
+      "label": "artifacts/turbulent_channel3d_verification/",
+      "in_report_section": "preamble",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 6,
+        "start_char": 261,
+        "end_char": 332,
+        "quote": "> 所有数字由 `artifacts/turbulent_channel3d_verification/run_probe.py` 程序化生成",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "artifacts/turbulent_channel3d_verification",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 6 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "data_artifact_reference",
+      "label": "results.json",
+      "in_report_section": "preamble",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 7,
+        "start_char": 333,
+        "end_char": 365,
+        "quote": "> （`results.json` + 两张 png），无手抄。",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "path absent from this delivery worktree (TensorKnowledge); source repo outside package scope",
+        "result": "unresolved",
+        "detail": {
+          "path": "results.json",
+          "expected_owner_repo": "unknown"
+        }
+      },
+      "note": "Reference parsed from line 7 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "reference",
+      "label": "tests/",
+      "in_report_section": "2. 怎么做的",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 36,
+        "start_char": 1330,
+        "end_char": 1395,
+        "quote": "1. 先读模块，确认无任何测试引用（`grep -rn turbulent_channel3d tests/` 只命中无关文件）。",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "tests",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 36 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "test_reference",
+      "label": "tests/test_turbulent_channel3d.py",
+      "in_report_section": "2. 怎么做的",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 41,
+        "start_char": 1594,
+        "end_char": 1664,
+        "quote": "5. 用闭式解锚 + 负控写成 18 条 pytest（`tests/test_turbulent_channel3d.py`，33 s）。",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "tests/test_turbulent_channel3d.py",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 41 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "reference",
+      "label": "tests/",
+      "in_report_section": "2. 怎么做的",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 41,
+        "start_char": 1594,
+        "end_char": 1664,
+        "quote": "5. 用闭式解锚 + 负控写成 18 条 pytest（`tests/test_turbulent_channel3d.py`，33 s）。",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "tests",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 41 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "figure_reference",
+      "label": "artifacts/.../fig1_force_source.png",
+      "in_report_section": "3. 计算结果",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 45,
+        "start_char": 1678,
+        "end_char": 1736,
+        "quote": "**表 1 — 力项动量源（锚 A，`artifacts/.../fig1_force_source.png`）**",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "artifacts/.../fig1_force_source.png",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 45 (backticked); resolution checked against this worktree only. Path is abbreviated in the report (uses '...'), so it is not a literal file path."
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "reference",
+      "label": "artifacts/.../",
+      "in_report_section": "3. 计算结果",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 45,
+        "start_char": 1678,
+        "end_char": 1736,
+        "quote": "**表 1 — 力项动量源（锚 A，`artifacts/.../fig1_force_source.png`）**",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "artifacts/...",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 45 (backticked_dir); resolution checked against this worktree only. Path is abbreviated in the report (uses '...'), so it is not a literal file path."
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "figure_reference",
+      "label": "fig2_laminar_twin.png",
+      "in_report_section": "3. 计算结果",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 59,
+        "start_char": 2276,
+        "end_char": 2330,
+        "quote": "**表 2 — 剪切模态黏性与层流孪生（锚 B / C，`fig2_laminar_twin.png`）**",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "path absent from this delivery worktree (TensorKnowledge); source repo outside package scope",
+        "result": "unresolved",
+        "detail": {
+          "path": "fig2_laminar_twin.png",
+          "expected_owner_repo": "unknown"
+        }
+      },
+      "note": "Reference parsed from line 59 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "reference",
+      "label": "src/",
+      "in_report_section": "4. 修了什么（`src/`，最小改动）",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 80,
+        "start_char": 3229,
+        "end_char": 3252,
+        "quote": "## 4. 修了什么（`src/`，最小改动）",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "src",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 80 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "reference",
+      "label": "benchmarks/pending/channel_turb_3d/",
+      "in_report_section": "5. 注意点 / 局限（含未完成项，不粉饰）",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 105,
+        "start_char": 4643,
+        "end_char": 4714,
+        "quote": "   `u+ = log(y+)/κ + B`）需要 `benchmarks/pending/channel_turb_3d/` 的完整战役，",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "benchmarks/pending/channel_turb_3d",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 105 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "source_code_reference",
+      "label": "src/tensorlbm/turbulence/turbulent_channel3d.py",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 128,
+        "start_char": 5505,
+        "end_char": 5585,
+        "quote": "* 代码：`src/tensorlbm/turbulence/turbulent_channel3d.py`（默认值 + `validate` + 孪生重标定）",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "src/tensorlbm/turbulence/turbulent_channel3d.py",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 128 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "reference",
+      "label": "src/tensorlbm/turbulence/",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 128,
+        "start_char": 5505,
+        "end_char": 5585,
+        "quote": "* 代码：`src/tensorlbm/turbulence/turbulent_channel3d.py`（默认值 + `validate` + 孪生重标定）",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "src/tensorlbm/turbulence",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 128 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "test_reference",
+      "label": "tests/test_turbulent_channel3d.py",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 129,
+        "start_char": 5586,
+        "end_char": 5716,
+        "quote": "* 测试：`tests/test_turbulent_channel3d.py`（18 条，33 s，`PYTHONPATH=src OMP_NUM_THREADS=1 pytest -q tests/test_turbulent_channel3d.py`）",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "tests/test_turbulent_channel3d.py",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 129 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "reference",
+      "label": "tests/",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 129,
+        "start_char": 5586,
+        "end_char": 5716,
+        "quote": "* 测试：`tests/test_turbulent_channel3d.py`（18 条，33 s，`PYTHONPATH=src OMP_NUM_THREADS=1 pytest -q tests/test_turbulent_channel3d.py`）",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "tests",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 129 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "source_code_reference",
+      "label": "run_probe.py",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 130,
+        "start_char": 5717,
+        "end_char": 5838,
+        "quote": "* 工件：`artifacts/turbulent_channel3d_verification/{run_probe.py,results.json,fig1_force_source.png,fig2_laminar_twin.png}`",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "path absent from this delivery worktree (TensorKnowledge); source repo outside package scope",
+        "result": "unresolved",
+        "detail": {
+          "path": "run_probe.py",
+          "expected_owner_repo": "unknown"
+        }
+      },
+      "note": "Reference parsed from line 130 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "data_artifact_reference",
+      "label": "results.json",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 130,
+        "start_char": 5717,
+        "end_char": 5838,
+        "quote": "* 工件：`artifacts/turbulent_channel3d_verification/{run_probe.py,results.json,fig1_force_source.png,fig2_laminar_twin.png}`",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "path absent from this delivery worktree (TensorKnowledge); source repo outside package scope",
+        "result": "unresolved",
+        "detail": {
+          "path": "results.json",
+          "expected_owner_repo": "unknown"
+        }
+      },
+      "note": "Reference parsed from line 130 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "figure_reference",
+      "label": "fig1_force_source.png",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 130,
+        "start_char": 5717,
+        "end_char": 5838,
+        "quote": "* 工件：`artifacts/turbulent_channel3d_verification/{run_probe.py,results.json,fig1_force_source.png,fig2_laminar_twin.png}`",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "path absent from this delivery worktree (TensorKnowledge); source repo outside package scope",
+        "result": "unresolved",
+        "detail": {
+          "path": "fig1_force_source.png",
+          "expected_owner_repo": "unknown"
+        }
+      },
+      "note": "Reference parsed from line 130 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "figure_reference",
+      "label": "fig2_laminar_twin.png",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 130,
+        "start_char": 5717,
+        "end_char": 5838,
+        "quote": "* 工件：`artifacts/turbulent_channel3d_verification/{run_probe.py,results.json,fig1_force_source.png,fig2_laminar_twin.png}`",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "path absent from this delivery worktree (TensorKnowledge); source repo outside package scope",
+        "result": "unresolved",
+        "detail": {
+          "path": "fig2_laminar_twin.png",
+          "expected_owner_repo": "unknown"
+        }
+      },
+      "note": "Reference parsed from line 130 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A26",
+      "asset_class": "reference",
+      "label": "artifacts/turbulent_channel3d_verification/",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 130,
+        "start_char": 5717,
+        "end_char": 5838,
+        "quote": "* 工件：`artifacts/turbulent_channel3d_verification/{run_probe.py,results.json,fig1_force_source.png,fig2_laminar_twin.png}`",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "artifacts/turbulent_channel3d_verification",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 130 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A27",
+      "asset_class": "probe_script_reference",
+      "label": "artifacts/turbulent_channel3d_verification/run_probe.py",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 131,
+        "start_char": 5839,
+        "end_char": 5942,
+        "quote": "* 复核：`PYTHONPATH=src OMP_NUM_THREADS=1 python3 artifacts/turbulent_channel3d_verification/run_probe.py`",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "artifacts/turbulent_channel3d_verification/run_probe.py",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 131 (backticked); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A28",
+      "asset_class": "reference",
+      "label": "artifacts/turbulent_channel3d_verification/",
+      "in_report_section": "7. 证据指针",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 131,
+        "start_char": 5839,
+        "end_char": 5942,
+        "quote": "* 复核：`PYTHONPATH=src OMP_NUM_THREADS=1 python3 artifacts/turbulent_channel3d_verification/run_probe.py`",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "owner repo is TensorLBM; the path is outside this delivery worktree and is NOT matched against TensorKnowledge's same-named directories",
+        "result": "unresolved",
+        "detail": {
+          "path": "artifacts/turbulent_channel3d_verification",
+          "expected_owner_repo": "TensorLBM"
+        }
+      },
+      "note": "Reference parsed from line 131 (backticked_dir); resolution checked against this worktree only."
+    },
+    {
+      "asset_id": "A29",
+      "asset_class": "literature_reference",
+      "label": "Guo 1993 力项格式（体力注入）",
+      "in_report_section": "1. 案例介绍",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 12,
+        "start_char": 436,
+        "end_char": 482,
+        "quote": "驱动力用常量体力 `a`（Guo 1993）表示，因此定常流的流向动量平衡是**精确**的：",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "external publication cited by name; no DOI/URL/payload in report or reachable from this worktree",
+        "result": "unresolved",
+        "detail": {
+          "search_key": "Guo 1993",
+          "external": true
+        }
+      },
+      "note": "Locator resolves to the verbatim source line; the asset itself is not present in the package scope."
+    },
+    {
+      "asset_id": "A30",
+      "asset_class": "literature_reference",
+      "label": "Ladd 动量交换壁面力路线",
+      "in_report_section": "1. 案例介绍",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 18,
+        "start_char": 580,
+        "end_char": 644,
+        "quote": "模块自称内部有三条互相独立的摩擦速度路线（`body_force` / `wall_exchange`(Ladd 动量交换) /",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "external publication cited by name; no DOI/URL/payload in report or reachable from this worktree",
+        "result": "unresolved",
+        "detail": {
+          "search_key": "Ladd 动量交换",
+          "external": true
+        }
+      },
+      "note": "Locator resolves to the verbatim source line; the asset itself is not present in the package scope."
+    },
+    {
+      "asset_id": "A31",
+      "asset_class": "literature_reference",
+      "label": "MKM DNS 壁面湍流基准（未做，见 §5-3）",
+      "in_report_section": "5. 注意点 / 局限（含未完成项，不粉饰）",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 104,
+        "start_char": 4581,
+        "end_char": 4642,
+        "quote": "3. 本单只验证**层流锚**。Re_tau=180/395 的壁面解析湍流（MKM DNS、Reichardt 复合律、",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "external publication cited by name; no DOI/URL/payload in report or reachable from this worktree",
+        "result": "unresolved",
+        "detail": {
+          "search_key": "MKM DNS",
+          "external": true
+        }
+      },
+      "note": "Locator resolves to the verbatim source line; the asset itself is not present in the package scope."
+    },
+    {
+      "asset_id": "A32",
+      "asset_class": "literature_reference",
+      "label": "Reichardt 复合律（未做，见 §5-3）",
+      "in_report_section": "5. 注意点 / 局限（含未完成项，不粉饰）",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 104,
+        "start_char": 4581,
+        "end_char": 4642,
+        "quote": "3. 本单只验证**层流锚**。Re_tau=180/395 的壁面解析湍流（MKM DNS、Reichardt 复合律、",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "external publication cited by name; no DOI/URL/payload in report or reachable from this worktree",
+        "result": "unresolved",
+        "detail": {
+          "search_key": "Reichardt 复合律",
+          "external": true
+        }
+      },
+      "note": "Locator resolves to the verbatim source line; the asset itself is not present in the package scope."
+    },
+    {
+      "asset_id": "A33",
+      "asset_class": "declared_absent_asset",
+      "label": "合入时缺失的 pytest 用例与验证文档（报告声明不存在）",
+      "in_report_section": "preamble",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 4,
+        "start_char": 126,
+        "end_char": 209,
+        "quote": "> **合入时无任何 pytest 用例、无验证文档**，benchmark 仍停留在 `benchmarks/pending/channel_turb_3d/`）。",
+        "unique": true
+      },
+      "resolution": {
+        "status": "declared_absent",
+        "check": "report states the asset does not exist (absence is the report's own claim, quoted verbatim)",
+        "result": "absent",
+        "detail": {
+          "search_key": "合入时无任何 pytest 用例"
+        }
+      },
+      "note": "Locator resolves to the verbatim source line; the asset itself is not present in the package scope."
+    },
+    {
+      "asset_id": "A34",
+      "asset_class": "declared_open_defect",
+      "label": "壁面动量交换（wall_exchange）聚合口径缺陷：报告声明本单未修",
+      "in_report_section": "5. 注意点 / 局限（含未完成项，不粉饰）",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 96,
+        "start_char": 4135,
+        "end_char": 4171,
+        "quote": "   而非每步公式。本单**未修**（超出最小改动范围），已固化为待办：",
+        "unique": true
+      },
+      "resolution": {
+        "status": "referenced_unresolved",
+        "check": "report itself declares this item unfixed; no artifact can exist yet (open item, quoted verbatim)",
+        "result": "unresolved",
+        "detail": {
+          "search_key": "本单**未修**",
+          "declared_open": true
+        }
+      },
+      "note": "Locator resolves to the verbatim source line; the asset itself is not present in the package scope."
+    },
+    {
+      "asset_id": "A35",
+      "asset_class": "declared_absent_asset",
+      "label": "Re_tau=180/395 壁面解析湍流验证：报告声明本单未做",
+      "in_report_section": "5. 注意点 / 局限（含未完成项，不粉饰）",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 106,
+        "start_char": 4715,
+        "end_char": 4765,
+        "quote": "   在 load15 > 100 的共享 CPU 上不可行，**未做**（本单只保证战役的前置门：",
+        "unique": true
+      },
+      "resolution": {
+        "status": "declared_absent",
+        "check": "report states the asset does not exist (absence is the report's own claim, quoted verbatim)",
+        "result": "absent",
+        "detail": {
+          "search_key": "**未做**（本单只保证"
+        }
+      },
+      "note": "Locator resolves to the verbatim source line; the asset itself is not present in the package scope."
+    },
+    {
+      "asset_id": "A36",
+      "asset_class": "in_source_table",
+      "label": "表 1 力项动量源（锚 A）",
+      "in_report_section": "3. 计算结果",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 45,
+        "start_char": 1678,
+        "end_char": 1736,
+        "quote": "**表 1 — 力项动量源（锚 A，`artifacts/.../fig1_force_source.png`）**",
+        "unique": true
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "check": "table header line located verbatim in markdown; rows = contiguous '|' block after it",
+        "result": "resolved",
+        "detail": {
+          "header_line": 45
+        }
+      },
+      "note": "Registered as an in-source data asset; no cell values are extracted or normalized here."
+    },
+    {
+      "asset_id": "A37",
+      "asset_class": "in_source_table",
+      "label": "表 2 剪切模态黏性与层流孪生（锚 B/C）",
+      "in_report_section": "3. 计算结果",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 59,
+        "start_char": 2276,
+        "end_char": 2330,
+        "quote": "**表 2 — 剪切模态黏性与层流孪生（锚 B / C，`fig2_laminar_twin.png`）**",
+        "unique": true
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "check": "table header line located verbatim in markdown; rows = contiguous '|' block after it",
+        "result": "resolved",
+        "detail": {
+          "header_line": 59
+        }
+      },
+      "note": "Registered as an in-source data asset; no cell values are extracted or normalized here."
+    },
+    {
+      "asset_id": "A38",
+      "asset_class": "in_source_table",
+      "label": "表 3 负控（锚必须能失败）",
+      "in_report_section": "3. 计算结果",
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 72,
+        "start_char": 2907,
+        "end_char": 2927,
+        "quote": "**表 3 — 负控（锚必须能失败）**",
+        "unique": true
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "check": "table header line located verbatim in markdown; rows = contiguous '|' block after it",
+        "result": "resolved",
+        "detail": {
+          "header_line": 72
+        }
+      },
+      "note": "Registered as an in-source data asset; no cell values are extracted or normalized here."
+    }
+  ],
+  "claims": [],
+  "claims_note": "objective.classify_report_type=false and no extraction was requested; the contract notes explicitly allow an empty claims array. Nothing is marked verified — verification is computed by the platform gate.",
+  "resolution_vocabulary": {
+    "resolved_in_source": "located and (for files) hashed inside the source markdown / this delivery worktree / the report record",
+    "referenced_unresolved": "named in the report, target bytes not reachable from this work package",
+    "declared_absent": "the report itself states the asset does not exist"
+  },
+  "identity_granularity": "Path references are occurrence-level: identity = (path, markdown line), so a path cited on two lines yields two assets with their own quotes. counts.distinct_referenced_paths is the dedup view.",
+  "platform_probes": {
+    "figures": [
+      {
+        "path": "/tensor/reports/7473/figures/fig1_force_source.png",
+        "http_status": 404,
+        "bytes": 0,
+        "sha256": null
+      },
+      {
+        "path": "/tensor/reports/7473/figures/fig2_laminar_twin.png",
+        "http_status": 404,
+        "bytes": 0,
+        "sha256": null
+      }
+    ],
+    "artifacts_listing": {
+      "path": "/tensor/reports/7473/artifacts",
+      "http_status": 404,
+      "bytes": 0,
+      "sha256": null
+    }
+  },
+  "limitations": [
+    "Registration only: no extraction, no claim generation, no 'verified' marks.",
+    "Referenced TensorLBM paths (src/, tests/, artifacts/, benchmarks/) are outside this delivery worktree, so they are registered unresolved rather than assumed to exist.",
+    "Platform figure endpoint returned no bytes for either figure; captions are metadata only, no image hash is claimable.",
+    "Literature anchors (Guo 1993 / Ladd / MKM DNS / Reichardt) are registered as name-level citations; no DOI or URL appears in the report, so they stay unresolved."
+  ]
+}
