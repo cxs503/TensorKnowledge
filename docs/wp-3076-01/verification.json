@@ -1,0 +1,143 @@
+{
+  "package_id": "wp-3076-01",
+  "report_id": "3076",
+  "mode": "online (platform re-fetch)",
+  "verified_at": "2026-11-12T01:01:05+00:00",
+  "source": {
+    "uri": "tensor://reports/3076",
+    "field": "markdown",
+    "sha256": "9b7bb2427af8a1b4a7f229971492c52fc691737a7742b4b703ce4e41cea464c1",
+    "chars": 3712,
+    "bytes_utf8": 6092
+  },
+  "checks": [
+    {
+      "acceptance_item": "source_hash_matches",
+      "result": "PASS",
+      "detail": {
+        "sha256": "9b7bb2427af8a1b4a7f229971492c52fc691737a7742b4b703ce4e41cea464c1",
+        "contract": "9b7bb2427af8a1b4a7f229971492c52fc691737a7742b4b703ce4e41cea464c1",
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "chars_match_contract",
+      "result": "PASS",
+      "detail": {
+        "chars": 3712,
+        "bytes_utf8": 6092
+      }
+    },
+    {
+      "acceptance_item": "valid_json",
+      "result": "PASS",
+      "detail": {
+        "files": [
+          "asset_manifest.json",
+          "kf_result.wp-3076-01.json"
+        ],
+        "parse": "ok"
+      }
+    },
+    {
+      "acceptance_item": "schema_pass",
+      "result": "PASS",
+      "detail": {
+        "errors": [],
+        "documents": 2,
+        "schemas": [
+          "kf_result.v1.schema.json (restored from commit 53c59cc)",
+          "asset_manifest.v1.schema.json"
+        ]
+      }
+    },
+    {
+      "acceptance_item": "source_locator_resolvable",
+      "result": "PASS",
+      "detail": {
+        "assets_checked": 19,
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "no_duplicate_ids",
+      "result": "PASS",
+      "detail": {
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "PASS",
+      "detail": {
+        "claims": 0,
+        "asset_payload_statuses": {
+          "in_report_record": 2,
+          "external_not_in_record": 11,
+          "cross_report_out_of_scope": 2,
+          "declared_in_source_only": 1,
+          "declared_payload_missing": 3
+        },
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "boundaries_and_no_self_verified",
+      "result": "PASS",
+      "detail": {
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "record_metadata_verbatim",
+      "result": "PASS",
+      "detail": {
+        "source": "live platform record",
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "platform_figure_payload_status_current",
+      "result": "PASS",
+      "detail": {
+        "probes": [
+          {
+            "name": "gate_state_matrix.png",
+            "http_status": 404,
+            "body": "{\"detail\":\"figure not found\"}"
+          },
+          {
+            "name": "gate_numtrace_dev.png",
+            "http_status": 404,
+            "body": "{\"detail\":\"figure not found\"}"
+          },
+          {
+            "name": "gate_coth_tanh.png",
+            "http_status": 404,
+            "body": "{\"detail\":\"figure not found\"}"
+          }
+        ],
+        "note": "404 for all three figures ⇒ 'declared_payload_missing' is current; if any turns 200 the manifest must be re-registered"
+      }
+    },
+    {
+      "acceptance_item": "figure_endpoint_positive_control",
+      "result": "PASS",
+      "detail": {
+        "probe": {
+          "report_id": 14611,
+          "name": "fig_locator_map.png",
+          "http_status": 200,
+          "bytes": 100904,
+          "sha256": "45af3bd2b1ee56262a0ce3800273f40a41500540d9908b56f7476cc6d29ec168",
+          "delivered_bytes_equal_local": true,
+          "note": "GET /tensor/reports/<id>/figures/<name> returns 200 here, so the 404 observed for report 3076 is a genuinely absent payload, not a wrong route"
+        },
+        "implies": "endpoint behaviour is known-good, therefore the 404s recorded for report 3076 mean the payloads are absent"
+      }
+    }
+  ],
+  "acceptance_all_pass": true,
+  "verified_label_written": false,
+  "note": "对账=结构/哈希/定位/唯一性/边界；不评判报告结论真伪，也不把任何结论标为 verified（verification 由平台门计算）。"
+}
