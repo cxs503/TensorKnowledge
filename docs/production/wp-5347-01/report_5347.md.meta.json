@@ -1,0 +1,29 @@
+{
+  "id": 5347,
+  "title": "TensorDEM main CI 清红（m4829）：runner 路径断言与证据账本过期",
+  "summary": "main@524821fd 三处红项：溯源测试把 runner 挂载目录名当不变量（自托管 runner 的 _work 布局假红）、文档引用漏 src/tensordem 前缀、证据账本过期。修复=门禁锚定仓库根并补负控、修文档指针、重生成账本（145→152 篇 / 831→879 条，ORPHAN 保持 0）。同形布局下红项复现后再验证 20 passed，账本相关 4 文件 36 passed。",
+  "scenario_key": "ci_clearance",
+  "mission_id": 4829,
+  "stage": null,
+  "tags": [
+    "CI",
+    "gate",
+    "provenance",
+    "doc-evidence",
+    "TensorDEM",
+    "main-red"
+  ],
+  "figures": [
+    {
+      "name": "provenance_gate_matrix.png",
+      "caption": "溯源门禁在四种检出布局下的判定：main@524821fd 的 \"/work/\" 断言在自托管 runner(_work)与沙箱布局上假红；修复后的门禁按仓库根判定，只拒绝外部 checkout（负控）。"
+    },
+    {
+      "name": "ledger_regeneration.png",
+      "caption": "证据账本逐状态计数：提交态（过期，145 篇/831 条）vs 重生成后（152 篇/879 条）；3 条被门禁滤除的产物如实降级为 MISSING+REGENERABLE。"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-06T14:46:12.438974+00:00"
+}

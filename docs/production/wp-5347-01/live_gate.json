@@ -1,0 +1,124 @@
+{
+  "ok": true,
+  "published_report_id": "14642",
+  "checks": [
+    {
+      "check": "L1.single_json_block",
+      "ok": true,
+      "evidence": {
+        "error": null
+      }
+    },
+    {
+      "check": "L2.payload_equals_local",
+      "ok": true,
+      "evidence": {
+        "keys": [
+          "claims",
+          "outputs",
+          "package_id",
+          "provenance",
+          "report_id",
+          "task_type"
+        ]
+      }
+    },
+    {
+      "check": "L3.live_source_hash",
+      "ok": true,
+      "evidence": {
+        "claimed": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1",
+        "recomputed": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1",
+        "local_snapshot_sha256": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1"
+      }
+    },
+    {
+      "check": "L4.structure_gate",
+      "ok": true,
+      "evidence": {
+        "gates": [
+          {
+            "gate": "g1_valid_json",
+            "ok": true
+          },
+          {
+            "gate": "g2_schema_pass",
+            "ok": true
+          },
+          {
+            "gate": "g3_identity",
+            "ok": true,
+            "mismatched": []
+          }
+        ]
+      }
+    },
+    {
+      "check": "L5.evidence_gate",
+      "ok": true,
+      "evidence": {
+        "gates": [
+          {
+            "gate": "g4_source_hash_matches",
+            "ok": true,
+            "claimed": "sha256:bdd7bb0e76c1",
+            "actual": "sha256:bdd7bb0e76c1"
+          },
+          {
+            "gate": "g4b_source_field",
+            "ok": true
+          },
+          {
+            "gate": "g5_source_locator_resolvable",
+            "ok": true,
+            "checked": 0,
+            "resolved": 0,
+            "unresolved": [],
+            "too_short": []
+          },
+          {
+            "gate": "g5b_all_claims_located_or_unresolved",
+            "ok": true,
+            "offenders": []
+          },
+          {
+            "gate": "g6_no_duplicate_ids",
+            "ok": true,
+            "intra": [],
+            "cross": [],
+            "n_claims": 0
+          },
+          {
+            "gate": "g7_claim_namespace",
+            "ok": true,
+            "foreign": []
+          }
+        ],
+        "stats": {
+          "n_claims": 0,
+          "locators_checked": 0,
+          "locators_resolved": 0,
+          "locator_rate": null
+        }
+      }
+    },
+    {
+      "check": "L6.channel_identity",
+      "ok": true,
+      "evidence": {
+        "title": "KF-RESULT wp-5347-01",
+        "has_tag": true,
+        "tags": [
+          "kf-wp:wp-5347-01",
+          "kf",
+          "asset-registration",
+          "report-5347",
+          "ci_clearance",
+          "TensorKnowledge"
+        ]
+      }
+    }
+  ],
+  "live_source_chars": 4206,
+  "note": "0 claim 时证据门为空真：stats.locator_rate=None，不得引用为定位率 100%"
+}
