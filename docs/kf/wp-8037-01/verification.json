@@ -1,0 +1,50 @@
+{
+  "package_id": "wp-8037-01",
+  "report_id": "8037",
+  "verified_at": "2026-11-12T01:33:39.423571+00:00",
+  "source_hash_live": "sha256:1e44804da4c51cf5e17cb6db345e3f414ffa55321b8f3e8b3a29d08e9c69c9b0",
+  "gate": "PASS",
+  "gate_scope": "the six contract acceptance items for task_type 01-asset-registration only",
+  "checks": {
+    "valid_json": {
+      "ok": true,
+      "detail": "asset_manifest.json and kf_result.json both parse as JSON"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": "asset_manifest.json valid against asset_manifest.wp-8037-01.schema.json; kf_result.json valid against canonical kf_result.v1.schema.json"
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": "22/22 locators re-resolved verbatim (char span + substring + uniqueness + line span)",
+      "failures": []
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": "live=sha256:1e44804da4c51cf5e17cb6db345e3f414ffa55321b8f3e8b3a29d08e9c69c9b0 contract=sha256:1e44804da4c51cf5e17cb6db345e3f414ffa55321b8f3e8b3a29d08e9c69c9b0 manifest=sha256:1e44804da4c51cf5e17cb6db345e3f414ffa55321b8f3e8b3a29d08e9c69c9b0",
+      "chars": {
+        "live": 1223,
+        "contract": 1223,
+        "manifest": 1223
+      }
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": "22 asset ids, 0 claim ids, duplicates assets=[] claims=[], A\\d{2} pattern ok"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": "claims=[] with an explicit claims_empty_reason (no_forced_claim_generation) - vacuously satisfied and declared, not silently omitted",
+      "unbacked": []
+    },
+    "scope_single_report_id": {
+      "ok": true,
+      "detail": "no foreign report_id in the manifest"
+    }
+  },
+  "not_verified": [
+    "The 'Pass' verdicts in the source table are NOT re-verified: no simulation was re-run and no test suite was executed (the declared test module is not in this worktree).",
+    "External artefact contents (A17-A20) were not read; only their declared paths were probed.",
+    "No numeric claim is compared with any benchmark here; this package performs no error-vs-reference assessment."
+  ]
+}

@@ -1,0 +1,375 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.wp-8037-01.schema.json",
+  "title": "asset_manifest (wp-8037-01 instance of asset_manifest.v1)",
+  "description": "Package-local instance of asset_manifest.v1 for work package wp-8037-01 (report 8037). The repo-wide schemas/asset_manifest.v1.schema.json pins package_id 'wp-448-01'/report_id '448' with `const`, so it cannot validate this package's manifest; it is left untouched (other packages' artefacts must not be rewritten) and this file pins the wp-8037-01 identity instead, keeping the same required keys, asset-item shape and locator shape. If the platform-side schema differs, the platform gate wins and this artefact must be revised.",
+  "type": "object",
+  "required": [
+    "schema",
+    "package_id",
+    "task_type",
+    "report_id",
+    "source",
+    "counts",
+    "assets",
+    "claims",
+    "integrity"
+  ],
+  "properties": {
+    "schema": {
+      "const": "asset_manifest.v1"
+    },
+    "schema_source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "package_id": {
+      "const": "wp-8037-01"
+    },
+    "task_type": {
+      "const": "01-asset-registration"
+    },
+    "report_id": {
+      "const": "8037"
+    },
+    "lane": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "producer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "uri",
+        "field",
+        "hash_alg",
+        "hash",
+        "chars",
+        "bytes_utf8",
+        "title",
+        "scenario_key",
+        "hash_matches_contract"
+      ],
+      "properties": {
+        "uri": {
+          "const": "tensor://reports/8037"
+        },
+        "field": {
+          "const": "markdown"
+        },
+        "hash_alg": {
+          "const": "sha256"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "contract_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "hash_matches_contract": {
+          "type": "boolean"
+        },
+        "chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "bytes_utf8": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "lines": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scenario_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "platform_figures": {
+          "type": "array"
+        },
+        "platform_tags": {
+          "type": "array"
+        },
+        "hash_hex": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "assets",
+        "by_class",
+        "by_resolution",
+        "resolved_in_source",
+        "referenced_unresolved",
+        "declared_absent"
+      ],
+      "properties": {
+        "assets": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "by_class": {
+          "type": "object"
+        },
+        "by_resolution": {
+          "type": "object"
+        },
+        "resolved_in_source": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "referenced_unresolved": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "declared_absent": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unique_quotes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "asset_id",
+          "asset_class",
+          "label",
+          "in_report_section",
+          "locator",
+          "resolution",
+          "resolution_check",
+          "note"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "pattern": "^A[0-9]{2}$"
+          },
+          "asset_class": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "in_report_section": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolution": {
+            "enum": [
+              "resolved_in_source",
+              "referenced_unresolved",
+              "declared_absent"
+            ]
+          },
+          "resolution_check": {
+            "type": "object",
+            "required": [
+              "check",
+              "result"
+            ],
+            "properties": {
+              "check": {
+                "type": "string",
+                "minLength": 1
+              },
+              "result": {
+                "enum": [
+                  "resolved",
+                  "unresolved",
+                  "absent",
+                  "present"
+                ]
+              },
+              "probe": {
+                "type": "object",
+                "required": [
+                  "probe",
+                  "hits",
+                  "exists"
+                ],
+                "properties": {
+                  "probe": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "hits": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "exists": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "locator": {
+            "type": "object",
+            "required": [
+              "method",
+              "start_char",
+              "end_char",
+              "start_line",
+              "end_line",
+              "quote",
+              "unique"
+            ],
+            "properties": {
+              "method": {
+                "enum": [
+                  "char_span",
+                  "document"
+                ]
+              },
+              "start_char": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end_char": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "start_line": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "end_line": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unique": {
+                "type": "boolean"
+              }
+            }
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "Empty is legitimate and expected here (objective.register_assets only, no extraction). Each claim, if any, must carry an evidence locator or an explicit status.",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim_id",
+          "text"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "evidence_locator"
+            ]
+          },
+          {
+            "required": [
+              "status"
+            ]
+          }
+        ]
+      }
+    },
+    "claims_empty_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "integrity": {
+      "type": "object",
+      "required": [
+        "quote_uniqueness",
+        "hash_recomputed_locally",
+        "hash_matches_contract"
+      ],
+      "properties": {
+        "quote_uniqueness": {
+          "type": "object",
+          "required": [
+            "checked",
+            "unique",
+            "all_unique"
+          ],
+          "properties": {
+            "checked": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unique": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "all_unique": {
+              "type": "boolean"
+            }
+          }
+        },
+        "hash_recomputed_locally": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "hash_matches_contract": {
+          "type": "boolean"
+        },
+        "chars_matches_contract": {
+          "type": "boolean"
+        },
+        "asset_id_unique": {
+          "type": "boolean"
+        },
+        "char_spans_reproduce_quotes": {
+          "type": "boolean"
+        },
+        "verification_status": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
