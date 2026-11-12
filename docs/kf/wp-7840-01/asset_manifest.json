@@ -1,0 +1,655 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-7840-01",
+  "task_type": "01-asset-registration",
+  "report_id": "7840",
+  "generated_at": "2026-11-12T01:29:15.316643+00:00",
+  "provenance": {
+    "source_uri": "tensor://reports/7840",
+    "source_field": "markdown",
+    "source_hash": "sha256:eaf940b5a606c4b1ad613ea2283219434fb88265bee60999953e2f33d35a2a3d",
+    "hash_algo": "sha256",
+    "hashed_bytes": "markdown encoded as utf-8",
+    "source_chars": 6896,
+    "source_bytes_utf8": 10262,
+    "report_title": "IN59-N09 ACV/SES 气垫压力-泄漏-波阻闭式链",
+    "report_scenario_key": "IN59-N09",
+    "report_mission_id": 6603,
+    "report_created_at": "2026-11-08T06:27:42.155022+00:00",
+    "report_tags": [
+      "ACV",
+      "SES",
+      "air_cushion",
+      "newman_poole",
+      "wave_resistance",
+      "closed_chain",
+      "IN59"
+    ],
+    "fetched_via": "GET /api/v1/tensor/reports/7840",
+    "generator": "scripts/kf/build_asset_manifest_7840.py",
+    "contract_version": "1.0"
+  },
+  "resolution_status_vocabulary": {
+    "resolved": "bytes located and hashed (source markdown, or a file present in this worktree)",
+    "unresolved": "reference parsed verbatim from the report, target outside this package's reachable scope",
+    "metadata_only": "platform lists the asset but stores no byte payload, so no hash is claimable"
+  },
+  "counts": {
+    "assets": 25,
+    "by_kind": {
+      "report_markdown/resolved": 1,
+      "embedded_figure/metadata_only": 4,
+      "directory_reference/unresolved": 1,
+      "source_code_reference/unresolved": 13,
+      "figure_reference/unresolved": 5,
+      "data_artifact_reference/unresolved": 1
+    },
+    "by_resolution": {
+      "resolved": 1,
+      "unresolved": 20,
+      "metadata_only": 4
+    }
+  },
+  "assets": [
+    {
+      "asset_id": "r7840:source",
+      "kind": "report_markdown",
+      "uri": "tensor://reports/7840",
+      "source_field": "markdown",
+      "title": "IN59-N09 ACV/SES 气垫压力-泄漏-波阻闭式链",
+      "scenario_key": "IN59-N09",
+      "chars": 6896,
+      "bytes_utf8": 10262,
+      "sha256": "eaf940b5a606c4b1ad613ea2283219434fb88265bee60999953e2f33d35a2a3d",
+      "locator": {
+        "scheme": "report_field",
+        "field": "markdown"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "platform_api",
+        "via": "GET /api/v1/tensor/reports/7840"
+      },
+      "note": "sha256 matches the work-package contract input.source_hash; chars matches input.chars."
+    },
+    {
+      "asset_id": "r7840:figure:01",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/7840#figures[0]",
+      "name": "fig1_resistance_speed.png",
+      "caption": "fig1 resistance speed",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 0
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record carries this figure as name+caption only; figures[] stores no png_base64 payload, so no figure bytes/hash can be claimed here"
+      }
+    },
+    {
+      "asset_id": "r7840:figure:02",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/7840#figures[1]",
+      "name": "fig2_wave_resistance_fn.png",
+      "caption": "fig2 wave resistance fn",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 1
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record carries this figure as name+caption only; figures[] stores no png_base64 payload, so no figure bytes/hash can be claimed here"
+      }
+    },
+    {
+      "asset_id": "r7840:figure:03",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/7840#figures[2]",
+      "name": "fig3_power_ledger.png",
+      "caption": "fig3 power ledger",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 2
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record carries this figure as name+caption only; figures[] stores no png_base64 payload, so no figure bytes/hash can be claimed here"
+      }
+    },
+    {
+      "asset_id": "r7840:figure:04",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/7840#figures[3]",
+      "name": "fig4_resistance_breakdown.png",
+      "caption": "fig4 resistance breakdown",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 3
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record carries this figure as name+caption only; figures[] stores no png_base64 payload, so no figure bytes/hash can be claimed here"
+      }
+    },
+    {
+      "asset_id": "r7840:ref:01",
+      "kind": "directory_reference",
+      "uri": "tensor://reports/7840#line=99",
+      "path_reference": "backend/physics/acv/",
+      "path_reference_literal": "backend/physics/acv/",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_dir_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 99,
+        "quote": "- **物理模块**：`backend/physics/acv/`（static_equilibrium.py, leakage.py, wave_resistance.py, closed_chain.py）"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:02",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=99",
+      "path_reference": "backend/physics/acv/static_equilibrium.py",
+      "path_reference_literal": "static_equilibrium.py",
+      "path_reference_constructed": true,
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 99,
+        "quote": "- **物理模块**：`backend/physics/acv/`（static_equilibrium.py, leakage.py, wave_resistance.py, closed_chain.py）"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "filename quoted bare; resolved against the directory cited on the same source line; source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:03",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=99",
+      "path_reference": "backend/physics/acv/leakage.py",
+      "path_reference_literal": "leakage.py",
+      "path_reference_constructed": true,
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 99,
+        "quote": "- **物理模块**：`backend/physics/acv/`（static_equilibrium.py, leakage.py, wave_resistance.py, closed_chain.py）"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "filename quoted bare; resolved against the directory cited on the same source line; source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:04",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=99",
+      "path_reference": "backend/physics/acv/wave_resistance.py",
+      "path_reference_literal": "wave_resistance.py",
+      "path_reference_constructed": true,
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 99,
+        "quote": "- **物理模块**：`backend/physics/acv/`（static_equilibrium.py, leakage.py, wave_resistance.py, closed_chain.py）"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "filename quoted bare; resolved against the directory cited on the same source line; source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:05",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=99",
+      "path_reference": "backend/physics/acv/closed_chain.py",
+      "path_reference_literal": "closed_chain.py",
+      "path_reference_constructed": true,
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 99,
+        "quote": "- **物理模块**：`backend/physics/acv/`（static_equilibrium.py, leakage.py, wave_resistance.py, closed_chain.py）"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "filename quoted bare; resolved against the directory cited on the same source line; source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:06",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=100",
+      "path_reference": "backend/api/acv.py",
+      "path_reference_literal": "backend/api/acv.py",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 100,
+        "quote": "- **API**：`backend/api/acv.py`（FastAPI 端点）"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:07",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=101",
+      "path_reference": "tests/test_acv_closed_chain.py",
+      "path_reference_literal": "tests/test_acv_closed_chain.py",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 101,
+        "quote": "- **测试**：`tests/test_acv_closed_chain.py`（35 个 pytest 用例）"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:08",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/7840#line=165",
+      "path_reference": "artifacts/acv_in59_n09/fig1_resistance_speed.png",
+      "path_reference_literal": "artifacts/acv_in59_n09/fig1_resistance_speed.png",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "markdown_image",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 165,
+        "quote": "![Resistance-Speed Curve](artifacts/acv_in59_n09/fig1_resistance_speed.png)"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:09",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/7840#line=171",
+      "path_reference": "artifacts/acv_in59_n09/fig2_wave_resistance_fn.png",
+      "path_reference_literal": "artifacts/acv_in59_n09/fig2_wave_resistance_fn.png",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "markdown_image",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 171,
+        "quote": "![Wave Resistance vs Fn_c](artifacts/acv_in59_n09/fig2_wave_resistance_fn.png)"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:10",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/7840#line=177",
+      "path_reference": "artifacts/acv_in59_n09/fig3_power_ledger.png",
+      "path_reference_literal": "artifacts/acv_in59_n09/fig3_power_ledger.png",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "markdown_image",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 177,
+        "quote": "![Power Ledger](artifacts/acv_in59_n09/fig3_power_ledger.png)"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:11",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/7840#line=183",
+      "path_reference": "artifacts/acv_in59_n09/fig4_resistance_breakdown.png",
+      "path_reference_literal": "artifacts/acv_in59_n09/fig4_resistance_breakdown.png",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "markdown_image",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 183,
+        "quote": "![Resistance Breakdown](artifacts/acv_in59_n09/fig4_resistance_breakdown.png)"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:12",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=254",
+      "path_reference": "backend/physics/acv/static_equilibrium.py",
+      "path_reference_literal": "backend/physics/acv/static_equilibrium.py",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 254,
+        "quote": "| 静平衡 | `backend/physics/acv/static_equilibrium.py` | p_c = (W - L_hydro) / A_c |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:13",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=255",
+      "path_reference": "backend/physics/acv/leakage.py",
+      "path_reference_literal": "backend/physics/acv/leakage.py",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 255,
+        "quote": "| 泄漏 | `backend/physics/acv/leakage.py` | Orifice 模型 + 风机功率 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:14",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=256",
+      "path_reference": "backend/physics/acv/wave_resistance.py",
+      "path_reference_literal": "backend/physics/acv/wave_resistance.py",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 256,
+        "quote": "| 波阻 | `backend/physics/acv/wave_resistance.py` | Newman-Poole 闭式 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:15",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=257",
+      "path_reference": "backend/physics/acv/closed_chain.py",
+      "path_reference_literal": "backend/physics/acv/closed_chain.py",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 257,
+        "quote": "| 闭式链 | `backend/physics/acv/closed_chain.py` | 三段串联 + 排水船对比 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:16",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=258",
+      "path_reference": "backend/api/acv.py",
+      "path_reference_literal": "backend/api/acv.py",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 258,
+        "quote": "| API | `backend/api/acv.py` | FastAPI 端点 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:17",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=259",
+      "path_reference": "tests/test_acv_closed_chain.py",
+      "path_reference_literal": "tests/test_acv_closed_chain.py",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 259,
+        "quote": "| 测试 | `tests/test_acv_closed_chain.py` | 35 用例，全部通过 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:18",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/7840#line=260",
+      "path_reference": "artifacts/acv_in59_n09/fig*.png",
+      "path_reference_literal": "artifacts/acv_in59_n09/fig*.png",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 260,
+        "quote": "| 图 | `artifacts/acv_in59_n09/fig*.png` | 4 幅结果图 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": true
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:19",
+      "kind": "data_artifact_reference",
+      "uri": "tensor://reports/7840#line=261",
+      "path_reference": "artifacts/acv_in59_n09/acv_closed_chain_data.json",
+      "path_reference_literal": "artifacts/acv_in59_n09/acv_closed_chain_data.json",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 261,
+        "quote": "| 数据 | `artifacts/acv_in59_n09/acv_closed_chain_data.json` | 完整数值结果 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    },
+    {
+      "asset_id": "r7840:ref:20",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/7840#line=276",
+      "path_reference": "tests/test_acv_closed_chain.py",
+      "path_reference_literal": "tests/test_acv_closed_chain.py",
+      "path_reference_constructed": false,
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 276,
+        "quote": "*测试执行：pytest tests/test_acv_closed_chain.py -v → 35 passed*"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path referenced by the report body is not present in the TensorKnowledge delivery worktree (the report declares its own repository=ship-performance-platform, which is outside this work package's boundary)",
+        "glob_expanded": false
+      },
+      "note": "source line is unique in the markdown"
+    }
+  ],
+  "claims": [],
+  "claims_note": "Empty claims array is legitimate for task_type 01-asset-registration (objective.register_assets=true, no extraction). No forced claim generation; no claim is marked verified.",
+  "summary": {
+    "asset_count": 25,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 4,
+      "directory_reference": 1,
+      "source_code_reference": 13,
+      "figure_reference": 5,
+      "data_artifact_reference": 1
+    },
+    "resolved": 1,
+    "unresolved": 20,
+    "metadata_only": 4,
+    "claims": 0,
+    "distinct_referenced_paths": 13
+  },
+  "identity_granularity": "Reference assets are occurrence-level: identity is (path_reference, markdown_line), so the same file cited on two lines yields two asset_ids each carrying its own verbatim quote; summary.distinct_referenced_paths reports the deduplicated view.",
+  "coverage_sweep": {
+    "sweep_token_count": 16,
+    "registered_literal_count": 17,
+    "unregistered_tokens": []
+  },
+  "artifact_endpoint_probe": {
+    "/tensor/reports/7840/artifacts": {
+      "status": "http_404"
+    },
+    "/tensor/artifacts?report_id=7840": {
+      "status": "http_404"
+    }
+  },
+  "limitations": [
+    "Registration only: no extraction, no claim generation, no verified marks (verification is platform-gated).",
+    "Referenced paths are resolved strictly inside the TensorKnowledge delivery worktree. The report declares repository=ship-performance-platform, whose tree is outside this work package's boundary, so its source/artifact references stay unresolved by design rather than being assumed present.",
+    "Report figures are inventoried as metadata (name/caption) only; no figure bytes are stored on the report record, so no figure hash is claimed.",
+    "No cross-report access: only report_id=7840 was fetched.",
+    "Outputs live under docs/kf/wp-7840-01/ because .gitignore drops artifacts/** from the push gate."
+  ]
+}

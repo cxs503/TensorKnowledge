@@ -1,0 +1,57 @@
+{
+  "package_id": "wp-7840-01",
+  "report_id": "7840",
+  "verified_at": "2026-11-12T01:29:44.320612+00:00",
+  "note": "self-check only; the authoritative verification is the platform gate.",
+  "manifest": "docs/kf/wp-7840-01/asset_manifest.json",
+  "manifest_sha256": "0b3980382c4d3cc0f87fe1aa7e96083f1fd40d4cbfb7ba01178f718b6b36653c",
+  "acceptance": {
+    "valid_json": {
+      "pass": true,
+      "detail": "json.loads OK on asset_manifest.json"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": "envelope_missing=[] envelope_extra=[] provenance_ok=True manifest_missing=[] assets_missing_fields=[]"
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "detail": "checked 25 locators against live markdown (277 lines); unresolvable=[]"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": "recomputed=eaf940b5a606c4b1ad613ea2283219434fb88265bee60999953e2f33d35a2a3d manifest=eaf940b5a606c4b1ad613ea2283219434fb88265bee60999953e2f33d35a2a3d envelope=eaf940b5a606c4b1ad613ea2283219434fb88265bee60999953e2f33d35a2a3d contract=eaf940b5a606c4b1ad613ea2283219434fb88265bee60999953e2f33d35a2a3d chars=6896/6896"
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "detail": "assets=25 unique=25"
+    },
+    "coverage_sweep_gap_free": {
+      "pass": true,
+      "detail": "independent sweep tokens=16 unregistered=[] recorded==recomputed=True"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "detail": "claims=0 violating=0 (empty array: vacuously satisfied per contract notes)"
+    }
+  },
+  "boundary_self_checks": {
+    "no_verified_marks": {
+      "pass": true,
+      "detail": "neither manifest.claims nor envelope.claims carries a 'verified' status"
+    },
+    "single_report_scope": {
+      "pass": true,
+      "detail": "every report_id field in the package outputs equals 7840"
+    },
+    "constructed_paths_flagged": {
+      "pass": true,
+      "detail": "4 constructed path(s) carry both literal and joined forms"
+    },
+    "no_forced_claims": {
+      "pass": true,
+      "detail": "claims array empty by contract note; no synthesis to hit a metric"
+    }
+  },
+  "all_pass": true
+}
