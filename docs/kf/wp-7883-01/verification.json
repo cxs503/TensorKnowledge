@@ -1,0 +1,51 @@
+{
+  "package_id": "wp-7883-01",
+  "report_id": "7883",
+  "verified_at": "2026-11-12T01:33:44.830077+00:00",
+  "manifest": "docs/kf/wp-7883-01/asset_manifest.json",
+  "manifest_sha256": "3757cbedfc50c23bdffd78b8a83a444404230695491af1a191b88686f5a16a57",
+  "envelope_sha256": "7508b416bd0cd4969741eee8b303f6abe05fddc56786f1935d05bbaa2a9daef5",
+  "checks": {
+    "valid_json": {
+      "pass": true,
+      "detail": "json.loads OK (manifest); envelope checked under schema_pass"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": {
+        "envelope_structurally_valid": true,
+        "manifest_required_keys": true,
+        "envelope": "jsonschema.validate OK against schemas/kf_result.v1.schema.json"
+      }
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "detail": "checked 21 locators, unresolvable=[]"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": "recomputed=fc4d21ec4e30740b8596ea5b2892c877444ab58e274d5d301638322ae5fd77f5 manifest=fc4d21ec4e30740b8596ea5b2892c877444ab58e274d5d301638322ae5fd77f5 envelope=fc4d21ec4e30740b8596ea5b2892c877444ab58e274d5d301638322ae5fd77f5 contract=fc4d21ec4e30740b8596ea5b2892c877444ab58e274d5d301638322ae5fd77f5"
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "detail": "asset_ids=21 unique=21"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "detail": "claims=0 violating=0 (empty array: vacuously satisfied, contract allows empty claims)"
+    },
+    "do_not_mark_claims_as_verified": {
+      "pass": true,
+      "detail": "no claim carries status='verified'"
+    },
+    "outputs_match_declared_file": {
+      "pass": true,
+      "detail": "embedded==disk:True binding_sha256_ok:True binding_bytes_ok:True"
+    },
+    "scope_single_report_only": {
+      "pass": true,
+      "detail": "report_id references found: ['7883']"
+    }
+  },
+  "all_pass": true
+}
