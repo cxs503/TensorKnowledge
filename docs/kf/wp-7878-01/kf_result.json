@@ -1,0 +1,780 @@
+{
+  "package_id": "wp-7878-01",
+  "task_type": "01-asset-registration",
+  "report_id": "7878",
+  "provenance": {
+    "source_hash": "sha256:ce890ca0df1440fe3339a7eece9a31f9b0fc767eb6cb43d9991b446f42c8b1fb",
+    "source_field": "markdown",
+    "producer": "agent/m15603",
+    "emitted_at": "2026-11-12T01:33:29+00:00",
+    "notes": "source_hash recomputed with hashlib.sha256 over the UTF-8 bytes of the markdown field fetched from GET /api/v1/tensor/reports/7878; matches the contract hash sha256:ce890ca0df1440fe3339a7eece9a31f9b0fc767eb6cb43d9991b446f42c8b1fb. Hash equality is a mechanical identity check only - no claim in this package is marked verified, verification stays with the platform gate."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "manifest_version": "1.0",
+      "package_id": "wp-7878-01",
+      "task_type": "01-asset-registration",
+      "report_id": "7878",
+      "contract_version": "1.0",
+      "generated_at": "2026-11-12T01:33:29+00:00",
+      "generator": "scripts/kf_wp7878_01_register.py",
+      "schema_note": "asset_manifest.json is the contract-declared output of this work package; the platform envelope wrapping it is validated against schemas/kf_result.v1.schema.json (draft 2020-12). Shape follows the wp-7878-01 contract keys (package_id/task_type/report_id/provenance/outputs).",
+      "provenance": {
+        "source_uri": "tensor://reports/7878",
+        "source_field": "markdown",
+        "fetched_via": "GET /api/v1/tensor/reports/7878 (Bearer)",
+        "hash_algo": "sha256",
+        "hashed_bytes": "markdown encoded as utf-8",
+        "source_hash": "sha256:ce890ca0df1440fe3339a7eece9a31f9b0fc767eb6cb43d9991b446f42c8b1fb",
+        "source_hash_expected": "sha256:ce890ca0df1440fe3339a7eece9a31f9b0fc767eb6cb43d9991b446f42c8b1fb",
+        "source_hash_matches": true,
+        "source_chars": 7386,
+        "source_bytes_utf8": 10880,
+        "chars_expected": 7386,
+        "chars_matches": true,
+        "chars_semantics": "contract `chars` equals the python str length (code points); the utf-8 byte length differs (CJK body)",
+        "record_identity": {
+          "id": 7878,
+          "title": "P151-N05 完整干舷与吨位丈量验证链：ICLL 1966 修正链 + IMO Tonnage 1969（台账 STAB-FREEBOARD）",
+          "scenario_key": "ship_stability_freeboard_tonnage",
+          "mission_id": 6651,
+          "status": "published",
+          "created_at": "2026-11-08T06:49:22.621806+00:00",
+          "created_by": 1,
+          "tags": [
+            "ICLL1966",
+            "干舷",
+            "load-line",
+            "IMO-Tonnage-1969",
+            "GT/NT",
+            "舷弧修正",
+            "几何前置门",
+            "P151-N05",
+            "STAB-FREEBOARD"
+          ],
+          "figure_records": 5
+        },
+        "title_matches_contract": true,
+        "scenario_key_matches_contract": true
+      },
+      "identity_granularity": "asset identity is asset-level: one id per distinct registered reference (figure path, artifact path, inline table, inline block); a quote occurring on several lines is registered once with `locator.occurrences` > 1 and its primary line.",
+      "resolution_status_vocabulary": {
+        "resolved": "asset bytes fetched and hashed in this package (source markdown only)",
+        "locator_resolved": "identity located verbatim in the registered markdown; content bytes not retrievable / not extracted by design",
+        "metadata_only": "only record-side metadata (name+caption) is available; no payload",
+        "unresolved": "identity could not be located - none in this package"
+      },
+      "assets": [
+        {
+          "asset_id": "r7878:source",
+          "kind": "report_markdown",
+          "uri": "tensor://reports/7878",
+          "format": "markdown",
+          "origin": "record.markdown",
+          "locator": {
+            "scheme": "report_field",
+            "field": "markdown",
+            "section": "whole record"
+          },
+          "resolution": {
+            "status": "resolved",
+            "locator_resolvable": true,
+            "content_retrievable": true,
+            "note": "bytes fetched from GET /api/v1/tensor/reports/7878 and hashed locally"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:figure:fig1",
+          "kind": "figure",
+          "uri": "docs/figures/p151n05/fig1_tabular_freeboard_continuity.png",
+          "format": "png",
+          "origin": "record.figures+markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ④ 结果图",
+            "line": 89,
+            "line_end": 89,
+            "char_offset": 4207,
+            "char_end": 4265,
+            "occurrences": 2,
+            "quote": "docs/figures/p151n05/fig1_tabular_freeboard_continuity.png"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "path quoted verbatim from the figure list; caption taken from record.figures | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:figure:fig2",
+          "kind": "figure",
+          "uri": "docs/figures/p151n05/fig2_correction_chain.png",
+          "format": "png",
+          "origin": "record.figures+markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ④ 结果图",
+            "line": 91,
+            "line_end": 91,
+            "char_offset": 4320,
+            "char_end": 4366,
+            "occurrences": 2,
+            "quote": "docs/figures/p151n05/fig2_correction_chain.png"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "path quoted verbatim from the figure list; caption taken from record.figures | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:figure:fig3",
+          "kind": "figure",
+          "uri": "docs/figures/p151n05/fig3_tonnage_piecewise.png",
+          "format": "png",
+          "origin": "record.figures+markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ④ 结果图",
+            "line": 93,
+            "line_end": 93,
+            "char_offset": 4433,
+            "char_end": 4480,
+            "occurrences": 2,
+            "quote": "docs/figures/p151n05/fig3_tonnage_piecewise.png"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "path quoted verbatim from the figure list; caption taken from record.figures | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:figure:fig4",
+          "kind": "figure",
+          "uri": "docs/figures/p151n05/fig4_five_hull_closure.png",
+          "format": "png",
+          "origin": "record.figures+markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ④ 结果图",
+            "line": 95,
+            "line_end": 95,
+            "char_offset": 4543,
+            "char_end": 4590,
+            "occurrences": 2,
+            "quote": "docs/figures/p151n05/fig4_five_hull_closure.png"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "path quoted verbatim from the figure list; caption taken from record.figures | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:figure:fig5",
+          "kind": "figure",
+          "uri": "docs/figures/p151n05/fig5_sheer_three_cases.png",
+          "format": "png",
+          "origin": "record.figures+markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ④ 结果图",
+            "line": 97,
+            "line_end": 97,
+            "char_offset": 4647,
+            "char_end": 4694,
+            "occurrences": 2,
+            "quote": "docs/figures/p151n05/fig5_sheer_three_cases.png"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "path quoted verbatim from the figure list; caption taken from record.figures | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:code:run_verification",
+          "kind": "code_file",
+          "uri": "artifacts/p151n05/run_verification.py",
+          "format": "py",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "# P151-N05 完整干舷与吨位丈量验证链（ICLL 1966 + IMO Tonnage 1969）",
+            "line": 3,
+            "line_end": 3,
+            "char_offset": 62,
+            "char_end": 109,
+            "occurrences": 1,
+            "quote": "`python3 artifacts/p151n05/run_verification.py`"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "producer of the report body (numbers programmatically injected) | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:glob:run_verification_json",
+          "kind": "declared_input_glob",
+          "uri": "artifacts/p151n05/*.json",
+          "format": "json-glob",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "# P151-N05 完整干舷与吨位丈量验证链（ICLL 1966 + IMO Tonnage 1969）",
+            "line": 4,
+            "line_end": 4,
+            "char_offset": 124,
+            "char_end": 150,
+            "occurrences": 1,
+            "quote": "`artifacts/p151n05/*.json`"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "declared input glob of run_verification.py; expanded members registered separately | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:test:freeboard_tonnage",
+          "kind": "test_file",
+          "uri": "tests/test_freeboard_tonnage_p151n05.py",
+          "format": "py",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "# P151-N05 完整干舷与吨位丈量验证链（ICLL 1966 + IMO Tonnage 1969）",
+            "line": 5,
+            "line_end": 5,
+            "char_offset": 178,
+            "char_end": 234,
+            "occurrences": 1,
+            "quote": "tests/test_freeboard_tonnage_p151n05.py` → **47 passed**"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "test module backing the 47-passed statement (count itself not re-run here) | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:code:freeboard_tonnage_api",
+          "kind": "code_file",
+          "uri": "backend/api/freeboard_tonnage.py",
+          "format": "py",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ② 怎么做的（方法 / 流程 / 工具链）",
+            "line": 50,
+            "line_end": 50,
+            "char_offset": 2720,
+            "char_end": 2775,
+            "occurrences": 1,
+            "quote": "`backend/api/freeboard_tonnage.py`（纯函数 + FastAPI 路由，已注册"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "pure functions + FastAPI routes, registered under /api/v1/freeboard-tonnage/* | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:data:icll1966_freeboard_table",
+          "kind": "data_artifact",
+          "uri": "backend/data/icll1966_freeboard_table.json",
+          "format": "json",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ⑤ 注意点（坑 / 局限 / 适用范围）",
+            "line": 104,
+            "line_end": 104,
+            "char_offset": 4835,
+            "char_end": 4879,
+            "occurrences": 2,
+            "quote": "`backend/data/icll1966_freeboard_table.json`"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "tabular freeboard data artifact carrying provenance.status = SURROGATE | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:tool:gen_icll1966_surrogate_table",
+          "kind": "tool",
+          "uri": "tools/gen_icll1966_surrogate_table.py",
+          "format": "py",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## 审计链",
+            "line": 144,
+            "line_end": 144,
+            "char_offset": 6781,
+            "char_end": 6820,
+            "occurrences": 1,
+            "quote": "`tools/gen_icll1966_surrogate_table.py`"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "generator of the surrogate table (reproducible by the author's claim) | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:data:standard_models_detailed",
+          "kind": "data_artifact",
+          "uri": "backend/data/standard_models_detailed.py",
+          "format": "py",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ① 案例介绍（物理背景 / 几何 / 参数表）",
+            "line": 22,
+            "line_end": 22,
+            "char_offset": 682,
+            "char_end": 724,
+            "occurrences": 1,
+            "quote": "`backend/data/standard_models_detailed.py`"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "source of the 3 public benchmark hulls (KCS/KVLCC2/JBC) | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:data:acceptance_json",
+          "kind": "data_artifact",
+          "uri": "artifacts/p151n05/acceptance.json",
+          "format": "json",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## 审计链",
+            "line": 147,
+            "line_end": 147,
+            "char_offset": 6963,
+            "char_end": 6998,
+            "occurrences": 1,
+            "quote": "`artifacts/p151n05/acceptance.json`"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "criteria (a)-(h) result JSON | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:data:five_hull_closure_json",
+          "kind": "data_artifact",
+          "uri": "artifacts/p151n05/five_hull_closure.json",
+          "format": "json",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## 审计链",
+            "line": 147,
+            "line_end": 147,
+            "char_offset": 6999,
+            "char_end": 7023,
+            "occurrences": 1,
+            "quote": "`five_hull_closure.json`"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "five-hull Cb closure result JSON | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:data:tonnage_json",
+          "kind": "data_artifact",
+          "uri": "artifacts/p151n05/tonnage.json",
+          "format": "json",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## 审计链",
+            "line": 147,
+            "line_end": 147,
+            "char_offset": 7024,
+            "char_end": 7038,
+            "occurrences": 1,
+            "quote": "`tonnage.json`"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "GT/NT piecewise result JSON | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:ledger:STAB-FREEBOARD",
+          "kind": "ledger",
+          "uri": "artifacts/ledger/STAB-FREEBOARD.jsonl",
+          "format": "jsonl",
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## 审计链",
+            "line": 148,
+            "line_end": 148,
+            "char_offset": 7045,
+            "char_end": 7084,
+            "occurrences": 1,
+            "quote": "`artifacts/ledger/STAB-FREEBOARD.jsonl`"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "ledger entry key STAB-FREEBOARD (per-criterion pass flags + figure paths) | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        },
+        {
+          "asset_id": "r7878:table:hull_geometry",
+          "kind": "inline_markdown_table",
+          "uri": "in-report://7878/table/hull_geometry",
+          "format": null,
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ① 案例介绍（物理背景 / 几何 / 参数表）",
+            "line": 25,
+            "line_end": 25,
+            "char_offset": 767,
+            "char_end": 803,
+            "occurrences": 1,
+            "quote": "| 船型 | 类型 | ICLL 型 | L [m] | B [m] |"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "section 1 five-hull geometry table | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false,
+          "structure": {
+            "data_rows": 5,
+            "header_cells": 18
+          }
+        },
+        {
+          "asset_id": "r7878:table:criteria",
+          "kind": "inline_markdown_table",
+          "uri": "in-report://7878/table/criteria",
+          "format": null,
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ③ 计算结果（判据数字，全部程序化注入）",
+            "line": 57,
+            "line_end": 57,
+            "char_offset": 2979,
+            "char_end": 3000,
+            "occurrences": 1,
+            "quote": "| 判据 | 阈值 | 实测 | 结论 |"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "section 3 criterion (a)-(h) table | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false,
+          "structure": {
+            "data_rows": 8,
+            "header_cells": 4
+          }
+        },
+        {
+          "asset_id": "r7878:table:node_continuity",
+          "kind": "inline_markdown_table",
+          "uri": "in-report://7878/table/node_continuity",
+          "format": null,
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "### (a) 结点连续性逐点",
+            "line": 70,
+            "line_end": 70,
+            "char_offset": 3600,
+            "char_end": 3628,
+            "occurrences": 1,
+            "quote": "| L [m] | f0 [mm] | 左极限相对差 |"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "section 3 (a) per-node continuity table | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false,
+          "structure": {
+            "data_rows": 4,
+            "header_cells": 6
+          }
+        },
+        {
+          "asset_id": "r7878:table:sheer_cases",
+          "kind": "inline_markdown_table",
+          "uri": "in-report://7878/table/sheer_cases",
+          "format": null,
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "### (d) 舷弧修正三工况（Reg 38）",
+            "line": 79,
+            "line_end": 79,
+            "char_offset": 3927,
+            "char_end": 3968,
+            "occurrences": 1,
+            "quote": "| L [m] | 标准舷弧 [m] | 零舷弧 [m] | 双倍舷弧 [m] |"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "section 3 (d) Reg 38 three-case table | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false,
+          "structure": {
+            "data_rows": 5,
+            "header_cells": 4
+          }
+        },
+        {
+          "asset_id": "r7878:table:error_judgement",
+          "kind": "inline_markdown_table",
+          "uri": "in-report://7878/table/error_judgement",
+          "format": null,
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ⑥ 误差判定（逐项回答\"是否 <3%\"）",
+            "line": 128,
+            "line_end": 128,
+            "char_offset": 6034,
+            "char_end": 6058,
+            "occurrences": 1,
+            "quote": "| 关键量 | 基准 | 误差 | <3%? |"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "section 6 per-quantity error judgement table (<3%?) | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false,
+          "structure": {
+            "data_rows": 9,
+            "header_cells": 4
+          }
+        },
+        {
+          "asset_id": "r7878:block:icll_chain_diagram",
+          "kind": "inline_fenced_block",
+          "uri": "in-report://7878/block/icll_chain_diagram",
+          "format": null,
+          "origin": "markdown",
+          "locator": {
+            "scheme": "markdown_line",
+            "source_field": "markdown",
+            "section": "## ① 案例介绍（物理背景 / 几何 / 参数表）",
+            "line": 17,
+            "line_end": 17,
+            "char_offset": 493,
+            "char_end": 543,
+            "occurrences": 1,
+            "quote": "f0(L, type)  --Reg30-->  +ΔCb(Cb>0.68)  --Reg32-->"
+          },
+          "resolution": {
+            "status": "locator_resolved",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "section 1 fenced text diagram of the ICLL 1966 correction chain (no language tag) | path/quote resolved in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it (see artifact_endpoint_probe)"
+          },
+          "content_extracted": false
+        }
+      ],
+      "attachments": [
+        {
+          "name": "fig1_tabular_freeboard_continuity.png",
+          "caption": "图1 ICLL 1966 表列干舷 f0(L)（A/B 两型）与判据 (a) 四个结点（标注实测跳变 <3e-6 相对），灰区为 1 m 网格区段。",
+          "origin": "record.figures",
+          "markdown_locator_line": 89,
+          "caption_resolvable_in_markdown": null,
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "name+caption from record.figures; PNG payload not downloaded, not checked in"
+          }
+        },
+        {
+          "name": "fig2_correction_chain.png",
+          "caption": "图2 干舷链各项修正随 L 的分解（自相似船型族）；Reg 31 修正率分段点 L=120 m 无折角跳变（120/0.48=250）。",
+          "origin": "record.figures",
+          "markdown_locator_line": 91,
+          "caption_resolvable_in_markdown": null,
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "name+caption from record.figures; PNG payload not downloaded, not checked in"
+          }
+        },
+        {
+          "name": "fig3_tonnage_piecewise.png",
+          "caption": "图3 GT=K1·V（右轴 K1）与 NT 的 0.30·GT 下界切换：max 函数在切换点相对跳变 0（Reg 4）。",
+          "origin": "record.figures",
+          "markdown_locator_line": 93,
+          "caption_resolvable_in_markdown": null,
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "name+caption from record.figures; PNG payload not downloaded, not checked in"
+          }
+        },
+        {
+          "name": "fig4_five_hull_closure.png",
+          "caption": "图4 五船型 assign 最小干舷 vs 实船型干舷 D−T，及 Cb 闭合偏差对 3% 几何门的余量（最大 2.50%）。",
+          "origin": "record.figures",
+          "markdown_locator_line": 95,
+          "caption_resolvable_in_markdown": null,
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "name+caption from record.figures; PNG payload not downloaded, not checked in"
+          }
+        },
+        {
+          "name": "fig5_sheer_three_cases.png",
+          "caption": "图5 Reg 38 舷弧修正三工况：零舷弧（+）/标准（0）/双倍舷弧（−）符号分离，且严格反对称。",
+          "origin": "record.figures",
+          "markdown_locator_line": 97,
+          "caption_resolvable_in_markdown": null,
+          "resolution": {
+            "status": "metadata_only",
+            "locator_resolvable": true,
+            "content_retrievable": false,
+            "note": "name+caption from record.figures; PNG payload not downloaded, not checked in"
+          }
+        }
+      ],
+      "artifact_endpoint_probe": {
+        "base": "http://127.0.0.1:8010/api/v1",
+        "probes": [
+          {
+            "path": "/openapi.json",
+            "status": "HTTP 404"
+          },
+          {
+            "path": "/tensor/reports/7878/artifacts",
+            "status": "HTTP 404"
+          },
+          {
+            "path": "/tensor/reports/7878/figures",
+            "status": "HTTP 404"
+          },
+          {
+            "path": "/tensor/artifacts?report_id=7878",
+            "status": "HTTP 404"
+          }
+        ],
+        "conclusion": "no reachable endpoint serves figure/artifact payloads for this record; the record exposes figures as name+caption metadata only, so binary/JSON payloads cannot be registered at content level in this work package"
+      },
+      "claims": [],
+      "claims_note": "claims intentionally empty: task_type 01-asset-registration performs no extraction and the contract allows an empty array; nothing here is marked verified",
+      "summary": {
+        "assets": 23,
+        "assets_by_kind": {
+          "report_markdown": 1,
+          "figure": 5,
+          "code_file": 2,
+          "declared_input_glob": 1,
+          "test_file": 1,
+          "data_artifact": 5,
+          "tool": 1,
+          "ledger": 1,
+          "inline_markdown_table": 5,
+          "inline_fenced_block": 1
+        },
+        "attachments": 5,
+        "locators_checked": 22,
+        "locators_resolved": 22,
+        "duplicate_asset_ids": [],
+        "claims": 0
+      },
+      "limitations": [
+        "single-report scope: only report_id=7878 is read; no other report_id is touched",
+        "no extraction: no number/quote from the body is promoted to a claim; table and block assets are registered as structure (rows/columns) only",
+        "hash equality is a mechanical identity check, not an endorsement of the report's conclusions; verification stays with the platform gate",
+        "referenced artifact paths are quoted from the markdown, but the files live in the producing repository (ship-performance-platform), not in this record",
+        "the upstream self-declared table provenance (SURROGATE) is registered verbatim as a pointer, not re-checked",
+        "the report's own numbers (e.g. 47 passed, 2.50% Cb deviation) are not re-executed here"
+      ]
+    }
+  },
+  "claims": []
+}
