@@ -1,0 +1,196 @@
+{
+  "report_id": "7554",
+  "note": "Discovery plan for wp-7554-01. Each `anchor` MUST occur exactly once in the report markdown; the build tool aborts otherwise. The manifest quote is the machine-sliced anchor span, never retyped.",
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "Report 7554 markdown itself (contract source)",
+      "in_report_section": "title / ① 案例介绍",
+      "kind": "report_markdown",
+      "uri": "tensor://reports/{report_id}",
+      "method": "document",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(markdown utf-8) == contract source_hash",
+        "result": "resolved"
+      },
+      "note": "Whole-document asset; end_char = len(markdown). Bytes re-hashed locally at build time."
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "artifact_file",
+      "label": "artifacts/p143_w1/prop-6357.json (6 proposal task-sheets)",
+      "in_report_section": "preamble 产物行",
+      "kind": "json_artifact",
+      "uri": "artifact://p143_w1/prop-6357.json",
+      "anchor": "`artifacts/p143_w1/prop-6357.json`（6 条完整任务书）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "path exists in this worktree (glob artifacts/p143_w1/prop-6357.json)",
+        "result": "unresolved"
+      },
+      "note": "Path is named in the report but no such file is present in this worktree (artifacts/ is gitignored and only holds oss-lbm-kruger). Not fetched: out of this package's scope. Not a claim that the file never existed.",
+      "present_in_worktree": false
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "artifact_file",
+      "label": "fig_data.json (source numbers behind figures 1-2)",
+      "in_report_section": "preamble 产物行; ③ 欠账账本",
+      "kind": "json_artifact",
+      "uri": "artifact://p143_w1/fig_data.json",
+      "anchor": "`fig_data.json`（图数据）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "path exists in this worktree (glob **/fig_data.json)",
+        "result": "unresolved"
+      },
+      "note": "Cited as the single source of the figure numbers; absent from this worktree, so this package cannot independently re-derive the plotted values. No attempt to reconstruct them (no-invention constraint).",
+      "present_in_worktree": false
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "code_artifact",
+      "label": "gen_figs.py (figure data-extraction / plotting script)",
+      "in_report_section": "preamble 产物行",
+      "kind": "source_code",
+      "uri": "artifact://p143_w1/gen_figs.py",
+      "anchor": "`gen_figs.py`（取数/绘图脚本）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "path exists in this worktree (glob **/gen_figs.py)",
+        "result": "unresolved"
+      },
+      "note": "Referenced without a directory prefix, so its location is ambiguous in the source; not resolvable from this worktree.",
+      "present_in_worktree": false
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "embedded_figure",
+      "label": "fig1_frontier_coverage.png (plan-143 node states + discipline coverage heatmap)",
+      "in_report_section": "③ 计算结果 / ④ 结果图 图 1",
+      "kind": "platform_figure",
+      "uri": "tensor://reports/{report_id}#figures[0]",
+      "anchor": "![fig1](fig:fig1_frontier_coverage)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "read API (GET /tensor/reports/7554) exposes a figure payload field",
+        "result": "unresolved"
+      },
+      "note": "The report read API returns only {name, caption} for figures[0] — no payload field — so no image bytes can be hashed or embedded here. Whether bytes are stored server-side is NOT determined by this package (control: this package submitted a 65,141-byte PNG and the read-back still exposed only name/caption). Not a claim that the figure does not exist.",
+      "present_in_worktree": false
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "embedded_figure",
+      "label": "fig2_gap_ledger.png (attainment ratio of the six indebtedness items, log axis)",
+      "in_report_section": "③ 计算结果 / ④ 结果图 图 2",
+      "kind": "platform_figure",
+      "uri": "tensor://reports/{report_id}#figures[1]",
+      "anchor": "![fig2](fig:fig2_gap_ledger)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "read API (GET /tensor/reports/7554) exposes a figure payload field",
+        "result": "unresolved"
+      },
+      "note": "The report read API returns only {name, caption} for figures[1] — no payload field — so no image bytes can be hashed or embedded here. Whether bytes are stored server-side is NOT determined by this package (control: this package submitted a 65,141-byte PNG and the read-back still exposed only name/caption). Not a claim that the figure does not exist.",
+      "present_in_worktree": false
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "field_contour",
+      "label": "field-quantity contour (contradiction/pressure fields) for this report",
+      "in_report_section": "⑤ 注意点 1",
+      "kind": "absent_by_declaration",
+      "uri": "tensor://reports/{report_id}#absent:field_contour",
+      "anchor": "图里没有场量云图",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "report self-declares that no field was solved, hence no contour exists",
+        "result": "absent"
+      },
+      "note": "Registered as an explicit absence so that downstream tasks do not hunt for a contour that was never produced. Reason given by the report: this is a proposal-only report with no simulated field."
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "data_source",
+      "label": "campaign_nodes (plan_id=143) node-state table, read by SQL",
+      "in_report_section": "② 怎么做的 1. 情报归集",
+      "kind": "database_table",
+      "uri": "db://tensorplatform/campaign_nodes?plan_id=143",
+      "anchor": "`campaign_nodes(plan_id=143)` 状态 SQL 直读",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "table content re-read and compared inside this package",
+        "result": "unresolved"
+      },
+      "note": "Upstream database state, not an attachment of the report; re-reading it would be a later verification task, not asset registration. Not queried here (out of scope).",
+      "present_in_worktree": false
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "data_source",
+      "label": "tensor_guide_tracker KPI snapshot (success_rate/lineage_coverage/kb_samples/...)",
+      "in_report_section": "① 案例介绍 参数/主体",
+      "kind": "database_table",
+      "uri": "db://tensorplatform/tensor_guide_tracker",
+      "anchor": "`tensor_guide_tracker` 最新 KPI 快照",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "KPI numbers re-read from the tracker inside this package",
+        "result": "unresolved"
+      },
+      "note": "The snapshot is point-in-time ('最新'), so the values quoted in the source cannot be re-resolved exactly later even by a reader with DB access. Baseline drift is expected.",
+      "present_in_worktree": false
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "upstream_report",
+      "label": "report m6334 (P1: SC-LBM droplet entry, Laplace/added-mass criteria)",
+      "in_report_section": "① 案例介绍 / ⑤ 注意点",
+      "kind": "report_reference",
+      "uri": "tensor://reports/mission:6334",
+      "anchor": "P1（m6334）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "report 6334 markdown read inside this package",
+        "result": "unresolved"
+      },
+      "note": "Cross-report reference. Deliberately NOT fetched: the package boundary forbids touching any report_id other than 7554.",
+      "present_in_worktree": false
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "upstream_report",
+      "label": "report m6335 (P2: TensorDEM bonded-particle ice fracture, UCS/ν/Weibull criteria)",
+      "in_report_section": "① 案例介绍 / ⑤ 注意点",
+      "kind": "report_reference",
+      "uri": "tensor://reports/mission:6335",
+      "anchor": "P2（m6335）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "report 6335 markdown read inside this package",
+        "result": "unresolved"
+      },
+      "note": "Same boundary rule as A10: reference recorded, bytes not read here.",
+      "present_in_worktree": false
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "upstream_report",
+      "label": "report m6330 (A3: run-manifest back-filler, limitation 5)",
+      "in_report_section": "① 案例介绍 / ⑤ 注意点 3",
+      "kind": "report_reference",
+      "uri": "tensor://reports/mission:6330",
+      "anchor": "A3（m6330）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "report 6330 markdown read inside this package",
+        "result": "unresolved"
+      },
+      "note": "Same boundary rule as A10/A11; the report quotes A3's limitation 5, which this package does not re-verify.",
+      "present_in_worktree": false
+    }
+  ]
+}
