@@ -1,0 +1,40 @@
+{
+  "package_id": "wp-7743-01",
+  "report_id": "7743",
+  "verified_at": "2026-11-12T01:33:39.901725+00:00",
+  "acceptance": {
+    "valid_json": {
+      "ok": true,
+      "detail": "asset_manifest.json + kf_result.json parse as JSON"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": "kf_result.v1 errors=0; asset_manifest.v1.pattern errors=0",
+      "errors": []
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": "34 locators + 38 occurrences re-resolved by char span against live markdown",
+      "failures": []
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": "live=sha256:2db8e0192df29ddfed091f81cdf35c5f128166ab8966c45298f354dd9a15e21a manifest=sha256:2db8e0192df29ddfed091f81cdf35c5f128166ab8966c45298f354dd9a15e21a envelope=sha256:2db8e0192df29ddfed091f81cdf35c5f128166ab8966c45298f354dd9a15e21a contract=sha256:2db8e0192df29ddfed091f81cdf35c5f128166ab8966c45298f354dd9a15e21a",
+      "chars": {
+        "live": 6520,
+        "manifest": 6520,
+        "contract": 6520
+      }
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": "34 asset ids; duplicate ids=[]; duplicate (class,ref_key)=[]"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": "0 claims (empty is contract-legal); empty-claims reason stated=True"
+    }
+  },
+  "all_ok": true,
+  "note": "Self-check only: no claim is marked verified here. The platform gate recomputes hash + locator substrings independently."
+}
