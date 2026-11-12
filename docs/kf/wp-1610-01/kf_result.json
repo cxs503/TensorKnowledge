@@ -1,0 +1,86 @@
+{
+  "package_id": "wp-1610-01",
+  "task_type": "01-asset-registration",
+  "report_id": "1610",
+  "provenance": {
+    "source_hash": "sha256:c426979905fa50a5cd372e8e7b300ad931596c437ea1cbabb79df59c7aaa41de",
+    "source_field": "markdown",
+    "producer": "agent/m15530",
+    "emitted_at": "2026-11-12T00:54:15+00:00",
+    "notes": "source_hash recomputed with hashlib.sha256 over the report markdown bytes fetched from GET /api/v1/tensor/reports/1610; matches the contract-declared hash. Hash equality is a mechanical identity check only: no claim in this package is marked verified, verification stays with the platform gate."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "package_id": "wp-1610-01",
+      "task_type": "01-asset-registration",
+      "report_id": "1610",
+      "source_uri": "tensor://reports/1610",
+      "source_field": "markdown",
+      "source_hash": "sha256:c426979905fa50a5cd372e8e7b300ad931596c437ea1cbabb79df59c7aaa41de",
+      "source_hash_expected": "sha256:c426979905fa50a5cd372e8e7b300ad931596c437ea1cbabb79df59c7aaa41de",
+      "source_hash_matches": true,
+      "hash_algorithm": "sha256 over UTF-8 bytes of the markdown field",
+      "title": "CMA-ES 内核文献基准独立复核：Hansen 2016 闭式参数零误差、8/8 检查通过，并修复 4 处静默稳健性缺陷（m1884）",
+      "scenario_key": "cmaes_literature_verification",
+      "source_mission_id": 1884,
+      "source_status": "published",
+      "chars": 5883,
+      "bytes_utf8": 9536,
+      "heading_count": 12,
+      "headings": [
+        "# CMA-ES 内核文献/解析基准独立复核（optimizer.core.cmaes）",
+        "## 1. 案例介绍",
+        "## 2. 方法与工具链",
+        "## 3. 计算结果",
+        "### 3.1 闭式策略参数（Hansen 2016 式 49-55）",
+        "### 3.2 收敛：达到解析最优目标所需评价次数（shipped vs 独立参考实现）",
+        "### 3.3 其余性质检查",
+        "### 3.4 修复 B1（C_old 一致性）的 A/B 实测",
+        "### 3.5 图",
+        "## 4. 注意点与局限",
+        "## 5. 误差判定（逐项，显式回答是否 <3%）",
+        "## 6. 复现"
+      ],
+      "attachments": [
+        {
+          "name": "cmaes_convergence_vs_reference.png",
+          "caption": "Best-so-far fitness per generation on 5-D analytic benchmarks (sphere/ellipsoid/cigar/rosenbrock, f*=0), shipped kernel vs from-paper reference implementation.",
+          "origin": "record.figures"
+        },
+        {
+          "name": "cmaes_evals_to_target.png",
+          "caption": "Evaluations needed to reach the analytic-optimum target; annotation = shipped/reference ratio (acceptance gate <= 3).",
+          "origin": "record.figures"
+        },
+        {
+          "name": "cmaes_achieved_precision.png",
+          "caption": "Achieved distance to the analytically known optimum per case.",
+          "origin": "record.figures"
+        }
+      ],
+      "attachments_note": "figure metadata from the report record only; PNG payloads are not downloaded or checked in this package",
+      "artifacts": [
+        {
+          "path": "artifacts/cmaes_verification/cmaes_convergence_vs_reference.png",
+          "locator": "markdown §3.5 图",
+          "resolvable_from_platform_record": false,
+          "note": "path text is quoted verbatim from the report; the binary lives in the producing repo, not in this record"
+        },
+        {
+          "path": "artifacts/cmaes_verification/cmaes_evals_to_target.png",
+          "locator": "markdown §3.5 图",
+          "resolvable_from_platform_record": false,
+          "note": "path text is quoted verbatim from the report; the binary lives in the producing repo, not in this record"
+        },
+        {
+          "path": "artifacts/cmaes_verification/cmaes_achieved_precision.png",
+          "locator": "markdown §3.5 图",
+          "resolvable_from_platform_record": false,
+          "note": "path text is quoted verbatim from the report; the binary lives in the producing repo, not in this record"
+        }
+      ],
+      "claims": [],
+      "claims_note": "claims intentionally empty: this package only registers assets; no extraction, no invented claims"
+    }
+  }
+}
