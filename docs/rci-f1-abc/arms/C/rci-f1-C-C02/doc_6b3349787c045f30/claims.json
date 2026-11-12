@@ -1,0 +1,432 @@
+{
+ "doc_id": "doc:6b3349787c045f30",
+ "package_id": "rci-f1-C-C02",
+ "lane": "C",
+ "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+ "claim_schema": "rci-f1.claim/1.0",
+ "claims": [
+  {
+   "claim_id": "rci-f1:c:C02-6b334978-01",
+   "doc_id": "doc:6b3349787c045f30",
+   "statement": "> 审计对象:/nfs/wangxi/tensor_eco/TensorDEM(104 个 .py 模块) > 审计日期:2026-10-21 > 审计方法:只读源码 + 已有测试用例,不修改任何 src/ 代码 > 所有\"已有\"论断均附 file:line 证据,零手抄。",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+    "quote": "> 审计对象：`/nfs/wangxi/tensor_eco/TensorDEM`（104 个 .py 模块）\n> 审计日期：2026-10-21\n> 审计方法：只读源码 + 已有测试用例，不修改任何 src/ 代码\n> 所有\"已有\"论断均附 `file:line` 证据，零手抄。",
+    "span": [
+     39,
+     180
+    ],
+    "lines": [
+     3,
+     6
+    ],
+    "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C02-6b334978-01-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 19,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "SI-0D: TensorDEM 能力审计（Phase 0 — 纯读）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C02-6b334978-02",
+   "doc_id": "doc:6b3349787c045f30",
+   "statement": "颗粒形状族(仅球体/无 clump) dem3d.py 有测试 直接 dem3d.py:19 \"3-D bonded-sphere model\";dem3d.py:130-133 仅支持 box/cylinder_xz,粒子坐标=格点×2×radius,纯球体;dem3d.py:355 接触检测 overlap = (2 * cfg.radius - cdistance) 纯球-球",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+    "quote": "| 颗粒形状族（仅球体/无 clump） | `dem3d.py` | **有测试** | 直接 | `dem3d.py:19` \"3-D bonded-sphere model\"；`dem3d.py:130-133` 仅支持 box/cylinder_xz，粒子坐标=格点×2×radius，纯球体；`dem3d.py:355` 接触检测 `overlap = (2 * cfg.radius - cdistance)` 纯球-球 |",
+    "span": [
+     339,
+     557
+    ],
+    "lines": [
+     16,
+     16
+    ],
+    "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C02-6b334978-02-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 2,
+    "total": 21,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "1-A 碎冰块接触模型（dem3d）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C02-6b334978-03",
+   "doc_id": "doc:6b3349787c045f30",
+   "statement": "接触本构(法向弹簧+阻尼,无切向摩擦) dem3d.py 有测试 直接 dem3d.py:364 contact_mag = cfg.contact_stiffness * overlap - cfg.contact_damping * vn 仅法向;dem3d.py:29 默认 contact_damping=5.0;无 friction/restitution 参数(全库搜索零结果)",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+    "quote": "| 接触本构（法向弹簧+阻尼，无切向摩擦） | `dem3d.py` | **有测试** | 直接 | `dem3d.py:364` `contact_mag = cfg.contact_stiffness * overlap - cfg.contact_damping * vn` 仅法向；`dem3d.py:29` 默认 `contact_damping=5.0`；无 `friction`/`restitution` 参数（全库搜索零结果） |",
+    "span": [
+     558,
+     783
+    ],
+    "lines": [
+     17,
+     17
+    ],
+    "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C02-6b334978-03-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 2,
+    "total": 21,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "1-A 碎冰块接触模型（dem3d）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C02-6b334978-04",
+   "doc_id": "doc:6b3349787c045f30",
+   "statement": "恢复系数标定 无专门模块 仅原型 间接 dem3d.py:364 法向阻尼通过 contact_damping 参数实现能量耗散,但无 restitution→damping 的解析映射函数;dem3d_energy.py:55-84 _dissipation_rates() 可量化阻尼耗散率,用于后验拟合但不提供预标定接口",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+    "quote": "| 恢复系数标定 | 无专门模块 | **仅原型** | 间接 | `dem3d.py:364` 法向阻尼通过 `contact_damping` 参数实现能量耗散，但无 restitution→damping 的解析映射函数；`dem3d_energy.py:55-84` `_dissipation_rates()` 可量化阻尼耗散率，用于后验拟合但不提供预标定接口 |",
+    "span": [
+     784,
+     971
+    ],
+    "lines": [
+     18,
+     18
+    ],
+    "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C02-6b334978-04-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 2,
+    "total": 21,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "1-A 碎冰块接触模型（dem3d）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C02-6b334978-05",
+   "doc_id": "doc:6b3349787c045f30",
+   "statement": "键合断裂(拉/剪应变准则) dem3d.py 有测试 直接 dem3d.py:27-28 breaking_strain=0.015, shear_breaking_strain=0.03;dem3d.py:304-319 _commit_fracture() 拉/剪双准则;测试 test_dem3d.py:40-48 验证断裂不可逆",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+    "quote": "| 键合断裂（拉/剪应变准则） | `dem3d.py` | **有测试** | 直接 | `dem3d.py:27-28` `breaking_strain=0.015, shear_breaking_strain=0.03`；`dem3d.py:304-319` `_commit_fracture()` 拉/剪双准则；测试 `test_dem3d.py:40-48` 验证断裂不可逆 |",
+    "span": [
+     972,
+     1168
+    ],
+    "lines": [
+     19,
+     19
+    ],
+    "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C02-6b334978-05-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 2,
+    "total": 21,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "1-A 碎冰块接触模型（dem3d）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C02-6b334978-06",
+   "doc_id": "doc:6b3349787c045f30",
+   "statement": "流体主步:dt_fluid(LBM 典型 1e-5~1e-4 s)",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+    "quote": "- **流体主步**：`dt_fluid`（LBM 典型 1e-5~1e-4 s）",
+    "span": [
+     8434,
+     8475
+    ],
+    "lines": [
+     130,
+     130
+    ],
+    "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C02-6b334978-06-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 4,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 1,
+    "total": 19,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "5.3 时钟节拍建议",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C02-6b334978-07",
+   "doc_id": "doc:6b3349787c045f30",
+   "statement": "参照现有 calibrated_wet_coupling.py:23 的模式",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+    "quote": "- 参照现有 `calibrated_wet_coupling.py:23` 的模式",
+    "span": [
+     8571,
+     8613
+    ],
+    "lines": [
+     132,
+     132
+    ],
+    "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C02-6b334978-07-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 3,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 2,
+    "total": 19,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "5.3 时钟节拍建议",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C02-6b334978-08",
+   "doc_id": "doc:6b3349787c045f30",
+   "statement": "交换节拍:每 exchange_steps 个流体步交换一次(参照 calibrated_wet_coupling.py:62)",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+    "quote": "- **交换节拍**：每 `exchange_steps` 个流体步交换一次（参照 `calibrated_wet_coupling.py:62`）",
+    "span": [
+     8614,
+     8688
+    ],
+    "lines": [
+     133,
+     133
+    ],
+    "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C02-6b334978-08-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 4,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 2,
+    "total": 21,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "5.3 时钟节拍建议",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C02-6b334978-09",
+   "doc_id": "doc:6b3349787c045f30",
+   "statement": "建议:3D 耦合沿用 2D 已验证的 subcycling 架构,将 exchange_state() 从 dem.py:389-400 模式扩展到 dem3d.py",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+    "quote": "- **建议**：3D 耦合沿用 2D 已验证的 subcycling 架构，将 `exchange_state()` 从 `dem.py:389-400` 模式扩展到 `dem3d.py`",
+    "span": [
+     8689,
+     8784
+    ],
+    "lines": [
+     134,
+     134
+    ],
+    "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C02-6b334978-09-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 2,
+    "total": 22,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "5.3 时钟节拍建议",
+   "epistemic_status": "draft"
+  }
+ ]
+}
