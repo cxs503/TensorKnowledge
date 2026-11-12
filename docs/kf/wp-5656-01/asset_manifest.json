@@ -1,0 +1,500 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-5656-01",
+  "task_type": "01-asset-registration",
+  "report_id": "5656",
+  "source": {
+    "uri": "tensor://reports/5656",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "0e698f7d7f4fb439b5c47b210d0a2b3cc8d94cd44852b3693e6b5895befd8e51",
+    "chars": 2506,
+    "bytes_utf8": 2530,
+    "title": "D3Q27 Lattice Enumeration Revival & Maturation (IN14-D9)",
+    "scenario_key": "IN14-D9",
+    "platform_id": "5656",
+    "platform_mission_id": 4955,
+    "platform_figures": [
+      {
+        "name": "cavity_u_profile",
+        "caption": "u/u_lid along vertical centreline"
+      },
+      {
+        "name": "cavity_v_profile",
+        "caption": "v/u_lid along horizontal centreline"
+      },
+      {
+        "name": "cavity_error_comparison",
+        "caption": "Error comparison bar chart"
+      }
+    ],
+    "platform_tags": [
+      "D3Q27",
+      "LBM",
+      "enumeration",
+      "cavity",
+      "validation"
+    ],
+    "retrieved_via": "GET /api/v1/tensor/reports/5656",
+    "local_copy": "runs/wp-5656-01/report_5656.md"
+  },
+  "counts": {
+    "assets": 17,
+    "by_class": {
+      "code_convention": 1,
+      "code_reference": 1,
+      "document": 1,
+      "embedded_figure": 3,
+      "error_assessment": 1,
+      "external_reference": 1,
+      "heading": 1,
+      "lattice_definition": 1,
+      "limitation_set": 1,
+      "method_block": 2,
+      "parameter_set": 1,
+      "primary_conclusion": 1,
+      "result_table": 1,
+      "test_coverage": 1
+    },
+    "by_resolution": {
+      "referenced_unresolved": 5,
+      "resolved_in_source": 12
+    },
+    "resolved_in_source": 12,
+    "referenced_unresolved": 5,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "document",
+      "label": "report markdown (full source field)",
+      "uri": "tensor://reports/5656#L1-L66",
+      "in_report_section": "(document)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 2506,
+        "start_line": 1,
+        "end_line": 66,
+        "quote": "# D3Q27 Lattice Enumeration Revival & Maturation\n\n## 1. Case Introduction\n\nThe D3Q27 lattice is a 3D LBM stencil with 27 velocity directions covering all combinations of (cx,cy,cz) ∈ {-1,0,1}³. Compared to D3Q19 (19 directions), D3Q27 includes 8 corner directions (|c|=√3) achieving 4th-order isotropy, reducing numerical artefacts in flows with strong corner-region gradients.\n\n**Parameters:**\n- Grid: 16×16×2 (spanwise-periodic 3D cavity)\n- Lid velocity: u_lid = 0.06 (lattice units)\n- Relaxation time: τ = 0.8 (Re ≈ 3.2)\n- Steps: 2000\n- Collision: MRT (Multi-Relaxation-Time)\n- Reference: Ghia et al. (1982), Re=400\n\n## 2. Methodology\n\n### 2.1 Enumeration Symmetry Self-Check\n- Verified all 27 combinations of {-1,0,1}³ are present (completeness)\n- Verified no duplicate velocities\n- Verified c_q and -c_q pairing via OPPOSITE map\n- Verified weight sum = 1 (w_rest=8/27, w_face=2/27, w_edge=1/54, w_corner=1/216)\n- Verified 4th-order isotropy moments\n\n### 2.2 Lid-Driven Cavity Comparison\n- Spanwise-periodic 3D cavity with stationary walls (x=0, x=nx-1, y=0) via bounce-back\n- Moving lid (y=ny-1) via Zou/He BC\n- MRT collision for both D3Q27 and D3Q19\n- Centreline velocity profiles compared against Ghia reference\n\n### 2.3 Layout Convention\n- C tensor: shape (Q,3) with columns (cx,cy,cz)\n- Solver fields: shape (Q,nz,ny,nx)\n- Streaming: torch.roll with shifts (cz,cy,cx) on dims (0,1,2)\n\n## 3. Results\n\n| Metric | D3Q27 | D3Q19 |\n|--------|-------|-------|\n| u L2 error | 0.4752 | 0.4691 |\n| v L2 error | 0.0998 | 0.1092 |\n| u max error | 1.0185 | 1.0000 |\n| v max error | 0.1614 | 0.2319 |\n| Compute time | 67.6s | 13.4s |\n\n## 4. Error Assessment\n\nThe errors vs Ghia Re=400 reference are large (u_L2≈0.47) because:\n1. Grid resolution is coarse (16×16) vs Ghia's 129×129\n2. τ=0.8 corresponds to Re≈3.2, not Re=400\n3. Spanwise resolution is minimal (nz=2)\n\n**Key finding:** D3Q27 and D3Q19 produce comparable results (within 2%), validating the D3Q27 implementation.\n\n## 5. Test Coverage\n\n- 32 enumeration tests (symmetry, completeness, weights, layout, negative cases, isotropy)\n- 5 cavity comparison tests (finite results, lid velocity, D3Q27 vs D3Q19)\n- 31 existing D3Q27 tests (all passing)\n- **Total: 68 tests passing**\n\n## 6. Limitations\n\n- Full Re=400 comparison requires finer grid (≥64×64) and more steps (≥8000), which exceeds local compute budget\n- D3Q27 streaming is ~5× slower than D3Q19 due to 27 vs 19 directions\n- Corner directions in D3Q27 add computational cost but improve isotropy\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Whole markdown field; sha256 recomputed locally from utf-8 bytes."
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "heading",
+      "label": "report title heading",
+      "uri": "tensor://reports/5656#L1-L1",
+      "in_report_section": "1. Case Introduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 48,
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "# D3Q27 Lattice Enumeration Revival & Maturation",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Top-level heading of the report."
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "lattice_definition",
+      "label": "D3Q27 stencil definition (27 velocity directions)",
+      "uri": "tensor://reports/5656#L5-L5",
+      "in_report_section": "1. Case Introduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 75,
+        "end_char": 377,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "The D3Q27 lattice is a 3D LBM stencil with 27 velocity directions covering all combinations of (cx,cy,cz) ∈ {-1,0,1}³. Compared to D3Q19 (19 directions), D3Q27 includes 8 corner directions (|c|=√3) achieving 4th-order isotropy, reducing numerical artefacts in flows with strong corner-region gradients.",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Declares the stencil enumeration domain {-1,0,1}^3 used by the solver."
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "parameter_set",
+      "label": "run parameters: grid / u_lid / tau / steps / collision",
+      "uri": "tensor://reports/5656#L8-L12",
+      "in_report_section": "1. Case Introduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 395,
+        "end_char": 578,
+        "start_line": 8,
+        "end_line": 12,
+        "quote": "- Grid: 16×16×2 (spanwise-periodic 3D cavity)\n- Lid velocity: u_lid = 0.06 (lattice units)\n- Relaxation time: τ = 0.8 (Re ≈ 3.2)\n- Steps: 2000\n- Collision: MRT (Multi-Relaxation-Time)",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Registers the 5 numeric run parameters verbatim; values are not re-derived here."
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "external_reference",
+      "label": "reference dataset in-text citation: Ghia et al. (1982), Re=400",
+      "uri": "tensor://reports/5656#L13-L13",
+      "in_report_section": "1. Case Introduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 579,
+        "end_char": 618,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "- Reference: Ghia et al. (1982), Re=400",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "unresolved",
+        "passed": true
+      },
+      "note": "Citation of an external publication; its table is not embedded in the report, so no bytes are resolvable in this package's scope."
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "method_block",
+      "label": "2.1 enumeration symmetry self-check (completeness / no-dup / OPPOSITE / weights / isotropy)",
+      "uri": "tensor://reports/5656#L17-L22",
+      "in_report_section": "2.1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 639,
+        "end_char": 953,
+        "start_line": 17,
+        "end_line": 22,
+        "quote": "### 2.1 Enumeration Symmetry Self-Check\n- Verified all 27 combinations of {-1,0,1}³ are present (completeness)\n- Verified no duplicate velocities\n- Verified c_q and -c_q pairing via OPPOSITE map\n- Verified weight sum = 1 (w_rest=8/27, w_face=2/27, w_edge=1/54, w_corner=1/216)\n- Verified 4th-order isotropy moments",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Five stated self-check items, including the D3Q27 weight set."
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "method_block",
+      "label": "2.2 lid-driven cavity comparison setup (BCs, MRT, centreline vs Ghia)",
+      "uri": "tensor://reports/5656#L24-L28",
+      "in_report_section": "2.2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 955,
+        "end_char": 1218,
+        "start_line": 24,
+        "end_line": 28,
+        "quote": "### 2.2 Lid-Driven Cavity Comparison\n- Spanwise-periodic 3D cavity with stationary walls (x=0, x=nx-1, y=0) via bounce-back\n- Moving lid (y=ny-1) via Zou/He BC\n- MRT collision for both D3Q27 and D3Q19\n- Centreline velocity profiles compared against Ghia reference",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Setup of the comparison that produced the results table."
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "code_convention",
+      "label": "2.3 layout convention (C shape, field shape, streaming shifts)",
+      "uri": "tensor://reports/5656#L30-L33",
+      "in_report_section": "2.3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1220,
+        "end_char": 1392,
+        "start_line": 30,
+        "end_line": 33,
+        "quote": "### 2.3 Layout Convention\n- C tensor: shape (Q,3) with columns (cx,cy,cz)\n- Solver fields: shape (Q,nz,ny,nx)\n- Streaming: torch.roll with shifts (cz,cy,cx) on dims (0,1,2)",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Implementation conventions stated in prose; no module path is given."
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "result_table",
+      "label": "results table: u/v L2 and max errors, compute time (D3Q27 vs D3Q19)",
+      "uri": "tensor://reports/5656#L37-L43",
+      "in_report_section": "3. Results",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1409,
+        "end_char": 1629,
+        "start_line": 37,
+        "end_line": 43,
+        "quote": "| Metric | D3Q27 | D3Q19 |\n|--------|-------|-------|\n| u L2 error | 0.4752 | 0.4691 |\n| v L2 error | 0.0998 | 0.1092 |\n| u max error | 1.0185 | 1.0000 |\n| v max error | 0.1614 | 0.2319 |\n| Compute time | 67.6s | 13.4s |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Only quantitative results block in the report; registered as one table asset."
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "error_assessment",
+      "label": "4. Error Assessment: three stated causes of the large errors",
+      "uri": "tensor://reports/5656#L47-L50",
+      "in_report_section": "4. Error Assessment",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1655,
+        "end_char": 1860,
+        "start_line": 47,
+        "end_line": 50,
+        "quote": "The errors vs Ghia Re=400 reference are large (u_L2≈0.47) because:\n1. Grid resolution is coarse (16×16) vs Ghia's 129×129\n2. τ=0.8 corresponds to Re≈3.2, not Re=400\n3. Spanwise resolution is minimal (nz=2)",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Self-declared error attribution (grid, tau/Re, nz)."
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "primary_conclusion",
+      "label": "4. key finding: D3Q27 ~ D3Q19 within 2%",
+      "uri": "tensor://reports/5656#L52-L52",
+      "in_report_section": "4. Error Assessment",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1862,
+        "end_char": 1971,
+        "start_line": 52,
+        "end_line": 52,
+        "quote": "**Key finding:** D3Q27 and D3Q19 produce comparable results (within 2%), validating the D3Q27 implementation.",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Report's own headline conclusion; registered, NOT marked verified (gate decides)."
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "test_coverage",
+      "label": "5. Test Coverage counts (32 + 5 + 31 = 68 passing)",
+      "uri": "tensor://reports/5656#L56-L59",
+      "in_report_section": "5. Test Coverage",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1994,
+        "end_char": 2229,
+        "start_line": 56,
+        "end_line": 59,
+        "quote": "- 32 enumeration tests (symmetry, completeness, weights, layout, negative cases, isotropy)\n- 5 cavity comparison tests (finite results, lid velocity, D3Q27 vs D3Q19)\n- 31 existing D3Q27 tests (all passing)\n- **Total: 68 tests passing**",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Test counts as declared by the report."
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "code_reference",
+      "label": "test suite reference (enumeration + cavity comparison tests)",
+      "uri": "tensor://reports/5656#L56-L58",
+      "in_report_section": "5. Test Coverage",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1994,
+        "end_char": 2199,
+        "start_line": 56,
+        "end_line": 58,
+        "quote": "- 32 enumeration tests (symmetry, completeness, weights, layout, negative cases, isotropy)\n- 5 cavity comparison tests (finite results, lid velocity, D3Q27 vs D3Q19)\n- 31 existing D3Q27 tests (all passing)",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "unresolved",
+        "passed": true
+      },
+      "note": "Counts are given but no module/file path or commit id appears in the report; target bytes are not locatable from this report alone."
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "limitation_set",
+      "label": "6. Limitations: resolution/steps budget, 5x cost, corner cost vs isotropy",
+      "uri": "tensor://reports/5656#L63-L65",
+      "in_report_section": "6. Limitations",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2250,
+        "end_char": 2505,
+        "start_line": 63,
+        "end_line": 65,
+        "quote": "- Full Re=400 comparison requires finer grid (≥64×64) and more steps (≥8000), which exceeds local compute budget\n- D3Q27 streaming is ~5× slower than D3Q19 due to 27 vs 19 directions\n- Corner directions in D3Q27 add computational cost but improve isotropy",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote; md.count(quote) == 1",
+        "result": "present",
+        "passed": true
+      },
+      "note": "Declared limitations of the reported results."
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "embedded_figure",
+      "label": "figure[0] cavity_u_profile",
+      "uri": "tensor://reports/5656#figures[0]",
+      "in_report_section": "3. Results",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2506,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "platform figures[] index 0 (u/u_lid along vertical centreline)",
+        "unique": true,
+        "field": "figures",
+        "index": 0
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform figures[0] present; payload png_base64 absent",
+        "result": "unresolved",
+        "passed": true
+      },
+      "note": "Platform lists name+caption only (no png_base64 payload in figures[]), so no byte hash is claimable; payload resolution is out of this package's scope."
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "embedded_figure",
+      "label": "figure[1] cavity_v_profile",
+      "uri": "tensor://reports/5656#figures[1]",
+      "in_report_section": "3. Results",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2506,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "platform figures[] index 1 (v/u_lid along horizontal centreline)",
+        "unique": true,
+        "field": "figures",
+        "index": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform figures[1] present; payload png_base64 absent",
+        "result": "unresolved",
+        "passed": true
+      },
+      "note": "Platform lists name+caption only; no payload -> unresolved in this package."
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "embedded_figure",
+      "label": "figure[2] cavity_error_comparison",
+      "uri": "tensor://reports/5656#figures[2]",
+      "in_report_section": "3. Results",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2506,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "platform figures[] index 2 (Error comparison bar chart)",
+        "unique": true,
+        "field": "figures",
+        "index": 2
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform figures[2] present; payload png_base64 absent",
+        "result": "unresolved",
+        "passed": true
+      },
+      "note": "Platform lists name+caption only; no payload -> unresolved in this package."
+    }
+  ],
+  "claims": [],
+  "claims_note": "objective.classify_report_type=false and no extraction is in scope for task_type 01-asset-registration, so claims[] is empty by contract. Nothing in this manifest is marked verified; verification is computed by the platform gate.",
+  "integrity": {
+    "quote_uniqueness": true,
+    "hash_recomputed_locally": "0e698f7d7f4fb439b5c47b210d0a2b3cc8d94cd44852b3693e6b5895befd8e51",
+    "hash_matches_contract": true,
+    "chars_match_contract": true,
+    "no_duplicate_ids": true,
+    "all_resolution_checks_passed": true,
+    "hand_copied_text": false,
+    "hand_copy_note": "quotes are sliced from the fetched markdown by line range (builder never types source text)",
+    "claims_marked_verified": 0
+  },
+  "artifact_endpoint_probe": {
+    "/tensor/reports/5656/artifacts": {
+      "status": "http_404"
+    },
+    "/tensor/reports/5656/attachments": {
+      "status": "http_404"
+    },
+    "/tensor/artifacts?report_id=5656": {
+      "status": "http_404"
+    },
+    "conclusion": "platform exposes no attachment/artifact listing for this report (all three probes 404), so the only enumerable non-markdown assets are source.platform_figures (3, metadata only)"
+  },
+  "limitations": [
+    "Registration only: no parameter/claim extraction, no recalculation of the reported numbers.",
+    "Figure payloads are not stored by the report record (name+caption only); they stay referenced_unresolved.",
+    "Test counts in section 5 cannot be bound to a commit or module path from the report text alone.",
+    "Asset identity is per declared span; overlapping spans (e.g. the test-coverage block and its code_reference view) are intentional and carry distinct ids."
+  ],
+  "generated_at": "2026-11-12T01:22:01.761527+00:00",
+  "generator": "scripts/kf/build_asset_manifest_5656.py",
+  "contract_version": "1.0"
+}
