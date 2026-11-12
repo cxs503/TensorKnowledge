@@ -1,0 +1,658 @@
+{
+  "schema": "asset_manifest.v1",
+  "manifest_version": "1.0",
+  "package_id": "wp-6551-01",
+  "task_type": "01-asset-registration",
+  "report_id": "6551",
+  "lane": "C",
+  "generated_at": "2026-11-12T01:29:45.622429+00:00",
+  "producer": "kf-worker/m15591",
+  "objective": {
+    "register_assets": true,
+    "classify_report_type": false,
+    "extraction_performed": false
+  },
+  "source": {
+    "uri": "tensor://reports/6551",
+    "report_id": "6551",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431",
+    "source_hash": "sha256:879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431",
+    "contract_source_hash": "sha256:879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431",
+    "hash_match": true,
+    "chars": 5491,
+    "contract_chars": 5491,
+    "chars_match_contract": true,
+    "bytes_utf8": 8310,
+    "lines": 117,
+    "has_crlf": false,
+    "has_trailing_newline": true,
+    "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based",
+    "title": "IN28-N04 船型阻力闭合：三级证据记账、波阻 GCI 与诚实 FAIL（KCS/5415/Series60）",
+    "contract_title": "IN28-N04 船型阻力闭合：三级证据记账、波阻 GCI 与诚实 FAIL（KCS/5415/Series60）",
+    "title_matches_contract": true,
+    "scenario_key": "IN28-N04-ship-resistance-closure",
+    "contract_scenario_key": "IN28-N04-ship-resistance-closure",
+    "scenario_matches_contract": true,
+    "platform_figures": [
+      "ct_vs_fn.png",
+      "quadrature_convergence.png",
+      "geometry_audit.png",
+      "decomposition_5415.png"
+    ],
+    "platform_tags": [
+      "TensorLBM",
+      "ship-resistance",
+      "thin-ship",
+      "grid-convergence",
+      "honest-FAIL",
+      "IN28-N04"
+    ],
+    "record_fields": {
+      "id": 6551,
+      "mission_id": 5522,
+      "status": "published",
+      "stage": null,
+      "created_at": "2026-11-07T13:45:02.165281+00:00",
+      "created_by": 1
+    },
+    "fetched_via": "GET /api/v1/tensor/reports/6551"
+  },
+  "counts": {
+    "assets": 13,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 4,
+      "declared_hash_reference": 1,
+      "source_code_reference": 2,
+      "module_symbol_reference": 1,
+      "data_artifact_reference": 2,
+      "test_reference": 1,
+      "benchmark_dir_reference": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 1,
+      "referenced_unresolved": 12
+    },
+    "resolved_in_source": 1,
+    "referenced_unresolved": 12,
+    "declared_absent": 0,
+    "kind_status_histogram": {
+      "report_markdown|resolved_in_source": 1,
+      "embedded_figure|referenced_unresolved": 4,
+      "declared_hash|referenced_unresolved": 1,
+      "source_code_reference|referenced_unresolved": 3,
+      "symbol_reference|referenced_unresolved": 1,
+      "data_artifact_reference|referenced_unresolved": 2,
+      "directory_reference|referenced_unresolved": 1
+    },
+    "distinct_reference_tokens": 7
+  },
+  "assets": [
+    {
+      "asset_id": "r6551:source-markdown",
+      "asset_class": "report_markdown",
+      "kind": "report_markdown",
+      "label": "report-6551 markdown (source of record)",
+      "name": "report-6551-markdown",
+      "in_report_section": "document (whole payload)",
+      "locator": {
+        "method": "document",
+        "source_field": "markdown",
+        "start_char": 0,
+        "end_char": 5491,
+        "start_line": 1,
+        "end_line": 117,
+        "quote": "# IN28-N04 船型模型尺度阻力闭合（KCS / DTMB 5415 / Series 60）：三级证据记账与诚实 FAIL",
+        "quote_sha256": "7854134586410f349a270d3cd64bc419a9bce14d7d669e2431caa00fe481553c",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_detail": {
+        "scope": "platform_api",
+        "via": "GET /api/v1/tensor/reports/6551",
+        "local_copy": "runs/wp-6551-01/source_6551.md",
+        "bytes": 8310,
+        "chars": 5491,
+        "lines": 117,
+        "sha256": "879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431"
+      },
+      "resolution_check": {
+        "check": "sha256 of served markdown bytes == contract source_hash",
+        "result": "resolved"
+      },
+      "note": "hash recomputed here from the served bytes; the contract hash matches."
+    },
+    {
+      "asset_id": "r6551:figure:01",
+      "asset_class": "embedded_figure",
+      "kind": "embedded_figure",
+      "label": "ct_vs_fn.png",
+      "name": "ct_vs_fn.png",
+      "caption": "C_T(Fn)：admitted 船型计算点与锁定实验点（KCS Fn=0.26 / DTMB5415 Fn=0.28 / Series60 Todd Fn=0.30）",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 3561,
+        "end_char": 3573,
+        "start_line": 80,
+        "end_line": 80,
+        "quote": "ct_vs_fn.png",
+        "quote_sha256": "33e3eff64e19c6fcf43a308880f9686149ea021875b4fd48fa4b2a364c1540bc",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_detail": {
+        "scope": "platform_api",
+        "via": "GET /api/v1/tensor/reports/6551/figures/ct_vs_fn.png",
+        "http_status": 404,
+        "response_bytes": 29,
+        "name_resolved_in_markdown": true,
+        "reason": "record exposes name+caption only and the figure endpoint returned no payload, so no image bytes/hash are claimed; the name itself is locatable verbatim in the markdown"
+      },
+      "resolution_check": {
+        "check": "verbatim figure name in markdown + payload GET",
+        "result": "unresolved"
+      },
+      "note": "metadata-only registration; no pixel data was retrieved or hashed."
+    },
+    {
+      "asset_id": "r6551:figure:02",
+      "asset_class": "embedded_figure",
+      "kind": "embedded_figure",
+      "label": "quadrature_convergence.png",
+      "name": "quadrature_convergence.png",
+      "caption": "thin-ship 求积 4×/2×/1× 收敛（C_W 归一化）与 GCI",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 3680,
+        "end_char": 3706,
+        "start_line": 82,
+        "end_line": 82,
+        "quote": "quadrature_convergence.png",
+        "quote_sha256": "d17bcd11059d4356cb2fa46a783d49637b077910240a54ccfd149f1e48497d2d",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_detail": {
+        "scope": "platform_api",
+        "via": "GET /api/v1/tensor/reports/6551/figures/quadrature_convergence.png",
+        "http_status": 404,
+        "response_bytes": 29,
+        "name_resolved_in_markdown": true,
+        "reason": "record exposes name+caption only and the figure endpoint returned no payload, so no image bytes/hash are claimed; the name itself is locatable verbatim in the markdown"
+      },
+      "resolution_check": {
+        "check": "verbatim figure name in markdown + payload GET",
+        "result": "unresolved"
+      },
+      "note": "metadata-only registration; no pixel data was retrieved or hashed."
+    },
+    {
+      "asset_id": "r6551:figure:03",
+      "asset_class": "embedded_figure",
+      "kind": "embedded_figure",
+      "label": "geometry_audit.png",
+      "name": "geometry_audit.png",
+      "caption": "五型横剖面面积曲线与 Cb 相对锁定值的偏差（±2% 几何门）",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 3751,
+        "end_char": 3769,
+        "start_line": 83,
+        "end_line": 83,
+        "quote": "geometry_audit.png",
+        "quote_sha256": "cb33d83117b0b3b05d0f5174241dc1b31c221bd3ccb44d2a52e4961ffad29276",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_detail": {
+        "scope": "platform_api",
+        "via": "GET /api/v1/tensor/reports/6551/figures/geometry_audit.png",
+        "http_status": 404,
+        "response_bytes": 29,
+        "name_resolved_in_markdown": true,
+        "reason": "record exposes name+caption only and the figure endpoint returned no payload, so no image bytes/hash are claimed; the name itself is locatable verbatim in the markdown"
+      },
+      "resolution_check": {
+        "check": "verbatim figure name in markdown + payload GET",
+        "result": "unresolved"
+      },
+      "note": "metadata-only registration; no pixel data was retrieved or hashed."
+    },
+    {
+      "asset_id": "r6551:figure:04",
+      "asset_class": "embedded_figure",
+      "kind": "embedded_figure",
+      "label": "decomposition_5415.png",
+      "name": "decomposition_5415.png",
+      "caption": "DTMB 5415 阻力分解：相关式粘性份额 vs 一阶兴波份额",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 3809,
+        "end_char": 3831,
+        "start_line": 84,
+        "end_line": 84,
+        "quote": "decomposition_5415.png",
+        "quote_sha256": "3ee8f5417dd25960b166bec0d52d7ba1688a79612e982697828ac05681b3d1df",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_detail": {
+        "scope": "platform_api",
+        "via": "GET /api/v1/tensor/reports/6551/figures/decomposition_5415.png",
+        "http_status": 404,
+        "response_bytes": 29,
+        "name_resolved_in_markdown": true,
+        "reason": "record exposes name+caption only and the figure endpoint returned no payload, so no image bytes/hash are claimed; the name itself is locatable verbatim in the markdown"
+      },
+      "resolution_check": {
+        "check": "verbatim figure name in markdown + payload GET",
+        "result": "unresolved"
+      },
+      "note": "metadata-only registration; no pixel data was retrieved or hashed."
+    },
+    {
+      "asset_id": "r6551:hash:01",
+      "asset_class": "declared_hash_reference",
+      "kind": "declared_hash",
+      "label": "declared sha256 c448dd3129e241d1…",
+      "name": "c448dd3129e241d1",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 2135,
+        "end_char": 2151,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "c448dd3129e241d1",
+        "quote_sha256": "c10a696b27c66e85f0ed304ffb40b16c782c5baaf3c242f9ac59bd3346ef8ee8",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_detail": {
+        "scope": "report_text",
+        "algo": "sha256",
+        "declared_hex_chars": 16,
+        "truncated_in_report": true,
+        "verifiability": "unverifiable_truncated_prefix",
+        "reason": "only a truncated digest prefix is printed, so no artefact can be recomputed against it"
+      },
+      "resolution_check": {
+        "check": "digest length / truncation marker",
+        "result": "unresolved"
+      },
+      "note": "registered as declared by the report; NOT verified by this工序."
+    },
+    {
+      "asset_id": "r6551:ref:01",
+      "asset_class": "source_code_reference",
+      "kind": "source_code_reference",
+      "label": "run.py",
+      "name": "run.py",
+      "attr_qualifier": null,
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 338,
+        "end_char": 344,
+        "start_line": 11,
+        "end_line": 11,
+        "quote": "run.py",
+        "quote_sha256": "d6af0459a37d985953d7040c14f53feb3b9cc9e58b543aa3c2b80256d276c5e0",
+        "unique": false
+      },
+      "occurrence_lines": [
+        11,
+        45
+      ],
+      "resolution": "referenced_unresolved",
+      "declared_owner_hint": null,
+      "resolution_detail": {
+        "status": "unresolved",
+        "searched_scopes": [
+          "delivery_worktree"
+        ],
+        "reason": "declared path not found under any searched root",
+        "same_basename_hits_in_worktree": []
+      },
+      "resolution_check": {
+        "check": "filesystem probe of declared path in delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "reference only: the report names it, this工序 does not open or audit it. Not found in the TensorKnowledge worktree -- the report places it in TensorLBM, so unresolved here is a scope statement, not absence."
+    },
+    {
+      "asset_id": "r6551:ref:02",
+      "asset_class": "source_code_reference",
+      "kind": "source_code_reference",
+      "label": "src/tensorlbm/ship_resistance_closure.py",
+      "name": "src/tensorlbm/ship_resistance_closure.py",
+      "attr_qualifier": null,
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 1351,
+        "end_char": 1391,
+        "start_line": 31,
+        "end_line": 31,
+        "quote": "src/tensorlbm/ship_resistance_closure.py",
+        "quote_sha256": "5e54e408d1b78e25cf4f16fab0b0e903ca068863eaacaa7c13609a213a127dc4",
+        "unique": true
+      },
+      "occurrence_lines": [
+        31
+      ],
+      "resolution": "referenced_unresolved",
+      "declared_owner_hint": {
+        "repo": "TensorLBM",
+        "basis": "path prefix src/tensorlbm/",
+        "asserted": false
+      },
+      "resolution_detail": {
+        "status": "unresolved",
+        "searched_scopes": [
+          "delivery_worktree"
+        ],
+        "reason": "declared path not found under any searched root",
+        "same_basename_hits_in_worktree": []
+      },
+      "resolution_check": {
+        "check": "filesystem probe of declared path in delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "reference only: the report names it, this工序 does not open or audit it. Not found in the TensorKnowledge worktree -- the report places it in TensorLBM, so unresolved here is a scope statement, not absence."
+    },
+    {
+      "asset_id": "r6551:ref:03",
+      "asset_class": "module_symbol_reference",
+      "kind": "symbol_reference",
+      "label": "hydrodynamics.ittc57_friction_coefficient",
+      "name": "hydrodynamics.ittc57_friction_coefficient",
+      "attr_qualifier": null,
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 1672,
+        "end_char": 1713,
+        "start_line": 36,
+        "end_line": 36,
+        "quote": "hydrodynamics.ittc57_friction_coefficient",
+        "quote_sha256": "3ba52dbfdb6666321c6f0a71c23f14fb374ff73f2a2dc378f316032c67f893ce",
+        "unique": true
+      },
+      "occurrence_lines": [
+        36
+      ],
+      "resolution": "referenced_unresolved",
+      "declared_owner_hint": null,
+      "resolution_detail": {
+        "status": "unresolved",
+        "searched_scopes": [
+          "delivery_worktree"
+        ],
+        "reason": "declared path not found under any searched root",
+        "same_basename_hits_in_worktree": []
+      },
+      "resolution_check": {
+        "check": "filesystem probe of declared path in delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "reference only: the report names it, this工序 does not open or audit it. Not found in the TensorKnowledge worktree -- the report places it in TensorLBM, so unresolved here is a scope statement, not absence."
+    },
+    {
+      "asset_id": "r6551:ref:04",
+      "asset_class": "data_artifact_reference",
+      "kind": "data_artifact_reference",
+      "label": "refs_lock.json",
+      "name": "refs_lock.json",
+      "attr_qualifier": null,
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 2109,
+        "end_char": 2123,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "refs_lock.json",
+        "quote_sha256": "b7d89eaca2ec8d4eb09e35942636f3623ea4e0ce09c5249dac347901f6b94338",
+        "unique": true
+      },
+      "occurrence_lines": [
+        43
+      ],
+      "resolution": "referenced_unresolved",
+      "declared_owner_hint": null,
+      "resolution_detail": {
+        "status": "unresolved",
+        "searched_scopes": [
+          "delivery_worktree"
+        ],
+        "reason": "declared path not found under any searched root",
+        "same_basename_hits_in_worktree": []
+      },
+      "resolution_check": {
+        "check": "filesystem probe of declared path in delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "reference only: the report names it, this工序 does not open or audit it. Not found in the TensorKnowledge worktree -- the report places it in TensorLBM, so unresolved here is a scope statement, not absence."
+    },
+    {
+      "asset_id": "r6551:ref:05",
+      "asset_class": "data_artifact_reference",
+      "kind": "data_artifact_reference",
+      "label": "results.json",
+      "name": "results.json",
+      "attr_qualifier": null,
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 2244,
+        "end_char": 2256,
+        "start_line": 46,
+        "end_line": 46,
+        "quote": "results.json",
+        "quote_sha256": "7c39d6b011c502a43da7133e9b5148959852743cd6b1acf96799bd0508d31f3a",
+        "unique": false
+      },
+      "occurrence_lines": [
+        46,
+        61
+      ],
+      "resolution": "referenced_unresolved",
+      "declared_owner_hint": null,
+      "resolution_detail": {
+        "status": "unresolved",
+        "searched_scopes": [
+          "delivery_worktree"
+        ],
+        "reason": "declared path not found under any searched root",
+        "same_basename_hits_in_worktree": []
+      },
+      "resolution_check": {
+        "check": "filesystem probe of declared path in delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "reference only: the report names it, this工序 does not open or audit it. Not found in the TensorKnowledge worktree -- the report places it in TensorLBM, so unresolved here is a scope statement, not absence."
+    },
+    {
+      "asset_id": "r6551:ref:06",
+      "asset_class": "test_reference",
+      "kind": "source_code_reference",
+      "label": "tests/test_ship_resistance_closure.py",
+      "name": "tests/test_ship_resistance_closure.py",
+      "attr_qualifier": null,
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 2280,
+        "end_char": 2317,
+        "start_line": 46,
+        "end_line": 46,
+        "quote": "tests/test_ship_resistance_closure.py",
+        "quote_sha256": "bdec18cc9efe46fcc09ea6aafe3a8ab69e7675a638c6d9e493f8766f5469e93a",
+        "unique": true
+      },
+      "occurrence_lines": [
+        46
+      ],
+      "resolution": "referenced_unresolved",
+      "declared_owner_hint": null,
+      "resolution_detail": {
+        "status": "unresolved",
+        "searched_scopes": [
+          "delivery_worktree"
+        ],
+        "reason": "declared path not found under any searched root",
+        "same_basename_hits_in_worktree": []
+      },
+      "resolution_check": {
+        "check": "filesystem probe of declared path in delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "reference only: the report names it, this工序 does not open or audit it. Not found in the TensorKnowledge worktree -- the report places it in TensorLBM, so unresolved here is a scope statement, not absence."
+    },
+    {
+      "asset_id": "r6551:ref:07",
+      "asset_class": "benchmark_dir_reference",
+      "kind": "directory_reference",
+      "label": "benchmarks/pending/suboff_highre_resistance",
+      "name": "benchmarks/pending/suboff_highre_resistance",
+      "attr_qualifier": null,
+      "in_report_section": "⑤ 注意点 / 局限",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 4188,
+        "end_char": 4231,
+        "start_line": 94,
+        "end_line": 94,
+        "quote": "benchmarks/pending/suboff_highre_resistance",
+        "quote_sha256": "44af88c4044ba7650fad15996e9b05a8c3bfeb5a9124fbe3708ff1c9cc2fdd25",
+        "unique": true
+      },
+      "occurrence_lines": [
+        94
+      ],
+      "resolution": "referenced_unresolved",
+      "declared_owner_hint": null,
+      "resolution_detail": {
+        "status": "unresolved",
+        "searched_scopes": [
+          "delivery_worktree"
+        ],
+        "reason": "declared path not found under any searched root",
+        "same_basename_hits_in_worktree": []
+      },
+      "resolution_check": {
+        "check": "filesystem probe of declared path in delivery worktree",
+        "result": "unresolved"
+      },
+      "note": "reference only: the report names it, this工序 does not open or audit it. Not found in the TensorKnowledge worktree -- the report places it in TensorLBM, so unresolved here is a scope statement, not absence."
+    }
+  ],
+  "claims": [],
+  "claims_empty_reason": "objective.classify_report_type=false and the contract scopes this package to asset registration only ('登记源资产…不做抽取'; 'claims 允许为空数组'). No sentence of the report was promoted to a knowledge claim here; extraction is a separate work package. Empty is a complete result, not a gap.",
+  "identity_facts": [
+    {
+      "fact_id": "# title",
+      "locator": {
+        "source_field": "markdown",
+        "line": 1
+      },
+      "quote": "# IN28-N04 船型模型尺度阻力闭合（KCS / DTMB 5415 / Series 60）：三级证据记账与诚实 FAIL",
+      "quote_sha256": "7854134586410f349a270d3cd64bc419a9bce14d7d669e2431caa00fe481553c"
+    },
+    {
+      "fact_id": "## section ①",
+      "locator": {
+        "source_field": "markdown",
+        "line": 3
+      },
+      "quote": "## ① 案例介绍",
+      "quote_sha256": "7ddf89857913efd224be5a41d7506c1c08107704d42df47f1f87b8bcc6872f42"
+    },
+    {
+      "fact_id": "## section ②",
+      "locator": {
+        "source_field": "markdown",
+        "line": 29
+      },
+      "quote": "## ② 怎么做的",
+      "quote_sha256": "d96e990d7dece6286c641545798575f31ab24a71d4c7eebdfaf3187fb28c82c1"
+    },
+    {
+      "fact_id": "## section ③",
+      "locator": {
+        "source_field": "markdown",
+        "line": 59
+      },
+      "quote": "## ③ 计算结果",
+      "quote_sha256": "725f569a39ae4b79e0c3d7f6f2747c2eb79f7fba7690c5cf38e8112f68cdf1c7"
+    },
+    {
+      "fact_id": "## section ④",
+      "locator": {
+        "source_field": "markdown",
+        "line": 78
+      },
+      "quote": "## ④ 结果图",
+      "quote_sha256": "f96f5db082d6af7df301ed61dff480e611035eab736db49814b2ba4ba6067766"
+    },
+    {
+      "fact_id": "## section ⑤",
+      "locator": {
+        "source_field": "markdown",
+        "line": 86
+      },
+      "quote": "## ⑤ 注意点 / 局限",
+      "quote_sha256": "e97c1cf6586c6fba3f2f00389cd79a5274b522592ad5982ad2b572464b06c710"
+    },
+    {
+      "fact_id": "## section ⑥",
+      "locator": {
+        "source_field": "markdown",
+        "line": 102
+      },
+      "quote": "## ⑥ 误差判定（逐项显式回答「是否<3%」）",
+      "quote_sha256": "cca141ac181c06a73142c67326e81f3b4b49365fe930d62470a5460c9c2f4415"
+    },
+    {
+      "fact_id": "closing-note",
+      "locator": {
+        "source_field": "markdown",
+        "line": 117
+      },
+      "quote": "首手型值（Tokyo-2015 offsets / Todd 型值）→ Rankine 面元或 ITTC-1978 三因次外推 → 壁链交付模型 Re 摩擦。",
+      "quote_sha256": "6e3a3fb78e6574e1bef4b1fdc58ab6fa6cd064aefda5164a056a84554a73cabf"
+    }
+  ],
+  "integrity": {
+    "quote_uniqueness": {
+      "markdown_quotes": 13,
+      "unique_quotes": 11,
+      "non_unique_quotes": [
+        "r6551:ref:01",
+        "r6551:ref:05"
+      ]
+    },
+    "hash_recomputed_locally": "sha256:879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431",
+    "hash_matches_contract": true,
+    "source_copy_path": "runs/wp-6551-01/source_6551.md"
+  }
+}
