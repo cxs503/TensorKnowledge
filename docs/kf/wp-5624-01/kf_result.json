@@ -1,0 +1,360 @@
+{
+  "package_id": "wp-5624-01",
+  "task_type": "01",
+  "report_id": "5624",
+  "provenance": {
+    "source_hash": "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839",
+    "source_field": "markdown",
+    "source_uri": "tensor://reports/5624",
+    "producer": "m15571",
+    "emitted_at": "2026-11-12T01:21:53Z",
+    "notes": "01-asset-registration：仅登记源资产/附件/引用清单与引文定位，未做抽取；claims=[]（合同允许），verification 交平台门计算"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "manifest_version": "1.0",
+      "package_id": "wp-5624-01",
+      "task_type": "01-asset-registration",
+      "objective": {
+        "register_assets": true,
+        "classify_report_type": false,
+        "extraction_performed": false
+      },
+      "generated_at": "2026-11-12T01:21:53Z",
+      "generator": "agent/m15571",
+      "source_asset": {
+        "uri": "tensor://reports/5624",
+        "field": "markdown",
+        "platform_record_id": 5624,
+        "hash": {
+          "algorithm": "sha256",
+          "value": "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839",
+          "scope": "UTF-8 bytes of tensor_reports.markdown (report 5624)",
+          "contract_expected": "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839",
+          "matches_contract": true
+        },
+        "size": {
+          "chars": 1833,
+          "bytes_utf8": 3255,
+          "lines": 46,
+          "contract_chars": 1833,
+          "chars_match_contract": true
+        },
+        "record_metadata": {
+          "title": "IN15-O5 工件 sha256 索引器：102 工件索引 + 20/20 抽查全中 + 幂等增量（m4963）",
+          "scenario_key": "in15-o5-artifact-sha256-indexer",
+          "tags": [
+            "IN15-O5",
+            "artifact-indexer",
+            "sha256",
+            "integrity",
+            "reproducibility",
+            "m4963"
+          ],
+          "status": "published",
+          "created_by": 1,
+          "created_at": "2026-11-07T01:04:07.872855+00:00",
+          "mission_id": 4963,
+          "stage": null
+        },
+        "contract_layer_hint": {
+          "value": "IN15-O5|in15-o5-artifact-sha256-indexer|s",
+          "interpreted": false,
+          "note": "契约 notes 中的分层标签原样登记；objective.classify_report_type=false，不解读"
+        }
+      },
+      "attachments": {
+        "count": 3,
+        "items": [
+          {
+            "name": "fig1_inventory.png",
+            "caption": "Fig.1 索引清单：按根目录统计文件数与字节数（artifacts/ 94 + runs/ 8 = 102）。",
+            "payload_field_present": false,
+            "png_base64_len": 0
+          },
+          {
+            "name": "fig2_sizes.png",
+            "caption": "Fig.2 工件尺寸分布：对数直方图与 CDF（最大单件 471 KB，无 GB 级大件）。",
+            "payload_field_present": false,
+            "png_base64_len": 0
+          },
+          {
+            "name": "fig3_acceptance.png",
+            "caption": "Fig.3 验收证据：左=抽查 20/20 全中；右=冷构建全量哈希 vs 二次构建 0 重算（mtime 未变跳过，幂等）。",
+            "payload_field_present": false,
+            "png_base64_len": 0
+          }
+        ],
+        "scan": {
+          "record_figures_len": 3,
+          "png_base64_present": false,
+          "markdown_image_syntax_hits": 0,
+          "external_url_hits": 0,
+          "returned_all": true
+        },
+        "note": "附件=平台记录 figures 字段登记的 3 张图（仅元数据：name/caption），正文自述为后端完整性工具、无物理场量云图；未下载/未解码图像载荷"
+      },
+      "sections": [
+        {
+          "ordinal": 1,
+          "level": 1,
+          "heading": "IN15-O5 · 工件 sha256 索引器（自回归燃料⑤：可复算）",
+          "line_start": 1,
+          "line_end": 1,
+          "chars": 37,
+          "sha256": "sha256:5b7dc7952d60a4d29564513bf5c77f4597fc343a8de016a3de235c8e9678e54a"
+        },
+        {
+          "ordinal": 2,
+          "level": 2,
+          "heading": "① 案例介绍（背景/对象/参数）",
+          "line_start": 3,
+          "line_end": 10,
+          "chars": 335,
+          "sha256": "sha256:4e6dfe8256742dceded3668c7334584288fbdd6e0a6b3879eeced3d4c069ce27"
+        },
+        {
+          "ordinal": 3,
+          "level": 2,
+          "heading": "② 怎么做的（方法/流程/工具链）",
+          "line_start": 12,
+          "line_end": 18,
+          "chars": 418,
+          "sha256": "sha256:c541a6e602ec299d866ebabad46106b0665cb901acdcb36b10948b39a1bfb83c"
+        },
+        {
+          "ordinal": 4,
+          "level": 2,
+          "heading": "③ 计算结果（程序化注入，零手抄）",
+          "line_start": 20,
+          "line_end": 29,
+          "chars": 437,
+          "sha256": "sha256:db6022790fa7fad61bbf3b9acaaaad52c85b631672b958530168bb84a30f6a55"
+        },
+        {
+          "ordinal": 5,
+          "level": 2,
+          "heading": "④ 结果图",
+          "line_start": 31,
+          "line_end": 32,
+          "chars": 61,
+          "sha256": "sha256:b72cb8da6fbe5b1e61d1e0597e813d178e491faacb80b26005a2737249b33967"
+        },
+        {
+          "ordinal": 6,
+          "level": 2,
+          "heading": "⑤ 注意点（坑/局限/适用范围）",
+          "line_start": 34,
+          "line_end": 39,
+          "chars": 293,
+          "sha256": "sha256:2e98f1acf264d6c6c1eddbfac2e21f2e27d0886d61727aa77c139c847d7a88a8"
+        },
+        {
+          "ordinal": 7,
+          "level": 2,
+          "heading": "⑥ 误差判定",
+          "line_start": 41,
+          "line_end": 46,
+          "chars": 239,
+          "sha256": "sha256:78d38d09f957edce07625e64a756b55f397ad21cac9d03c216fe008a63e7367e"
+        }
+      ],
+      "referenced_artifacts": [
+        {
+          "raw_text": "artifacts/",
+          "path_kind": "declared_in_report_code_span",
+          "occurrences": 1,
+          "first_line": 7,
+          "locator_quote": "`artifacts/`（0 文件）与 `runs/`（0 文件），",
+          "ref_id": "5624-ref-01",
+          "existence": "not_checked",
+          "existence_reason": "该路径声明于 m4963 的 TensorPlatform worktree（工件根/工具目录），本包工作树为 TensorKnowledge 且边界=只触碰 report_id=5624，不跨 worktree 取证，故存在性/内容一致性留待上游门或后续工序"
+        },
+        {
+          "raw_text": "runs/",
+          "path_kind": "declared_in_report_code_span",
+          "occurrences": 1,
+          "first_line": 7,
+          "locator_quote": "`artifacts/`（0 文件）与 `runs/`（0 文件），",
+          "ref_id": "5624-ref-02",
+          "existence": "not_checked",
+          "existence_reason": "该路径声明于 m4963 的 TensorPlatform worktree（工件根/工具目录），本包工作树为 TensorKnowledge 且边界=只触碰 report_id=5624，不跨 worktree 取证，故存在性/内容一致性留待上游门或后续工序"
+        },
+        {
+          "raw_text": "tools/artifact_indexer/",
+          "path_kind": "declared_in_report_code_span",
+          "occurrences": 1,
+          "first_line": 10,
+          "locator_quote": "`tools/artifact_indexer/`，纯标准库，不触碰任何既有 API/schema/表。",
+          "ref_id": "5624-ref-03",
+          "existence": "not_checked",
+          "existence_reason": "该路径声明于 m4963 的 TensorPlatform worktree（工件根/工具目录），本包工作树为 TensorKnowledge 且边界=只触碰 report_id=5624，不跨 worktree 取证，故存在性/内容一致性留待上游门或后续工序"
+        },
+        {
+          "raw_text": "tools/artifact_indexer",
+          "path_kind": "declared_in_report_code_span",
+          "occurrences": 1,
+          "first_line": 17,
+          "locator_quote": "- 工具链：python3.11 标准库（hashlib/json/os/random），CLI `python3 -m tools.artifact_indexer {build|check|verify|show}`，",
+          "ref_id": "5624-ref-04",
+          "existence": "not_checked",
+          "existence_reason": "该路径声明于 m4963 的 TensorPlatform worktree（工件根/工具目录），本包工作树为 TensorKnowledge 且边界=只触碰 report_id=5624，不跨 worktree 取证，故存在性/内容一致性留待上游门或后续工序"
+        }
+      ],
+      "content_digests": [
+        {
+          "raw_text": "7223cab4b4edf2f1dbad8cba148bf4c56b7cbc938dd9a2620ba146dd6ed20bb7",
+          "digits": 64,
+          "occurrences": 1,
+          "first_line": 25,
+          "locator_quote": "| 索引文件 sha256（前后一致） | `7223cab4b4edf2f1dbad8cba148bf4c56b7cbc938dd9a2620ba146dd6ed20bb7` |",
+          "digest_id": "5624-dig-01",
+          "algorithm": "sha256",
+          "note": "报告正文引用的内容摘要值，本工序只登记不重算（对应工件不在本 worktree）"
+        },
+        {
+          "raw_text": "7223cab4b4edf2f1",
+          "digits": 16,
+          "occurrences": 1,
+          "first_line": 45,
+          "locator_quote": "- 幂等：二次构建索引 sha256 前后一致（`7223cab4b4edf2f1…`），**通过 ✓**",
+          "digest_id": "5624-dig-02",
+          "algorithm": "sha256_truncated",
+          "note": "报告正文引用的内容摘要值，本工序只登记不重算（对应工件不在本 worktree）",
+          "prefix_of": [
+            "5624-dig-01"
+          ],
+          "prefix_consistent": true
+        }
+      ],
+      "observations": [
+        {
+          "id": "5624-obs-01",
+          "kind": "internal_inconsistency",
+          "status": "unresolved",
+          "statement": "正文对两个工件根的文件数自述为 0 文件，同段末又给出>0 的文件总数；Fig.1 caption 给出按根目录的分解（94+8）。三处计数口径不一致。",
+          "locators": {
+            "zero_file_lines": [
+              7
+            ],
+            "total_count_line": 8,
+            "other_file_count_lines": [
+              43
+            ],
+            "attachment_id": "fig-1"
+          },
+          "quotes": [
+            "`artifacts/`（0 文件）与 `runs/`（0 文件），",
+            "共 **102 文件 / 6.45 MB**。判据（任务书）：索引建立后抽查 20 文件全中 +",
+            "Fig.1 索引清单：按根目录统计文件数与字节数（artifacts/ 94 + runs/ 8 = 102）。"
+          ],
+          "note": "本工序不裁决哪个数字为准（不臆造），交由上游/复核工序追溯运行日志"
+        }
+      ],
+      "locator_check": {
+        "total": 9,
+        "resolved": 9,
+        "all_resolved": true,
+        "method": "每条 quote 对 markdown 做逐字子串匹配（str in markdown）",
+        "items": [
+          {
+            "bucket": "referenced_artifacts",
+            "id": "5624-ref-01",
+            "source_field": "markdown",
+            "resolvable": true,
+            "quote": "`artifacts/`（0 文件）与 `runs/`（0 文件），"
+          },
+          {
+            "bucket": "referenced_artifacts",
+            "id": "5624-ref-02",
+            "source_field": "markdown",
+            "resolvable": true,
+            "quote": "`artifacts/`（0 文件）与 `runs/`（0 文件），"
+          },
+          {
+            "bucket": "referenced_artifacts",
+            "id": "5624-ref-03",
+            "source_field": "markdown",
+            "resolvable": true,
+            "quote": "`tools/artifact_indexer/`，纯标准库，不触碰任何既有 API/schema/表。"
+          },
+          {
+            "bucket": "referenced_artifacts",
+            "id": "5624-ref-04",
+            "source_field": "markdown",
+            "resolvable": true,
+            "quote": "- 工具链：python3.11 标准库（hashlib/json/os/random），CLI `python3 -m tools.artifact_indexer {build|check|verify|show}`，"
+          },
+          {
+            "bucket": "content_digests",
+            "id": "5624-dig-01",
+            "source_field": "markdown",
+            "resolvable": true,
+            "quote": "| 索引文件 sha256（前后一致） | `7223cab4b4edf2f1dbad8cba148bf4c56b7cbc938dd9a2620ba146dd6ed20bb7` |"
+          },
+          {
+            "bucket": "content_digests",
+            "id": "5624-dig-02",
+            "source_field": "markdown",
+            "resolvable": true,
+            "quote": "- 幂等：二次构建索引 sha256 前后一致（`7223cab4b4edf2f1…`），**通过 ✓**"
+          },
+          {
+            "bucket": "attachments",
+            "id": "fig-1",
+            "source_field": "figures",
+            "resolvable": true,
+            "quote": "Fig.1 索引清单：按根目录统计文件数与字节数（artifacts/ 94 + runs/ 8 = 102）。",
+            "note": "图注存于记录 figures 字段，正文 markdown 无该文本，故对 figures 记录做逐字匹配"
+          },
+          {
+            "bucket": "attachments",
+            "id": "fig-2",
+            "source_field": "figures",
+            "resolvable": true,
+            "quote": "Fig.2 工件尺寸分布：对数直方图与 CDF（最大单件 471 KB，无 GB 级大件）。",
+            "note": "图注存于记录 figures 字段，正文 markdown 无该文本，故对 figures 记录做逐字匹配"
+          },
+          {
+            "bucket": "attachments",
+            "id": "fig-3",
+            "source_field": "figures",
+            "resolvable": true,
+            "quote": "Fig.3 验收证据：左=抽查 20/20 全中；右=冷构建全量哈希 vs 二次构建 0 重算（mtime 未变跳过，幂等）。",
+            "note": "图注存于记录 figures 字段，正文 markdown 无该文本，故对 figures 记录做逐字匹配"
+          }
+        ],
+        "unresolved_items": []
+      },
+      "unresolved": [
+        {
+          "item": "referenced_artifacts[].existence",
+          "status": "unresolved",
+          "reason": "工件根位于 m4963 的 TensorPlatform worktree，本包不跨 worktree 读取（边界约束）"
+        },
+        {
+          "item": "content_digests[].value_recomputation",
+          "status": "unresolved",
+          "reason": "被摘要工件不在本 worktree，不重算、不主张其正确性"
+        },
+        {
+          "item": "observations[0].which_count_is_authoritative",
+          "status": "unresolved",
+          "reason": "原文三处计数口径冲突，本工序不裁决（do_not_invent_missing_information）"
+        }
+      ],
+      "boundary": {
+        "report_ids_read": [
+          "5624"
+        ],
+        "report_ids_written": [
+          "5624"
+        ],
+        "claims_generated": 0,
+        "claims_policy": "no_forced_claim_generation：01 工序只登记资产，envelope.claims=[] 为完整结果",
+        "verification_status": "none — 由平台门独立计算，本包不标 verified"
+      }
+    }
+  },
+  "claims": []
+}
