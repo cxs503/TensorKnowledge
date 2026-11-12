@@ -1,0 +1,2176 @@
+{
+  "package_id": "wp-5559-01",
+  "task_type": "01-asset-registration",
+  "report_id": "5559",
+  "provenance": {
+    "source_uri": "tensor://reports/5559",
+    "source_field": "markdown",
+    "source_hash": "sha256:3b04e96a056a9d8ba1b7861452dd5c2b3ce74777654154c7cc91e41f4e0b74ed",
+    "producer": "kf-worker/m15567",
+    "emitted_at": "2026-11-12T01:24:49.958805+00:00",
+    "notes": "hash recomputed from GET /api/v1/tensor/reports/5559 field `markdown` (UTF-8 bytes); equals the contract source_hash sha256:3b04e96a056a9d8ba1b7861452dd5c2b3ce74777654154c7cc91e41f4e0b74ed"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "manifest_version": "1.0",
+      "package_id": "wp-5559-01",
+      "task_type": "01-asset-registration",
+      "report_id": "5559",
+      "lane": "C",
+      "generated_at": "2026-11-12T01:24:49.958805+00:00",
+      "producer": "kf-worker/m15567",
+      "repro_cmd": "python3 scripts/kf_wp_5559_01_register.py  # live API mode; python3 scripts/kf_wp_5559_01_register.py --offline  # frozen snapshot",
+      "objective": {
+        "register_assets": true,
+        "classify_report_type": false
+      },
+      "source": {
+        "report_id": "5559",
+        "source_uri": "tensor://reports/5559",
+        "source_field": "markdown",
+        "source_hash": "sha256:3b04e96a056a9d8ba1b7861452dd5c2b3ce74777654154c7cc91e41f4e0b74ed",
+        "contract_source_hash": "sha256:3b04e96a056a9d8ba1b7861452dd5c2b3ce74777654154c7cc91e41f4e0b74ed",
+        "hash_algo": "sha256",
+        "hash_match": true,
+        "chars": 9257,
+        "contract_chars": 9257,
+        "chars_match_contract": true,
+        "bytes": 13288,
+        "lines": 244,
+        "has_crlf": false,
+        "has_trailing_newline": true,
+        "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based; char offsets are offsets into the decoded markdown string",
+        "fetched_via": "GET /api/v1/tensor/reports/5559",
+        "record_fields": {
+          "id": 5559,
+          "title": "IN10-A1 · 四态冰场合成器成熟化（field_synth）：可复现冰情场 + 判据全过",
+          "scenario_key": "ice_nav_campaign",
+          "mission_id": 4908,
+          "status": "published",
+          "created_at": "2026-11-06T23:51:00.664613+00:00",
+          "tags": [
+            "IN10-A1",
+            "ice_field",
+            "field_synth",
+            "reproducibility",
+            "frazil",
+            "ice_ridge",
+            "brash_ice",
+            "ship-performance-platform"
+          ],
+          "title_matches_contract": true,
+          "scenario_matches_contract": true
+        },
+        "platform_attachment_probes": {
+          "/tensor/reports/5559/figures": {
+            "path": "/tensor/reports/5559/figures",
+            "http_status": 404,
+            "bytes": 22
+          },
+          "/tensor/reports/5559/artifacts": {
+            "path": "/tensor/reports/5559/artifacts",
+            "http_status": 404,
+            "bytes": 22
+          },
+          "/tensor/reports/5559/attachments": {
+            "path": "/tensor/reports/5559/attachments",
+            "http_status": 404,
+            "bytes": 22
+          },
+          "/tensor/artifacts/field_synth_demo.json": {
+            "path": "/tensor/artifacts/field_synth_demo.json",
+            "http_status": 404,
+            "bytes": 22
+          },
+          "/tensor/reports/5559/figures/fig1_level_ice.png": {
+            "path": "/tensor/reports/5559/figures/fig1_level_ice.png",
+            "http_status": 404,
+            "bytes": 29
+          },
+          "/tensor/reports/5559/figures/fig2_broken_ice.png": {
+            "path": "/tensor/reports/5559/figures/fig2_broken_ice.png",
+            "http_status": 404,
+            "bytes": 29
+          },
+          "/tensor/reports/5559/figures/fig4_frazil.png": {
+            "path": "/tensor/reports/5559/figures/fig4_frazil.png",
+            "http_status": 404,
+            "bytes": 29
+          },
+          "/tensor/reports/5559/figures/fig5_scene.png": {
+            "path": "/tensor/reports/5559/figures/fig5_scene.png",
+            "http_status": 404,
+            "bytes": 29
+          }
+        }
+      },
+      "assets": [
+        {
+          "asset_id": "r5559:source-markdown",
+          "kind": "report_markdown",
+          "name": "report-5559-markdown",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1,
+            "char_start": 0,
+            "char_end": 35,
+            "quote": "# IN10-A1 · 四态冰场合成器成熟化（field_synth）",
+            "matched_token": "# IN10-A1",
+            "token_char_start": 0,
+            "token_char_end": 9
+          },
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> field `markdown`",
+            "local_copy": "knowledge/kf/wp-5559-01/source_report_5559.md",
+            "byte_identical_to_contract_hash": true,
+            "reason": "markdown fetched live; its UTF-8 byte sha256 equals the contract source_hash and its char count equals the contract chars"
+          },
+          "note": "the report markdown itself, fetched live and hashed",
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r5559:param-seed",
+          "kind": "declared_parameter",
+          "name": "seed",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3,
+            "char_start": 37,
+            "char_end": 140,
+            "quote": "**战役节点** IN10-A1（环境军 A1） · **种子** `seed=4908` · **网格** 1024×1024 @ 2.0 m（2.05 km × 2.05 km，N=1048576 格）",
+            "matched_token": "seed=4908",
+            "token_char_start": 72,
+            "token_char_end": 81
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "campaign node seed declared in the identity header",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-grid",
+          "kind": "declared_parameter",
+          "name": "grid 1024x1024 @ 2.0 m",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3,
+            "char_start": 37,
+            "char_end": 140,
+            "quote": "**战役节点** IN10-A1（环境军 A1） · **种子** `seed=4908` · **网格** 1024×1024 @ 2.0 m（2.05 km × 2.05 km，N=1048576 格）",
+            "matched_token": "1024×1024",
+            "token_char_start": 92,
+            "token_char_end": 101
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "field grid and spacing; N is stated on the same line",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:criterion-total",
+          "kind": "declared_criterion",
+          "name": "总判据 PASS",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 5,
+            "char_start": 142,
+            "char_end": 203,
+            "quote": "**总判据**：`PASS` · **字段摘要**：`dae26261b298d1d60371f4c38a583e4e…`",
+            "matched_token": "**总判据**：`PASS`",
+            "token_char_start": 142,
+            "token_char_end": 156
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "headline verdict as declared by the producing run",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:digest-prefix-header",
+          "kind": "declared_digest_reference",
+          "name": "header field digest (truncated)",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 5,
+            "char_start": 142,
+            "char_end": 203,
+            "quote": "**总判据**：`PASS` · **字段摘要**：`dae26261b298d1d60371f4c38a583e4e…`",
+            "matched_token": "dae26261b298d1d60371f4c38a583e4e…",
+            "token_char_start": 169,
+            "token_char_end": 202
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "truncated digest in the identity header",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-h-ref",
+          "kind": "declared_parameter",
+          "name": "h_ref 1.2 m",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 17,
+            "char_start": 499,
+            "char_end": 531,
+            "quote": "| 平整冰 | h_ref (目标平均厚度) | 1.2 m |",
+            "matched_token": "h_ref (目标平均厚度)",
+            "token_char_start": 507,
+            "token_char_end": 521
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "level-ice target mean thickness",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-sigma-ln",
+          "kind": "declared_parameter",
+          "name": "sigma_ln 0.18",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 18,
+            "char_start": 532,
+            "char_end": 568,
+            "quote": "| 平整冰 | sigma_ln (ln h 标准差) | 0.18 |",
+            "matched_token": "sigma_ln",
+            "token_char_start": 540,
+            "token_char_end": 548
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "lognormal sigma of the thickness field",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-corr-len",
+          "kind": "declared_parameter",
+          "name": "corr_len 60 m",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 19,
+            "char_start": 569,
+            "char_end": 603,
+            "quote": "| 平整冰 | corr_len (相关长度) | 60.0 m |",
+            "matched_token": "corr_len",
+            "token_char_start": 577,
+            "token_char_end": 585
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "correlation length of the Gaussian field",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-channel",
+          "kind": "declared_parameter",
+          "name": "channel width W / r_ch",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 20,
+            "char_start": 604,
+            "char_end": 647,
+            "quote": "| 平整冰 | 磨道宽度 W / 折减比 r_ch | 40.0 m / 0.55 |",
+            "matched_token": "磨道宽度 W / 折减比 r_ch",
+            "token_char_start": 612,
+            "token_char_end": 629
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "channel geometry and thickness reduction ratio",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-broken-coverage",
+          "kind": "declared_parameter",
+          "name": "coverage C / covered mean h",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 21,
+            "char_start": 648,
+            "char_end": 687,
+            "quote": "| 碎冰 | 覆盖率 C / 覆盖区平均厚度 | 0.62 / 0.9 m |",
+            "matched_token": "覆盖率 C / 覆盖区平均厚度",
+            "token_char_start": 655,
+            "token_char_end": 670
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "broken-ice coverage and mean thickness in the covered area",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-floe-spectrum",
+          "kind": "declared_parameter",
+          "name": "floe size spectrum b",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 22,
+            "char_start": 688,
+            "char_end": 753,
+            "quote": "| 碎冰 | 浮冰谱 N(>D)∝D^-b, D∈[d_min,d_max] | b=2.05, [12.0, 90.0] m |",
+            "matched_token": "浮冰谱 N(>D)",
+            "token_char_start": 695,
+            "token_char_end": 704
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "truncated Pareto floe spectrum and support",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-brash",
+          "kind": "declared_parameter",
+          "name": "brash relative thickness / bins",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 23,
+            "char_start": 754,
+            "char_end": 792,
+            "quote": "| 碎冰 | brash 相对厚度 / 尺寸分级数 | 0.55 / 8 |",
+            "matched_token": "brash 相对厚度",
+            "token_char_start": 761,
+            "token_char_end": 771
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "brash fraction and size-class count",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-ridge-spacing",
+          "kind": "declared_parameter",
+          "name": "ridge spacing lambda / threshold",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 24,
+            "char_start": 793,
+            "char_end": 837,
+            "quote": "| 冰脊 | 泊松间距均值 λ / 帆高判别阈值 | 150.0 m / 0.3 m |",
+            "matched_token": "泊松间距均值 λ",
+            "token_char_start": 800,
+            "token_char_end": 808
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "Poisson ridge spacing and sail-height detection threshold",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-ridge-sail",
+          "kind": "declared_parameter",
+          "name": "sail scale / keel-sail ratio k",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 25,
+            "char_start": 838,
+            "char_end": 882,
+            "quote": "| 冰脊 | 帆高尺度 / 龙骨-帆比 k | Exp(λ=0.7 m) / 4.4 |",
+            "matched_token": "帆高尺度 / 龙骨-帆比 k",
+            "token_char_start": 845,
+            "token_char_end": 859
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "ridge sail distribution and keel-to-sail ratio",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-track-length",
+          "kind": "declared_parameter",
+          "name": "statistical track length 120 km",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 26,
+            "char_start": 883,
+            "char_end": 907,
+            "quote": "| 冰脊 | 统计航迹长度 | 120 km |",
+            "matched_token": "统计航迹长度",
+            "token_char_start": 890,
+            "token_char_end": 896
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "track length used for the ridge statistics",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-frazil-dt",
+          "kind": "declared_parameter",
+          "name": "supercooling dT / event duration",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 27,
+            "char_start": 908,
+            "char_end": 952,
+            "quote": "| frazil | 过冷度峰值 ΔT / 事件时长 | 0.18 K / 48 h |",
+            "matched_token": "过冷度峰值 ΔT",
+            "token_char_start": 919,
+            "token_char_end": 927
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "frazil supercooling peak and event duration",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-frazil-dep",
+          "kind": "declared_parameter",
+          "name": "tau_dep / phi_pack / alpha",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 28,
+            "char_start": 953,
+            "char_end": 1014,
+            "quote": "| frazil | τ_dep / φ_pack=φ_max / α | 300000 s / 0.35 / 1.7 |",
+            "matched_token": "τ_dep",
+            "token_char_start": 964,
+            "token_char_end": 969
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "deposition time, packing fraction and viscosity exponent",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:param-frazil-nu-crit",
+          "kind": "declared_parameter",
+          "name": "nu_crit 2.0",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 29,
+            "char_start": 1015,
+            "char_end": 1045,
+            "quote": "| frazil | 跃变判据 ν_crit | 2.0 |",
+            "matched_token": "ν_crit",
+            "token_char_start": 1031,
+            "token_char_end": 1037
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "viscosity-jump threshold",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:ref-rng",
+          "kind": "symbol_reference",
+          "name": "derive_rng(seed, name)",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 33,
+            "char_start": 1075,
+            "char_end": 1220,
+            "quote": "1. **随机流的可复现设计**：`derive_rng(seed, name)` 用 `SeedSequence([seed, crc32(name)])` 为每个分量派生独立子流（PCG64）。增删某一分量的抽样次数不会污染其它分量 → 同 seed 双跑逐位一致，且分量间可独立回归。",
+            "matched_token": "`derive_rng(seed, name)`",
+            "token_char_start": 1092,
+            "token_char_end": 1116
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "per-component RNG substream derivation",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:ref-seedsequence",
+          "kind": "symbol_reference",
+          "name": "SeedSequence([seed, crc32(name)])",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 33,
+            "char_start": 1075,
+            "char_end": 1220,
+            "quote": "1. **随机流的可复现设计**：`derive_rng(seed, name)` 用 `SeedSequence([seed, crc32(name)])` 为每个分量派生独立子流（PCG64）。增删某一分量的抽样次数不会污染其它分量 → 同 seed 双跑逐位一致，且分量间可独立回归。",
+            "matched_token": "SeedSequence([seed, crc32(name)])",
+            "token_char_start": 1120,
+            "token_char_end": 1153
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "PCG64 substream keying",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:ref-level-formula",
+          "kind": "formula_reference",
+          "name": "h = h_ref·exp(s·g)/⟨exp(s·g)⟩",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 34,
+            "char_start": 1221,
+            "char_end": 1383,
+            "quote": "2. **平整冰**：零均值单位方差高斯随机场（白噪声频域乘 `exp(-k²L²/4)` → 自相关 `ρ(r)=exp(-r²/2L²)`）→ `h = h_ref·exp(s·g)/⟨exp(s·g)⟩`，**样本均值恒等于 h_ref**；磨道 = 沿 y 的带限随机游走中心线 + `tanh` 侧壁的厚度折减带。",
+            "matched_token": "`h = h_ref·exp(s·g)/⟨exp(s·g)⟩`",
+            "token_char_start": 1295,
+            "token_char_end": 1326
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "level-ice thickness field construction",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:ref-ridge-formula",
+          "kind": "formula_reference",
+          "name": "k = rho_i/(rho_w - rho_i(1-p))",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 36,
+            "char_start": 1539,
+            "char_end": 1685,
+            "quote": "4. **冰脊**：位置 = 泊松过程（间距 Exp(λ)）；帆高 = 阈值 0.3 m + Exp(λ_s)（指数无记忆，等价于对阈值以上样本取样）；龙骨深 `D_k = k·H_s`，k=4.4 并做**等压一致性反解**（k=ρ_i/(ρ_w−ρ_i(1−p)) ⇒ 龙骨孔隙率 p）。",
+            "matched_token": "k=ρ_i/(ρ_w−ρ_i(1−p))",
+            "token_char_start": 1653,
+            "token_char_end": 1673
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "isostatic inversion from keel-sail ratio to keel porosity",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:ref-frazil-formula",
+          "kind": "formula_reference",
+          "name": "dphi/dt balance",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 37,
+            "char_start": 1686,
+            "char_end": 1919,
+            "quote": "5. **frazil**：`P = ρ_w c_p C_H u ΔT/(ρ_i L H_mix)` → `dφ/dt = P(1−φ/φ_pack) − φ/τ` 在**分段常数 P 下解析递推**（不是欧拉差分）→ `φ_L = min(φH/h_L, 0.98φ_pack)` → `ν/ν_w = (1−φ_L/φ_max)^{-α}`；跃变窗 = `ν/ν_w ≥ ν_crit` 的时间区间，边界用连续解 + 二分细化，并用 dt→dt/4 做收敛检验。",
+            "matched_token": "`dφ/dt = P(1−φ/φ_pack) − φ/τ`",
+            "token_char_start": 1739,
+            "token_char_end": 1768
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "frazil balance integrated analytically per segment",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:ref-pipeline",
+          "kind": "source_code_reference",
+          "name": "backend/modules/ice_nav_campaign/pipeline.py",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 38,
+            "char_start": 1920,
+            "char_end": 2078,
+            "quote": "6. **工具链**：纯 numpy/scipy（无 GPU、无外部服务）；pytest 17 例；工件与图件由 `backend/modules/ice_nav_campaign/pipeline.py` 程序化生成，报告数字全部来自 `artifacts/field_synth_demo.json`（零手抄）。",
+            "matched_token": "backend/modules/ice_nav_campaign/pipeline.py",
+            "token_char_start": 1978,
+            "token_char_end": 2022
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "producing_repo",
+            "declared_repository": "ship-performance-platform",
+            "reason": "path is named in the report prose; the producing repository is not checked out in this worktree, so existence is neither asserted nor denied here"
+          },
+          "note": "module that programmatically generates the artefacts and figures",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:digest-prefix-table",
+          "kind": "declared_digest_reference",
+          "name": "criteria-table field digest (truncated)",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 45,
+            "char_start": 2165,
+            "char_end": 2237,
+            "quote": "| G1 逐位一致 | field sha256 | 同一 | `dae26261b298d1d60371f4c3…` | 0 | PASS |",
+            "matched_token": "dae26261b298d1d60371f4c3…",
+            "token_char_start": 2198,
+            "token_char_end": 2223
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "truncated digest repeated in the criteria table",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:fig-body-01",
+          "kind": "figure_reference",
+          "name": "fig1_level_ice.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 74,
+            "char_start": 3524,
+            "char_end": 3590,
+            "quote": "![fig1_level_ice.png](../artifacts/field_synth/fig1_level_ice.png)",
+            "matched_token": "![fig1_level_ice.png]",
+            "token_char_start": 3524,
+            "token_char_end": 3545
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "mapping_to_record_figure": "present",
+            "reason": "the markdown links the figure by relative path and carries no bytes; the record figure list is the only metadata channel"
+          },
+          "note": "figure link in section 4",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:fig-body-02",
+          "kind": "figure_reference",
+          "name": "fig2_broken_ice.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 78,
+            "char_start": 3643,
+            "char_end": 3711,
+            "quote": "![fig2_broken_ice.png](../artifacts/field_synth/fig2_broken_ice.png)",
+            "matched_token": "![fig2_broken_ice.png]",
+            "token_char_start": 3643,
+            "token_char_end": 3665
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "mapping_to_record_figure": "present",
+            "reason": "the markdown links the figure by relative path and carries no bytes; the record figure list is the only metadata channel"
+          },
+          "note": "figure link in section 4",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:fig-body-03",
+          "kind": "figure_reference",
+          "name": "fig3_ridges.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 82,
+            "char_start": 3800,
+            "char_end": 3860,
+            "quote": "![fig3_ridges.png](../artifacts/field_synth/fig3_ridges.png)",
+            "matched_token": "![fig3_ridges.png]",
+            "token_char_start": 3800,
+            "token_char_end": 3818
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "mapping_to_record_figure": "absent",
+            "reason": "the markdown links the figure by relative path and carries no bytes; the record figure list is the only metadata channel"
+          },
+          "note": "figure link in section 4; no matching record figure",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:fig-body-04",
+          "kind": "figure_reference",
+          "name": "fig4_frazil.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 86,
+            "char_start": 3928,
+            "char_end": 3988,
+            "quote": "![fig4_frazil.png](../artifacts/field_synth/fig4_frazil.png)",
+            "matched_token": "![fig4_frazil.png]",
+            "token_char_start": 3928,
+            "token_char_end": 3946
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "mapping_to_record_figure": "present",
+            "reason": "the markdown links the figure by relative path and carries no bytes; the record figure list is the only metadata channel"
+          },
+          "note": "figure link in section 4",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:fig-body-05",
+          "kind": "figure_reference",
+          "name": "fig5_scene.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 90,
+            "char_start": 4054,
+            "char_end": 4112,
+            "quote": "![fig5_scene.png](../artifacts/field_synth/fig5_scene.png)",
+            "matched_token": "![fig5_scene.png]",
+            "token_char_start": 4054,
+            "token_char_end": 4071
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "mapping_to_record_figure": "present",
+            "reason": "the markdown links the figure by relative path and carries no bytes; the record figure list is the only metadata channel"
+          },
+          "note": "figure link in section 4",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:artifact-demo-json",
+          "kind": "data_artifact_reference",
+          "name": "artifacts/field_synth_demo.json",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 129,
+            "char_start": 5902,
+            "char_end": 5981,
+            "quote": "- `artifacts/field_synth_demo.json`（sha256 `2a63a044b50e9a4893f655cae8e67c8b…`）",
+            "matched_token": "artifacts/field_synth_demo.json",
+            "token_char_start": 5905,
+            "token_char_end": 5936
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "producing_repo",
+            "declared_repository": "ship-performance-platform",
+            "reason": "path is declared in section 7 of the report but no bytes are attached to the report record; every platform artefact/figure endpoint probed returned HTTP 404 and the path is not part of the TensorKnowledge delivery worktree"
+          },
+          "note": "the JSON all report numbers are injected from",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:artifact-fig1",
+          "kind": "figure_file_reference",
+          "name": "artifacts/field_synth/fig1_level_ice.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 131,
+            "char_start": 5983,
+            "char_end": 6055,
+            "quote": "- `artifacts/field_synth/fig1_level_ice.png`（sha256 `3989e93065c269e6…`）",
+            "matched_token": "artifacts/field_synth/fig1_level_ice.png",
+            "token_char_start": 5986,
+            "token_char_end": 6026
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "producing_repo",
+            "declared_repository": "ship-performance-platform",
+            "reason": "path is declared in section 7 of the report but no bytes are attached to the report record; every platform artefact/figure endpoint probed returned HTTP 404 and the path is not part of the TensorKnowledge delivery worktree"
+          },
+          "note": "figure file with declared truncated sha256",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:artifact-fig2",
+          "kind": "figure_file_reference",
+          "name": "artifacts/field_synth/fig2_broken_ice.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 133,
+            "char_start": 6057,
+            "char_end": 6130,
+            "quote": "- `artifacts/field_synth/fig2_broken_ice.png`（sha256 `6bf9f22c1528e41a…`）",
+            "matched_token": "artifacts/field_synth/fig2_broken_ice.png",
+            "token_char_start": 6060,
+            "token_char_end": 6101
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "producing_repo",
+            "declared_repository": "ship-performance-platform",
+            "reason": "path is declared in section 7 of the report but no bytes are attached to the report record; every platform artefact/figure endpoint probed returned HTTP 404 and the path is not part of the TensorKnowledge delivery worktree"
+          },
+          "note": "figure file with declared truncated sha256",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:artifact-fig3",
+          "kind": "figure_file_reference",
+          "name": "artifacts/field_synth/fig3_ridges.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 135,
+            "char_start": 6132,
+            "char_end": 6201,
+            "quote": "- `artifacts/field_synth/fig3_ridges.png`（sha256 `cee0ad278980443b…`）",
+            "matched_token": "artifacts/field_synth/fig3_ridges.png",
+            "token_char_start": 6135,
+            "token_char_end": 6172
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "producing_repo",
+            "declared_repository": "ship-performance-platform",
+            "reason": "path is declared in section 7 of the report but no bytes are attached to the report record; every platform artefact/figure endpoint probed returned HTTP 404 and the path is not part of the TensorKnowledge delivery worktree"
+          },
+          "note": "figure file with declared truncated sha256; absent from the record figure list",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:artifact-fig4",
+          "kind": "figure_file_reference",
+          "name": "artifacts/field_synth/fig4_frazil.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 137,
+            "char_start": 6203,
+            "char_end": 6272,
+            "quote": "- `artifacts/field_synth/fig4_frazil.png`（sha256 `010aa907892551ae…`）",
+            "matched_token": "artifacts/field_synth/fig4_frazil.png",
+            "token_char_start": 6206,
+            "token_char_end": 6243
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "producing_repo",
+            "declared_repository": "ship-performance-platform",
+            "reason": "path is declared in section 7 of the report but no bytes are attached to the report record; every platform artefact/figure endpoint probed returned HTTP 404 and the path is not part of the TensorKnowledge delivery worktree"
+          },
+          "note": "figure file with declared truncated sha256",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:artifact-fig5",
+          "kind": "figure_file_reference",
+          "name": "artifacts/field_synth/fig5_scene.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 139,
+            "char_start": 6274,
+            "char_end": 6342,
+            "quote": "- `artifacts/field_synth/fig5_scene.png`（sha256 `3d39e42939589ebb…`）",
+            "matched_token": "artifacts/field_synth/fig5_scene.png",
+            "token_char_start": 6277,
+            "token_char_end": 6313
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "producing_repo",
+            "declared_repository": "ship-performance-platform",
+            "reason": "path is declared in section 7 of the report but no bytes are attached to the report record; every platform artefact/figure endpoint probed returned HTTP 404 and the path is not part of the TensorKnowledge delivery worktree"
+          },
+          "note": "figure file with declared truncated sha256",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:test-invocation",
+          "kind": "test_reference",
+          "name": "pytest tests/test_field_synth_in10a1.py",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 141,
+            "char_start": 6344,
+            "char_end": 6416,
+            "quote": "- 测试：`python3 -m pytest tests/test_field_synth_in10a1.py -q` → 17 passed",
+            "matched_token": "python3 -m pytest tests/test_field_synth_in10a1.py",
+            "token_char_start": 6350,
+            "token_char_end": 6400
+          },
+          "resolution": {
+            "status": "unresolved",
+            "scope": "producing_repo",
+            "declared_repository": "ship-performance-platform",
+            "reason": "path is named in the report prose; the producing repository is not checked out in this worktree, so existence is neither asserted nor denied here"
+          },
+          "note": "declared test invocation and pass count",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:runtime-env",
+          "kind": "environment_declaration",
+          "name": "runtime 114.1 s / py3.11.6 / numpy 2.4.6",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 143,
+            "char_start": 6418,
+            "char_end": 6462,
+            "quote": "- 运行时长：114.1 s；环境：python 3.11.6, numpy 2.4.6",
+            "matched_token": "python 3.11.6, numpy 2.4.6",
+            "token_char_start": 6436,
+            "token_char_end": 6462
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "wall time and library versions of the producing run",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:embedded-criteria-json",
+          "kind": "embedded_json_reference",
+          "name": "machine criteria JSON summary",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "markdown",
+            "line": 147,
+            "char_start": 6466,
+            "char_end": 6483,
+            "quote": "## 附：机器判据 JSON 摘要",
+            "matched_token": "## 附：机器判据 JSON 摘要",
+            "token_char_start": 6466,
+            "token_char_end": 6483
+          },
+          "resolution": {
+            "status": "declared_only",
+            "scope": "markdown_prose",
+            "reason": "value/expression is declared in the report text; this work package registers the declaration and does not re-derive it"
+          },
+          "note": "fenced json block the numeric cross-checks are parsed from",
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r5559:record-id",
+          "kind": "record_metadata",
+          "name": "/id",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/id",
+            "quote": 5559
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> /id",
+            "reason": "record field read live; no byte payload is attached to it"
+          },
+          "note": "record primary key",
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r5559:record-title",
+          "kind": "record_metadata",
+          "name": "/title",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/title",
+            "quote": "IN10-A1 · 四态冰场合成器成熟化（field_synth）：可复现冰情场 + 判据全过"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> /title",
+            "reason": "record field read live; no byte payload is attached to it"
+          },
+          "note": "record title (equals contract title)",
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r5559:record-scenario",
+          "kind": "record_metadata",
+          "name": "/scenario_key",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/scenario_key",
+            "quote": "ice_nav_campaign"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> /scenario_key",
+            "reason": "record field read live; no byte payload is attached to it"
+          },
+          "note": "scenario key (equals contract scenario_key)",
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r5559:record-status",
+          "kind": "record_metadata",
+          "name": "/status",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/status",
+            "quote": "published"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> /status",
+            "reason": "record field read live; no byte payload is attached to it"
+          },
+          "note": "record publication status",
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r5559:record-created-at",
+          "kind": "record_metadata",
+          "name": "/created_at",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/created_at",
+            "quote": "2026-11-06T23:51:00.664613+00:00"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> /created_at",
+            "reason": "record field read live; no byte payload is attached to it"
+          },
+          "note": "record creation timestamp",
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r5559:record-figure-01",
+          "kind": "embedded_figure",
+          "name": "fig1_level_ice.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/0/name",
+            "quote": "fig1_level_ice.png"
+          },
+          "caption_locator": {
+            "source_field": "record",
+            "pointer": "/figures/0/caption",
+            "quote": "平整冰厚度场（对数正态+高斯相关谱，样本均值严格等于 h_ref）与磨道中心线/磨道宽度反测。",
+            "caption_in_markdown": true
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> /figures/0",
+            "png_bytes_present": 0,
+            "reason": "record carries name+caption only (png_base64 empty); the figure byte endpoints probed in this run all returned HTTP 404, so no hash is claimed for the image"
+          },
+          "note": "figure metadata declared by the producing run",
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r5559:record-figure-02",
+          "kind": "embedded_figure",
+          "name": "fig2_broken_ice.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/1/name",
+            "quote": "fig2_broken_ice.png"
+          },
+          "caption_locator": {
+            "source_field": "record",
+            "pointer": "/figures/1/caption",
+            "quote": "碎冰场占据图（覆盖率由计数控制严格等于 round(C·N)/N）与浮冰尺寸 CCDF；橙线为同律同支撑的对照样本（bias-cancelling control）。",
+            "caption_in_markdown": true
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> /figures/1",
+            "png_bytes_present": 0,
+            "reason": "record carries name+caption only (png_base64 empty); the figure byte endpoints probed in this run all returned HTTP 404, so no hash is claimed for the image"
+          },
+          "note": "figure metadata declared by the producing run",
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r5559:record-figure-03",
+          "kind": "embedded_figure",
+          "name": "fig4_frazil.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/2/name",
+            "quote": "fig4_frazil.png"
+          },
+          "caption_locator": {
+            "source_field": "record",
+            "pointer": "/figures/2/caption",
+            "quote": "frazil 事件链：过冷度 → 深度平均/层内浓度 → 黏度比；红色阴影为黏度跃变窗（ν/ν_w ≥ ν_crit）。",
+            "caption_in_markdown": true
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> /figures/2",
+            "png_bytes_present": 0,
+            "reason": "record carries name+caption only (png_base64 empty); the figure byte endpoints probed in this run all returned HTTP 404, so no hash is claimed for the image"
+          },
+          "note": "figure metadata declared by the producing run",
+          "existence_asserted_by_worker": true
+        },
+        {
+          "asset_id": "r5559:record-figure-04",
+          "kind": "embedded_figure",
+          "name": "fig5_scene.png",
+          "source_uri": "tensor://reports/5559",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/3/name",
+            "quote": "fig5_scene.png"
+          },
+          "caption_locator": {
+            "source_field": "record",
+            "pointer": "/figures/3/caption",
+            "quote": "四态场景装配：平整冰背景 + 磨道内碎冰/敞水 + 横穿冰脊带 + frazil 斑块；面积占比 level=0.937, broken=0.012, ridge=0.012, frazil=0.031, open=0.008。",
+            "caption_in_markdown": true
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /api/v1/tensor/reports/5559 -> /figures/3",
+            "png_bytes_present": 0,
+            "reason": "record carries name+caption only (png_base64 empty); the figure byte endpoints probed in this run all returned HTTP 404, so no hash is claimed for the image"
+          },
+          "note": "figure metadata declared by the producing run",
+          "existence_asserted_by_worker": true
+        }
+      ],
+      "locators": [
+        {
+          "id": "r5559:source-markdown",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1,
+            "char_start": 0,
+            "char_end": 35
+          },
+          "quote": "# IN10-A1 · 四态冰场合成器成熟化（field_synth）",
+          "quote_sha256": "sha256:8ca6806508c28cc97a863f6bb73a4826fb6395f42416f2011c3bbdbfde057361",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-seed",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3,
+            "char_start": 37,
+            "char_end": 140
+          },
+          "quote": "**战役节点** IN10-A1（环境军 A1） · **种子** `seed=4908` · **网格** 1024×1024 @ 2.0 m（2.05 km × 2.05 km，N=1048576 格）",
+          "quote_sha256": "sha256:2d5b440597ad457716d01d0bfe666b25dc430ab37ae64d9676c6d97c34153f4c",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-grid",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3,
+            "char_start": 37,
+            "char_end": 140
+          },
+          "quote": "**战役节点** IN10-A1（环境军 A1） · **种子** `seed=4908` · **网格** 1024×1024 @ 2.0 m（2.05 km × 2.05 km，N=1048576 格）",
+          "quote_sha256": "sha256:2d5b440597ad457716d01d0bfe666b25dc430ab37ae64d9676c6d97c34153f4c",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:criterion-total",
+          "locator": {
+            "source_field": "markdown",
+            "line": 5,
+            "char_start": 142,
+            "char_end": 203
+          },
+          "quote": "**总判据**：`PASS` · **字段摘要**：`dae26261b298d1d60371f4c38a583e4e…`",
+          "quote_sha256": "sha256:c43faf563595486d8269728bbbc6c0700494520ee03ec7c298f57cb11539fc59",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:digest-prefix-header",
+          "locator": {
+            "source_field": "markdown",
+            "line": 5,
+            "char_start": 142,
+            "char_end": 203
+          },
+          "quote": "**总判据**：`PASS` · **字段摘要**：`dae26261b298d1d60371f4c38a583e4e…`",
+          "quote_sha256": "sha256:c43faf563595486d8269728bbbc6c0700494520ee03ec7c298f57cb11539fc59",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-h-ref",
+          "locator": {
+            "source_field": "markdown",
+            "line": 17,
+            "char_start": 499,
+            "char_end": 531
+          },
+          "quote": "| 平整冰 | h_ref (目标平均厚度) | 1.2 m |",
+          "quote_sha256": "sha256:ebb4c1d06e6474a2be3b2a3a01b3147b964323648c0a3728035a8f10353eab82",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-sigma-ln",
+          "locator": {
+            "source_field": "markdown",
+            "line": 18,
+            "char_start": 532,
+            "char_end": 568
+          },
+          "quote": "| 平整冰 | sigma_ln (ln h 标准差) | 0.18 |",
+          "quote_sha256": "sha256:ac34ccbc0cf5ef2648ff3ad41edfc4e641d0f34a4d2174dfb5417038e983e066",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-corr-len",
+          "locator": {
+            "source_field": "markdown",
+            "line": 19,
+            "char_start": 569,
+            "char_end": 603
+          },
+          "quote": "| 平整冰 | corr_len (相关长度) | 60.0 m |",
+          "quote_sha256": "sha256:95a662f7b4b510ebf4abd3f8a6fb26b57174b87871d09499929af88a38ec6a5c",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-channel",
+          "locator": {
+            "source_field": "markdown",
+            "line": 20,
+            "char_start": 604,
+            "char_end": 647
+          },
+          "quote": "| 平整冰 | 磨道宽度 W / 折减比 r_ch | 40.0 m / 0.55 |",
+          "quote_sha256": "sha256:e279ff1bfda6fa7b65d36293edad50e966ff7dde8e55436bbe5ddd7cf05ad405",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-broken-coverage",
+          "locator": {
+            "source_field": "markdown",
+            "line": 21,
+            "char_start": 648,
+            "char_end": 687
+          },
+          "quote": "| 碎冰 | 覆盖率 C / 覆盖区平均厚度 | 0.62 / 0.9 m |",
+          "quote_sha256": "sha256:6332a1e465157ee3ffb234b4f5ce0d90f77b553707229e5237a1e19a9eef93cf",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-floe-spectrum",
+          "locator": {
+            "source_field": "markdown",
+            "line": 22,
+            "char_start": 688,
+            "char_end": 753
+          },
+          "quote": "| 碎冰 | 浮冰谱 N(>D)∝D^-b, D∈[d_min,d_max] | b=2.05, [12.0, 90.0] m |",
+          "quote_sha256": "sha256:df67d05326996fb8a61dfe572f873bd659fc0f1c1b313ceddfda6261b5d5f643",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-brash",
+          "locator": {
+            "source_field": "markdown",
+            "line": 23,
+            "char_start": 754,
+            "char_end": 792
+          },
+          "quote": "| 碎冰 | brash 相对厚度 / 尺寸分级数 | 0.55 / 8 |",
+          "quote_sha256": "sha256:186f27120317482963793bd608c86dd0667113506247213bf4ffc5bfa9bd1f31",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-ridge-spacing",
+          "locator": {
+            "source_field": "markdown",
+            "line": 24,
+            "char_start": 793,
+            "char_end": 837
+          },
+          "quote": "| 冰脊 | 泊松间距均值 λ / 帆高判别阈值 | 150.0 m / 0.3 m |",
+          "quote_sha256": "sha256:c89dea2ce22e7ea54b83e1a134580fb4e928ad6d6e4488045d6571b31fb0b1e4",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-ridge-sail",
+          "locator": {
+            "source_field": "markdown",
+            "line": 25,
+            "char_start": 838,
+            "char_end": 882
+          },
+          "quote": "| 冰脊 | 帆高尺度 / 龙骨-帆比 k | Exp(λ=0.7 m) / 4.4 |",
+          "quote_sha256": "sha256:3409bf09ce240359c76f1656e7add6aa999bc2c3f8f26780cc58f62534029f75",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-track-length",
+          "locator": {
+            "source_field": "markdown",
+            "line": 26,
+            "char_start": 883,
+            "char_end": 907
+          },
+          "quote": "| 冰脊 | 统计航迹长度 | 120 km |",
+          "quote_sha256": "sha256:f573312b60107041dc47fdd1daf0f7295314f23d539c3b4721a410ba5b0db874",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-frazil-dt",
+          "locator": {
+            "source_field": "markdown",
+            "line": 27,
+            "char_start": 908,
+            "char_end": 952
+          },
+          "quote": "| frazil | 过冷度峰值 ΔT / 事件时长 | 0.18 K / 48 h |",
+          "quote_sha256": "sha256:6a2d3d59b6f63d0d2162b6f2048f4bf8884330c5b87a78e9fa91e2abab2fdf66",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-frazil-dep",
+          "locator": {
+            "source_field": "markdown",
+            "line": 28,
+            "char_start": 953,
+            "char_end": 1014
+          },
+          "quote": "| frazil | τ_dep / φ_pack=φ_max / α | 300000 s / 0.35 / 1.7 |",
+          "quote_sha256": "sha256:6a255f62e1cc147fe79ed72bb05c25d2dc58153a23c9691f0b79dd0418c33692",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:param-frazil-nu-crit",
+          "locator": {
+            "source_field": "markdown",
+            "line": 29,
+            "char_start": 1015,
+            "char_end": 1045
+          },
+          "quote": "| frazil | 跃变判据 ν_crit | 2.0 |",
+          "quote_sha256": "sha256:f6e2f7b4ed0bf23048a433f275e07958843ee8a4bf629b712c3c4ec976204e16",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:ref-rng",
+          "locator": {
+            "source_field": "markdown",
+            "line": 33,
+            "char_start": 1075,
+            "char_end": 1220
+          },
+          "quote": "1. **随机流的可复现设计**：`derive_rng(seed, name)` 用 `SeedSequence([seed, crc32(name)])` 为每个分量派生独立子流（PCG64）。增删某一分量的抽样次数不会污染其它分量 → 同 seed 双跑逐位一致，且分量间可独立回归。",
+          "quote_sha256": "sha256:702fa55947a182eb703a981b190dec40c401aec47450a38da0500d3cc7b9d9fb",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:ref-seedsequence",
+          "locator": {
+            "source_field": "markdown",
+            "line": 33,
+            "char_start": 1075,
+            "char_end": 1220
+          },
+          "quote": "1. **随机流的可复现设计**：`derive_rng(seed, name)` 用 `SeedSequence([seed, crc32(name)])` 为每个分量派生独立子流（PCG64）。增删某一分量的抽样次数不会污染其它分量 → 同 seed 双跑逐位一致，且分量间可独立回归。",
+          "quote_sha256": "sha256:702fa55947a182eb703a981b190dec40c401aec47450a38da0500d3cc7b9d9fb",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:ref-level-formula",
+          "locator": {
+            "source_field": "markdown",
+            "line": 34,
+            "char_start": 1221,
+            "char_end": 1383
+          },
+          "quote": "2. **平整冰**：零均值单位方差高斯随机场（白噪声频域乘 `exp(-k²L²/4)` → 自相关 `ρ(r)=exp(-r²/2L²)`）→ `h = h_ref·exp(s·g)/⟨exp(s·g)⟩`，**样本均值恒等于 h_ref**；磨道 = 沿 y 的带限随机游走中心线 + `tanh` 侧壁的厚度折减带。",
+          "quote_sha256": "sha256:2b93cea9084112315f85fddd5b435f09bbfdd9be019b9030a9288ea8c218cbbd",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:ref-ridge-formula",
+          "locator": {
+            "source_field": "markdown",
+            "line": 36,
+            "char_start": 1539,
+            "char_end": 1685
+          },
+          "quote": "4. **冰脊**：位置 = 泊松过程（间距 Exp(λ)）；帆高 = 阈值 0.3 m + Exp(λ_s)（指数无记忆，等价于对阈值以上样本取样）；龙骨深 `D_k = k·H_s`，k=4.4 并做**等压一致性反解**（k=ρ_i/(ρ_w−ρ_i(1−p)) ⇒ 龙骨孔隙率 p）。",
+          "quote_sha256": "sha256:ff0299ae557d4e55d8f1ac790461ad3315d12efdab03cceff0adc5d52d7f8f97",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:ref-frazil-formula",
+          "locator": {
+            "source_field": "markdown",
+            "line": 37,
+            "char_start": 1686,
+            "char_end": 1919
+          },
+          "quote": "5. **frazil**：`P = ρ_w c_p C_H u ΔT/(ρ_i L H_mix)` → `dφ/dt = P(1−φ/φ_pack) − φ/τ` 在**分段常数 P 下解析递推**（不是欧拉差分）→ `φ_L = min(φH/h_L, 0.98φ_pack)` → `ν/ν_w = (1−φ_L/φ_max)^{-α}`；跃变窗 = `ν/ν_w ≥ ν_crit` 的时间区间，边界用连续解 + 二分细化，并用 dt→dt/4 做收敛检验。",
+          "quote_sha256": "sha256:40551a582b3b1dad85bc6527f5dda2456dcff1455ffcba86181d3b0e56226827",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:ref-pipeline",
+          "locator": {
+            "source_field": "markdown",
+            "line": 38,
+            "char_start": 1920,
+            "char_end": 2078
+          },
+          "quote": "6. **工具链**：纯 numpy/scipy（无 GPU、无外部服务）；pytest 17 例；工件与图件由 `backend/modules/ice_nav_campaign/pipeline.py` 程序化生成，报告数字全部来自 `artifacts/field_synth_demo.json`（零手抄）。",
+          "quote_sha256": "sha256:d6b0f6376eeca29e2a9594a0a814b582fd66f430722a349824ab448935d36f1d",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:digest-prefix-table",
+          "locator": {
+            "source_field": "markdown",
+            "line": 45,
+            "char_start": 2165,
+            "char_end": 2237
+          },
+          "quote": "| G1 逐位一致 | field sha256 | 同一 | `dae26261b298d1d60371f4c3…` | 0 | PASS |",
+          "quote_sha256": "sha256:f69948b1f9c27958970fb8475bcf57f8d1dce68d86d30cec25e15a93f88ac0ae",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:fig-body-01",
+          "locator": {
+            "source_field": "markdown",
+            "line": 74,
+            "char_start": 3524,
+            "char_end": 3590
+          },
+          "quote": "![fig1_level_ice.png](../artifacts/field_synth/fig1_level_ice.png)",
+          "quote_sha256": "sha256:d75787f391ad37f70f2b5210feb9319eec735ec0c158694859f84e2f263e240b",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:fig-body-02",
+          "locator": {
+            "source_field": "markdown",
+            "line": 78,
+            "char_start": 3643,
+            "char_end": 3711
+          },
+          "quote": "![fig2_broken_ice.png](../artifacts/field_synth/fig2_broken_ice.png)",
+          "quote_sha256": "sha256:9aac99c5814741b281c5ac732f3cdbefa6ef5910e140b9c754f65e06467c4552",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:fig-body-03",
+          "locator": {
+            "source_field": "markdown",
+            "line": 82,
+            "char_start": 3800,
+            "char_end": 3860
+          },
+          "quote": "![fig3_ridges.png](../artifacts/field_synth/fig3_ridges.png)",
+          "quote_sha256": "sha256:49df056094c1b44989a3bebedebd374b2631ce0c2f13206d017f50b0f7435170",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:fig-body-04",
+          "locator": {
+            "source_field": "markdown",
+            "line": 86,
+            "char_start": 3928,
+            "char_end": 3988
+          },
+          "quote": "![fig4_frazil.png](../artifacts/field_synth/fig4_frazil.png)",
+          "quote_sha256": "sha256:cd7ec7a77cbe06d5664bcea62312f69cb93b293fc98df8fa3ae7c4421be0a662",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:fig-body-05",
+          "locator": {
+            "source_field": "markdown",
+            "line": 90,
+            "char_start": 4054,
+            "char_end": 4112
+          },
+          "quote": "![fig5_scene.png](../artifacts/field_synth/fig5_scene.png)",
+          "quote_sha256": "sha256:d3798b4260e2f3b98b4dc7e6751c994f90a1cede232686c99eec5db6f8da693c",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:artifact-demo-json",
+          "locator": {
+            "source_field": "markdown",
+            "line": 129,
+            "char_start": 5902,
+            "char_end": 5981
+          },
+          "quote": "- `artifacts/field_synth_demo.json`（sha256 `2a63a044b50e9a4893f655cae8e67c8b…`）",
+          "quote_sha256": "sha256:2a8919b044d555d97e5cb608efe076ca0e4c2feeb0b182189e03f639749e6f84",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:artifact-fig1",
+          "locator": {
+            "source_field": "markdown",
+            "line": 131,
+            "char_start": 5983,
+            "char_end": 6055
+          },
+          "quote": "- `artifacts/field_synth/fig1_level_ice.png`（sha256 `3989e93065c269e6…`）",
+          "quote_sha256": "sha256:a2c6ac45b561120685573cf44c7750a03c11e441d2bd46830f8cdaedb7bf8311",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:artifact-fig2",
+          "locator": {
+            "source_field": "markdown",
+            "line": 133,
+            "char_start": 6057,
+            "char_end": 6130
+          },
+          "quote": "- `artifacts/field_synth/fig2_broken_ice.png`（sha256 `6bf9f22c1528e41a…`）",
+          "quote_sha256": "sha256:be446f54b0d5852380d58c75eb4fb7c955ea949b685750b96a10caf6f4f9e616",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:artifact-fig3",
+          "locator": {
+            "source_field": "markdown",
+            "line": 135,
+            "char_start": 6132,
+            "char_end": 6201
+          },
+          "quote": "- `artifacts/field_synth/fig3_ridges.png`（sha256 `cee0ad278980443b…`）",
+          "quote_sha256": "sha256:2743a9fc17a7c6ad41c2a2dcb04af759b2fc88b00ef5a414019143eed1e6f4c6",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:artifact-fig4",
+          "locator": {
+            "source_field": "markdown",
+            "line": 137,
+            "char_start": 6203,
+            "char_end": 6272
+          },
+          "quote": "- `artifacts/field_synth/fig4_frazil.png`（sha256 `010aa907892551ae…`）",
+          "quote_sha256": "sha256:4d3bddf2f4f217e66077564be3e96fc8729500f9dbb2d09553fdce78a26862f7",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:artifact-fig5",
+          "locator": {
+            "source_field": "markdown",
+            "line": 139,
+            "char_start": 6274,
+            "char_end": 6342
+          },
+          "quote": "- `artifacts/field_synth/fig5_scene.png`（sha256 `3d39e42939589ebb…`）",
+          "quote_sha256": "sha256:83aeb4a9010d0f032508f37740c68caa979a34d268d943fc5c5a60492f89c1ca",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:test-invocation",
+          "locator": {
+            "source_field": "markdown",
+            "line": 141,
+            "char_start": 6344,
+            "char_end": 6416
+          },
+          "quote": "- 测试：`python3 -m pytest tests/test_field_synth_in10a1.py -q` → 17 passed",
+          "quote_sha256": "sha256:2aa529af44c9fe3e785dcbdf7f6fbc7679d0e8c619d6fff5c395acd7327dd63c",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:runtime-env",
+          "locator": {
+            "source_field": "markdown",
+            "line": 143,
+            "char_start": 6418,
+            "char_end": 6462
+          },
+          "quote": "- 运行时长：114.1 s；环境：python 3.11.6, numpy 2.4.6",
+          "quote_sha256": "sha256:64fdfe0d2167ba273236c8105dc2e7eabf2285d7370ad7cbccd21b5755006529",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:embedded-criteria-json",
+          "locator": {
+            "source_field": "markdown",
+            "line": 147,
+            "char_start": 6466,
+            "char_end": 6483
+          },
+          "quote": "## 附：机器判据 JSON 摘要",
+          "quote_sha256": "sha256:c4aa14e680a6c0d33c83969f8f0d584f2ac22eac6a4cd4fd0d7e5da7d8f8f6c2",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "char_slice_equals_quote": true,
+          "token_slice_equals_token": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "id": "r5559:record-id",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/id"
+          },
+          "quote": 5559,
+          "quote_sha256": "sha256:30c6570a99d5554ca6975f2ca386e7d3af1b3b92dc063e0d34d90223f5d2e7dd",
+          "pointer_resolved": true,
+          "value_at_pointer": 5559,
+          "value_equals_quote": true,
+          "resolved": true
+        },
+        {
+          "id": "r5559:record-title",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/title"
+          },
+          "quote": "IN10-A1 · 四态冰场合成器成熟化（field_synth）：可复现冰情场 + 判据全过",
+          "quote_sha256": "sha256:738de42000516d6f3ca5322e05ad4a0928732e4dffeb9c0c3f3b1f8052ef0ff2",
+          "pointer_resolved": true,
+          "value_at_pointer": "IN10-A1 · 四态冰场合成器成熟化（field_synth）：可复现冰情场 + 判据全过",
+          "value_equals_quote": true,
+          "resolved": true
+        },
+        {
+          "id": "r5559:record-scenario",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/scenario_key"
+          },
+          "quote": "ice_nav_campaign",
+          "quote_sha256": "sha256:e67f6c445c63ad605087dfad41a48da766d17b7cdbb692f417a18021ddfc02e7",
+          "pointer_resolved": true,
+          "value_at_pointer": "ice_nav_campaign",
+          "value_equals_quote": true,
+          "resolved": true
+        },
+        {
+          "id": "r5559:record-status",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/status"
+          },
+          "quote": "published",
+          "quote_sha256": "sha256:b04e5ea201bb040cae53f693f6a38a3e00b62da6039ca248fecd59b7fc842894",
+          "pointer_resolved": true,
+          "value_at_pointer": "published",
+          "value_equals_quote": true,
+          "resolved": true
+        },
+        {
+          "id": "r5559:record-created-at",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/created_at"
+          },
+          "quote": "2026-11-06T23:51:00.664613+00:00",
+          "quote_sha256": "sha256:ce350795984d89afa41b9cea921ea5ac0c10551a0ca702bc980ea95876dddd35",
+          "pointer_resolved": true,
+          "value_at_pointer": "2026-11-06T23:51:00.664613+00:00",
+          "value_equals_quote": true,
+          "resolved": true
+        },
+        {
+          "id": "r5559:record-figure-01",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/0/name"
+          },
+          "quote": "fig1_level_ice.png",
+          "quote_sha256": "sha256:7816fd072cb50254102410ff8a9374d8e689bc706bee6856a5f0ab1f00948c37",
+          "pointer_resolved": true,
+          "value_at_pointer": "fig1_level_ice.png",
+          "value_equals_quote": true,
+          "resolved": true
+        },
+        {
+          "id": "r5559:record-figure-02",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/1/name"
+          },
+          "quote": "fig2_broken_ice.png",
+          "quote_sha256": "sha256:b83da3a95579861c1a9a74ad478f396d808ba2d77a16e3f27a96764578bf51c3",
+          "pointer_resolved": true,
+          "value_at_pointer": "fig2_broken_ice.png",
+          "value_equals_quote": true,
+          "resolved": true
+        },
+        {
+          "id": "r5559:record-figure-03",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/2/name"
+          },
+          "quote": "fig4_frazil.png",
+          "quote_sha256": "sha256:fddf57bf322e3eecfe7229d8e00022e65ccd44c9d1546440ef25739970c8c3e3",
+          "pointer_resolved": true,
+          "value_at_pointer": "fig4_frazil.png",
+          "value_equals_quote": true,
+          "resolved": true
+        },
+        {
+          "id": "r5559:record-figure-04",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/3/name"
+          },
+          "quote": "fig5_scene.png",
+          "quote_sha256": "sha256:b15bf7b1f817ca851fe75ed9827fa3d261b9b70fc21280fcefb23c02b1b919d9",
+          "pointer_resolved": true,
+          "value_at_pointer": "fig5_scene.png",
+          "value_equals_quote": true,
+          "resolved": true
+        }
+      ],
+      "ref_consistency_checks": [
+        {
+          "check": "grid_cells_equal_N",
+          "computed": 1048576,
+          "stated": 1048576,
+          "consistent": true,
+          "note": "nx*ny from the identity header vs the stated N (arithmetic only)"
+        },
+        {
+          "check": "domain_extent_km",
+          "computed": 2.048,
+          "stated": 2.05,
+          "consistent": true,
+          "note": "nx*dx = 2.048 km vs a stated 2.05 km; equal at the stated 2-decimal rounding, not exactly"
+        },
+        {
+          "check": "coverage_from_count_control",
+          "computed": 0.619999885559082,
+          "stated_measured": 0.619999885559082,
+          "consistent": true,
+          "note": "round(C*N)/N reproduces the measured coverage bit-for-bit"
+        },
+        {
+          "check": "coverage_relative_error",
+          "computed": 1.8458212574888566e-07,
+          "stated": 1.8458212574888566e-07,
+          "consistent": true,
+          "note": "(C - measured)/C reproduces the declared relative error"
+        },
+        {
+          "check": "coverage_quantization_bound",
+          "computed": 7.690921906502017e-07,
+          "stated": 7.690921906502017e-07,
+          "consistent": true,
+          "note": "1/(2*N*C) reproduces the declared bound"
+        },
+        {
+          "check": "frazil_window_hours",
+          "computed": 17.0981,
+          "stated": 17.1,
+          "consistent": true,
+          "note": "(t_end - t_start)/3600 rounds to the stated duration in hours"
+        },
+        {
+          "check": "digest_prefix_header",
+          "prefix": "dae26261b298d1d60371f4c38a583e4e",
+          "full_digest_is_64_hex": true,
+          "consistent": true,
+          "note": "header ellipsis prefix is a prefix of the embedded full digest"
+        },
+        {
+          "check": "digest_prefix_table",
+          "prefix": "dae26261b298d1d60371f4c3",
+          "consistent": true,
+          "note": "criteria-table ellipsis prefix is a prefix of the embedded full digest"
+        },
+        {
+          "check": "body_vs_record_figure_sets",
+          "body_figures": [
+            "fig1_level_ice.png",
+            "fig2_broken_ice.png",
+            "fig3_ridges.png",
+            "fig4_frazil.png",
+            "fig5_scene.png"
+          ],
+          "record_figures": [
+            "fig1_level_ice.png",
+            "fig2_broken_ice.png",
+            "fig4_frazil.png",
+            "fig5_scene.png"
+          ],
+          "in_body_not_in_record": [
+            "fig3_ridges.png"
+          ],
+          "in_record_not_in_body": [],
+          "consistent": false,
+          "note": "an unequal set is registered as an observation, never corrected here"
+        },
+        {
+          "check": "record_captions_located_in_markdown",
+          "per_figure": {
+            "fig1_level_ice.png": true,
+            "fig2_broken_ice.png": true,
+            "fig4_frazil.png": true,
+            "fig5_scene.png": true
+          },
+          "consistent": true
+        },
+        {
+          "check": "declared_png_sha_prefixes_shape",
+          "declared": {
+            "artifacts/field_synth/fig1_level_ice.png": "3989e93065c269e6",
+            "artifacts/field_synth/fig2_broken_ice.png": "6bf9f22c1528e41a",
+            "artifacts/field_synth/fig3_ridges.png": "cee0ad278980443b",
+            "artifacts/field_synth/fig4_frazil.png": "010aa907892551ae",
+            "artifacts/field_synth/fig5_scene.png": "3d39e42939589ebb"
+          },
+          "consistent": true,
+          "note": "each figure hash is declared as a 16-hex truncated sha256; full digests are NOT resolvable from this report record"
+        }
+      ],
+      "id_integrity": {
+        "ids_checked": 48,
+        "duplicates": [],
+        "unique": true
+      },
+      "claims": [],
+      "claims_empty_reason": "Contract wp-5559-01 sets objective.register_assets=true and classify_report_type=false, notes state that `claims 允许为空数组`, and the constraints include no_forced_claim_generation=true and do_not_mark_claims_as_verified=true. This work package registers asset identity only (report_id, markdown byte hash, declared attachments/artefacts); claim extraction belongs to a downstream work package, so an empty claims array is the complete result rather than an omission.",
+      "counts": {
+        "assets_total": 48,
+        "by_kind": {
+          "data_artifact_reference": 1,
+          "declared_criterion": 1,
+          "declared_digest_reference": 2,
+          "declared_parameter": 15,
+          "embedded_figure": 4,
+          "embedded_json_reference": 1,
+          "environment_declaration": 1,
+          "figure_file_reference": 5,
+          "figure_reference": 5,
+          "formula_reference": 3,
+          "record_metadata": 5,
+          "report_markdown": 1,
+          "source_code_reference": 1,
+          "symbol_reference": 2,
+          "test_reference": 1
+        },
+        "by_status": {
+          "declared_only": 30,
+          "metadata_only": 9,
+          "resolved": 1,
+          "unresolved": 8
+        },
+        "locators": 48,
+        "locators_resolved": 48,
+        "declared_parameters": 15,
+        "figures_in_body": 5,
+        "figures_in_record": 4,
+        "figures_with_bytes": 0,
+        "artifacts_declared": 6,
+        "artifact_bytes_retrieved": 0,
+        "claims": 0,
+        "probes": 8,
+        "probes_http_404": 8
+      },
+      "observations": [
+        "Record title equals the contract title, while the markdown H1 is the shorter `# IN10-A1 · 四态冰场合成器成熟化（field_synth）`; downstream consumers keying on title equality instead of report_id would miss this record.",
+        "The report body links five figures (fig1..fig5) but the record declares only four (fig1, fig2, fig4, fig5): fig3_ridges.png is absent from the record figure list while section 7 still declares its file and a truncated sha256.",
+        "record.mission_id is 4908 even though the package contract declares mission_id: null; recorded as observed, not reconciled here.",
+        "The report embeds one fenced json block (machine-criteria summary); it parses and its digest is a 64-hex string whose prefix agrees with both truncated digests in the prose.",
+        "Every platform figure/artefact endpoint probed returned HTTP 404, so no artifact bytes (and therefore no artifact hash) could be checked from this record.",
+        "The domain extent is stated as 2.05 km while 1024 x 2.0 m = 2.048 km: equal at the stated two-decimal rounding, so this is rounding, not a numeric inconsistency."
+      ],
+      "limitations": [
+        "Registration only: no claim/evidence extraction, no report-type classification, no verification marks (verification is computed by the platform gate).",
+        "source_hash scope = UTF-8 bytes of the markdown string returned by the platform API; any whitespace change in the stored markdown invalidates it.",
+        "Artefact hashes appear in the report only as truncated 16-hex prefixes; the full digests are unresolvable from this record and are not asserted.",
+        "Artefacts live in the producing repository (ship-performance-platform), which is not checked out here; their content was not read, hashed or trusted.",
+        "The numeric cross-checks are arithmetic/structural re-derivations of numbers the report itself declares; they are not a re-run of the ice-field synthesiser and say nothing about physical validity.",
+        "Locator char offsets are offsets into the decoded markdown string, not byte offsets of a file on disk."
+      ],
+      "checks": {
+        "source_hash_matches_contract": true,
+        "chars_match_contract": true,
+        "source_locator_resolvable": true,
+        "no_duplicate_ids": true,
+        "valid_json": true,
+        "claims_empty_by_contract": true,
+        "no_verified_marks_emitted": true,
+        "single_report_scope": true
+      }
+    }
+  }
+}
