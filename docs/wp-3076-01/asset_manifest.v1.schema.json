@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.v1.schema.json",
+  "title": "asset_manifest.v1 (KF work package task_type=01-asset-registration, wp-3076-01)",
+  "description": "Shape actually produced by scripts/kf_register_3076.py. The canonical envelope schema referenced by the contract (schemas/kf_result.v1.schema.json) is absent from this worktree, so a byte-identical copy restored from TensorKnowledge commit 53c59cc lives next to this file as kf_result.v1.schema.json and is used for envelope validation; this file pins the inner manifest so that the 'schema_pass' acceptance item is a reproducible check rather than an assertion.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "package_id",
+    "task_type",
+    "report_id",
+    "objective",
+    "source",
+    "counts",
+    "assets",
+    "claims",
+    "claims_note",
+    "integrity",
+    "boundaries"
+  ],
+  "properties": {
+    "schema": {"const": "asset_manifest.v1"},
+    "package_id": {"const": "wp-3076-01"},
+    "task_type": {"const": "01-asset-registration"},
+    "report_id": {"const": "3076"},
+    "objective": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["register_assets", "classify_report_type"],
+      "properties": {
+        "register_assets": {"const": true},
+        "classify_report_type": {"const": false}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["uri", "field", "hash_alg", "hash", "chars", "bytes_utf8", "title", "scenario_key"],
+      "properties": {
+        "uri": {"const": "tensor://reports/3076"},
+        "field": {"const": "markdown"},
+        "hash_alg": {"const": "sha256"},
+        "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "chars": {"type": "integer", "minimum": 1},
+        "bytes_utf8": {"type": "integer", "minimum": 1},
+        "contract_chars": {"type": "integer", "minimum": 1},
+        "title": {"type": "string", "minLength": 1},
+        "scenario_key": {"type": "string", "minLength": 1},
+        "platform_mission_id": {"type": ["integer", "null"]},
+        "platform_status": {"type": ["string", "null"]},
+        "platform_created_at": {"type": ["string", "null"]},
+        "platform_tags": {"type": "array", "items": {"type": "string"}},
+        "platform_figures": {"type": "array"}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["assets", "by_class", "by_payload_status", "check_id_count", "claims"],
+      "properties": {
+        "assets": {"type": "integer", "minimum": 1},
+        "by_class": {"type": "object"},
+        "by_payload_status": {"type": "object"},
+        "check_id_count": {"type": "integer", "minimum": 0},
+        "claims": {"type": "integer", "minimum": 0}
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["asset_id", "asset_class", "label", "in_report_section", "locator", "payload", "note"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^A[0-9]{2}$"},
+          "asset_class": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "in_report_section": {"type": "string", "minLength": 1},
+          "locator": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["method", "source_field", "start_char", "end_char", "start_line", "end_line", "quote", "unique"],
+            "properties": {
+              "method": {"enum": ["char_span", "document"]},
+              "source_field": {"enum": ["markdown"]},
+              "start_char": {"type": "integer", "minimum": 0},
+              "end_char": {"type": "integer", "minimum": 1},
+              "start_line": {"type": "integer", "minimum": 1},
+              "end_line": {"type": "integer", "minimum": 1},
+              "quote": {"type": "string", "minLength": 1},
+              "unique": {"type": "boolean"}
+            }
+          },
+          "payload": {
+            "type": "object",
+            "required": ["status", "checked_how"],
+            "properties": {
+              "status": {
+                "enum": [
+                  "in_report_record",
+                  "external_not_in_record",
+                  "cross_report_out_of_scope",
+                  "declared_in_source_only",
+                  "declared_payload_missing"
+                ]
+              },
+              "checked_how": {"type": "string", "minLength": 10},
+              "evidence": {"type": "object"}
+            }
+          },
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "Empty is legitimate for this package (no extraction). A non-empty claim must carry evidence or an explicit status; 'verified' is not a legal status here.",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "text"],
+        "anyOf": [{"required": ["evidence"]}, {"required": ["status"]}],
+        "properties": {
+          "status": {"enum": ["supported", "partially-supported", "unresolved", "refuted"]}
+        }
+      }
+    },
+    "claims_note": {"type": "string", "minLength": 1},
+    "integrity": {
+      "type": "object",
+      "required": [
+        "hash_recomputed_locally",
+        "hash_matches_contract",
+        "chars_match_contract",
+        "all_locators_unique_quotes",
+        "verified_by",
+        "no_file_outside_worktree_written"
+      ],
+      "properties": {
+        "hash_recomputed_locally": {"type": "boolean"},
+        "hash_matches_contract": {"type": "boolean"},
+        "chars_match_contract": {"type": "boolean"},
+        "all_locators_unique_quotes": {"type": "boolean"},
+        "verified_by": {"type": "string"},
+        "no_file_outside_worktree_written": {"type": "boolean"}
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "required": ["only_report_id", "other_reports_read", "upstream_artifacts_rewritten", "claims_marked_verified"],
+      "properties": {
+        "only_report_id": {"const": "3076"},
+        "other_reports_read": {"const": false},
+        "upstream_artifacts_rewritten": {"const": false},
+        "claims_marked_verified": {"const": 0}
+      }
+    }
+  }
+}
