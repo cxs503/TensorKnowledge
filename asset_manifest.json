@@ -1,0 +1,265 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-7768-01",
+  "task_type": "01-asset-registration",
+  "report_id": "7768",
+  "source": {
+    "uri": "tensor://reports/7768",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "447244ef27d9af41d1cb4bf922ae26ec09d9999ee023a2473d69cf8cb7cc8667",
+    "chars": 6419,
+    "bytes_utf8": 9573,
+    "title": "自然对流方腔证据审计：8/8 派生场 psi_error_rel 失效、归档梯子仅 frozen 配方可复现、Nu<3% 但 psi 锚点判 WITHHELD（m6545）",
+    "scenario_key": "fvm-verification-debt",
+    "platform_figures": [
+      {
+        "name": "fig_metric_ladder.png",
+        "caption": "关键量随网格的阶梯：左=|psi|/alpha（点线=de Vahl Davis，星=Richardson）；右=相对误差（红=3% 线）"
+      }
+    ],
+    "platform_tags": [
+      "TensorFVM",
+      "verification-debt",
+      "natural-convection",
+      "de Vahl Davis",
+      "convergence-order",
+      "audit"
+    ]
+  },
+  "counts": {
+    "assets": 10,
+    "by_class": {
+      "dataset": 1,
+      "script": 3,
+      "test": 1,
+      "source_code": 1,
+      "figure": 2,
+      "data": 2
+    },
+    "by_resolution": {
+      "resolved_in_source": 10
+    },
+    "resolved_in_source": 10,
+    "referenced_unresolved": 0,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "dataset",
+      "label": "被审计的证据文件（8份JSON归档）",
+      "in_report_section": "§1 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1001,
+        "end_char": 1074,
+        "start_line": 28,
+        "end_line": 28,
+        "quote": "据：`docs/incompressible-baselines/cavity_n0{32,64,96}_ra{1e04,1e05,1e06}.json`\n（",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:docs/incompressible-baselines/cavity_n0{32,64,96}_ra{1e04,1e05,1e06}.json",
+        "result": "resolved"
+      },
+      "note": "Referenced in §1 案例介绍; 1 occurrence(s) in report"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "script",
+      "label": "复算+收敛阶/外推+--check棘轮脚本",
+      "in_report_section": "§2 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1141,
+        "end_char": 1184,
+        "start_line": 33,
+        "end_line": 33,
+        "quote": ". `scripts/audit_natural_convection_metrics.py`：逐",
+        "unique": false
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:scripts/audit_natural_convection_metrics.py",
+        "result": "resolved"
+      },
+      "note": "Referenced in §2 怎么做的; 3 occurrence(s) in report"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "script",
+      "label": "FVM基线运行脚本（新增dc_relax参数）",
+      "in_report_section": "§2 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1629,
+        "end_char": 1672,
+        "start_line": 40,
+        "end_line": 40,
+        "quote": "给 `scripts/run_fvm_incompressible_baselines.py` 增",
+        "unique": false
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:scripts/run_fvm_incompressible_baselines.py",
+        "result": "resolved"
+      },
+      "note": "Referenced in §2 怎么做的; 2 occurrence(s) in report"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "script",
+      "label": "梯子延伸一级薄包装脚本",
+      "in_report_section": "§2 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1729,
+        "end_char": 1761,
+        "start_line": 41,
+        "end_line": 41,
+        "quote": "增 `scripts/run_cavity_refinement.py`",
+        "unique": false
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:scripts/run_cavity_refinement.py",
+        "result": "resolved"
+      },
+      "note": "Referenced in §2 怎么做的; 3 occurrence(s) in report"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "test",
+      "label": "8条机器门测试（含负向对照）",
+      "in_report_section": "§2 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1789,
+        "end_char": 1835,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "门：`tests/test_natural_convection_metrics_audit.py`（8",
+        "unique": false
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:tests/test_natural_convection_metrics_audit.py",
+        "result": "resolved"
+      },
+      "note": "Referenced in §2 怎么做的; 3 occurrence(s) in report"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "source_code",
+      "label": "求解器源码（psi_error_rel修正处:441）",
+      "in_report_section": "§3.1 失效场识别",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2536,
+        "end_char": 2577,
+        "start_line": 65,
+        "end_line": 65,
+        "quote": "前 `src/tensorfvm/incompressible_baselines.py:44",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:src/tensorfvm/incompressible_baselines.py",
+        "result": "resolved"
+      },
+      "note": "Referenced in §3.1 失效场识别; 1 occurrence(s) in report"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "figure",
+      "label": "收敛阶梯图（结果图，内嵌引用）",
+      "in_report_section": "§4 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4107,
+        "end_char": 4128,
+        "start_line": 98,
+        "end_line": 98,
+        "quote": "1（`fig_metric_ladder.png`）：",
+        "unique": false
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:fig_metric_ladder.png",
+        "result": "resolved"
+      },
+      "note": "Referenced in §4 结果图; 3 occurrence(s) in report"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "data",
+      "label": "台账（程序生成）",
+      "in_report_section": "§7 工件与复现",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6041,
+        "end_char": 6096,
+        "start_line": 143,
+        "end_line": 143,
+        "quote": "照）\ndocs/verification-natural-convection-metrics/audit.json",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:docs/verification-natural-convection-metrics/audit.json",
+        "result": "resolved"
+      },
+      "note": "Referenced in §7 工件与复现; 1 occurrence(s) in report"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "data",
+      "label": "复现结果JSON（frozen配方）",
+      "in_report_section": "§7 工件与复现",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6112,
+        "end_char": 6191,
+        "start_line": 144,
+        "end_line": 144,
+        "quote": "成）\ndocs/verification-natural-convection-metrics/reproduced_cavity_n032_ra1e05.json\ndo",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:docs/verification-natural-convection-metrics/reproduced_cavity_n032_ra1e05.json",
+        "result": "resolved"
+      },
+      "note": "Referenced in §7 工件与复现; 1 occurrence(s) in report"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "figure",
+      "label": "收敛阶梯图PNG（工件路径）",
+      "in_report_section": "§7 工件与复现",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6192,
+        "end_char": 6258,
+        "start_line": 145,
+        "end_line": 145,
+        "quote": "on\ndocs/verification-natural-convection-metrics/fig_metric_ladder.png\n``",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_search:docs/verification-natural-convection-metrics/fig_metric_ladder.png",
+        "result": "resolved"
+      },
+      "note": "Referenced in §7 工件与复现; 1 occurrence(s) in report"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": "all_locators_verified",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true
+  }
+}
