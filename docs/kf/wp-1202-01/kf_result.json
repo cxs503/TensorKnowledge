@@ -1,0 +1,260 @@
+{
+  "package_id": "wp-1202-01",
+  "task_type": "01-asset-registration",
+  "report_id": "1202",
+  "provenance": {
+    "source_hash": "sha256:8af11b1cd48728e4d579eb6dccea1a7f7111a41baaf2fd68a045064cafaad1c1",
+    "source_field": "markdown",
+    "producer": "agent/m15524",
+    "emitted_at": "2026-11-12T00:49:31Z",
+    "notes": "Hash recomputed from GET /tensor/reports/1202 markdown; report-markdown bytes only (figures metadata excluded). Contract-declared hash matches."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "manifest_version": "1.0",
+      "package_id": "wp-1202-01",
+      "task_type": "01-asset-registration",
+      "generated_by": "agent/m15524",
+      "generator_inputs": {
+        "report_id": "1202",
+        "expect_sha256": "8af11b1cd48728e4d579eb6dccea1a7f7111a41baaf2fd68a045064cafaad1c1",
+        "expect_chars": 3914
+      },
+      "source": {
+        "report_id": "1202",
+        "source_uri": "tensor://reports/1202",
+        "source_field": "markdown",
+        "title": "EX1-P2 prereg v1: KVLCC2 满载阻力盲预测（Holtrop-1984 主链，md5 冻结）",
+        "scenario_key": "resistance",
+        "status": "published",
+        "tags": ["EX1", "prereg", "KVLCC2", "Holtrop-1984", "盲预测", "阻力", "md5-lock", "审计"],
+        "chars": 3914,
+        "bytes_utf8": 6053,
+        "sha256": "8af11b1cd48728e4d579eb6dccea1a7f7111a41baaf2fd68a045064cafaad1c1",
+        "hash_independently_recomputed": true,
+        "contract_declared_source_hash": "8af11b1cd48728e4d579eb6dccea1a7f7111a41baaf2fd68a045064cafaad1c1",
+        "source_hash_matches": true,
+        "contract_declared_chars": 3914,
+        "chars_match": true,
+        "figures_entries": 3
+      },
+      "asset_counts": {
+        "total": 9,
+        "registered_with_bytes": 1,
+        "by_status": {
+          "registered": 1,
+          "declared_metadata_only": 3,
+          "declared_only": 5
+        },
+        "unresolved_items": 0
+      },
+      "assets": [
+        {
+          "kind": "source_text",
+          "name": "markdown",
+          "logical_name": "tensor://reports/1202#markdown",
+          "media_type": "text/markdown; charset=utf-8",
+          "payload": {
+            "present": true,
+            "bytes_utf8": 6053,
+            "chars": 3914,
+            "sha256": "8af11b1cd48728e4d579eb6dccea1a7f7111a41baaf2fd68a045064cafaad1c1"
+          },
+          "locator": {
+            "source_field": "markdown",
+            "offset": 0,
+            "length": 3914
+          },
+          "resolvable": true,
+          "status": "registered",
+          "asset_id": "asset-1202-0001"
+        },
+        {
+          "kind": "figure",
+          "name": "fig1_rt_components_vs_fn.png",
+          "logical_name": "tensor://reports/1202#/figures/0",
+          "media_type": "image/png",
+          "declared_metadata": {
+            "caption": "图1 KVLCC2 (Lpp=320 m) Holtrop-1984 盲预测: 总阻力与各分量 vs Fn（虚线 Fn=0.142 设计点）"
+          },
+          "record_pointer": "/figures/0",
+          "payload": {
+            "present": false,
+            "bytes": 0,
+            "sha256": null
+          },
+          "resolvable": false,
+          "status": "declared_metadata_only",
+          "locator": {
+            "source_field": "markdown",
+            "line": 32,
+            "quote": "图1：总阻力与分量 vs Fn（物理解读：Fn>0.16 后 Rw 从 2% 升到 24.6%，肥大船破波 / 方尾效应开始主导）。"
+          },
+          "asset_id": "asset-1202-0002"
+        },
+        {
+          "kind": "figure",
+          "name": "fig2_ct_and_wave_share.png",
+          "logical_name": "tensor://reports/1202#/figures/1",
+          "media_type": "image/png",
+          "declared_metadata": {
+            "caption": "图2 总阻力系数 Ct（全尺度）与波阻占比 Rw/Rt vs Fn；Ct 在 Fn≈0.14 出现极小值"
+          },
+          "record_pointer": "/figures/1",
+          "payload": {
+            "present": false,
+            "bytes": 0,
+            "sha256": null
+          },
+          "resolvable": false,
+          "status": "declared_metadata_only",
+          "locator": {
+            "source_field": "markdown",
+            "line": 33,
+            "quote": "图2：Ct 与波阻占比 vs Fn，Ct 极小点位于 Fn≈0.14（与设计优化点一致，构成可证伪的趋势预言）。"
+          },
+          "asset_id": "asset-1202-0003"
+        },
+        {
+          "kind": "figure",
+          "name": "fig3_rt_loglog.png",
+          "logical_name": "tensor://reports/1202#/figures/2",
+          "media_type": "image/png",
+          "declared_metadata": {
+            "caption": "图3 Rt–Fn 双对数（外部基线插值/独立核对用）"
+          },
+          "record_pointer": "/figures/2",
+          "payload": {
+            "present": false,
+            "bytes": 0,
+            "sha256": null
+          },
+          "resolvable": false,
+          "status": "declared_metadata_only",
+          "locator": {
+            "source_field": "markdown",
+            "line": 34,
+            "quote": "图3：Rt–Fn 双对数，供外部基线插值与独立复算。"
+          },
+          "asset_id": "asset-1202-0004"
+        },
+        {
+          "kind": "code",
+          "name": "holtrop1984.py",
+          "logical_name": "tensor://repo/ship-performance-platform/backend/api/holtrop1984.py",
+          "media_type": "text/x-python",
+          "declared_metadata": {
+            "description": "Holtrop (1984) 完整实现：Rt = Rf(1+k) + Rapp + Rw + Rb + Rtr + Ra",
+            "md5": "3557316704b3fd51d23c71cae0abebbd",
+            "evidence_level": "REAL"
+          },
+          "payload": {
+            "present": false,
+            "bytes": 0,
+            "sha256": null
+          },
+          "resolvable": false,
+          "status": "declared_only",
+          "locator": {
+            "source_field": "markdown",
+            "line": 10,
+            "quote": "**新增真实实现** `backend/api/holtrop1984.py`：逐项转录 Holtrop (1984) 原文 `Rt = Rf(1+k) + Rapp + Rw + Rb + Rtr + Ra`"
+          },
+          "asset_id": "asset-1202-0005"
+        },
+        {
+          "kind": "code",
+          "name": "ex1_kvlcc2_predict.py",
+          "logical_name": "tensor://repo/ship-performance-platform/tools/prereg/ex1_kvlcc2_predict.py",
+          "media_type": "text/x-python",
+          "declared_metadata": {
+            "description": "确定性预测器：Fn 0.10–0.20 步长 0.02 ∪ 设计点 Fn=0.142，全尺度计算",
+            "md5": "36868ad8dff711c78e13cda8ec964635"
+          },
+          "payload": {
+            "present": false,
+            "bytes": 0,
+            "sha256": null
+          },
+          "resolvable": false,
+          "status": "declared_only",
+          "locator": {
+            "source_field": "markdown",
+            "line": 11,
+            "quote": "**确定性预测器** `tools/prereg/ex1_kvlcc2_predict.py`：Fn 0.10–0.20 步长 0.02（6 点）∪ 设计点 Fn=0.142（共 7 点）"
+          },
+          "asset_id": "asset-1202-0006"
+        },
+        {
+          "kind": "data",
+          "name": "predictions.csv",
+          "logical_name": "tensor://repo/ship-performance-platform/docs/prereg/predictions.csv",
+          "media_type": "text/csv",
+          "declared_metadata": {
+            "description": "7 点全尺度阻力预测结果表",
+            "md5": "b070cddeab0f93a448f886bf0ea75420"
+          },
+          "payload": {
+            "present": false,
+            "bytes": 0,
+            "sha256": null
+          },
+          "resolvable": false,
+          "status": "declared_only",
+          "locator": {
+            "source_field": "markdown",
+            "line": 12,
+            "quote": "md5 锁：predictions.csv `b070cddeab0f93a448f886bf0ea75420`"
+          },
+          "asset_id": "asset-1202-0007"
+        },
+        {
+          "kind": "data",
+          "name": "inputs.json",
+          "logical_name": "tensor://repo/ship-performance-platform/docs/prereg/inputs.json",
+          "media_type": "application/json",
+          "declared_metadata": {
+            "description": "预测器输入参数（几何、流体属性、Fn 序列）",
+            "md5": "7a774bc3174c7c8bbe62213dfb76de65"
+          },
+          "payload": {
+            "present": false,
+            "bytes": 0,
+            "sha256": null
+          },
+          "resolvable": false,
+          "status": "declared_only",
+          "locator": {
+            "source_field": "markdown",
+            "line": 12,
+            "quote": "inputs.json `7a774bc3174c7c8bbe62213dfb76de65`"
+          },
+          "asset_id": "asset-1202-0008"
+        },
+        {
+          "kind": "document",
+          "name": "EX1_KVLCC2_prereg_v1.md",
+          "logical_name": "tensor://repo/ship-performance-platform/docs/prereg/EX1_KVLCC2_prereg_v1.md",
+          "media_type": "text/markdown",
+          "declared_metadata": {
+            "description": "预注册文档，表格与 md5 程序化注入，append-only"
+          },
+          "payload": {
+            "present": false,
+            "bytes": 0,
+            "sha256": null
+          },
+          "resolvable": false,
+          "status": "declared_only",
+          "locator": {
+            "source_field": "markdown",
+            "line": 11,
+            "quote": "把表格与 md5 程序化注入 `docs/prereg/EX1_KVLCC2_prereg_v1.md`"
+          },
+          "asset_id": "asset-1202-0009"
+        }
+      ]
+    }
+  },
+  "claims": []
+}
