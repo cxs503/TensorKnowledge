@@ -1,0 +1,609 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-7450-01",
+  "task_type": "01-asset-registration",
+  "report_id": "7450",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-12T01:29:58.846977+00:00",
+  "source": {
+    "uri": "tensor://reports/7450",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "4b20aadcaabc128bc8fb10e8f9f164de670421c2b67d36d2837fc5781d96bfac",
+    "chars": 6312,
+    "bytes_utf8": 9110,
+    "title": "m6284 CII 规则三实现交叉核对：green_shipping 静默默认清偿 + 独立转录互证（164 项回归）",
+    "scenario_key": "ship_performance/verification_debt/cii_rules_crosscheck",
+    "platform_figures": [
+      "fig1_required_cii_regimes.png",
+      "fig2_rating_bands.png"
+    ],
+    "platform_tags": [
+      "CII",
+      "MEPC.338(76)",
+      "green_shipping",
+      "verification-debt",
+      "single-source-of-truth",
+      "regime",
+      "m6284"
+    ],
+    "platform_status": "published",
+    "platform_created_at": "2026-11-07T20:28:23.218300+00:00"
+  },
+  "counts": {
+    "assets": 19,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 2,
+      "source_code_reference": 8,
+      "report_table": 5,
+      "repro_command_block": 1,
+      "api_endpoint": 1,
+      "api_field": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 9,
+      "referenced_unresolved": 10
+    },
+    "resolved_in_source": 9,
+    "referenced_unresolved": 10,
+    "declared_absent": 0,
+    "distinct_referenced_paths": 7
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "source markdown of report 7450",
+      "in_report_section": "(whole document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 6312,
+        "start_line": 1,
+        "end_line": 139,
+        "quote": "# m6284 · CII 规则三实现交叉核对与静默默认清偿（green_shipping）\n\n**任务**：自找活 tp-ver-8（verifier 席）· 仓 `ship-performance-platform` · 分支 `agent/m6284`\n**类型**：验证欠账（对已合并功能 m2083 `green_shipping` 的规则复核 + 失效回归修复）\n**日期**：2026-11-06\n\n## ① 案例介绍\n\n**物理/规则背景**：CII（碳强度指标，MARPOL 附则 VI 第 4 章）对单船年度碳强度\n`attained CII = Σ(FC·C_F)/(Capacity·D)` 设「要求值」`required CII = a·Capacity^(−c)·(1−Z)`，\n并按 G4 的 dd 向量把 `attained/required` 映射到 A–E 等级。规则的三个组成部件性质不同：\n\n| 部件 | 数学性质 | 离线可验证性 |\n|---|---|---|\n| `attained` 能量→燃油→CO₂ 链 | 纯物理/代数 | 可独立复算（REAL） |\n| 参考线 `a, c` 与年度折减 `Z` | 规则表转录 | 仅有转录互证（WITHHELD） |\n| A–E 评级 dd 向量 | 分船型规则表 | 分船型向量缺原文（NOT_SUPPORTED） |\n\n**几何/参数**：本核对用规则侧参数（无船体几何）：4 个共有船型\nbulk_carrier, tanker, container_ship, gas_carrier；Capacity ∈ {5 000, 50 000, 80 000, 200 000} t；\n年份 2023–2026（确定值区）。基准算例取 Capacity = 80,000 t。\n\n**被复核对象**（同一规则在本仓的**三份实现**）：\n\n1. `backend/services/cii_required_value.py` —— m1829 显式 regime 实现；\n2. `backend/api/green_shipping.py` —— m2083 迁入 TP 服务时**内嵌/复制**的一份，\n   且是对外 API 唯一入口；\n3. `backend/modules/green_navigation_ice/mepc.py` —— 冰区模块自带的规则内核（独立转录）。\n\n## ② 怎么做的\n\n1. **只读扫描**：对三份实现做常量/函数级对照（参考线表、Z 表、dd 向量、regime 语义）。\n2. **发现缺陷**：`green_shipping._gn_required_cii` 内含 m1803 已判定、m1829 已修复的\n   两处「静默默认」——C1（≥2027 静默沿用 Z=0.11，无 `z_extrapolated` 标记）、\n   C2（<2023 静默给 z=0.0 并要求值，规则未适用却看似可判合规）。迁移时复制表\n   使缺陷复活，且只有这份拷贝在对外服务。\n3. **最小修复**（`backend/api/green_shipping.py`）：\n   - CII 参考线/Z 因子改为**别名**到 `services.cii_required_value`（物理上不可再漂移）；\n   - `_gn_required_cii` 改为**委托**服务层 `required_cii`（返回键集为旧实现的超集）；\n   - `_gn_evaluate_cii` 透出 `regime / z_extrapolated / regime_note /\n     required_value_is_reference / compliance_applicable / compliant_provisional`；\n   - `/cii` 请求新增 `allow_inapplicable_year`（默认 false），<2023 默认 **422**；\n   - L4（A–E 等级）维持 `NOT_SUPPORTED`，但把理由改为**可核查的实证理由**\n     （仓内 dd 实现只有单一向量且分船型向量缺原文），并给出 `repo_reference`。\n4. **验证工具链**：`artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py`\n   （本探针，程序化生成下表 + 两张图 + 本 md），\n   pytest `backend/tests/test_cii_rule_arbitration_m6284.py`（164 项）。\n\n## ③ 计算结果（程序化注入，未手抄）\n\n**表 1** 三实现要求值逐位对照（Capacity = 80,000 t）\n\n| ship_type | year | reference_2019 | Z | service | api（修复后） | ice_kernel | relΔ(api−svc) | relΔ(ice−svc) |\n|---|---|---|---|---|---|---|---|---|\n| bulk_carrier | 2023 | 4.2317 | 0.05 | 4.020109 | 4.020109 | 4.020109 | 0.00e+00 | 0.00e+00 |\n| bulk_carrier | 2024 | 4.2317 | 0.07 | 3.935475 | 3.935475 | 3.935475 | 0.00e+00 | 0.00e+00 |\n| bulk_carrier | 2025 | 4.2317 | 0.09 | 3.850841 | 3.850841 | 3.850841 | 0.00e+00 | 0.00e+00 |\n| bulk_carrier | 2026 | 4.2317 | 0.11 | 3.766208 | 3.766208 | 3.766208 | 0.00e+00 | 0.00e+00 |\n| tanker | 2023 | 5.3583 | 0.05 | 5.090375 | 5.090375 | 5.090375 | 0.00e+00 | 0.00e+00 |\n| tanker | 2024 | 5.3583 | 0.07 | 4.983209 | 4.983209 | 4.983209 | 0.00e+00 | 0.00e+00 |\n| tanker | 2025 | 5.3583 | 0.09 | 4.876043 | 4.876043 | 4.876043 | 0.00e+00 | 0.00e+00 |\n| tanker | 2026 | 5.3583 | 0.11 | 4.768878 | 4.768878 | 4.768878 | 0.00e+00 | 0.00e+00 |\n| container_ship | 2023 | 7.9420 | 0.05 | 7.544914 | 7.544914 | 7.544914 | 0.00e+00 | 0.00e+00 |\n| container_ship | 2024 | 7.9420 | 0.07 | 7.386073 | 7.386073 | 7.386073 | 0.00e+00 | 0.00e+00 |\n| container_ship | 2025 | 7.9420 | 0.09 | 7.227233 | 7.227233 | 7.227233 | 0.00e+00 | 0.00e+00 |\n| container_ship | 2026 | 7.9420 | 0.11 | 7.068393 | 7.068393 | 7.068393 | 0.00e+00 | 0.00e+00 |\n| gas_carrier | 2023 | 5.9652 | 0.05 | 5.666939 | 5.666939 | 5.666939 | 0.00e+00 | 0.00e+00 |\n| gas_carrier | 2024 | 5.9652 | 0.07 | 5.547635 | 5.547635 | 5.547635 | 0.00e+00 | 0.00e+00 |\n| gas_carrier | 2025 | 5.9652 | 0.09 | 5.428331 | 5.428331 | 5.428331 | 0.00e+00 | 0.00e+00 |\n| gas_carrier | 2026 | 5.9652 | 0.11 | 5.309027 | 5.309027 | 5.309027 | 0.00e+00 | 0.00e+00 |\n\n**最大相对差**：`api vs service = 0.000e+00`，`ice_kernel vs service = 0.000e+00`\n（机器判据 1e-12，均通过 → 2023–2026 三路**逐位一致**）。\n\n**表 2** regime 语义探针（bulk_carrier, 80,000 t；末列为 m2083 旧实现的静默输出）\n\n| year | regime（修复后） | z_extrapolated | required（修复后） | required（旧实现，静默） |\n|---|---|---|---|---|\n| 2019 | RAISED | None | 422/InapplicableYearError | 4.231694 |\n| 2022 | RAISED | None | 422/InapplicableYearError | 4.231694 |\n| 2023 | determined | False | 4.020109 | 4.020109 |\n| 2026 | determined | False | 3.766208 | 3.766208 |\n| 2027 | extrapolated | True | 3.766208 | 3.766208 |\n| 2031 | extrapolated | True | 3.766208 | 3.766208 |\n\n可见旧实现对 2019/2022 也给出「要求值」4.231694（应拒绝），对 2027+ 静默\n外推 3.766208（应标记 `z_extrapolated=True`）。\n\n**表 3** 评级带探针（冰区内核单一 dd 向量 = [0.86, 0.94, 1.06, 1.18]，required 取 2024 年）\n\n| attained/required | 0.8, 0.86, 0.94, 1.06, 1.18, 1.3 |\n|---|---|\n| rating | A, A, B, C, D, E |\n\n## ④ 结果图\n\n- `fig1_required_cii_regimes.png`：要求值随年份的 regime 结构。三实现曲线在\n  2023–2026 **完全重合**（互证成立）；≥2027 进入外推带；<2023 灰区为「规则未适用」，\n  黑虚线（旧实现）显示出静默外推/静默给值的错误行为。\n- `fig2_rating_bands.png`：dd 向量把 `attained/required` 划成 A–E 五带，`ratio=1.0`\n  必须落在 C 带（该不变量在测试中钉住）；仓内只有一条向量，故无法对全部船型宣称等级。\n\n## ⑤ 注意点（踩坑 / 局限 / 适用范围）\n\n1. **迁移即回归**：把规则代码「内嵌复制」进新模块会让已修复的缺陷复活。本单的根因\n   不是算错，而是**单一仲裁源缺失**；修复手段是别名+委托，而非再写一遍。\n2. **离线不可回读规则原文**：参考线 `a, c`、Z 表、dd 向量的绝对正确性仍属 `WITHHELD`。\n   本单能取得的真实证据只是「两份独立转录逐位一致」（互证），不能升级为 REAL。\n3. **已证实的分歧（未修，防误改）**：① 船型覆盖 11 vs 4；② `lng_carrier` 参考线在冰区\n   内核记 `(9.827, 0.000)`（常数线）与其它船型 c≈0.6 形态不符；③ dd 向量仅一条\n   （0.86/0.94/1.06/1.18）套用于所有船型，而 G4 向量分船型。三条都用「钉子测试」记录，\n   任一方单方面修改会让测试报红，强制同步文档与另一方。\n4. **另见**：`EEXI_REDUCTION` 表（8 型）与本单同源转录，其中\n   `container_ship=0.20 / gas_carrier=0.20 / lng_carrier=0.20 / general_cargo=0.15`\n   与二手文献常见值（0.50 / 0.30 / 0.30 / 0.30）不一致，**离线无法裁决**，\n   本单不擅自改数（改错比不改更危险），建议随 G4/G3 原文一并复核。\n5. **适用范围**：本核对只覆盖规则算术与适用性语义，不涉及 `attained` 侧的物理输入\n   （SFOC/航速/容量）质量。\n\n## ⑥ 误差判定\n\n| 关键量 | 基准 | 误差 | 是否 <3% |\n|---|---|---|---|\n| required CII（2023–2026，4 型 × 4 年 × 4 容量） | `services.cii_required_value`（独立实现） | 0.000e+00 相对差 | **是**（且达 1e-12 量级） |\n| required CII（同网格） | `green_navigation_ice.mepc`（独立转录） | 0.000e+00 相对差 | **是** |\n| regime 语义（2019/2022/2027/2031） | m1829 已判定语义（C1/C2） | 4/4 符合 | **是**（行为级，非数值） |\n| dd 向量与 A–E 等级 | G4 分船型原文 | **无基准** | **不可判定** → 保持 NOT_SUPPORTED |\n| EEXI 削减率表 | MEPC.328(76) 原文 | **无基准（仅二手文献不一致）** | **不可判定** → 报告不擅改，留待原文复核 |\n\n结论：**算术面与适用性面通过（<3% 达标，实际 1e-12 量级）；规则系数面诚实保持\nWITHHELD / NOT_SUPPORTED，不宣称合规能力。**\n\n## 复现\n\n```bash\ncd backend\npython3 -m pytest tests/test_cii_rule_arbitration_m6284.py -q      # 164 passed\npython3 ../artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py\n```\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "GET /tensor/reports/7450 markdown field + sha256 over utf-8 bytes",
+        "result": "resolved",
+        "detail": "chars=6312 bytes_utf8=9110 sha256=4b20aadcaabc128bc8fb10e8f9f164de670421c2b67d36d2837fc5781d96bfac"
+      },
+      "source_uri": "tensor://reports/7450",
+      "note": "the source asset itself; its byte hash is the provenance anchor of this work package.",
+      "kind": "report_markdown"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "fig1_required_cii_regimes.png",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4586,
+        "end_char": 4644,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "- `fig1_required_cii_regimes.png`：要求值随年份的 regime 结构。三实现曲线在",
+        "unique": true,
+        "token": "fig1_required_cii_regimes.png",
+        "token_span": [
+          4589,
+          4618
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/7450#figures[0]",
+      "caption": "图1 CII 要求值 regime 结构：2023–2026 三实现曲线完全重合（差 0.0）；黑虚线=m2083 旧实现的静默默认/外推",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure",
+      "label": "fig2_rating_bands.png",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4731,
+        "end_char": 4805,
+        "start_line": 100,
+        "end_line": 100,
+        "quote": "- `fig2_rating_bands.png`：dd 向量把 `attained/required` 划成 A–E 五带，`ratio=1.0`",
+        "unique": true,
+        "token": "fig2_rating_bands.png",
+        "token_span": [
+          4734,
+          4755
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/7450#figures[1]",
+      "caption": "图2 G4 dd 向量评级带（仓内唯一 0.86/0.94/1.06/1.18）：ratio=1.0 必落 C 带；分船型向量缺原文→/cii 等级仍 NOT_SUPPORTED",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "source_code_reference",
+      "label": "backend/services/cii_required_value.py (markdown line 25)",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 817,
+        "end_char": 883,
+        "start_line": 25,
+        "end_line": 25,
+        "quote": "1. `backend/services/cii_required_value.py` —— m1829 显式 regime 实现；",
+        "unique": true,
+        "token": "backend/services/cii_required_value.py",
+        "token_span": [
+          821,
+          859
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/services/cii_required_value.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "source_code_reference",
+      "label": "backend/api/green_shipping.py (markdown line 26)",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 884,
+        "end_char": 950,
+        "start_line": 26,
+        "end_line": 26,
+        "quote": "2. `backend/api/green_shipping.py` —— m2083 迁入 TP 服务时**内嵌/复制**的一份，",
+        "unique": true,
+        "token": "backend/api/green_shipping.py",
+        "token_span": [
+          888,
+          917
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/api/green_shipping.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "source_code_reference",
+      "label": "backend/modules/green_navigation_ice/mepc.py (markdown line 28)",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 969,
+        "end_char": 1040,
+        "start_line": 28,
+        "end_line": 28,
+        "quote": "3. `backend/modules/green_navigation_ice/mepc.py` —— 冰区模块自带的规则内核（独立转录）。",
+        "unique": true,
+        "token": "backend/modules/green_navigation_ice/mepc.py",
+        "token_span": [
+          973,
+          1017
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/modules/green_navigation_ice/mepc.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "source_code_reference",
+      "label": "backend/api/green_shipping.py (markdown line 37)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1306,
+        "end_char": 1351,
+        "start_line": 37,
+        "end_line": 37,
+        "quote": "3. **最小修复**（`backend/api/green_shipping.py`）：",
+        "unique": true,
+        "token": "backend/api/green_shipping.py",
+        "token_span": [
+          1319,
+          1348
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/api/green_shipping.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py (markdown line 45)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1813,
+        "end_char": 1884,
+        "start_line": 45,
+        "end_line": 45,
+        "quote": "4. **验证工具链**：`artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py`",
+        "unique": true,
+        "token": "artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py",
+        "token_span": [
+          1827,
+          1883
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "source_code_reference",
+      "label": "backend/tests/test_cii_rule_arbitration_m6284.py (markdown line 47)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1916,
+        "end_char": 1984,
+        "start_line": 47,
+        "end_line": 47,
+        "quote": "   pytest `backend/tests/test_cii_rule_arbitration_m6284.py`（164 项）。",
+        "unique": true,
+        "token": "backend/tests/test_cii_rule_arbitration_m6284.py",
+        "token_span": [
+          1927,
+          1975
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/tests/test_cii_rule_arbitration_m6284.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_cii_rule_arbitration_m6284.py (markdown line 137)",
+      "in_report_section": "复现",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6160,
+        "end_char": 6239,
+        "start_line": 137,
+        "end_line": 137,
+        "quote": "python3 -m pytest tests/test_cii_rule_arbitration_m6284.py -q      # 164 passed",
+        "unique": true,
+        "token": "tests/test_cii_rule_arbitration_m6284.py",
+        "token_span": [
+          6178,
+          6218
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "tests/test_cii_rule_arbitration_m6284.py",
+      "origin": "code_fence",
+      "note": "source_code_reference reference parsed out of the code_fence; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "source_code_reference",
+      "label": "../artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py (markdown line 138)",
+      "in_report_section": "复现",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6240,
+        "end_char": 6307,
+        "start_line": 138,
+        "end_line": 138,
+        "quote": "python3 ../artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py",
+        "unique": true,
+        "token": "../artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py",
+        "token_span": [
+          6248,
+          6307
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "../artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py",
+      "origin": "code_fence",
+      "note": "source_code_reference reference parsed out of the code_fence; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "report_table",
+      "label": "table 1 @ lines 13-17",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 416,
+        "end_char": 606,
+        "start_line": 13,
+        "end_line": 17,
+        "quote": "| 部件 | 数学性质 | 离线可验证性 |\n|---|---|---|\n| `attained` 能量→燃油→CO₂ 链 | 纯物理/代数 | 可独立复算（REAL） |\n| 参考线 `a, c` 与年度折减 `Z` | 规则表转录 | 仅有转录互证（WITHHELD） |\n| A–E 评级 dd 向量 | 分船型规则表 | 分船型向量缺原文（NOT_SUPPORTED） |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "5 rows x 3 columns"
+      },
+      "rows": 5,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "report_table",
+      "label": "table 2 @ lines 53-70",
+      "in_report_section": "③ 计算结果（程序化注入，未手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2049,
+        "end_char": 3694,
+        "start_line": 53,
+        "end_line": 70,
+        "quote": "| ship_type | year | reference_2019 | Z | service | api（修复后） | ice_kernel | relΔ(api−svc) | relΔ(ice−svc) |\n|---|---|---|---|---|---|---|---|---|\n| bulk_carrier | 2023 | 4.2317 | 0.05 | 4.020109 | 4.020109 | 4.020109 | 0.00e+00 | 0.00e+00 |\n| bulk_carrier | 2024 | 4.2317 | 0.07 | 3.935475 | 3.935475 | 3.935475 | 0.00e+00 | 0.00e+00 |\n| bulk_carrier | 2025 | 4.2317 | 0.09 | 3.850841 | 3.850841 | 3.850841 | 0.00e+00 | 0.00e+00 |\n| bulk_carrier | 2026 | 4.2317 | 0.11 | 3.766208 | 3.766208 | 3.766208 | 0.00e+00 | 0.00e+00 |\n| tanker | 2023 | 5.3583 | 0.05 | 5.090375 | 5.090375 | 5.090375 | 0.00e+00 | 0.00e+00 |\n| tanker | 2024 | 5.3583 | 0.07 | 4.983209 | 4.983209 | 4.983209 | 0.00e+00 | 0.00e+00 |\n| tanker | 2025 | 5.3583 | 0.09 | 4.876043 | 4.876043 | 4.876043 | 0.00e+00 | 0.00e+00 |\n| tanker | 2026 | 5.3583 | 0.11 | 4.768878 | 4.768878 | 4.768878 | 0.00e+00 | 0.00e+00 |\n| container_ship | 2023 | 7.9420 | 0.05 | 7.544914 | 7.544914 | 7.544914 | 0.00e+00 | 0.00e+00 |\n| container_ship | 2024 | 7.9420 | 0.07 | 7.386073 | 7.386073 | 7.386073 | 0.00e+00 | 0.00e+00 |\n| container_ship | 2025 | 7.9420 | 0.09 | 7.227233 | 7.227233 | 7.227233 | 0.00e+00 | 0.00e+00 |\n| container_ship | 2026 | 7.9420 | 0.11 | 7.068393 | 7.068393 | 7.068393 | 0.00e+00 | 0.00e+00 |\n| gas_carrier | 2023 | 5.9652 | 0.05 | 5.666939 | 5.666939 | 5.666939 | 0.00e+00 | 0.00e+00 |\n| gas_carrier | 2024 | 5.9652 | 0.07 | 5.547635 | 5.547635 | 5.547635 | 0.00e+00 | 0.00e+00 |\n| gas_carrier | 2025 | 5.9652 | 0.09 | 5.428331 | 5.428331 | 5.428331 | 0.00e+00 | 0.00e+00 |\n| gas_carrier | 2026 | 5.9652 | 0.11 | 5.309027 | 5.309027 | 5.309027 | 0.00e+00 | 0.00e+00 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "18 rows x 9 columns"
+      },
+      "rows": 18,
+      "columns": 9,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "report_table",
+      "label": "table 3 @ lines 77-84",
+      "in_report_section": "③ 计算结果（程序化注入，未手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3877,
+        "end_char": 4311,
+        "start_line": 77,
+        "end_line": 84,
+        "quote": "| year | regime（修复后） | z_extrapolated | required（修复后） | required（旧实现，静默） |\n|---|---|---|---|---|\n| 2019 | RAISED | None | 422/InapplicableYearError | 4.231694 |\n| 2022 | RAISED | None | 422/InapplicableYearError | 4.231694 |\n| 2023 | determined | False | 4.020109 | 4.020109 |\n| 2026 | determined | False | 3.766208 | 3.766208 |\n| 2027 | extrapolated | True | 3.766208 | 3.766208 |\n| 2031 | extrapolated | True | 3.766208 | 3.766208 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "8 rows x 5 columns"
+      },
+      "rows": 8,
+      "columns": 5,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "report_table",
+      "label": "table 4 @ lines 91-93",
+      "in_report_section": "③ 计算结果（程序化注入，未手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4478,
+        "end_char": 4574,
+        "start_line": 91,
+        "end_line": 93,
+        "quote": "| attained/required | 0.8, 0.86, 0.94, 1.06, 1.18, 1.3 |\n|---|---|\n| rating | A, A, B, C, D, E |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "3 rows x 2 columns"
+      },
+      "rows": 3,
+      "columns": 2,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "report_table",
+      "label": "table 5 @ lines 122-128",
+      "in_report_section": "⑥ 误差判定",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5574,
+        "end_char": 6049,
+        "start_line": 122,
+        "end_line": 128,
+        "quote": "| 关键量 | 基准 | 误差 | 是否 <3% |\n|---|---|---|---|\n| required CII（2023–2026，4 型 × 4 年 × 4 容量） | `services.cii_required_value`（独立实现） | 0.000e+00 相对差 | **是**（且达 1e-12 量级） |\n| required CII（同网格） | `green_navigation_ice.mepc`（独立转录） | 0.000e+00 相对差 | **是** |\n| regime 语义（2019/2022/2027/2031） | m1829 已判定语义（C1/C2） | 4/4 符合 | **是**（行为级，非数值） |\n| dd 向量与 A–E 等级 | G4 分船型原文 | **无基准** | **不可判定** → 保持 NOT_SUPPORTED |\n| EEXI 削减率表 | MEPC.328(76) 原文 | **无基准（仅二手文献不一致）** | **不可判定** → 报告不擅改，留待原文复核 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "7 rows x 4 columns"
+      },
+      "rows": 7,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "repro_command_block",
+      "label": "bash fence @ lines 135-139",
+      "in_report_section": "复现",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6141,
+        "end_char": 6311,
+        "start_line": 135,
+        "end_line": 139,
+        "quote": "```bash\ncd backend\npython3 -m pytest tests/test_cii_rule_arbitration_m6284.py -q      # 164 passed\npython3 ../artifacts/cii_crosscheck_m6284/probe_crosscheck_m6284.py\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "fenced code block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "3 command line(s), language=bash"
+      },
+      "language": "bash",
+      "note": "reproduction block as written in the report; commands are not executed by this work package.",
+      "kind": "repro_command_block"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "api_endpoint",
+      "label": "/cii",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1642,
+        "end_char": 1646,
+        "start_line": 42,
+        "end_line": 42,
+        "quote": "/cii",
+        "unique": false,
+        "context_line": "   - `/cii` 请求新增 `allow_inapplicable_year`（默认 false），<2023 默认 **422**；"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (exact inline-code span)",
+        "result": "resolved",
+        "detail": "occurs 4 time(s); pinned at line 42"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "api_endpoint"
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "api_field",
+      "label": "allow_inapplicable_year",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1654,
+        "end_char": 1677,
+        "start_line": 42,
+        "end_line": 42,
+        "quote": "allow_inapplicable_year",
+        "unique": true,
+        "context_line": "   - `/cii` 请求新增 `allow_inapplicable_year`（默认 false），<2023 默认 **422**；"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (exact inline-code span)",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 42"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "api_field"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": {
+      "total_quotes": 19,
+      "quotes_unique_in_source": 18,
+      "repeated_quotes": [],
+      "note": "repeated short quotes are structural (identical table rows); each asset still carries its own char span."
+    },
+    "hash_recomputed_locally": "4b20aadcaabc128bc8fb10e8f9f164de670421c2b67d36d2837fc5781d96bfac",
+    "hash_matches_contract": true,
+    "hash_alg": "sha256 over markdown encoded as utf-8",
+    "locator_scheme": "absolute character span in markdown, 1-based inclusive line numbers"
+  },
+  "identity_granularity": "File references are occurrence-level: identity is (path, markdown line), so a file cited twice yields two assets carrying their own quotes; counts.distinct_referenced_paths is the deduplicated view.",
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no `verified` marks (verification is platform-gated).",
+    "Referenced source paths belong to the producing repository; they are resolved strictly inside the TensorKnowledge delivery worktree, so cross-repository references stay referenced_unresolved by design.",
+    "Figures are inventoried from record.figures[] as-is; when png_base64 is empty the asset is metadata_only and no byte hash is claimed.",
+    "Table and code-fence assets record geometry (rows/columns/language) only; their content is not restated as knowledge.",
+    "Only path-like references, fenced/inline code paths, tables, figures and explicitly configured interface tokens are registered. Bare prose symbols (e.g. a rule table named in the text that lives in the producing repository) are deliberately NOT inferred - registering them would require assuming information the report does not pin to a file.",
+    "Outputs live under docs/kf/<package>/ because the push gate drops artifacts/** (see docs/ops), so registered artifacts are not silently filtered."
+  ],
+  "producer": {
+    "generator": "scripts/kf/kf01_register.py",
+    "contract_version": "1.0",
+    "fetched_via": "GET /api/v1/tensor/reports/7450"
+  }
+}
