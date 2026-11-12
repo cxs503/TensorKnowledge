@@ -1,0 +1,365 @@
+{
+  "manifest_version": "asset_manifest.v1",
+  "package_id": "wp-5757-01",
+  "task_type": "01-asset-registration",
+  "report_id": "5757",
+  "schema_note": "Schema kf_result.v1.schema.json not present in worktree; shape derived from wp-542-01 precedent and asset_manifest.v1.schema.json",
+  "generated_at": "2026-11-12T01:20:00Z",
+  "provenance": {
+    "source_uri": "tensor://reports/5757",
+    "source_field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "d85b5a16b5062cdf22dfb828c57a433f8799ecfe324bd31efa72ba27449bd915",
+    "chars": 5061,
+    "bytes_utf8": 8027,
+    "title": "放门自动化成熟化：gate_auto_release daemon（IN20-R2，G13–G20 六门演练）",
+    "scenario_key": "gate-auto-release",
+    "fetched_via": "GET /api/v1/tensor/reports/5757",
+    "generator": "manual asset registration for wp-5757-01"
+  },
+  "resolution_status_vocabulary": {
+    "resolved_in_source": "asset content present and verifiable in report or worktree",
+    "referenced_unresolved": "asset path mentioned but content not available for verification",
+    "declared_absent": "report explicitly states asset is missing/not_found"
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "code",
+      "label": "gate_auto_release.py",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1301,
+        "end_char": 1335,
+        "start_line": 35,
+        "end_line": 35,
+        "quote": "ops/taskplane/gate_auto_release.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "主脚本：纯函数 evaluate_gate() + PsqlStore 原子 CTE 写路径 + gate_release_audit 审计表 + JSONL 流 + --rollback"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "code",
+      "label": "gate_auto_release_loop.sh",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1439,
+        "end_char": 1464,
+        "start_line": 37,
+        "end_line": 37,
+        "quote": "gate_auto_release_loop.sh",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "循环脚本：flock 单实例 + 指数退避"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "config",
+      "label": "gate-auto-release.service",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1486,
+        "end_char": 1528,
+        "start_line": 38,
+        "end_line": 38,
+        "quote": "deploy/taskplane/gate-auto-release.service",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "systemd 自愈服务单元"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "code",
+      "label": "gate_drill.py",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1632,
+        "end_char": 1651,
+        "start_line": 41,
+        "end_line": 41,
+        "quote": "tools/gate_drill.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "演练工具：三段式（生产只读矩阵/沙箱写入路径/审计链体检）"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "code",
+      "label": "supervise.py",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1558,
+        "end_char": 1570,
+        "start_line": 39,
+        "end_line": 39,
+        "quote": "supervise.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "任务平面三方一致清单注册（DAEMONS）"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "config",
+      "label": "taskplane.manifest.yaml",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1583,
+        "end_char": 1606,
+        "start_line": 39,
+        "end_line": 39,
+        "quote": "taskplane.manifest.yaml",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "任务平面清单文件"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "artifact",
+      "label": "system_pierce_acceptance.json",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2042,
+        "end_char": 2081,
+        "start_line": 52,
+        "end_line": 52,
+        "quote": "artifacts/system_pierce_acceptance.json",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "absent"
+      },
+      "note": "G13 判据工件，生产侧 not_found"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "artifact",
+      "label": "deepwater_gap_ledger_update.json",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2158,
+        "end_char": 2200,
+        "start_line": 53,
+        "end_line": 53,
+        "quote": "artifacts/deepwater_gap_ledger_update.json",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "absent"
+      },
+      "note": "G14 判据工件，生产侧 not_found"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "artifact",
+      "label": "autoregression_acceptance.md",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2278,
+        "end_char": 2316,
+        "start_line": 54,
+        "end_line": 54,
+        "quote": "artifacts/autoregression_acceptance.md",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "absent"
+      },
+      "note": "G15 判据工件，生产侧 not_found"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "artifact",
+      "label": "chronicler_acceptance.json",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2467,
+        "end_char": 2503,
+        "start_line": 56,
+        "end_line": 56,
+        "quote": "artifacts/chronicler_acceptance.json",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "absent"
+      },
+      "note": "G18 判据工件，生产侧 not_found"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "artifact",
+      "label": "spec_impl_acceptance.json",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2583,
+        "end_char": 2618,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "artifacts/spec_impl_acceptance.json",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "absent"
+      },
+      "note": "G20 判据工件，生产侧 not_found（治理门）"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "figure",
+      "label": "gate_auto_release_drill.png",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3721,
+        "end_char": 3758,
+        "start_line": 90,
+        "end_line": 90,
+        "quote": "artifacts/gate_auto_release_drill.png",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "六门判据矩阵 + 生产与沙箱动作计数柱 + 审计链配对图"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "database",
+      "label": "gate_release_audit",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1387,
+        "end_char": 1405,
+        "start_line": 36,
+        "end_line": 36,
+        "quote": "gate_release_audit",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "审计表：首轮落 7 行，二轮新增 0 行（幂等）"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "database",
+      "label": "campaign_nodes",
+      "in_report_section": "① 案例介绍（背景 / 对象 / 参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 339,
+        "end_char": 368,
+        "start_line": 11,
+        "end_line": 11,
+        "quote": "tensorplatform.campaign_nodes",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "生产库战役节点表，plan 13-20 的 6 道 blocked 门"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "database",
+      "label": "gate_drill schema",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1638,
+        "end_char": 1648,
+        "start_line": 41,
+        "end_line": 41,
+        "quote": "gate_drill",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "隔离 schema，用于沙箱写入路径演练"
+    }
+  ],
+  "claims": [],
+  "claims_note": "claims 允许为空数组（contract: objective.classify_report_type=false, no extraction required）",
+  "summary": {
+    "total_assets": 15,
+    "by_class": {
+      "code": 4,
+      "config": 2,
+      "artifact": 5,
+      "figure": 1,
+      "database": 3
+    },
+    "by_resolution": {
+      "referenced_unresolved": 10,
+      "declared_absent": 5
+    }
+  },
+  "identity_granularity": "char_span with unique quote",
+  "artifact_endpoint_probe": "not_performed",
+  "limitations": [
+    "Assets are path references only; no content verification performed (asset registration task, not extraction)",
+    "All code/config assets are referenced_unresolved as they live in other repos (TensorPlatform/ship-performance-platform)",
+    "All artifact assets are declared_absent per report's production read-only matrix results"
+  ]
+}
