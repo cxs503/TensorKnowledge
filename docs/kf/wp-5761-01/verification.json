@@ -1,0 +1,182 @@
+{
+  "package_id": "wp-5761-01",
+  "report_id": "5761",
+  "verified_by": "scripts/kf/verify_5761.py",
+  "independence_note": "re-fetch + re-slice + re-validate; does not import the builder and does not read any producer explanation beyond the products themselves",
+  "source_hash_recomputed": "sha256:06f7e6a9d2164c64a916d4f11cc0e117af97766de133438d10fc884a35c2c4d7",
+  "source_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/5761",
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "pass",
+      "detail": {
+        "files": [
+          "asset_manifest.json",
+          "kf_result.json",
+          "schema/…schema.json",
+          "schema_binding.json"
+        ],
+        "note": "all four parsed by json.loads"
+      }
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "pass",
+      "detail": {
+        "contract_sha256": "06f7e6a9d2164c64a916d4f11cc0e117af97766de133438d10fc884a35c2c4d7",
+        "refetched_sha256": "06f7e6a9d2164c64a916d4f11cc0e117af97766de133438d10fc884a35c2c4d7",
+        "local_copy_sha256": "06f7e6a9d2164c64a916d4f11cc0e117af97766de133438d10fc884a35c2c4d7",
+        "manifest_sha256": "06f7e6a9d2164c64a916d4f11cc0e117af97766de133438d10fc884a35c2c4d7",
+        "envelope_sha256": "06f7e6a9d2164c64a916d4f11cc0e117af97766de133438d10fc884a35c2c4d7",
+        "refetched_chars": 4141,
+        "contract_chars": 4141,
+        "via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/5761"
+      }
+    },
+    {
+      "check": "schema_pass",
+      "result": "pass",
+      "detail": {
+        "schema": "docs/kf/wp-5761-01/schema/asset_manifest.v1.wp-5761-01.schema.json",
+        "schema_sha256": "8251cc03c9566cbe225a9329e767e6b692a550e805565f09e6a6717b90b33c73",
+        "parent_schema": "schemas/asset_manifest.v1.schema.json",
+        "parent_schema_sha256": "5a464a27d68edf52f18a0a641014d443a244e89c389fb63c58fc0751d53d789c",
+        "substitutions": [
+          {
+            "from": "wp-448-01",
+            "to": "wp-5761-01",
+            "occurrences": 1
+          },
+          {
+            "from": "448",
+            "to": "5761",
+            "occurrences": 1
+          },
+          {
+            "from": "tensor://reports/448",
+            "to": "tensor://reports/5761",
+            "occurrences": 1
+          }
+        ],
+        "validator": "jsonschema.validate (draft-07)",
+        "structure_inherited_from_parent": true,
+        "error": null,
+        "note": "canonical schemas/kf_result.v1.schema.json named by the contract is absent from this worktree; manifest validated against the mechanically re-pinned copy of the accepted asset_manifest.v1 schema — platform schema wins if it differs"
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "pass",
+      "detail": {
+        "assets_checked": 31,
+        "spans_resolved": 31,
+        "failures": [],
+        "method": "re-slice fresh markdown at [start_char,end_char), compare to quote, count occurrences, recompute start_line/end_line"
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "pass",
+      "detail": {
+        "asset_ids": [
+          "A01",
+          "A02",
+          "A03",
+          "A04",
+          "A05",
+          "A06",
+          "A07",
+          "A08",
+          "A09",
+          "A10",
+          "A11",
+          "A12",
+          "A13",
+          "A14",
+          "A15",
+          "A16",
+          "A17",
+          "A18",
+          "A19",
+          "A20",
+          "A21",
+          "A22",
+          "A23",
+          "A24",
+          "A25",
+          "A26",
+          "A27",
+          "A28",
+          "A29",
+          "A30",
+          "A31"
+        ],
+        "duplicates": [],
+        "claim_ids": []
+      }
+    },
+    {
+      "check": "counts_consistent",
+      "result": "pass",
+      "detail": {
+        "assets": 31,
+        "by_resolution": {
+          "resolved_in_source": 22,
+          "referenced_unresolved": 8,
+          "declared_absent": 1
+        },
+        "by_class_rows": 31
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": {
+        "claims": 0,
+        "offenders": [],
+        "note": "claims=[] by contract (objective.register_assets only, classify_report_type=false); asset-level resolution status carried on all 31 assets (22 resolved_in_source / 8 referenced_unresolved / 1 declared_absent)",
+        "claims_note_chars": 156
+      }
+    },
+    {
+      "check": "no_verified_markers",
+      "result": "pass",
+      "detail": {
+        "structural_hits": [],
+        "note": "producer must not mark anything verified (verification is the platform gate's job); the envelope carries only provenance.verification_note = a not_verified statement"
+      }
+    },
+    {
+      "check": "result_envelope_shape",
+      "result": "pass",
+      "detail": {
+        "keys": [
+          "outputs",
+          "package_id",
+          "provenance",
+          "report_id",
+          "schema_version",
+          "task_type"
+        ],
+        "artifact_sha256": "962793f37a9fb02feaf606d7ca54bbbee221d09c048cfbac1b9ed18ce9971940",
+        "envelope_artifact_sha256": "962793f37a9fb02feaf606d7ca54bbbee221d09c048cfbac1b9ed18ce9971940",
+        "inline_manifest_matches_file": true
+      }
+    },
+    {
+      "check": "figures_present",
+      "result": "pass",
+      "detail": {
+        "fig_asset_inventory.png": 91648,
+        "fig_locator_map.png": 64633
+      }
+    }
+  ],
+  "overall": "PASS",
+  "scope_limits": [
+    "content correctness of the report's claims is NOT checked (out of scope for 01; the numbers are registered as located text, not re-executed)",
+    "codes/artifacts referenced by the report (route/, route_lock.json, summary.json, test file, scripts) are absent from this worktree: registered as referenced_unresolved, not verified",
+    "figure PNG payloads are absent from the platform report record (name+caption only): figures registered as referenced_unresolved",
+    "the canonical schemas/kf_result.v1.schema.json is absent from the worktree; the envelope shape follows the accepted wp-448-01 / wp-542-01 precedent and is validated structurally, not against the canonical file"
+  ]
+}
