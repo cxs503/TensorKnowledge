@@ -1,0 +1,165 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.wp-6511-01.schema.json",
+  "title": "asset_manifest for KF work package wp-6511-01 (task_type=01-asset-registration)",
+  "description": "Package-scoped shape pin for docs/kf/wp-6511-01/asset_manifest.json. The repo-level schemas/asset_manifest.v1.schema.json hard-codes package_id=wp-448-01 (const), so it cannot validate this package; this file pins the shape actually emitted so acceptance item schema_pass is a reproducible check rather than an assertion. If the platform-side schema differs, the platform gate wins.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_version",
+    "package_id",
+    "task_type",
+    "report_id",
+    "lane",
+    "generated_at",
+    "producer",
+    "source",
+    "document_structure",
+    "assets",
+    "claims",
+    "claims_empty_reason",
+    "counts",
+    "id_integrity",
+    "unresolved",
+    "observations",
+    "limitations"
+  ],
+  "properties": {
+    "manifest_version": {"const": "1.0"},
+    "package_id": {"const": "wp-6511-01"},
+    "task_type": {"const": "01-asset-registration"},
+    "report_id": {"const": "6511"},
+    "lane": {"const": "C"},
+    "generated_at": {"type": "string", "minLength": 10},
+    "producer": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "required": [
+        "report_id",
+        "source_uri",
+        "source_field",
+        "source_hash",
+        "contract_source_hash",
+        "hash_algo",
+        "hash_match",
+        "chars",
+        "bytes",
+        "lines",
+        "record_fields"
+      ],
+      "properties": {
+        "report_id": {"const": "6511"},
+        "source_uri": {"const": "tensor://reports/6511"},
+        "source_field": {"const": "markdown"},
+        "source_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "contract_source_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "hash_algo": {"const": "sha256"},
+        "hash_match": {"const": true},
+        "chars": {"const": 4405},
+        "bytes": {"type": "integer", "minimum": 1},
+        "lines": {"type": "integer", "minimum": 1},
+        "record_fields": {"type": "object"}
+      }
+    },
+    "document_structure": {
+      "type": "object",
+      "required": ["h2_headings", "h3_headings", "fenced_block_lines", "tables"],
+      "properties": {
+        "h2_headings": {"type": "array"},
+        "h3_headings": {"type": "array"},
+        "fenced_block_lines": {"type": "array"},
+        "tables": {"type": "array"}
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["asset_id", "kind", "name", "in_report_section", "locator", "resolution"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^r6511:[a-z0-9:-]+$"},
+          "kind": {
+            "enum": [
+              "report_markdown",
+              "embedded_table",
+              "embedded_parameter_list",
+              "embedded_formula",
+              "embedded_figure",
+              "figure_declaration",
+              "software_reference",
+              "external_reference",
+              "absent_artifact"
+            ]
+          },
+          "name": {"type": "string", "minLength": 1},
+          "in_report_section": {"type": "string", "minLength": 1},
+          "locator": {
+            "type": "object",
+            "required": ["source_field"],
+            "properties": {
+              "source_field": {"enum": ["markdown", "record"]},
+              "line": {"type": "integer", "minimum": 1},
+              "quote": {"type": "string", "minLength": 1},
+              "quote_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+              "occurrences_in_source": {"type": "integer", "minimum": 1},
+              "path": {"type": "string"},
+              "value": {"type": "string"}
+            },
+            "allOf": [
+              {
+                "if": {"properties": {"source_field": {"const": "markdown"}}},
+                "then": {
+                  "required": ["line", "quote", "quote_sha256", "occurrences_in_source"]
+                }
+              },
+              {
+                "if": {"properties": {"source_field": {"const": "record"}}},
+                "then": {"required": ["path", "value"]}
+              }
+            ]
+          },
+          "resolution": {
+            "type": "object",
+            "required": ["status"],
+            "properties": {
+              "status": {"enum": ["resolved", "unresolved", "metadata_only", "absent"]},
+              "scope": {"type": "string"},
+              "reason": {"type": "string", "minLength": 1}
+            },
+            "allOf": [
+              {
+                "if": {"properties": {"status": {"enum": ["unresolved", "absent", "metadata_only"]}}},
+                "then": {"required": ["reason"]}
+              }
+            ]
+          }
+        }
+      }
+    },
+    "claims": {"type": "array", "maxItems": 0},
+    "claims_empty_reason": {"type": "string", "minLength": 40},
+    "counts": {
+      "type": "object",
+      "required": ["assets_total", "by_kind", "by_resolution_status", "claims"],
+      "properties": {
+        "assets_total": {"type": "integer", "minimum": 1},
+        "by_kind": {"type": "object"},
+        "by_resolution_status": {"type": "object"},
+        "claims": {"const": 0}
+      }
+    },
+    "id_integrity": {
+      "type": "object",
+      "required": ["ids_checked", "duplicates", "unique"],
+      "properties": {
+        "ids_checked": {"type": "integer", "minimum": 1},
+        "duplicates": {"type": "array", "maxItems": 0},
+        "unique": {"const": true}
+      }
+    },
+    "unresolved": {"type": "array"},
+    "observations": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  }
+}
