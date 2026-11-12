@@ -1,0 +1,403 @@
+{
+  "package_id": "wp-4537-04",
+  "task_type": "04-independent-review",
+  "report_id": "4537",
+  "provenance": {
+    "source_hash": "sha256:de0b4b17cb6e270fc0b3f390715ddb329ab127e826c985388f948b5fac856d08",
+    "source_field": "markdown",
+    "source_uri": "tensor://reports/4537",
+    "producer": "scripts/kf/review_4537_04.py",
+    "emitted_at": "2026-11-12T02:48:32Z",
+    "notes": "source_hash 由本脚本对 markdown UTF-8 字节独立重算后写入并复核；审核对象=wp-4537-01；本包不写 epistemic status、不标 verified"
+  },
+  "outputs": {
+    "review_report.json": {
+      "review_report_version": 1,
+      "package_id": "wp-4537-04",
+      "task_type": "04-independent-review",
+      "reviewed_package_id": "wp-4537-01",
+      "report_id": "4537",
+      "reviewed_source": {
+        "source_uri": "tensor://reports/4537",
+        "source_field": "markdown",
+        "source_hash": "sha256:de0b4b17cb6e270fc0b3f390715ddb329ab127e826c985388f948b5fac856d08",
+        "reviewer_recomputed_hash": "sha256:de0b4b17cb6e270fc0b3f390715ddb329ab127e826c985388f948b5fac856d08",
+        "chars": 7931
+      },
+      "reviewer": {
+        "id": "reviewer-m15829-redteam",
+        "reviewer_type": "agent",
+        "role": "red-team-reviewer"
+      },
+      "producer_ids": [
+        "scripts/kf/register_4537_assets.py",
+        "1"
+      ],
+      "independence": {
+        "ok": true,
+        "basis": "distinct-identity",
+        "rule": "scripts/ke_state_machine.is_independent (A2, alias-closed)",
+        "limitations": [
+          "同一平台、同一模型族内的两个会话；id 不同只能证明会话不同，不能证明利益不同",
+          "审核上下文仅含报告原文 + 上游包 JSON；生产者对方法的自述未被采信为证据"
+        ]
+      },
+      "disposition": "needs-fix",
+      "disposition_reason": "无 blocker；1 条 medium 阻塞项（FN-4537-04-01，注册完整性缺口）需上游补登记；报告本体（原文）对不可观测量的诚实标注通过复核，不被本单升级",
+      "checks": [
+        {
+          "id": "F1",
+          "rule": "source_hash_recomputed",
+          "pass": true,
+          "detail": "reviewer recomputed sha256=de0b4b17cb6e270f… chars=7931 upstream_declared=sha256:de0b4b17c…"
+        },
+        {
+          "id": "F1b",
+          "rule": "chars_match_contract",
+          "pass": true,
+          "detail": "chars=7931 contract=7931"
+        },
+        {
+          "id": "F2",
+          "rule": "upstream_locators_resolve",
+          "pass": true,
+          "detail": "37 occurrences re-sliced from source; mismatches=[]"
+        },
+        {
+          "id": "F3",
+          "rule": "asset_names_verbatim_in_source",
+          "pass": true,
+          "detail": "names absent from markdown=[]"
+        },
+        {
+          "id": "F4",
+          "rule": "asset_counts_recomputed",
+          "pass": true,
+          "detail": "recomputed total=27 by_status={'resolved': 2, 'declared_metadata_only': 6, 'declared_shorthand': 6, 'declared_only': 13} by_kind={'report_markdown': 1, 'report_record_metadata': 1, 'report_figure': 1, 'path_basename_shorthand': 6, 'path_directory': 3, 'path_file': 10, 'vcs_branch': 1, 'vcs_commit': 4}"
+        },
+        {
+          "id": "F5",
+          "rule": "asset_ids_unique",
+          "pass": true,
+          "detail": "n=27 unique=27"
+        },
+        {
+          "id": "F6",
+          "rule": "absent_artifact_has_no_hash",
+          "pass": true,
+          "detail": "absent-but-hashed assets=[]"
+        },
+        {
+          "id": "F7",
+          "rule": "no_verification_marked",
+          "pass": true,
+          "detail": "claims=0; 'verified' occurrences=0"
+        },
+        {
+          "id": "F8",
+          "rule": "single_report_scope",
+          "pass": true,
+          "detail": "foreign report ids referenced=[]"
+        },
+        {
+          "id": "F9",
+          "rule": "every_declared_path_registered_or_unresolved",
+          "pass": false,
+          "detail": "2/15 declared paths in markdown not covered by wp-4537-01: ['tests/test_v1_readiness.py', 'tests/test_validation_gate.py']"
+        },
+        {
+          "id": "F10",
+          "rule": "unresolved_inventory_distinct_from_status_mirror",
+          "pass": false,
+          "detail": "|unresolved|=25 |assets with status!=resolved|=25 sets_equal=True"
+        },
+        {
+          "id": "F11",
+          "rule": "report_internal_arithmetic_consistent",
+          "pass": true,
+          "detail": "Σrules=4268 (report 合计 4268); 3962/4268=92.83% (report 92.8%); 8/624=1.28% (report 1.28%)"
+        },
+        {
+          "id": "F12",
+          "rule": "unobserved_outcome_not_claimed",
+          "pass": true,
+          "detail": "honest marker at char 7158; '未直接观测' present=True; 1 'PR #128 CI 变绿' mention(s), all inside the disclaimer=True"
+        },
+        {
+          "id": "F13",
+          "rule": "e701_e702_not_cleared_by_ruff_format",
+          "pass": false,
+          "detail": "probe R1b verdict=refuted: codes before=['E701', 'E702'] after `ruff format`=[] (ruff 0.15.0, the version the report pins)"
+        }
+      ],
+      "findings": [
+        {
+          "finding_id": "FN-4537-04-01",
+          "severity": "medium",
+          "blocking": true,
+          "scope": "wp-4537-01",
+          "title": "注册完整性缺口：报告点名的测试文件路径未进 assets[]，也不在 unresolved[]",
+          "claim_under_review": "wp-4537-01 自述登记「报告引用的每一个文件/路径」，且 unresolved[] 覆盖未决项",
+          "evidence": [
+            {
+              "source_field": "markdown",
+              "corpus": "runs/m15829_wp4537_04/source_report_4537.md",
+              "quote": "pytest -q tests/test_validation_gate.py tests/test_v1_readiness.py",
+              "span": [
+                4999,
+                5065
+              ],
+              "content_hash": "sha256:793fdbf5da500e410acacd4841d822276fff6b45e7fdadf5e3eb89935feadf74"
+            },
+            {
+              "source_field": "record",
+              "corpus": "scripts/kf/register_4537_assets.py",
+              "quote": "and every file/path the report *references*",
+              "span": [
+                225,
+                268
+              ],
+              "content_hash": "sha256:1cb34c6b0c86719bf74e6ab19c3af8518af6e06f1cc46561f601eabe5d48242d"
+            },
+            {
+              "source_field": "markdown",
+              "corpus": "runs/m15829_wp4537_04/source_report_4537.md",
+              "quote": "抽查 `pytest -q tests/test_validation_gate.py tests/test_v1_readiness.py`",
+              "span": [
+                4995,
+                5066
+              ],
+              "content_hash": "sha256:d065fbf6c6a20463956165ec4444e035c1d9f977388b199e5344db4d74d53983"
+            }
+          ],
+          "observed": {
+            "declared_paths_missing": [
+              "tests/test_v1_readiness.py",
+              "tests/test_validation_gate.py"
+            ],
+            "n_declared_paths": 15,
+            "n_missing": 2,
+            "registered": false,
+            "in_unresolved": false
+          },
+          "reproduction": "python3 -c \"import json,re;md=open('runs/m15829_wp4537_04/source_report_4537.md',encoding='utf-8').read();m=json.load(open('docs/kf/wp-4537-01/kf_result.json'))['outputs']['asset_manifest.json'];n={a['name'] for a in m['assets']};print([t for t in ['tests/test_validation_gate.py','tests/test_v1_readiness.py'] if t in md and t not in n])\"",
+          "root_cause": "两条路径整体落在一个 inline code span 里（命令 `pytest -q …`），01 的 tokenizer 把含空白的 span 判为 command_line 后整段跳过，span 内的路径不再进入资产分类器",
+          "impact": "下游 03/04 的抽取面缺两个被报告明确点名的验证入口文件；报告 §3 的回归面证据不可被下游重建",
+          "remediation": "在 scripts/kf/register_4537_assets.py 的 command span 上再做一次路径切分，或在 unresolved[] 显式登记这两条路径；加一条回归断言（tests/test_kf_wp4537_01.py）"
+        },
+        {
+          "finding_id": "FN-4537-04-02",
+          "severity": "low",
+          "blocking": false,
+          "scope": "wp-4537-01",
+          "title": "unresolved[] 与 assets[status!=resolved] 集合完全同构，不是独立未决清单",
+          "claim_under_review": "unresolved[] 语义 = 需下游/人工补齐的不确定项",
+          "evidence": [
+            {
+              "source_field": "record",
+              "corpus": "docs/kf/wp-4537-01/asset_manifest.json",
+              "quote": "仅出现文件名/简化名，完整路径须由上下文唯一确定",
+              "span": [
+                22489,
+                22513
+              ],
+              "content_hash": "sha256:04027e230e3130fa05cc8eea141b1aefc0d90954fa9bd78b859a61de306d2627"
+            }
+          ],
+          "observed": {
+            "n_unresolved": 25,
+            "n_mirror": 25
+          },
+          "reproduction": "python3 scripts/kf/review_4537_04.py  # F10",
+          "impact": "下游按 unresolved 计欠账时会把已声明资产重复计为未决（同一批 25 条）",
+          "remediation": "unresolved[] 只放真正未决项，或改名 status_mirror 并在 manifest 说明"
+        },
+        {
+          "finding_id": "FN-4537-04-03",
+          "severity": "medium",
+          "blocking": true,
+          "scope": "report:4537",
+          "title": "报告的关键机制论断被同版本复现证伪：`ruff format` 会拆 E701/E702 语句",
+          "claim_under_review": "（a）「其中 3962 条（92.8%）是 E701/E702 这类**不可自动修复**的排版债，且 `ruff format` 也不会拆语句」；（b）「E701/E702 这类不可自动修复的债无法通过 `ruff format` 消解」",
+          "evidence": [
+            {
+              "source_field": "markdown",
+              "corpus": "runs/m15829_wp4537_04/source_report_4537.md",
+              "quote": "其中 3962 条（92.8%）是 E701/E702 这类**不可自动修复**的排版债，且 `ruff format` 也不会拆语句",
+              "span": [
+                1309,
+                1376
+              ],
+              "content_hash": "sha256:6b6f4eadb8dba1a55e7328b3e9e5d55d28899fb4b17385d948af874237b7c889"
+            },
+            {
+              "source_field": "markdown",
+              "corpus": "runs/m15829_wp4537_04/source_report_4537.md",
+              "quote": "`E701/E702` 这类不可自动修复的债无法通过 `ruff format` 消解",
+              "span": [
+                6102,
+                6145
+              ],
+              "content_hash": "sha256:540f47df956b9388d3151cb5f95c03e94788abdd47e901eb5d13d28ac3422e99"
+            }
+          ],
+          "counter_evidence": {
+            "probe": "R1b（ruff 0.15.0，与报告钉版本一致）",
+            "input": "import os\n\nx = 1; y = 2\nif True: pass\nprint(1)\n",
+            "ruff_check_before": [
+              "E701",
+              "E702"
+            ],
+            "after_ruff_format_file": "import os\n\nx = 1\ny = 2\nif True:\n    pass\nprint(1)\n",
+            "ruff_check_after": [],
+            "after_rc": 0
+          },
+          "reproduction": "python3 scripts/kf/review_4537_04.py  # probe R1b（临时目录内 ruff format + ruff check --select E701,E702）",
+          "root_cause": "把『lint 规则无 autofix』外推成『formatter 也不会动它』；formatter 对复合语句会展开成多行（与 Black 同源行为）",
+          "impact": "(1) 3962/4268=92.8% 的债并非只能手改：一次 `ruff format` 批量即可消解 E701/E702，burn-down 的『E7xx 只能手改』成本被高估；(2) 『ruff format --check』的 616 文件待重排本身就说明 formatter 会动这些文件，两处论断互相矛盾；(3) 数值部分（4268/616/92.8%）不受影响，已由 F11 复算通过",
+          "non_blocking_for_ship": false,
+          "remediation": "改写 §1 与 §5.5 的措辞为『E701/E702 无 lint autofix，只能由 ruff format 批量展开（代价=616 文件 churn）』；docs/ci-lint-gate.md 的 burn-down 把 E7xx 阶段改为一次 formatter 批处理，保留『不在本 PR 内重排全仓』的决策不变"
+        }
+      ],
+      "reproduction_probes": [
+        {
+          "probe": "R1a-e701-e702-have-no-lint-fix",
+          "report_claim": "E701/E702 这类**不可自动修复**的排版债",
+          "fix_diff_empty": true,
+          "still_reported_after_fix": [
+            "E701",
+            "E702"
+          ],
+          "control_f401_autofix_removed_import": true,
+          "verdict": "confirmed"
+        },
+        {
+          "probe": "R1b-ruff-format-splits-e701-e702",
+          "report_claim": "`ruff format` 也不会拆语句；E701/E702 这类债无法通过 `ruff format` 消解",
+          "ruff_version": "ruff format m.py",
+          "codes_before": [
+            "E701",
+            "E702"
+          ],
+          "format_rc": 0,
+          "file_after_format": "import os\n\nx = 1\ny = 2\nif True:\n    pass\nprint(1)\n",
+          "semicolon_statement_split": true,
+          "inline_colon_split": true,
+          "codes_after": [],
+          "after_rc": 0,
+          "verdict": "refuted"
+        },
+        {
+          "probe": "R2-config-select-vs-cli-select",
+          "report_claim": "`select` 只影响**阻塞**规则集，`ruff check --select E4,E7,E9,F` 在修复后依旧报 4268 条",
+          "blocking_step_codes": [
+            "F821"
+          ],
+          "blocking_step_rc": 1,
+          "backlog_counter_codes": [
+            "E701",
+            "E702",
+            "F401",
+            "F821"
+          ],
+          "backlog_counter_rc": 1,
+          "blocking_set_only_f821": true,
+          "backlog_still_reports_style_debt": true,
+          "verdict": "confirmed"
+        },
+        {
+          "probe": "R3-unquoted-colon-in-step-name",
+          "report_claim": "step `name` 里出现 `ruff: correctness` 会因 \"mapping values are not allowed here\" 直接让 workflow 非法",
+          "unquoted_raises": true,
+          "unquoted_error": "mapping values are not allowed here   in \"<unicode string>\", line 4, column 19:           - name: ruff: correctness                       ^",
+          "error_is_mapping_values": true,
+          "quoted_parses": true,
+          "verdict": "confirmed"
+        },
+        {
+          "probe": "R4-temp-dir-loses-ruff-config",
+          "report_claim": "临时基线文件在系统临时目录，故 `ruff format` 会回落到 ruff 默认配置（line-length 88）；脚本显式传 --line-length 100 --target-version py311",
+          "synthetic_line_chars": 93,
+          "project_dir_check_rc": 0,
+          "temp_dir_check_rc": 1,
+          "temp_dir_explicit_args_rc": 0,
+          "temp_dir_ancestors_with_ruff_config": [],
+          "verdict": "confirmed"
+        }
+      ],
+      "ruff_version_used": "ruff 0.15.0",
+      "overstated_claims": [
+        {
+          "claim": "8/8 条断言 PASS / lint_gate.py 212 行",
+          "status": "not_run",
+          "why": "artifacts/lint-gate-m4175/evidence.log 与 scripts/lint_gate.py 的本体不在本工作树，无法逐字节复核；本审核不把未复核的量化声明记为已证"
+        },
+        {
+          "claim": "ruff==0.15.0（本地与 CI 一致）",
+          "status": "partially-supported",
+          "why": "本地实测 ruff 0.15.0，与报告钉的版本一致；CI 侧一致性无法在本环境证实"
+        },
+        {
+          "claim": "脚本对**所有**检查显式传 --line-length 100 --target-version py311（与 [tool.ruff] 同步）",
+          "status": "partially-supported",
+          "why": "R4 证实临时目录确实丢配置且该两参数可复原；但『与 [tool.ruff] 同步』只覆盖 line-length/target-version 两个旋钮，formatter 的 quote-style / skip-magic-trailing-comma 等未同步"
+        }
+      ],
+      "checks_not_run": [
+        "GitHub check run 结论（报告 §5.1 自述出站被拦；本环境同样无 gh / REST 通路）",
+        "TensorFEM 树上 4268 / 616 的原地复算（本工作树无 TensorFEM 检出，且不得跨仓读）",
+        "artifacts/lint-gate-m4175/* 逐字节复核（工件不在本仓）",
+        "5 个控制实验的原始退出码（evidence.log 不可及）",
+        "M5 语义保真的 claim 级全量判定（上游 01 包 claims=[]，无 KO 可审；本单只做资产级保真判定）"
+      ],
+      "checks_failed": [
+        "F9",
+        "F10",
+        "F13"
+      ],
+      "summary": {
+        "n_checks": 14,
+        "n_checks_passed": 11,
+        "n_findings": 3,
+        "n_blocking": 2,
+        "n_probes_confirmed": 4,
+        "n_probes_refuted": 1,
+        "n_probes": 5
+      }
+    },
+    "review_events.json": [
+      {
+        "id": "tkr:wp-4537-04:needs-fix",
+        "decision": "request-changes",
+        "policy_version": "ke-review-v0.1",
+        "reviewer": {
+          "id": "reviewer-m15829-redteam",
+          "reviewer_type": "agent"
+        },
+        "reviewed_at": "2026-11-12T02:48:32Z",
+        "subject_package_id": "wp-4537-01",
+        "independence_basis": "distinct-identity",
+        "findings": [
+          {
+            "finding_id": "FN-4537-04-01",
+            "severity": "medium",
+            "title": "注册完整性缺口：报告点名的测试文件路径未进 assets[]，也不在 unresolved[]"
+          },
+          {
+            "finding_id": "FN-4537-04-02",
+            "severity": "low",
+            "title": "unresolved[] 与 assets[status!=resolved] 集合完全同构，不是独立未决清单"
+          },
+          {
+            "finding_id": "FN-4537-04-03",
+            "severity": "medium",
+            "title": "报告的关键机制论断被同版本复现证伪：`ruff format` 会拆 E701/E702 语句"
+          }
+        ],
+        "review_report": "review_report.json",
+        "touches_epistemic_status": false
+      }
+    ]
+  },
+  "claims": []
+}
