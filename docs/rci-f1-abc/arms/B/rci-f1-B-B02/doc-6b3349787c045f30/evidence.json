@@ -1,0 +1,32 @@
+[
+ {
+  "claim_id": "6b3349787c045f30-c01",
+  "path": "scenarios/suboff_icebreaking/audits/SI-0D-TensorDEM.md",
+  "repo": "TensorPhysics",
+  "lines": [
+   3,
+   6
+  ],
+  "span": [
+   3,
+   6
+  ],
+  "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+  "quote": "> 审计对象：`/nfs/wangxi/tensor_eco/TensorDEM`（104 个 .py 模块）\n> 审计日期：2026-10-21\n> 审计方法：只读源码 + 已有测试用例，不修改任何 src/ 代码\n> 所有\"已有\"论断均附 `file:line` 证据，零手抄。"
+ },
+ {
+  "claim_id": "6b3349787c045f30-c02",
+  "path": "scenarios/suboff_icebreaking/audits/SI-0D-TensorDEM.md",
+  "repo": "TensorPhysics",
+  "lines": [
+   130,
+   134
+  ],
+  "span": [
+   130,
+   134
+  ],
+  "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+  "quote": "- **流体主步**：`dt_fluid`（LBM 典型 1e-5~1e-4 s）\n- **DEM 子步**：`dt_dem = dt_fluid / substeps`，`substeps = ceil(dt_fluid / dt_dem_recommended)`\n  - 参照现有 `calibrated_wet_coupling.py:23` 的模式\n- **交换节拍**：每 `exchange_steps` 个流体步交换一次（参照 `calibrated_wet_coupling.py:62`）\n- **建议**：3D 耦合沿用 2D 已验证的 subcycling 架构，将 `exchange_state()` 从 `dem.py:389-400` 模式扩展到 `dem3d.py`"
+ }
+]

@@ -1,0 +1,86 @@
+[
+ {
+  "claim_id": "6b3349787c045f30-c01",
+  "statement": "> 审计对象：`/nfs/wangxi/tensor_eco/TensorDEM`（104 个 .py 模块） > 审计日期：2026-10-21 > 审计方法：只读源码 + 已有测试用例，不修改任何 src/ 代码 > 所有\"已有\"论断均附 `file:line` 证据，零手抄。",
+  "claim_form": "descriptive",
+  "faithfulness": {
+   "quote": "> 审计对象：`/nfs/wangxi/tensor_eco/TensorDEM`（104 个 .py 模块）\n> 审计日期：2026-10-21\n> 审计方法：只读源码 + 已有测试用例，不修改任何 src/ 代码\n> 所有\"已有\"论断均附 `file:line` 证据，零手抄。",
+   "span": [
+    3,
+    6
+   ],
+   "lines": 4,
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+  },
+  "conditions": {
+   "stated_in_source": false,
+   "scope": "not-stated-in-source",
+   "text": ""
+  },
+  "quality": {
+   "locator_precision": 3,
+   "propositional_content": 3,
+   "numeric_grounding": 5,
+   "context_sufficiency": 5,
+   "scope_disclosure": 2,
+   "traceability": 5,
+   "rubric": {
+    "locator_precision": "5=quote is one line; 4=2-3 lines; 3=4-6; 2=7-10; 1=>10 lines in span",
+    "propositional_content": "5=quantitative result/capability, 4=requirement/verification/assumption, 3=descriptive, 2=plan/limitation hint, 0=no proposition",
+    "numeric_grounding": "5=>=2 numeric tokens; 4=1 numeric token; 2=only unit/range hint; 0=none",
+    "context_sufficiency": "5=quote >=120 chars and self-contained; 4=>=80; 3=>=50; 2=<50",
+    "scope_disclosure": "5=sentence states its own scope/assumption; 2=scope absent but explicitly marked not-stated-in-source; 0=scope implied by us (forbidden -> claim dropped)",
+    "traceability": "5=quote names a concrete artifact (path/file/test) or code pointer; 3=refers to an internal section/table; 1=none"
+   }
+  },
+  "ko_state": {
+   "mission": "succeeded",
+   "review": "not-reviewed",
+   "scientific_verification": "not-verified",
+   "verified": false
+  },
+  "drop_history": []
+ },
+ {
+  "claim_id": "6b3349787c045f30-c02",
+  "statement": "- **流体主步**：`dt_fluid`（LBM 典型 1e-5~1e-4 s） - **DEM 子步**：`dt_dem = dt_fluid / substeps`，`substeps = ceil(dt_fluid / dt_dem_recommended)` - 参照现有 `calibrated_wet_coupling.py:23` 的模式 - **交换节拍**：每 `exchange_steps` 个流体步交换一次（参照 `calibrated_wet_coupling.py:62`） - **建议**：3D 耦合沿用 2D 已验证的 subcycling 架构，将 `exchange_state()` 从 `dem.py:389-400` 模式扩展到 `dem3d.py`",
+  "claim_form": "quantitative-result",
+  "faithfulness": {
+   "quote": "- **流体主步**：`dt_fluid`（LBM 典型 1e-5~1e-4 s）\n- **DEM 子步**：`dt_dem = dt_fluid / substeps`，`substeps = ceil(dt_fluid / dt_dem_recommended)`\n  - 参照现有 `calibrated_wet_coupling.py:23` 的模式\n- **交换节拍**：每 `exchange_steps` 个流体步交换一次（参照 `calibrated_wet_coupling.py:62`）\n- **建议**：3D 耦合沿用 2D 已验证的 subcycling 架构，将 `exchange_state()` 从 `dem.py:389-400` 模式扩展到 `dem3d.py`",
+   "span": [
+    130,
+    134
+   ],
+   "lines": 5,
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3"
+  },
+  "conditions": {
+   "stated_in_source": false,
+   "scope": "not-stated-in-source",
+   "text": ""
+  },
+  "quality": {
+   "locator_precision": 3,
+   "propositional_content": 5,
+   "numeric_grounding": 5,
+   "context_sufficiency": 5,
+   "scope_disclosure": 2,
+   "traceability": 5,
+   "rubric": {
+    "locator_precision": "5=quote is one line; 4=2-3 lines; 3=4-6; 2=7-10; 1=>10 lines in span",
+    "propositional_content": "5=quantitative result/capability, 4=requirement/verification/assumption, 3=descriptive, 2=plan/limitation hint, 0=no proposition",
+    "numeric_grounding": "5=>=2 numeric tokens; 4=1 numeric token; 2=only unit/range hint; 0=none",
+    "context_sufficiency": "5=quote >=120 chars and self-contained; 4=>=80; 3=>=50; 2=<50",
+    "scope_disclosure": "5=sentence states its own scope/assumption; 2=scope absent but explicitly marked not-stated-in-source; 0=scope implied by us (forbidden -> claim dropped)",
+    "traceability": "5=quote names a concrete artifact (path/file/test) or code pointer; 3=refers to an internal section/table; 1=none"
+   }
+  },
+  "ko_state": {
+   "mission": "succeeded",
+   "review": "not-reviewed",
+   "scientific_verification": "not-verified",
+   "verified": false
+  },
+  "drop_history": []
+ }
+]
