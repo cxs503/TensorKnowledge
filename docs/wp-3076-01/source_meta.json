@@ -1,0 +1,39 @@
+{
+  "report_id": "3076",
+  "sha256": "9b7bb2427af8a1b4a7f229971492c52fc691737a7742b4b703ce4e41cea464c1",
+  "chars": 3712,
+  "bytes_utf8": 6092,
+  "record": {
+    "id": 3076,
+    "title": "成稿机检门禁 manuscript_gate v1：把 SEAL.md 的 H1–H8 硬伤固化为 11 项机检（负控复现 8 项 / 正控 0 误报）",
+    "summary": "新建 papers/tools/manuscript_gate.py（11 checks，HARD/SOFT 分级，退出码可接 CI）+ pytest 19 passed。负控=封存 FAIL 稿+Report #823 证据基 → 复现 7 类机器可判硬伤（H1 formula/H2 overclaim/H3 figdata/H4 figref/H6 repro/H7 statdof/H8 arith），H5 如实不报；正控=新建全链真算样本 → 0 HARD 误报。另独立复算 coth/tanh 误式波数偏差（T=4→12 s: 0.37%→25.02%，T≥14 s 无根）。",
+    "scenario_key": "paper-line-provenance-gate",
+    "mission_id": 3012,
+    "stage": null,
+    "tags": [
+      "paper-production",
+      "provenance-gate",
+      "manuscript-conformance",
+      "verification-debt",
+      "pytest",
+      "honest-FAIL"
+    ],
+    "figures": [
+      {
+        "name": "gate_state_matrix.png",
+        "caption": "门禁 11 项 checks 在封存 FAIL 稿与正控稿上的状态矩阵（绿=PASS 红=FAIL 黄=WARN 灰=SKIP）"
+      },
+      {
+        "name": "gate_numtrace_dev.png",
+        "caption": "数值溯源：每个定量 token 到证据基的最小相对偏差（log10），虚线=5e-3 容差"
+      },
+      {
+        "name": "gate_coth_tanh.png",
+        "caption": "H1 独立复算：coth 误式相对 tanh 正解的波数偏差 vs 周期，含 3%/15% 线"
+      }
+    ],
+    "status": "published",
+    "created_by": 1,
+    "created_at": "2026-11-03T23:35:19.261537+00:00"
+  }
+}
