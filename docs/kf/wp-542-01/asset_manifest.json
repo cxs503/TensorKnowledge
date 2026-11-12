@@ -1,0 +1,1045 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-542-01",
+  "task_type": "01-asset-registration",
+  "report_id": "542",
+  "schema_note": "No kf_result/asset_manifest JSON Schema file is shipped in this repository (schemas/ has no kf_*.json); shape follows the wp-542-01 contract keys (package_id/task_type/report_id/provenance/outputs) and is self-described below.",
+  "generated_at": "2026-11-12T00:48:34.408514+00:00",
+  "provenance": {
+    "source_uri": "tensor://reports/542",
+    "source_field": "markdown",
+    "source_hash": "sha256:a07bad2500aeed73b47222738bffb3d6a70d39a16790e2c991e01f5bbb239b40",
+    "hash_algo": "sha256",
+    "hashed_bytes": "markdown encoded as utf-8",
+    "source_chars": 6599,
+    "source_bytes_utf8": 10333,
+    "report_title": "FEM/DEM 能力盘点与成组任务树 — m605 进展报告",
+    "report_scenario_key": "suboff_icebreaking",
+    "report_mission_id": 605,
+    "report_created_at": "2026-10-30T23:36:30.075319+00:00",
+    "report_tags": [
+      "FEM",
+      "DEM",
+      "capability-audit",
+      "task-tree",
+      "SIR",
+      "icebreaking"
+    ],
+    "fetched_via": "GET /api/v1/tensor/reports/542",
+    "generator": "scripts/kf/build_asset_manifest.py",
+    "contract_version": "1.0"
+  },
+  "resolution_status_vocabulary": {
+    "resolved": "bytes located and hashed (source markdown or a file inside this worktree)",
+    "unresolved": "reference parsed from the report but the target is not present in this package's scope",
+    "metadata_only": "platform lists the asset but stores no byte payload, so no hash is claimable"
+  },
+  "assets": [
+    {
+      "asset_id": "r542:source",
+      "kind": "report_markdown",
+      "uri": "tensor://reports/542",
+      "source_field": "markdown",
+      "title": "FEM/DEM 能力盘点与成组任务树 — m605 进展报告",
+      "chars": 6599,
+      "bytes_utf8": 10333,
+      "sha256": "a07bad2500aeed73b47222738bffb3d6a70d39a16790e2c991e01f5bbb239b40",
+      "locator": {
+        "scheme": "report_field",
+        "field": "markdown"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/542"
+      }
+    },
+    {
+      "asset_id": "r542:figure:01",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/542#figures[0]",
+      "name": "fig1_capability_radar.png",
+      "caption": "FEM/DEM Capability Radar: TensorPhysics vs Reference Codes",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 0
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record lists this figure by name+caption only; no png_base64 payload is stored in figures[], so no byte hash can be computed"
+      }
+    },
+    {
+      "asset_id": "r542:figure:02",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/542#figures[1]",
+      "name": "fig2_dependency_dag.png",
+      "caption": "Task Tree Dependency DAG (16 nodes, 20 edges)",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 1
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record lists this figure by name+caption only; no png_base64 payload is stored in figures[], so no byte hash can be computed"
+      }
+    },
+    {
+      "asset_id": "r542:figure:03",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/542#figures[2]",
+      "name": "fig3_gap_heatmap.png",
+      "caption": "Three-Layer Cross-Reference Gap Matrix",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 2
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record lists this figure by name+caption only; no png_base64 payload is stored in figures[], so no byte hash can be computed"
+      }
+    },
+    {
+      "asset_id": "r542:ref:01",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=27",
+      "path_reference": "dem3d.py",
+      "line_pin": "24",
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 27,
+        "quote": "| 冰密度 ρ_ice | 917 kg/m³ | dem3d.py:24 硬编码 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:02",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=28",
+      "path_reference": "dem3d.py",
+      "line_pin": "27-28",
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 28,
+        "quote": "| 键合断裂应变 | 0.015 (拉) / 0.03 (剪) | dem3d.py:27-28 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:03",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=29",
+      "path_reference": "dem3d.py",
+      "line_pin": "364",
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 29,
+        "quote": "| 接触刚度 | 用户定义 | dem3d.py:364 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:04",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=30",
+      "path_reference": "dem3d.py",
+      "line_pin": "29",
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 30,
+        "quote": "| 接触阻尼 | 5.0 (默认) | dem3d.py:29 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:05",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=31",
+      "path_reference": "tensorfem/shell4.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 31,
+        "quote": "| FEM 板单元 | Shell4 (4节点壳) | tensorfem/shell4.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:06",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=32",
+      "path_reference": "tensorfem/cohesive.py",
+      "line_pin": "32",
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 32,
+        "quote": "| cohesive 模型 | 双线性牵引-分离律 | tensorfem/cohesive.py:32 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:07",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=33",
+      "path_reference": "tensorfem/dynamics.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 33,
+        "quote": "| 瞬态积分 | Newmark-β / 中心差分 | tensorfem/dynamics.py, explicit_dynamics.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:08",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=33",
+      "path_reference": "explicit_dynamics.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 33,
+        "quote": "| 瞬态积分 | Newmark-β / 中心差分 | tensorfem/dynamics.py, explicit_dynamics.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:09",
+      "kind": "data_artifact_reference",
+      "uri": "tensor://reports/542#line=34",
+      "path_reference": "validation_report.json",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 34,
+        "quote": "| SI-4 演示规模 | 25节点×16单元板, 12颗粒×30键 | validation_report.json |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:10",
+      "kind": "data_artifact_reference",
+      "uri": "tensor://reports/542#line=35",
+      "path_reference": "run_summary.json",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 35,
+        "quote": "| SIR5 断裂规模 | 405颗粒, 3560键, 624断裂 | sir5 run_summary.json |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:11",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=82",
+      "path_reference": "beam2.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 82,
+        "quote": "| beam2.py | 2节点Euler-Bernoulli梁 | ✅有测试 | PASS | test_beam.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:12",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=82",
+      "path_reference": "test_beam.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 82,
+        "quote": "| beam2.py | 2节点Euler-Bernoulli梁 | ✅有测试 | PASS | test_beam.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:13",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=83",
+      "path_reference": "shell4.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 83,
+        "quote": "| shell4.py | 4节点MITC4壳 | ✅有测试 | PASS | test_shell4.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:14",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=83",
+      "path_reference": "test_shell4.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 83,
+        "quote": "| shell4.py | 4节点MITC4壳 | ✅有测试 | PASS | test_shell4.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:15",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=84",
+      "path_reference": "solid3d.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 84,
+        "quote": "| solid3d.py | 8节点六面体 | ✅有测试 | PASS | test_solid3d.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:16",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=84",
+      "path_reference": "test_solid3d.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 84,
+        "quote": "| solid3d.py | 8节点六面体 | ✅有测试 | PASS | test_solid3d.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:17",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=85",
+      "path_reference": "cohesive.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 85,
+        "quote": "| cohesive.py | 两节点cohesive界面 | ✅有测试 | PASS | test_cohesive.py (6 tests) |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:18",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=85",
+      "path_reference": "test_cohesive.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 85,
+        "quote": "| cohesive.py | 两节点cohesive界面 | ✅有测试 | PASS | test_cohesive.py (6 tests) |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:19",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=86",
+      "path_reference": "mixed_mode_cohesive.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 86,
+        "quote": "| mixed_mode_cohesive.py | BK混合模式 | ✅有测试 | PASS | test_mixed_mode_cohesive.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:20",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=86",
+      "path_reference": "test_mixed_mode_cohesive.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 86,
+        "quote": "| mixed_mode_cohesive.py | BK混合模式 | ✅有测试 | PASS | test_mixed_mode_cohesive.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:21",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=87",
+      "path_reference": "ice_sheet.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 87,
+        "quote": "| ice_sheet.py | 冰板(Winkler占位) | ⚠️部分 | 部分PASS | 地基板未实现,浮力有测试 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:22",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=88",
+      "path_reference": "dynamics.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 88,
+        "quote": "| dynamics.py | Newmark-β隐式 | ✅有测试 | PASS | test_beam_dynamics.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:23",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=88",
+      "path_reference": "test_beam_dynamics.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 88,
+        "quote": "| dynamics.py | Newmark-β隐式 | ✅有测试 | PASS | test_beam_dynamics.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:24",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=89",
+      "path_reference": "explicit_dynamics.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 89,
+        "quote": "| explicit_dynamics.py | 中心差分显式 | ✅有测试 | PASS | test_explicit_dynamics.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:25",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=89",
+      "path_reference": "test_explicit_dynamics.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 89,
+        "quote": "| explicit_dynamics.py | 中心差分显式 | ✅有测试 | PASS | test_explicit_dynamics.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:26",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=90",
+      "path_reference": "coupled_hull.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 90,
+        "quote": "| coupled_hull.py | 线性船体接收器 | ⚠️间接 | 间接PASS | physical_accuracy=False |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:27",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=91",
+      "path_reference": "suboff_ice_collision.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 91,
+        "quote": "| suboff_ice_collision.py | SUBOFF碰撞全链 | ✅有测试 | PASS | test_suboff_ice_collision.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:28",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=91",
+      "path_reference": "test_suboff_ice_collision.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 91,
+        "quote": "| suboff_ice_collision.py | SUBOFF碰撞全链 | ✅有测试 | PASS | test_suboff_ice_collision.py |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:29",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=97",
+      "path_reference": "dem3d.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 97,
+        "quote": "| dem3d.py | 3D键合球体DEM | ✅有测试 | PASS | 105颗粒基准 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:30",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=98",
+      "path_reference": "dem.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 98,
+        "quote": "| dem.py | 2D IceDEM | ✅有测试 | PASS | hull_contact集成 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:31",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=99",
+      "path_reference": "dem3d_wedge.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 99,
+        "quote": "| dem3d_wedge.py | 楔形船首接触 | ✅有测试 | PASS | 有限/无限宽 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:32",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=100",
+      "path_reference": "hull_contact.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 100,
+        "quote": "| hull_contact.py | 2D polyline船体 | ✅有测试 | PASS | 反力平衡验证 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:33",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=101",
+      "path_reference": "continuum_boundary_dem.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 101,
+        "quote": "| continuum_boundary_dem.py | 连续体弹簧网络 | ✅有测试 | PASS | 平面应力本构 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:34",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=102",
+      "path_reference": "calibrated_wet_coupling.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 102,
+        "quote": "| calibrated_wet_coupling.py | 2D流-DEM耦合 | ✅有测试 | PASS | subcycling |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:35",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=103",
+      "path_reference": "dem3d_energy.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 103,
+        "quote": "| dem3d_energy.py | 能量跟踪 | ✅有测试 | PASS | 耗散率量化 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:36",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/542#line=122",
+      "path_reference": "runs/m605/fig1_capability_radar.png",
+      "line_pin": null,
+      "via": "markdown_image",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 122,
+        "quote": "![能力雷达图](runs/m605/fig1_capability_radar.png)"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:37",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/542#line=130",
+      "path_reference": "runs/m605/fig3_gap_heatmap.png",
+      "line_pin": null,
+      "via": "markdown_image",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 130,
+        "quote": "![缺口热图](runs/m605/fig3_gap_heatmap.png)"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:38",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/542#line=140",
+      "path_reference": "runs/m605/fig2_dependency_dag.png",
+      "line_pin": null,
+      "via": "markdown_image",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 140,
+        "quote": "![依赖DAG](runs/m605/fig2_dependency_dag.png)"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:39",
+      "kind": "data_artifact_reference",
+      "uri": "tensor://reports/542#line=180",
+      "path_reference": "artifacts/fem_dem_task_tree.json",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 180,
+        "quote": "完整任务树已入库：`artifacts/fem_dem_task_tree.json`"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:40",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=196",
+      "path_reference": "dem3d.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 196,
+        "quote": "3. **GPU 未验证**：dem3d.py 声称支持 CUDA，但 cell list 可能同步阻塞"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:41",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=197",
+      "path_reference": "coupled_hull.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 197,
+        "quote": "4. **物理精度**：coupled_hull.py 的 `physical_accuracy_qualified` 硬编码为 False"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:42",
+      "kind": "data_artifact_reference",
+      "uri": "tensor://reports/542#line=244",
+      "path_reference": "artifacts/fem_dem_task_tree.json",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 244,
+        "quote": "| `artifacts/fem_dem_task_tree.json` | 任务树 JSON（16节点，机器可读） |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:43",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/542#line=245",
+      "path_reference": "runs/m605/fig1_capability_radar.png",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 245,
+        "quote": "| `runs/m605/fig1_capability_radar.png` | 能力雷达图 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:44",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/542#line=246",
+      "path_reference": "runs/m605/fig2_dependency_dag.png",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 246,
+        "quote": "| `runs/m605/fig2_dependency_dag.png` | 依赖 DAG 图 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:45",
+      "kind": "figure_reference",
+      "uri": "tensor://reports/542#line=247",
+      "path_reference": "runs/m605/fig3_gap_heatmap.png",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 247,
+        "quote": "| `runs/m605/fig3_gap_heatmap.png` | 缺口矩阵热图 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:46",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/542#line=248",
+      "path_reference": "runs/m605/generate_figures.py",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 248,
+        "quote": "| `runs/m605/generate_figures.py` | 图表生成脚本 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r542:ref:47",
+      "kind": "document_reference",
+      "uri": "tensor://reports/542#line=249",
+      "path_reference": "docs/reports/m605_fem_dem_audit_report.md",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 249,
+        "quote": "| `docs/reports/m605_fem_dem_audit_report.md` | 本报告 |"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    }
+  ],
+  "claims": [],
+  "claims_note": "Contract notes allow an empty claims array for task_type 01-asset-registration; no extraction performed.",
+  "summary": {
+    "asset_count": 51,
+    "by_kind": {
+      "report_markdown/resolved": 1,
+      "embedded_figure/metadata_only": 3,
+      "source_code_reference/unresolved": 36,
+      "data_artifact_reference/unresolved": 4,
+      "figure_reference/unresolved": 6,
+      "document_reference/unresolved": 1
+    },
+    "resolved": 1,
+    "unresolved": 47,
+    "metadata_only": 3,
+    "claims": 0,
+    "distinct_referenced_paths": 36
+  },
+  "identity_granularity": "Reference assets are occurrence-level: identity is (path_reference, markdown_line), so the same file cited on different lines yields different asset_ids carrying their own quotes. distinct_referenced_paths reports the deduplicated view.",
+  "artifact_endpoint_probe": {
+    "/tensor/reports/542/artifacts": {
+      "status": "http_404"
+    },
+    "/tensor/artifacts?report_id=542": {
+      "status": "http_404"
+    }
+  },
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no verified marks (verification is platform-gated).",
+    "Referenced paths are resolved strictly inside the TensorKnowledge delivery worktree; TensorFEM/TensorDEM source trees are outside this work package's boundary, so source_code_reference entries stay unresolved by design.",
+    "No artifacts/fem_dem_task_tree.json or runs/m605/*.png exist in this worktree, so the report's own appendix files are registered as unresolved rather than assumed.",
+    "Report metadata 'figures' is inventoried as-is; no figure bytes are copied into the manifest.",
+    "Output location: .gitignore ignores artifacts/ and docs/ops/filter-audit.md documents that the push gate drops artifacts/**; outputs therefore live under docs/kf/wp-542-01/ so they are not silently filtered."
+  ]
+}
