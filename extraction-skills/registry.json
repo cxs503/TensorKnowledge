@@ -1,0 +1,231 @@
+{
+  "registry_version": "1.0",
+  "note": "Extraction Skill Library registry. All skills are template-created (skeleton + identification signals exist, no real representative report has passed the full line yet). Promotion rules are enforced by ke.wp_gate.validate_skill_registry (K1-K6).",
+  "report_types": [
+    "literature-review",
+    "scientific-computation",
+    "algorithm-implementation",
+    "software-engineering",
+    "technical-proposal",
+    "experimental-validation"
+  ],
+  "skills": [
+    {
+      "skill_id": "xsk-literature-review",
+      "skill_version": "0.1.0",
+      "title": "Literature review extraction",
+      "report_type": "literature-review",
+      "lifecycle_state": "template-created",
+      "identify_signals": ["related work", "state of the art", "survey", "bibliography", "citation density >= 5 per 1000 chars"],
+      "applies_to": {
+        "source_fields": ["markdown"],
+        "languages": ["en", "zh"],
+        "sections": ["introduction", "related work", "comparison", "open problems"]
+      },
+      "steps": [
+        {
+          "step_id": "segment-by-citation",
+          "instruction": "Split the body into citation-bearing passages; one passage yields at most one claim about the cited work.",
+          "deterministic": true,
+          "claim_types_allowed": ["descriptive", "interpretive"]
+        },
+        {
+          "step_id": "attribute-claims-to-cited-work",
+          "instruction": "Each claim names the work it is about; a claim without a resolvable citation is dropped, not guessed.",
+          "deterministic": false,
+          "claim_types_allowed": ["descriptive", "interpretive"]
+        },
+        {
+          "step_id": "record-agreement-and-conflict",
+          "instruction": "Record where the review reports agreement, conflict or a gap between works; conflicting statements are separate claims, never merged or averaged.",
+          "deterministic": false,
+          "claim_types_allowed": ["descriptive", "interpretive", "hypothesis"]
+        }
+      ],
+      "reuse_count": 0,
+      "created_at": "2026-11-12T00:00:00Z",
+      "updated_at": "2026-11-12T00:00:00Z"
+    },
+    {
+      "skill_id": "xsk-scientific-computation",
+      "skill_version": "0.1.0",
+      "title": "Scientific computation extraction",
+      "report_type": "scientific-computation",
+      "lifecycle_state": "template-created",
+      "identify_signals": ["governing equations", "discretisation", "convergence study", "mesh refinement", "timing table"],
+      "applies_to": {
+        "source_fields": ["markdown"],
+        "languages": ["en", "zh"],
+        "sections": ["method", "numerical setup", "results", "convergence"]
+      },
+      "steps": [
+        {
+          "step_id": "extract-equations-and-parameters",
+          "instruction": "Extract the governing equation, the discretisation and every parameter with its value and unit; a number without a unit is recorded as stated, never completed.",
+          "deterministic": false,
+          "claim_types_allowed": ["mathematical", "methodological"]
+        },
+        {
+          "step_id": "extract-accuracy-statements",
+          "instruction": "Extract error and accuracy statements with the reference they are measured against; an error without a reference value yields no claim.",
+          "deterministic": false,
+          "claim_types_allowed": ["descriptive", "predictive"]
+        },
+        {
+          "step_id": "extract-assumptions",
+          "instruction": "Copy stated modelling assumptions verbatim into assumptions[]; never synthesise assumptions the text does not state.",
+          "deterministic": false,
+          "claim_types_allowed": ["methodological"]
+        }
+      ],
+      "reuse_count": 0,
+      "created_at": "2026-11-12T00:00:00Z",
+      "updated_at": "2026-11-12T00:00:00Z"
+    },
+    {
+      "skill_id": "xsk-algorithm-implementation",
+      "skill_version": "0.1.0",
+      "title": "Algorithm implementation extraction",
+      "report_type": "algorithm-implementation",
+      "lifecycle_state": "template-created",
+      "identify_signals": ["pseudocode", "complexity", "algorithm block", "function signature", "O(n"]
+      ,
+      "applies_to": {
+        "source_fields": ["markdown"],
+        "languages": ["en", "zh"],
+        "sections": ["algorithm", "implementation", "complexity", "correctness"]
+      },
+      "steps": [
+        {
+          "step_id": "extract-procedure",
+          "instruction": "Extract the procedure step by step in the source's order; a step the text leaves implicit stays implicit and is listed as a gap.",
+          "deterministic": false,
+          "claim_types_allowed": ["methodological", "mathematical"]
+        },
+        {
+          "step_id": "extract-complexity-claims",
+          "instruction": "Complexity and termination statements are claims only when the source states them; do not derive them from the pseudocode.",
+          "deterministic": false,
+          "claim_types_allowed": ["mathematical", "predictive"]
+        },
+        {
+          "step_id": "locate-code-artefacts",
+          "instruction": "Reference code locations by path and symbol when the report names them; missing code is recorded as unresolved, not reconstructed.",
+          "deterministic": true,
+          "claim_types_allowed": ["descriptive"]
+        }
+      ],
+      "reuse_count": 0,
+      "created_at": "2026-11-12T00:00:00Z",
+      "updated_at": "2026-11-12T00:00:00Z"
+    },
+    {
+      "skill_id": "xsk-software-engineering",
+      "skill_version": "0.1.0",
+      "title": "Software engineering change-record extraction",
+      "report_type": "software-engineering",
+      "lifecycle_state": "template-created",
+      "identify_signals": ["changed files", "commit", "interface", "regression", "API"],
+      "applies_to": {
+        "source_fields": ["markdown", "summary"],
+        "languages": ["en", "zh"],
+        "sections": ["change", "what changed", "verification", "limitations"]
+      },
+      "steps": [
+        {
+          "step_id": "extract-change-scope",
+          "instruction": "Extract which artefacts changed (files, endpoints, schemas). A claimed change without a named artefact is not a claim.",
+          "deterministic": true,
+          "claim_types_allowed": ["descriptive"]
+        },
+        {
+          "step_id": "extract-verification-evidence",
+          "instruction": "Extract what was actually run and its result separately from what is believed; 'tests pass' without a command and output is recorded as an unverified assertion.",
+          "deterministic": false,
+          "claim_types_allowed": ["descriptive", "methodological"]
+        },
+        {
+          "step_id": "extract-behavioural-claims",
+          "instruction": "Behavioural claims must name the input condition they hold under; unconditional wording for a conditional change is an over-claim.",
+          "deterministic": false,
+          "claim_types_allowed": ["causal", "predictive", "methodological"]
+        }
+      ],
+      "reuse_count": 0,
+      "created_at": "2026-11-12T00:00:00Z",
+      "updated_at": "2026-11-12T00:00:00Z"
+    },
+    {
+      "skill_id": "xsk-technical-proposal",
+      "skill_version": "0.1.0",
+      "title": "Technical proposal / design extraction",
+      "report_type": "technical-proposal",
+      "lifecycle_state": "template-created",
+      "identify_signals": ["proposal", "design", "roadmap", "specification", "plan"],
+      "applies_to": {
+        "source_fields": ["markdown"],
+        "languages": ["en", "zh"],
+        "sections": ["purpose", "method", "results", "limitations", "conclusion"]
+      },
+      "steps": [
+        {
+          "step_id": "extract-purpose-and-question",
+          "instruction": "Extract the question the document answers, verbatim where possible; a document with no question yields no research-question claim.",
+          "deterministic": false,
+          "claim_types_allowed": ["descriptive", "interpretive"]
+        },
+        {
+          "step_id": "extract-method-claims",
+          "instruction": "Extract each method step with its parameters as stated; do not fill in defaults the document omits.",
+          "deterministic": false,
+          "claim_types_allowed": ["methodological"]
+        },
+        {
+          "step_id": "extract-results-and-limits",
+          "instruction": "Extract result statements together with their stated scope, and copy the limitations section into limitations[] verbatim.",
+          "deterministic": false,
+          "claim_types_allowed": ["descriptive", "interpretive"]
+        }
+      ],
+      "reuse_count": 0,
+      "created_at": "2026-11-12T00:00:00Z",
+      "updated_at": "2026-11-12T00:00:00Z"
+    },
+    {
+      "skill_id": "xsk-experimental-validation",
+      "skill_version": "0.1.0",
+      "title": "Experimental validation extraction",
+      "report_type": "experimental-validation",
+      "lifecycle_state": "template-created",
+      "identify_signals": ["test matrix", "facility", "measurement uncertainty", "validation case", "baseline comparison"],
+      "applies_to": {
+        "source_fields": ["markdown"],
+        "languages": ["en", "zh"],
+        "sections": ["setup", "measurement", "comparison", "uncertainty", "validation"]
+      },
+      "steps": [
+        {
+          "step_id": "extract-conditions",
+          "instruction": "Extract the tested conditions (facility, configuration, ranges) as a condition list attached to every claim from that run.",
+          "deterministic": false,
+          "claim_types_allowed": ["descriptive"]
+        },
+        {
+          "step_id": "extract-comparison-pairs",
+          "instruction": "Each accuracy claim must carry the measured value, the reference value and how the reference was obtained; a comparison missing either side yields an unresolved claim.",
+          "deterministic": false,
+          "claim_types_allowed": ["descriptive", "predictive"]
+        },
+        {
+          "step_id": "extract-uncertainty",
+          "instruction": "Copy stated uncertainty and its coverage factor verbatim; never compute an error band the report does not state.",
+          "deterministic": false,
+          "claim_types_allowed": ["descriptive", "mathematical"]
+        }
+      ],
+      "reuse_count": 0,
+      "created_at": "2026-11-12T00:00:00Z",
+      "updated_at": "2026-11-12T00:00:00Z"
+    }
+  ]
+}

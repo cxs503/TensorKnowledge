@@ -1,0 +1,51 @@
+{
+  "package_id": "wp-bad-source-hash",
+  "task_type": "03-knowledge-extraction",
+  "version": "1.0.0",
+  "input": {
+    "report_id": "9001",
+    "source_uri": "tensor://reports/9001",
+    "source_hash": "sha256:b5fbcf44217fa73b171aa8b539c4beed31f7a2c5012be383b38df671f85c9266",
+    "source_field": "markdown",
+    "attachments": []
+  },
+  "objective": {
+    "identify_research_question": true,
+    "extract_methods_and_claims": true,
+    "extract_evidence": true,
+    "identify_assumptions": true,
+    "identify_limitations": true
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true
+  },
+  "output": {
+    "claims.json": true,
+    "evidence.json": true,
+    "provenance.json": true,
+    "extraction_summary.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_locator_resolvable": true,
+    "source_hash_matches": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true
+  },
+  "review": {
+    "required": true,
+    "independent_reviewer": true,
+    "reviewer_role": "evidence-auditor",
+    "sample_rate": 1.0
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "draft",
+    "path": "knowledge/extraction/bad-source-hash"
+  }
+}
