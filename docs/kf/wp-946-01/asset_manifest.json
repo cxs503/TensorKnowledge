@@ -1,0 +1,860 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-946-01",
+  "task_type": "01-asset-registration",
+  "scope": {
+    "report_id": "946",
+    "reports_touched": [
+      "946"
+    ],
+    "other_reports_read_or_written": []
+  },
+  "source": {
+    "report_id": "946",
+    "source_uri": "tensor://reports/946",
+    "source_field": "markdown",
+    "title_in_contract": "AI 原生基础设施演化图 v2（替代报告 941）：十方向 × 六准则可复算覆盖度审计",
+    "title_in_record": "AI 原生基础设施演化图 v2（替代报告 941）：十方向 × 六准则可复算覆盖度审计",
+    "title_match": true,
+    "scenario_key": "ai-native-infra",
+    "chars": 14281,
+    "byte_length_utf8": 26523,
+    "sha256": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552",
+    "retrieval_origin": "cache_snapshot_in_worktree",
+    "hash_check": {
+      "expected": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552",
+      "recomputed": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552",
+      "match": true
+    },
+    "chars_check": {
+      "expected": 14281,
+      "observed": 14281,
+      "match": true
+    }
+  },
+  "assets": [
+    {
+      "asset_id": "ast-946-01",
+      "kind": "source_document",
+      "role": "primary_source",
+      "name": "report_946_markdown",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 0,
+          "char_end": 51,
+          "quote": "# AI 原生基础设施演化图 v2 —— 十方向 × 六准则覆盖度审计（返工重发，替代原报告 941）",
+          "occurrences": 1,
+          "note": "first line of markdown; whole-document byte scope is content_ref"
+        }
+      ],
+      "content_ref": {
+        "source_uri": "tensor://reports/946",
+        "source_field": "markdown",
+        "chars": 14281,
+        "byte_length_utf8": 26523,
+        "sha256": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552",
+        "record_snapshot": "docs/kf/wp-946-01/source/report_946.json",
+        "snapshot_sha256": "sha256:118ee9eb9fa8a3d83cf09014bc964e46e4fe5de9f087a8d93555b9517aa0e001"
+      },
+      "resolvable": true,
+      "resolution": "content_present_in_report_store",
+      "status": "resolvable"
+    },
+    {
+      "asset_id": "ast-946-02",
+      "kind": "record_metadata",
+      "role": "identification",
+      "name": "report_946_record",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "id",
+          "value": 946
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "title",
+          "value": "AI 原生基础设施演化图 v2（替代报告 941）：十方向 × 六准则可复算覆盖度审计"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "scenario_key",
+          "value": "ai-native-infra"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "mission_id",
+          "value": 1237
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "status",
+          "value": "published"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "created_by",
+          "value": 1
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "created_at",
+          "value": "2026-11-01T02:05:59.106917+00:00"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "tags",
+          "value": [
+            "AI原生基础设施",
+            "演化图",
+            "覆盖度矩阵",
+            "可复算审计",
+            "证据分级",
+            "返工重发",
+            "引用报告941"
+          ]
+        }
+      ],
+      "resolvable": true,
+      "resolution": "api_tensor_reports_946",
+      "status": "resolvable"
+    },
+    {
+      "asset_id": "ast-946-03",
+      "kind": "figure",
+      "role": "referenced_figure",
+      "name": "artifacts/ai-native-infra-v1/figures/fig1_coverage_matrix.png",
+      "fig_no": 1,
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 8490,
+          "char_end": 8560,
+          "quote": "![fig1](artifacts/ai-native-infra-v1/figures/fig1_coverage_matrix.png)",
+          "occurrences": 1,
+          "note": "markdown image reference to the figure file"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "figures[0].name",
+          "value": "fig1_coverage_matrix",
+          "note": "declared figure identity"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "figures[0].caption",
+          "value": "图 1 十方向 × 六准则覆盖度矩阵（左：逐准则 0–3 分；右：总分与强/中/弱带位）。rubric 与判据见方法节，分数由 build_evidence.py 复算，非人工填写。",
+          "note": "caption text also appears verbatim in the markdown 1 time(s); the markdown occurrence (bold caption line in section 3.6) is where the figure is described"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 8395,
+          "char_end": 8486,
+          "quote": "图 1 十方向 × 六准则覆盖度矩阵（左：逐准则 0–3 分；右：总分与强/中/弱带位）。rubric 与判据见方法节，分数由 build_evidence.py 复算，非人工填写。",
+          "occurrences": 1,
+          "note": "caption body inside the markdown (bold markers excluded)"
+        }
+      ],
+      "content_ref": {
+        "declared_name": "fig1_coverage_matrix",
+        "declared_fields": [
+          "caption",
+          "name"
+        ],
+        "has_inline_binary": false
+      },
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__no_bytes_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "the markdown embeds the figure via a repo-relative path, but report 946 carries no figure bytes: record.figures holds only name+caption and GET /tensor/reports/946/figures returns HTTP 404. Ownership of the PNG lies with the producing worktree, so registration stops at the reference."
+    },
+    {
+      "asset_id": "ast-946-04",
+      "kind": "figure",
+      "role": "referenced_figure",
+      "name": "artifacts/ai-native-infra-v1/figures/fig2_seat_model_decoupling.png",
+      "fig_no": 2,
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 8645,
+          "char_end": 8721,
+          "quote": "![fig2](artifacts/ai-native-infra-v1/figures/fig2_seat_model_decoupling.png)",
+          "occurrences": 1,
+          "note": "markdown image reference to the figure file"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "figures[1].name",
+          "value": "fig2_seat_model_decoupling",
+          "note": "declared figure identity"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "figures[1].caption",
+          "value": "图 2 席位身份与底层模型解耦实测（左：各席位承接任务按模型着色；右：样本规模）。来源：missions 表只读 API 视图 + fleet.json。",
+          "note": "caption text also appears verbatim in the markdown 1 time(s); the markdown occurrence (bold caption line in section 3.6) is where the figure is described"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 8564,
+          "char_end": 8641,
+          "quote": "图 2 席位身份与底层模型解耦实测（左：各席位承接任务按模型着色；右：样本规模）。来源：missions 表只读 API 视图 + fleet.json。",
+          "occurrences": 1,
+          "note": "caption body inside the markdown (bold markers excluded)"
+        }
+      ],
+      "content_ref": {
+        "declared_name": "fig2_seat_model_decoupling",
+        "declared_fields": [
+          "caption",
+          "name"
+        ],
+        "has_inline_binary": false
+      },
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__no_bytes_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "the markdown embeds the figure via a repo-relative path, but report 946 carries no figure bytes: record.figures holds only name+caption and GET /tensor/reports/946/figures returns HTTP 404. Ownership of the PNG lies with the producing worktree, so registration stops at the reference."
+    },
+    {
+      "asset_id": "ast-946-05",
+      "kind": "figure",
+      "role": "referenced_figure",
+      "name": "artifacts/ai-native-infra-v1/figures/fig3_selfheal_evidence.png",
+      "fig_no": 3,
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 8865,
+          "char_end": 8937,
+          "quote": "![fig3](artifacts/ai-native-infra-v1/figures/fig3_selfheal_evidence.png)",
+          "occurrences": 1,
+          "note": "markdown image reference to the figure file"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "figures[2].name",
+          "value": "fig3_selfheal_evidence",
+          "note": "declared figure identity"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "figures[2].caption",
+          "value": "图 3 自愈机制实测证据（左：autoheal 复活事件时间线，逐守护；右：fleet_supervisor 巡检间隔直方图与实测中位）。来源：/var/log/tp-fleet/autoheal.log、/var/log/tp-fleet-supervisor.log。",
+          "note": "caption text also appears verbatim in the markdown 1 time(s); the markdown occurrence (bold caption line in section 3.6) is where the figure is described"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 8725,
+          "char_end": 8861,
+          "quote": "图 3 自愈机制实测证据（左：autoheal 复活事件时间线，逐守护；右：fleet_supervisor 巡检间隔直方图与实测中位）。来源：/var/log/tp-fleet/autoheal.log、/var/log/tp-fleet-supervisor.log。",
+          "occurrences": 1,
+          "note": "caption body inside the markdown (bold markers excluded)"
+        }
+      ],
+      "content_ref": {
+        "declared_name": "fig3_selfheal_evidence",
+        "declared_fields": [
+          "caption",
+          "name"
+        ],
+        "has_inline_binary": false
+      },
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__no_bytes_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "the markdown embeds the figure via a repo-relative path, but report 946 carries no figure bytes: record.figures holds only name+caption and GET /tensor/reports/946/figures returns HTTP 404. Ownership of the PNG lies with the producing worktree, so registration stops at the reference."
+    },
+    {
+      "asset_id": "ast-946-06",
+      "kind": "figure",
+      "role": "referenced_figure",
+      "name": "artifacts/ai-native-infra-v1/figures/fig4_claim_grades.png",
+      "fig_no": 4,
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 8998,
+          "char_end": 9065,
+          "quote": "![fig4](artifacts/ai-native-infra-v1/figures/fig4_claim_grades.png)",
+          "occurrences": 1,
+          "note": "markdown image reference to the figure file"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "figures[3].name",
+          "value": "fig4_claim_grades",
+          "note": "declared figure identity"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "record",
+          "field": "figures[3].caption",
+          "value": "图 4 报告断言证据分级（可复算 vs 定性观察）。用于替代自评打分：可复算断言占比即本报告的稳健性下界。",
+          "note": "caption text also appears verbatim in the markdown 1 time(s); the markdown occurrence (bold caption line in section 3.6) is where the figure is described"
+        },
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 8941,
+          "char_end": 8994,
+          "quote": "图 4 报告断言证据分级（可复算 vs 定性观察）。用于替代自评打分：可复算断言占比即本报告的稳健性下界。",
+          "occurrences": 1,
+          "note": "caption body inside the markdown (bold markers excluded)"
+        }
+      ],
+      "content_ref": {
+        "declared_name": "fig4_claim_grades",
+        "declared_fields": [
+          "caption",
+          "name"
+        ],
+        "has_inline_binary": false
+      },
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__no_bytes_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "the markdown embeds the figure via a repo-relative path, but report 946 carries no figure bytes: record.figures holds only name+caption and GET /tensor/reports/946/figures returns HTTP 404. Ownership of the PNG lies with the producing worktree, so registration stops at the reference."
+    },
+    {
+      "asset_id": "ast-946-07",
+      "kind": "asset_dir",
+      "role": "referenced_external_artifact",
+      "name": "artifacts/ai-native-infra-v1/",
+      "purpose_note": "artifact bundle root of the producing mission (evidence.json + scripts + figures)",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 392,
+          "char_end": 421,
+          "quote": "artifacts/ai-native-infra-v1/",
+          "occurrences": 16,
+          "all_char_starts": [
+            392,
+            1577,
+            1636,
+            8498,
+            8653,
+            8873,
+            9006,
+            9387,
+            9485,
+            9582,
+            9678,
+            9754,
+            9834,
+            11395,
+            14049,
+            14107
+          ],
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-08",
+      "kind": "report_generator",
+      "role": "referenced_external_artifact",
+      "name": "build_evidence.py",
+      "purpose_note": "collector that recomputes evidence.json from API/logs/config and renders figures",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 1606,
+          "char_end": 1623,
+          "quote": "build_evidence.py",
+          "occurrences": 7,
+          "all_char_starts": [
+            1606,
+            2297,
+            8459,
+            9168,
+            9514,
+            11424,
+            14078
+          ],
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-09",
+      "kind": "report_generator",
+      "role": "referenced_external_artifact",
+      "name": "make_report.py",
+      "purpose_note": "renderer that turns evidence.json into report body + POST payload",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 1665,
+          "char_end": 1679,
+          "quote": "make_report.py",
+          "occurrences": 3,
+          "all_char_starts": [
+            1665,
+            9611,
+            14136
+          ],
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-10",
+      "kind": "evidence_table",
+      "role": "referenced_external_artifact",
+      "name": "evidence.json",
+      "purpose_note": "single numeric source for the whole report",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 194,
+          "char_end": 207,
+          "quote": "evidence.json",
+          "occurrences": 6,
+          "all_char_starts": [
+            194,
+            3580,
+            9192,
+            9416,
+            9549,
+            9631
+          ],
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-11",
+      "kind": "provenance_check",
+      "role": "referenced_external_artifact",
+      "name": "provenance_check.json",
+      "purpose_note": "independent recomputation results for the three audited numbers",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 9783,
+          "char_end": 9804,
+          "quote": "provenance_check.json",
+          "occurrences": 1,
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-12",
+      "kind": "superseded_report_copy",
+      "role": "referenced_external_artifact",
+      "name": "report941_original.md",
+      "purpose_note": "full text of the superseded report 941, kept for diff",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 9863,
+          "char_end": 9884,
+          "quote": "report941_original.md",
+          "occurrences": 1,
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-13",
+      "kind": "data_artifact_glob",
+      "role": "referenced_external_artifact",
+      "name": "artifacts/ai-native-infra-v1/figures/fig1..fig4*.png",
+      "purpose_note": "the four figure binaries (see figure assets above)",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 9678,
+          "char_end": 9730,
+          "quote": "artifacts/ai-native-infra-v1/figures/fig1..fig4*.png",
+          "occurrences": 1,
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-14",
+      "kind": "api_endpoint",
+      "role": "referenced_external_artifact",
+      "name": "${TENSOR_API_BASE}/tensor/missions",
+      "purpose_note": "missions read-only API view, paged 200x5; source of C1/C2",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 2608,
+          "char_end": 2642,
+          "quote": "${TENSOR_API_BASE}/tensor/missions",
+          "occurrences": 1,
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-15",
+      "kind": "config_file",
+      "role": "referenced_external_artifact",
+      "name": "/root/tp-agent/fleet.json",
+      "purpose_note": "fleet seat configuration, 42 entries",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 2729,
+          "char_end": 2754,
+          "quote": "/root/tp-agent/fleet.json",
+          "occurrences": 3,
+          "all_char_starts": [
+            2729,
+            10285,
+            11148
+          ],
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-16",
+      "kind": "source_code",
+      "role": "referenced_external_artifact",
+      "name": "/root/tp-agent/tp_autoheal.py",
+      "purpose_note": "CYCLE / COOLDOWN / FLAP_* constants",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 2896,
+          "char_end": 2925,
+          "quote": "/root/tp-agent/tp_autoheal.py",
+          "occurrences": 2,
+          "all_char_starts": [
+            2896,
+            10758
+          ],
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-17",
+      "kind": "log_file",
+      "role": "referenced_external_artifact",
+      "name": "/var/log/tp-fleet/autoheal.log",
+      "purpose_note": "REVIVE lines, source of C3/C4",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 2815,
+          "char_end": 2845,
+          "quote": "/var/log/tp-fleet/autoheal.log",
+          "occurrences": 4,
+          "all_char_starts": [
+            2815,
+            8797,
+            10585,
+            10793
+          ],
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-18",
+      "kind": "log_file",
+      "role": "referenced_external_artifact",
+      "name": "/var/log/tp-fleet-supervisor.log",
+      "purpose_note": "patrol lines, source of C5",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 2994,
+          "char_end": 3026,
+          "quote": "/var/log/tp-fleet-supervisor.log",
+          "occurrences": 3,
+          "all_char_starts": [
+            2994,
+            8828,
+            10979
+          ],
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-19",
+      "kind": "policy_document",
+      "role": "referenced_external_artifact",
+      "name": "平台运营事件流/DISPOSITION_RULES.md",
+      "purpose_note": "human-read discipline surface, source of the qualitative claim C8",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 11681,
+          "char_end": 11709,
+          "quote": "平台运营事件流/DISPOSITION_RULES.md",
+          "occurrences": 1,
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-20",
+      "kind": "external_url",
+      "role": "referenced_external_artifact",
+      "name": "https://labs.cloudsecurityalliance.org/research/csa-research-note-nist-ai-agent-standards-regulatory-framewo",
+      "purpose_note": "CSA research note on NIST AI agent standards (URL appears truncated in the report)",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 11870,
+          "char_end": 11978,
+          "quote": "https://labs.cloudsecurityalliance.org/research/csa-research-note-nist-ai-agent-standards-regulatory-framewo",
+          "occurrences": 1,
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-21",
+      "kind": "external_url",
+      "role": "referenced_external_artifact",
+      "name": "https://datatracker.ietf.org/doc/draft-daniel-ai-agent-internet-architecture/",
+      "purpose_note": "IETF individual draft referenced for the standardization line",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 11981,
+          "char_end": 12058,
+          "quote": "https://datatracker.ietf.org/doc/draft-daniel-ai-agent-internet-architecture/",
+          "occurrences": 1,
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    },
+    {
+      "asset_id": "ast-946-22",
+      "kind": "runtime_prerequisite",
+      "role": "referenced_external_artifact",
+      "name": "TENSOR_AGENT_USER/PASS",
+      "purpose_note": "environment variables required by the reported repro command",
+      "purpose_note_source": "package_author_summary__not_a_report_quote",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/946",
+          "source_field": "markdown",
+          "char_start": 14155,
+          "char_end": 14177,
+          "quote": "TENSOR_AGENT_USER/PASS",
+          "occurrences": 1,
+          "note": "markdown reference to the artifact"
+        }
+      ],
+      "resolvable": false,
+      "resolution": "referenced_in_markdown__not_present_in_report_store",
+      "status": "unresolved",
+      "unresolved_reason": "named inside the report text but no byte-level copy is attached to report 946; the object lives in the producing mission worktree, on the host filesystem, or on an external site — registration records the reference and does not assert resolvability."
+    }
+  ],
+  "counts": {
+    "total": 22,
+    "resolvable": 2,
+    "unresolved": 20,
+    "by_kind": {
+      "source_document": 1,
+      "record_metadata": 1,
+      "figure": 4,
+      "asset_dir": 1,
+      "report_generator": 2,
+      "evidence_table": 1,
+      "provenance_check": 1,
+      "superseded_report_copy": 1,
+      "data_artifact_glob": 1,
+      "api_endpoint": 1,
+      "config_file": 1,
+      "source_code": 1,
+      "log_file": 2,
+      "policy_document": 1,
+      "external_url": 2,
+      "runtime_prerequisite": 1
+    },
+    "by_status": {
+      "resolvable": 2,
+      "unresolved": 20
+    },
+    "duplicate_asset_ids": [],
+    "unresolved_without_reason": []
+  },
+  "extraction": {
+    "performed": false,
+    "reason": "contract objective is register_assets=true / classify_report_type=false; extraction and report-type classification belong to other work packages"
+  },
+  "claims_registered": 0,
+  "claims_note": "contract note allows claims to be an empty array; this package registers assets only, so no claim objects are emitted and none can be mislabelled as verified",
+  "verification": {
+    "performed": false,
+    "reason": "verification status is computed by the platform gate, never self-assigned"
+  },
+  "resolvability_probe": {
+    "figure_binary_probes": [
+      {
+        "probe": "GET /api/v1/tensor/reports/946/figures",
+        "http_status": 404,
+        "observed": "{\"detail\":\"Not Found\"}"
+      },
+      {
+        "probe": "GET /api/v1/tensor/reports/946/figures/fig1_coverage_matrix",
+        "http_status": 404,
+        "observed": "{\"detail\":\"figure not found\"}"
+      },
+      {
+        "probe": "record.figures[*] key set",
+        "http_status": 200,
+        "observed": [
+          "caption",
+          "name"
+        ],
+        "interpretation": "name+caption only, no inline base64 payload"
+      }
+    ],
+    "record_key_set": [
+      "created_at",
+      "created_by",
+      "figures",
+      "id",
+      "markdown",
+      "mission_id",
+      "scenario_key",
+      "stage",
+      "status",
+      "summary",
+      "tags",
+      "title"
+    ],
+    "producing_worktree_probe": {
+      "path_checked": "/root/tp-agent/work/m1237/artifacts/ai-native-infra-v1/",
+      "exists": false,
+      "note": "read-only existence check only, used to explain why referenced paths cannot be resolved here; no content was read and this is outside the report store, so it is NOT evidence for any asset"
+    }
+  },
+  "notes": [
+    "report 946 record.mission_id=1237 while the package contract declares mission_id: null; recorded as observed, not reconciled by this package",
+    "contract chars=14281 matches len(markdown) in Unicode code points; the UTF-8 byte length is 26523 — both are recorded so the gate can pick its own convention",
+    "the CSA URL in the markdown is truncated mid-path ('...regulatory-framewo' followed by ' ; '), so that locator resolves to a non-fetchable URL as written; registered as-is, not repaired",
+    "no fenced code block exists in the markdown, so no code artifact is registered from fences"
+  ]
+}
