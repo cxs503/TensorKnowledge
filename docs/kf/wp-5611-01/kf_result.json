@@ -1,0 +1,353 @@
+{
+  "package_id": "wp-5611-01",
+  "task_type": "01-asset-registration",
+  "report_id": "5611",
+  "provenance": {
+    "source_hash": "sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d",
+    "source_field": "markdown",
+    "source_uri": "tensor://reports/5611",
+    "producer": "agent/m15570 (TensorKnowledge) · package wp-5611-01",
+    "emitted_at": "2026-11-12T01:16:00+00:00",
+    "notes": "01-asset-registration: hash-pinned inventory of report 5611; claims intentionally empty; no extraction, no report_type classification, no verification stamp"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "manifest_version": "1.0",
+      "package_id": "wp-5611-01",
+      "task_type": "01-asset-registration",
+      "generated_at": "2026-11-12T01:16:00+00:00",
+      "scope": {
+        "report_id": "5611",
+        "reports_touched": [
+          "5611"
+        ]
+      },
+      "source": {
+        "report_id": "5611",
+        "source_uri": "tensor://reports/5611",
+        "source_field": "markdown",
+        "title": "IN15-O1 饱和脉搏度量管线成熟化：三态采集器+幂等建表+趋势报表（TensorPlatform）",
+        "scenario_key": "platform-saturation-pulse",
+        "chars": 7533,
+        "byte_length_utf8": 10925,
+        "sha256": "sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d",
+        "hash_check": {
+          "expected": "sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d",
+          "recomputed": "sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d",
+          "match": true
+        },
+        "chars_check": {
+          "expected": 7533,
+          "observed": 7533,
+          "match": true
+        }
+      },
+      "assets": [
+        {
+          "asset_id": "ast-5611-01",
+          "kind": "source_document",
+          "role": "primary_source",
+          "name": "report_5611_markdown",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "char_start": 0,
+              "char_end": 43,
+              "quote": "## ① 案例介绍",
+              "note": "first line of markdown; whole-document span is recorded in content_ref"
+            }
+          ],
+          "content_ref": {
+            "source_uri": "tensor://reports/5611",
+            "source_field": "markdown",
+            "chars": 7533,
+            "sha256": "sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d"
+          },
+          "resolvable": true,
+          "resolution": "fetched_via_tensor_api",
+          "byte_length_utf8": 10925
+        },
+        {
+          "asset_id": "ast-5611-02",
+          "kind": "record_metadata",
+          "role": "identification",
+          "name": "report_5611_record",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "record",
+              "field": "id",
+              "value": 5611
+            },
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "record",
+              "field": "title",
+              "value": "IN15-O1 饱和脉搏度量管线成熟化：三态采集器+幂等建表+趋势报表（TensorPlatform）"
+            },
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "record",
+              "field": "scenario_key",
+              "value": "platform-saturation-pulse"
+            },
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "record",
+              "field": "mission_id",
+              "value": 4959
+            },
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "record",
+              "field": "status",
+              "value": "published"
+            },
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "record",
+              "field": "tags",
+              "value": [
+                "IN15-O1",
+                "saturation_pulse",
+                "telemetry",
+                "platform",
+                "autoregressive",
+                "pytest"
+              ]
+            }
+          ],
+          "values": {
+            "report_id": "5611",
+            "title": "IN15-O1 饱和脉搏度量管线成熟化：三态采集器+幂等建表+趋势报表（TensorPlatform）",
+            "scenario_key": "platform-saturation-pulse",
+            "mission_id": 4959,
+            "status": "published",
+            "tags": [
+              "IN15-O1",
+              "saturation_pulse",
+              "telemetry",
+              "platform",
+              "autoregressive",
+              "pytest"
+            ],
+            "created_by": 1,
+            "created_at": "2026-11-07T00:54:23.898697+00:00"
+          },
+          "resolvable": true,
+          "resolution": "fetched_via_tensor_api"
+        },
+        {
+          "asset_id": "ast-5611-03",
+          "kind": "figure",
+          "role": "result_visualization",
+          "name": "fig1_pulse_trend.png",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "figures",
+              "index": 0,
+              "field": "name",
+              "value": "fig1_pulse_trend.png"
+            }
+          ],
+          "caption": "Fig.1 三态负载与 held 节点的 24 次落库趋势（橙=busy 活claim，蓝=idle，深蓝线=held DAG 节点；柱顶数字为 online）；下图为 queued 与 released。",
+          "resolvable": true,
+          "resolution": "declared_in_report_figures"
+        },
+        {
+          "asset_id": "ast-5611-04",
+          "kind": "figure",
+          "role": "result_visualization",
+          "name": "fig2_verification.png",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "figures",
+              "index": 1,
+              "field": "name",
+              "value": "fig2_verification.png"
+            }
+          ],
+          "caption": "Fig.2 验收证据：(a) 同一固定时刻 dry-run 与 --commit 的快照逐项相等（全部 delta=0）；(b) 审计链摘要（连续落库、只读锁足迹、DDL 幂等、负值拒收、pytest 24 通过、独立 SQL 对账 delta=0）。",
+          "resolvable": true,
+          "resolution": "declared_in_report_figures"
+        },
+        {
+          "asset_id": "ast-5611-05",
+          "kind": "figure",
+          "role": "result_visualization",
+          "name": "fig3_state_reconciliation.png",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "figures",
+              "index": 2,
+              "field": "name",
+              "value": "fig3_state_reconciliation.png"
+            }
+          ],
+          "caption": "Fig.3 定标发现：同一时刻仅读 worker 表（state/current_mission_id 全未维护）得到 online=23/busy=0，并入 mission 活 claim 后为 online=52/busy=32；busy 指标必须由活 claim 推导。",
+          "resolvable": true,
+          "resolution": "declared_in_report_figures"
+        },
+        {
+          "asset_id": "ast-5611-06",
+          "kind": "code_reference",
+          "role": "implementation_artifact",
+          "name": "tools/pulse/saturation_pulse.py",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "quote": "tools/pulse/saturation_pulse.py",
+              "note": "三态采集器主脚本，见报告§②第1点"
+            }
+          ],
+          "resolvable": false,
+          "resolution": "referenced_in_markdown_not_fetched",
+          "note": "Asset registered by reference only; file content not fetched per 01-asset-registration scope"
+        },
+        {
+          "asset_id": "ast-5611-07",
+          "kind": "code_reference",
+          "role": "implementation_artifact",
+          "name": "tools/pulse/sql/001_saturation_pulse.sql",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "quote": "tools/pulse/sql/001_saturation_pulse.sql",
+              "note": "幂等建表 DDL，见报告§②第2点"
+            }
+          ],
+          "resolvable": false,
+          "resolution": "referenced_in_markdown_not_fetched",
+          "note": "Asset registered by reference only"
+        },
+        {
+          "asset_id": "ast-5611-08",
+          "kind": "code_reference",
+          "role": "implementation_artifact",
+          "name": "tools/pulse/pulse_report.py",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "quote": "tools/pulse/pulse_report.py",
+              "note": "趋势报表 CLI，见报告§②第3点"
+            }
+          ],
+          "resolvable": false,
+          "resolution": "referenced_in_markdown_not_fetched",
+          "note": "Asset registered by reference only"
+        },
+        {
+          "asset_id": "ast-5611-09",
+          "kind": "code_reference",
+          "role": "implementation_artifact",
+          "name": "tools/pulse/acceptance_evidence.py",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "quote": "tools/pulse/acceptance_evidence.py",
+              "note": "证据链一键重建脚本，见报告§②第4点"
+            }
+          ],
+          "resolvable": false,
+          "resolution": "referenced_in_markdown_not_fetched",
+          "note": "Asset registered by reference only"
+        },
+        {
+          "asset_id": "ast-5611-10",
+          "kind": "code_reference",
+          "role": "test_artifact",
+          "name": "tests/pulse/test_saturation_pulse.py",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "quote": "tests/pulse/test_saturation_pulse.py",
+              "note": "24条测试（22纯逻辑+2连库），见报告§②第5点"
+            }
+          ],
+          "resolvable": false,
+          "resolution": "referenced_in_markdown_not_fetched",
+          "note": "Asset registered by reference only"
+        },
+        {
+          "asset_id": "ast-5611-11",
+          "kind": "evidence_artifact",
+          "role": "acceptance_evidence",
+          "name": "artifacts/m4959/acceptance_IN15-O1.json",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "quote": "artifacts/m4959/acceptance_IN15-O1.json",
+              "note": "判据数字+产物路径，见报告审计链段"
+            }
+          ],
+          "resolvable": false,
+          "resolution": "referenced_in_markdown_not_fetched",
+          "note": "Asset registered by reference only"
+        },
+        {
+          "asset_id": "ast-5611-12",
+          "kind": "evidence_artifact",
+          "role": "acceptance_evidence",
+          "name": "cross_check_psql.json",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "quote": "cross_check_psql.json",
+              "note": "独立 SQL 对账结果，见报告审计链段"
+            }
+          ],
+          "resolvable": false,
+          "resolution": "referenced_in_markdown_not_fetched",
+          "note": "Asset registered by reference only"
+        },
+        {
+          "asset_id": "ast-5611-13",
+          "kind": "evidence_artifact",
+          "role": "acceptance_evidence",
+          "name": "pulse_samples.jsonl",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "quote": "pulse_samples.jsonl",
+              "note": "追加式样本日志，见报告审计链段"
+            }
+          ],
+          "resolvable": false,
+          "resolution": "referenced_in_markdown_not_fetched",
+          "note": "Asset registered by reference only"
+        },
+        {
+          "asset_id": "ast-5611-14",
+          "kind": "evidence_artifact",
+          "role": "acceptance_evidence",
+          "name": "pytest_pulse.txt",
+          "locators": [
+            {
+              "source_uri": "tensor://reports/5611",
+              "source_field": "markdown",
+              "quote": "pytest_pulse.txt",
+              "note": "pytest 输出，见报告审计链段"
+            }
+          ],
+          "resolvable": false,
+          "resolution": "referenced_in_markdown_not_fetched",
+          "note": "Asset registered by reference only"
+        }
+      ],
+      "registration_note": "01-asset-registration: hash-pinned inventory of report 5611; claims intentionally empty; no extraction, no report_type classification, no verification stamp"
+    }
+  },
+  "claims": []
+}
