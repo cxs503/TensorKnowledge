@@ -1,0 +1,518 @@
+{
+  "schema_version": "kf-asset-manifest/1.0",
+  "package_id": "wp-1716-01",
+  "task_type": "01-asset-registration",
+  "report_id": "1716",
+  "lane": "C",
+  "contract_version": "1.0",
+  "generator": "scripts/kf_wp1716_01_asset_manifest.py",
+  "repro_cmd": "python3 scripts/kf_wp1716_01_asset_manifest.py && python3 scripts/kf_wp1716_01_asset_manifest.py --verify --offline",
+  "determinism": {
+    "wall_clock_fields_in_manifest": 0,
+    "note": "no timestamp is written here; the report carries generated_at"
+  },
+  "source": {
+    "uri": "tensor://reports/1716",
+    "field": "markdown",
+    "hash": {
+      "algorithm": "sha256",
+      "value": "sha256:79cd7a448000f110435f121ee33ed9909bc3989cc6ac1046b16c0203e3936a8b",
+      "scope": "utf-8 bytes of the tensor_reports.markdown field",
+      "recomputed_in_run": true,
+      "matches_contract": true,
+      "contract_value": "sha256:79cd7a448000f110435f121ee33ed9909bc3989cc6ac1046b16c0203e3936a8b"
+    },
+    "size": {
+      "chars": 4159,
+      "bytes": 6565
+    },
+    "snapshot": {
+      "path": "docs/kf/wp-1716-01/source_report_1716.md",
+      "hash": "sha256:79cd7a448000f110435f121ee33ed9909bc3989cc6ac1046b16c0203e3936a8b"
+    },
+    "report_facts": {
+      "title": "平台方差分解能力补齐与验证欠账清偿：黑箱 Sobol' 采样通道 + 已合并 PCE 谱通道解析复核（34 测试绿）",
+      "title_matches_contract": true,
+      "scenario_key": "platform_gsa_sobol_verification",
+      "scenario_key_matches_contract": true,
+      "mission_id": 1961,
+      "status": "published",
+      "created_at": "2026-11-02T03:38:58.558659+00:00",
+      "tags": [
+        "GSA",
+        "Sobol",
+        "sensitivity",
+        "verification-debt",
+        "variance-decomposition",
+        "ice-resistance"
+      ]
+    }
+  },
+  "channel_probes": [
+    {
+      "path": "/tensor/reports/1716/figures/gsa_convergence.png",
+      "http_status": 404,
+      "detail": "figure not found"
+    },
+    {
+      "path": "/tensor/reports/1716/figures/gsa_estimates_vs_analytic.png",
+      "http_status": 404,
+      "detail": "figure not found"
+    },
+    {
+      "path": "/tensor/reports/1716/figures/gsa_lindqvist_ice.png",
+      "http_status": 404,
+      "detail": "figure not found"
+    },
+    {
+      "path": "/tensor/reports/1716/attachments",
+      "http_status": 404,
+      "detail": "Not Found"
+    },
+    {
+      "path": "/tensor/reports/1716/figures",
+      "http_status": 404,
+      "detail": "Not Found"
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "ast-1716-report-markdown",
+      "kind": "report_markdown",
+      "role": "primary_source",
+      "declared_uri": "tensor://reports/1716#markdown",
+      "locator": {
+        "field": "markdown",
+        "char_start": 0,
+        "char_end": 49,
+        "quote": "# 平台方差分解（Sobol' GSA）能力：黑箱采样通道补齐 + 已合并 PCE 谱通道解析复核"
+      },
+      "covers": {
+        "field": "markdown",
+        "char_start": 0,
+        "char_end": 4159
+      },
+      "hash": {
+        "algorithm": "sha256",
+        "value": "sha256:79cd7a448000f110435f121ee33ed9909bc3989cc6ac1046b16c0203e3936a8b",
+        "scope": "utf-8 bytes of the markdown field",
+        "recomputed_in_run": true
+      },
+      "size": {
+        "chars": 4159,
+        "bytes": 6565
+      },
+      "status": "registered",
+      "resolution": {
+        "method": "platform_api_read",
+        "endpoint": "GET $TENSOR_API_BASE/tensor/reports/1716",
+        "bytes_obtained": true,
+        "snapshot": "docs/kf/wp-1716-01/source_report_1716.md"
+      }
+    },
+    {
+      "asset_id": "ast-1716-figure-1-gsa-convergence",
+      "kind": "figure",
+      "role": "result_figure",
+      "declared_uri": "tensor://reports/1716#figures/gsa_convergence.png",
+      "declared_metadata": {
+        "name": "gsa_convergence.png",
+        "caption": "图1 采样通道收敛：误差 vs N，1%/3% 判据带"
+      },
+      "locator": {
+        "field": "markdown",
+        "char_start": 2879,
+        "char_end": 2898,
+        "quote": "gsa_convergence.png"
+      },
+      "occurrences": [
+        {
+          "char_start": 2879,
+          "char_end": 2898,
+          "quote": "gsa_convergence.png"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "metadata_field_plus_prose_anchor",
+        "bytes_obtained": false,
+        "unresolved_reason": {
+          "code": "figure_payload_404",
+          "detail": "GET /tensor/reports/1716/figures/gsa_convergence.png returns 404 'figure not found'; the report record carries name+caption only, so the PNG bytes are declared but not held here."
+        }
+      }
+    },
+    {
+      "asset_id": "ast-1716-figure-2-gsa-estimates-vs-analytic",
+      "kind": "figure",
+      "role": "result_figure",
+      "declared_uri": "tensor://reports/1716#figures/gsa_estimates_vs_analytic.png",
+      "declared_metadata": {
+        "name": "gsa_estimates_vs_analytic.png",
+        "caption": "图2 估计值 vs 解析 Sobol 指数（Ishigami / g-function）"
+      },
+      "locator": {
+        "field": "markdown",
+        "char_start": 2947,
+        "char_end": 2976,
+        "quote": "gsa_estimates_vs_analytic.png"
+      },
+      "occurrences": [
+        {
+          "char_start": 2947,
+          "char_end": 2976,
+          "quote": "gsa_estimates_vs_analytic.png"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "metadata_field_plus_prose_anchor",
+        "bytes_obtained": false,
+        "unresolved_reason": {
+          "code": "figure_payload_404",
+          "detail": "GET /tensor/reports/1716/figures/gsa_estimates_vs_analytic.png returns 404 'figure not found'; the report record carries name+caption only, so the PNG bytes are declared but not held here."
+        }
+      }
+    },
+    {
+      "asset_id": "ast-1716-figure-3-gsa-lindqvist-ice",
+      "kind": "figure",
+      "role": "result_figure",
+      "declared_uri": "tensor://reports/1716#figures/gsa_lindqvist_ice.png",
+      "declared_metadata": {
+        "name": "gsa_lindqvist_ice.png",
+        "caption": "图3 应用算例：层冰阻力四参数方差分解（95% bootstrap）"
+      },
+      "locator": {
+        "field": "markdown",
+        "char_start": 3015,
+        "char_end": 3036,
+        "quote": "gsa_lindqvist_ice.png"
+      },
+      "occurrences": [
+        {
+          "char_start": 3015,
+          "char_end": 3036,
+          "quote": "gsa_lindqvist_ice.png"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "metadata_field_plus_prose_anchor",
+        "bytes_obtained": false,
+        "unresolved_reason": {
+          "code": "figure_payload_404",
+          "detail": "GET /tensor/reports/1716/figures/gsa_lindqvist_ice.png returns 404 'figure not found'; the report record carries name+caption only, so the PNG bytes are declared but not held here."
+        }
+      }
+    },
+    {
+      "asset_id": "ast-1716-path-backend-services-global-sensitivity-py",
+      "kind": "referenced_artifact_path",
+      "role": "declared_producer_or_output",
+      "declared_uri": "tensor://reports/1716#backend/services/global_sensitivity.py",
+      "declared_path": "backend/services/global_sensitivity.py",
+      "declared_symbol": null,
+      "locator": {
+        "field": "markdown",
+        "char_start": 133,
+        "char_end": 171,
+        "quote": "backend/services/global_sensitivity.py"
+      },
+      "occurrences": [
+        {
+          "char_start": 133,
+          "char_end": 171,
+          "quote": "backend/services/global_sensitivity.py"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "path_token_in_prose",
+        "bytes_obtained": false,
+        "local_worktree_probe": {
+          "probed_at": "worktree:/root/tp-agent/work/m15531",
+          "exists": false
+        },
+        "unresolved_reason": {
+          "code": "producer_repo_not_in_worktree",
+          "detail": "the path is declared inside this report (repo TensorPlatform, per the report header) but the artifact registry ships no byte channel for it and the path is absent from this worktree (exists=False), so bytes are not held."
+        }
+      }
+    },
+    {
+      "asset_id": "ast-1716-path-tools-gsa-benchmark-py",
+      "kind": "referenced_artifact_path",
+      "role": "declared_producer_or_output",
+      "declared_uri": "tensor://reports/1716#tools/gsa_benchmark.py",
+      "declared_path": "tools/gsa_benchmark.py",
+      "declared_symbol": null,
+      "locator": {
+        "field": "markdown",
+        "char_start": 174,
+        "char_end": 196,
+        "quote": "tools/gsa_benchmark.py"
+      },
+      "occurrences": [
+        {
+          "char_start": 174,
+          "char_end": 196,
+          "quote": "tools/gsa_benchmark.py"
+        },
+        {
+          "char_start": 1315,
+          "char_end": 1337,
+          "quote": "tools/gsa_benchmark.py"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "path_token_in_prose",
+        "bytes_obtained": false,
+        "local_worktree_probe": {
+          "probed_at": "worktree:/root/tp-agent/work/m15531",
+          "exists": false
+        },
+        "unresolved_reason": {
+          "code": "producer_repo_not_in_worktree",
+          "detail": "the path is declared inside this report (repo TensorPlatform, per the report header) but the artifact registry ships no byte channel for it and the path is absent from this worktree (exists=False), so bytes are not held."
+        }
+      }
+    },
+    {
+      "asset_id": "ast-1716-path-tests-test-global-sensitivity-py",
+      "kind": "referenced_artifact_path",
+      "role": "declared_producer_or_output",
+      "declared_uri": "tensor://reports/1716#tests/test_global_sensitivity.py",
+      "declared_path": "tests/test_global_sensitivity.py",
+      "declared_symbol": null,
+      "locator": {
+        "field": "markdown",
+        "char_start": 200,
+        "char_end": 232,
+        "quote": "tests/test_global_sensitivity.py"
+      },
+      "occurrences": [
+        {
+          "char_start": 200,
+          "char_end": 232,
+          "quote": "tests/test_global_sensitivity.py"
+        },
+        {
+          "char_start": 1473,
+          "char_end": 1505,
+          "quote": "tests/test_global_sensitivity.py"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "path_token_in_prose",
+        "bytes_obtained": false,
+        "local_worktree_probe": {
+          "probed_at": "worktree:/root/tp-agent/work/m15531",
+          "exists": false
+        },
+        "unresolved_reason": {
+          "code": "producer_repo_not_in_worktree",
+          "detail": "the path is declared inside this report (repo TensorPlatform, per the report header) but the artifact registry ships no byte channel for it and the path is absent from this worktree (exists=False), so bytes are not held."
+        }
+      }
+    },
+    {
+      "asset_id": "ast-1716-path-artifacts-gsa-sobol-benchmark-json",
+      "kind": "referenced_artifact_path",
+      "role": "declared_producer_or_output",
+      "declared_uri": "tensor://reports/1716#artifacts/gsa_sobol_benchmark.json",
+      "declared_path": "artifacts/gsa_sobol_benchmark.json",
+      "declared_symbol": null,
+      "locator": {
+        "field": "markdown",
+        "char_start": 246,
+        "char_end": 280,
+        "quote": "artifacts/gsa_sobol_benchmark.json"
+      },
+      "occurrences": [
+        {
+          "char_start": 246,
+          "char_end": 280,
+          "quote": "artifacts/gsa_sobol_benchmark.json"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "path_token_in_prose",
+        "bytes_obtained": false,
+        "local_worktree_probe": {
+          "probed_at": "worktree:/root/tp-agent/work/m15531",
+          "exists": false
+        },
+        "unresolved_reason": {
+          "code": "producer_repo_not_in_worktree",
+          "detail": "the path is declared inside this report (repo TensorPlatform, per the report header) but the artifact registry ships no byte channel for it and the path is absent from this worktree (exists=False), so bytes are not held."
+        }
+      }
+    },
+    {
+      "asset_id": "ast-1716-path-docs-gsa-sobol-verification-md",
+      "kind": "referenced_artifact_path",
+      "role": "declared_producer_or_output",
+      "declared_uri": "tensor://reports/1716#docs/gsa_sobol_verification.md",
+      "declared_path": "docs/gsa_sobol_verification.md",
+      "declared_symbol": null,
+      "locator": {
+        "field": "markdown",
+        "char_start": 284,
+        "char_end": 314,
+        "quote": "docs/gsa_sobol_verification.md"
+      },
+      "occurrences": [
+        {
+          "char_start": 284,
+          "char_end": 314,
+          "quote": "docs/gsa_sobol_verification.md"
+        },
+        {
+          "char_start": 1424,
+          "char_end": 1454,
+          "quote": "docs/gsa_sobol_verification.md"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "path_token_in_prose",
+        "bytes_obtained": false,
+        "local_worktree_probe": {
+          "probed_at": "worktree:/root/tp-agent/work/m15531",
+          "exists": false
+        },
+        "unresolved_reason": {
+          "code": "producer_repo_not_in_worktree",
+          "detail": "the path is declared inside this report (repo TensorPlatform, per the report header) but the artifact registry ships no byte channel for it and the path is absent from this worktree (exists=False), so bytes are not held."
+        }
+      }
+    },
+    {
+      "asset_id": "ast-1716-path-backend-services-ice-resistance-uq-py",
+      "kind": "referenced_artifact_path",
+      "role": "declared_producer_or_output",
+      "declared_uri": "tensor://reports/1716#backend/services/ice_resistance_uq.py::sobol_indices",
+      "declared_path": "backend/services/ice_resistance_uq.py",
+      "declared_symbol": "sobol_indices",
+      "locator": {
+        "field": "markdown",
+        "char_start": 374,
+        "char_end": 426,
+        "quote": "backend/services/ice_resistance_uq.py::sobol_indices"
+      },
+      "occurrences": [
+        {
+          "char_start": 374,
+          "char_end": 426,
+          "quote": "backend/services/ice_resistance_uq.py::sobol_indices"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "path_token_in_prose",
+        "bytes_obtained": false,
+        "local_worktree_probe": {
+          "probed_at": "worktree:/root/tp-agent/work/m15531",
+          "exists": false
+        },
+        "unresolved_reason": {
+          "code": "producer_repo_not_in_worktree",
+          "detail": "the path is declared inside this report (repo TensorPlatform, per the report header) but the artifact registry ships no byte channel for it and the path is absent from this worktree (exists=False), so bytes are not held."
+        }
+      }
+    },
+    {
+      "asset_id": "ast-1716-gitref-agent-m1961",
+      "kind": "git_ref",
+      "role": "provenance_pointer",
+      "declared_uri": "tensor://reports/1716#agent/m1961",
+      "declared_ref": "agent/m1961",
+      "declared_repo": "TensorPlatform",
+      "locator": {
+        "field": "markdown",
+        "char_start": 112,
+        "char_end": 123,
+        "quote": "agent/m1961"
+      },
+      "occurrences": [
+        {
+          "char_start": 112,
+          "char_end": 123,
+          "quote": "agent/m1961"
+        }
+      ],
+      "hash": null,
+      "size": null,
+      "status": "declared_not_fetched",
+      "resolution": {
+        "method": "ref_token_in_prose",
+        "bytes_obtained": false,
+        "unresolved_reason": {
+          "code": "cross_repo_ref",
+          "detail": "branch name only; cross-repo (TensorPlatform) and not resolvable from this worktree, so no commit id is pinned."
+        }
+      }
+    }
+  ],
+  "claims": [],
+  "verification_policy": {
+    "claims_marked_verified": 0,
+    "note": "registration only: assets are located and hash-pinned, no claim is extracted and no verification status is asserted; verification is computed by the platform gate."
+  },
+  "scope_notes": {
+    "in_scope": [
+      "report_id 1716 only",
+      "markdown identity (sha256 + char/byte size) re-derived in-run",
+      "declared figures, inline artifact paths and the producer git ref, each pinned to a verbatim locator"
+    ],
+    "out_of_scope": [
+      "claim extraction / report type classification (classify_report_type=false)",
+      "reading or writing any other report_id",
+      "fetching bytes for assets with no byte channel (recorded as unresolved)"
+    ],
+    "not_registered_on_purpose": [
+      {
+        "item": "benchmark case keys `ishigami`, `sobol_g_a_0_0.5_3_9_99`",
+        "reason": "case identifiers inside artifacts/gsa_sobol_benchmark.json, not standalone attachments; registering them would imply a container we do not hold"
+      },
+      {
+        "item": "symbols `saltelli_sample`, `sobol_indices`, `ice_resistance_uq.build_pce`",
+        "reason": "symbol-level pointers; the owning module paths are registered separately, symbol-level assets need the module bytes"
+      }
+    ]
+  },
+  "unresolved_summary": {
+    "n_assets": 11,
+    "by_status": {
+      "registered": 1,
+      "declared_not_fetched": 10
+    },
+    "reason_codes": [
+      "cross_repo_ref",
+      "figure_payload_404",
+      "producer_repo_not_in_worktree"
+    ]
+  }
+}
