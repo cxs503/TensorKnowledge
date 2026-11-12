@@ -1,0 +1,46 @@
+{
+  "package_id": "wp-6537-01",
+  "report_id": "6537",
+  "verified_at": "2026-11-12T01:30:43.870641+00:00",
+  "manifest": "docs/kf/wp-6537-01/asset_manifest.json",
+  "manifest_sha256": "5afa3314a56cda0010c8de63fea5f5218d8009f8a6388220ead0f5cf668468a2",
+  "source_snapshot_sha256": "aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71",
+  "checks": {
+    "valid_json": {
+      "pass": true,
+      "detail": "json.loads OK on asset_manifest.json"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": "missing_top=[] missing_provenance=[]"
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "detail": "checked 37 locators against source_6537.md; unresolvable=[]"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": "snapshot=aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71 declared=aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71 contract=aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71 chars=10530/10530"
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "detail": "assets=37 unique=37"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "detail": "claims=0 violating=0 (empty array: vacuously satisfied, contract allows it)"
+    },
+    "do_not_mark_claims_as_verified": {
+      "pass": true,
+      "detail": "no claim carries status=verified"
+    },
+    "counts_consistent": {
+      "pass": true,
+      "detail": "counts.assets=37 by_resolution_sum=37 by_class_sum=37"
+    }
+  },
+  "all_pass": true,
+  "not_run": [
+    "live re-fetch in verify（emit_result 内已做 hash 漂移守卫；verify 用快照以支持离线复跑）"
+  ]
+}
