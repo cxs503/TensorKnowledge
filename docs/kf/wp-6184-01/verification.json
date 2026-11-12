@@ -1,0 +1,50 @@
+{
+  "package_id": "wp-6184-01",
+  "report_id": "6184",
+  "source_hash": "sha256:f13e86a0dd27242b2872083e00f50b1c4cd5e4248a30b17de565db49d0aa310c",
+  "checked_at": "2026-11-12T01:27:29.975212+00:00",
+  "acceptance": [
+    {
+      "check": "valid_json",
+      "result": "pass",
+      "detail": "13241 bytes parsed"
+    },
+    {
+      "check": "schema_pass",
+      "result": "pass",
+      "detail": "jsonschema.validate pass against asset_manifest.schema.json"
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "pass",
+      "detail": "recomputed=f13e86a0dd27242b2872083e00f50b1c4cd5e4248a30b17de565db49d0aa310c source=platform refetch platform_match=True manifest_hash=f13e86a0dd27242b2872083e00f50b1c4cd5e4248a30b17de565db49d0aa310c"
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "pass",
+      "detail": "all quotes resolve + unique"
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "pass",
+      "detail": "10 ids, dupes=[]"
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": "claims=0 (empty=legal for 01-asset-registration); offenders=[]"
+    },
+    {
+      "check": "counts_consistent",
+      "result": "pass",
+      "detail": "counts.assets=10 len(assets)=10"
+    },
+    {
+      "check": "no_verified_marks",
+      "result": "pass",
+      "detail": "no claim/asset marked verified by this package"
+    }
+  ],
+  "all_pass": true,
+  "note": "verification here = self-check of the 01-asset-registration acceptance list; claim-level verification stays with the platform gate (this package emits no claims)."
+}
