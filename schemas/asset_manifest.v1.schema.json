@@ -2,19 +2,19 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://tensorplatform.local/schemas/asset_manifest.v1.schema.json",
   "title": "asset_manifest.v1 (KF work package task_type=01-asset-registration)",
-  "description": "Locally written schema for the asset_manifest.json produced by scripts/kf_register_448.py. The canonical schemas/kf_result.v1.schema.json referenced by the work-package contract is NOT present in this worktree (TensorKnowledge/schemas/ had no kf_result schema); this file pins the shape actually used so that the schema_pass acceptance item is a reproducible check rather than an assertion. If the platform-side schema differs, the platform gate wins and this artifact must be revised.",
+  "description": "Shape of the asset_manifest.json produced by 01-asset-registration work packages (first pinned by scripts/kf_register_448.py; generalized on 2026-11-12 for wp-5690-01: package_id/report_id/source.uri are now pattern-checked instead of const-pinned to wp-448-01, so one schema serves the whole task_type. The wp-448-01 manifest still validates against this file (verified by scripts/kf_verify_448.py). The canonical schemas/kf_result.v1.schema.json referenced by the work-package contract is NOT present in this worktree; this file pins the manifest side so that the schema_pass acceptance item is a reproducible check rather than an assertion. If the platform-side schema differs, the platform gate wins and the artifact must be revised.",
   "type": "object",
   "required": ["schema", "package_id", "task_type", "report_id", "source", "counts", "assets", "claims", "integrity"],
   "properties": {
     "schema": {"const": "asset_manifest.v1"},
-    "package_id": {"const": "wp-448-01"},
+    "package_id": {"type": "string", "pattern": "^wp-[0-9]+-[0-9]{2}$"},
     "task_type": {"const": "01-asset-registration"},
-    "report_id": {"const": "448"},
+    "report_id": {"type": "string", "pattern": "^[0-9]+$"},
     "source": {
       "type": "object",
       "required": ["uri", "field", "hash_alg", "hash", "chars", "bytes_utf8", "title", "scenario_key"],
       "properties": {
-        "uri": {"const": "tensor://reports/448"},
+        "uri": {"type": "string", "pattern": "^tensor://reports/[0-9]+$"},
         "field": {"const": "markdown"},
         "hash_alg": {"const": "sha256"},
         "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
