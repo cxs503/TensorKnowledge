@@ -1,0 +1,817 @@
+{
+  "package_id": "wp-623-01",
+  "task_type": "01-asset-registration",
+  "report_id": "623",
+  "provenance": {
+    "source_hash": "sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15515",
+    "emitted_at": "2026-11-12T00:52:47.243855+00:00",
+    "notes": "hash recomputed from GET /api/v1/tensor/reports/623 markdown (UTF-8 bytes); matches contract source_hash sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "manifest_version": "1.0",
+      "package_id": "wp-623-01",
+      "task_type": "01-asset-registration",
+      "report_id": "623",
+      "lane": "C",
+      "generated_at": "2026-11-12T00:52:46.793963+00:00",
+      "producer": "kf-worker/m15515",
+      "source": {
+        "report_id": "623",
+        "source_uri": "tensor://reports/623",
+        "source_field": "markdown",
+        "source_hash": "sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf",
+        "contract_source_hash": "sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf",
+        "hash_algo": "sha256",
+        "hash_match": true,
+        "chars": 7281,
+        "contract_chars": 7281,
+        "chars_match_contract": true,
+        "bytes": 7324,
+        "lines": 151,
+        "has_crlf": false,
+        "has_trailing_newline": true,
+        "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based",
+        "fetched_via": "GET /api/v1/tensor/reports/623",
+        "record_fields": {
+          "title": "DEM3D Large-Scale Particle Benchmark: 10k-100k Wall-Clock Scaling Study",
+          "scenario_key": "SIR-PC2|V02",
+          "mission_id": 705,
+          "status": "published",
+          "created_at": "2026-10-31T04:56:19.855455+00:00",
+          "tags": [
+            "DEM",
+            "scaling",
+            "benchmark",
+            "ice-navigation",
+            "L2_validation"
+          ],
+          "contract_title": "DEM3D Large-Scale Particle Benchmark: 10k-100k Wall-Clock Scaling Study",
+          "contract_scenario_key": "SIR-PC2|V02",
+          "title_matches_contract": true,
+          "scenario_matches_contract": true
+        },
+        "platform_attachment_probes": {
+          "GET /tensor/reports/623/artifacts": "not_probed_here",
+          "figure_probe": {
+            "dem3d_scale_benchmark": {
+              "http_status": 404,
+              "bytes": 29
+            },
+            "dem3d_energy_drift": {
+              "http_status": 404,
+              "bytes": 29
+            }
+          }
+        }
+      },
+      "assets": [
+        {
+          "asset_id": "r623:source-markdown",
+          "kind": "report_markdown",
+          "name": "report-623-markdown",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1
+          },
+          "source_uri": "tensor://reports/623",
+          "media_type": "text/markdown",
+          "bytes": 7324,
+          "chars": 7281,
+          "lines": 151,
+          "sha256": "sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf",
+          "hash_scope": "UTF-8 bytes of the markdown field as served by GET /api/v1/tensor/reports/623",
+          "local_copy": "runs/wp-623-01/source_623.md",
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/623"
+          },
+          "hash_matches_contract": true,
+          "chars_matches_contract": true
+        },
+        {
+          "asset_id": "r623:figure:01",
+          "kind": "embedded_figure",
+          "name": "dem3d_scale_benchmark",
+          "caption": "Log-log plot of per-step wall-clock time vs. particle count. Measured scaling closely follows ideal O(N) linear scaling. 100k ratio vs ideal: 1.12x.",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/0/name",
+            "quote": "dem3d_scale_benchmark"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/623/figures/dem3d_scale_benchmark",
+            "http_status": 404,
+            "reason": "record exposes name/caption only; no byte payload was returned, so no hash is claimed"
+          }
+        },
+        {
+          "asset_id": "r623:figure:02",
+          "kind": "embedded_figure",
+          "name": "dem3d_energy_drift",
+          "caption": "Energy drift per step across all three scales. All cases show zero drift within machine precision.",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/1/name",
+            "quote": "dem3d_energy_drift"
+          },
+          "resolution": {
+            "status": "metadata_only",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/623/figures/dem3d_energy_drift",
+            "http_status": 404,
+            "reason": "record exposes name/caption only; no byte payload was returned, so no hash is claimed"
+          }
+        },
+        {
+          "asset_id": "r623:ref:01",
+          "kind": "source_code_reference",
+          "name": "scripts/benchmark_dem3d_scale.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 52,
+            "quote": "- **Benchmark script**: `scripts/benchmark_dem3d_scale.py`"
+          },
+          "quote_token": "scripts/benchmark_dem3d_scale.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:02",
+          "kind": "source_code_reference",
+          "name": "scripts/plot_dem3d_scale_benchmark.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 53,
+            "quote": "- **Visualization**: `scripts/plot_dem3d_scale_benchmark.py`, `scripts/plot_dem3d_energy_drift.py`"
+          },
+          "quote_token": "scripts/plot_dem3d_scale_benchmark.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:03",
+          "kind": "source_code_reference",
+          "name": "scripts/plot_dem3d_energy_drift.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 53,
+            "quote": "- **Visualization**: `scripts/plot_dem3d_scale_benchmark.py`, `scripts/plot_dem3d_energy_drift.py`"
+          },
+          "quote_token": "scripts/plot_dem3d_energy_drift.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:04",
+          "kind": "source_code_reference",
+          "name": "tests/test_dem3d_scale_benchmark.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 54,
+            "quote": "- **Tests**: `tests/test_dem3d_scale_benchmark.py` (7 acceptance tests)"
+          },
+          "quote_token": "tests/test_dem3d_scale_benchmark.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:05",
+          "kind": "figure_reference",
+          "name": "../artifacts/dem3d_scale_benchmark.png",
+          "reference_form": "markdown_image_link",
+          "locator": {
+            "source_field": "markdown",
+            "line": 98,
+            "quote": "![DEM3D Scale Benchmark](../artifacts/dem3d_scale_benchmark.png)"
+          },
+          "quote_token": "../artifacts/dem3d_scale_benchmark.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:06",
+          "kind": "figure_reference",
+          "name": "../artifacts/dem3d_energy_drift.png",
+          "reference_form": "markdown_image_link",
+          "locator": {
+            "source_field": "markdown",
+            "line": 103,
+            "quote": "![DEM3D Energy Drift](../artifacts/dem3d_energy_drift.png)"
+          },
+          "quote_token": "../artifacts/dem3d_energy_drift.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:07",
+          "kind": "source_code_reference",
+          "name": "src/tensordem/dem3d.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 144,
+            "quote": "- **Solver**: `src/tensordem/dem3d.py` (IceDEM3D), `src/tensordem/dem3d_energy.py` (EnergyAuditedIceDEM3D)"
+          },
+          "quote_token": "src/tensordem/dem3d.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:08",
+          "kind": "source_code_reference",
+          "name": "src/tensordem/dem3d_energy.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 144,
+            "quote": "- **Solver**: `src/tensordem/dem3d.py` (IceDEM3D), `src/tensordem/dem3d_energy.py` (EnergyAuditedIceDEM3D)"
+          },
+          "quote_token": "src/tensordem/dem3d_energy.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:09",
+          "kind": "source_code_reference",
+          "name": "scripts/benchmark_dem3d_scale.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 145,
+            "quote": "- **Benchmark**: `scripts/benchmark_dem3d_scale.py`"
+          },
+          "quote_token": "scripts/benchmark_dem3d_scale.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:10",
+          "kind": "source_code_reference",
+          "name": "tests/test_dem3d_scale_benchmark.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 146,
+            "quote": "- **Tests**: `tests/test_dem3d_scale_benchmark.py` (7/7 PASS)"
+          },
+          "quote_token": "tests/test_dem3d_scale_benchmark.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:11",
+          "kind": "data_artifact_reference",
+          "name": "results-dem3d-scale/scaling_report.json",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 147,
+            "quote": "- **Artifacts**: `results-dem3d-scale/scaling_report.json`, `artifacts/dem3d_scale_benchmark.png`, `artifacts/dem3d_energy_drift.png`"
+          },
+          "quote_token": "results-dem3d-scale/scaling_report.json",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:12",
+          "kind": "figure_reference",
+          "name": "artifacts/dem3d_scale_benchmark.png",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 147,
+            "quote": "- **Artifacts**: `results-dem3d-scale/scaling_report.json`, `artifacts/dem3d_scale_benchmark.png`, `artifacts/dem3d_energy_drift.png`"
+          },
+          "quote_token": "artifacts/dem3d_scale_benchmark.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r623:ref:13",
+          "kind": "figure_reference",
+          "name": "artifacts/dem3d_energy_drift.png",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 147,
+            "quote": "- **Artifacts**: `results-dem3d-scale/scaling_report.json`, `artifacts/dem3d_scale_benchmark.png`, `artifacts/dem3d_energy_drift.png`"
+          },
+          "quote_token": "artifacts/dem3d_energy_drift.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        }
+      ],
+      "symbol_references": [
+        {
+          "symbol_id": "r623:sym:01",
+          "kind": "module_reference",
+          "token": "tensordem.dem3d.IceDEM3D",
+          "locator": {
+            "source_field": "markdown",
+            "line": 51,
+            "quote": "- **Solver**: `tensordem.dem3d.IceDEM3D` + `tensordem.dem3d_energy.EnergyAuditedIceDEM3D`"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "named in the report prose; this工序 registers the reference, it does not open TensorDEM"
+          },
+          "existence_asserted_by_worker": false
+        },
+        {
+          "symbol_id": "r623:sym:02",
+          "kind": "module_reference",
+          "token": "tensordem.dem3d_energy.EnergyAuditedIceDEM3D",
+          "locator": {
+            "source_field": "markdown",
+            "line": 51,
+            "quote": "- **Solver**: `tensordem.dem3d.IceDEM3D` + `tensordem.dem3d_energy.EnergyAuditedIceDEM3D`"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "named in the report prose; this工序 registers the reference, it does not open TensorDEM"
+          },
+          "existence_asserted_by_worker": false
+        },
+        {
+          "symbol_id": "r623:sym:03",
+          "kind": "upstream_report_reference",
+          "token": "m670",
+          "locator": {
+            "source_field": "markdown",
+            "line": 143,
+            "quote": "- **Upstream**: m670 (friction/rolling resistance model) — interface compatible"
+          },
+          "resolution": {
+            "status": "declared_only",
+            "reason": "named in the report prose; this工序 registers the reference, it does not open TensorDEM"
+          },
+          "existence_asserted_by_worker": false
+        }
+      ],
+      "locators": [
+        {
+          "asset_id": "r623:source-markdown",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1
+          },
+          "quote_sha256": "sha256:6537d09ae4754eec2618a4f9256725f55ce35f3ccf9c9a91db145014113eb379",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:01",
+          "locator": {
+            "source_field": "markdown",
+            "line": 52
+          },
+          "quote_sha256": "sha256:2d823ee79d0a72a81c74dcb4344d5407f47cbc128672aa493898c397d333812e",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:02",
+          "locator": {
+            "source_field": "markdown",
+            "line": 53
+          },
+          "quote_sha256": "sha256:a5fe44df7911ea403ef85de11e4d1d919b3b314a6360244dbaf2130ce51b1764",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:03",
+          "locator": {
+            "source_field": "markdown",
+            "line": 53
+          },
+          "quote_sha256": "sha256:a5fe44df7911ea403ef85de11e4d1d919b3b314a6360244dbaf2130ce51b1764",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:04",
+          "locator": {
+            "source_field": "markdown",
+            "line": 54
+          },
+          "quote_sha256": "sha256:74d6ce40b0ae676bb807525f158ccb978c176ac9250bb789b2c9508064f45111",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:05",
+          "locator": {
+            "source_field": "markdown",
+            "line": 98
+          },
+          "quote_sha256": "sha256:82a2771e0e8a809b9fc00d7d8258cd12fdfff73393e662e71a6582147ff6a67d",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:06",
+          "locator": {
+            "source_field": "markdown",
+            "line": 103
+          },
+          "quote_sha256": "sha256:4f2d2c03d99fa7fc997c9acb1d8001f9b93e68a69b584670b0c5219cf0e413b0",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:07",
+          "locator": {
+            "source_field": "markdown",
+            "line": 144
+          },
+          "quote_sha256": "sha256:bc30fc31045901322df7050cfd9ea5bc5266c686ef7c6c11dfada297b7e94596",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:08",
+          "locator": {
+            "source_field": "markdown",
+            "line": 144
+          },
+          "quote_sha256": "sha256:bc30fc31045901322df7050cfd9ea5bc5266c686ef7c6c11dfada297b7e94596",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:09",
+          "locator": {
+            "source_field": "markdown",
+            "line": 145
+          },
+          "quote_sha256": "sha256:af5ac5cb0b63aa748687c0157f66e1288ecd70c0278b18c4a25d6b7cf37c271b",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:10",
+          "locator": {
+            "source_field": "markdown",
+            "line": 146
+          },
+          "quote_sha256": "sha256:a33deb42da0f17f393c523d652274f3c6f05762f45f3747b56b8a17dce8bb48f",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:11",
+          "locator": {
+            "source_field": "markdown",
+            "line": 147
+          },
+          "quote_sha256": "sha256:70b5815c0012e4031c3ab832d0fd7d3fdb44facc3bef715d0da83079bba428aa",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:12",
+          "locator": {
+            "source_field": "markdown",
+            "line": 147
+          },
+          "quote_sha256": "sha256:70b5815c0012e4031c3ab832d0fd7d3fdb44facc3bef715d0da83079bba428aa",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:ref:13",
+          "locator": {
+            "source_field": "markdown",
+            "line": 147
+          },
+          "quote_sha256": "sha256:70b5815c0012e4031c3ab832d0fd7d3fdb44facc3bef715d0da83079bba428aa",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:sym:01",
+          "locator": {
+            "source_field": "markdown",
+            "line": 51
+          },
+          "quote_sha256": "sha256:8dd3cfab5b0eee502e014ae1990daca4a4fdc42cc2c39932ebde23a7dd6f69d0",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:sym:02",
+          "locator": {
+            "source_field": "markdown",
+            "line": 51
+          },
+          "quote_sha256": "sha256:8dd3cfab5b0eee502e014ae1990daca4a4fdc42cc2c39932ebde23a7dd6f69d0",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        },
+        {
+          "asset_id": "r623:sym:03",
+          "locator": {
+            "source_field": "markdown",
+            "line": 143
+          },
+          "quote_sha256": "sha256:671f111c6072a965f6362bd066aa607cb73dd630014a2e1300f29d2f26903a9f",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "resolved": true
+        }
+      ],
+      "identity_facts": [
+        {
+          "fact_id": "title-line",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1
+          },
+          "quote": "# DEM3D Large-Scale Particle Benchmark: 10k–100k Wall-Clock Scaling Study",
+          "quote_sha256": "sha256:6537d09ae4754eec2618a4f9256725f55ce35f3ccf9c9a91db145014113eb379",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "scenario-line",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3
+          },
+          "quote": "**Mission**: SIR-PC2|V02 | **ID**: m705 | **Layer**: L2_validation  ",
+          "quote_sha256": "sha256:40dbabdce718bdc90bc7497e50624cf2a9645e9671b5993567df1e41e801b6c0",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "sec1-header",
+          "locator": {
+            "source_field": "markdown",
+            "line": 9
+          },
+          "quote": "## 1. Case Introduction",
+          "quote_sha256": "sha256:ac5670ab730f4d4e0a5515c3bec2d6230c3e1bc2df9006cfd06b12c985a4bd8f",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "audit-chain-header",
+          "locator": {
+            "source_field": "markdown",
+            "line": 141
+          },
+          "quote": "## Audit Chain",
+          "quote_sha256": "sha256:a1324df931ce8a0175a1885d886f1dfd88b7ee84c952a1881c255df47523cf1e",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "closing-note",
+          "locator": {
+            "source_field": "markdown",
+            "line": 150
+          },
+          "quote": "",
+          "quote_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 7282
+        }
+      ],
+      "claims": [],
+      "claims_empty_reason": "Contract wp-623-01 objective is register_assets=true / classify_report_type=false, and notes state 'claims 允许为空数组' plus constraints no_forced_claim_generation=true. This工序 registers asset identity only (report_id, markdown byte hash, declared attachments/artifacts); extraction is a downstream工序, so an empty claims array is the complete result, not an omission.",
+      "counts": {
+        "source_documents": 1,
+        "figures_declared_in_record": 2,
+        "figures_with_bytes": 0,
+        "body_references": 13,
+        "distinct_referenced_paths": 11,
+        "assets_total": 16,
+        "assets_resolved": 1,
+        "assets_metadata_only": 2,
+        "assets_unresolved": 13,
+        "locators": 17,
+        "locators_resolved": 17,
+        "symbol_references": 3,
+        "claims": 0,
+        "kind_status_histogram": {
+          "data_artifact_reference/unresolved": 1,
+          "embedded_figure/metadata_only": 2,
+          "figure_reference/unresolved": 4,
+          "report_markdown/resolved": 1,
+          "source_code_reference/unresolved": 8
+        }
+      },
+      "id_integrity": {
+        "ids_checked": 16,
+        "duplicates": [],
+        "unique": true
+      },
+      "unresolved": [
+        {
+          "asset_id": "r623:ref:01",
+          "name": "scripts/benchmark_dem3d_scale.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:02",
+          "name": "scripts/plot_dem3d_scale_benchmark.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:03",
+          "name": "scripts/plot_dem3d_energy_drift.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:04",
+          "name": "tests/test_dem3d_scale_benchmark.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:05",
+          "name": "../artifacts/dem3d_scale_benchmark.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:06",
+          "name": "../artifacts/dem3d_energy_drift.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:07",
+          "name": "src/tensordem/dem3d.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:08",
+          "name": "src/tensordem/dem3d_energy.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:09",
+          "name": "scripts/benchmark_dem3d_scale.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:10",
+          "name": "tests/test_dem3d_scale_benchmark.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:11",
+          "name": "results-dem3d-scale/scaling_report.json",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:12",
+          "name": "artifacts/dem3d_scale_benchmark.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r623:ref:13",
+          "name": "artifacts/dem3d_energy_drift.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        }
+      ],
+      "observations": [
+        "Report markdown is complete and self-consistent: first line is the H1 title, sections 1-6 + Audit Chain all present (151 lines).",
+        "The 2 figures are declared in the record metadata (name+caption) and referenced in-body as relative links ../artifacts/<name>.png; the platform serves no figure bytes for this report, so they stay metadata_only (no hash claimed).",
+        "All body path references point at TensorDEM artefacts (src/tensordem/*.py, scripts/*, tests/*, results-dem3d-scale/*, artifacts/*.png) which do not exist in the TensorKnowledge delivery worktree; they are registered as declared references with existence_asserted_by_worker=false."
+      ],
+      "limitations": [
+        "Registration only: no claim/evidence extraction, no report-type classification, no verified marks (verification is computed by the platform gate).",
+        "source_hash scope = UTF-8 bytes of the markdown string returned by the platform API; any change to the stored markdown (even whitespace) invalidates it.",
+        "Direct psql read of tensor_reports was denied (permission denied for table tensor_reports), so the API is the only source channel used.",
+        "Reference resolution is limited to the delivery worktree; a missing path here is reported as unresolved, never as a broken upstream artefact."
+      ]
+    }
+  },
+  "claims": []
+}
