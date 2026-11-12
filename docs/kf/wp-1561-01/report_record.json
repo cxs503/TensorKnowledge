@@ -1,0 +1,41 @@
+{
+ "id": 1561,
+ "title": "m1838 推进端点推力闭合修复：Kt=0.3-0.2J 直线式 → BEMT 反解转速，5 型船闸门 verdict_fail=0",
+ "summary": "/propulsion/predict 旧内核转速由航速抛出、与阻力无耦合，5 型船推力仅达 R_T/(1-t) 需求带的 24.7–67.5%、功率缺 14.7–68.8%。新内核用 BEMT 敞水曲线由 T(1-t)=R_T 反解转速（桨径 D/T=0.70、螺距比扫掠最优），不设钳位；同源 Holtrop R_T 保证两端点一致。跨端点闸门实跑 verdict_fail=0（修复前 15），I2/I3/I4 五船全 PASS；推力闭合残差 ≤1.11e-05；pytest 28 项通过。",
+ "scenario_key": "propulsion_closure",
+ "mission_id": 1838,
+ "stage": null,
+ "tags": [
+  "propulsion",
+  "BEMT",
+  "cross-endpoint-gate",
+  "chain_gate",
+  "closure",
+  "m1838"
+ ],
+ "figures": [
+  {
+   "name": "fig1_thrust_power.png",
+   "caption": "图1 I2/I3 判据：5 型船推力与交付功率对物理需求带（修复前红方 vs 修复后蓝点）"
+  },
+  {
+   "name": "fig2_cross_pe.png",
+   "caption": "图2 交叉有效功率比 T(1-t)V/(R_T·V) 区间：修复前 vs 修复后，虚线为 1.0"
+  },
+  {
+   "name": "fig3_eta0_vs_diameter.png",
+   "caption": "图3 定推力下 η0(D/T) 单调上升，★选定 D/T=0.70，灰带为 I5b 允许带"
+  },
+  {
+   "name": "fig4_open_water.png",
+   "caption": "图4 设计桨敞水 K_T(J)/η0(J) 与闭合工作点，点线为致动盘理想效率上界"
+  },
+  {
+   "name": "fig5_pitch_sweep.png",
+   "caption": "图5 η_D(P/D) 扫掠：设计取每条曲线最大值（★）"
+  }
+ ],
+ "status": "published",
+ "created_by": 1,
+ "created_at": "2026-11-02T00:32:11.021164+00:00"
+}
