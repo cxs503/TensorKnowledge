@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest_7473.schema.json",
+  "title": "asset_manifest for work package wp-7473-01 (report 7473)",
+  "description": "Local schema pinning the manifest shape produced by scripts/kf/build_asset_manifest_7473.py. The platform-side kf_result gate wins if it disagrees.",
+  "type": "object",
+  "required": [
+    "manifest_version",
+    "package_id",
+    "task_type",
+    "report_id",
+    "source",
+    "counts",
+    "assets",
+    "claims"
+  ],
+  "properties": {
+    "manifest_version": {
+      "const": "1.0"
+    },
+    "package_id": {
+      "const": "wp-7473-01"
+    },
+    "task_type": {
+      "const": "01-asset-registration"
+    },
+    "report_id": {
+      "const": "7473"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim_id",
+          "text"
+        ]
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "source_uri",
+        "source_field",
+        "source_hash",
+        "hash_algo",
+        "chars",
+        "bytes_utf8",
+        "lines"
+      ],
+      "properties": {
+        "source_uri": {
+          "const": "tensor://reports/7473"
+        },
+        "source_field": {
+          "const": "markdown"
+        },
+        "hash_algo": {
+          "const": "sha256"
+        },
+        "source_hash": {
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "bytes_utf8": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "lines": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "hash_match": {
+          "type": "boolean"
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "assets",
+        "by_class",
+        "by_resolution"
+      ],
+      "properties": {
+        "assets": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "asset_id",
+          "asset_class",
+          "label",
+          "in_report_section",
+          "locator",
+          "resolution"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "pattern": "^A[0-9]{2}$"
+          },
+          "asset_class": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "in_report_section": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolution": {
+            "type": "object",
+            "required": [
+              "status",
+              "check",
+              "result"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "resolved_in_source",
+                  "referenced_unresolved",
+                  "declared_absent"
+                ]
+              },
+              "check": {
+                "type": "string",
+                "minLength": 1
+              },
+              "result": {
+                "enum": [
+                  "resolved",
+                  "unresolved",
+                  "absent"
+                ]
+              }
+            }
+          },
+          "locator": {
+            "type": "object",
+            "required": [
+              "scheme",
+              "quote"
+            ],
+            "properties": {
+              "scheme": {
+                "enum": [
+                  "markdown_line",
+                  "markdown_document",
+                  "report_field"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
