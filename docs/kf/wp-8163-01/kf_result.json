@@ -1,0 +1,356 @@
+{
+  "package_id": "wp-8163-01",
+  "task_type": "01-asset-registration",
+  "report_id": "8163",
+  "provenance": {
+    "source_hash": "sha256:7b48265e05e153c69347ff038be80e20a8f309fbb0563599fa21c98e22b910e7",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15607",
+    "emitted_at": "2026-11-12T01:32:55.281474+00:00",
+    "notes": "sha256 over the UTF-8 bytes of GET /api/v1/tensor/reports/8163 `markdown`; recomputed locally, equals the contract source_hash sha256:7b48265e05e153c69347ff038be80e20a8f309fbb0563599fa21c98e22b910e7."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-8163-01",
+      "task_type": "01-asset-registration",
+      "report_id": "8163",
+      "lane": "C",
+      "generated_at": "2026-11-12T01:32:55.279253+00:00",
+      "producer": "kf-worker/m15607",
+      "schema_note": "Shape follows schemas/asset_manifest.v1.schema.json. That file pins package_id/report_id/source.uri with `const` to wp-448-01, so it cannot validate any other package verbatim; verify regenerates a retargeted copy (asset_manifest.v1.wp8163.schema.json: only the three `const` values changed) and validates against both that copy and schemas/kf_result.v1.schema.json.",
+      "source": {
+        "uri": "tensor://reports/8163",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "7b48265e05e153c69347ff038be80e20a8f309fbb0563599fa21c98e22b910e7",
+        "chars": 7785,
+        "bytes_utf8": 11158,
+        "lines": 242,
+        "title": "Rigid Collision Energy Ledger Convergence Certification: Three-Method Audit and m5404 Residual Attribution",
+        "scenario_key": "IN155-N07_rigid_collision_energy_convergence",
+        "platform_figures": [
+          {
+            "name": "energy_methods_schematic",
+            "caption": "三种能量核算方法的数学表述、精度等级和相互关系。方法 (i) 和 (ii-b) 在机器精度内等价，方法 (ii-a) 为一阶精度。"
+          },
+          {
+            "name": "convergence_orders",
+            "caption": "收敛阶分析四子图：(左上) 方法 (ii-a) vs (ii-b) 显示 O(dt) 收敛，斜率=1.02；(右上) 方法 (i) vs (ii-b) 在机器精度；(左下) 恢复系数随时间步收敛；(右下) 方法 (i) vs 理论显示时间离散化误差主导。"
+          }
+        ],
+        "platform_tags": [
+          "DEM",
+          "energy_conservation",
+          "collision",
+          "convergence",
+          "verification",
+          "rigid_body"
+        ],
+        "platform_mission_id": 6820,
+        "platform_status": "published",
+        "fetched_via": "GET /api/v1/tensor/reports/8163",
+        "contract_source_hash": "sha256:7b48265e05e153c69347ff038be80e20a8f309fbb0563599fa21c98e22b910e7",
+        "contract_chars": 7785,
+        "contract_title": "Rigid Collision Energy Ledger Convergence Certification: Three-Method Audit and m5404 Residual Attribution",
+        "contract_scenario_key": "IN155-N07_rigid_collision_energy_convergence",
+        "hash_matches_contract": true,
+        "chars_match_contract": true,
+        "title_matches_contract": true,
+        "scenario_matches_contract": true
+      },
+      "counts": {
+        "assets": 9,
+        "by_class": {
+          "report_markdown": 1,
+          "figure_reference": 2,
+          "artifact_directory_reference": 1,
+          "source_code_reference": 3,
+          "symbol_reference": 2
+        },
+        "by_resolution": {
+          "resolved_in_source": 1,
+          "referenced_unresolved": 8
+        },
+        "resolved_in_source": 1,
+        "referenced_unresolved": 8,
+        "declared_absent": 0,
+        "distinct_referenced_paths": 5
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "report_markdown",
+          "label": "report-8163-markdown",
+          "in_report_section": "(whole document)",
+          "uri": "tensor://reports/8163",
+          "media_type": "text/markdown",
+          "chars": 7785,
+          "bytes_utf8": 11158,
+          "sha256": "sha256:7b48265e05e153c69347ff038be80e20a8f309fbb0563599fa21c98e22b910e7",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 7785,
+            "start_line": 1,
+            "end_line": 242,
+            "quote": "# Rigid Collision Energy Ledger Convergence Certification",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "sha256(recomputed) == contract source_hash and chars == contract chars",
+            "result": "resolved"
+          },
+          "note": "Fetched from GET /api/v1/tensor/reports/8163; byte hash over the UTF-8 encoding of the `markdown` field."
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "figure_reference",
+          "label": "artifacts/rigid_collision_energy/energy_methods_schematic.png",
+          "in_report_section": "### 图 1: 能量核算方法示意图",
+          "uri": "tensor://reports/8163#figure:energy_methods_schematic",
+          "platform_figure_name": "energy_methods_schematic",
+          "platform_caption": "三种能量核算方法的数学表述、精度等级和相互关系。方法 (i) 和 (ii-b) 在机器精度内等价，方法 (ii-a) 为一阶精度。",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4879,
+            "end_char": 4969,
+            "start_line": 143,
+            "end_line": 143,
+            "quote": "![Energy Methods Schematic](artifacts/rigid_collision_energy/energy_methods_schematic.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "binary path resolved in worktree (artifacts/rigid_collision_energy/energy_methods_schematic.png) and platform figure endpoint GET /api/v1/tensor/reports/8163/figures/energy_methods_schematic",
+            "result": "unresolved",
+            "path_in_worktree": false,
+            "figure_endpoint_status": 404
+          },
+          "note": "Image path is quoted verbatim from the report body; the producing byte payload lives in the upstream repo, not in this record (record.figures[] carries name+caption only)."
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "figure_reference",
+          "label": "artifacts/rigid_collision_energy/convergence_orders.png",
+          "in_report_section": "### 图 2: 收敛阶分析",
+          "uri": "tensor://reports/8163#figure:convergence_orders",
+          "platform_figure_name": "convergence_orders",
+          "platform_caption": "收敛阶分析四子图：(左上) 方法 (ii-a) vs (ii-b) 显示 O(dt) 收敛，斜率=1.02；(右上) 方法 (i) vs (ii-b) 在机器精度；(左下) 恢复系数随时间步收敛；(右下) 方法 (i) vs 理论显示时间离散化误差主导。",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5009,
+            "end_char": 5087,
+            "start_line": 149,
+            "end_line": 149,
+            "quote": "![Convergence Orders](artifacts/rigid_collision_energy/convergence_orders.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "binary path resolved in worktree (artifacts/rigid_collision_energy/convergence_orders.png) and platform figure endpoint GET /api/v1/tensor/reports/8163/figures/convergence_orders",
+            "result": "unresolved",
+            "path_in_worktree": false,
+            "figure_endpoint_status": 404
+          },
+          "note": "Image path is quoted verbatim from the report body; the producing byte payload lives in the upstream repo, not in this record (record.figures[] carries name+caption only)."
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "artifact_directory_reference",
+          "label": "artifacts/rigid_collision_energy/",
+          "in_report_section": "## 8. 审计链 (Audit Trail)",
+          "uri": "tensor://reports/8163#path:artifacts/rigid_collision_energy/",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7564,
+            "end_char": 7611,
+            "start_line": 234,
+            "end_line": 234,
+            "quote": "- **产物路径**: `artifacts/rigid_collision_energy/`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path_exists_in_delivery_worktree(TensorKnowledge@/root/tensor) + platform artifact probe",
+            "result": "unresolved",
+            "path": "artifacts/rigid_collision_energy",
+            "abs_exists": false
+          },
+          "note": "Directory named in the audit trail; the report body also embeds two png files under it (see the figure_reference assets)."
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "source_code_reference",
+          "label": "src/tensordem/rigid_collision_energy.py",
+          "in_report_section": "## 8. 审计链 (Audit Trail)",
+          "uri": "tensor://reports/8163#path:src/tensordem/rigid_collision_energy.py",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7375,
+            "end_char": 7428,
+            "start_line": 231,
+            "end_line": 231,
+            "quote": "- **代码实现**: `src/tensordem/rigid_collision_energy.py`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path_exists_in_delivery_worktree(TensorKnowledge@/root/tensor) + platform artifact probe",
+            "result": "unresolved",
+            "path": "src/tensordem/rigid_collision_energy.py",
+            "abs_exists": false
+          },
+          "note": "Declared in the report's audit trail; the file lives in the producing repository (TensorDEM), outside this work package's boundary."
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "source_code_reference",
+          "label": "tests/test_rigid_collision_energy_convergence.py",
+          "in_report_section": "## 8. 审计链 (Audit Trail)",
+          "uri": "tensor://reports/8163#path:tests/test_rigid_collision_energy_convergence.py",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7429,
+            "end_char": 7502,
+            "start_line": 232,
+            "end_line": 232,
+            "quote": "- **测试用例**: `tests/test_rigid_collision_energy_convergence.py` (6/6 PASS)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path_exists_in_delivery_worktree(TensorKnowledge@/root/tensor) + platform artifact probe",
+            "result": "unresolved",
+            "path": "tests/test_rigid_collision_energy_convergence.py",
+            "abs_exists": false
+          },
+          "note": "Declared in the report's audit trail; the file lives in the producing repository (TensorDEM), outside this work package's boundary."
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "source_code_reference",
+          "label": "scripts/plot_rigid_collision_energy_minimal.py",
+          "in_report_section": "## 8. 审计链 (Audit Trail)",
+          "uri": "tensor://reports/8163#path:scripts/plot_rigid_collision_energy_minimal.py",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7503,
+            "end_char": 7563,
+            "start_line": 233,
+            "end_line": 233,
+            "quote": "- **图表生成**: `scripts/plot_rigid_collision_energy_minimal.py`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path_exists_in_delivery_worktree(TensorKnowledge@/root/tensor) + platform artifact probe",
+            "result": "unresolved",
+            "path": "scripts/plot_rigid_collision_energy_minimal.py",
+            "abs_exists": false
+          },
+          "note": "Declared in the report's audit trail; the file lives in the producing repository (TensorDEM), outside this work package's boundary."
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "symbol_reference",
+          "label": "IceDEM3D",
+          "in_report_section": "### 数值实现",
+          "uri": "tensor://reports/8163#symbol:IceDEM3D",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1037,
+            "end_char": 1109,
+            "start_line": 42,
+            "end_line": 42,
+            "quote": "1. **碰撞场景构建**: 使用 TensorDEM 的 IceDEM3D 引擎，构建两球对心碰撞场景。所有其他粒子冻结，仅保留两个自由球体。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "token 'IceDEM3D' resolved to line 42 of the report prose",
+            "result": "unresolved",
+            "existence_asserted_by_worker": false
+          },
+          "note": "Symbol is named in the report prose; this work package registers the reference and does not open the TensorDEM tree to confirm it exists."
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "symbol_reference",
+          "label": "restitution_to_damping",
+          "in_report_section": "### 关键设置",
+          "uri": "tensor://reports/8163#symbol:restitution_to_damping",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1624,
+            "end_char": 1702,
+            "start_line": 53,
+            "end_line": 53,
+            "quote": "- 阻尼系数：通过 $c_n = \\text{restitution\\_to\\_damping}(e_{target}, k_n, m_{eff})$ 计算",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "token 'restitution\\\\_to\\\\_damping' resolved to line 53 of the report prose",
+            "result": "unresolved",
+            "existence_asserted_by_worker": false
+          },
+          "note": "Symbol is named in the report prose; this work package registers the reference and does not open the TensorDEM tree to confirm it exists."
+        }
+      ],
+      "claims": [],
+      "claims_note": "Empty by contract: objective.classify_report_type=false, no extraction performed, no claim may be generated for this work package.",
+      "integrity": {
+        "quote_uniqueness": {
+          "checked": 9,
+          "unique": 9
+        },
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "quotes_sliced_from_markdown_not_retyped": true
+      },
+      "registration_coverage": {
+        "enumeration": {
+          "markdown_backtick_paths_regex": "`([^`]+?\\.(?:py|png|jpg|json|csv|h5|md))`",
+          "markdown_image_embeds_regex": "!\\[[^\\]]*\\]\\(([^)]+)\\)",
+          "artefact_dir_regex": "`(artifacts/[^`]*/)`",
+          "record_figures": "record.figures[] names",
+          "symbols": [
+            "IceDEM3D",
+            "restitution_to_damping"
+          ]
+        },
+        "found": {
+          "markdown_backtick_paths": 3,
+          "markdown_image_embeds": 2,
+          "artefact_dirs": 1,
+          "record_figures": 2,
+          "symbols": 2
+        },
+        "not_registered": [
+          {
+            "token": "m5404",
+            "occurrences_in_markdown": 9,
+            "reason": "mission/task identifier referenced in the prose (sections 1, 3, 6.1); the document names no artefact or figure belonging to that run, so there is nothing locatable to register"
+          },
+          {
+            "token": "IN155-N07",
+            "occurrences_in_markdown": 1,
+            "reason": "campaign/task code printed in the footer; not an asset"
+          }
+        ]
+      },
+      "probes": {
+        "/tensor/reports/8163/artifacts": {
+          "http_status": 404
+        }
+      },
+      "limitations": [
+        "Registration only: no extraction, no claim generation, no `verified` mark.",
+        "Path references are resolved inside this TensorKnowledge worktree; the producing TensorDEM tree is outside the work package boundary, so code/test/plot references stay unresolved by design (not `absent` verdicts about TensorDEM).",
+        "record.figures[] exposes name+caption only; no byte payload is served, so no hash is claimed for either figure."
+      ]
+    }
+  }
+}
