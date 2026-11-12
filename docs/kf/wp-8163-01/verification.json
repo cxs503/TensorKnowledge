@@ -1,0 +1,47 @@
+{
+  "package_id": "wp-8163-01",
+  "report_id": "8163",
+  "verified_at": "2026-11-12T01:32:56.662738+00:00",
+  "manifest": "docs/kf/wp-8163-01/asset_manifest.json",
+  "manifest_sha256": "af5075ed242951b380f2c8a126ee24f73b7ac5383d38c6372c4e45f08ba90a66",
+  "checks": {
+    "valid_json": {
+      "pass": true,
+      "detail": "json.loads OK for kf_result.json and asset_manifest.json"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": "kf_result vs schemas/kf_result.v1.schema.json errors=0; manifest vs retargeted asset_manifest.v1 (asset_manifest.v1.wp8163.schema.json) errors=0",
+      "errors": []
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "detail": "checked 9 locators against the live markdown; unresolvable=0",
+      "failures": []
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": "recomputed=7b48265e05e153c69347ff038be80e20a8f309fbb0563599fa21c98e22b910e7 declared=7b48265e05e153c69347ff038be80e20a8f309fbb0563599fa21c98e22b910e7 contract=7b48265e05e153c69347ff038be80e20a8f309fbb0563599fa21c98e22b910e7 chars=7785/7785"
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "detail": "assets=9 unique=9"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "detail": "claims=0 violating=0 (empty array satisfies the constraint per the contract note 'claims 允许为空数组')"
+    },
+    "do_not_mark_claims_as_verified": {
+      "pass": true,
+      "detail": "no claim carries status=verified (verification is platform-gated)"
+    }
+  },
+  "coverage": {
+    "pass": true,
+    "enumerated_not_registered": [],
+    "record_figures_not_registered": [],
+    "registered_assets": 11,
+    "note": "same regexes as build(); a hit that is not a registered label would mean the manifest silently dropped a declared asset"
+  },
+  "all_pass": true
+}
