@@ -1,0 +1,107 @@
+[
+ {
+  "claim_id": "227829247375ffc8-c01",
+  "path": "evidence/ci_triage_20261026/README.md",
+  "repo": "TensorLBM",
+  "lines": [
+   13,
+   13
+  ],
+  "span": [
+   13,
+   13
+  ],
+  "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080",
+  "quote": "- 合并前基线：`ad3d19ae6e5f55f02ac691f6719d4a5ae68f4cdc`。"
+ },
+ {
+  "claim_id": "227829247375ffc8-c02",
+  "path": "evidence/ci_triage_20261026/README.md",
+  "repo": "TensorLBM",
+  "lines": [
+   78,
+   80
+  ],
+  "span": [
+   78,
+   80
+  ],
+  "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080",
+  "quote": "均通过。**这只证明 Ruff 两步通过，不等于整个 lint job 已通过。**\n本地另跑 mypy core gate，在旧 PyTorch 类型定义下发现\n`src/tensorlbm/solver.py:437 [no-any-return]`，尚未处理；"
+ },
+ {
+  "claim_id": "227829247375ffc8-c03",
+  "path": "evidence/ci_triage_20261026/README.md",
+  "repo": "TensorLBM",
+  "lines": [
+   88,
+   89
+  ],
+  "span": [
+   88,
+   89
+  ],
+  "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080",
+  "quote": "实际触发 `NameError`，\n影响 `TestResistanceBreakdown3D` 的三个用例。"
+ },
+ {
+  "claim_id": "227829247375ffc8-c04",
+  "path": "evidence/ci_triage_20261026/README.md",
+  "repo": "TensorLBM",
+  "lines": [
+   106,
+   106
+  ],
+  "span": [
+   106,
+   106
+  ],
+  "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080",
+  "quote": "下表统计修复后的 **47 failed + 8 errors**，分类用于安排调查，不代替每项契约审查。"
+ },
+ {
+  "claim_id": "227829247375ffc8-c05",
+  "path": "evidence/ci_triage_20261026/README.md",
+  "repo": "TensorLBM",
+  "lines": [
+   144,
+   144
+  ],
+  "span": [
+   144,
+   144
+  ],
+  "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080",
+  "quote": "- 修复前 `--collect-only -m 'not slow'` 成功收集 6702 项、取消选择 14 项；"
+ },
+ {
+  "claim_id": "227829247375ffc8-c06",
+  "path": "evidence/ci_triage_20261026/README.md",
+  "repo": "TensorLBM",
+  "lines": [
+   146,
+   146
+  ],
+  "span": [
+   146,
+   146
+  ],
+  "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080",
+  "quote": "- 尝试全 fast suite（maxfail=3、单测 timeout=30），总执行等待超过 180 秒。"
+ },
+ {
+  "claim_id": "227829247375ffc8-c07",
+  "path": "evidence/ci_triage_20261026/README.md",
+  "repo": "TensorLBM",
+  "lines": [
+   149,
+   150
+  ],
+  "span": [
+   149,
+   150
+  ],
+  "sha256": "65df62eff69c48d4cf01946d92c508224b43a65a505abf5ca37d0bcebf376080",
+  "quote": "**这是中断结果，不是完整回归通过，也不是 timeout=30 能限制全套测试总时间的证明。**\n- 完整数值回归、GPU、前端构建未执行；"
+ }
+]
