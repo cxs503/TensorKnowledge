@@ -1,0 +1,60 @@
+{
+  "package_id": "wp-7554-01",
+  "report_id": "7554",
+  "verified_at": "2026-11-12T01:34:19.718746+00:00",
+  "checks": [
+    {
+      "check": "source_hash_matches_contract",
+      "result": "PASS",
+      "detail": "recomputed=d64a8ba8abe00714e3d7f8067ebfcbc30509ef0e858e1c697231b62d1eda7921 contract=d64a8ba8abe00714e3d7f8067ebfcbc30509ef0e858e1c697231b62d1eda7921"
+    },
+    {
+      "check": "source_chars_matches_contract",
+      "result": "PASS",
+      "detail": "actual=5015 contract=5015"
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "PASS",
+      "detail": "non-substring quotes: []"
+    },
+    {
+      "check": "quote_uniqueness",
+      "result": "PASS",
+      "detail": "non-unique quotes: []"
+    },
+    {
+      "check": "locator_char_span_roundtrip",
+      "result": "PASS",
+      "detail": "span!=quote: []"
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "PASS",
+      "detail": "n=12 unique=12"
+    },
+    {
+      "check": "counts_consistent",
+      "result": "PASS",
+      "detail": "assets=12 by_resolution={'resolved_in_source': 1, 'referenced_unresolved': 10, 'declared_absent': 1}"
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "PASS",
+      "detail": "claims=0 (zero claims is a legal complete result for 01)"
+    },
+    {
+      "check": "kf_result_schema_pass",
+      "result": "PASS",
+      "detail": "schemas/kf_result.v1.schema.json"
+    },
+    {
+      "check": "manifest_schema_pass",
+      "result": "PASS",
+      "detail": "derived from schemas/asset_manifest.v1.schema.json"
+    }
+  ],
+  "failures": [],
+  "gate_note": "These are the *worker-side* self-checks named by the contract. They are NOT the platform verification gate; no claim in any artifact is marked verified.",
+  "verdict": "self-checks-pass"
+}
