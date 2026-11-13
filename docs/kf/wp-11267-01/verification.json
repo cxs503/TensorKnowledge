@@ -1,0 +1,154 @@
+{
+ "package_id": "wp-11267-01",
+ "report_id": "11267",
+ "generated_at": "2026-11-12T01:56:03.518874+00:00",
+ "producer": "kf-worker/m15695",
+ "acceptance_items": [
+  "valid_json",
+  "schema_pass",
+  "source_locator_resolvable",
+  "source_hash_matches",
+  "no_duplicate_ids",
+  "all_claims_have_evidence_or_explicit_unresolved_status"
+ ],
+ "checks": [
+  {
+   "check_id": "C1_valid_json",
+   "acceptance_item": "valid_json",
+   "status": "pass",
+   "detail": "asset_manifest.json and kf_result.json both parse with json.loads",
+   "metric": {
+    "manifest_bytes": 47009,
+    "envelope_bytes": 50362
+   }
+  },
+  {
+   "check_id": "C2_schema_pass",
+   "acceptance_item": "schema_pass",
+   "status": "pass",
+   "detail": "jsonschema draft-07 on the package-pinned manifest schema (docs/kf/wp-11267-01/asset_manifest.schema.json) + draft-2020-12 on schemas/kf_result.v1.schema.json for the envelope",
+   "metric": {
+    "manifest_errors": [],
+    "envelope_errors": []
+   }
+  },
+  {
+   "check_id": "C3_source_locator_resolvable",
+   "acceptance_item": "source_locator_resolvable",
+   "status": "pass",
+   "detail": "every locator re-resolved against a freshly fetched markdown: quote in source AND md[start:end] == quote AND recomputed line == declared line",
+   "metric": {
+    "locators_checked": 34,
+    "failures": []
+   }
+  },
+  {
+   "check_id": "C4_source_hash_matches",
+   "acceptance_item": "source_hash_matches",
+   "status": "pass",
+   "detail": "sha256 of the live-fetched markdown bytes compared against the contract hash, the manifest source.hash, the envelope provenance.source_hash and the on-disk copy",
+   "metric": {
+    "recomputed": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+    "contract": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+    "manifest": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+    "envelope": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+    "disk_copy": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+    "chars": 7482,
+    "bytes_utf8": 11574,
+    "chars_match_contract": true
+   }
+  },
+  {
+   "check_id": "C5_no_duplicate_ids",
+   "acceptance_item": "no_duplicate_ids",
+   "status": "pass",
+   "detail": "asset_id uniqueness plus (asset_class, name) uniqueness over the manifest",
+   "metric": {
+    "assets": 23,
+    "duplicate_ids": [],
+    "duplicate_names": []
+   }
+  },
+  {
+   "check_id": "C6_claims_evidence_or_status",
+   "acceptance_item": "all_claims_have_evidence_or_explicit_unresolved_status",
+   "status": "pass",
+   "detail": "claims==[] by contract (classify_report_type=false, no_forced_claim_generation); the vacuous pass is stated explicitly with the reason recorded in the manifest",
+   "metric": {
+    "claims": 0,
+    "claims_without_evidence_or_status": 0,
+    "claims_empty_reason_present": true,
+    "verified_marks_present": false
+   }
+  },
+  {
+   "check_id": "X1_contract_identity",
+   "acceptance_item": "extra: source identity matches the work-package YAML",
+   "status": "pass",
+   "detail": "live record title/scenario_key compared with the contract constants",
+   "metric": {
+    "record_title": "TensorPhysics: MPI 域分解并行 FEM 基础设施与强/弱扩展验证 (p284w3-n04)",
+    "record_scenario_key": "p284w3-n04-fem-mpi-parallel"
+   }
+  },
+  {
+   "check_id": "X2_figure_caption_coverage",
+   "acceptance_item": "extra: every record figure is referenced in body",
+   "status": "pass",
+   "detail": "record /figures captions cross-checked against in-body markdown image links",
+   "metric": {
+    "record_figures": 7,
+    "referenced_in_body": 7,
+    "payload_served": 7
+   }
+  },
+  {
+   "check_id": "X3_report_scope",
+   "acceptance_item": "extra: single report_id touched",
+   "status": "pass",
+   "detail": "both artefacts carry report_id 11267 only; REPORT_ID is a single module constant",
+   "metric": {
+    "manifest_report_id": "11267",
+    "envelope_report_id": "11267",
+    "source_uri": "tensor://reports/11267"
+   }
+  }
+ ],
+ "summary": {
+  "total": 9,
+  "pass": 9,
+  "fail": 0,
+  "acceptance_total": 6,
+  "acceptance_pass": 6
+ },
+ "gate_verdict": "pass",
+ "scope_note": "checks are mechanical; verification of knowledge claims is the platform gate's job, not this工序's",
+ "registered_assets": {
+  "assets": 23,
+  "by_class": {
+   "cluster_job": 3,
+   "code_module_path": 1,
+   "code_script": 3,
+   "data_artifact": 1,
+   "declared_measurement_gap": 4,
+   "figure_artifact": 7,
+   "run_command": 1,
+   "source_document": 1,
+   "test_suite": 1,
+   "test_symbol": 1
+  },
+  "by_resolution": {
+   "declared_absent": 7,
+   "referenced_unresolved": 8,
+   "resolved_in_source": 8
+  },
+  "resolved_in_source": 8,
+  "referenced_unresolved": 8,
+  "declared_absent": 7,
+  "body_image_links": 7,
+  "figure_references_total": 14,
+  "distinct_referenced_paths": 15,
+  "claims": 0
+ },
+ "source_hash": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f"
+}
