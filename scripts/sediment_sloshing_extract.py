@@ -680,6 +680,10 @@ def main() -> int:
         "entry": {
             "builder": "scripts/sediment_sloshing_extract.py",
             "verifier": "scripts/verify_sediment_sloshing.py",
+            # python modules the verifier imports; the repository runner probes
+            # them so a missing dependency is reported as an environment problem
+            # ("blocked-missing-dependency") instead of as a failed asset
+            "requires": ["jsonschema", "referencing"],
             "artifacts": ["run/verification.json", "run/benchmark.json"],
         },
         "version": VERSION,

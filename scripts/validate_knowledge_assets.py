@@ -29,6 +29,42 @@ def load_json(path: Path):
         raise ValueError(f"{path.relative_to(ROOT)}: invalid JSON: {exc}") from exc
 
 
+SEMVER_PATTERN = r"^[0-9]+\.[0-9]+\.[0-9]+$"
+
+
+def check_schema_version_rule(schema: dict, path: Path, errors: list[str]) -> None:
+    """A schema that defines ``version`` must pin which form it accepts.
+
+    Two pinned forms are accepted:
+
+    * ``{"type": "string", "pattern": "^MAJOR.MINOR.PATCH$"}`` -- the learning
+      asset family (nodes / tutorials / pathways / pilot packages) is semver;
+    * ``{"type": "integer", "minimum": >= 1}`` -- an explicit monotone revision
+      counter, e.g. an RCI knowledge object whose ``version`` is a revision
+      number starting at 1 (``schema_version`` carries the schema identity).
+
+    Anything else -- a string version with no pattern, a loose pattern such as
+    ``^v[0-9]+``, a bare ``{"type": "string"}`` -- is rejected: that is the case
+    this rule exists to catch, because such a field accepts "latest", "v1" or a
+    typo without anyone noticing.
+    """
+    version_property = schema.get("properties", {}).get("version")
+    if version_property is None:
+        return
+    if not isinstance(version_property, dict):
+        errors.append(f"{path.relative_to(ROOT)}: version must be described by a schema object")
+        return
+    if version_property.get("pattern") == SEMVER_PATTERN:
+        return
+    minimum = version_property.get("minimum")
+    if version_property.get("type") == "integer" and isinstance(minimum, int) and minimum >= 1:
+        return
+    errors.append(
+        f"{path.relative_to(ROOT)}: version must pin an accepted form: "
+        f"pattern {SEMVER_PATTERN} for a string, or type=integer with minimum>=1 for a revision counter"
+    )
+
+
 def check_version(item: dict, path: Path, errors: list[str]) -> None:
     version = item.get("version")
     if not isinstance(version, str) or not VERSION_RE.fullmatch(version):
@@ -240,31 +276,34 @@ def main() -> int:
             schema = load_json(path)
             if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
                 errors.append(f"{path.relative_to(ROOT)}: unexpected JSON Schema dialect")
-            version_property = schema.get("properties", {}).get("version")
-            if version_property is not None:
-                version_pattern = version_property.get("pattern") if isinstance(version_property, dict) else None
-                if version_pattern != r"^[0-9]+\.[0-9]+\.[0-9]+$":
-                    errors.append(f"{path.relative_to(ROOT)}: version pattern must accept MAJOR.MINOR.PATCH when a version field is defined")
+            check_schema_version_rule(schema, path, errors)
         except ValueError as exc:
             errors.append(str(exc))
 
     # ---- sediment packages: each declares its own verifier in manifest.json ----
     # A package that cannot reach its read-only source repository is reported as
-    # skipped (never counted as passed); a package whose verifier exits non-zero
-    # for any other reason fails this validator.
+    # skipped (never counted as passed).  Everything else that is not a pass --
+    # a real check failure, a verifier crash, or a missing python dependency --
+    # fails this validator, but each is reported with its own status and reason
+    # (one red line per asset, never a single opaque gate failure).
     sediment_status: dict[str, str] = {}
+    sediment_results: list[dict] = []
     sediment_root = ROOT / "knowledge" / "sediment"
     if sediment_root.is_dir():
         import validate_sediment_packages as sediment_runner
 
         for pkg in sediment_runner.packages(sediment_root):
             result = sediment_runner.run_package(pkg)
+            sediment_results.append(result)
             sediment_status[pkg.name] = result["status"]
-            if result["status"] == "fail":
+            if result["status"] in sediment_runner.FAILING_STATUSES:
                 errors.append(
                     f"knowledge/sediment/{pkg.name}: verifier {result.get('entry')} "
-                    f"failed (rc={result['returncode']})"
+                    f"{result['status']} (rc={result['returncode']}): {result.get('reason', '')}"
                 )
+        # the per-asset index is printed on success too: a green run must show
+        # *which* assets were actually verified and which were only skipped
+        print(sediment_runner.render_index(sediment_results))
 
     if errors:
         print("Knowledge asset validation FAILED")
