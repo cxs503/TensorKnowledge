@@ -1,0 +1,30 @@
+{
+  "probe": "platform figure byte availability",
+  "report_id_probed": "14772",
+  "report_note": "该报告由本工单提交，提交时图件 png_base64 非空（见 submitted_png_base64_chars）",
+  "submitted_png_base64_chars": [
+    234512
+  ],
+  "returned_png_base64_chars": [
+    0
+  ],
+  "returned_figures": [
+    {
+      "name": "fig1_asset_resolution.png",
+      "caption_present": true,
+      "png_base64_chars": 0
+    }
+  ],
+  "figure_endpoints": {
+    "/tensor/reports/14772/figures": {
+      "status": 404,
+      "body_head": "{\"detail\":\"Not Found\"}"
+    },
+    "/tensor/figures/14772/fig1_asset_resolution.png": {
+      "status": 404,
+      "body_head": "{\"detail\":\"Not Found\"}"
+    }
+  },
+  "conclusion": "提交侧非空、响应侧为空 → API 响应不回传图件字节，且无图件下载端点；因此 payload 中 png_base64 为空不能推断作者未附图（只说明本环境取不到位图）",
+  "used_for": "asset_manifest A23–A26 的 note 与 resolution_check.detail（避免把响应侧行为误判为作者缺失）"
+}
