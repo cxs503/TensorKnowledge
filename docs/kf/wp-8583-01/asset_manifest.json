@@ -1,0 +1,1408 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-8583-01",
+  "task_type": "01-asset-registration",
+  "report_id": "8583",
+  "source": {
+    "source_uri": "tensor://reports/8583",
+    "source_field": "markdown",
+    "hash_alg": "sha256",
+    "source_hash": "sha256:2dae949f5c82c8f0e931f5280c0ea5c565bd188e05b0c109e49763d47a4fdfa4",
+    "sha256": "2dae949f5c82c8f0e931f5280c0ea5c565bd188e05b0c109e49763d47a4fdfa4",
+    "chars": 4087,
+    "bytes_utf8": 6530,
+    "lines": 91,
+    "title": "IN69-N10 极地航行 CII 合规性耦合优化：冰阻力→油耗→CII 评级 + 速度-冰况 Pareto + Polar Code 窗口",
+    "scenario_key": "polar_cii_compliance",
+    "upstream_mission_id": 7236,
+    "platform_status": "published",
+    "platform_tags": [
+      "CII",
+      "polar",
+      "ice-resistance",
+      "pareto",
+      "IMO-MEPC",
+      "green-navigation",
+      "IN69-N10"
+    ],
+    "platform_figures": [
+      "fig1_cii_vs_speed.png",
+      "fig2_pareto_speed_time.png",
+      "fig3_pareto_speed_route.png",
+      "fig4_uncertainty_cii.png",
+      "fig5_multiship_rating.png",
+      "fig6_ice_thickness_sweep.png"
+    ],
+    "created_at": "2026-11-08T12:50:57.102008+00:00",
+    "local_copy": "runs/wp-8583-01/report_8583.md",
+    "contract": {
+      "source_hash": "sha256:2dae949f5c82c8f0e931f5280c0ea5c565bd188e05b0c109e49763d47a4fdfa4",
+      "chars": 4087,
+      "title": "IN69-N10 极地航行 CII 合规性耦合优化：冰阻力→油耗→CII 评级 + 速度-冰况 Pareto + Polar Code 窗口",
+      "scenario_key": "polar_cii_compliance"
+    },
+    "hash_matches_contract": true,
+    "chars_matches_contract": true,
+    "title_matches_contract": true,
+    "scenario_matches_contract": true
+  },
+  "assets": [
+    {
+      "asset_id": "r8583:source-markdown",
+      "kind": "report_markdown",
+      "name": "report-8583-markdown",
+      "locator": {
+        "method": "document",
+        "source_field": "markdown",
+        "line": 1,
+        "char_start": 0,
+        "char_end": 4087,
+        "quote": "## IN69-N10 极地航行 CII 合规性耦合优化（冰阻力→油耗→CII + 速度-冰况 Pareto + Polar Code 窗口）",
+        "quote_unique": true
+      },
+      "source_uri": "tensor://reports/8583",
+      "media_type": "text/markdown",
+      "bytes": 6530,
+      "chars": 4087,
+      "lines": 91,
+      "sha256": "2dae949f5c82c8f0e931f5280c0ea5c565bd188e05b0c109e49763d47a4fdfa4",
+      "hash_scope": "sha256 over the UTF-8 bytes of the markdown field served by GET /api/v1/tensor/reports/8583",
+      "local_copy": "runs/wp-8583-01/report_8583.md",
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/8583"
+      },
+      "hash_matches_contract": true,
+      "chars_matches_contract": true
+    },
+    {
+      "asset_id": "r8583:section:01",
+      "asset_class": "heading",
+      "label": "报告标题行",
+      "anchor": "## IN69-N10 极地航行 CII 合规性耦合优化",
+      "in_report_section": "L1-L1",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 1,
+        "end_line": 1,
+        "char_start": 0,
+        "char_end": 71,
+        "quote": "## IN69-N10 极地航行 CII 合规性耦合优化（冰阻力→油耗→CII + 速度-冰况 Pareto + Polar Code 窗口）",
+        "quote_unique": true,
+        "quote_sha256": "6908e4bb46c5ae55550967f4fffa5bb12f1826acc5d236c62a5dfabd8522c0d5"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:02",
+      "asset_class": "case_description",
+      "label": "§① 案例介绍（耦合链条 + 三型母型 + 情景/窗口）",
+      "anchor": "### ① 案例介绍",
+      "in_report_section": "L3-L15",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 3,
+        "end_line": 15,
+        "char_start": 73,
+        "char_end": 748,
+        "quote": "### ① 案例介绍\n极地航行船的年度 CII 被冰阻力抬升，同时 Polar Code 给出最低自航速度与冰级能力冰厚两条窗口。\n本节点把\"以什么航速、走哪条航线（绕航换薄冰）过冰，既满足 CII 评级又不把航次时长推爆\"做成\n可复算、可接口化的工程模型。链条（量纲闭合）：\n`R_total = R_ow(V) + C^γ·R_ice,level(V;h,σ_f)`；`P = R_total·V/η_prop`；\n`FOC = SFOC(P/P_MCR)·(P+P_hotel)`；`CII = (FOC/V)·1e6·CF/DWT`；年度按冰区里程占比 φ 加权。\n\n三型母型（几何先过 Cb/L/B 校验）：散货 45k dwt PC6（190×30.0×11.5 m, Cb 0.8200, MCR 18 MW,\n13.0 kn, η_prop 0.7141）；油轮 105k dwt 1A（240×42.0×14.9,\nCb 0.8200, 16 MW, 13.5 kn, η_prop 0.6897）；集装箱 40k dwt 1A\n（205×32.2×11.5, Cb 0.6000, 22 MW, 17.5 kn, η_prop 0.7189）。\n情景 5 档（h=0/0.2/0.5/0.8/1.0 m，C 0.5–0.9，T −15/−25 ℃，φ=0.12，重冰 0.20）；评级基准年 2026\n（Z%=11%，MEPC.338(76)）。窗口：V∈[3,18] kn、h≤1.0 m，另加主机最低连续负荷 10% MCR。",
+        "quote_unique": true,
+        "quote_sha256": "bff72aaab00b7243d8d04ed797389427fda0e0b291a6198fd7eadfd0f25fae7d"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:03",
+      "asset_class": "parameter_table",
+      "label": "三型母型主尺度与设计点（Cb/L/B 校验声明）",
+      "anchor": "三型母型（几何先过 Cb/L/B 校验）",
+      "in_report_section": "L10-L13",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 10,
+        "end_line": 13,
+        "char_start": 361,
+        "char_end": 605,
+        "quote": "三型母型（几何先过 Cb/L/B 校验）：散货 45k dwt PC6（190×30.0×11.5 m, Cb 0.8200, MCR 18 MW,\n13.0 kn, η_prop 0.7141）；油轮 105k dwt 1A（240×42.0×14.9,\nCb 0.8200, 16 MW, 13.5 kn, η_prop 0.6897）；集装箱 40k dwt 1A\n（205×32.2×11.5, Cb 0.6000, 22 MW, 17.5 kn, η_prop 0.7189）。",
+        "quote_unique": true,
+        "quote_sha256": "e5bb9e46ca5ea8fdc5967868b97ff58ca4e24c62e3349582c71d005b33c4944f"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:04",
+      "asset_class": "scenario_definition",
+      "label": "5 档冰况情景 + 评级基准年 + 速度/冰厚窗口",
+      "anchor": "情景 5 档（h=0/0.2/0.5/0.8/1.0 m",
+      "in_report_section": "L14-L15",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 14,
+        "end_line": 15,
+        "char_start": 606,
+        "char_end": 748,
+        "quote": "情景 5 档（h=0/0.2/0.5/0.8/1.0 m，C 0.5–0.9，T −15/−25 ℃，φ=0.12，重冰 0.20）；评级基准年 2026\n（Z%=11%，MEPC.338(76)）。窗口：V∈[3,18] kn、h≤1.0 m，另加主机最低连续负荷 10% MCR。",
+        "quote_unique": true,
+        "quote_sha256": "41aa1b116c65a5ce16ca7f8cfc6622a8c93db837821d27116004fba163c03d17"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:05",
+      "asset_class": "method_chain",
+      "label": "§② 做法 7 步（Lindqvist/η_prop 反解/CII 算式/优化器/工具链）",
+      "anchor": "### ② 怎么做的",
+      "in_report_section": "L17-L27",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 17,
+        "end_line": 27,
+        "char_start": 750,
+        "char_end": 1340,
+        "quote": "### ② 怎么做的\n1) 阻力复用 Lindqvist 三分解（新增 `sigma_f_pa` 显式覆盖，σ_f 可扫 0.3–1.0 MPa）；\n2) η_prop 由 W3-N11 KT/KQ 链在设计点反解（**不是自由参数**），常数化跨 4–16 kn 功率偏差\n0.89%；\n3) CII/评级直接调用 MEPC.353/338/354 算术，不重写法规常数；\n4) `min_V CII(V)`：因辅机负荷存在**内点最优**，用粗网格定界 + 黄金分割（1e-4 kn）求解，\n再与 0.002 kn 稠密网格独立互校；约束 V_min/V_max/P≤MCR/P≥0.1MCR（均用二分）；\n5) Pareto 两级：(CII, 航次时长) 前沿 与 (V × 航线方案) 非支配前沿（绕航系数↔冰厚折衷）；\n6) 不确定度：MC 乘性抽样（固定种子 20261108），metrology 与 stress 两套 σ 口径**同时上报**；\n7) 工具链 `tools/run_cii_ice_optimization.py` → `artifacts/cii_ice_in69n10/`（5 csv + 6 png +\nsummary.json）；REST `POST /api/v1/calculations/cii-ice-optimization`。",
+        "quote_unique": true,
+        "quote_sha256": "0b0a31ed3b63e3f0b85df399089f260f995643d380b89bd1a9ed8849e2a51b92"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:06",
+      "asset_class": "result_table",
+      "label": "§③ 年 CII 矩阵表（3 船型 × 5 冰况，含 required 基准）",
+      "anchor": "| 船型（required） | 无冰 | 薄冰 0.2 | 中冰 0.5 | 厚冰 0.8 | 冰级上限 1.0 |",
+      "in_report_section": "L30-L34",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 30,
+        "end_line": 34,
+        "char_start": 1392,
+        "char_end": 1695,
+        "quote": "| 船型（required） | 无冰 | 薄冰 0.2 | 中冰 0.5 | 厚冰 0.8 | 冰级上限 1.0 |\n|---|---|---|---|---|---|\n| 散货 45k（5.38677） | 5.279 C | 5.635 C | 6.596 E | 8.468 E | 12.474 E |\n| 油轮 105k（4.03995） | 3.858 C | 4.103 C | 4.750 D | 5.969 E | 8.601 E |\n| 集装箱 40k（9.92029） | 10.512 C | 10.970 D | 12.226 E | 14.621 E | 19.768 E |",
+        "quote_unique": true,
+        "quote_sha256": "dbeb5b2276a5960a3f9e1d007b2df9ab4cf9725d3dee0e6d99fde716b7089ae8"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:07",
+      "asset_class": "result_statement",
+      "label": "中冰年 CII 抬高幅度结论行（三船型）",
+      "anchor": "中冰使年 CII 抬高 16.3%",
+      "in_report_section": "L36-L36",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 36,
+        "end_line": 36,
+        "char_start": 1697,
+        "char_end": 1753,
+        "quote": "中冰使年 CII 抬高 16.3%（集装箱）/23.1%（油轮）/24.9%（散货），三型全部跌到 D/E 档。",
+        "quote_unique": true,
+        "quote_sha256": "817b74d4d376113ea14f24bf0dc1cd55fbedb276e008ba2996f8aa33d29e3325"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:08",
+      "asset_class": "result_table",
+      "label": "CII 最优航速表（数学窗 / 工程窗 / 网格互校）",
+      "anchor": "**CII 最优航速（两套窗口并列）**",
+      "in_report_section": "L38-L44",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 38,
+        "end_line": 44,
+        "char_start": 1755,
+        "char_end": 2068,
+        "quote": "**CII 最优航速（两套窗口并列）**\n| 船型/情景 | 数学窗 V_opt (CII_min) | 工程窗 V_opt(负荷≥10%) (CII_min) | 网格互校 |\n|---|---|---|---|\n| 散货/无冰 | 5.001 kn (2.0995) | 9.319 kn (3.1561) | 1.1e-08 |\n| 散货/中冰 | 4.817 kn (3.1463) | 4.817 kn (3.1463) | 7.2e-09 |\n| 油轮/无冰 | 4.374 kn | 7.430 kn | 3.1e-09 |\n| 集装箱/无冰 | 6.156 kn | 10.360 kn | 2.6e-09 |",
+        "quote_unique": true,
+        "quote_sha256": "c2dc2eeb5d769fac255a2dd16015148f3ae302180c4decfb141afd6035a68c75"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:09",
+      "asset_class": "result_statement",
+      "label": "速度-时长 Pareto + 速度-航线 Pareto 两段结论",
+      "anchor": "**速度-时长 Pareto（中冰，2500 nm）**",
+      "in_report_section": "L46-L51",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 46,
+        "end_line": 51,
+        "char_start": 2070,
+        "char_end": 2423,
+        "quote": "**速度-时长 Pareto（中冰，2500 nm）**：散货 4.82 kn/3.146/518.4 h ↔ 13.17 kn/6.737/189.8 h\n（CII +114%，时长 −63%）；油轮 4.26/1.896/587.2 ↔ 9.56/2.991/261.4；集装箱 5.95/4.395/420.0 ↔\n14.81/8.818/168.8。\n**速度-航线 Pareto**：直达(h=1.0)×1.00 vs 南向绕航(h=0.30)×1.15——绕航航线在 (CII, 时长)\n**双目标同时占优**（散货 5.194/356.8 h → 2.609/181.1 h），临界绕航系数 d*=v_thin/v_thick =\n2.27（散货）/ 2.73（油轮）/ 2.17（集装箱）。",
+        "quote_unique": true,
+        "quote_sha256": "646c7d0897680a4e65825897ea2fb3bbd81d9a78dbabc58045f7fb52bd26555b"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:10",
+      "asset_class": "result_statement",
+      "label": "不确定度段（n=20000，metrology/stress 双 σ 口径）",
+      "anchor": "**不确定度（中冰，服务航速，n=20000）**",
+      "in_report_section": "L53-L57",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 53,
+        "end_line": 57,
+        "char_start": 2425,
+        "char_end": 2595,
+        "quote": "**不确定度（中冰，服务航速，n=20000）**：散货 CII 6.596 95% 区间\n[6.170, 7.098] 宽度 14.1%；\n油轮 13.5%；集装箱 11.9%（metrology σ）。\nstress σ（3/3/15/5/10%）同点 21.4%–18.9%，\n**超 15%** 如实上报；重冰矩阵 21%–35%。",
+        "quote_unique": true,
+        "quote_sha256": "1fb5c913cdc31b8563cbc93dde6794a722aaafa2b754dc53261d89025777ebb9"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:11",
+      "asset_class": "figure_index",
+      "label": "§④ 结果图清单（6 张图的文字登记）",
+      "anchor": "### ④ 结果图（6 张",
+      "in_report_section": "L59-L63",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 59,
+        "end_line": 63,
+        "char_start": 2597,
+        "char_end": 2874,
+        "quote": "### ④ 结果图（6 张，matplotlib 生成，见 figures）\nFig.1 CII–V 特性曲线（三船 × 无冰/中冰/冰级上限，标出内点最优）；Fig.2 中冰速度-时长 Pareto；\nFig.3 速度-航线 Pareto（灰点=全部扫描点，蓝点=非支配集）；Fig.4 基准工况 CII 蒙特卡洛分布 +\n95% 分位 + required 线；Fig.5 三船 attained CII vs 2023–2026 required 折减曲线；\nFig.6 冰厚扫描（年混合 CII 与冰区段 CII，h_max=1.0 m 竖线）。",
+        "quote_unique": true,
+        "quote_sha256": "98b720282ec0dac7a9bf38cc49d82239a658ddd67c5cbcb9f98a96b45ea31814"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:12",
+      "asset_class": "caveat_list",
+      "label": "§⑤ 注意点 7 条（陷阱/判据性质/σ 敏感/适用域/法规系数离线）",
+      "anchor": "### ⑤ 注意点",
+      "in_report_section": "L65-L75",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 65,
+        "end_line": 75,
+        "char_start": 2876,
+        "char_end": 3405,
+        "quote": "### ⑤ 注意点\n1) **陷阱**：纯 CII 最小化给出 4–6 kn，但主机负荷仅 1.6%–7%（不可实现）；加 10% MCR 工程下限后\n敞水最优点上移 7.4–10.4 kn，中冰情景自然落在 20% 负荷（可行）。已固化 `min_load_factor`。\n2) IMO CII 计算器本体离线不可达，判据 (a) 是**同一法规算式的双实现互校**（逐海里积分 vs 年度聚合），\n非独立物理数据验证。\n3) σ 口径敏感：宽度判据在 metrology σ 下达标、stress σ 下 19–22% 超标，两套都进产物。\n4) 重冰（h≥0.8 m）95% 宽度 21–35%：Lindqvist 族对全尺度散布本身 10–25%，故本模型适用\nCII 相对排序与运行策略寻优，不宜用于重冰下 ±5% 级合规裁决。\n5) η_prop 常数化跨速域偏差 <0.9%，但冰区段改变 J/η_O 未逐点重算（与 chain.py 详细链分工明确）。\n6) 航线方案为演示情景设定（provenance 已声明，非实测冰图）；dwt 统一作 Capacity（集装箱 GT 口径需换算）。\n7) 法规系数为离线转录 → WITHHELD。",
+        "quote_unique": true,
+        "quote_sha256": "98a83fa8538f455081ef6d74d52a1db949f4b35086033bd8f925322402de7c9e"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:13",
+      "asset_class": "acceptance_table",
+      "label": "§⑥ 误差判定表（判据 a–g：目标 / 实测 / <3%?）",
+      "anchor": "### ⑥ 误差判定（逐项显式回答）",
+      "in_report_section": "L77-L87",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 77,
+        "end_line": 87,
+        "char_start": 3407,
+        "char_end": 3898,
+        "quote": "### ⑥ 误差判定（逐项显式回答）\n| 判据 | 目标 | 实测 | <3%? |\n|---|---|---|---|\n| (a) 计算器语义互校（27 组） | <3% | **3.5e-16** | 是（远优，但为算术互校） |\n| (a′) 公开手算案例 AER | <3% | **0**（3.48420，rating A 一致） | 是 |\n| (b) A–E 阈值 vs 折减曲线 | 100% | 12/12 边界 + 3/3 单调 | 是（一致率 100%） |\n| (c) V_opt vs 稠密网格 | <1% | **6.6e-06** | 是 |\n| (d) ≥3 船型评级一致 | 9/9 | 9/9 交叉校验一致 | 是（0 偏差） |\n| (e) CII 95% 宽度 | <15% | **14.1%**（基准工况） | 是（重冰 21–35% 不达标，如实报） |\n| (f) 负控 | h=0→敞水；V→0→∞ | 相对差 0；发散比 8.6–9.3 | 是 |\n| (g) pytest | ≥12 | **26 passed** | 是 |",
+        "quote_unique": true,
+        "quote_sha256": "e09a48ade7a091c3ccf9916b5dd06f2765d0fe1d6d054c935cfccac6bdea8a54"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:section:14",
+      "asset_class": "provenance_statement",
+      "label": "honest 声明 + 产物路径 + commit 归属",
+      "anchor": "honest 声明：",
+      "in_report_section": "L89-L91",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_line": 89,
+        "end_line": 91,
+        "char_start": 3900,
+        "char_end": 4087,
+        "quote": "honest 声明：(e) 达标依赖 σ 口径与基准工况的预声明；(a) 非外部数据验证；厚冰工况超判据。\n产物：`artifacts/cii_ice_in69n10/`（summary.json / 5 csv / 6 png）、`docs/CII_ICE_COMPLIANCE_IN69N10.md`、\ncommit 7925bc0e on `agent/m7236`。",
+        "quote_unique": true,
+        "quote_sha256": "d8670c38cf249acc5170b77688efae363091d9913505fc61985ced8494e12fc7"
+      },
+      "resolution": {
+        "status": "resolved_in_source",
+        "scope": "report_markdown"
+      },
+      "note": "block registered verbatim; its numbers are registered, not recomputed"
+    },
+    {
+      "asset_id": "r8583:figure:01",
+      "kind": "declared_figure",
+      "name": "fig1_cii_vs_speed.png",
+      "caption": "Fig.1 三船 CII–航速特性 + 内点最优航速 + 2026 required 线",
+      "locator": {
+        "method": "document",
+        "source_field": "record",
+        "pointer": "/figures/0/name",
+        "quote": "fig1_cii_vs_speed.png",
+        "quote_unique": false
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/8583/figures/fig1_cii_vs_speed.png",
+        "http_status": 404,
+        "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+      }
+    },
+    {
+      "asset_id": "r8583:figure:02",
+      "kind": "declared_figure",
+      "name": "fig2_pareto_speed_time.png",
+      "caption": "Fig.2 中冰下速度-航次时长 Pareto 前沿",
+      "locator": {
+        "method": "document",
+        "source_field": "record",
+        "pointer": "/figures/1/name",
+        "quote": "fig2_pareto_speed_time.png",
+        "quote_unique": false
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/8583/figures/fig2_pareto_speed_time.png",
+        "http_status": 404,
+        "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+      }
+    },
+    {
+      "asset_id": "r8583:figure:03",
+      "kind": "declared_figure",
+      "name": "fig3_pareto_speed_route.png",
+      "caption": "Fig.3 速度-航线（冰况）Pareto 前沿（灰=扫描点，蓝=非支配集）",
+      "locator": {
+        "method": "document",
+        "source_field": "record",
+        "pointer": "/figures/2/name",
+        "quote": "fig3_pareto_speed_route.png",
+        "quote_unique": false
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/8583/figures/fig3_pareto_speed_route.png",
+        "http_status": 404,
+        "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+      }
+    },
+    {
+      "asset_id": "r8583:figure:04",
+      "kind": "declared_figure",
+      "name": "fig4_uncertainty_cii.png",
+      "caption": "Fig.4 基准工况 CII 蒙特卡洛分布 + 95% 分位 + required 线",
+      "locator": {
+        "method": "document",
+        "source_field": "record",
+        "pointer": "/figures/3/name",
+        "quote": "fig4_uncertainty_cii.png",
+        "quote_unique": false
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/8583/figures/fig4_uncertainty_cii.png",
+        "http_status": 404,
+        "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+      }
+    },
+    {
+      "asset_id": "r8583:figure:05",
+      "kind": "declared_figure",
+      "name": "fig5_multiship_rating.png",
+      "caption": "Fig.5 三船 attained CII vs 2023–2026 required 折减曲线",
+      "locator": {
+        "method": "document",
+        "source_field": "record",
+        "pointer": "/figures/4/name",
+        "quote": "fig5_multiship_rating.png",
+        "quote_unique": false
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/8583/figures/fig5_multiship_rating.png",
+        "http_status": 404,
+        "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+      }
+    },
+    {
+      "asset_id": "r8583:figure:06",
+      "kind": "declared_figure",
+      "name": "fig6_ice_thickness_sweep.png",
+      "caption": "Fig.6 冰厚扫描：年混合 CII 与冰区段 CII（h_max 竖线）",
+      "locator": {
+        "method": "document",
+        "source_field": "record",
+        "pointer": "/figures/5/name",
+        "quote": "fig6_ice_thickness_sweep.png",
+        "quote_unique": false
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/8583/figures/fig6_ice_thickness_sweep.png",
+        "http_status": 404,
+        "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+      }
+    }
+  ],
+  "references": [
+    {
+      "asset_id": "r8583:ref:01",
+      "kind": "symbol_or_expression",
+      "name": "R_total = R_ow(V) + C^γ·R_ice,level(V;h,σ_f)",
+      "locator": {
+        "source_field": "markdown",
+        "line": 7,
+        "char_start": 212,
+        "char_end": 258,
+        "quote": "`R_total = R_ow(V) + C^γ·R_ice,level(V;h,σ_f)`；`P = R_total·V/η_prop`；"
+      },
+      "quote_token": "R_total = R_ow(V) + C^γ·R_ice,level(V;h,σ_f)",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "named in the report (symbol / formula / knob); registration only"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:02",
+      "kind": "symbol_or_expression",
+      "name": "P = R_total·V/η_prop",
+      "locator": {
+        "source_field": "markdown",
+        "line": 7,
+        "char_start": 259,
+        "char_end": 281,
+        "quote": "`R_total = R_ow(V) + C^γ·R_ice,level(V;h,σ_f)`；`P = R_total·V/η_prop`；"
+      },
+      "quote_token": "P = R_total·V/η_prop",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "named in the report (symbol / formula / knob); registration only"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:03",
+      "kind": "symbol_or_expression",
+      "name": "FOC = SFOC(P/P_MCR)·(P+P_hotel)",
+      "locator": {
+        "source_field": "markdown",
+        "line": 8,
+        "char_start": 283,
+        "char_end": 316,
+        "quote": "`FOC = SFOC(P/P_MCR)·(P+P_hotel)`；`CII = (FOC/V)·1e6·CF/DWT`；年度按冰区里程占比 φ 加权。"
+      },
+      "quote_token": "FOC = SFOC(P/P_MCR)·(P+P_hotel)",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "named in the report (symbol / formula / knob); registration only"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:04",
+      "kind": "symbol_or_expression",
+      "name": "CII = (FOC/V)·1e6·CF/DWT",
+      "locator": {
+        "source_field": "markdown",
+        "line": 8,
+        "char_start": 317,
+        "char_end": 343,
+        "quote": "`FOC = SFOC(P/P_MCR)·(P+P_hotel)`；`CII = (FOC/V)·1e6·CF/DWT`；年度按冰区里程占比 φ 加权。"
+      },
+      "quote_token": "CII = (FOC/V)·1e6·CF/DWT",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "named in the report (symbol / formula / knob); registration only"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:05",
+      "kind": "symbol_or_expression",
+      "name": "sigma_f_pa",
+      "locator": {
+        "source_field": "markdown",
+        "line": 18,
+        "char_start": 786,
+        "char_end": 798,
+        "quote": "1) 阻力复用 Lindqvist 三分解（新增 `sigma_f_pa` 显式覆盖，σ_f 可扫 0.3–1.0 MPa）；"
+      },
+      "quote_token": "sigma_f_pa",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "named in the report (symbol / formula / knob); registration only"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:06",
+      "kind": "symbol_or_expression",
+      "name": "min_V CII(V)",
+      "locator": {
+        "source_field": "markdown",
+        "line": 22,
+        "char_start": 941,
+        "char_end": 955,
+        "quote": "4) `min_V CII(V)`：因辅机负荷存在**内点最优**，用粗网格定界 + 黄金分割（1e-4 kn）求解，"
+      },
+      "quote_token": "min_V CII(V)",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "named in the report (symbol / formula / knob); registration only"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:07",
+      "kind": "path_reference",
+      "name": "tools/run_cii_ice_optimization.py",
+      "locator": {
+        "source_field": "markdown",
+        "line": 26,
+        "char_start": 1189,
+        "char_end": 1224,
+        "quote": "7) 工具链 `tools/run_cii_ice_optimization.py` → `artifacts/cii_ice_in69n10/`（5 csv + 6 png +"
+      },
+      "quote_token": "tools/run_cii_ice_optimization.py",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree=m15624",
+        "exists_here": false,
+        "same_basename_hits": [],
+        "reason": "declared by the report as an artefact of the producing (solver) run; not present in this TensorKnowledge delivery worktree -- existence neither asserted nor denied"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:08",
+      "kind": "path_reference",
+      "name": "artifacts/cii_ice_in69n10/",
+      "locator": {
+        "source_field": "markdown",
+        "line": 26,
+        "char_start": 1227,
+        "char_end": 1255,
+        "quote": "7) 工具链 `tools/run_cii_ice_optimization.py` → `artifacts/cii_ice_in69n10/`（5 csv + 6 png +"
+      },
+      "quote_token": "artifacts/cii_ice_in69n10/",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree=m15624",
+        "exists_here": false,
+        "same_basename_hits": [],
+        "reason": "declared by the report as an artefact of the producing (solver) run; not present in this TensorKnowledge delivery worktree -- existence neither asserted nor denied"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:09",
+      "kind": "api_reference",
+      "name": "POST /api/v1/calculations/cii-ice-optimization",
+      "locator": {
+        "source_field": "markdown",
+        "line": 27,
+        "char_start": 1291,
+        "char_end": 1339,
+        "quote": "summary.json）；REST `POST /api/v1/calculations/cii-ice-optimization`。"
+      },
+      "quote_token": "POST /api/v1/calculations/cii-ice-optimization",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "REST route asserted by the report; this package registers the declaration only and does not exercise the endpoint"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:10",
+      "kind": "symbol_or_expression",
+      "name": "min_load_factor",
+      "locator": {
+        "source_field": "markdown",
+        "line": 67,
+        "char_start": 2996,
+        "char_end": 3013,
+        "quote": "敞水最优点上移 7.4–10.4 kn，中冰情景自然落在 20% 负荷（可行）。已固化 `min_load_factor`。"
+      },
+      "quote_token": "min_load_factor",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "named in the report (symbol / formula / knob); registration only"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:11",
+      "kind": "path_reference",
+      "name": "docs/CII_ICE_COMPLIANCE_IN69N10.md",
+      "locator": {
+        "source_field": "markdown",
+        "line": 90,
+        "char_start": 4016,
+        "char_end": 4052,
+        "quote": "产物：`artifacts/cii_ice_in69n10/`（summary.json / 5 csv / 6 png）、`docs/CII_ICE_COMPLIANCE_IN69N10.md`、"
+      },
+      "quote_token": "docs/CII_ICE_COMPLIANCE_IN69N10.md",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree=m15624",
+        "exists_here": false,
+        "same_basename_hits": [],
+        "reason": "declared by the report as an artefact of the producing (solver) run; not present in this TensorKnowledge delivery worktree -- existence neither asserted nor denied"
+      }
+    },
+    {
+      "asset_id": "r8583:ref:12",
+      "kind": "symbol_or_expression",
+      "name": "agent/m7236",
+      "locator": {
+        "source_field": "markdown",
+        "line": 91,
+        "char_start": 4073,
+        "char_end": 4086,
+        "quote": "commit 7925bc0e on `agent/m7236`。"
+      },
+      "quote_token": "agent/m7236",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "named in the report (symbol / formula / knob); registration only"
+      }
+    },
+    {
+      "asset_id": "r8583:prose:01",
+      "kind": "path_reference",
+      "name": "summary.json",
+      "reference_form": "prose",
+      "locator": {
+        "source_field": "markdown",
+        "line": 27,
+        "char_start": 1272,
+        "char_end": 1284,
+        "quote": "summary.json）；REST `POST /api/v1/calculations/cii-ice-optimization`。"
+      },
+      "quote_token": "summary.json",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree=m15624",
+        "exists_here": false,
+        "same_basename_hits": [],
+        "reason": "named in prose as an artefact of the producing run; absent from this delivery worktree -- existence neither asserted nor denied"
+      }
+    },
+    {
+      "asset_id": "r8583:prose:02",
+      "kind": "path_reference",
+      "name": "chain.py",
+      "reference_form": "prose",
+      "locator": {
+        "source_field": "markdown",
+        "line": 73,
+        "char_start": 3293,
+        "char_end": 3301,
+        "quote": "5) η_prop 常数化跨速域偏差 <0.9%，但冰区段改变 J/η_O 未逐点重算（与 chain.py 详细链分工明确）。"
+      },
+      "quote_token": "chain.py",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree=m15624",
+        "exists_here": false,
+        "same_basename_hits": [],
+        "reason": "named in prose as an artefact of the producing run; absent from this delivery worktree -- existence neither asserted nor denied"
+      }
+    },
+    {
+      "asset_id": "r8583:prose:03",
+      "kind": "git_commit",
+      "name": "7925bc0e",
+      "reference_form": "prose",
+      "locator": {
+        "source_field": "markdown",
+        "line": 91,
+        "char_start": 4061,
+        "char_end": 4069,
+        "quote": "commit 7925bc0e on `agent/m7236`。"
+      },
+      "quote_token": "7925bc0e",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "commit id cited by the report as the provenance of the run; that commit is not an object in this repository's history"
+      }
+    }
+  ],
+  "regulation_references": [
+    {
+      "asset_id": "r8583:reg:01",
+      "kind": "regulation_reference",
+      "name": "MEPC.338(76)",
+      "locator": {
+        "source_field": "markdown",
+        "line": 15,
+        "char_start": 692,
+        "char_end": 704,
+        "quote": "（Z%=11%，MEPC.338(76)）。窗口：V∈[3,18] kn、h≤1.0 m，另加主机最低连续负荷 10% MCR。"
+      },
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "regulation cited by the report; the report itself flags its coefficients as offline transcription (§⑤ item 7) and this package does not re-verify them"
+      }
+    },
+    {
+      "asset_id": "r8583:reg:02",
+      "kind": "regulation_reference",
+      "name": "MEPC.353/338/354",
+      "locator": {
+        "source_field": "markdown",
+        "line": 21,
+        "char_start": 909,
+        "char_end": 925,
+        "quote": "3) CII/评级直接调用 MEPC.353/338/354 算术，不重写法规常数；"
+      },
+      "resolution": {
+        "status": "declared_only",
+        "scope": "report_prose",
+        "reason": "regulation cited by the report; the report itself flags its coefficients as offline transcription (§⑤ item 7) and this package does not re-verify them"
+      }
+    }
+  ],
+  "locators": [
+    {
+      "asset_id": "r8583:source-markdown",
+      "line": 1,
+      "line_range": [
+        1,
+        1
+      ],
+      "quote_sha256": "6908e4bb46c5ae55550967f4fffa5bb12f1826acc5d236c62a5dfabd8522c0d5",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:01",
+      "line": 1,
+      "line_range": [
+        1,
+        1
+      ],
+      "quote_sha256": "6908e4bb46c5ae55550967f4fffa5bb12f1826acc5d236c62a5dfabd8522c0d5",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:02",
+      "line": 3,
+      "line_range": [
+        3,
+        15
+      ],
+      "quote_sha256": "bff72aaab00b7243d8d04ed797389427fda0e0b291a6198fd7eadfd0f25fae7d",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:03",
+      "line": 10,
+      "line_range": [
+        10,
+        13
+      ],
+      "quote_sha256": "e5bb9e46ca5ea8fdc5967868b97ff58ca4e24c62e3349582c71d005b33c4944f",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:04",
+      "line": 14,
+      "line_range": [
+        14,
+        15
+      ],
+      "quote_sha256": "41aa1b116c65a5ce16ca7f8cfc6622a8c93db837821d27116004fba163c03d17",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:05",
+      "line": 17,
+      "line_range": [
+        17,
+        27
+      ],
+      "quote_sha256": "0b0a31ed3b63e3f0b85df399089f260f995643d380b89bd1a9ed8849e2a51b92",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:06",
+      "line": 30,
+      "line_range": [
+        30,
+        34
+      ],
+      "quote_sha256": "dbeb5b2276a5960a3f9e1d007b2df9ab4cf9725d3dee0e6d99fde716b7089ae8",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:07",
+      "line": 36,
+      "line_range": [
+        36,
+        36
+      ],
+      "quote_sha256": "817b74d4d376113ea14f24bf0dc1cd55fbedb276e008ba2996f8aa33d29e3325",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:08",
+      "line": 38,
+      "line_range": [
+        38,
+        44
+      ],
+      "quote_sha256": "c2dc2eeb5d769fac255a2dd16015148f3ae302180c4decfb141afd6035a68c75",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:09",
+      "line": 46,
+      "line_range": [
+        46,
+        51
+      ],
+      "quote_sha256": "646c7d0897680a4e65825897ea2fb3bbd81d9a78dbabc58045f7fb52bd26555b",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:10",
+      "line": 53,
+      "line_range": [
+        53,
+        57
+      ],
+      "quote_sha256": "1fb5c913cdc31b8563cbc93dde6794a722aaafa2b754dc53261d89025777ebb9",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:11",
+      "line": 59,
+      "line_range": [
+        59,
+        63
+      ],
+      "quote_sha256": "98b720282ec0dac7a9bf38cc49d82239a658ddd67c5cbcb9f98a96b45ea31814",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:12",
+      "line": 65,
+      "line_range": [
+        65,
+        75
+      ],
+      "quote_sha256": "98a83fa8538f455081ef6d74d52a1db949f4b35086033bd8f925322402de7c9e",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:13",
+      "line": 77,
+      "line_range": [
+        77,
+        87
+      ],
+      "quote_sha256": "e09a48ade7a091c3ccf9916b5dd06f2765d0fe1d6d054c935cfccac6bdea8a54",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:section:14",
+      "line": 89,
+      "line_range": [
+        89,
+        91
+      ],
+      "quote_sha256": "d8670c38cf249acc5170b77688efae363091d9913505fc61985ced8494e12fc7",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:01",
+      "line": 7,
+      "line_range": [
+        7,
+        7
+      ],
+      "quote_sha256": "c55d3801296683a7c61be6e9daad8480b12e6536f809965b2d8b2d3f1eb242e8",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:02",
+      "line": 7,
+      "line_range": [
+        7,
+        7
+      ],
+      "quote_sha256": "c55d3801296683a7c61be6e9daad8480b12e6536f809965b2d8b2d3f1eb242e8",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:03",
+      "line": 8,
+      "line_range": [
+        8,
+        8
+      ],
+      "quote_sha256": "65e30ab034d93d204aa0a01e0ea8c968f9f635a94157c3d60ae321e0f5429f1e",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:04",
+      "line": 8,
+      "line_range": [
+        8,
+        8
+      ],
+      "quote_sha256": "65e30ab034d93d204aa0a01e0ea8c968f9f635a94157c3d60ae321e0f5429f1e",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:05",
+      "line": 18,
+      "line_range": [
+        18,
+        18
+      ],
+      "quote_sha256": "3a3a957e453862481ae4e2eb73a86186e0ff2062b0e774fca2221978f0286180",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:06",
+      "line": 22,
+      "line_range": [
+        22,
+        22
+      ],
+      "quote_sha256": "eb8e74bbcb66017f5fa1560e76ddbb4c89005f6b1b6de8dd6219478a674f5073",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:07",
+      "line": 26,
+      "line_range": [
+        26,
+        26
+      ],
+      "quote_sha256": "f5b2bb9036604da55109f80b4aa08a2953463e4c4d1c4cddee393b261d7df202",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:08",
+      "line": 26,
+      "line_range": [
+        26,
+        26
+      ],
+      "quote_sha256": "f5b2bb9036604da55109f80b4aa08a2953463e4c4d1c4cddee393b261d7df202",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:09",
+      "line": 27,
+      "line_range": [
+        27,
+        27
+      ],
+      "quote_sha256": "faceec33550aaaac8edd454f5583b3a7f1e59ae5f55588eacf51b40185064006",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:10",
+      "line": 67,
+      "line_range": [
+        67,
+        67
+      ],
+      "quote_sha256": "17447bcbe082e4b63115af15564d15a7f0cfab4d25c294c4ea97933307eb0714",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:11",
+      "line": 90,
+      "line_range": [
+        90,
+        90
+      ],
+      "quote_sha256": "c7d70af4f9d7eff3f2067ea0e42bfd5f767413bf5f7c0ab6028a75bd93cbb79b",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:ref:12",
+      "line": 91,
+      "line_range": [
+        91,
+        91
+      ],
+      "quote_sha256": "4a6419d24e412a92fd59ff41b67263f3c54f56b340c16024e06260c123a43d04",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:prose:01",
+      "line": 27,
+      "line_range": [
+        27,
+        27
+      ],
+      "quote_sha256": "faceec33550aaaac8edd454f5583b3a7f1e59ae5f55588eacf51b40185064006",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:prose:02",
+      "line": 73,
+      "line_range": [
+        73,
+        73
+      ],
+      "quote_sha256": "1e4907d8ae84387dbdf5de7817cd3296330944a0009ca2831d3d7ad3fb20a9cc",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:prose:03",
+      "line": 91,
+      "line_range": [
+        91,
+        91
+      ],
+      "quote_sha256": "4a6419d24e412a92fd59ff41b67263f3c54f56b340c16024e06260c123a43d04",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:reg:01",
+      "line": 15,
+      "line_range": [
+        15,
+        15
+      ],
+      "quote_sha256": "cbcc267d5946adc9429b308e37a5fd5599891b810812cb1fccd4b96ad53947d5",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    },
+    {
+      "asset_id": "r8583:reg:02",
+      "line": 21,
+      "line_range": [
+        21,
+        21
+      ],
+      "quote_sha256": "2e19f3610cdd6c0d599503cd308112af2e32e89c5729f7f74bb922da4a118ad7",
+      "quote_in_source": true,
+      "quote_on_declared_line": true,
+      "occurrences_in_source": 1,
+      "resolved": true
+    }
+  ],
+  "claims": [],
+  "claims_empty_reason": "Contract wp-8583-01 sets objective.register_assets=true / classify_report_type=false and notes 'claims 允许为空数组'; constraints no_forced_claim_generation=true and do_not_mark_claims_as_verified=true apply. This package registers asset identity (report_id, markdown byte hash, resolvable attachments/artefacts) only -- knowledge extraction is a downstream package -- so an empty claims array is the complete result, not an omission.",
+  "counts": {
+    "assets_total": 21,
+    "sections_registered": 14,
+    "figures_declared_in_record": 6,
+    "figures_with_bytes": 0,
+    "references_total": 15,
+    "references_resolved_in_worktree": 0,
+    "references_unresolved": 5,
+    "references_declared_only": 10,
+    "regulation_references": 2,
+    "locators": 32,
+    "locators_resolved": 32,
+    "claims": 0,
+    "assets_by_status": {
+      "metadata_only": 6,
+      "resolved_in_source": 15
+    },
+    "kind_status_histogram": {
+      "acceptance_table/resolved_in_source": 1,
+      "case_description/resolved_in_source": 1,
+      "caveat_list/resolved_in_source": 1,
+      "declared_figure/metadata_only": 6,
+      "figure_index/resolved_in_source": 1,
+      "heading/resolved_in_source": 1,
+      "method_chain/resolved_in_source": 1,
+      "parameter_table/resolved_in_source": 1,
+      "provenance_statement/resolved_in_source": 1,
+      "report_markdown/resolved_in_source": 1,
+      "result_statement/resolved_in_source": 3,
+      "result_table/resolved_in_source": 2,
+      "scenario_definition/resolved_in_source": 1
+    }
+  },
+  "id_integrity": {
+    "ids_checked": 38,
+    "duplicates": [],
+    "unique": true
+  },
+  "unresolved": [
+    {
+      "asset_id": "r8583:figure:01",
+      "name": "fig1_cii_vs_speed.png",
+      "status": "metadata_only",
+      "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+    },
+    {
+      "asset_id": "r8583:figure:02",
+      "name": "fig2_pareto_speed_time.png",
+      "status": "metadata_only",
+      "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+    },
+    {
+      "asset_id": "r8583:figure:03",
+      "name": "fig3_pareto_speed_route.png",
+      "status": "metadata_only",
+      "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+    },
+    {
+      "asset_id": "r8583:figure:04",
+      "name": "fig4_uncertainty_cii.png",
+      "status": "metadata_only",
+      "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+    },
+    {
+      "asset_id": "r8583:figure:05",
+      "name": "fig5_multiship_rating.png",
+      "status": "metadata_only",
+      "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+    },
+    {
+      "asset_id": "r8583:figure:06",
+      "name": "fig6_ice_thickness_sweep.png",
+      "status": "metadata_only",
+      "reason": "record exposes name/caption only and the figure-bytes route returned HTTP 404; no byte hash is claimed"
+    },
+    {
+      "asset_id": "r8583:ref:07",
+      "name": "tools/run_cii_ice_optimization.py",
+      "status": "unresolved",
+      "reason": "declared by the report as an artefact of the producing (solver) run; not present in this TensorKnowledge delivery worktree -- existence neither asserted nor denied"
+    },
+    {
+      "asset_id": "r8583:ref:08",
+      "name": "artifacts/cii_ice_in69n10/",
+      "status": "unresolved",
+      "reason": "declared by the report as an artefact of the producing (solver) run; not present in this TensorKnowledge delivery worktree -- existence neither asserted nor denied"
+    },
+    {
+      "asset_id": "r8583:ref:11",
+      "name": "docs/CII_ICE_COMPLIANCE_IN69N10.md",
+      "status": "unresolved",
+      "reason": "declared by the report as an artefact of the producing (solver) run; not present in this TensorKnowledge delivery worktree -- existence neither asserted nor denied"
+    },
+    {
+      "asset_id": "r8583:prose:01",
+      "name": "summary.json",
+      "status": "unresolved",
+      "reason": "named in prose as an artefact of the producing run; absent from this delivery worktree -- existence neither asserted nor denied"
+    },
+    {
+      "asset_id": "r8583:prose:02",
+      "name": "chain.py",
+      "status": "unresolved",
+      "reason": "named in prose as an artefact of the producing run; absent from this delivery worktree -- existence neither asserted nor denied"
+    }
+  ],
+  "observations": [
+    "Markdown is structurally complete: H1 title line, §①–§⑥ and the honest 声明 footer (L89-L91) are all present.",
+    "All 6 figure names in the record metadata also appear in the body figure index §④, so record and prose agree on the figure set; only the bytes are unavailable.",
+    "The report's own §⑤ item 7 flags the IMO coefficients as offline transcription -> WITHHELD by the author; this package does not raise that evidence grade.",
+    "Every artefact path named in the body (tools/…, artifacts/cii_ice_in69n10/…, docs/CII_ICE_COMPLIANCE_IN69N10.md, chain.py, commit 7925bc0e, the calculations REST route) belongs to the producing solver worktree and is therefore unresolved here."
+  ],
+  "limitations": [
+    "Registration only: no claim/evidence extraction, no report-type classification, no verified marks (verification is computed by the platform gate).",
+    "source_hash scope = sha256 over the UTF-8 bytes of the markdown string returned by GET /api/v1/tensor/reports/8583; any edit of the stored markdown invalidates it.",
+    "Figure bytes are not served by the platform (probed, see fig_probe); no image hash is claimed and no pixel-level statement is made.",
+    "Reference resolution is limited to this delivery worktree; an absent path is reported as unresolved and never as a broken upstream artefact.",
+    "Direct psql read of tensor_reports is denied to this role in this worktree, so the platform API is the only source channel used."
+  ],
+  "fig_probe": {
+    "fig1_cii_vs_speed.png": {
+      "http_status": 404,
+      "bytes": 29
+    },
+    "fig2_pareto_speed_time.png": {
+      "http_status": 404,
+      "bytes": 29
+    },
+    "fig3_pareto_speed_route.png": {
+      "http_status": 404,
+      "bytes": 29
+    },
+    "fig4_uncertainty_cii.png": {
+      "http_status": 404,
+      "bytes": 29
+    },
+    "fig5_multiship_rating.png": {
+      "http_status": 404,
+      "bytes": 29
+    },
+    "fig6_ice_thickness_sweep.png": {
+      "http_status": 404,
+      "bytes": 29
+    }
+  }
+}
