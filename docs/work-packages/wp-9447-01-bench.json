@@ -1,0 +1,101 @@
+{
+  "schema": "wp-9447-01-bench.v1",
+  "environment": {
+    "python": "3.11.6",
+    "platform": "loongarch64"
+  },
+  "rows": [
+    {
+      "deliverables": 1,
+      "payload_bytes": 3525,
+      "median_ms": 0.595,
+      "sweep_medians_ms": [
+        0.674,
+        0.576,
+        0.595
+      ],
+      "us_per_deliverable": 594.84
+    },
+    {
+      "deliverables": 2,
+      "payload_bytes": 7050,
+      "median_ms": 0.888,
+      "sweep_medians_ms": [
+        0.945,
+        0.888,
+        0.879
+      ],
+      "us_per_deliverable": 443.86
+    },
+    {
+      "deliverables": 4,
+      "payload_bytes": 14100,
+      "median_ms": 1.444,
+      "sweep_medians_ms": [
+        1.501,
+        1.371,
+        1.444
+      ],
+      "us_per_deliverable": 360.92
+    },
+    {
+      "deliverables": 8,
+      "payload_bytes": 28200,
+      "median_ms": 2.864,
+      "sweep_medians_ms": [
+        3.042,
+        2.751,
+        2.864
+      ],
+      "us_per_deliverable": 357.95
+    },
+    {
+      "deliverables": 16,
+      "payload_bytes": 56400,
+      "median_ms": 5.766,
+      "sweep_medians_ms": [
+        5.766,
+        6.188,
+        5.3
+      ],
+      "us_per_deliverable": 360.39
+    },
+    {
+      "deliverables": 32,
+      "payload_bytes": 112800,
+      "median_ms": 10.559,
+      "sweep_medians_ms": [
+        10.559,
+        13.914,
+        10.186
+      ],
+      "us_per_deliverable": 329.98
+    },
+    {
+      "deliverables": 64,
+      "payload_bytes": 225600,
+      "median_ms": 21.047,
+      "sweep_medians_ms": [
+        20.625,
+        21.047,
+        21.072
+      ],
+      "us_per_deliverable": 328.85
+    }
+  ],
+  "fit": {
+    "slope_ms_per_deliverable": 0.3311,
+    "us_per_deliverable": 331.11,
+    "max_rel_residual": 0.4435,
+    "per_sweep_us_per_deliverable": [
+      326.51,
+      351.79,
+      327.85
+    ],
+    "run_to_run_spread_us": [
+      326.51,
+      351.79
+    ]
+  },
+  "notes": "3 independent sweeps x 3 runs per point, median of sweep medians, fresh in-memory store per run, 4 KiB csv payload; run-to-run spread is reported because the host is shared"
+}

@@ -11,7 +11,7 @@ Usage:
     python -m ke.cli validate <pilot_dir> --db <path>
     python -m ke.cli demo     <pilot_dir> [--db <path>]
     python -m ke.cli export   <pilot_dir> --kind sft|eval|triples --out DIR [--db <path>]
-    python -m ke.cli assets   list|show|register-ko|review|deprecate|report \
+    python -m ke.cli assets   list|show|register-ko|review|deprecate|report|register-mission \
                               --db <path> [subcommand args]
 
 ``demo`` runs the full closed loop (ingest -> all query classes -> xref
@@ -35,6 +35,7 @@ import tempfile
 from pathlib import Path
 
 from . import assets as asset_mgr
+from . import mission_assets as mission_mgr
 from . import export as exp
 from . import queries as q
 from . import store, validate
@@ -312,6 +313,49 @@ def cmd_assets_export_index(args) -> int:
     return 0
 
 
+def cmd_assets_register_mission(args) -> int:
+    specs = json.loads(Path(args.deliverables).read_text(encoding="utf-8"))
+    if isinstance(specs, dict):
+        specs = specs.get("deliverables", [])
+    conn = _assets_store(args)
+    try:
+        report = mission_mgr.register_matured_deliverables(
+            conn, args.mission_id, specs,
+            base_dir=Path(args.base_dir), version=args.version,
+            created_by=args.created_by, state=args.state,
+        )
+        conn.commit()
+    except ValueError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        conn.close()
+    _print_json(report)
+    return 0
+
+
+def cmd_assets_mission_report(args) -> int:
+    conn = _assets_store(args)
+    try:
+        report = mission_mgr.mission_deliverable_report(conn, args.mission_id)
+    finally:
+        conn.close()
+    _print_json(report)
+    return 0
+
+
+def cmd_assets_verify_mission(args) -> int:
+    conn = _assets_store(args)
+    try:
+        report = mission_mgr.verify_mission_deliverables(
+            conn, args.mission_id, base_dir=Path(args.base_dir)
+        )
+    finally:
+        conn.close()
+    _print_json(report)
+    return 0 if report["ok"] else 1
+
+
 def _add_backend_args(p) -> None:
     p.add_argument("--backend", default=None, choices=list(store.BACKENDS),
                    help="storage backend (default: inferred from --db)")
@@ -429,6 +473,30 @@ def main(argv=None) -> int:
     p = assets_sub.add_parser("export-index", help="export asset-index-v1 JSON")
     p.add_argument("--output", default=None, help="write to file instead of stdout")
     p.set_defaults(fn=cmd_assets_export_index)
+
+    p = assets_sub.add_parser("register-mission",
+                               help="register a matured mission's deliverables as "
+                                    "immutable KO versions (in_review)")
+    p.add_argument("mission_id")
+    p.add_argument("--deliverables", required=True,
+                   help="JSON file: list of {deliverable_id,title,path,evidence_grade,acceptance}")
+    p.add_argument("--base-dir", required=True,
+                   help="directory the deliverable paths are resolved against")
+    p.add_argument("--version", default="1.0.0")
+    p.add_argument("--state", default="in_review", choices=list(mission_mgr.ALLOWED_BIRTH_STATES))
+    p.add_argument("--created-by", default="mission-registrar")
+    p.set_defaults(fn=cmd_assets_register_mission)
+
+    p = assets_sub.add_parser("mission-report",
+                              help="registered deliverables of a mission (+ states)")
+    p.add_argument("mission_id")
+    p.set_defaults(fn=cmd_assets_mission_report)
+
+    p = assets_sub.add_parser("verify-mission",
+                              help="re-hash mission deliverables against the registry")
+    p.add_argument("mission_id")
+    p.add_argument("--base-dir", required=True)
+    p.set_defaults(fn=cmd_assets_verify_mission)
 
     assets_leaves = [sp for name, sp in assets_sub.choices.items()]
     for sp in assets_leaves:
