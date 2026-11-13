@@ -1,0 +1,40 @@
+{
+  "package_id": "wp-9510-01",
+  "report_id": "9510",
+  "verified_at": "2026-11-13T15:18:58.059602+00:00",
+  "acceptance": {
+    "valid_json": {
+      "ok": true,
+      "detail": "asset_manifest.json + kf_result.json parse as JSON objects"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": "{\"kf_result.v1\": {\"schema_file\": \"schemas/kf_result.v1.schema.json\", \"error_count\": 0, \"errors\": []}, \"asset_manifest.v1\": {\"schema_file\": \"schemas/asset_manifest.v1.schema.json\", \"error_count\": 0, \"errors\": []}}"
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": "26/26 locators re-resolved (verbatim line + char-span identity + substring)",
+      "failures": []
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": "live=sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c manifest=sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c contract=sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c envelope=sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c",
+      "chars": {
+        "live": 8039,
+        "manifest": 8039,
+        "contract": 8039
+      },
+      "chars_match": true
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": "26 asset ids, duplicates=[]"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": "0 claims (empty allowed by contract; reason stated=True); 25 assets carry an explicit non-resolved status: A02,A03,A04,A05,A06,A07,A08,A09,A10,A11,A12,A13,A14,A15,A16,A17,A18,A19,A20,A21,A22,A23,A24,A25,A26"
+    }
+  },
+  "all_ok": true,
+  "note": "Self-check only. Nothing here marks a claim verified; the platform gate recomputes hash and locators independently."
+}
