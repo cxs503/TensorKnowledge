@@ -1,0 +1,1230 @@
+{
+ "reviewer": "wp-6506-04 reviewer (agent, mission 15845)",
+ "reviewed_package": "wp-6506-01",
+ "source": {
+  "path": "/root/tp-agent/work/m15845/work/wp-6506-04/report_6506.md",
+  "chars": 10846,
+  "sha256": "195447357f5099ba51d2931c4daff233b23098fee7bdf8f53a1569b060f4877c"
+ },
+ "upstream_artifacts": {
+  "dir": "/root/tp-agent/work/m15845/work/wp-6506-04/upstream_artifacts",
+  "origin": "TensorPlatform@2fe7f597f:artifacts/m5496/*.json",
+  "sha256": {
+   "audit_c6_baseline.json": "451dca8184d44987761456e85a10289f56ad34cb55c804c45a40f7076911bc17",
+   "audit_c7_v3.json": "473177004fcc1ef678c411d18cb71a67f4049fb834d2e2d970ca5b747d72f107",
+   "criteria_mutation_ledger.json": "48e4b0feeabab8df02cc4204e46dc5f000b95d24edc9171026b5f275afec5b63",
+   "domain_leak_scan.json": "4e54a91f7f13676bca56b8f2d5a519bb2d0670309f543ea80fdbc94da40401b2",
+   "gate_c11_negative.json": "47a07d5d0d9016fe3bae656337db535f71e8107db6aa5a7af1683bdde7579222",
+   "gate_c11_positive.json": "1c402bcbbbe4e00458101c55d1723cca957a2161a449fec9c3ce5f99030fc0fa",
+   "pr_new_criteria_no_killer.json": "d485a508ec62decebe2476ef721b2cf23213756e4aced0f2a87d1548239794b0",
+   "pr_new_criteria_with_killer.json": "28f435ecf7d253b907bba7cbd06818c977605d8d81e50c0be9ec626b9eea63f2",
+   "test_runs.json": "fb2dc79e2f1f8f56a3b3ada4090a600bd750c48eacc5d0dd75ac91d65c58fe6f"
+  }
+ },
+ "counts": {
+  "total": 99,
+  "pass": 90,
+  "fail": 7,
+  "unknown": 2,
+  "by_kind": {
+   "hash": {
+    "pass": 2,
+    "fail": 0,
+    "unknown": 0
+   },
+   "quote": {
+    "pass": 24,
+    "fail": 0,
+    "unknown": 0
+   },
+   "arithmetic": {
+    "pass": 59,
+    "fail": 2,
+    "unknown": 0
+   },
+   "replay": {
+    "pass": 5,
+    "fail": 5,
+    "unknown": 2
+   }
+  }
+ },
+ "checks": [
+  {
+   "check_id": "H1",
+   "kind": "hash",
+   "claim": "契约 source_hash 与原文 markdown 字节哈希一致",
+   "expected": "sha256:195447357f5099ba51d2931c4daff233b23098fee7bdf8f53a1569b060f4877c",
+   "observed": "sha256:195447357f5099ba51d2931c4daff233b23098fee7bdf8f53a1569b060f4877c",
+   "status": "pass",
+   "evidence": "contract input.source_hash",
+   "note": ""
+  },
+  {
+   "check_id": "H2",
+   "kind": "hash",
+   "claim": "契约 chars 与原文长度一致",
+   "expected": 10846,
+   "observed": 10846,
+   "status": "pass",
+   "evidence": "contract input.chars",
+   "note": ""
+  },
+  {
+   "check_id": "Q-Q01",
+   "kind": "quote",
+   "claim": "「结构性阻断 + fail-fast + KPI 门禁」的做法陈述",
+   "expected": "verbatim substring",
+   "observed": "found@712",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "本单把这三条线做成**服务端结构性阻断 + 客户端 fail-fast + 全台账 KPI 门禁**。"
+  },
+  {
+   "check_id": "Q-Q02",
+   "kind": "quote",
+   "claim": "台账规模：12 判据(含负控)/66 变异体",
+   "expected": "verbatim substring",
+   "observed": "found@1372",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "| 台账判据数 | 12 条（含 1 条负控），变异体 66 个 |"
+  },
+  {
+   "check_id": "Q-Q03",
+   "kind": "quote",
+   "claim": "声称新增 21/30/12 条测试",
+   "expected": "verbatim substring",
+   "observed": "found@1093",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "`tests/test_report_ownership.py`（21 条）、`tests/test_criteria_"
+  },
+  {
+   "check_id": "Q-Q04",
+   "kind": "quote",
+   "claim": "配图门声称以 IEND 收尾为判据",
+   "expected": "verbatim substring",
+   "observed": "found@2022",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "必须以带 CRC 的 IEND 块收尾"
+  },
+  {
+   "check_id": "Q-Q05",
+   "kind": "quote",
+   "claim": "PAPER-TRACE 门 kill rate 61.1%",
+   "expected": "verbatim substring",
+   "observed": "found@4158",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "| PAPER-TRACE | 3 | 11/18 | 61.1% | ⚠️ |"
+  },
+  {
+   "check_id": "Q-Q06",
+   "kind": "quote",
+   "claim": "REPORT-QUALITY 门 kill rate 58.3%",
+   "expected": "verbatim substring",
+   "observed": "found@4245",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "| REPORT-QUALITY | 3 | 7/12 | 58.3% | ⚠️ |"
+  },
+  {
+   "check_id": "Q-Q07",
+   "kind": "quote",
+   "claim": "合计 47/66 = 71.2%",
+   "expected": "verbatim substring",
+   "observed": "found@4385",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "全部判据合计 killed 47/66 = 71.2%"
+  },
+  {
+   "check_id": "Q-Q08",
+   "kind": "quote",
+   "claim": "扣除负控后 79.7%",
+   "expected": "verbatim substring",
+   "observed": "found@4416",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "扣除负控后 79.7%"
+  },
+  {
+   "check_id": "Q-Q09",
+   "kind": "quote",
+   "claim": "M1 单调性序列 [3,3,5]",
+   "expected": "verbatim substring",
+   "observed": "found@4442",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "ε=1%→3 个、3%→3 个、15%→5 个"
+  },
+  {
+   "check_id": "Q-Q10",
+   "kind": "quote",
+   "claim": "负控 0/7 且标 UNFALSIFIABLE",
+   "expected": "verbatim substring",
+   "observed": "found@4563",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "且被标为 UNFALSIFIABLE（清单：NEG-TAUTOLOGY）"
+  },
+  {
+   "check_id": "Q-Q11",
+   "kind": "quote",
+   "claim": "PAPER-TRACE AST 残留 4 个 survivor 且点名",
+   "expected": "verbatim substring",
+   "observed": "found@6748",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "残留 survivor 4 个：binop_swap[5], binop_swap[6], return_empty[0"
+  },
+  {
+   "check_id": "Q-Q12",
+   "kind": "quote",
+   "claim": "AST 现状 182/186 = 97.8%",
+   "expected": "verbatim substring",
+   "observed": "found@6604",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "| 现状 | +51 条杀手测试（含本单 12 条 v3） | 186 | 182 | **97.8%** |"
+  },
+  {
+   "check_id": "Q-Q13",
+   "kind": "quote",
+   "claim": "AST 基线 92/186 = 49.5%",
+   "expected": "verbatim substring",
+   "observed": "found@6563",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "| 基线 | 原 21 条单测 | 186 | 92 | **49.5%** |"
+  },
+  {
+   "check_id": "Q-Q14",
+   "kind": "quote",
+   "claim": "C5 既有测试 223/0/1",
+   "expected": "verbatim substring",
+   "observed": "found@7363",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "223 passed / 0 failed / 1 skipped"
+  },
+  {
+   "check_id": "Q-Q15",
+   "kind": "quote",
+   "claim": "C12 域词扫描 3 文件/37 词条/命中 0",
+   "expected": "verbatim substring",
+   "observed": "found@7785",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "`domain_leak_scan.py` 扫 3 个新改文件 / 37 域词条 → 命中 0"
+  },
+  {
+   "check_id": "Q-Q16",
+   "kind": "quote",
+   "claim": "§⑥ 门槛写作 168/186（90.0%）",
+   "expected": "verbatim substring",
+   "observed": "found@9578",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "判据 ≥168/186（90.0%）"
+  },
+  {
+   "check_id": "Q-Q17",
+   "kind": "quote",
+   "claim": "§⑥ 余量 7.8pp",
+   "expected": "verbatim substring",
+   "observed": "found@9635",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "余量 7.8pp"
+  },
+  {
+   "check_id": "Q-Q18",
+   "kind": "quote",
+   "claim": "逐判据 PT-PG4 4/7 = 57%",
+   "expected": "verbatim substring",
+   "observed": "found@4692",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "| PT-PG4 | PAPER-TRACE | 4/7 | 57% |"
+  },
+  {
+   "check_id": "Q-Q19",
+   "kind": "quote",
+   "claim": "逐判据 PL-DRIFT 7/7 = 100%",
+   "expected": "verbatim substring",
+   "observed": "found@5547",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "| PL-DRIFT | CLIENT-PAYLOAD | 7/7 | 100% |"
+  },
+  {
+   "check_id": "Q-Q20",
+   "kind": "quote",
+   "claim": "C11 门禁生效自述（负控 exit 2 + 正控 bites=True）",
+   "expected": "verbatim substring",
+   "observed": "found@7675",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "负控 spec（无 killer test）→ exit 2 `NO_KILLER_TEST`；正控 spec → ex"
+  },
+  {
+   "check_id": "Q-Q21",
+   "kind": "quote",
+   "claim": "C6 基线复现 92/186 = 49.46%",
+   "expected": "verbatim substring",
+   "observed": "found@7440",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "| C6 基线复现 | 92/186 = 49.46% | 通过（=49.5%） |"
+  },
+  {
+   "check_id": "Q-Q22",
+   "kind": "quote",
+   "claim": "诚实申报未跑全量套件",
+   "expected": "verbatim substring",
+   "observed": "found@9314",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "未跑仓内数万条全量用例"
+  },
+  {
+   "check_id": "Q-Q23",
+   "kind": "quote",
+   "claim": "误差口径为离散判据",
+   "expected": "verbatim substring",
+   "observed": "found@9939",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "所有关键量都是**离散/程序化**判据"
+  },
+  {
+   "check_id": "Q-Q24",
+   "kind": "quote",
+   "claim": "纳入台账的验收门 4 个",
+   "expected": "verbatim substring",
+   "observed": "found@1289",
+   "status": "pass",
+   "evidence": "report_6506.md",
+   "note": "纳入台账的验收门 | 4 个"
+  },
+  {
+   "check_id": "A1",
+   "kind": "arithmetic",
+   "claim": "台账判据条数 12（含 1 条负控）",
+   "expected": 12,
+   "observed": 12,
+   "status": "pass",
+   "evidence": "criteria_mutation_ledger.json#criteria",
+   "note": ""
+  },
+  {
+   "check_id": "A1b",
+   "kind": "arithmetic",
+   "claim": "负控条数 1",
+   "expected": 1,
+   "observed": 1,
+   "status": "pass",
+   "evidence": "criteria_mutation_ledger.json#criteria",
+   "note": ""
+  },
+  {
+   "check_id": "A2",
+   "kind": "arithmetic",
+   "claim": "变异体总数 66",
+   "expected": 66,
+   "observed": 66,
+   "status": "pass",
+   "evidence": "sum(criteria[].total)",
+   "note": ""
+  },
+  {
+   "check_id": "A3",
+   "kind": "arithmetic",
+   "claim": "全部判据合计 killed 47/66",
+   "expected": "47/66",
+   "observed": "47/66",
+   "status": "pass",
+   "evidence": "sum(criteria[].killed)",
+   "note": ""
+  },
+  {
+   "check_id": "A3b",
+   "kind": "arithmetic",
+   "claim": "合计 kill rate 71.2%",
+   "expected": "71.2%",
+   "observed": "71.2%",
+   "status": "pass",
+   "evidence": "47/66",
+   "note": ""
+  },
+  {
+   "check_id": "A4",
+   "kind": "arithmetic",
+   "claim": "扣除负控后 79.7%",
+   "expected": "79.7%",
+   "observed": "79.7%",
+   "status": "pass",
+   "evidence": "47/(66-7)",
+   "note": ""
+  },
+  {
+   "check_id": "A5-PAPER-TRACE",
+   "kind": "arithmetic",
+   "claim": "§3.1 逐门 PAPER-TRACE 行 = (3 判据, 11/18)",
+   "expected": [
+    3,
+    11,
+    18
+   ],
+   "observed": [
+    3,
+    11,
+    18
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria",
+   "note": ""
+  },
+  {
+   "check_id": "A5r-PAPER-TRACE",
+   "kind": "arithmetic",
+   "claim": "§3.1 PAPER-TRACE kill rate 印刷值",
+   "expected": "61.1%",
+   "observed": "61.1%",
+   "status": "pass",
+   "evidence": "killed/mutants",
+   "note": ""
+  },
+  {
+   "check_id": "A5-REPORT-QUALITY",
+   "kind": "arithmetic",
+   "claim": "§3.1 逐门 REPORT-QUALITY 行 = (3 判据, 7/12)",
+   "expected": [
+    3,
+    7,
+    12
+   ],
+   "observed": [
+    3,
+    7,
+    12
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria",
+   "note": ""
+  },
+  {
+   "check_id": "A5r-REPORT-QUALITY",
+   "kind": "arithmetic",
+   "claim": "§3.1 REPORT-QUALITY kill rate 印刷值",
+   "expected": "58.3%",
+   "observed": "58.3%",
+   "status": "pass",
+   "evidence": "killed/mutants",
+   "note": ""
+  },
+  {
+   "check_id": "A5-REPORT-OWNERSHIP",
+   "kind": "arithmetic",
+   "claim": "§3.1 逐门 REPORT-OWNERSHIP 行 = (3 判据, 15/15)",
+   "expected": [
+    3,
+    15,
+    15
+   ],
+   "observed": [
+    3,
+    15,
+    15
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria",
+   "note": ""
+  },
+  {
+   "check_id": "A5r-REPORT-OWNERSHIP",
+   "kind": "arithmetic",
+   "claim": "§3.1 REPORT-OWNERSHIP kill rate 印刷值",
+   "expected": "100.0%",
+   "observed": "100.0%",
+   "status": "pass",
+   "evidence": "killed/mutants",
+   "note": ""
+  },
+  {
+   "check_id": "A5-CLIENT-PAYLOAD",
+   "kind": "arithmetic",
+   "claim": "§3.1 逐门 CLIENT-PAYLOAD 行 = (2 判据, 14/14)",
+   "expected": [
+    2,
+    14,
+    14
+   ],
+   "observed": [
+    2,
+    14,
+    14
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria",
+   "note": ""
+  },
+  {
+   "check_id": "A5r-CLIENT-PAYLOAD",
+   "kind": "arithmetic",
+   "claim": "§3.1 CLIENT-PAYLOAD kill rate 印刷值",
+   "expected": "100.0%",
+   "observed": "100.0%",
+   "status": "pass",
+   "evidence": "killed/mutants",
+   "note": ""
+  },
+  {
+   "check_id": "A5-NEGATIVE-CONTROL",
+   "kind": "arithmetic",
+   "claim": "§3.1 逐门 NEGATIVE-CONTROL 行 = (1 判据, 0/7)",
+   "expected": [
+    1,
+    0,
+    7
+   ],
+   "observed": [
+    1,
+    0,
+    7
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria",
+   "note": ""
+  },
+  {
+   "check_id": "A5r-NEGATIVE-CONTROL",
+   "kind": "arithmetic",
+   "claim": "§3.1 NEGATIVE-CONTROL kill rate 印刷值",
+   "expected": "0.0%",
+   "observed": "0.0%",
+   "status": "pass",
+   "evidence": "killed/mutants",
+   "note": ""
+  },
+  {
+   "check_id": "A6-PT-PG4",
+   "kind": "arithmetic",
+   "claim": "§3.2 PT-PG4 = 4/7（印刷 57%）",
+   "expected": [
+    4,
+    7
+   ],
+   "observed": [
+    4,
+    7
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[PT-PG4]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-PT-PG4",
+   "kind": "arithmetic",
+   "claim": "§3.2 PT-PG4 kill rate 印刷值",
+   "expected": "57%",
+   "observed": "57%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-PT-PG5",
+   "kind": "arithmetic",
+   "claim": "§3.2 PT-PG5 = 3/7（印刷 43%）",
+   "expected": [
+    3,
+    7
+   ],
+   "observed": [
+    3,
+    7
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[PT-PG5]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-PT-PG5",
+   "kind": "arithmetic",
+   "claim": "§3.2 PT-PG5 kill rate 印刷值",
+   "expected": "43%",
+   "observed": "43%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-PT-PG7",
+   "kind": "arithmetic",
+   "claim": "§3.2 PT-PG7 = 4/4（印刷 100%）",
+   "expected": [
+    4,
+    4
+   ],
+   "observed": [
+    4,
+    4
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[PT-PG7]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-PT-PG7",
+   "kind": "arithmetic",
+   "claim": "§3.2 PT-PG7 kill rate 印刷值",
+   "expected": "100%",
+   "observed": "100%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-RQ-PHYSICS",
+   "kind": "arithmetic",
+   "claim": "§3.2 RQ-PHYSICS = 2/4（印刷 50%）",
+   "expected": [
+    2,
+    4
+   ],
+   "observed": [
+    2,
+    4
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[RQ-PHYSICS]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-RQ-PHYSICS",
+   "kind": "arithmetic",
+   "claim": "§3.2 RQ-PHYSICS kill rate 印刷值",
+   "expected": "50%",
+   "observed": "50%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-RQ-VALIDATION",
+   "kind": "arithmetic",
+   "claim": "§3.2 RQ-VALIDATION = 2/4（印刷 50%）",
+   "expected": [
+    2,
+    4
+   ],
+   "observed": [
+    2,
+    4
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[RQ-VALIDATION]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-RQ-VALIDATION",
+   "kind": "arithmetic",
+   "claim": "§3.2 RQ-VALIDATION kill rate 印刷值",
+   "expected": "50%",
+   "observed": "50%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-RQ-FIGURES",
+   "kind": "arithmetic",
+   "claim": "§3.2 RQ-FIGURES = 3/4（印刷 75%）",
+   "expected": [
+    3,
+    4
+   ],
+   "observed": [
+    3,
+    4
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[RQ-FIGURES]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-RQ-FIGURES",
+   "kind": "arithmetic",
+   "claim": "§3.2 RQ-FIGURES kill rate 印刷值",
+   "expected": "75%",
+   "observed": "75%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-RO-MISSION",
+   "kind": "arithmetic",
+   "claim": "§3.2 RO-MISSION = 7/7（印刷 100%）",
+   "expected": [
+    7,
+    7
+   ],
+   "observed": [
+    7,
+    7
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[RO-MISSION]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-RO-MISSION",
+   "kind": "arithmetic",
+   "claim": "§3.2 RO-MISSION kill rate 印刷值",
+   "expected": "100%",
+   "observed": "100%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-RO-PNG-MAGIC",
+   "kind": "arithmetic",
+   "claim": "§3.2 RO-PNG-MAGIC = 4/4（印刷 100%）",
+   "expected": [
+    4,
+    4
+   ],
+   "observed": [
+    4,
+    4
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[RO-PNG-MAGIC]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-RO-PNG-MAGIC",
+   "kind": "arithmetic",
+   "claim": "§3.2 RO-PNG-MAGIC kill rate 印刷值",
+   "expected": "100%",
+   "observed": "100%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-RO-PNG-IEND",
+   "kind": "arithmetic",
+   "claim": "§3.2 RO-PNG-IEND = 4/4（印刷 100%）",
+   "expected": [
+    4,
+    4
+   ],
+   "observed": [
+    4,
+    4
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[RO-PNG-IEND]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-RO-PNG-IEND",
+   "kind": "arithmetic",
+   "claim": "§3.2 RO-PNG-IEND kill rate 印刷值",
+   "expected": "100%",
+   "observed": "100%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-PL-NAME",
+   "kind": "arithmetic",
+   "claim": "§3.2 PL-NAME = 7/7（印刷 100%）",
+   "expected": [
+    7,
+    7
+   ],
+   "observed": [
+    7,
+    7
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[PL-NAME]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-PL-NAME",
+   "kind": "arithmetic",
+   "claim": "§3.2 PL-NAME kill rate 印刷值",
+   "expected": "100%",
+   "observed": "100%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-PL-DRIFT",
+   "kind": "arithmetic",
+   "claim": "§3.2 PL-DRIFT = 7/7（印刷 100%）",
+   "expected": [
+    7,
+    7
+   ],
+   "observed": [
+    7,
+    7
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[PL-DRIFT]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-PL-DRIFT",
+   "kind": "arithmetic",
+   "claim": "§3.2 PL-DRIFT kill rate 印刷值",
+   "expected": "100%",
+   "observed": "100%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A6-NEG-TAUTOLOGY",
+   "kind": "arithmetic",
+   "claim": "§3.2 NEG-TAUTOLOGY = 0/7（印刷 0%）",
+   "expected": [
+    0,
+    7
+   ],
+   "observed": [
+    0,
+    7
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[NEG-TAUTOLOGY]",
+   "note": ""
+  },
+  {
+   "check_id": "A6r-NEG-TAUTOLOGY",
+   "kind": "arithmetic",
+   "claim": "§3.2 NEG-TAUTOLOGY kill rate 印刷值",
+   "expected": "0%",
+   "observed": "0%",
+   "status": "pass",
+   "evidence": "killed/total",
+   "note": ""
+  },
+  {
+   "check_id": "A7",
+   "kind": "arithmetic",
+   "claim": "判据可实例化率 12/12 = 100%",
+   "expected": "12/12",
+   "observed": "12/12",
+   "status": "pass",
+   "evidence": "criteria[].instantiable",
+   "note": ""
+  },
+  {
+   "check_id": "A8",
+   "kind": "arithmetic",
+   "claim": "纳入台账的验收门 4 个（负控不计门）",
+   "expected": 4,
+   "observed": 4,
+   "status": "pass",
+   "evidence": "set(gate)",
+   "note": ""
+  },
+  {
+   "check_id": "A9",
+   "kind": "arithmetic",
+   "claim": "§3.1 M1 单调性序列 ε=1%/3%/15% → [3,3,5]",
+   "expected": [
+    3,
+    3,
+    5
+   ],
+   "observed": [
+    3,
+    3,
+    5
+   ],
+   "status": "pass",
+   "evidence": "criteria[].mutants[class=M1]",
+   "note": ""
+  },
+  {
+   "check_id": "A10",
+   "kind": "arithmetic",
+   "claim": "M1 单调性违例 0",
+   "expected": 0,
+   "observed": 0,
+   "status": "pass",
+   "evidence": "eps-grid pairwise",
+   "note": ""
+  },
+  {
+   "check_id": "A11",
+   "kind": "arithmetic",
+   "claim": "负控 NEG-TAUTOLOGY killed 0/7",
+   "expected": [
+    0,
+    7
+   ],
+   "observed": [
+    0,
+    7
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[control]",
+   "note": ""
+  },
+  {
+   "check_id": "A11c",
+   "kind": "arithmetic",
+   "claim": "负控 killed 类 0/5",
+   "expected": [
+    0,
+    5
+   ],
+   "observed": [
+    0,
+    5
+   ],
+   "status": "pass",
+   "evidence": "ledger#criteria[control].killed_classes",
+   "note": ""
+  },
+  {
+   "check_id": "A12",
+   "kind": "arithmetic",
+   "claim": "§3.3 点名 12 个最弱 mutant 全部真在 survivor 集里",
+   "expected": [],
+   "observed": [],
+   "status": "pass",
+   "evidence": "criteria[].survivors[].label",
+   "note": ""
+  },
+  {
+   "check_id": "A13",
+   "kind": "arithmetic",
+   "claim": "§3.3 清单完备性：非负控 survivor 共 12 个 == 清单行数",
+   "expected": 12,
+   "observed": 12,
+   "status": "pass",
+   "evidence": "sum(total-killed) 非负控",
+   "note": ""
+  },
+  {
+   "check_id": "A14",
+   "kind": "arithmetic",
+   "claim": "§3.4 基线 92/186 = 49.46%",
+   "expected": [
+    92,
+    186
+   ],
+   "observed": [
+    92,
+    186
+   ],
+   "status": "pass",
+   "evidence": "audit_c6_baseline.json",
+   "note": ""
+  },
+  {
+   "check_id": "A14r",
+   "kind": "arithmetic",
+   "claim": "基线 kill rate 49.5%（印刷）",
+   "expected": "49.5%",
+   "observed": "49.5%",
+   "status": "pass",
+   "evidence": "92/186",
+   "note": ""
+  },
+  {
+   "check_id": "A15",
+   "kind": "arithmetic",
+   "claim": "§3.4 现状 182/186 = 97.8%",
+   "expected": [
+    182,
+    186
+   ],
+   "observed": [
+    182,
+    186
+   ],
+   "status": "pass",
+   "evidence": "audit_c7_v3.json",
+   "note": ""
+  },
+  {
+   "check_id": "A16",
+   "kind": "arithmetic",
+   "claim": "§3.4 残留 4 个 survivor 且点名一致",
+   "expected": [
+    "binop_swap[5]",
+    "binop_swap[6]",
+    "return_empty[0]",
+    "return_empty[1]"
+   ],
+   "observed": [
+    "binop_swap[5]",
+    "binop_swap[6]",
+    "return_empty[0]",
+    "return_empty[1]"
+   ],
+   "status": "pass",
+   "evidence": "audit_c7_v3.json#survivors",
+   "note": ""
+  },
+  {
+   "check_id": "A16b",
+   "kind": "arithmetic",
+   "claim": "现状 ≥168/186 门槛",
+   "expected": "182>=168",
+   "observed": true,
+   "status": "pass",
+   "evidence": "audit_c7_v3.json",
+   "note": ""
+  },
+  {
+   "check_id": "A17",
+   "kind": "arithmetic",
+   "claim": "§⑥ 门槛印刷为「168/186（90.0%）」——真值 90.32%",
+   "expected": "168/186 = 90.0%",
+   "observed": "168/186 = 90.32%",
+   "status": "fail",
+   "evidence": "168/186",
+   "note": "印刷 90.0% 与 90.32% 差 0.32pp；§⑥ 同表余量按 90.0% 算得 7.8pp，按 168/186 应为 7.53pp"
+  },
+  {
+   "check_id": "A17b",
+   "kind": "arithmetic",
+   "claim": "§⑥ 余量 14/186 = 7.53pp，报告写 7.8pp",
+   "expected": "7.8pp",
+   "observed": "7.53pp",
+   "status": "fail",
+   "evidence": "(182-168)/186",
+   "note": "两个基准混用：7.85pp 是 97.85-90.0，7.53pp 是 (182-168)/186"
+  },
+  {
+   "check_id": "A18",
+   "kind": "arithmetic",
+   "claim": "C5 223 passed / 0 failed / 1 skipped",
+   "expected": [
+    223,
+    0,
+    1
+   ],
+   "observed": [
+    223,
+    0,
+    1
+   ],
+   "status": "pass",
+   "evidence": "test_runs.json",
+   "note": ""
+  },
+  {
+   "check_id": "A18b",
+   "kind": "arithmetic",
+   "claim": "批次可加性：51 + 172 = 223",
+   "expected": 223,
+   "observed": 223,
+   "status": "pass",
+   "evidence": "test_runs.json#runs",
+   "note": ""
+  },
+  {
+   "check_id": "A19",
+   "kind": "arithmetic",
+   "claim": "C12 域词扫描 3 文件 / 37 词条 / 命中 0",
+   "expected": [
+    3,
+    37,
+    0
+   ],
+   "observed": [
+    3,
+    37,
+    0
+   ],
+   "status": "pass",
+   "evidence": "domain_leak_scan.json",
+   "note": ""
+  },
+  {
+   "check_id": "A20",
+   "kind": "arithmetic",
+   "claim": "C11 负控 exit 2 / NO_KILLER_TEST",
+   "expected": [
+    2,
+    "NO_KILLER_TEST"
+   ],
+   "observed": [
+    2,
+    "NO_KILLER_TEST"
+   ],
+   "status": "pass",
+   "evidence": "gate_c11_negative.json",
+   "note": ""
+  },
+  {
+   "check_id": "A21",
+   "kind": "arithmetic",
+   "claim": "C11 正控 exit 0 且 bites=True",
+   "expected": [
+    0,
+    true
+   ],
+   "observed": [
+    0,
+    true
+   ],
+   "status": "pass",
+   "evidence": "gate_c11_positive.json",
+   "note": ""
+  },
+  {
+   "check_id": "A22",
+   "kind": "arithmetic",
+   "claim": "C11 正控 killer_checks 的 exit 必须是 1（真红），不能是 4（收集错误）",
+   "expected": [
+    1
+   ],
+   "observed": [
+    1
+   ],
+   "status": "pass",
+   "evidence": "gate_c11_positive.json",
+   "note": "台账里是 1=failed，符合；但 gate 代码把任意非 0 当 bites，见 R4"
+  },
+  {
+   "check_id": "U1",
+   "kind": "replay",
+   "claim": "上游 wp-6506-01 已发布（report 14673，01-asset-registration）",
+   "expected": "01-asset-registration",
+   "observed": "01-asset-registration",
+   "status": "pass",
+   "evidence": "report 14673 kf_result block",
+   "note": ""
+  },
+  {
+   "check_id": "U2",
+   "kind": "replay",
+   "claim": "上游 provenance.source_hash 与本单一致",
+   "expected": "sha256:195447357f5099ba51d2931c4daff233b23098fee7bdf8f53a1569b060f4877c",
+   "observed": "sha256:195447357f5099ba51d2931c4daff233b23098fee7bdf8f53a1569b060f4877c",
+   "status": "pass",
+   "evidence": "upstream asset_manifest",
+   "note": ""
+  },
+  {
+   "check_id": "U3",
+   "kind": "replay",
+   "claim": "上游 asset_manifest 含 assets[] 逐项（locator/类型/sha256）",
+   "expected": "assets[] with locator+hash",
+   "observed": "keys=artifact_count,artifact_types,chars,claim_count,report_id,scenario_key,source_field,source_hash,source_uri,title",
+   "status": "fail",
+   "evidence": "upstream asset_manifest.json",
+   "note": "只有计数与类型直方图，没有任何 asset 条目、locator 或 sha256 → 无法挂证据"
+  },
+  {
+   "check_id": "U4",
+   "kind": "replay",
+   "claim": "上游 asset_count=17 与原文可枚举路径记号的关系（信息项）",
+   "expected": "17",
+   "observed": "16 个互不相同的路径记号：.github/workflows/criteria-gate.yml, artifacts/m5496/make_report_payload.py, artifacts/m5496/probe_kill.py, backend/services/report_ownership.py, backend/tests/test_paper_traceability_gate_kills_v3.py, backend/tests/test_report_gate*.py, domain_leak_scan.py, fig1_killrate_by_gate.png, fig2_m1_monotonic.png, fig3_paper_trace_ast.png, fig4_criteria_heatmap.png, report_m5496.json, tests/test_criteria_mutation.py, tests/test_report_ownership.py, tools/audit/criteria_mutation.py, tools/report_payload.py",
+   "status": "unknown",
+   "evidence": "asset_manifest.json#artifact_count",
+   "note": "信息项：报告正文出现 0 个互不相同的路径样式记号（含 4 张图、CI yml、tests 文件），17 与之相容但清单未列出条目故不可逐条核对"
+  },
+  {
+   "check_id": "R1",
+   "kind": "replay",
+   "claim": "生产者提交里 tests/test_report_ownership.py 存在",
+   "expected": true,
+   "observed": true,
+   "status": "pass",
+   "evidence": "git ls-tree 2fe7f597f",
+   "note": ""
+  },
+  {
+   "check_id": "R2",
+   "kind": "replay",
+   "claim": "生产者提交里 artifacts/m5496 台账入库（12 个）",
+   "expected": 12,
+   "observed": 12,
+   "status": "pass",
+   "evidence": "git ls-tree 2fe7f597f | grep artifacts/m5496",
+   "note": ""
+  },
+  {
+   "check_id": "R3",
+   "kind": "replay",
+   "claim": "「21 条」需要参数化展开才成立：该提交 def test_ 18 个",
+   "expected": "18 defs (+3 参数化)",
+   "observed": "18 defs",
+   "status": "unknown",
+   "evidence": "git show 2fe7f597f:tests/test_report_ownership.py",
+   "note": "def 计数 18 ≠ 21；21 只能由 parametrize 展开得到（未在本次审核中复跑该文件）"
+  },
+  {
+   "check_id": "R4",
+   "kind": "replay",
+   "claim": "当前 main HEAD 上 tests/test_report_ownership.py 仍存在（报告引用它）",
+   "expected": true,
+   "observed": false,
+   "status": "fail",
+   "evidence": "git ls-tree HEAD",
+   "note": "HEAD 上不存在；同时 artifacts/m5496 在 HEAD 上 0 个文件 → 报告里的复算入口在 main 上不可解析（HEAD=34c9108ca）"
+  },
+  {
+   "check_id": "R5",
+   "kind": "replay",
+   "claim": "tests/test_criteria_mutation.py 30 条全绿（报告 C5/C11 的前提）",
+   "expected": "30 passed",
+   "observed": "1 failed, 29 passed, 1 warning in 3.45s",
+   "status": "fail",
+   "evidence": "pytest tests/test_criteria_mutation.py -q (cwd=TensorPlatform worktree)",
+   "note": "复现：1 failed, 29 passed —— 失败用例 test_gate_rejects_toothless_killer"
+  },
+  {
+   "check_id": "R6",
+   "kind": "replay",
+   "claim": "失败用例定位",
+   "expected": "none",
+   "observed": "FAILED tests/test_criteria_mutation.py::test_gate_rejects_toothless_killer - ...",
+   "status": "fail",
+   "evidence": "pytest stdout",
+   "note": ""
+  },
+  {
+   "check_id": "R7",
+   "kind": "replay",
+   "claim": "报告附录/CI 命令 `pytest tests/test_criteria_mutation.py -q --noconftest` 可收集",
+   "expected": "exit 0",
+   "observed": "exit 2",
+   "status": "fail",
+   "evidence": "pytest -q --noconftest",
+   "note": "收集错误：ModuleNotFoundError: No module named 'tools.audit'"
+  },
+  {
+   "check_id": "R8",
+   "kind": "replay",
+   "claim": "v3 killer 测试 12 条全绿（报告 C7 的测试侧）",
+   "expected": "12 passed",
+   "observed": "............                                                             [100%]",
+   "status": "pass",
+   "evidence": "pytest backend/tests/test_paper_traceability_gate_kills_v3.py",
+   "note": ""
+  }
+ ]
+}
