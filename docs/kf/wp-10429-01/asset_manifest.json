@@ -1,0 +1,625 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-10429-01",
+  "task_type": "01-asset-registration",
+  "report_id": "10429",
+  "source": {
+    "uri": "tensor://reports/10429",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "6e48f09bc41ac354d46463f6f91ef5b6d34a1ffa7748dcf6a3083c4f6944be1d",
+    "chars": 7442,
+    "bytes_utf8": 7448,
+    "title": "P153W2-N03 TensorFEM x TensorLBM strong-coupling FSI: Turek-Hron 2D-2 anchor + FSI-2 honest-FAIL + energy ledger",
+    "scenario_key": "fsi_lbm_strong_coupling",
+    "platform_id": 10429,
+    "platform_mission_id": 8136,
+    "platform_figures": [
+      "fig_cylinder_validation",
+      "fig_fsi2_history",
+      "fig_energy_ledger",
+      "fig_summary"
+    ],
+    "platform_tags": [
+      "FSI",
+      "Turek-Hron",
+      "LBM",
+      "strong-coupling",
+      "Aitken",
+      "energy-ledger",
+      "honest-FAIL"
+    ],
+    "contract_hash": "sha256:6e48f09bc41ac354d46463f6f91ef5b6d34a1ffa7748dcf6a3083c4f6944be1d",
+    "contract_chars": 7442,
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/10429",
+    "local_copy": "runs/wp-10429-01/report_10429.md",
+    "worktree": "/root/tp-agent/work/m15682"
+  },
+  "counts": {
+    "assets": 22,
+    "by_class": {
+      "document": 1,
+      "heading": 1,
+      "vcs_reference": 1,
+      "case_geometry": 1,
+      "parameter_set": 1,
+      "table": 5,
+      "code_pointer": 3,
+      "method_declaration": 1,
+      "validation_statement": 1,
+      "statement": 2,
+      "root_cause_set": 1,
+      "falsification_statement": 1,
+      "figure_declaration": 1,
+      "reference_set": 1,
+      "numeric_anchor": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 19,
+      "referenced_unresolved": 3
+    },
+    "resolved_in_source": 19,
+    "referenced_unresolved": 3,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "document",
+      "label": "报告正文（markdown 全文，源资产本体）",
+      "in_report_section": "(document)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "document_sha256_matches_contract",
+        "result": "resolved",
+        "detail": "整篇 markdown sha256 与契约 source_hash 一致"
+      },
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 7442,
+        "start_line": 0,
+        "end_line": 144,
+        "quote": "# P153W2-N03 — LBM x FE partitioned strong coupling (Turek-Hron 2D-2 / FSI-2)\n\n**Repo** TensorFEM · **branch** `agent/m8136` · **mission** 8136\n\n## 1. Case\n\nTurek & Hron (2006) laminar channel 2.5 x 0",
+        "unique": true,
+        "span_chars": 7442
+      },
+      "note": "整篇 markdown 即源资产；sha256 与 chars 见 source.hash/chars"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "heading",
+      "label": "报告标题行（含 P153W2-N03 编号与主题）",
+      "in_report_section": "(document)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 0
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 77,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "# P153W2-N03 — LBM x FE partitioned strong coupling (Turek-Hron 2D-2 / FSI-2)",
+        "unique": true,
+        "span_chars": 77
+      },
+      "note": "标题行；与平台 title 字段同源"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "vcs_reference",
+      "label": "产出来源三元组：Repo TensorFEM / branch agent/m8136 / mission 8136",
+      "in_report_section": "# P153W2-N03 — LBM x FE partitioned strong coupling (Turek-Hron 2D-2 / FSI-2)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 79
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 79,
+        "end_char": 143,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "**Repo** TensorFEM · **branch** `agent/m8136` · **mission** 8136",
+        "unique": true,
+        "span_chars": 64
+      },
+      "note": "分支名可登记，但报告未给 commit sha，故无 git 对象可解析（见 resolution_check.detail）"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "case_geometry",
+      "label": "Turek-Hron 2D-2 几何与工况声明（渠道/圆柱/梁尺寸）",
+      "in_report_section": "## 1. Case",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 157
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 157,
+        "end_char": 299,
+        "start_line": 6,
+        "end_line": 7,
+        "quote": "Turek & Hron (2006) laminar channel 2.5 x 0.41 m, rigid cylinder D = 0.1 m at\n(0.2, 0.2) with an attached elastic beam L = 0.35 m, h = 0.02 m.",
+        "unique": true,
+        "span_chars": 142
+      },
+      "note": "几何以文字声明，未附网格文件或 STL；D/L/h 三个尺度是该 FSI 基准的定义量"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "parameter_set",
+      "label": "物理参数集（rho/nu/U_mean/Re/E/rho_s）",
+      "in_report_section": "## 1. Case",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 300
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 300,
+        "end_char": 441,
+        "start_line": 8,
+        "end_line": 9,
+        "quote": "Physical parameters: rho = 1000 kg/m^3, nu = 1e-3 m^2/s, U_mean = 1.0 m/s\n(Re = U_mean D / nu = 100), beam E = 5.6e6 Pa, rho_s = 1000 kg/m^3.",
+        "unique": true,
+        "span_chars": 141
+      },
+      "note": "数值原样登记，不做单位换算"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "table",
+      "label": "两个锚定算例定义表 + 外部参考量（CD/CL/St）",
+      "in_report_section": "## 1. Case",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 475
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 475,
+        "end_char": 764,
+        "start_line": 13,
+        "end_line": 17,
+        "quote": "| case | what it isolates | external reference |\n|---|---|---|\n| 2D-2 cylinder in channel | fluid solver (wake, drag, Strouhal) | CD = 3.22-3.24, CL amplitude ~ 1.0, St = 0.295-0.305 |\n| FSI-2 cylinder + elastic splitter plate | two-way coupling | Turek-Hron FSI-2 tables (f, A, forces) |\n",
+        "unique": true,
+        "span_chars": 289
+      },
+      "note": "外部参考以区间给出（CD=3.22-3.24, St=0.295-0.305）；参考来源见 A18 参考文献集"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "code_pointer",
+      "label": "流体求解器 src/tensorfem/lbm_channel2d.py（外部仓文件）",
+      "in_report_section": "## 2. Method",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_lookup",
+        "result": "unresolved",
+        "detail": "候选中本工作树均不存在（外部仓 TensorFEM 产物）；报告未给 URL/DOI/commit，故不猜地址",
+        "searched": [
+          "src/tensorfem/lbm_channel2d.py",
+          "tensorfem/lbm_channel2d.py"
+        ]
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 779,
+        "end_char": 985,
+        "start_line": 20,
+        "end_line": 22,
+        "quote": "* **Fluid** `src/tensorfem/lbm_channel2d.py`: D2Q9 BGK lattice Boltzmann,\n  half-way bounce-back walls and obstacles, momentum-exchange force, Guo\n  forcing, parabolic velocity inlet / zero-gradient outlet.",
+        "unique": true,
+        "span_chars": 206
+      },
+      "note": "TensorFEM 仓相对路径；本工作树（TensorKnowledge）内不存在该文件，无法解析到具体版本"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "code_pointer",
+      "label": "结构求解器符号 CantileverBeamFE / ModalCantileverBeam",
+      "in_report_section": "## 2. Method",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_lookup",
+        "result": "unresolved",
+        "detail": "候选中本工作树均不存在（外部仓 TensorFEM 产物）；报告未给 URL/DOI/commit，故不猜地址",
+        "searched": [
+          "src/tensorfem/beam_fe.py",
+          "src/tensorfem/cantilever_beam.py"
+        ]
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 986,
+        "end_char": 1332,
+        "start_line": 23,
+        "end_line": 27,
+        "quote": "* **Structure** `CantileverBeamFE` / `ModalCantileverBeam`: Euler-Bernoulli\n  Hermite finite elements with a consistent mass matrix, integrated with\n  Newmark (beta = 1/4, gamma = 1/2); the first 5 generalised modes are retained\n  because the rotational inertia of the fine mesh excites a stiff, unresolved\n  band that destabilises the interface.",
+        "unique": true,
+        "span_chars": 346
+      },
+      "note": "仅给符号名，未给文件路径或 commit；本工作树内无同名符号"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "code_pointer",
+      "label": "耦合模块符号 StrongCouplingFSI2（Aitken 动态松弛）",
+      "in_report_section": "## 2. Method",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_lookup",
+        "result": "unresolved",
+        "detail": "候选中本工作树均不存在（外部仓 TensorFEM 产物）；报告未给 URL/DOI/commit，故不猜地址",
+        "searched": [
+          "src/tensorfem/strong_coupling_fsi2.py",
+          "src/tensorfem/fsi_coupling2.py"
+        ]
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1333,
+        "end_char": 1790,
+        "start_line": 28,
+        "end_line": 33,
+        "quote": "* **Coupling** `StrongCouplingFSI2`: Dirichlet-Neumann fixed point per time\n  step, the body is rasterised into a bounce-back mask, the reaction is\n  obtained from the momentum exchange of the boundary links and projected to\n  the FE nodes with the shape functions (resultant conserved by construction),\n  Aitken Delta^2 dynamic relaxation accelerates the sub-iteration and the loop\n  stops on both the displacement and the interface force residuals (1e-4).",
+        "unique": true,
+        "span_chars": 457
+      },
+      "note": "符号名 + 方法描述；实现体在外部仓，本工作树不可解析"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "method_declaration",
+      "label": "能量账本构成的五项定义",
+      "in_report_section": "## 2. Method",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 1791
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1791,
+        "end_char": 2006,
+        "start_line": 34,
+        "end_line": 36,
+        "quote": "* **Energy ledger**: fluid kinetic energy (from the populations), structural\n  kinetic + strain energy, viscous dissipation from the strain-rate tensor,\n  inlet/outlet kinetic-energy flux and the interface work F.v.",
+        "unique": true,
+        "span_chars": 215
+      },
+      "note": "账本项定义原文；账本数值本体见 A13/A15"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "table",
+      "label": "流体锚定结果表（3 组 cells/D × dt，含相对误差）",
+      "in_report_section": "### 3.1 Fluid anchor: Turek-Hron 2D-2 (cylinder, Re = 100)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 2083
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 2083,
+        "end_char": 2404,
+        "start_line": 42,
+        "end_line": 47,
+        "quote": "| cells/D | dt [s] | CD | CL amplitude | St | rel. error CD | rel. error CL | rel. error St |\n|---|---|---|---|---|---|---|---|\n| 12 | 8.3e-04 | 2.922 | 0.800 | 0.265 | 9.5% | 20.0% | 11.6% |\n| 20 | 5.0e-04 | 2.869 | 0.808 | 0.266 | 11.2% | 19.2% | 11.3% |\n| 12 | 4.2e-04 | 2.913 | 0.779 | 0.269 | 9.8% | 22.1% | 10.4% |\n",
+        "unique": true,
+        "span_chars": 321
+      },
+      "note": "上游自报相对误差；本工序只登记不复核（复核属下游/门）"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "validation_statement",
+      "label": "网格收敛性结论（CD 1.81% / St 0.35%）",
+      "in_report_section": "### 3.1 Fluid anchor: Turek-Hron 2D-2 (cylinder, Re = 100)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 2405
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 2405,
+        "end_char": 2661,
+        "start_line": 48,
+        "end_line": 51,
+        "quote": "Grid refinement (D=12 -> 20): CD changes 1.81%,\nSt changes 0.35% — the scheme is grid converged but sits\nabout 11% below the published CD and St and 19% below the lift amplitude\n(the zero-gradient outlet reflects acoustic waves; this is the dominant bias).",
+        "unique": true,
+        "span_chars": 256
+      },
+      "note": "结论同时给出主导偏差来源（零梯度出口反射声波）"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "table",
+      "label": "结构与界面验证表（f1 / Newmark 能量漂移 / 静挠度 / 界面合力守恒）",
+      "in_report_section": "### 3.2 Structure and interface verification",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 2709
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 2709,
+        "end_char": 3046,
+        "start_line": 55,
+        "end_line": 60,
+        "quote": "| check | result | criterion |\n|---|---|---|\n| beam f1 vs analytic (1.875^2/(2 pi) sqrt(EI/m)/L^2) | 1.9736 vs 1.9801 Hz (0.33%) | < 3% |\n| Newmark energy drift over two periods | 2.40e-06 | < 1% |\n| static tip deflection with 8 modes (modal truncation) | 4.87e-06 | < 0.1% |\n| interface force resultant conservation | 2.30e-03 | <= 1% |",
+        "unique": true,
+        "span_chars": 337
+      },
+      "note": "4 项自检结果与其判据并列给出"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "table",
+      "label": "耦合 FSI-2 运行清单（步数/子迭代/FFT 峰/幅值/阻力/账本残差）",
+      "in_report_section": "### 3.3 Coupled FSI-2 run",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 3162
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3162,
+        "end_char": 3577,
+        "start_line": 67,
+        "end_line": 74,
+        "quote": "| quantity | value | note |\n|---|---|---|\n| mean sub-iterations / step | 2.13 | all steps below tolerance (100%) |\n| median interface force residual | 0.00e+00 | >= 1e-4 target |\n| FFT peak of tip motion | 3.08 Hz | window < 1 shedding period |\n| tip amplitude | 15.6 mm | transient |\n| cylinder drag (window mean) | 56.3 x (1/2 rho U^2 D) | start-up transient |\n| energy ledger residual | 669% | transient window |",
+        "unique": true,
+        "span_chars": 415
+      },
+      "note": "运行配置（cells/D=20, u_lat=0.05, dt=2.50e-04, 1200 steps, 5 modes, zeta=2%）在表前一行"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "table",
+      "label": "验收判据表 C1-C8（computed 值与 verdict）",
+      "in_report_section": "## 4. Acceptance criteria",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 3606
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3606,
+        "end_char": 4443,
+        "start_line": 78,
+        "end_line": 87,
+        "quote": "| id | criterion | computed | verdict |\n|---|---|---|---|\n| C1 | FSI-2 oscillation frequency vs reference (<= 5%) | 3.0780664123011743 | FAIL |\n| C2 | FSI-2 tip amplitude vs reference (<= 10%) | 0.015588967778231221 | FAIL |\n| C3 | mean CD / CL amplitude of the coupled case (<= 10%) | {'mean_CD': 56.28568448114494, 'amp_CL': 0.987280847455634} | WITHHELD |\n| C4 | flutter critical speed vs Theodorsen (<= 8%) | None | WITHHELD |\n| C5 | energy ledger residual (<= 5%) | 6.693557969802016 | FAIL |\n| C6 | time-step halving changes the answer by <= 3% | {'CD_change': 0.0029459622334283364, 'St_change': 0.013329719722991887, 'CL_change': 0.02633157880836767, 'max_change': 0.02633157880836767} | PASS |\n| C7 | interface force conservation error <= 1% | 0.002303900226913432 | PASS |\n| C8 | honest-FAIL root-cause analysis | None | PASS |",
+        "unique": true,
+        "span_chars": 837
+      },
+      "note": "含 FAIL/WITHHELD/PASS 三种判定；本工序不改变其状态、不标 verified"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "statement",
+      "label": "总体判定陈述（2/8 定量判据通过，honest FAIL）",
+      "in_report_section": "## 4. Acceptance criteria",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 4445
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 4445,
+        "end_char": 4594,
+        "start_line": 89,
+        "end_line": 90,
+        "quote": "**Verdict: C6 and C7 and C8 pass; C1, C2, C5 fail honestly; C3 and C4 are\nWITHHELD. The node is an honest FAIL overall** (2/8 quantitative criteria).",
+        "unique": true,
+        "span_chars": 149
+      },
+      "note": "判定陈述原文；数值依据见 A15"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "root_cause_set",
+      "label": "C8 根因分析 6 条（瞬态/算力/无幅值饱和/出口反射/参考转写/旧 PASS 被证伪）",
+      "in_report_section": "## 5. Root causes of the FAIL (C8)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 4631
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 4631,
+        "end_char": 6052,
+        "start_line": 93,
+        "end_line": 113,
+        "quote": "\n1. **Start-up transient.** The initial condition is the parabolic profile\n   everywhere, so the splitter plate blocks an impulsive flow: the measured\n   window (0.3 s) is shorter than one shedding period and the drag decays from\n   8.8 kN to 2.8 kN without reaching a steady value.\n2. **Affordability.** A converged FSI-2 needs cells/D ~ 100 and O(10^4) steps;\n   at cells/D = 20 with u_lat = 0.05 one step costs ~70 ms with 2-3 sub-\n   iterations, i.e. ~15 min per second of physical time on one core.\n3. **No amplitude saturation.** The beam is linear (modal); the real benchmark\n   limits the amplitude through geometric nonlinearity. Without it the linear\n   model can only grow or decay.\n4. **Outlet reflections.** The zero-gradient outlet reflects acoustic waves and\n   biases CD / St low by ~11%; this affects both the anchor and the coupled run.\n5. **Reference transcription.** The FSI-2 frequency/force tables could not be\n   re-read offline, so C1/C2/C4 references are the ones already used in the\n   repository; the previous PASS on C4 is now known to be a tautology.\n6. **Previously reported PASS is falsified.** `fsi_turek_hron` tunes\n   f_vortex = 3.0 Hz and F0 = 17.5 N to the answer and reports Re = 100 while\n   the configured inflow gives Re = 30; `find_critical_flutter` returns the\n   closed form 2 sqrt(mu) that it is compared against. Those capabilities must\n   be downgraded to MOCK in the ledger.",
+        "unique": true,
+        "span_chars": 1421
+      },
+      "note": "第 6 条含对既有能力 fsi_turek_hron / fsi_flutter 的证伪结论，见 A19 单列"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "statement",
+      "label": "新增且已验证内容清单（4 项）",
+      "in_report_section": "## 6. What is genuinely new and verified",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 6095
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 6095,
+        "end_char": 6689,
+        "start_line": 116,
+        "end_line": 125,
+        "quote": "\n* a from-scratch D2Q9 lattice-Boltzmann channel solver with bounce-back\n  obstacles and momentum-exchange forces (validated on 2D-2 to 11%/19%/11%);\n* a modal Euler-Bernoulli FE beam verified against the analytic first\n  frequency (0.33%) and Newmark energy conservation (2.4e-6);\n* a partitioned Dirichlet-Neumann coupling with Aitken relaxation, bounce-back\n  moving body, conservative interface projection (0.23% resultant error) and a\n  real sub-iteration convergence history;\n* an energy ledger with all FSI terms, plus the finding that the two existing\n  \"verified\" FSI modules are MOCK.",
+        "unique": true,
+        "span_chars": 594
+      },
+      "note": "上游自述『verified』；本工序原样登记，不改写为平台 verified"
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "falsification_statement",
+      "label": "证伪结论：fsi_turek_hron（调参+Re=30 当 100）与 fsi_flutter（2sqrt(mu) 同义反复）应降级 MOCK",
+      "in_report_section": "## 5. Root causes of the FAIL (C8)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 5711
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 5711,
+        "end_char": 6012,
+        "start_line": 109,
+        "end_line": 112,
+        "quote": "6. **Previously reported PASS is falsified.** `fsi_turek_hron` tunes\n   f_vortex = 3.0 Hz and F0 = 17.5 N to the answer and reports Re = 100 while\n   the configured inflow gives Re = 30; `find_critical_flutter` returns the\n   closed form 2 sqrt(mu) that it is compared against. Those capabilities must",
+        "unique": true,
+        "span_chars": 301
+      },
+      "note": "负面结论（capability downgrade 建议）；不由本工序执行降级，仅登记"
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "figure_declaration",
+      "label": "图件声明 4 项（artifacts/fsi_strong_coupling/*.png）",
+      "in_report_section": "## 7. Figures",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "platform_figures_name_match",
+        "result": "present",
+        "detail": "declared png 声明 4 个，平台 record.figures 同名 4 个",
+        "declared": [
+          "fig_cylinder_validation",
+          "fig_fsi2_history",
+          "fig_energy_ledger",
+          "fig_summary"
+        ],
+        "platform_figure_names": [
+          "fig_cylinder_validation",
+          "fig_fsi2_history",
+          "fig_energy_ledger",
+          "fig_summary"
+        ]
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 6705,
+        "end_char": 6928,
+        "start_line": 128,
+        "end_line": 132,
+        "quote": "\n* `artifacts/fsi_strong_coupling/fig_cylinder_validation.png`\n* `artifacts/fsi_strong_coupling/fig_fsi2_history.png`\n* `artifacts/fsi_strong_coupling/fig_energy_ledger.png`\n* `artifacts/fsi_strong_coupling/fig_summary.png`",
+        "unique": true,
+        "span_chars": 223
+      },
+      "note": "路径为 TensorFEM 仓相对路径；平台 record.figures 里 4 个同名图件已存在（名称逐一对应）"
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "reference_set",
+      "label": "参考文献集 4 条（Turek-Hron 2006 / Kuettler-Wall 2008 / Guo 2002 / Newmark 1959）",
+      "in_report_section": "## 8. References",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 6947
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 6947,
+        "end_char": 7441,
+        "start_line": 135,
+        "end_line": 143,
+        "quote": "\n1. Turek, S., Hron, J. (2006). *Proposal for numerical benchmarking of FSI\n   between an elastic object and laminar incompressible flow.* LNCS 53, 371.\n2. Kuettler, U., Wall, W.A. (2008). *Fixed-point FSI solvers with dynamic\n   relaxation.* Comput. Mech. 42, 1.\n3. Guo, Z., Zheng, C., Shi, B. (2002). *Discrete lattice Boltzmann equation\n   for the forcing term.* Phys. Fluids 14, 2007.\n4. Newmark, N.M. (1959). *A method of computation for structural dynamics.*\n   J. Eng. Mech. Div. 85, 67.",
+        "unique": true,
+        "span_chars": 494
+      },
+      "note": "书目条目在源文内可定位；条目未给 DOI/URL，故外部全文不可由本工序解析"
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "numeric_anchor",
+      "label": "关键数值锚点：账本残差 6.693557969802016（669%）触发 C5 FAIL",
+      "in_report_section": "## 4. Acceptance criteria",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "substring_at_char_span",
+        "result": "resolved",
+        "detail": "quote 在源 markdown 中逐字命中",
+        "found_at_char": 4037
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 4037,
+        "end_char": 4103,
+        "start_line": 84,
+        "end_line": 84,
+        "quote": "| C5 | energy ledger residual (<= 5%) | 6.693557969802016 | FAIL |",
+        "unique": true,
+        "span_chars": 66
+      },
+      "note": "单一数字锚；同一量在 A14 以 669% 形式出现（百分比与小数两处一致，仅登记不做换算校验）"
+    }
+  ],
+  "claims": [],
+  "claims_note": "工作包契约 objective.classify_report_type=false / notes『不做抽取，claims 允许为空数组』：本工序只登记资产与定位，不生成 claim；claim 抽取留给下游工序。",
+  "integrity": {
+    "quote_uniqueness": "全部 char_span quote 均由 build_locator 从源 markdown 按行/字符偏移切出，并逐一断言 md.count(quote)==1（见 scripts/kf_wp10429_01_register.py）",
+    "zero_hand_copy": "数字/引文无手工键入，全部来自 fetched markdown 的切片",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "contract_hash_echoed": "sha256:6e48f09bc41ac354d46463f6f91ef5b6d34a1ffa7748dcf6a3083c4f6944be1d",
+    "verification_status": "not_verified",
+    "verification_note": "verification 由平台门计算；本文件不置 verified 标记"
+  }
+}
