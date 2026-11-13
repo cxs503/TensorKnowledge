@@ -1,0 +1,177 @@
+{
+  "package_id": "wp-10647-01",
+  "report_id": "10647",
+  "checks": {
+    "valid_json": {
+      "ok": true,
+      "files": [
+        "artifacts/wp-10647-01/asset_manifest.json",
+        "runs/wp-10647-01/kf_result.wp-10647-01.json",
+        "runs/wp-10647-01/kf_result_block.wp-10647-01.json"
+      ]
+    },
+    "schema_pass": {
+      "ok": true,
+      "manifest_schema": "schemas/asset_manifest.v2.schema.json",
+      "envelope_schema": "schemas/kf_result.v1.schema.json",
+      "manifest_errors": [],
+      "envelope_errors": []
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "contract_declared": "sha256:aa10fd7a44acab4a0c877a58dab70f087877e249a28e2684f9a6a7a2d6dfbf31",
+      "provenance": "sha256:aa10fd7a44acab4a0c877a58dab70f087877e249a28e2684f9a6a7a2d6dfbf31",
+      "manifest_source_hash": "sha256:aa10fd7a44acab4a0c877a58dab70f087877e249a28e2684f9a6a7a2d6dfbf31",
+      "recomputed_from_markdown_bytes": "sha256:aa10fd7a44acab4a0c877a58dab70f087877e249a28e2684f9a6a7a2d6dfbf31",
+      "chars_expected": 10814,
+      "chars_observed": 10814,
+      "chars_match": true,
+      "independence": "fresh API login + re-fetch in this process"
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "locators_checked": 31,
+      "locators_resolved": 31,
+      "failures": [],
+      "independence": "fresh API login + re-fetch in this process"
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "asset_id_count": 31,
+      "duplicate_asset_ids": [],
+      "duplicate_locators": 0
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "claim_count": 0,
+      "vacuous": true,
+      "claims_without_evidence_or_status": [],
+      "contract_note": "objective.classify_report_type=false / notes: claims 允许为空数组"
+    },
+    "counts_consistent": {
+      "ok": true,
+      "recomputed": {
+        "assets": 31,
+        "by_class": {
+          "code_module": 5,
+          "code_snippet": 1,
+          "design_table": 1,
+          "environment_limitation": 1,
+          "evidence_dataset": 1,
+          "figure": 4,
+          "figure_set": 1,
+          "formula": 1,
+          "measurement_note": 1,
+          "measurement_protocol": 1,
+          "measurement_schema": 2,
+          "measurement_table": 7,
+          "procedure_spec": 1,
+          "repro_command": 1,
+          "scope_limitation": 1,
+          "test_job_spec": 1,
+          "test_suite": 1
+        },
+        "by_resolution": {
+          "declared_absent": 1,
+          "referenced_unresolved": 13,
+          "resolved_in_source": 17
+        }
+      }
+    },
+    "resolution_check_result_consistent": {
+      "ok": true,
+      "mismatched": [],
+      "rule": "resolution_check.result 必须与 resolution 同向（resolved/unresolved/absent）"
+    },
+    "span_nesting": {
+      "ok": true,
+      "unexpected_overlaps": [],
+      "allowed_by_design": [
+        [
+          "A10",
+          "A05"
+        ],
+        [
+          "A10",
+          "A06"
+        ],
+        [
+          "A10",
+          "A07"
+        ],
+        [
+          "A10",
+          "A08"
+        ]
+      ]
+    },
+    "no_verified_marks": {
+      "ok": true,
+      "resolution_verified": [],
+      "note": "resolution 仅描述定位可解析性；verification 由平台门计算"
+    },
+    "envelope_identity": {
+      "ok": true,
+      "block_identical": true,
+      "package_id": "wp-10647-01",
+      "report_id": "10647"
+    },
+    "platform_figure_metadata": {
+      "ok": true,
+      "payload": [
+        [
+          "fig1_overhead.png",
+          true,
+          0
+        ],
+        [
+          "fig2_autopsy.png",
+          true,
+          0
+        ],
+        [
+          "fig3_resume.png",
+          true,
+          0
+        ],
+        [
+          "fig4_ladder.png",
+          true,
+          0
+        ]
+      ],
+      "manifest": [
+        [
+          "fig1_overhead.png",
+          true,
+          0
+        ],
+        [
+          "fig2_autopsy.png",
+          true,
+          0
+        ],
+        [
+          "fig3_resume.png",
+          true,
+          0
+        ],
+        [
+          "fig4_ladder.png",
+          true,
+          0
+        ]
+      ],
+      "note": "payload 的 png_base64 全为空 → 位图本体不可解析（figures 作为 referenced_unresolved 登记）"
+    }
+  },
+  "all_pass": true,
+  "acceptance_order": [
+    "valid_json",
+    "schema_pass",
+    "source_locator_resolvable",
+    "source_hash_matches",
+    "no_duplicate_ids",
+    "all_claims_have_evidence_or_explicit_unresolved_status"
+  ]
+}
