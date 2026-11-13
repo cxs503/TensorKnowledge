@@ -1,0 +1,438 @@
+{
+  "package_id": "wp-5757-04",
+  "report_id": "5757",
+  "reviewed_package": "wp-5757-01",
+  "source_hash": "sha256:d85b5a16b5062cdf22dfb828c57a433f8799ecfe324bd31efa72ba27449bd915",
+  "source_chars": 5061,
+  "checks_total": 15,
+  "checks_pass": 10,
+  "checks_fail": 5,
+  "blocking_failures": [],
+  "non_blocking_failures": [
+    "C6",
+    "C8",
+    "C13",
+    "C14",
+    "C15"
+  ],
+  "checks": [
+    {
+      "check_id": "C1",
+      "name": "provenance 哈希与被审 markdown 一致",
+      "result": "pass",
+      "severity_if_fail": "blocking",
+      "detail": {
+        "recomputed": "sha256:d85b5a16b5062cdf22dfb828c57a433f8799ecfe324bd31efa72ba27449bd915",
+        "expected": "sha256:d85b5a16b5062cdf22dfb828c57a433f8799ecfe324bd31efa72ba27449bd915",
+        "chars": 5061,
+        "bytes_utf8": 8027
+      }
+    },
+    {
+      "check_id": "C2",
+      "name": "上游 manifest 的 provenance 哈希/字符数与本报告一致",
+      "result": "pass",
+      "severity_if_fail": "blocking",
+      "detail": {
+        "manifest_hash": "d85b5a16b5062cdf22dfb828c57a433f8799ecfe324bd31efa72ba27449bd915",
+        "recomputed": "d85b5a16b5062cdf22dfb828c57a433f8799ecfe324bd31efa72ba27449bd915",
+        "manifest_chars": 5061,
+        "actual_chars": 5061
+      }
+    },
+    {
+      "check_id": "C3",
+      "name": "上游 manifest 声明的 asset_count 与 assets 数组一致",
+      "result": "pass",
+      "severity_if_fail": "blocking",
+      "detail": {
+        "total_assets": 15,
+        "len": 15
+      }
+    },
+    {
+      "check_id": "C4",
+      "name": "asset 编号唯一且无空 locator",
+      "result": "pass",
+      "severity_if_fail": "blocking",
+      "detail": {
+        "ids": [
+          "A01",
+          "A02",
+          "A03",
+          "A04",
+          "A05",
+          "A06",
+          "A07",
+          "A08",
+          "A09",
+          "A10",
+          "A11",
+          "A12",
+          "A13",
+          "A14",
+          "A15"
+        ]
+      }
+    },
+    {
+      "check_id": "C5",
+      "name": "15 个 locator 的 char_span 与行号逐字命中原文",
+      "result": "pass",
+      "severity_if_fail": "blocking",
+      "detail": {
+        "checked": 15,
+        "failed": []
+      }
+    },
+    {
+      "check_id": "C6",
+      "name": "locator.unique=true 与实际出现次数相符（机器可读字段须为真）",
+      "result": "fail",
+      "severity_if_fail": "minor",
+      "detail": {
+        "non_unique_quotes": [
+          "A13",
+          "A15"
+        ],
+        "mitigation": "md.find(quote) 与记录 start_char 全部一致，first-occurrence 解析不受影响",
+        "reproducible_by_index": true
+      }
+    },
+    {
+      "check_id": "C7",
+      "name": "file/path 型资产召回无遗漏",
+      "result": "pass",
+      "severity_if_fail": "minor",
+      "detail": {
+        "candidate_paths": [
+          "artifacts/autoregression_acceptance.md",
+          "artifacts/chronicler_acceptance.json",
+          "artifacts/deepwater_gap_ledger_update.json",
+          "artifacts/gate_auto_release_drill.png",
+          "artifacts/spec_impl_acceptance.json",
+          "artifacts/system_pierce_acceptance.json",
+          "gate_auto_release_loop.sh",
+          "ops/taskplane/gate_auto_release.py",
+          "supervise.py",
+          "taskplane.manifest.yaml",
+          "tools/gate_drill.py"
+        ],
+        "registered": [
+          "artifacts/autoregression_acceptance.md",
+          "artifacts/chronicler_acceptance.json",
+          "artifacts/deepwater_gap_ledger_update.json",
+          "artifacts/gate_auto_release_drill.png",
+          "artifacts/spec_impl_acceptance.json",
+          "artifacts/system_pierce_acceptance.json",
+          "deploy/taskplane/gate-auto-release.service",
+          "gate_auto_release_loop.sh",
+          "gate_drill",
+          "gate_release_audit",
+          "ops/taskplane/gate_auto_release.py",
+          "supervise.py",
+          "taskplane.manifest.yaml",
+          "tensorplatform.campaign_nodes",
+          "tools/gate_drill.py"
+        ],
+        "uncovered": []
+      }
+    },
+    {
+      "check_id": "C8",
+      "name": "报告引用的 pytest 覆盖套件是否登记为资产",
+      "result": "fail",
+      "severity_if_fail": "minor",
+      "detail": {
+        "report_says": [
+          "10 条 pytest 覆盖，**尚无生产 release 审计行**——如实披露，不粉饰。"
+        ],
+        "registered_test_assets": []
+      }
+    },
+    {
+      "check_id": "C9",
+      "name": "生产 6 门矩阵的行动作计数与自述『动作计数』一致",
+      "result": "pass",
+      "severity_if_fail": "blocking",
+      "detail": {
+        "matrix_rows": 6,
+        "matrix_counts": {
+          "hold_owner_only": 1,
+          "wait": 5
+        },
+        "stated": {
+          "release": "0",
+          "wait": "5",
+          "hold_owner_only": "1"
+        },
+        "quote": "- 动作计数：release=0 / wait=5 /",
+        "quote_continuation": "hold_owner_only=1",
+        "note": "该行在原文里被硬换行折成两行（首行以 '/' 结尾，续行为 hold_owner_only=1）；计数按合并后文本解析"
+      }
+    },
+    {
+      "check_id": "C10",
+      "name": "沙箱表行动作计数 == 自述审计动作计数，且 release 集合一致",
+      "result": "pass",
+      "severity_if_fail": "blocking",
+      "detail": {
+        "sandbox_counts": {
+          "hold_owner_only": 1,
+          "release": 4,
+          "wait": 1
+        },
+        "audit_counts": {
+          "rollback": 4,
+          "hold_owner_only": 1,
+          "release": 4,
+          "wait": 1
+        },
+        "released": [
+          129,
+          144,
+          153,
+          170
+        ],
+        "quote": "- 审计动作计数：{'rollback': 4, 'hold_owner_only': 1, 'release': 4, 'wait': 1}；字段完整性 `audit_rows_complete=True`；"
+      }
+    },
+    {
+      "check_id": "C11",
+      "name": "release↔rollback 配对自洽（4 放 / 4 回滚）",
+      "result": "pass",
+      "severity_if_fail": "blocking",
+      "detail": {
+        "release": 4,
+        "rollback": 4,
+        "released_rows": 4
+      }
+    },
+    {
+      "check_id": "C12",
+      "name": "生产首轮审计行数 7 = 6 门动作 + G21 一行的算术自洽",
+      "result": "pass",
+      "severity_if_fail": "minor",
+      "detail": {
+        "six_gate_wait": 5,
+        "six_gate_hold": 1,
+        "g21_wait": 1,
+        "derived_total": 7,
+        "note": "总数自洽；但正文把 6 个 wait 行写成『六门 wait ×6』，而六门中 wait=5、hold=1，第 6 个 wait 来自 plan 21 的 G21",
+        "prose_quote": "- 首轮 `gate_release_audit` 落 7 行（G20 `hold_owner_only` ×1 + 六门 `wait` ×6，"
+      }
+    },
+    {
+      "check_id": "C13",
+      "name": "判据表显式声明 C3(治理门) 先于 C2(工件可解析) 的判定优先级",
+      "result": "fail",
+      "severity_if_fail": "minor",
+      "detail": {
+        "gate185_row": [
+          "185",
+          "SPEC军G20·S×E闭环验收门",
+          "done",
+          "`artifacts/spec_impl_acceptance.json`→not_found",
+          "`hold_owner_only`",
+          "`governance_marker=SPEC军`"
+        ],
+        "explanation": "185 行判据工件 not_found（C2 不满足）却给 hold_owner_only（C3），说明实现让 C3 短路 C2；判据表只列 C1/C2/C3 未写优先级，仅靠 C3 描述里的『永不自动放』隐含",
+        "criteria_table": [
+          [
+            "C1 上游就绪",
+            "每个 `dependencies` 节点存在且 `status='done'`",
+            "继续等（`upstream_pending`）"
+          ],
+          [
+            "C2 判据工件可解析",
+            "metadata 声明的证据路径在 roots 中解析到**非空文件**；`.json` 还需 json 合法；`metadata.repo` 声明时命中路径须在该仓内",
+            "继续等（`artifact_missing`）"
+          ],
+          [
+            "C3 非治理门",
+            "`metadata.owner_only` 非真 + 门名/goal 无治理标记",
+            "只标 `owner_only=1`，**永不自动放**"
+          ]
+        ]
+      }
+    },
+    {
+      "check_id": "C14",
+      "name": "生产快照哈希给全（可被独立重算/比对）",
+      "result": "fail",
+      "severity_if_fail": "minor",
+      "detail": {
+        "quote": "- 生产全表快照：before `56e8ab792ceeeb40db68538a…` =",
+        "truncated": true,
+        "impact": "production_untouched=True 只能采信程序结论，外部无法复算"
+      }
+    },
+    {
+      "check_id": "C15",
+      "name": "图件 A12 的 png 载荷随报告记录发布（下游可否验图）",
+      "result": "fail",
+      "severity_if_fail": "minor",
+      "detail": {
+        "figures": [
+          {
+            "name": "gate_auto_release_drill.png...",
+            "caption": "左：G13–G20 六门判据矩阵（上游/工件/非治理 × 6 门）与判词；右：生..."
+          }
+        ],
+        "impact": "上游把 A12 记为 referenced_unresolved 是诚实的；但图内容对下游不可验"
+      }
+    }
+  ],
+  "locator_matrix": [
+    {
+      "asset_id": "A01",
+      "quote": "ops/taskplane/gate_auto_release.py",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 1301,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A02",
+      "quote": "gate_auto_release_loop.sh",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 1439,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A03",
+      "quote": "deploy/taskplane/gate-auto-release.service",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 1486,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A04",
+      "quote": "tools/gate_drill.py",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 1632,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A05",
+      "quote": "supervise.py",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 1558,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A06",
+      "quote": "taskplane.manifest.yaml",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 1583,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A07",
+      "quote": "artifacts/system_pierce_acceptance.json",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 2042,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A08",
+      "quote": "artifacts/deepwater_gap_ledger_update.json",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 2158,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A09",
+      "quote": "artifacts/autoregression_acceptance.md",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 2278,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A10",
+      "quote": "artifacts/chronicler_acceptance.json",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 2467,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A11",
+      "quote": "artifacts/spec_impl_acceptance.json",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 2583,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A12",
+      "quote": "artifacts/gate_auto_release_drill.png",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 3721,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A13",
+      "quote": "gate_release_audit",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 2,
+      "declared_unique": true,
+      "first_index": 1387,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A14",
+      "quote": "tensorplatform.campaign_nodes",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 1,
+      "declared_unique": true,
+      "first_index": 339,
+      "first_index_equals_span": true
+    },
+    {
+      "asset_id": "A15",
+      "quote": "gate_drill",
+      "span_exact": true,
+      "line_ok": true,
+      "occurrences": 2,
+      "declared_unique": true,
+      "first_index": 1638,
+      "first_index_equals_span": true
+    }
+  ]
+}
