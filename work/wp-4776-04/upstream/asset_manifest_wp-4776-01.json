@@ -1,0 +1,528 @@
+{
+ "manifest_version": "1.0",
+ "package_id": "wp-4776-01",
+ "task_type": "01-asset-registration",
+ "generated_at": "2026-11-12T01:23:48Z",
+ "generator": "scripts/kf/wp_4776_01_register_assets.py",
+ "producer": "agent/m15561",
+ "scope": {
+  "report_id": "4776",
+  "reports_touched": [
+   "4776"
+  ],
+  "registers_assets_only": true,
+  "extracts_claims": false,
+  "classifies_report_type": false,
+  "writes_outside_worktree": false,
+  "upstream_artifacts_modified": false
+ },
+ "source": {
+  "report_id": "4776",
+  "source_uri": "tensor://reports/4776",
+  "source_field": "markdown",
+  "title": "PR #185 CI cure: one pinned ruff build for the lint debt ratchet",
+  "title_matches_contract": true,
+  "markdown_h1": "PR #185 CI cure: one ruff build for the debt ratchet",
+  "title_equals_markdown_h1": false,
+  "scenario_key": "tensorfem/ci/lint-debt-ratchet",
+  "scenario_key_matches_contract": true,
+  "chars": 4869,
+  "contract_chars": 4869,
+  "chars_match_contract": true,
+  "byte_length_utf8": 4869,
+  "ascii_only": true,
+  "sha256": "sha256:03d3239696a36958c408df0ac3fd21d506a39cce4277b7f918134591d00d3882",
+  "contract_source_hash": "sha256:03d3239696a36958c408df0ac3fd21d506a39cce4277b7f918134591d00d3882",
+  "hash_matches_contract": true,
+  "hash_scope": "UTF-8 bytes of tensor_reports.markdown, no newline normalisation"
+ },
+ "record_metadata": {
+  "platform_record_id": 4776,
+  "mission_id": 4398,
+  "status": "published",
+  "created_at": "2026-11-05T17:20:53.203552+00:00",
+  "tags": [
+   "CI",
+   "lint",
+   "ruff",
+   "debt-ratchet",
+   "TensorFEM",
+   "PR-cure"
+  ],
+  "figures_count": 1,
+  "figures": [
+   {
+    "name": "pr185-cure-evidence.png",
+    "caption_chars": 272
+   }
+  ]
+ },
+ "asset_inventory": [
+  {
+   "asset_id": "A01",
+   "kind": "figure",
+   "declared_path": "runs/pr185-cure/pr185-cure-evidence.png",
+   "basename": "pr185-cure-evidence.png",
+   "role_note": "Single figure of the report; declared both as a platform `figures[]` entry (name+caption, no inline bytes) and as an inline image reference.",
+   "declared_in_platform_figures": true,
+   "locator": {
+    "field": "markdown",
+    "quote": "pr185-cure-evidence.png",
+    "char_start": 3922,
+    "char_end": 3945,
+    "line": 73,
+    "content_hash": "sha256:5376cc1d533b54a25199561e651441c8deb3cf18e2ee655462da82d74eba28c5",
+    "at_locator_matches": true,
+    "occurrences": 2
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "Evidence logs and the figure live in `runs/pr185-cure/`:",
+    "char_start": 3681,
+    "char_end": 3737,
+    "line": 68
+   },
+   "payload_in_record": "metadata_only",
+   "reachability": {
+    "status": "metadata_only_in_record",
+    "note": "Declared by name+caption in `record.figures`; no inline bytes in the record and the probed figure routes return 404, so the payload itself stays unresolved."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A02",
+   "kind": "evidence_artifact",
+   "declared_path": "runs/pr185-cure/ci-test312-pre-fix.log",
+   "basename": "ci-test312-pre-fix.log",
+   "role_note": "Failing CI job log of `test (3.12)` before the fix.",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`ci-test312-pre-fix.log` - the failing CI job log",
+    "char_start": 3741,
+    "char_end": 3790,
+    "line": 70,
+    "content_hash": "sha256:1c1644feec05685b1d9b9a1e84dd952f982932d63806f568e46370c69ddfc18b",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "Evidence logs and the figure live in `runs/pr185-cure/`:",
+    "char_start": 3681,
+    "char_end": 3737,
+    "line": 68
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A03",
+   "kind": "evidence_artifact",
+   "declared_path": "runs/pr185-cure/tests-post-fix.log",
+   "basename": "tests-post-fix.log",
+   "role_note": "Post-fix `pytest tests/test_lint_gate.py` log (18 passed).",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`tests-post-fix.log`",
+    "char_start": 3793,
+    "char_end": 3813,
+    "line": 71,
+    "content_hash": "sha256:ce8129332b8141ee0e1f3cbe0cb138a1a3ad9bd1bff50856b61d77e623c89088",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "Evidence logs and the figure live in `runs/pr185-cure/`:",
+    "char_start": 3681,
+    "char_end": 3737,
+    "line": 68
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A04",
+   "kind": "evidence_artifact",
+   "declared_path": "runs/pr185-cure/tests-drifted-guard.log",
+   "basename": "tests-drifted-guard.log",
+   "role_note": "Drift-guard test log with a ruff 0.17.3 shim on PATH (14 passed, 4 skipped).",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`tests-drifted-guard.log`",
+    "char_start": 3815,
+    "char_end": 3840,
+    "line": 71,
+    "content_hash": "sha256:409ccd5b6b6db6476bfe60cd2b49e414c15a3f63885597320e770cc7bcec2253",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "Evidence logs and the figure live in `runs/pr185-cure/`:",
+    "char_start": 3681,
+    "char_end": 3737,
+    "line": 68
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A05",
+   "kind": "evidence_artifact",
+   "declared_path": "runs/pr185-cure/gate-pinned.log",
+   "basename": "gate-pinned.log",
+   "role_note": "`lint_gate.py --check` log on the pinned build: exit 0, no new debt.",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`gate-pinned.log` (exit 0)",
+    "char_start": 3843,
+    "char_end": 3869,
+    "line": 72,
+    "content_hash": "sha256:1a2a85a339112e1fec56fe79a7959c548cfbed198a6d2a4c28890b2e9f28dfea",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "Evidence logs and the figure live in `runs/pr185-cure/`:",
+    "char_start": 3681,
+    "char_end": 3737,
+    "line": 68
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A06",
+   "kind": "evidence_artifact",
+   "declared_path": "runs/pr185-cure/gate-drifted.log",
+   "basename": "gate-drifted.log",
+   "role_note": "`lint_gate.py --check` log under ruff 0.17.3 shim: exit 2 (tool drift).",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`gate-drifted.log` (exit 2)",
+    "char_start": 3871,
+    "char_end": 3898,
+    "line": 72,
+    "content_hash": "sha256:89d2de919287d1e8f2e19074ab527f703b257ecd0279f9f1e80503375a8394d2",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "Evidence logs and the figure live in `runs/pr185-cure/`:",
+    "char_start": 3681,
+    "char_end": 3737,
+    "line": 68
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A07",
+   "kind": "evidence_artifact",
+   "declared_path": "runs/pr185-cure/lint-report.json",
+   "basename": "lint-report.json",
+   "role_note": "Machine-readable lint report payload produced by the gate (rule_totals etc.).",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`lint-report.json`",
+    "char_start": 3900,
+    "char_end": 3918,
+    "line": 72,
+    "content_hash": "sha256:8023918cb07a8c76fa3ad84232b6fe97b7910bc7a8e4a971323680c140b8d1ea",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "Evidence logs and the figure live in `runs/pr185-cure/`:",
+    "char_start": 3681,
+    "char_end": 3737,
+    "line": 68
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A08",
+   "kind": "referenced_repo_path",
+   "declared_path": "pyproject.toml",
+   "basename": "pyproject.toml",
+   "role_note": "Changed file #1: `dev` extra now pins `ruff==0.15.0`.",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`pyproject.toml` - `dev` extra now pins `ruff==0.15.0`",
+    "char_start": 1744,
+    "char_end": 1798,
+    "line": 39,
+    "content_hash": "sha256:3256a4d83f64b4340f90708cf955e02afd2c209d39eee0a0e6bcb1c40ca01dc0",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "The debt ledger `docs/lint-baseline.json` is **ruff-version specific** (frozen with",
+    "char_start": 784,
+    "char_end": 867,
+    "line": 20
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A09",
+   "kind": "referenced_repo_path",
+   "declared_path": "scripts/lint_gate.py",
+   "basename": "lint_gate.py",
+   "role_note": "Changed file #2: `tool_drift()` refuses cross-version ledger comparison with exit 2.",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`scripts/lint_gate.py` - `tool_drift()`",
+    "char_start": 1871,
+    "char_end": 1910,
+    "line": 41,
+    "content_hash": "sha256:4ead10c2cdee222552c889af1fc93ff9832965580b85329020126f2821fd1b28",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "## Fix (4 files)",
+    "char_start": 1723,
+    "char_end": 1739,
+    "line": 37
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A10",
+   "kind": "referenced_repo_path",
+   "declared_path": "tests/test_lint_gate.py",
+   "basename": "test_lint_gate.py",
+   "role_note": "Changed file #3: pin-consistency regression test + drift-guard contract tests.",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`tests/test_lint_gate.py`",
+    "char_start": 1593,
+    "char_end": 1618,
+    "line": 34,
+    "content_hash": "sha256:d12723d6b0470bf7b7d953acb9daac200471c9c4636f96832cf954c27220a471",
+    "at_locator_matches": true,
+    "occurrences": 2
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "## Fix (4 files)",
+    "char_start": 1723,
+    "char_end": 1739,
+    "line": 37
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A11",
+   "kind": "referenced_repo_path",
+   "declared_path": "docs/lint-debt-baseline.md",
+   "basename": "lint-debt-baseline.md",
+   "role_note": "Changed file #4: records the two-place pin and the exit-2 contract.",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`docs/lint-debt-baseline.md` - records the two-place pin and the exit-2 contract.",
+    "char_start": 2677,
+    "char_end": 2758,
+    "line": 53,
+    "content_hash": "sha256:2476f0a1b22e9bfbbbac534b35fbb02f434cd91b0ad23270f468ad469491f6d8",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "## Fix (4 files)",
+    "char_start": 1723,
+    "char_end": 1739,
+    "line": 37
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A12",
+   "kind": "referenced_repo_path",
+   "declared_path": "docs/lint-baseline.json",
+   "basename": "lint-baseline.json",
+   "role_note": "Frozen debt ledger (ruff-version specific); named as the root-cause subject.",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`docs/lint-baseline.json`",
+    "char_start": 800,
+    "char_end": 825,
+    "line": 20,
+    "content_hash": "sha256:2abea9a394881c39ba7b3cbc5a75296a1f8c069455d4df24a5ba1f8a10ea4b9f",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "The debt ledger `docs/lint-baseline.json` is **ruff-version specific** (frozen with",
+    "char_start": 784,
+    "char_end": 867,
+    "line": 20
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  },
+  {
+   "asset_id": "A13",
+   "kind": "referenced_repo_path",
+   "declared_path": ".github/workflows/ci.yml",
+   "basename": "ci.yml",
+   "role_note": "Workflow whose `lint` job carries the original `ruff==0.15.0` pin.",
+   "declared_in_platform_figures": false,
+   "locator": {
+    "field": "markdown",
+    "quote": "`.github/workflows/ci.yml`, lint job",
+    "char_start": 994,
+    "char_end": 1030,
+    "line": 25,
+    "content_hash": "sha256:018e0c68766645f2bb584059272c443a86e6d5fd0f8987076b2228e9aea92f90",
+    "at_locator_matches": true,
+    "occurrences": 1
+   },
+   "context_locator": {
+    "field": "markdown",
+    "quote": "| place | declared | resolved in CI |",
+    "char_start": 940,
+    "char_end": 977,
+    "line": 23
+   },
+   "payload_in_record": "not_hosted",
+   "reachability": {
+    "status": "declared_only_not_resolvable_in_report_store",
+    "note": "Path is declared in the markdown only; the record carries no attachment listing and every probed non-markdown route returns 404. The file lives in the TensorFEM worktree outside this package's scope (not read)."
+   },
+   "content_extracted": false
+  }
+ ],
+ "asset_counts": {
+  "total": 13,
+  "by_kind": {
+   "figure": 1,
+   "evidence_artifact": 6,
+   "referenced_repo_path": 6
+  }
+ },
+ "reachability_probes": [
+  {
+   "method": "GET",
+   "route": "/tensor/reports/4776",
+   "http_status": 200,
+   "note": "source of record (markdown + figures metadata)"
+  },
+  {
+   "method": "GET",
+   "route": "/tensor/reports/4776/figures",
+   "http_status": 404,
+   "note": "probe: figure listing route"
+  },
+  {
+   "method": "GET",
+   "route": "/tensor/reports/4776/figures/pr185-cure-evidence.png",
+   "http_status": 404,
+   "note": "probe: figure bytes route"
+  },
+  {
+   "method": "GET",
+   "route": "/tensor/reports/4776/attachments",
+   "http_status": 404,
+   "note": "probe: attachment listing route"
+  },
+  {
+   "method": "GET",
+   "route": "/tensor/reports/4776/assets",
+   "http_status": 404,
+   "note": "probe: asset listing route"
+  }
+ ],
+ "claims_registration": {
+  "claims": [],
+  "is_empty": true,
+  "reason": "Task type 01 registers assets only; claim extraction belongs to work package 03 (03-knowledge-extraction) and is explicitly out of scope here."
+ },
+ "unresolved": [
+  {
+   "item": "figure_payload",
+   "status": "unresolved",
+   "detail": "pr185-cure-evidence.png: name+caption registered, bytes not retrievable from the record nor from the probed routes (404)."
+  },
+  {
+   "item": "evidence_artifact_payloads",
+   "status": "unresolved",
+   "detail": "6 files under runs/pr185-cure/ are declared in the markdown only; no payload is stored with the report, so their content cannot be hashed or parsed here."
+  },
+  {
+   "item": "referenced_repo_payloads",
+   "status": "unresolved",
+   "detail": "6 repository paths (incl. the 4 changed files) are pointers into the TensorFEM tree; resolving them is out of scope for report 4776 registration."
+  }
+ ],
+ "registration_problems": []
+}
