@@ -200,3 +200,10 @@ RQS = 0.30·schema_conformance + 0.25·evidence_traceability + 0.20·field_compl
 - `confidence.basis` 有 12 条证据缺 quote、5 条靠 R5 引文哈希兜底 —— 这些对象的 `unassessed` 是真实信息缺失，不是 bug，未强行填值。
 - 平台验证回流 / L3 通道、`tensor_reports` 正文小节锚的真实解析、`ko_relation` 网络构建：**未测**（需 TP 侧导出与 KE 服务常驻，接口就绪但本轮不跑）。
 - 修订 R1–R6 目前只是**内存投影 + 数字**，`schemas/` 落地与校验器改造留待评审后单独 PR（避免与在飞 schema 改动互相踩）。
+> 复现：`python3 scripts/rci_s2b_pilot.py`（本机约 4 s，写工件+出图）+ `--full-frame`（本机约 32 s）；图 `docs/assets/rci/*.png`
+试点总体（抽样框）**不是**造的：它是本仓 `knowledge/` 下已有的四份真实语料，去重后 10,071 条 claim、10,107 条 evidence 索引（evidence 文件内 raw 行 103,307，按 id 去重后建档）：
+1. **建抽样框** `build_frame()`：四份语料去重（同 id 取首次出现），evidence 按 id 建索引 → `10,071 claim / 10,107 evidence`。
+| RQS 分布 + E-TR 分布 + 逐维均值 | `docs/assets/rci/rqs_distribution.png` | 左：RQS 直方图（0.1 分箱，标均值/中位）；中：逐对象证据可追溯率分布（只有两端：174 个对象 1.0、26 个对象 0.0，无中间值）；右：五维均值条形（不受权重影响）。 |
+1. **仓内语料 0 条证据带 `report_id`。** 10,107 条 evidence 全为 locator 型（`code-location`/报告切片），`persistent_id` 用 `git:<repo>@<commit>` 钉扎。v1.0 的 `EvidenceRef` 把 `report_id` 列为必填 ⇒ **试点总体 10,071 条里 0 条能过 v1.0**。这不是映射实现差，是 schema 与既有语料形态不匹配；修法见 R1。
+7. **RQS 权重是约定的诊断系数**，不要把 0.95 读成「知识质量 95 分」。逐维均值才是可讨论的量：本轮 E-TR 维度均值 0.87（`metrics.json → rqs.dimension_means.evidence_traceability`）是真正的短板：200 个对象里 26 个 E-TR=0（其中 2 个对象本身无证据条目；其余 24 个对象名下的 25 条证据中，12 条 quote 不足 15 字符、13 条有哈希与 quote 但缺可解析定位——既无仓内引用路径、也无 commit 钉扎、也无 `@sha` 尾钉）。
+- **不加权样本值有 1 项超线**（R2 影响面 5.05 pp，因小层过量抽样）⇒ 200 条样本的**原始比率**不能直接当总体结论；要么加权，要么（推荐）直接跑全样本枚举 —— 本轮已跑，成本约 32 s（本机实测），没理由再用估计。

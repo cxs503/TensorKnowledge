@@ -271,3 +271,23 @@ def test_report_documents_declared_limits(pilot):
     for rid in ("R1", "R2", "R3", "R4", "R5", "R6"):
         assert rid in rev
     assert "不采纳" in rev
+
+# --------------------------------------------------- 7. prose numbers bound to artifacts
+def test_report_corpus_counts_match_frame(pilot, frame):
+    """报告与修订文档里的语料规模数字必须等于 build_frame() 实测值（防手抄漂移）。"""
+    n_claims, n_evidence = len(frame["claims"]), len(frame["evidence"])
+    rev = (REPO / "docs" / "rci-s2b-schema-revisions.md").read_text(encoding="utf-8")
+    report = DOC.read_text(encoding="utf-8")
+    assert f"{n_claims:,} 条 claim" in report
+    assert f"{n_evidence:,} 条 evidence" in report
+    assert f"{n_evidence:,} 条 evidence" in rev
+
+
+def test_report_review_shortfall_numbers_match_measurement(pilot, measured):
+    """§⑤ 对短板的手写描述（E-TR 均值、零追溯对象数）必须与逐对象度量一致。"""
+    items = measured["items"]
+    mean = round(sum(it["rqs"]["evidence_traceability"] for it in items) / len(items), 2)
+    zero = sum(1 for it in items if it["rqs"]["evidence_traceability"] == 0.0)
+    report = DOC.read_text(encoding="utf-8")
+    assert f"E-TR 维度均值 {mean:.2f}" in report
+    assert f"{zero} 个 E-TR=0" in report
