@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest_wp11363_01.schema.json",
+  "title": "asset_manifest for KF work package wp-11363-01 (task_type=01-asset-registration)",
+  "description": "Locally pinned shape of docs/kf/wp-11363-01/asset_manifest.json, written so that the acceptance item schema_pass is a reproducible check instead of an assertion. The canonical envelope schema is schemas/kf_result.v1.schema.json; this file additionally pins the manifest body that the envelope's outputs.asset_manifest.json carries. Package-specific constants (package_id/report_id/hash) are const-pinned on purpose: the manifest must not be reusable for another report_id.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["manifest_version", "package_id", "task_type", "report_id",
+               "source", "assets", "locators", "counts", "claims", "id_integrity"],
+  "properties": {
+    "manifest_version": {"const": "1.0"},
+    "package_id": {"const": "wp-11363-01"},
+    "task_type": {"const": "01-asset-registration"},
+    "report_id": {"const": "11363"},
+    "source": {
+      "type": "object",
+      "required": ["report_id", "source_uri", "source_field", "source_hash",
+                   "contract_source_hash", "hash_match", "chars", "bytes", "lines"],
+      "properties": {
+        "report_id": {"const": "11363"},
+        "source_uri": {"const": "tensor://reports/11363"},
+        "source_field": {"const": "markdown"},
+        "source_hash": {"const": "sha256:346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23"},
+        "contract_source_hash": {"const": "sha256:346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23"},
+        "hash_match": {"const": true},
+        "hash_algo": {"const": "sha256"},
+        "chars": {"const": 6902},
+        "bytes": {"type": "integer", "minimum": 1},
+        "lines": {"type": "integer", "minimum": 1}
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["asset_id", "kind", "label", "section", "locator"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^r11363:[A-Za-z0-9_.:\\-]+$"},
+          "kind": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "section": {"type": "string", "minLength": 1},
+          "locator": {
+            "type": "object",
+            "required": ["source_field", "method"],
+            "properties": {
+              "source_field": {"enum": ["markdown", "record"]},
+              "method": {"enum": ["char_span", "record_pointer", "document"]},
+              "quote": {"type": "string", "minLength": 1},
+              "start_char": {"type": "integer", "minimum": 0},
+              "end_char": {"type": "integer", "minimum": 1},
+              "line": {"type": "integer", "minimum": 1},
+              "quote_verified": {"type": "boolean"},
+              "count_occurrences": {"type": "integer", "minimum": 1}
+            }
+          }
+        }
+      }
+    },
+    "locators": {
+      "type": "object",
+      "required": ["count", "all_in_markdown", "all_back_read_ok", "all_verified"],
+      "properties": {
+        "count": {"type": "integer", "minimum": 1},
+        "all_in_markdown": {"const": true},
+        "all_back_read_ok": {"const": true},
+        "all_verified": {"const": true}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["assets_total", "locators", "claims"],
+      "properties": {
+        "assets_total": {"type": "integer", "minimum": 1},
+        "locators": {"type": "integer", "minimum": 1},
+        "claims": {"const": 0}
+      }
+    },
+    "claims": {"type": "array", "maxItems": 0},
+    "id_integrity": {
+      "type": "object",
+      "required": ["count", "unique", "duplicate_ids"],
+      "properties": {
+        "count": {"type": "integer", "minimum": 1},
+        "unique": {"const": true},
+        "duplicate_ids": {"type": "array", "maxItems": 0}
+      }
+    }
+  }
+}

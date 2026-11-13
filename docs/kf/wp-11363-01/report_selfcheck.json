@@ -1,0 +1,63 @@
+{
+  "package_id": "wp-11363-01",
+  "report_id": "11363",
+  "generated_at_utc": "2026-11-12T01:53:59.607339+00:00",
+  "source_mode": "live GET /api/v1/tensor/reports/11363",
+  "checked_against": {
+    "envelope": "docs/kf/wp-11363-01/kf_result.json",
+    "manifest": "docs/kf/wp-11363-01/asset_manifest.json"
+  },
+  "summary": {
+    "checks": 11,
+    "passed": 11,
+    "failed": 0,
+    "all_pass": true
+  },
+  "checks": {
+    "valid_json": {
+      "pass": true,
+      "detail": "envelope and manifest parsed via json.loads (input to run_checks)"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": "schemas/kf_result.v1.schema.json (envelope) + schemas/asset_manifest_wp11363_01.schema.json (manifest) both validate; declared output name = asset_manifest.json"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": "source=live GET /api/v1/tensor/reports/11363; recomputed=346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23 envelope=346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23 manifest=346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23 contract=346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23 chars=6902 bytes=9618"
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "detail": "25 char_span locators re-verified against live GET /api/v1/tensor/reports/11363 (substring + offset back-read + line number + occurrence count); 25 are unique in the source; failures=[]"
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "detail": "25 asset ids, duplicates=[], pattern_ok=True"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "detail": "claims=[] in both envelope and manifest (objective.classify_report_type=false, no extraction); reason recorded: 'objective.classify_report_type=false and the contract allows'; vacuously satisfied, violations=[]"
+    },
+    "constraint_do_not_mark_claims_as_verified": {
+      "pass": true,
+      "detail": "no claim carries status='verified' or verified=true; verification is left to the platform gate (violations=[])"
+    },
+    "constraint_report_id_scope": {
+      "pass": true,
+      "detail": "every report_id/source_uri in the deliverables resolves to 11363; offenders=[]"
+    },
+    "constraint_preserve_uncertainty": {
+      "pass": true,
+      "detail": "5 limitations + 19 unresolved asset ids recorded; figure byte absence is reported per figure instead of being papered over"
+    },
+    "constraint_contract_identity": {
+      "pass": true,
+      "detail": "package_id=wp-11363-01 report_id=11363 chars=6902 hash_match=True"
+    },
+    "constraint_envelope_manifest_consistency": {
+      "pass": true,
+      "detail": "package_id/report_id/task_type/source_hash agree between envelope and manifest and outputs.asset_manifest.json is the manifest itself; mismatches=[]"
+    }
+  },
+  "note": "Worker-side self check only. It does not replace the platform gate and makes no statement about upstream artefacts that live in another repository."
+}
