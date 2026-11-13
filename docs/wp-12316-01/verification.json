@@ -1,0 +1,188 @@
+{
+  "schema": "kf_verification.v1",
+  "package_id": "wp-12316-01",
+  "report_id": "12316",
+  "source_uri": "tensor://reports/12316",
+  "source_hash_fresh": "sha256:a38be5c7ec3bc9250f3d1a53fb75491d66489da695b121134a761e93bdba7f87",
+  "contract_hash": "sha256:a38be5c7ec3bc9250f3d1a53fb75491d66489da695b121134a761e93bdba7f87",
+  "manifest_sha256": "377ddebd13fd66d03399855777b19a7b7a7448e36b1d10877ffdff898382f983",
+  "verifier": "scripts/kf_verify_12316.py",
+  "generated_from": "fresh API re-fetch + local manifest (no reuse of register-script state)",
+  "checks": [
+    {
+      "id": "json_parses",
+      "ok": true,
+      "detail": {
+        "manifest_keys": 12,
+        "envelope_keys": 5
+      }
+    },
+    {
+      "id": "schema_pinned_to_package",
+      "ok": true,
+      "detail": {
+        "package_const": "wp-12316-01",
+        "report_const": "12316"
+      }
+    },
+    {
+      "id": "schema_manifest",
+      "ok": true,
+      "detail": "jsonschema validate OK against pinned asset_manifest.v1"
+    },
+    {
+      "id": "schema_result_envelope",
+      "ok": true,
+      "detail": "jsonschema validate OK against kf_result.v1"
+    },
+    {
+      "id": "identity",
+      "ok": true,
+      "detail": {
+        "package_id": "wp-12316-01",
+        "report_id": "12316",
+        "uri": "tensor://reports/12316"
+      }
+    },
+    {
+      "id": "hash_fresh_fetch",
+      "ok": true,
+      "detail": {
+        "fresh_api_sha256": "a38be5c7ec3bc9250f3d1a53fb75491d66489da695b121134a761e93bdba7f87",
+        "local_copy_sha256": "a38be5c7ec3bc9250f3d1a53fb75491d66489da695b121134a761e93bdba7f87",
+        "contract_sha256": "a38be5c7ec3bc9250f3d1a53fb75491d66489da695b121134a761e93bdba7f87",
+        "envelope_source_hash": "sha256:a38be5c7ec3bc9250f3d1a53fb75491d66489da695b121134a761e93bdba7f87",
+        "chars_fresh": 9610,
+        "chars_declared": 9610
+      }
+    },
+    {
+      "id": "manifest_hash_matches",
+      "ok": true,
+      "detail": "a38be5c7ec3bc9250f3d1a53fb75491d66489da695b121134a761e93bdba7f87"
+    },
+    {
+      "id": "chars_match",
+      "ok": true,
+      "detail": {
+        "chars": 9610,
+        "bytes_utf8": 14664,
+        "recomputed_chars": 9610,
+        "recomputed_bytes": 14664
+      }
+    },
+    {
+      "id": "unique_ids",
+      "ok": true,
+      "detail": {
+        "n_assets": 48,
+        "n_unique": 48,
+        "duplicates": []
+      }
+    },
+    {
+      "id": "id_pattern",
+      "ok": true,
+      "detail": [
+        "A01",
+        "A02",
+        "A03"
+      ]
+    },
+    {
+      "id": "counts_consistent",
+      "ok": true,
+      "detail": {
+        "declared": 48,
+        "actual": 48
+      }
+    },
+    {
+      "id": "locator_slice",
+      "ok": true,
+      "detail": {
+        "n_checked": 48,
+        "mismatches": []
+      }
+    },
+    {
+      "id": "locator_document_span",
+      "ok": true,
+      "detail": {
+        "mismatches": [],
+        "convention": "method=document → span=whole markdown, quote=first line"
+      }
+    },
+    {
+      "id": "locator_lines",
+      "ok": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    {
+      "id": "locator_unique",
+      "ok": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    {
+      "id": "locator_nonempty",
+      "ok": true,
+      "detail": {
+        "empty_quotes": []
+      }
+    },
+    {
+      "id": "resolution_check_present",
+      "ok": true,
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "id": "external_paths_accounted",
+      "ok": true,
+      "detail": {
+        "referenced_unresolved": 24,
+        "resolved_at_reported_path": 24,
+        "unresolved": [],
+        "note": "unresolved 项如实保留，不猜地址、不补造"
+      }
+    },
+    {
+      "id": "external_payload_status",
+      "ok": true,
+      "detail": {
+        "external_resolved_at_reported_path": 23,
+        "platform_record_field": 1
+      }
+    },
+    {
+      "id": "claims_policy",
+      "ok": true,
+      "detail": {
+        "n_claims": 0,
+        "note": "空数组合法（register_assets only / classify_report_type=false）"
+      }
+    },
+    {
+      "id": "no_verified_claims",
+      "ok": true,
+      "detail": {
+        "verification_status": "not_verified"
+      }
+    }
+  ],
+  "all_pass": true,
+  "claims_allowed_empty": true,
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_locator_resolvable": true,
+    "source_hash_matches": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true
+  }
+}
