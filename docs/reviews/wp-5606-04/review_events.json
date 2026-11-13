@@ -1,0 +1,60 @@
+[
+  {
+    "id": "tkr:review:wp-5606-04",
+    "object_ref": "report:5606#wp-5606-01",
+    "object_version": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+    "decision": "request-changes",
+    "reviewer": {
+      "id": "agent:m15835-red-team",
+      "reviewer_type": "agent",
+      "role": "red-team-reviewer"
+    },
+    "reviewed_at": "2026-11-12T02:56:27+00:00",
+    "policy_version": "kf-review-policy/v1",
+    "rationale": "数值自洽但反造假证据本身未被冻结：核心断言（块内裸数字 0）与快照哈希在被审工件/路径上不可复核；另有 3 类 FAIL 码无负例、图件只锁字节不锁数值。据 F1–F4 请求修改。",
+    "findings": [
+      {
+        "severity": "major",
+        "finding": "F1 核心防造假断言在被审对象内不可复核：report 5606 markdown 无任何真实溯源标记或 prov 块"
+      },
+      {
+        "severity": "major",
+        "finding": "F2 声明的冻结工件不可达 → snapshot_hash 无法独立复算"
+      },
+      {
+        "severity": "major",
+        "finding": "F3 8 类 FAIL 码只有 5 类有命名负例，与报告自己的核心教训互相拆台"
+      },
+      {
+        "severity": "major",
+        "finding": "F4 图件只锁字节不锁数值：『图数组=一条可重跑 SQL』在图件账本内不可复核"
+      },
+      {
+        "severity": "minor",
+        "finding": "F5 『过度宣称 2 项（9.5%）』与『宣称 REAL 18 / 对账 REAL 1』并列，降级判据未给"
+      },
+      {
+        "severity": "minor",
+        "finding": "F6 『重跑 SQL 条数 20』高估互异查询数：实际互异 14 条（6 组重复）"
+      },
+      {
+        "severity": "minor",
+        "finding": "F7 图 3 五阶段只印 3 个计数，reconciled / machine-checked 无数值"
+      },
+      {
+        "severity": "informational",
+        "finding": "F8 工具链版本自陈与控制面节点不符，『matplotlib 2.4.6』疑为 numpy 版本错记"
+      },
+      {
+        "severity": "informational",
+        "finding": "F9 『校验器物理上无法改写自己的证据』强度过头"
+      }
+    ],
+    "conditions": [
+      "提供含 {{prov:...}} 标记与 prov:begin/end 块的手稿工件（含 SHA）",
+      "提供冻结工件使 snapshot_hash 可复算",
+      "补齐 8 类 FAIL 码负例矩阵",
+      "图件登记数组级 (sql, params, array_sha256) 绑定"
+    ]
+  }
+]
