@@ -1,0 +1,83 @@
+{
+ "package_id": "wp-14351-01",
+ "report_id": "14351",
+ "source_sha256": "sha256:8c696991f8bef0c1f0903d2104e88a437897875c759af309c0c7710ce1260558",
+ "assets": 22,
+ "counts": {
+  "assets": 22,
+  "by_class": {
+   "source_document": 1,
+   "case_definition": 1,
+   "parameter_set": 1,
+   "analytic_reference": 1,
+   "defect_record": 2,
+   "test_reference": 1,
+   "code_reference": 2,
+   "run_artifact_reference": 3,
+   "test_result_statement": 1,
+   "table": 2,
+   "result_statement": 1,
+   "figure_declaration": 1,
+   "open_defect_statement": 1,
+   "negation_record_reference": 1,
+   "limitation_set": 1,
+   "external_job_reference": 1,
+   "repro_command_set": 1
+  },
+  "by_resolution": {
+   "resolved_in_source": 14,
+   "referenced_unresolved": 8,
+   "declared_absent": 0
+  }
+ },
+ "checks": [
+  {
+   "item": "valid_json",
+   "result": "PASS",
+   "detail": "json.loads(docs/kf/wp-14351-01/asset_manifest.json) 成功"
+  },
+  {
+   "item": "schema_pass",
+   "result": "PASS",
+   "detail": "jsonschema(draft-07) 对 docs/kf/wp-14351-01/asset_manifest.schema.json 通过；kf_result 信封对 schemas/kf_result.v1.schema.json 通过=True"
+  },
+  {
+   "item": "source_locator_resolvable",
+   "result": "PASS",
+   "detail": "22/22 条 locator 的 quote 与其 char span 一致（且全部 quote_unique=True）"
+  },
+  {
+   "item": "source_hash_matches",
+   "result": "PASS",
+   "detail": "重算 8c696991f8bef0c1f0903d2104e88a437897875c759af309c0c7710ce1260558 == 契约 sha256:8c696991f8bef0c1f0903d2104e88a437897875c759af309c0c7710ce1260558"
+  },
+  {
+   "item": "no_duplicate_ids",
+   "result": "PASS",
+   "detail": "asset_id 唯一数=22"
+  },
+  {
+   "item": "all_claims_have_evidence_or_explicit_unresolved_status",
+   "result": "PASS",
+   "detail": "claims=[]（契约允许；不做抽取），无缺证据 claim 条目 → 条件空真；每条资产另带 resolution 或 unresolved 说明"
+  },
+  {
+   "item": "contract_chars_match",
+   "result": "PASS",
+   "detail": "chars 4190 == 契约 4190"
+  },
+  {
+   "item": "single_report_scope",
+   "result": "PASS",
+   "detail": "仅取回/登记 report 14351；未读写任何其它 report_id"
+  },
+  {
+   "item": "do_not_mark_claims_as_verified",
+   "result": "PASS",
+   "detail": "结构化扫描：无任何 verified 标记对象/值；integrity.claims_marked_verified=0（claim_policy 为说明性文字，已从扫描中排除）"
+  }
+ ],
+ "passed": 9,
+ "failed": 0,
+ "repro_cmd": "python runs/wp-14351-01/fetch_report.py && python scripts/kf/register_14351_assets.py"
+}
