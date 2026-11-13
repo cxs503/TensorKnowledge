@@ -1,0 +1,167 @@
+{
+  "package_id": "wp-6551-04",
+  "task_type": "04-independent-review",
+  "report_id": "6551",
+  "provenance": {
+    "source_hash": "sha256:879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15848",
+    "emitted_at": "2026-11-12T02:45:00+00:00",
+    "notes": "Independent adversarial review of report 6551 (IN28-N04 ship resistance closure). Reviewer context = report markdown + upstream wp-6551-01 kf_result.json only; producer explanation excluded per contract."
+  },
+  "outputs": {
+    "review_report.json": {
+      "review_type": "adversarial-review",
+      "reviewer_independent": true,
+      "upstream_packages_completed": true,
+      "upstream_package": "wp-6551-01",
+      "disposition": "approve-with-notes",
+      "findings": [
+        {
+          "id": "F1",
+          "severity": "medium",
+          "category": "transparency",
+          "title": "DTMB 5415 C_T at Fn=0.28 not explicitly tabulated in main results table",
+          "description": "The main results table (§③) lists C_T at Fn=0.2/0.3/0.4 for dtmb5415 as '0.00444 / — / 0.00775', but the experimental comparison is at Fn=0.28. The computed C_T at Fn=0.28 (implied ≈0.00531 from the +26.5% deviation against 0.0042 reference) is not shown in the main table. The reader must infer it from the deviation percentage in the criteria table.",
+          "evidence": {
+            "claim": "C_T(DTMB 5415, Fn=0.28) 偏差 +26.5%",
+            "quote_from_source": "C_T(DTMB 5415, Fn=0.28) | INSEAN 模型试验 4.2e-3（同面积口径） | **+26.5%** | **否**",
+            "location": "§⑥ 误差判定 table, row 1"
+          },
+          "impact": "Minor transparency gap; does not affect correctness. The implied value (0.0042 × 1.265 ≈ 0.00531) is consistent with interpolation between Fn=0.2 (0.00444) and Fn=0.4 (0.00775).",
+          "remediation": "Add an explicit row or footnote in the main table showing C_T at Fn=0.28 for dtmb5415."
+        },
+        {
+          "id": "F2",
+          "severity": "low",
+          "category": "methodology-clarification",
+          "title": "Decomposition identity criterion (e) is tautological by construction",
+          "description": "Criterion (e) '分解残差<1e-6' reports max|Δ|/C_T = 0.0 across 8 samples. However, if C_T is computed as (1+k)C_F + C_W by code structure, then |C_T − [(1+k)C_F + C_W]|/C_T < 1e-6 is guaranteed algebraically, not by physical validation. This criterion tests code correctness (that the decomposition is implemented consistently), not physical fidelity to experiment.",
+          "evidence": {
+            "claim": "分解恒等式 |C_T−[(1+k)C_F+C_W]|/C_T<1e-6",
+            "quote_from_source": "分解恒等式 `|C_T−[(1+k)C_F+C_W]|/C_T<1e-6`",
+            "location": "§② 怎么做的, item 4"
+          },
+          "impact": "Not a correctness issue, but the criterion could be misread as physical validation. The report should clarify that this is a code-consistency check, not an experimental validation.",
+          "remediation": "Add a note in the criteria table clarifying that criterion (e) is a code-consistency check, not a physical validation."
+        },
+        {
+          "id": "F3",
+          "severity": "low",
+          "category": "analysis-depth",
+          "title": "GCI observed order p_obs≈1.0 not analyzed for implications",
+          "description": "The report notes '波阻腿加密呈一阶（p_obs≈1.0）' but does not discuss whether first-order convergence is expected for the Michell thin-ship integral or whether it indicates resolution limitations. For a well-resolved smooth integral, higher-order convergence might be expected.",
+          "evidence": {
+            "claim": "波阻腿加密呈一阶（p_obs≈1.0）",
+            "quote_from_source": "波阻腿加密呈一阶（p_obs≈1.0），GCI 1.45–4.24%（<8% 门）",
+            "location": "§③ 计算结果, paragraph after criteria table"
+          },
+          "impact": "The GCI values (1.45–4.24%) are all below the 8% threshold, so this does not affect the pass/fail verdict. However, understanding the convergence order is important for assessing whether further refinement would improve results.",
+          "remediation": "Add a brief note on whether p_obs≈1.0 is expected for Michell integrals (known singularities at waterline) or indicates a resolution concern."
+        }
+      ],
+      "positive_findings": [
+        {
+          "id": "P1",
+          "title": "Honest FAIL discipline properly applied",
+          "description": "KCS results correctly withheld due to geometry discrepancy (Cwp +19%). Series 60 Cb=0.7/0.8 correctly withheld (outside thin-ship validity). No attempt to sugar-coat or cherry-pick favorable results."
+        },
+        {
+          "id": "P2",
+          "title": "Dual area口径 for DTMB 5415",
+          "description": "Both +26.5% (same-area) and +44.2% (reference-S) deviations reported without selecting the more favorable figure. This demonstrates intellectual honesty."
+        },
+        {
+          "id": "P3",
+          "title": "Clear limitations and non-claims",
+          "description": "Report explicitly states what is NOT claimed: no LBM direct computation of model-scale C_T; related formulas not冒充 solver results. The limitations section (§⑤) is thorough and specific."
+        },
+        {
+          "id": "P4",
+          "title": "GCI analysis with anti-aliasing gate",
+          "description": "Wave resistance leg includes proper GCI analysis (1.45–4.24%, all <8%) and axial phase resolution diagnostic (k0·secθ·dx > π/8 gate) to prevent low-Fn aliasing."
+        }
+      ],
+      "claims_review": [
+        {
+          "claim": "KCS geometry rejected (Cb/Cwp discrepancy)",
+          "status": "supported",
+          "evidence": "Report states Cwp=0.791 vs real ship 0.667 (+19%); thin-ship gate rejects KCS. Quantified: '门外诊断 C_W=6.861e-03 约为实测残差 C_R≈0.3e-3 的 20 倍'.",
+          "verdict": "supported"
+        },
+        {
+          "claim": "DTMB 5415 C_T deviation +26.5% (same area) / +44.2% (reference S)",
+          "status": "supported",
+          "evidence": "Table shows C_T reference 0.0042 at Fn=0.28; deviation +26.5% implies computed ≈0.00531. Both口径 reported.",
+          "verdict": "supported"
+        },
+        {
+          "claim": "Series 60 Cb=0.60 C_T deviation −13.4%",
+          "status": "supported",
+          "evidence": "C_T at Fn=0.3 = 0.00658; reference 0.0076; (0.00658−0.0076)/0.0076 = −13.4%. Verified.",
+          "verdict": "supported"
+        },
+        {
+          "claim": "GCI <8% for all applicable cases",
+          "status": "supported",
+          "evidence": "dtmb5415: 4.24%; series60_cb0.600: 1.45%; wigley: 3.31%. All <8%.",
+          "verdict": "supported"
+        },
+        {
+          "claim": "Decomposition identity residual = 0.0 (8 samples)",
+          "status": "supported-but-tautological",
+          "evidence": "Report states 'max|Δ|/C_T = 0.0e+00（8 样本）'. This is algebraically guaranteed if C_T = (1+k)C_F + C_W by construction.",
+          "verdict": "supported"
+        },
+        {
+          "claim": "C_T(Fn) strict monotonicity",
+          "status": "partially-supported",
+          "evidence": "Series 60 Cb=0.6: 0.00459→0.00658→0.01219 (monotonic ✓); Wigley: 0.00449→0.00549→0.00593 (monotonic ✓); DTMB 5415 Fn=0.30 pending due to coarse-level non-monotonicity.",
+          "verdict": "partially-supported"
+        },
+        {
+          "claim": "pytest ≥15 all green",
+          "status": "supported",
+          "evidence": "Report states '24 passed'.",
+          "verdict": "supported"
+        }
+      ],
+      "numerical_consistency_checks": [
+        {
+          "check": "Series 60 Cb=0.60 deviation calculation",
+          "computed": "(0.00658 - 0.0076) / 0.0076 = -0.1342",
+          "reported": "-13.4%",
+          "match": true
+        },
+        {
+          "check": "DTMB 5415 implied C_T at Fn=0.28 (same area)",
+          "computed": "0.0042 × 1.265 = 0.005313",
+          "reported": "not explicitly tabulated (implied by +26.5%)",
+          "match": "consistent-by-inference"
+        },
+        {
+          "check": "Source hash verification",
+          "computed": "sha256:879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431",
+          "contract": "sha256:879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431",
+          "match": true
+        },
+        {
+          "check": "Character count",
+          "computed": 5491,
+          "contract": 5491,
+          "match": true
+        }
+      ],
+      "scope_and_limitations": {
+        "review_scope": "Full adversarial review of report 6551 markdown content and upstream wp-6551-01 kf_result.json. Checked: numerical consistency, evidence chain, semantic fidelity, honest-FAIL discipline, zero-copy compliance.",
+        "not_reviewed": [
+          "Source code correctness (src/tensorlbm/ship_resistance_closure.py not inspected)",
+          "Figure content (4 PNG figures not retrieved; only names/captions verified in markdown)",
+          "pytest test suite content (24 tests not individually inspected)",
+          "Platform API figure endpoints (returned 404 per upstream asset manifest)"
+        ],
+        "independence_statement": "Reviewer had access only to report 6551 markdown and upstream wp-6551-01 outputs. Producer explanation, run logs, and source code were excluded per contract."
+      }
+    }
+  }
+}
