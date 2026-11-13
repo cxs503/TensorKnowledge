@@ -1,0 +1,781 @@
+{
+  "schema_version": "kf_result.v1",
+  "package_id": "wp-9091-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9091",
+  "provenance": {
+    "source_uri": "tensor://reports/9091",
+    "source_field": "markdown",
+    "source_hash": "sha256:89c2a8f978e2915cb079337441118458e78017bcb4a177c38d8c8a00cc8c6f17",
+    "source_chars": 10060,
+    "source_bytes_utf8": 10955,
+    "source_title": "IN70-N04 FSI验证阶梯：Theodorsen闭式颤振通过，Turek-Hron/VIV因流体门槛失败而WITHHELD",
+    "scenario_key": "fsi-verification-ladder",
+    "contract_version": "1.0",
+    "lane": "C",
+    "work_package": "wp-9091-01",
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9091",
+    "local_copy": "runs/wp-9091-01/report_9091.md",
+    "generator": "scripts/kf_register_wp9091_01.py",
+    "verifier": "scripts/kf_verify_wp9091_01.py",
+    "verification_status": "not_verified"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "artifact_path": "artifacts/wp-9091-01/asset_manifest.json",
+      "artifact_sha256": "894ac2325a507b767286e141207d8db752b143938815b345b955fd2936e0626b",
+      "artifact_bytes": 48154,
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-9091-01",
+      "task_type": "01-asset-registration",
+      "report_id": "9091",
+      "source": {
+        "uri": "tensor://reports/9091",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "89c2a8f978e2915cb079337441118458e78017bcb4a177c38d8c8a00cc8c6f17",
+        "chars": 10060,
+        "bytes_utf8": 10955,
+        "title": "IN70-N04 FSI验证阶梯：Theodorsen闭式颤振通过，Turek-Hron/VIV因流体门槛失败而WITHHELD",
+        "scenario_key": "fsi-verification-ladder",
+        "platform_id": 9091,
+        "platform_mission_id": 7710,
+        "platform_status": "published",
+        "platform_figures": [
+          {
+            "name": "fsi_theodorsen_ck.png",
+            "caption": "Theodorsen 升力亏损函数 C(k)=F+iG：精确 Hankel 解 vs Jones 二极点近似 vs 三极点有理拟合（k∈[0.15,1.5] 最大相对误差 0.171%）"
+          },
+          {
+            "name": "fsi_flutter_boundary.png",
+            "caption": "二维弯-扭耦合颤振边界：p-k 特征值法（精确 C(k)）与时域 Wagner 指示函数法的增长率 σ(U)，红虚线为 p-k 颤振速度 U_f=1.1874 m/s；两条路径在 1.6U_f 以内均判定稳定，量化分歧 >60% 已如实记录"
+          },
+          {
+            "name": "fsi_dfg2d2.png",
+            "caption": "流体半程门槛：DFG 2D-2（Re=100，固定圆柱）实测平均阻力系数 C_D=0.623 与 Strouhal=0.1847 对标参考值 3.22 / 0.295，误差 80.7% / 37.4% —— 该失败直接导致 Turek-Hron FSI-2 判据 WITHHELD"
+          }
+        ],
+        "platform_tags": [
+          "FSI",
+          "Turek-Hron",
+          "Theodorsen",
+          "flutter",
+          "immersed-boundary",
+          "verification",
+          "honest-FAIL"
+        ],
+        "contract_chars": 10060,
+        "chars_match_contract": true,
+        "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9091",
+        "retrieved_by": "scripts/kf_fetch_report.py",
+        "local_copy": "runs/wp-9091-01/report_9091.md"
+      },
+      "counts": {
+        "assets": 29,
+        "by_class": {
+          "document": 1,
+          "heading": 1,
+          "status_statement": 1,
+          "artifact_index_declaration": 1,
+          "table": 6,
+          "external_file_set": 1,
+          "parameter_set": 2,
+          "verification_statement": 5,
+          "formula": 1,
+          "external_dataset": 2,
+          "platform_figure_set": 1,
+          "defect_pointer": 1,
+          "consequence_statement": 1,
+          "mechanism_spec": 1,
+          "limitation_set": 1,
+          "external_reference": 1,
+          "reproduce_commands": 1,
+          "honest_disclaimer": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 24,
+          "referenced_unresolved": 4,
+          "declared_absent": 1
+        },
+        "resolved_in_source": 24,
+        "referenced_unresolved": 4,
+        "declared_absent": 1
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "document",
+          "label": "报告正文（markdown 全文，sha256 见 source.hash）",
+          "in_report_section": "(document)",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 10060,
+            "start_line": 0,
+            "end_line": 187,
+            "quote": "# FSI 验证阶梯（弱耦合→强耦合）IN70-N04 — 阶段结论\n\n# FSI verification ladder: weak → strong coupling (IN70-N04)\n\nStatus: **partial, honest**.  Rung 1 (structural participant) and rung 3\n(Theodorsen flutter boundary) pass their gates.  Rung 2 (vortex-induced\nvibration, Turek–Hron FSI-2, elastic trailing edge) is **not qualified**: the\nfluid half fails its own gate (DFG 2D-2), so no coupled amplitude/frequency\nclaim is made.  Everything below quotes measured numbers; the JSON records are\nin `artifacts/` and the figures in `artifacts/*.png`.\n\n## 1. What was built (and where it lives)\n\n| module | role |\n| --- | --- |\n| `src/tensorfem/fsi/beam2d.py` | two-node von Kármán beam (axial + bending, geometric stiffening, plane-strain effective modulus), consistent mass, Newmark-β + Newton equilibrium |\n| `src/tensorfem/fsi/flow2d.py` | 2-D incompressible MAC solver, exact sparse-LU pressure projection, immersed-marker direct forcing (Uhlmann), body load = momentum exchange + pressure identity |\n| `src/tensorfem/fsi/coupling.py` | implicit (strong) coupling driver: sub-iteration to a displacement/force gate, Aitken dynamic relaxation, closed energy ledger |\n| `src/tensorfem/fsi/theodorsen.py` | closed-form `C(k)`, 2-DOF pitch–plunge p-k flutter, Wagner-indicial time-domain route, rational `C(k)` fit |\n| `src/tensorfem/fsi/benchmarks.py` | DFG 2D-2, Turek–Hron FSI-2 and NACA0012 + elastic trailing-edge drivers, with the literature references embedded |\n| `scripts/fsi_ladder_run.py`, `scripts/fsi_ladder_figures.py` | run records (JSON) and figures |\n| `tests/test_fsi_{beam2d,flow2d,theodorsen,coupling}.py` | 22 tests (21 pass, 1 strict-xfail for a documented defect) |\n\nThe package deliberately does not touch the older rigid-carrier fixtures\n(`fluid_rigid_feedback.py`, `ice_panel_fsi.py`); those remain rigid-translation\nonly.\n\n## 2. Rung 1 — structural participant (PASS)\n\nClamped-free beam, `E = 2e11 Pa`, `ν = 0.3`, `ρ = 7800 kg/m³`,\n`h = 0.05 m`, `L = 1 m`, 40 elements.\n\n| quantity | computed | analytic | error |\n| --- | --- | --- | --- |\n| tip deflection, unit tip load | −1.600000e−7 m | −1.600000e−7 m (`PL³/3EI`) | < 1e−15 |\n| f₁ | 40.8797 Hz | 40.8995 Hz (β₁ = 1.875104) | 0.048 % |\n| f₂ | 255.4515 Hz | 256.3128 Hz (β₂ = 4.694091) | 0.34 % |\n| f₃ | 711.9738 Hz | 717.6831 Hz (β₃ = 7.854757) | 0.80 % |\n\nPlane strain switches the modulus to `E/(1−ν²)`, which changes the deflection\nby exactly `1−ν² = 0.91` (asserted in\n`test_plane_strain_uses_effective_modulus`); this is the idealisation used for\nthe Turek–Hron structure.  Newmark energy conservation without damping or load:\nrelative drift < 5e−3 over 400 steps.\n\n## 3. Rung 3 — Theodorsen flutter boundary (PASS on the closed form)\n\n`C(k) = H₁⁽²⁾(k)/(H₁⁽²⁾(k) + iH₀⁽²⁾(k))`, evaluated both through\n`scipy.special.hankel2` and through the independent `J`/`Y` Bessel routines\n(maximum difference 1.1e−16 over `k ∈ [1e-3, 1e2]`).  Analytic limits\nreproduced: `C(1e−12) = 1.000000`, `C(1e7) = 0.50000`.\n\nIndependent anchors on `C(k)`:\n\n* Jones (1940) two-pole approximation, documented as valid for small `k`,\n  agrees within **< 3 % of `|C|` for `k ≤ 0.2`** (worst sample 2.1 %).\n* The three-pole rational fit `C ≈ 1/2 + Σ c_j(ik+d_j)⁻¹` used by the\n  time-domain route reproduces the exact function on `k ∈ [0.15, 1.5]` with\n  **max 0.171 %, mean 0.076 %** relative error (400 log-spaced samples).\n\nClassical section (`μ = 20`, `a = −0.2`, `x_θ = 0.2`, `r_θ = 0.5`,\n`ω_h = 1`, `ω_α = 2 rad/s`, `b = 0.5 m`), p-k eigenvalue iteration:\n\n| quantity | value |\n| --- | --- |\n| `U_f` | **1.1874 m/s** |\n| reduced frequency `k_f = ω_f b/U_f` | 0.8654 |\n| `ω_f` | 2.0553 rad/s |\n| reduced velocity `U_f/(b ω_α)` | 1.1874 |\n| frequency ratio `ω_f/ω_α` | 1.028 |\n| damping at the boundary | −1.4e−8 (zero by construction) |\n| bracket check | σ(0.6`U_f`) < 0 < σ(1.4`U_f`) |\n\n**Cross-route check (honest FAIL on the 3 % target).**  The Wagner-indicial\ntime-domain integration of the same section, using the 3-pole fit (no shared\ncode with the p-k solve), gives\n\n| U/U_f | 0.45 | 1.0 | 1.6 | 2.5 |\n| --- | --- | --- | --- | --- |\n| σ [1/s] (time domain) | −0.0336 | (0 at p-k) | −0.0183 | +0.4686 |\n\nso the time-domain boundary lies between `1.6 U_f` and `2.5 U_f`, i.e. the two\nroutes disagree by **more than 60 %**, not the 3 % the node asks for.  There is\nalso a frequency mismatch: the time domain gives `ω ≈ 1.7–1.9 rad/s` near\n`U_f` against 2.055 from p-k.  The likely causes, in order of suspicion: (i)\nthe Wagner/Jones indicial model loses the phase lag of `C(k)` as `k → 1` even\nwith the fitted poles, because the indicial form assumes a *real* transient\nresponse while `C(k)` at `k ≈ 0.87` still carries a −9° phase; (ii) the\npeak-envelope growth-rate estimator is biased by the beating of the two close\nstructural modes.  No external table could be consulted (offline environment),\nso the flutter speed is verified against the closed form and its own analytic\nlimits, **not** against a published value.  This is recorded as an open item,\nnot as a pass.\n\n## 4. Rung 2 — fluid half qualification (FAIL)\n\nDFG benchmark 2D-2 (fixed cylinder, `Re = 100`, `U = 1 m/s`, `D = 0.1 m`) with\nthe same solver and marker machinery used by the coupled rungs,\n`nx = 500`, `dt = 1e−3`, `t_end = 12 s`\n(`artifacts/fsi_dfg2d2.json`, figure `artifacts/fsi_dfg2d2.png`):\n\n| quantity | computed | reference (Turek & Hron 2006) | error |\n| --- | --- | --- | --- |\n| mean `C_D` | 0.623 | 3.22 | **80.7 %** |\n| `C_L` amplitude | 9.59 | 0.99 | 869 % |\n| Strouhal number | 0.1847 | 0.295 | 37.4 % |\n| max |∇·u| (interior) | 8.0e−2 s⁻¹ | — | — |\n\nThe pressure projection itself is exact (discrete divergence < 1e−9 in the\nprojection unit test); the failure is localized to the **body-load\nreconstruction**: the fictitious-domain pressure identity\n`F = −ρ∫χ∇p dV` is spread uniformly over the marker cloud while the\nconstraint part is per-marker, and the resulting signal is dominated by spikes\n(the `C_L` amplitude of 9.6 is non-physical by a factor of ten).  A second,\nsmaller defect is visible in\n`test_immersed_body_is_driven_to_the_prescribed_velocity` (strict xfail): on a\nnon-square grid not every marker velocity is driven to the body velocity, i.e.\nthe diffuse body leaks.\n\nConsequence: **no Turek–Hron FSI-2 amplitude/frequency and no trailing-edge\nlock-in claim is made.**  The acceptance criteria\n“`A_y` within 10 % / `f` within 5 %” and the VIV lock-in criterion are\n**WITHHELD (not verified)**, and the coupled demonstration case diverged\n(sub-iteration budget saturated, tip displacement → 1e33), which is consistent\nwith the body-load defect: a spurious load drives the structure.  Attempting\nthe production FSI-2 run (dx = 5 mm, t = 6 s) was abandoned after the fluid gate\nfailed, rather than reporting a number the solver cannot support.\n\n## 5. Strong-coupling machinery (implemented, gate verified in principle)\n\n`ImplicitCouplingDriver` re-runs the fluid step *and* the structural step from\nthe state at `tⁿ` inside every sub-iteration, so the fixed point it converges to\nis the implicit coupling, not a staggered one.  It reports\n\n* `disp_residual = ‖Δd‖_RMS / max(‖d‖_RMS, 1e−9)` against the gate (default\n  1e−4), plus a relative force residual `‖F^{k+1}−F^k‖/‖F^{k+1}‖`;\n* Aitken dynamic relaxation with the factor clipped to [0.02, 1];\n* a closed ledger: `work` (fluid → structure, trapezoidal in the interface\n  velocity), `storage` (Δstrain + Δkinetic), `dissipated` (Newmark Rayleigh\n  dissipation), and `relative_residual = |work − storage − dissipated| / Σ|work|`.\n\nVerified behaviours (tests): a quiescent start converges in ≤ 3 sub-iterations\nwith zero interface load; the sub-iteration count never exceeds the budget and\na non-converged step *reports* the saturated count instead of pretending to\nconverge; the ledger fields are finite and dissipation is non-negative; a rigid\nbody attaches through the same exchange.  **Not** verified: an actual\nconverged two-way FSI response in a shedding flow — the energy criterion\n(`error < 5 %`) is therefore **WITHHELD** rather than claimed.\n\n## 6. Known defects and limits\n\n1. Immersed-body load reconstruction: pressure part spread uniformly, no\n   surface-conforming traction; produces non-physical lift amplitude in the\n   DFG case.  Root cause of the rung-2 failure.\n2. Diffuse-body leakage on non-square grids (strict-xfail test).\n3. Projection is fixed-coefficient, so the body constraint is only\n   approximately enforced inside the body after each projection; a penalized\n   (variable-coefficient) projection or a cut-cell scheme is the standard\n   cure.\n4. Structured beam is total-Lagrangian von Kármán: moderate rotations only, no\n   shear deformation, no 3-D.\n5. Wagner/Jones indicial model vs exact `C(k)` disagreement near `k ≈ 1`\n   (§3); the p-k result is the qualified one.\n6. All runs are single-process; `nx = 500` in 2-D is the practical ceiling on\n   the shared development node under load.\n\n## 7. Reproduce\n\n```bash\nPYTHONPATH=src pytest tests/test_fsi_beam2d.py tests/test_fsi_theodorsen.py \\\n    tests/test_fsi_flow2d.py tests/test_fsi_coupling.py -q\npython scripts/fsi_ladder_run.py theodorsen --out artifacts/fsi_theodorsen.json\npython scripts/fsi_ladder_run.py dfg --nx 500 --dt 1e-3 --t-end 12 \\\n    --out artifacts/fsi_dfg2d2.json\npython scripts/fsi_ladder_figures.py\n```\n\n## 判定汇总（逐条回答判据）\n\n| 判据 | 结果 | 数字 |\n|---|---|---|\n| Turek–Hron FSI-2 振幅 A_y 误差 <10% | **WITHHELD（未验证）** | 流体半程自身门槛未过：DFG 2D-2 平均 C_D=0.623 vs 3.22（误差 80.7%） |\n| 振动频率 f 误差 <5% | **WITHHELD（未验证）** | 同上；耦合演示算例发散（子迭代饱和，tip→1e33 m），无有效耦合解 |\n| Theodorsen 颤振速度 U_f 解析复现 <3% | **部分通过** | 闭式 C(k) 与 Bessel 独立实现差 1.1e-16，极限 C(0)=1/C(∞)=0.5 复现；p-k 得 U_f=1.1874 m/s, k_f=0.8654, ω_f=2.0553 rad/s；但时域 Wagner 路径边界落在 1.6U_f~2.5U_f（分歧 >60%）→ 3% 未达成（honest FAIL） |\n| 子迭代残差 <1e-4 | **机制实现并验证** | 静水初值 1–3 次子迭代收敛；残差门被强制（未收敛时报告饱和次数而非伪收敛）；真实绕流耦合响应未收敛 |\n| 能量守恒误差 <5% | **WITHHELD** | 能量账本（流体功/储存/耗散）已实现并逐式闭合，仅在静水算例验证；绕流算例无有效解 |\n\n诚实声明：本节点未达成 FSI-2 振幅/频率与 VIV 锁定判据，也未达成 Theodorsen 跨方法 3% 一致；已定位的首要缺陷是浸入边界**物体载荷重构**（压力项在标记云上均匀铺开、非贴体 traction）导致 DFG 升力幅值虚高 10 倍。该结论不可被覆盖为通过。\n",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "整篇 markdown 即源资产；此为唯一 method=document 的资产"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "heading",
+          "label": "报告中文主标题行",
+          "in_report_section": "(document)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 0,
+            "end_char": 34,
+            "start_line": 0,
+            "end_line": 0,
+            "quote": "# FSI 验证阶梯（弱耦合→强耦合）IN70-N04 — 阶段结论",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "与 API title 字段同源；英文标题行紧随其后，未重复登记"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "status_statement",
+          "label": "总体状态声明（partial, honest；rung2 未取得资格）",
+          "in_report_section": "# FSI verification ladder: weak → strong coupling (IN70-N04)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 98,
+            "end_char": 320,
+            "start_line": 4,
+            "end_line": 6,
+            "quote": "Status: **partial, honest**.  Rung 1 (structural participant) and rung 3\n(Theodorsen flutter boundary) pass their gates.  Rung 2 (vortex-induced\nvibration, Turek–Hron FSI-2, elastic trailing edge) is **not qualified**: the",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "逐级状态：rung1/rung3 过门，rung2 因流体半程门槛失败未取得资格"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "artifact_index_declaration",
+          "label": "工件索引声明（JSON 在 artifacts/，图在 artifacts/*.png）",
+          "in_report_section": "# FSI verification ladder: weak → strong coupling (IN70-N04)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 413,
+            "end_char": 529,
+            "start_line": 8,
+            "end_line": 9,
+            "quote": "Everything below quotes measured numbers; the JSON records are\nin `artifacts/` and the figures in `artifacts/*.png`.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "报告自述的记录/图件落位；本体在本工作树内不存在，见 A17/A18"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "table",
+          "label": "模块清单表（模块→职责，6 行）",
+          "in_report_section": "## 1. What was built (and where it lives)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 574,
+            "end_char": 1667,
+            "start_line": 13,
+            "end_line": 21,
+            "quote": "| module | role |\n| --- | --- |\n| `src/tensorfem/fsi/beam2d.py` | two-node von Kármán beam (axial + bending, geometric stiffening, plane-strain effective modulus), consistent mass, Newmark-β + Newton equilibrium |\n| `src/tensorfem/fsi/flow2d.py` | 2-D incompressible MAC solver, exact sparse-LU pressure projection, immersed-marker direct forcing (Uhlmann), body load = momentum exchange + pressure identity |\n| `src/tensorfem/fsi/coupling.py` | implicit (strong) coupling driver: sub-iteration to a displacement/force gate, Aitken dynamic relaxation, closed energy ledger |\n| `src/tensorfem/fsi/theodorsen.py` | closed-form `C(k)`, 2-DOF pitch–plunge p-k flutter, Wagner-indicial time-domain route, rational `C(k)` fit |\n| `src/tensorfem/fsi/benchmarks.py` | DFG 2D-2, Turek–Hron FSI-2 and NACA0012 + elastic trailing-edge drivers, with the literature references embedded |\n| `scripts/fsi_ladder_run.py`, `scripts/fsi_ladder_figures.py` | run records (JSON) and figures |\n| `tests/test_fsi_{beam2d,flow2d,theodorsen,coupling}.py` | 22 tests (21 pass, 1 strict-xfail for a documented defect) |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "表内 6 条职责声明；模块/脚本/测试路径本体属 TensorFEM 仓，见 A06"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "external_file_set",
+          "label": "代码模块与脚本路径（src/tensorfem/fsi/*.py, scripts/fsi_ladder_*.py, tests/test_fsi_*.py）",
+          "in_report_section": "## 1. What was built (and where it lives)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 608,
+            "end_char": 637,
+            "start_line": 15,
+            "end_line": 15,
+            "quote": "`src/tensorfem/fsi/beam2d.py`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_lookup (repo root=/root/tp-agent/work/m15630; relative paths as written in the report)",
+            "result": "unresolved",
+            "paths_checked": [
+              "src/tensorfem/fsi/beam2d.py",
+              "src/tensorfem/fsi/flow2d.py",
+              "src/tensorfem/fsi/coupling.py",
+              "src/tensorfem/fsi/theodorsen.py",
+              "src/tensorfem/fsi/benchmarks.py",
+              "src/tensorfem/fsi/",
+              "scripts/fsi_ladder_run.py",
+              "scripts/fsi_ladder_figures.py"
+            ],
+            "paths_found": [],
+            "paths_missing": [
+              "src/tensorfem/fsi/beam2d.py",
+              "src/tensorfem/fsi/flow2d.py",
+              "src/tensorfem/fsi/coupling.py",
+              "src/tensorfem/fsi/theodorsen.py",
+              "src/tensorfem/fsi/benchmarks.py",
+              "src/tensorfem/fsi/",
+              "scripts/fsi_ladder_run.py",
+              "scripts/fsi_ladder_figures.py"
+            ],
+            "detail": "报告为仓库相对路径，指向 TensorFEM 的源码/工件；本仓检出内不存在"
+          },
+          "note": "locator 只钉住表中首个模块路径；完整路径清单见 paths（5 模块 + 2 脚本），本工作树无 src/ 与 scripts/fsi_ladder_*，属 TensorFEM 仓产物，未解析"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "parameter_set",
+          "label": "rung1 梁参数（E, ν, ρ, h, L, 40 单元）",
+          "in_report_section": "## 2. Rung 1 — structural participant (PASS)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1875,
+            "end_char": 1975,
+            "start_line": 29,
+            "end_line": 30,
+            "quote": "Clamped-free beam, `E = 2e11 Pa`, `ν = 0.3`, `ρ = 7800 kg/m³`,\n`h = 0.05 m`, `L = 1 m`, 40 elements.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "参数原文；本工序只登记不换算、不复核"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "table",
+          "label": "rung1 结构解析对照表（4 量：位移 + f1/f2/f3）",
+          "in_report_section": "## 2. Rung 1 — structural participant (PASS)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1977,
+            "end_char": 2314,
+            "start_line": 32,
+            "end_line": 37,
+            "quote": "| quantity | computed | analytic | error |\n| --- | --- | --- | --- |\n| tip deflection, unit tip load | −1.600000e−7 m | −1.600000e−7 m (`PL³/3EI`) | < 1e−15 |\n| f₁ | 40.8797 Hz | 40.8995 Hz (β₁ = 1.875104) | 0.048 % |\n| f₂ | 255.4515 Hz | 256.3128 Hz (β₂ = 4.694091) | 0.34 % |\n| f₃ | 711.9738 Hz | 717.6831 Hz (β₃ = 7.854757) | 0.80 % |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "上游自报误差 <1e−15 / 0.048 % / 0.34 % / 0.80 %；本工序不复核数值"
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "verification_statement",
+          "label": "平面应变有效模量断言（1−ν²=0.91）与 Newmark 能量漂移 <5e−3",
+          "in_report_section": "## 2. Rung 1 — structural participant (PASS)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2316,
+            "end_char": 2628,
+            "start_line": 39,
+            "end_line": 43,
+            "quote": "Plane strain switches the modulus to `E/(1−ν²)`, which changes the deflection\nby exactly `1−ν² = 0.91` (asserted in\n`test_plane_strain_uses_effective_modulus`); this is the idealisation used for\nthe Turek–Hron structure.  Newmark energy conservation without damping or load:\nrelative drift < 5e−3 over 400 steps.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "指向 test_plane_strain_uses_effective_modulus（测试本体见 A06，未解析）"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "formula",
+          "label": "Theodorsen 升力亏损函数闭式 C(k) 表达式",
+          "in_report_section": "## 3. Rung 3 — Theodorsen flutter boundary (PASS on the closed form)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2700,
+            "end_char": 2764,
+            "start_line": 47,
+            "end_line": 47,
+            "quote": "`C(k) = H₁⁽²⁾(k)/(H₁⁽²⁾(k) + iH₀⁽²⁾(k))`, evaluated both through",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "闭式定义（单行）；实现与独立 Bessel 实现的双路校验见 A11"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "verification_statement",
+          "label": "C(k) 双路实现差 1.1e−16 与解析极限 C(1e−12)=1, C(1e7)=0.5",
+          "in_report_section": "## 3. Rung 3 — Theodorsen flutter boundary (PASS on the closed form)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2765,
+            "end_char": 2965,
+            "start_line": 48,
+            "end_line": 50,
+            "quote": "`scipy.special.hankel2` and through the independent `J`/`Y` Bessel routines\n(maximum difference 1.1e−16 over `k ∈ [1e-3, 1e2]`).  Analytic limits\nreproduced: `C(1e−12) = 1.000000`, `C(1e7) = 0.50000`.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "解析极限复现属闭式自检，非外部基准，报告亦未据此宣称外部验证"
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "verification_statement",
+          "label": "Jones (1940) 二极点近似：k≤0.2 时 |C| 差 <3%（最差 2.1%）",
+          "in_report_section": "## 3. Rung 3 — Theodorsen flutter boundary (PASS on the closed form)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2999,
+            "end_char": 3143,
+            "start_line": 54,
+            "end_line": 55,
+            "quote": "* Jones (1940) two-pole approximation, documented as valid for small `k`,\n  agrees within **< 3 % of `|C|` for `k ≤ 0.2`** (worst sample 2.1 %).",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "外部锚点=Jones 1940；报告未给页码/公式号，未解析到可核对原文"
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "verification_statement",
+          "label": "三极点有理拟合误差（max 0.171 %，mean 0.076 %，400 个对数样本）",
+          "in_report_section": "## 3. Rung 3 — Theodorsen flutter boundary (PASS on the closed form)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3144,
+            "end_char": 3362,
+            "start_line": 56,
+            "end_line": 58,
+            "quote": "* The three-pole rational fit `C ≈ 1/2 + Σ c_j(ik+d_j)⁻¹` used by the\n  time-domain route reproduces the exact function on `k ∈ [0.15, 1.5]` with\n  **max 0.171 %, mean 0.076 %** relative error (400 log-spaced samples).",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "时域路径所用的 C(k) 有理拟合精度；样本数与区间均在原文"
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "parameter_set",
+          "label": "经典二维剖面参数（μ=20, a=−0.2, x_θ=0.2, r_θ=0.5, ω_h=1, ω_α=2, b=0.5）",
+          "in_report_section": "## 3. Rung 3 — Theodorsen flutter boundary (PASS on the closed form)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3364,
+            "end_char": 3498,
+            "start_line": 60,
+            "end_line": 61,
+            "quote": "Classical section (`μ = 20`, `a = −0.2`, `x_θ = 0.2`, `r_θ = 0.5`,\n`ω_h = 1`, `ω_α = 2 rad/s`, `b = 0.5 m`), p-k eigenvalue iteration:",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "颤振算例的输入参数全集；p-k 结果表见 A15"
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "table",
+          "label": "p-k 颤振边界结果表（U_f, k_f, ω_f, 阻尼, 括号校验，8 行）",
+          "in_report_section": "## 3. Rung 3 — Theodorsen flutter boundary (PASS on the closed form)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3500,
+            "end_char": 3828,
+            "start_line": 63,
+            "end_line": 71,
+            "quote": "| quantity | value |\n| --- | --- |\n| `U_f` | **1.1874 m/s** |\n| reduced frequency `k_f = ω_f b/U_f` | 0.8654 |\n| `ω_f` | 2.0553 rad/s |\n| reduced velocity `U_f/(b ω_α)` | 1.1874 |\n| frequency ratio `ω_f/ω_α` | 1.028 |\n| damping at the boundary | −1.4e−8 (zero by construction) |\n| bracket check | σ(0.6`U_f`) < 0 < σ(1.4`U_f`) |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "rung3 的合格结果锚点（U_f=1.1874 m/s）；本工序只登记"
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "table",
+          "label": "跨路径时域增长率表（σ at U/U_f = 0.45/1.0/1.6/2.5）",
+          "in_report_section": "## 3. Rung 3 — Theodorsen flutter boundary (PASS on the closed form)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4016,
+            "end_char": 4151,
+            "start_line": 77,
+            "end_line": 79,
+            "quote": "| U/U_f | 0.45 | 1.0 | 1.6 | 2.5 |\n| --- | --- | --- | --- | --- |\n| σ [1/s] (time domain) | −0.0336 | (0 at p-k) | −0.0183 | +0.4686 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "honest FAIL 的原始数字来源：时域边界落在 1.6U_f~2.5U_f，与 p-k 分歧 >60 %"
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "external_dataset",
+          "label": "DFG 2D-2 算例记录与图件（artifacts/fsi_dfg2d2.json / artifacts/fsi_dfg2d2.png）",
+          "in_report_section": "## 4. Rung 2 — fluid half qualification (FAIL)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5249,
+            "end_char": 5314,
+            "start_line": 99,
+            "end_line": 99,
+            "quote": "(`artifacts/fsi_dfg2d2.json`, figure `artifacts/fsi_dfg2d2.png`):",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_lookup (repo root=/root/tp-agent/work/m15630; relative paths as written in the report)",
+            "result": "unresolved",
+            "paths_checked": [
+              "artifacts/fsi_dfg2d2.json",
+              "artifacts/fsi_dfg2d2.png"
+            ],
+            "paths_found": [],
+            "paths_missing": [
+              "artifacts/fsi_dfg2d2.json",
+              "artifacts/fsi_dfg2d2.png"
+            ],
+            "detail": "报告为仓库相对路径，指向 TensorFEM 的源码/工件；本仓检出内不存在"
+          },
+          "note": "本工作树内 artifacts/fsi_dfg2d2.{json,png} 不存在；平台报告 payload 亦未内嵌二进制"
+        },
+        {
+          "asset_id": "A18",
+          "asset_class": "external_dataset",
+          "label": "Theodorsen 算例记录（artifacts/fsi_theodorsen.json）与全部图件（artifacts/*.png）",
+          "in_report_section": "## 7. Reproduce",
+          "locator": {
+            "method": "char_span",
+            "start_char": 9086,
+            "end_char": 9165,
+            "start_line": 171,
+            "end_line": 171,
+            "quote": "python scripts/fsi_ladder_run.py theodorsen --out artifacts/fsi_theodorsen.json",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_lookup (repo root=/root/tp-agent/work/m15630; relative paths as written in the report)",
+            "result": "unresolved",
+            "paths_checked": [
+              "artifacts/fsi_theodorsen.json",
+              "artifacts/*.png"
+            ],
+            "paths_found": [],
+            "paths_missing": [
+              "artifacts/fsi_theodorsen.json",
+              "artifacts/*.png"
+            ],
+            "detail": "报告为仓库相对路径，指向 TensorFEM 的源码/工件；本仓检出内不存在"
+          },
+          "note": "复现命令中声明的输出路径；文件本体不在本工作树，见 A19 平台 figures 字段交叉核对"
+        },
+        {
+          "asset_id": "A19",
+          "asset_class": "platform_figure_set",
+          "label": "平台 figures 字段（3 张：fsi_theodorsen_ck / fsi_flutter_boundary / fsi_dfg2d2）",
+          "in_report_section": "## 4. Rung 2 — fluid half qualification (FAIL)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5279,
+            "end_char": 5312,
+            "start_line": 99,
+            "end_line": 99,
+            "quote": "figure `artifacts/fsi_dfg2d2.png`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform_api_figures_field (GET /tensor/reports/9091)",
+            "result": "present",
+            "platform_figures_count": 3,
+            "detail": "payload.figures carries name+caption only, no image binary"
+          },
+          "note": "payload.figures 有 3 条 name+caption（present），但该字段不含图片本体；正文只字面点名 fsi_dfg2d2.png，另两张仅以 artifacts/*.png 概括（A04）"
+        },
+        {
+          "asset_id": "A20",
+          "asset_class": "table",
+          "label": "DFG 2D-2 对照表（computed vs Turek & Hron 2006，4 行）",
+          "in_report_section": "## 4. Rung 2 — fluid half qualification (FAIL)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5316,
+            "end_char": 5582,
+            "start_line": 101,
+            "end_line": 106,
+            "quote": "| quantity | computed | reference (Turek & Hron 2006) | error |\n| --- | --- | --- | --- |\n| mean `C_D` | 0.623 | 3.22 | **80.7 %** |\n| `C_L` amplitude | 9.59 | 0.99 | 869 % |\n| Strouhal number | 0.1847 | 0.295 | 37.4 % |\n| max |∇·u| (interior) | 8.0e−2 s⁻¹ | — | — |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "外部基准=Turek & Hron 2006 的 C_D/St 参考值；表内误差为上游自报（80.7 %/869 %/37.4 %），本工序不复核"
+        },
+        {
+          "asset_id": "A21",
+          "asset_class": "defect_pointer",
+          "label": "缺陷定位声明：物体载荷重构（F=−ρ∫χ∇p dV 均匀铺开）为主导缺陷，含 strict-xfail 测试名",
+          "in_report_section": "## 4. Rung 2 — fluid half qualification (FAIL)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5584,
+            "end_char": 6217,
+            "start_line": 108,
+            "end_line": 117,
+            "quote": "The pressure projection itself is exact (discrete divergence < 1e−9 in the\nprojection unit test); the failure is localized to the **body-load\nreconstruction**: the fictitious-domain pressure identity\n`F = −ρ∫χ∇p dV` is spread uniformly over the marker cloud while the\nconstraint part is per-marker, and the resulting signal is dominated by spikes\n(the `C_L` amplitude of 9.6 is non-physical by a factor of ten).  A second,\nsmaller defect is visible in\n`test_immersed_body_is_driven_to_the_prescribed_velocity` (strict xfail): on a\nnon-square grid not every marker velocity is driven to the body velocity, i.e.\nthe diffuse body leaks.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "指向 test_immersed_body_is_driven_to_the_prescribed_velocity（strict xfail）；测试体见 A06，未解析"
+        },
+        {
+          "asset_id": "A22",
+          "asset_class": "consequence_statement",
+          "label": "WITHHELD 判定与放弃生产的声明（无 Turek–Hron/VIV 结论；生产算例被弃跑）",
+          "in_report_section": "## 4. Rung 2 — fluid half qualification (FAIL)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6219,
+            "end_char": 6791,
+            "start_line": 119,
+            "end_line": 126,
+            "quote": "Consequence: **no Turek–Hron FSI-2 amplitude/frequency and no trailing-edge\nlock-in claim is made.**  The acceptance criteria\n“`A_y` within 10 % / `f` within 5 %” and the VIV lock-in criterion are\n**WITHHELD (not verified)**, and the coupled demonstration case diverged\n(sub-iteration budget saturated, tip displacement → 1e33), which is consistent\nwith the body-load defect: a spurious load drives the structure.  Attempting\nthe production FSI-2 run (dx = 5 mm, t = 6 s) was abandoned after the fluid gate\nfailed, rather than reporting a number the solver cannot support.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "不可被覆盖为通过的关键否定性声明；判定汇总见 A26"
+        },
+        {
+          "asset_id": "A23",
+          "asset_class": "mechanism_spec",
+          "label": "强耦合驱动机制规格（子迭代固定点、Aitken 松弛、闭合能量账本）",
+          "in_report_section": "## 5. Strong-coupling machinery (implemented, gate verified in principle)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6868,
+            "end_char": 7530,
+            "start_line": 130,
+            "end_line": 139,
+            "quote": "`ImplicitCouplingDriver` re-runs the fluid step *and* the structural step from\nthe state at `tⁿ` inside every sub-iteration, so the fixed point it converges to\nis the implicit coupling, not a staggered one.  It reports\n\n* `disp_residual = ‖Δd‖_RMS / max(‖d‖_RMS, 1e−9)` against the gate (default\n  1e−4), plus a relative force residual `‖F^{k+1}−F^k‖/‖F^{k+1}‖`;\n* Aitken dynamic relaxation with the factor clipped to [0.02, 1];\n* a closed ledger: `work` (fluid → structure, trapezoidal in the interface\n  velocity), `storage` (Δstrain + Δkinetic), `dissipated` (Newmark Rayleigh\n  dissipation), and `relative_residual = |work − storage − dissipated| / Σ|work|`.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "机制与三条残差/账本定义；验证范围为静水初值，见 A24"
+        },
+        {
+          "asset_id": "A24",
+          "asset_class": "verification_statement",
+          "label": "机制已验证行为 4 条 + 能量判据 WITHHELD 声明",
+          "in_report_section": "## 5. Strong-coupling machinery (implemented, gate verified in principle)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7532,
+            "end_char": 8051,
+            "start_line": 141,
+            "end_line": 147,
+            "quote": "Verified behaviours (tests): a quiescent start converges in ≤ 3 sub-iterations\nwith zero interface load; the sub-iteration count never exceeds the budget and\na non-converged step *reports* the saturated count instead of pretending to\nconverge; the ledger fields are finite and dissipation is non-negative; a rigid\nbody attaches through the same exchange.  **Not** verified: an actual\nconverged two-way FSI response in a shedding flow — the energy criterion\n(`error < 5 %`) is therefore **WITHHELD** rather than claimed.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "子迭代残差门与账本有限性已验证；绕流耦合响应未验证（能量 <5 % 判据 WITHHELD）"
+        },
+        {
+          "asset_id": "A25",
+          "asset_class": "limitation_set",
+          "label": "已知缺陷与局限 6 条（载荷重构 / 非方形网格泄漏 / 定系数投影 / 梁理论 / 指示函数模型 / 单进程上限）",
+          "in_report_section": "## 6. Known defects and limits",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8085,
+            "end_char": 8922,
+            "start_line": 151,
+            "end_line": 164,
+            "quote": "1. Immersed-body load reconstruction: pressure part spread uniformly, no\n   surface-conforming traction; produces non-physical lift amplitude in the\n   DFG case.  Root cause of the rung-2 failure.\n2. Diffuse-body leakage on non-square grids (strict-xfail test).\n3. Projection is fixed-coefficient, so the body constraint is only\n   approximately enforced inside the body after each projection; a penalized\n   (variable-coefficient) projection or a cut-cell scheme is the standard\n   cure.\n4. Structured beam is total-Lagrangian von Kármán: moderate rotations only, no\n   shear deformation, no 3-D.\n5. Wagner/Jones indicial model vs exact `C(k)` disagreement near `k ≈ 1`\n   (§3); the p-k result is the qualified one.\n6. All runs are single-process; `nx = 500` in 2-D is the practical ceiling on\n   the shared development node under load.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "局限清单原文；与 A21/A22 互为交叉引用，不重复登记缺陷本体"
+        },
+        {
+          "asset_id": "A26",
+          "asset_class": "table",
+          "label": "判定汇总表（5 条判据：WITHHELD / 部分通过 / 机制实现并验证）",
+          "in_report_section": "## 判定汇总（逐条回答判据）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 9330,
+            "end_char": 9916,
+            "start_line": 179,
+            "end_line": 185,
+            "quote": "| 判据 | 结果 | 数字 |\n|---|---|---|\n| Turek–Hron FSI-2 振幅 A_y 误差 <10% | **WITHHELD（未验证）** | 流体半程自身门槛未过：DFG 2D-2 平均 C_D=0.623 vs 3.22（误差 80.7%） |\n| 振动频率 f 误差 <5% | **WITHHELD（未验证）** | 同上；耦合演示算例发散（子迭代饱和，tip→1e33 m），无有效耦合解 |\n| Theodorsen 颤振速度 U_f 解析复现 <3% | **部分通过** | 闭式 C(k) 与 Bessel 独立实现差 1.1e-16，极限 C(0)=1/C(∞)=0.5 复现；p-k 得 U_f=1.1874 m/s, k_f=0.8654, ω_f=2.0553 rad/s；但时域 Wagner 路径边界落在 1.6U_f~2.5U_f（分歧 >60%）→ 3% 未达成（honest FAIL） |\n| 子迭代残差 <1e-4 | **机制实现并验证** | 静水初值 1–3 次子迭代收敛；残差门被强制（未收敛时报告饱和次数而非伪收敛）；真实绕流耦合响应未收敛 |\n| 能量守恒误差 <5% | **WITHHELD** | 能量账本（流体功/储存/耗散）已实现并逐式闭合，仅在静水算例验证；绕流算例无有效解 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "逐条判据结论表；本工序只登记结论标签与数字出处，不改变判定"
+        },
+        {
+          "asset_id": "A27",
+          "asset_class": "external_reference",
+          "label": "外部颤振文献参考值表（声明离线不可得）",
+          "in_report_section": "## 3. Rung 3 — Theodorsen flutter boundary (PASS on the closed form)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4786,
+            "end_char": 5016,
+            "start_line": 89,
+            "end_line": 92,
+            "quote": "No external table could be consulted (offline environment),\nso the flutter speed is verified against the closed form and its own analytic\nlimits, **not** against a published value.  This is recorded as an open item,\nnot as a pass.",
+            "unique": true
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "url_doi_scan_in_markdown",
+            "result": "absent",
+            "matches_found": [],
+            "detail": "报告声明离线不可查阅外部表；全文检索 URL/DOI 结果如上，无外部表可解析地址"
+          },
+          "note": "报告声明离线环境无法查阅外部表，颤振速度仅对闭式解与其解析极限验证；全文无 URL/DOI 可供解析（见 integrity.external_reference_scan）"
+        },
+        {
+          "asset_id": "A28",
+          "asset_class": "reproduce_commands",
+          "label": "复现命令块（pytest 4 个测试文件 + fsi_ladder_run theodorsen/dfg + 出图）",
+          "in_report_section": "## 7. Reproduce",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8941,
+            "end_char": 9307,
+            "start_line": 168,
+            "end_line": 174,
+            "quote": "```bash\nPYTHONPATH=src pytest tests/test_fsi_beam2d.py tests/test_fsi_theodorsen.py \\\n    tests/test_fsi_flow2d.py tests/test_fsi_coupling.py -q\npython scripts/fsi_ladder_run.py theodorsen --out artifacts/fsi_theodorsen.json\npython scripts/fsi_ladder_run.py dfg --nx 500 --dt 1e-3 --t-end 12 \\\n    --out artifacts/fsi_dfg2d2.json\npython scripts/fsi_ladder_figures.py",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "locator 覆盖 ```bash 起至最后一条命令（不含收尾围栏）；所调脚本属 TensorFEM 仓（A06，未解析），本工序未执行它们"
+        },
+        {
+          "asset_id": "A29",
+          "asset_class": "honest_disclaimer",
+          "label": "诚实声明（未达成 FSI-2 振幅/频率、VIV 锁定与 Theodorsen 跨方法 3%）",
+          "in_report_section": "## 判定汇总（逐条回答判据）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 9918,
+            "end_char": 10059,
+            "start_line": 187,
+            "end_line": 187,
+            "quote": "诚实声明：本节点未达成 FSI-2 振幅/频率与 VIV 锁定判据，也未达成 Theodorsen 跨方法 3% 一致；已定位的首要缺陷是浸入边界**物体载荷重构**（压力项在标记云上均匀铺开、非贴体 traction）导致 DFG 升力幅值虚高 10 倍。该结论不可被覆盖为通过。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown (verbatim, unique substring)",
+            "result": "resolved"
+          },
+          "note": "不可覆盖为通过的自我声明；与 A22/A26 一致"
+        }
+      ],
+      "claims": [],
+      "claims_note": "工作包契约 objective.classify_report_type=false 且 notes 允许 claims 为空数组：本工序只登记资产与其定位，不做 claim 抽取/分类；抽取由下游工序负责，故此处亦不存在被标为 verified 的断言。",
+      "integrity": {
+        "quote_uniqueness": "all 29 quotes confirmed unique verbatim substrings of the source markdown (scripts/kf_verify_wp9091_01.py, checks.source_locator_resolvable)",
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "external_reference_scan": {
+          "patterns_scanned": [
+            "http(s)://",
+            "doi:",
+            "10.xxxx/"
+          ],
+          "matches": [],
+          "note": "报告无 URL/DOI，故外部文献参考值只能登记为 declared_absent"
+        },
+        "verification_status": "not_verified",
+        "verification_note": "verification 由平台门计算；本工序不自标 verified"
+      }
+    }
+  }
+}
