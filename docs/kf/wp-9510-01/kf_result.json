@@ -1,0 +1,816 @@
+{
+  "package_id": "wp-9510-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9510",
+  "provenance": {
+    "source_hash": "sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15660",
+    "emitted_at": "2026-11-12T01:44:18.008270+00:00",
+    "notes": "hash recomputed from GET /api/v1/tensor/reports/9510 markdown (UTF-8 bytes); equals contract source_hash sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c; 8039 chars"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "manifest_version": "1.0",
+      "package_id": "wp-9510-01",
+      "task_type": "01-asset-registration",
+      "report_id": "9510",
+      "lane": "B",
+      "generated_at": "2026-11-12T01:44:17.595859+00:00",
+      "producer": "kf-worker/m15660",
+      "source": {
+        "uri": "tensor://reports/9510",
+        "report_id": "9510",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c",
+        "hash_prefixed": "sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c",
+        "chars": 8039,
+        "bytes_utf8": 12580,
+        "lines": 203,
+        "title": "P155W1-N02 绿色航行法规合规验证面成熟化（EEXI/CII/EEDI 全链 + 两处缺陷修复）",
+        "scenario_key": "green_navigation_regulatory_compliance",
+        "mission_id": 8243,
+        "platform_tags": [
+          "EEXI",
+          "CII",
+          "EEDI",
+          "MEPC.328(76)",
+          "MEPC.354(78)",
+          "缺陷修复",
+          "法规合规"
+        ],
+        "platform_figures": [
+          "fig1_eexi_attained_vs_required.png",
+          "fig2_epl_path.png",
+          "fig3_cii_rating_bands.png",
+          "fig4_sensitivity.png",
+          "fig5_eedi_timeline.png"
+        ],
+        "fetched_via": "GET /api/v1/tensor/reports/9510",
+        "local_copy": "runs/wp-9510-01/source_9510.md",
+        "hash_scope": "UTF-8 bytes of the markdown string as served by the platform API",
+        "contract": {
+          "source_hash": "sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c",
+          "chars": 8039,
+          "title": "P155W1-N02 绿色航行法规合规验证面成熟化（EEXI/CII/EEDI 全链 + 两处缺陷修复）",
+          "scenario_key": "green_navigation_regulatory_compliance",
+          "hash_matches": true,
+          "chars_matches": true,
+          "title_matches": true,
+          "scenario_matches": true
+        }
+      },
+      "counts": {
+        "assets": 26,
+        "by_class": {
+          "api_endpoint_reference": 1,
+          "code_directory": 2,
+          "code_symbol_reference": 1,
+          "data_artifact": 5,
+          "external_standard_reference": 5,
+          "figure": 5,
+          "source_document": 1,
+          "source_module": 5,
+          "test_module": 1
+        },
+        "by_resolution": {
+          "referenced_unresolved": 25,
+          "resolved_in_source": 1
+        },
+        "resolved_in_source": 1,
+        "referenced_unresolved": 25,
+        "declared_absent": 0,
+        "char_spans_verified": 25
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "source_document",
+          "label": "report 9510 markdown (source of truth for this package)",
+          "in_report_section": "(preamble)",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 8039,
+            "start_line": 1,
+            "end_line": 203,
+            "quote": "# P155W1-N02 绿色航行法规合规验证面成熟化：EEXI / CII / EEDI 计算链与 IMO 决议一致性",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET /tensor/reports/9510 markdown re-hashed in-process; local copy runs/wp-9510-01/source_9510.md",
+            "result": "resolved"
+          },
+          "locator_scope": "whole document: quote = H1 title line (verbatim anchor), char span covers the entire markdown",
+          "note": "sha256 sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c, 8039 chars / 12580 UTF-8 bytes, 203 lines; contract hash match=True, contract chars match=True"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "code_directory",
+          "label": "artifacts/P155W1-N02/",
+          "in_report_section": "(preamble)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 172,
+            "end_char": 257,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "**工件**：`artifacts/P155W1-N02/`（`compliance.sqlite`、`results.json`、`queries.sql`、5 张图）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(artifacts/P155W1-N02/)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L5 in (preamble) (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "data_artifact",
+          "label": "compliance.sqlite",
+          "in_report_section": "(preamble)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 172,
+            "end_char": 257,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "**工件**：`artifacts/P155W1-N02/`（`compliance.sqlite`、`results.json`、`queries.sql`、5 张图）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(compliance.sqlite)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L5 in (preamble) (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [
+            46
+          ],
+          "existence_asserted_by_worker": false,
+          "same_basename_as": [
+            "A26"
+          ]
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "data_artifact",
+          "label": "results.json",
+          "in_report_section": "(preamble)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 172,
+            "end_char": 257,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "**工件**：`artifacts/P155W1-N02/`（`compliance.sqlite`、`results.json`、`queries.sql`、5 张图）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(results.json)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L5 in (preamble) (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "data_artifact",
+          "label": "queries.sql",
+          "in_report_section": "(preamble)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 172,
+            "end_char": 257,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "**工件**：`artifacts/P155W1-N02/`（`compliance.sqlite`、`results.json`、`queries.sql`、5 张图）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(queries.sql)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L5 in (preamble) (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "source_module",
+          "label": "make_report.py",
+          "in_report_section": "(preamble)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 258,
+            "end_char": 333,
+            "start_line": 6,
+            "end_line": 6,
+            "quote": "**文档数字**：全部由 `make_report.py` 从 SQL 注入，零手抄（可 `sqlite3 < queries.sql` 逐条复算）。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(make_report.py)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L6 in (preamble) (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [
+            47
+          ],
+          "existence_asserted_by_worker": false,
+          "same_basename_as": [
+            "A25"
+          ]
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "external_standard_reference",
+          "label": "MEPC.328(76)",
+          "in_report_section": "## ① 案例介绍（物理背景 / 几何 / 参数表）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 368,
+            "end_char": 421,
+            "start_line": 12,
+            "end_line": 12,
+            "quote": "IMO 在 MEPC.328(76) 下把\"能效\"从设计（EEDI）扩到在役（EEXI）与营运（CII），",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(MEPC.328(76))",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L12 in ## ① 案例介绍（物理背景 / 几何 / 参数表） (prose_identifier)",
+          "declared_reference_form": "prose_identifier",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "code_directory",
+          "label": "backend/modules/green_compliance/",
+          "in_report_section": "## ② 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1199,
+            "end_char": 1278,
+            "start_line": 33,
+            "end_line": 33,
+            "quote": "1. **新建模块** `backend/modules/green_compliance/`：`regulatory`（规则系数单一转录源 + 证据分级 +",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(backend/modules/green_compliance/)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L33 in ## ② 怎么做的（方法 / 流程 / 工具链） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "api_endpoint_reference",
+          "label": "/api/v1/green-shipping/compliance/*",
+          "in_report_section": "## ② 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1346,
+            "end_char": 1421,
+            "start_line": 35,
+            "end_line": 35,
+            "quote": "   `sensitivity`（阶 4）、`api`（6 个端点，挂 `/api/v1/green-shipping/compliance/*`）。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(/api/v1/green-shipping/compliance/*)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L35 in ## ② 怎么做的（方法 / 流程 / 工具链） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "source_module",
+          "label": "backend/api/green_shipping.py",
+          "in_report_section": "## ② 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1422,
+            "end_char": 1486,
+            "start_line": 36,
+            "end_line": 36,
+            "quote": "2. **接线旧端点** `backend/api/green_shipping.py`：修复两处缺陷（见 ⑤），CII 评级从",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(backend/api/green_shipping.py)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L36 in ## ② 怎么做的（方法 / 流程 / 工具链） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "external_standard_reference",
+          "label": "MEPC.1/Circ.684",
+          "in_report_section": "## ② 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1610,
+            "end_char": 1670,
+            "start_line": 40,
+            "end_line": 40,
+            "quote": "   * 两条独立路径互证：功率-小时路径 vs 燃油量-航程路径（后者即 EEOI，MEPC.1/Circ.684）；",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(MEPC.1/Circ.684)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L40 in ## ② 怎么做的（方法 / 流程 / 工具链） (prose_identifier)",
+          "declared_reference_form": "prose_identifier",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "source_module",
+          "label": "green_navigation_ice.mepc",
+          "in_report_section": "## ② 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1765,
+            "end_char": 1845,
+            "start_line": 43,
+            "end_line": 43,
+            "quote": "   * 三处既有实现（`green_compliance` / `green_shipping` / `green_navigation_ice.mepc`）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(green_navigation_ice.mepc)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L43 in ## ② 怎么做的（方法 / 流程 / 工具链） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "source_module",
+          "label": "run_compliance.py",
+          "in_report_section": "## ② 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1976,
+            "end_char": 2053,
+            "start_line": 46,
+            "end_line": 46,
+            "quote": "4. **工件链**：`run_compliance.py` 一次跑完全部案例 → 204 行 metric 写入 `compliance.sqlite`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(run_compliance.py)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L46 in ## ② 怎么做的（方法 / 流程 / 工具链） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [
+            153
+          ],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "data_artifact",
+          "label": "report.json",
+          "in_report_section": "## ② 怎么做的（方法 / 流程 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2054,
+            "end_char": 2122,
+            "start_line": 47,
+            "end_line": 47,
+            "quote": "   → `make_report.py` 用 SQL 取数生成本报告 → `report.json` 内嵌图件 base64 发平台。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(report.json)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L47 in ## ② 怎么做的（方法 / 流程 / 工具链） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "external_standard_reference",
+          "label": "MEPC.354(78)",
+          "in_report_section": "### 3.2 阶 2 — CII 年度值 + A–E 评级",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3174,
+            "end_char": 3266,
+            "start_line": 80,
+            "end_line": 80,
+            "quote": "评级边界（MEPC.354(78) dd 向量 (0.86, 0.94, 1.06, 1.18)，`grade = #{i : attained > dd_i·required}`），",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(MEPC.354(78))",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L80 in ### 3.2 阶 2 — CII 年度值 + A–E 评级 (prose_identifier)",
+          "declared_reference_form": "prose_identifier",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "figure",
+          "label": "artifacts/P155W1-N02/fig1_eexi_attained_vs_required.png",
+          "in_report_section": "### 3.5 图件",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4577,
+            "end_char": 4683,
+            "start_line": 128,
+            "end_line": 128,
+            "quote": "![EEXI 达到值与要求值对比：遗留设计超标 82%，经济型设计需 EPL，限功率后达标](../artifacts/P155W1-N02/fig1_eexi_attained_vs_required.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(artifacts/P155W1-N02/fig1_eexi_attained_vs_required.png)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L128 in ### 3.5 图件 (markdown_image); platform figure probe HTTP 404, 29 bytes -> no payload, no hash claimed",
+          "declared_reference_form": "markdown_image",
+          "also_referenced_on_lines": [
+            130
+          ],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "figure",
+          "label": "artifacts/P155W1-N02/fig2_epl_path.png",
+          "in_report_section": "### 3.5 图件",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4818,
+            "end_char": 4910,
+            "start_line": 132,
+            "end_line": 132,
+            "quote": "![EPL 限功率扫描：EEXI ∝ MCR′^(2/3)，交点给出达标限值（航速损失显式标注）](../artifacts/P155W1-N02/fig2_epl_path.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(artifacts/P155W1-N02/fig2_epl_path.png)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L132 in ### 3.5 图件 (markdown_image); platform figure probe HTTP 404, 29 bytes -> no payload, no hash claimed",
+          "declared_reference_form": "markdown_image",
+          "also_referenced_on_lines": [
+            134
+          ],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A18",
+          "asset_class": "figure",
+          "label": "artifacts/P155W1-N02/fig3_cii_rating_bands.png",
+          "in_report_section": "### 3.5 图件",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5031,
+            "end_char": 5131,
+            "start_line": 136,
+            "end_line": 136,
+            "quote": "![CII 等级带随 2023–2026 年度折减收紧；A 船由 C 降到 D，B 船稳定在 B](../artifacts/P155W1-N02/fig3_cii_rating_bands.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(artifacts/P155W1-N02/fig3_cii_rating_bands.png)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L136 in ### 3.5 图件 (markdown_image); platform figure probe HTTP 404, 29 bytes -> no payload, no hash claimed",
+          "declared_reference_form": "markdown_image",
+          "also_referenced_on_lines": [
+            138
+          ],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A19",
+          "asset_class": "figure",
+          "label": "artifacts/P155W1-N02/fig4_sensitivity.png",
+          "in_report_section": "### 3.5 图件",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5260,
+            "end_char": 5353,
+            "start_line": 140,
+            "end_line": 140,
+            "quote": "![左：EEXI 网格（弹性 +1 / −1）；右：CII 等级跳变（弹性 +1 / +2）](../artifacts/P155W1-N02/fig4_sensitivity.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(artifacts/P155W1-N02/fig4_sensitivity.png)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L140 in ### 3.5 图件 (markdown_image); platform figure probe HTTP 404, 29 bytes -> no payload, no hash claimed",
+          "declared_reference_form": "markdown_image",
+          "also_referenced_on_lines": [
+            142
+          ],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A20",
+          "asset_class": "figure",
+          "label": "artifacts/P155W1-N02/fig5_eedi_timeline.png",
+          "in_report_section": "### 3.5 图件",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5475,
+            "end_char": 5586,
+            "start_line": 144,
+            "end_line": 144,
+            "quote": "![EEDI 阶段时间线对比：C 船满足 Phase 2 但不满足 Phase 3（EEXI 20% < EEDI 30%）](../artifacts/P155W1-N02/fig5_eedi_timeline.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(artifacts/P155W1-N02/fig5_eedi_timeline.png)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L144 in ### 3.5 图件 (markdown_image); platform figure probe HTTP 404, 29 bytes -> no payload, no hash claimed",
+          "declared_reference_form": "markdown_image",
+          "also_referenced_on_lines": [
+            146
+          ],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A21",
+          "asset_class": "code_symbol_reference",
+          "label": "api/green_shipping._gn_attained_index",
+          "in_report_section": "## ⑤ 注意点（踩坑 / 局限 / 适用范围）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5949,
+            "end_char": 6012,
+            "start_line": 157,
+            "end_line": 157,
+            "quote": "**缺陷 D1（已修，严重）**：`api/green_shipping._gn_attained_index` 旧实现分母写",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(api/green_shipping._gn_attained_index)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L157 in ## ⑤ 注意点（踩坑 / 局限 / 适用范围） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A22",
+          "asset_class": "test_module",
+          "label": "test_green_shipping.py",
+          "in_report_section": "## ⑤ 注意点（踩坑 / 局限 / 适用范围）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6246,
+            "end_char": 6296,
+            "start_line": 163,
+            "end_line": 163,
+            "quote": "（本节点已在 `test_green_shipping.py` 补物理量级断言 + 独立手算断言）。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(test_green_shipping.py)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L163 in ## ⑤ 注意点（踩坑 / 局限 / 适用范围） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A23",
+          "asset_class": "external_standard_reference",
+          "label": "MEPC.333(76)",
+          "in_report_section": "## ⑤ 注意点（踩坑 / 局限 / 适用范围）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6671,
+            "end_char": 6727,
+            "start_line": 175,
+            "end_line": 175,
+            "quote": "2. **未取得 IMO 数值算例原文**（MEPC.333(76) 附例等），因此\"与指南示例 ≤1%\"判据以",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(MEPC.333(76))",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L175 in ## ⑤ 注意点（踩坑 / 局限 / 适用范围） (prose_identifier)",
+          "declared_reference_form": "prose_identifier",
+          "also_referenced_on_lines": [
+            196
+          ],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A24",
+          "asset_class": "external_standard_reference",
+          "label": "MEPC.364(79)",
+          "in_report_section": "## ⑥ 误差判定（逐项，是否 <3%）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7353,
+            "end_char": 7414,
+            "start_line": 191,
+            "end_line": 191,
+            "quote": "| C_F 化学计量导出 vs MEPC.364(79) 公布值（最差燃料） | 0.248 % | 是 | REAL |",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(MEPC.364(79))",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L191 in ## ⑥ 误差判定（逐项，是否 <3%） (prose_identifier)",
+          "declared_reference_form": "prose_identifier",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "A25",
+          "asset_class": "source_module",
+          "label": "artifacts/P155W1-N02/make_report.py",
+          "in_report_section": "## ⑥ 误差判定（逐项，是否 <3%）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7911,
+            "end_char": 7972,
+            "start_line": 202,
+            "end_line": 202,
+            "quote": "生成：`artifacts/P155W1-N02/make_report.py`（SQL → markdown，零手抄）；",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(artifacts/P155W1-N02/make_report.py)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L202 in ## ⑥ 误差判定（逐项，是否 <3%） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false,
+          "same_basename_as": [
+            "A06"
+          ]
+        },
+        {
+          "asset_id": "A26",
+          "asset_class": "data_artifact",
+          "label": "artifacts/P155W1-N02/compliance.sqlite",
+          "in_report_section": "## ⑥ 误差判定（逐项，是否 <3%）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7973,
+            "end_char": 8038,
+            "start_line": 203,
+            "end_line": 203,
+            "quote": "数据：`artifacts/P155W1-N02/compliance.sqlite`（204 行 metric / 5 张图）。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "Path.exists(artifacts/P155W1-N02/compliance.sqlite)",
+            "result": "unresolved"
+          },
+          "note": "first occurrence L203 in ## ⑥ 误差判定（逐项，是否 <3%） (backtick_path)",
+          "declared_reference_form": "backtick_path",
+          "also_referenced_on_lines": [],
+          "existence_asserted_by_worker": false,
+          "same_basename_as": [
+            "A03"
+          ]
+        }
+      ],
+      "figure_probes": {
+        "fig1_eexi_attained_vs_required.png": {
+          "http_status": 404,
+          "bytes": 29,
+          "sha256": null,
+          "caption": "EEXI 达到值与要求值对比：遗留设计超标 82%，经济型设计需 EPL，限功率后达标"
+        },
+        "fig2_epl_path.png": {
+          "http_status": 404,
+          "bytes": 29,
+          "sha256": null,
+          "caption": "EPL 限功率扫描：EEXI ∝ MCR′^(2/3)，交点给出达标限值（航速损失显式标注）"
+        },
+        "fig3_cii_rating_bands.png": {
+          "http_status": 404,
+          "bytes": 29,
+          "sha256": null,
+          "caption": "CII 等级带随 2023–2026 年度折减收紧；A 船由 C 降到 D，B 船稳定在 B"
+        },
+        "fig4_sensitivity.png": {
+          "http_status": 404,
+          "bytes": 29,
+          "sha256": null,
+          "caption": "左：EEXI 网格（弹性 +1 / −1）；右：CII 等级跳变（弹性 +1 / +2）"
+        },
+        "fig5_eedi_timeline.png": {
+          "http_status": 404,
+          "bytes": 29,
+          "sha256": null,
+          "caption": "EEDI 阶段时间线对比：C 船满足 Phase 2 但不满足 Phase 3（EEXI 20% < EEDI 30%）"
+        }
+      },
+      "claims": [],
+      "claims_empty_reason": "Contract wp-9510-01 sets objective.register_assets=true / classify_report_type=false, constraints.no_forced_claim_generation=true, and the package notes state 'claims 允许为空数组'. This工序 registers asset identity only (report_id, markdown byte hash, declared attachments/artifacts); knowledge extraction belongs to a downstream工序 (03) and is deliberately not attempted here.",
+      "integrity": {
+        "quote_uniqueness": {
+          "quotes": 26,
+          "unique_quotes": 26,
+          "all_unique": true
+        },
+        "char_span_identity": {
+          "spans_checked": 25,
+          "all_match": true
+        },
+        "hash_recomputed_locally": "sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c",
+        "hash_matches_contract": true
+      },
+      "id_integrity": {
+        "ids_checked": 26,
+        "duplicates": [],
+        "unique": true
+      },
+      "figure_probe_summary": {
+        "probed": 5,
+        "http_200_with_bytes": 0,
+        "http_status_histogram": {
+          "404": 5
+        }
+      },
+      "observations": [
+        "Markdown is complete: H1 title on L1, sections ①-⑥ all present, 203 lines / 8039 chars; a generator/data footer closes the document.",
+        "The report declares its whole artifact chain under artifacts/P155W1-N02/ (compliance.sqlite, results.json, queries.sql, make_report.py, run_compliance.py, 5 figures); those files live in ship-performance-platform and are registered here as declared references, not as verified bytes.",
+        "Figure byte probes: 0/5 names returned HTTP 200 with payload, so the truncated sha256 prefixes printed in the report body can only be checked; a figure without payload stays referenced_unresolved and no hash is claimed.",
+        "5 figures are declared twice: in the platform record (name+caption) and in-body as relative image links carrying truncated sha256 prefixes; those prefixes are re-checked against bytes served by GET /tensor/reports/9510/figures/{name}.",
+        "IMO resolution identifiers (MEPC.x(yy) / MEPC.1/Circ.n) are registered as external standard references: they have no byte payload on this platform, so they stay referenced_unresolved by construction -- consistent with the report itself marking coefficient transcription WITHHELD."
+      ],
+      "limitations": [
+        "Registration only: no claim extraction, no report-type classification, no verified marks (the platform gate computes verification independently).",
+        "hash scope = UTF-8 bytes of the markdown field; any stored-markdown edit (even whitespace) invalidates this manifest.",
+        "Direct psql read of tensor_reports is denied to this agent (permission denied for table tensor_reports), so the authenticated API is the only source channel used.",
+        "Reference resolution is scoped to this delivery worktree; a path missing here is reported referenced_unresolved, never as a broken upstream artifact."
+      ]
+    }
+  },
+  "claims": []
+}
