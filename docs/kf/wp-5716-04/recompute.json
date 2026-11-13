@@ -1,0 +1,141 @@
+{
+  "source_hash": "sha256:4f9848b22b55515826476e1d5b2fcd15da80087a3d261d6a937a4c17cda68377",
+  "quote_keys": [
+    "a2_line",
+    "artifacts",
+    "b2_beta_row",
+    "b2_correction",
+    "c3_totals",
+    "d01",
+    "d07_row",
+    "d07_text",
+    "d1_route",
+    "d1_vs_c3_time",
+    "disclosure_count",
+    "disclosure_four",
+    "e1_gm",
+    "fem_row",
+    "gate_threshold",
+    "geom_cb",
+    "geom_cb_row",
+    "geom_params",
+    "honest_fail_scope",
+    "regrid",
+    "tests",
+    "wallclock_2",
+    "wallclock_9",
+    "withheld_cond"
+  ],
+  "recompute": {
+    "inputs": {
+      "L_pp_m": 190.0,
+      "B_m": 30.0,
+      "T_m": 11.5,
+      "DWT_t": 45000.0,
+      "LBT_m3": 65550.0,
+      "DWT_over_0.8167_t": 55099.79,
+      "service_kn": 13.0,
+      "n_ice_fraction": 0.27,
+      "route_nm": 684.1,
+      "energy_kWh": 203388.0
+    },
+    "a1_cb_literal_no_density": {
+      "cb": 0.840577,
+      "reported_cb": 0.82007,
+      "rel_diff_pct_vs_0.82": 2.5093,
+      "g01_own_tolerance_pct": 2.0,
+      "verdict": "FAIL of G01's own 2% tolerance if the formula is applied literally (no density step)"
+    },
+    "a2_cb_with_rho_1p025": {
+      "cb": 0.820075,
+      "reported_cb": 0.82007,
+      "rel_diff_pct_vs_0.82": 0.00911,
+      "reported_rel_diff": 8.5e-05,
+      "verdict": "reported value reproduces to display precision only when an unstated rho=1.025 t/m3 conversion is inserted"
+    },
+    "a3_geom_ratios": {
+      "LB": 6.3333,
+      "BT": 2.6087,
+      "reported": {
+        "LB": 6.333,
+        "BT": 2.609
+      },
+      "verdict": "consistent"
+    },
+    "a4_b2_beta_correction": {
+      "beta_theory": 0.2874,
+      "reported_rel_diff": 0.758,
+      "beta_implied_B2": 0.5052,
+      "utilization_20y": 67.58,
+      "utilization_after_correction": {
+        "SN_slope_m=3": 12.44,
+        "SN_slope_m=3.5": 9.38,
+        "SN_slope_m=4": 7.08,
+        "SN_slope_m=5": 4.02
+      },
+      "reported_after_correction": 12.4,
+      "verdict": "12.4 reproduces exactly for S-N slope m=3 and beta_B2 > beta_theory; neither assumption is stated in the markdown"
+    },
+    "a5_mean_speeds": {
+      "D1_mean_kn_54.5h": 12.55,
+      "C3_mean_kn_63.3h": 10.81,
+      "C3_mean_kn_68.2h": 10.03
+    },
+    "a6_ice_segment_speed_reconstruction": {
+      "assumption": "ice share 27.0% of 684.1 nm, open-water at the stated 13 kn service speed",
+      "ice_nm": 184.7,
+      "open_water_nm": 499.4,
+      "open_water_h": 38.41,
+      "implied_mean_ice_kn": {
+        "D1@54.5h": 11.48,
+        "C3@63.3h": 7.42,
+        "C3@68.2h": 6.2
+      },
+      "reported_design_point_kn": 4.5,
+      "ratio_vs_design_point": {
+        "D1@54.5h": 2.55,
+        "C3@63.3h": 1.65
+      },
+      "verdict": "first-order closure is NOT satisfied at 11.48 kn (D1) / 7.42 kn (C3) vs the reported 4.50 kn design point; the report carries no per-leg table, so this cannot be resolved from the markdown"
+    },
+    "a7_d07_consistency": {
+      "design_point_kn": 4.5,
+      "reported_rel_divergence": 0.656,
+      "implied_peer_speed_kn": 7.452,
+      "verdict": "65.6% is consistent with a peer model at ~7.45 kn under the same (h,C)"
+    },
+    "a8_energy": {
+      "avg_power_kW": 3213.1,
+      "energy_per_nm_kWh": 297.3,
+      "main_engine_MW": 18.0,
+      "avg_load_pct": 17.9
+    },
+    "a9_internal_conflicts": {
+      "wallclock_50.7_vs_41.5_pct": 18.1,
+      "c3_time_63.3_vs_68.2_pct": 7.7,
+      "d1_time_54.5_vs_54.4_pct": 0.18
+    },
+    "a10_disclosure_enumeration": {
+      "claimed_n": 7,
+      "named_D_ids": [
+        "D01-UIKKU-ANCHOR",
+        "D02-PLATE-MINDLIN",
+        "D06-STRUCTURAL-VERDICT",
+        "D07-SPEED-MODEL-DIVERGENCE"
+      ],
+      "named_n": 4,
+      "gap": 3
+    },
+    "a11_assertion_table": {
+      "pass_cells": 16,
+      "rows_declared": 16,
+      "gate_threshold": 8
+    },
+    "a12_error_table": {
+      "rows": 13,
+      "yes": 7,
+      "no": 6
+    },
+    "a13_a2_assimilation_gain_vs_ice_chart_pct": 20.71
+  }
+}
