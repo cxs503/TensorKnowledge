@@ -1,0 +1,143 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-13355-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13355",
+  "source": {
+    "uri": "tensor://reports/13355",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "0681fc2565db5dccb0a2b5873ff47172f617ee307f199180ed77aff0ce139955",
+    "chars": 6316,
+    "bytes_utf8": 10068,
+    "title": "P472W2-N01: 审计取证最小权限只读视图层 — RBAC audit_reader + 六表视图 + 权限矩阵门 + sha256 全等对照",
+    "scenario_key": "p472w2-n01"
+  },
+  "counts": {
+    "assets": 5,
+    "by_class": {
+      "sql_migration": 2,
+      "contract": 2,
+      "test_suite": 1
+    },
+    "by_resolution": {
+      "referenced_unresolved": 5
+    },
+    "resolved_in_source": 0,
+    "referenced_unresolved": 5,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "sql_migration",
+      "label": "迁移脚本",
+      "in_report_section": "## 2. 方法 → ### 实现产物",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1865,
+        "end_char": 1924,
+        "start_line": 55,
+        "end_line": 55,
+        "quote": "backend/migrations/115_audit_readonly_views.sql",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Referenced in report as 迁移脚本; file not present in TensorKnowledge worktree"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "sql_migration",
+      "label": "回滚脚本",
+      "in_report_section": "## 2. 方法 → ### 实现产物",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1935,
+        "end_char": 2002,
+        "start_line": 56,
+        "end_line": 56,
+        "quote": "backend/migrations/115_audit_readonly_views_rollback.sql",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Referenced in report as 回滚脚本; file not present in TensorKnowledge worktree"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "contract",
+      "label": "字段契约",
+      "in_report_section": "## 2. 方法 → ### 实现产物",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2013,
+        "end_char": 2061,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "contracts/audit_views_fields.json",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Referenced in report as 字段契约; file not present in TensorKnowledge worktree"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "contract",
+      "label": "权限矩阵",
+      "in_report_section": "## 2. 方法 → ### 实现产物",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2072,
+        "end_char": 2124,
+        "start_line": 58,
+        "end_line": 58,
+        "quote": "contracts/audit_permission_matrix.json",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Referenced in report as 权限矩阵; file not present in TensorKnowledge worktree"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "test_suite",
+      "label": "测试套件",
+      "in_report_section": "## 2. 方法 → ### 实现产物",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2135,
+        "end_char": 2185,
+        "start_line": 59,
+        "end_line": 59,
+        "quote": "backend/tests/test_audit_views_rbac.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Referenced in report as 测试套件; file not present in TensorKnowledge worktree"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": "all asset paths appear exactly once in the markdown",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true
+  }
+}
