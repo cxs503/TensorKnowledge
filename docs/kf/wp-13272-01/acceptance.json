@@ -1,0 +1,47 @@
+[
+  {
+    "check": "valid_json",
+    "pass": true,
+    "evidence": "asset_manifest.json and kf_result.json both json.loads OK"
+  },
+  {
+    "check": "schema_pass",
+    "pass": true,
+    "evidence": "jsonschema Draft2020-12: 0 errors on kf_result.json"
+  },
+  {
+    "check": "source_locator_resolvable",
+    "pass": true,
+    "evidence": "44 markdown locators + 10 record locators all re-resolved; failures=[]"
+  },
+  {
+    "check": "source_hash_matches",
+    "pass": true,
+    "evidence": "recomputed=sha256:75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90 contract=sha256:75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90 envelope=sha256:75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90"
+  },
+  {
+    "check": "no_duplicate_ids",
+    "pass": true,
+    "evidence": "45 asset_ids, unique=45"
+  },
+  {
+    "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+    "pass": true,
+    "evidence": "claims=0 (vacuous pass); claims_policy.reason non-empty=True"
+  },
+  {
+    "check": "unresolved_assets_have_reason",
+    "pass": true,
+    "evidence": "missing=[]"
+  },
+  {
+    "check": "reports_touched_single",
+    "pass": true,
+    "evidence": "reports_touched=['13272']"
+  },
+  {
+    "check": "chars_match_contract",
+    "pass": true,
+    "evidence": "observed=4537 contract=4537"
+  }
+]

@@ -1,0 +1,26 @@
+{
+ "id": 13272,
+ "title": "CII 规则内核三副本单源化与 regime 语义修复（m13764）",
+ "summary": "同一 IMO 碳强度规则在本仓三份实现中 12/12 年份不一致；冰区副本对 2019-2022 静默套 11% 折减（要求值偏低 11.00%）。修复后三处数值与 regime 逐点一致（12/12→0/12），153 条回归断言全绿。",
+ "scenario_key": "green_navigation",
+ "mission_id": 13764,
+ "stage": null,
+ "tags": [
+  "CII",
+  "MEPC",
+  "single-source",
+  "regime",
+  "verification-debt",
+  "m13764"
+ ],
+ "figures": [
+  {
+   "name": "m13764_cii_consistency.png",
+   "caption": "修复前/后三实现 required CII-year 曲线（bulk carrier 80000 DWT）；灰带=规则未适用年份"
+  }
+ ],
+ "status": "published",
+ "created_by": 1,
+ "created_at": "2026-11-11T05:09:28.584129+00:00",
+ "markdown": "# CII 规则内核三副本单源化与 regime 语义修复（m13764）\n\n**锚点**：NEW（`KPI-QC-RECHECK` 已合并功能独立复核的子项；建议新条目\n`DEF-CII-SINGLE-SOURCE`，见文末）\n**证据等级**：数值层 REAL（纯代数，可独立标量复算）；法规系数层 WITHHELD（离线未回读规则原文；\n本次不动系数，仅修语义与副本一致性）\n\n## ① 案例介绍（问题背景）\n\nIMO 碳强度规则（MEPC.353(78) 参考线 / MEPC.338(76) 年度折减率 Z / MEPC.354(78) 评级）\n在本仓存在 **三份独立实现**：\n\n| 代号 | 位置 | Z 表口径 | 角色 |\n|---|---|---|---|\n| A | `backend/services/cii_required_value.py` | 分数 | 权威口径（显式 regime，m1829 建） |\n| B | `backend/api/green_shipping.py` | 分数 | 主 API 副本 |\n| C | `backend/modules/green_navigation_ice/mepc.py` | 百分比 | 冰区链副本 |\n\n复核靶子：**同一年份的 CII 要求值，三处是否给同一个数、同一套语义？**\n（同一规则三副本 = 单源纪律的直接违反对象，且三处都不是错值报错型，而是静默默认型。）\n\n## ② 怎么做的（方法）\n\n1. 写机器对账工具 `tools/cii_consistency_scan.py`：对 (年份 2019–2030) × 三实现，\n   逐点取 (z, required_value, regime, extrapolated, 异常)，判定是否一致，输出 JSON 基线。\n2. 先跑基线（`artifacts/cii_consistency_scan_before.json`）→ **12/12 年份不一致**。\n3. 定位根因（两条，均为静默默认）：\n   - **C1（真缺陷，仅 C）**：`mepc.z_factor` 用 `Z_FACTORS.get(year, 11.0)` 一次性兜底，\n     `year<2023` 也套 11% 折减 → 规则尚未生效的年份给出\"要求值\"，比 2019 参考线**低 11.0%**\n     （bulk carrier / 80000 DWT：3.7662 vs 4.2317 gCO2/(dwt·nm)）；\n   - **C2（仅 B/C）**：`year>2026` 静默沿用 11%，返回体无外推标记，下游无法区分\n     \"法规确定值\"与\"外推值\"。\n4. 修复（最小改动，语义层单源化）：\n   - `mepc.py`：Z 表由 A 派生（`Z_FACTORS = 100·A.CII_Z_FACTOR`），新增\n     `z_regime() / z_extrapolated() / required_cii_meta()`；`z_factor()` 对 <2023 返回 0.0\n     （= 参考线口径，且 regime 可判）；2023–2026 数值逐位不变；\n   - `green_shipping.py`：`_gn_required_cii()` 委派 A 的 `required_cii()`，保留原键\n     （`z_factor` 仍为分数），新增 `regime / z_extrapolated / required_value_is_reference / regime_note`；\n   - `green_navigation_ice/api.py`：`compliance` 与 `model_audit` 回显 regime 标记与\n     `dd_vector_basis`（dd 向量为通用单档，未做船型×容量档转录 → 机器可见的局限声明）；\n   - **不动**任何法规系数（a/c、Z 表值、dd 值），不据此提高证据等级。\n\n## ③ 计算结果（程序化注入，`artifacts/cii_consistency_scan_*.json`）\n\nbulk carrier, Capacity = 80000 DWT：\n\n| year | regime | z（分数） | 修复前 B | 修复前 C | 修复后 A=B=C | 一致性 |\n|---|---|---|---|---|---|---|\n| 2019–2022 | not_yet_applicable | 0.00 | 4.2317 (无标记) | **3.7662 (−11.0%)** | 4.2317 | 前 ✗ / 后 ✓ |\n| 2023 | determined | 0.05 | 4.0201 | 4.0201 | 4.0201 | 前 ✗(regime 缺) / 后 ✓ |\n| 2024 | determined | 0.07 | 3.9355 | 3.9355 | 3.9355 | 同上 |\n| 2025 | determined | 0.09 | 3.8508 | 3.8508 | 3.8508 | 同上 |\n| 2026 | determined | 0.11 | 3.7662 | 3.7662 | 3.7662 | 同上 |\n| 2027–2030 | extrapolated | 0.11 | 3.7662 (无标记) | 3.7662 (无标记) | 3.7662 (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |\n\n对账结论：修复前 `divergent_years = 12/12`，修复后 `0/12`\n（`artifacts/cii_consistency_scan_before.json` / `_after.json`）。\n\n## ④ 结果图\n\n`artifacts/m13764_cii_consistency.png`：左右两栏为修复前/后三实现的 required CII–year 曲线，\n灰色带 = 规则未适用年份（2019–2022）。修复前 C 曲线在灰带内整体低于 A/B 11.0%（缺陷可见）；\n修复后三线完全重合。\n\n## ⑤ 注意点 / 局限\n\n- **未动的部分**：法规系数（a/c、Z 表、dd 向量）均为离线转录，证据等级仍 WITHHELD；\n  本次修复**不改变**任何系数的可信度，只消除\"同一规则三个答案\"与\"静默默认\"。\n- **评级（A–E）机制已验，法规值未验**：`dd_vector` 只有一档通用值 (0.86, 0.94, 1.06, 1.18)，\n  未做 MEPC.354(78) G4 的船型×容量档转录。因此只断言分区完备/单调/端点归属（机制层），\n  不断言逐船型评级正确；`DD_VECTOR_BASIS` 与 `/reference`、`model_audit` 均显式回显该局限。\n  `green_shipping` 的 L4 层仍保持 NOT_SUPPORTED，未因本次修复被提升（不制造假能力）。\n- **行为变更（向后兼容性）**：`mepc.required_cii(ref, 2019)` 由 3.7662 变为 4.2317（修正值）；\n  2023–2026 逐位不变，故 pathway / monte_carlo / pipeline 现有链路（年份 ≥2023）数值不受影响\n  （冰区模块 47 条测试、green_shipping 37 条测试全绿）。\n- 2027+ 仍返回 11%（工程保守取最后已通过值），但现在**必须**带 `z_extrapolated=True`，\n  调用方不能\"只看数字\"当合规结论。\n\n## ⑥ 误差判定\n\n| 关键量 | 基准 | 修复前误差 | 修复后误差 | <3%? |\n|---|---|---|---|---|\n| 2019–2022 要求值（C 实现） | 2019 参考线 `a·Cap^(−c)` = 4.2317 | **−11.00%** | 0.00%（逐位相等） | 前否 / **后是** |\n| 三实现 z 值（2019–2030，12 年 × 4 船型 × 3 容量） | A 单源 | 不一致（B/C 缺 regime，C 4 年错值） | 相对差 ≤1e-15 | **后是** |\n| 三实现 required_value（同上网格） | A 单源 | 同上 | 相对差 ≤1e-15 | **后是** |\n| 评级机制（边界分区/单调/端点） | 解析定义 dd_i·req | — | 153 条断言全通过 | 不适用（机制层） |\n\n## 复现\n\n```bash\npython3 tools/cii_consistency_scan.py --out artifacts/cii_consistency_scan_after.json\npython3 -m pytest tests/test_cii_single_source_consistency.py -q          # 153 passed\npython3 -m pytest backend/modules/green_navigation_ice/tests -q           # 47 passed\npython3 -m pytest backend/tests/test_green_shipping.py \\\n                 backend/tests/test_green_efficiency_m1895.py -q          # 37 passed\npython3 -m pytest tests/test_cii_regime_m1829.py -q                       # 70 passed\n```\n\n## 建议新总账条目\n\n- `slug=DEF-CII-SINGLE-SOURCE`，域：绿色航行（`ship-performance-platform`）\n- 验收：三实现 (2019–2035 × {bulk,tanker,container,gas} × {15k,80k,200k}) 的\n  z/required_value/regime 逐点相对差 ≤1e-12 且 `divergent_years == 0`（本单已达：\n  12/12 → 0/12，153 条回归断言）；\n- 后续增量（未做）：MEPC.354(78) G4 船型×容量档 dd 向量转录 → 才能把\n  `green_shipping` L4 评级从 NOT_SUPPORTED 提升。"
+}
