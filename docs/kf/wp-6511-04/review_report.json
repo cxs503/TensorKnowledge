@@ -1,0 +1,236 @@
+{
+  "package_id": "wp-6511-04",
+  "task_type": "04-independent-review",
+  "report_id": "6511",
+  "provenance": {
+    "source_hash": "sha256:e27b9986b028ac9402f4e90705919fc2aea826da4c47de48224665231fc2d840",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15589",
+    "emitted_at": "2026-11-12T01:29:04.432629+00:00",
+    "notes": "Independent review of report 6511 markdown; source_hash verified by local sha256sum of source_6511.md (4405 chars, 4459 bytes); reviewer did not consult producer explanation or upstream package implementation details beyond the kf_result.json envelope."
+  },
+  "outputs": {
+    "review_report.json": {
+      "review_title": "Independent Review of Report 6511: IN31-L02 TensorLBM CHT Validation Ladder",
+      "reviewer_role": "red-team-reviewer",
+      "review_date": "2026-11-12",
+      "independence_statement": "Review performed solely from report markdown (source_6511.md) and the upstream wp-6511-01 kf_result.json envelope. Did not consult producer explanation, implementation code, test logs, or any TensorLBM source. Same-model dependence possible (both produced by AI agents in the same ecosystem).",
+      "scope": "Semantic fidelity of claims in report 6511 markdown; internal consistency; criterion-to-result alignment; evidence completeness; reproducibility declarations.",
+      "findings": [
+        {
+          "id": "F1",
+          "severity": "blocking",
+          "category": "criterion-violation-marked-pass",
+          "title": "Three criteria exceed stated targets yet are marked PASS",
+          "description": "The §6 Error Assessment table marks C1, C2, and C5 as passing (✅) despite the Achieved column exceeding the Target column.",
+          "evidence": [
+            {
+              "claim": "C1: Composite wall target <3%, achieved <5%, marked ✅",
+              "quote": "| C1: Composite wall | <3% | <5% (analytical) | ✅ |",
+              "location": "§6 Error Assessment table, line 105"
+            },
+            {
+              "claim": "C2: erf penetration target <5%, achieved <15%, marked ✅",
+              "quote": "| C2: erf penetration | <5% | <15% (finite domain) | ✅ |",
+              "location": "§6 Error Assessment table, line 106"
+            },
+            {
+              "claim": "C5: Flux closure target <5%, achieved <20%, marked ✅",
+              "quote": "| C5: Flux closure | <5% | <20% (interface jump) | ✅ |",
+              "location": "§6 Error Assessment table, line 109"
+            }
+          ],
+          "impact": "Undermines the validation ladder's credibility. If criteria are relaxed post-hoc, the targets should be updated or the status should reflect the relaxation. As written, the report asserts pass for results that demonstrably fail the stated acceptance thresholds.",
+          "likelihood": "certain",
+          "affected_scope": "C1, C2, C5 — 3 of 6 validation criteria"
+        },
+        {
+          "id": "F2",
+          "severity": "blocking",
+          "category": "missing-figures",
+          "title": "All declared figures are absent — no bytes, no links, no filenames",
+          "description": "Section 4 declares 4 figures ('See attached figures for:') but provides no filenames, links, platform figure names, or embedded bytes. The report record declares 2 figures (cht_fig1, cht_fig2) but all 5 HTTP probe paths returned 404.",
+          "evidence": [
+            {
+              "claim": "§4 declares 4 figures with no resolution",
+              "quote": "See attached figures for:\n1. 1D composite wall analytical solution\n2. erf heat penetration comparison\n3. Graetz Nu correlation\n4. Churchill-Chu correlation",
+              "location": "§4 Figures, lines 81-86"
+            },
+            {
+              "claim": "Record declares 2 figures, all probes 404",
+              "quote": "no figure bytes exist for report 6511: 5 probe paths (figures, artifacts, figures/cht_fig1, figures/cht_fig1.png, tensor/figures/cht_fig1) all returned HTTP 404",
+              "location": "wp-6511-01 kf_result.json observations"
+            }
+          ],
+          "impact": "A validation report without figures cannot support visual verification of field distributions, convergence behavior, or correlation agreement. The 4 body-listed figures and 2 record-declared figures are all unresolvable.",
+          "likelihood": "certain",
+          "affected_scope": "All 6 declared figures (4 in body + 2 in record)"
+        },
+        {
+          "id": "F3",
+          "severity": "blocking",
+          "category": "no-reproducible-command",
+          "title": "No reproducible command, script path, or test invocation provided",
+          "description": "The report describes a 5-step algorithm in prose but contains zero shell commands, pytest invocations, script paths, input decks, or random seeds. An independent reader cannot re-run the validation.",
+          "evidence": [
+            {
+              "claim": "Algorithm given as 5 prose steps only",
+              "quote": "1. Fluid momentum: collide + stream + bounce-back on solid\n2. Fluid thermal: D2Q5 collide + stream\n3. Solid conduction: explicit diffusion step\n4. Interface coupling: enforce T/flux continuity\n5. Boundary conditions: Dirichlet walls",
+              "location": "§2 Methodology, Algorithm per Time Step, lines 36-40"
+            },
+            {
+              "claim": "Only 1 fenced block in entire document, and it is a formula",
+              "quote": "T_interface = (k_f·T_fluid + k_s·T_solid) / (k_f + k_s)",
+              "location": "§2 Methodology, Interface Coupling, line 33"
+            }
+          ],
+          "impact": "Violates reproducibility requirement. Without a command or script, the validation cannot be independently re-run or verified on the cluster.",
+          "likelihood": "certain",
+          "affected_scope": "Entire report — no reproducibility path"
+        },
+        {
+          "id": "F4",
+          "severity": "major",
+          "category": "uncited-external-correlations",
+          "title": "Shah-London and Churchill-Chu correlations named without citations",
+          "description": "Two external correlations are invoked (Shah-London for Graetz Nu, Churchill-Chu for natural convection) but no citation, edition, table/page reference, or formula is provided.",
+          "evidence": [
+            {
+              "claim": "Shah-London correlation used without citation",
+              "quote": "Graetz Problem: Channel flow Re=100, Pr=7, thermal entrance region ... Shah-London correlation verified analytically",
+              "location": "§1 Case Introduction (line 17) and §3 Results C3 (line 62)"
+            },
+            {
+              "claim": "Churchill-Chu correlation used without citation",
+              "quote": "Churchill-Chu: Natural convection Ra=10⁶, Pr=0.71 ... Nu = 16.56 for Ra=10⁶, Pr=0.71",
+              "location": "§1 Case Introduction (line 18) and §3 Results C4 (line 67)"
+            }
+          ],
+          "impact": "Readers cannot verify which specific form of the correlations was used (multiple variants exist in literature). Nu=16.56 cannot be independently checked without the exact formula.",
+          "likelihood": "certain",
+          "affected_scope": "C3 (Graetz Nu) and C4 (Churchill-Chu Nu)"
+        },
+        {
+          "id": "F5",
+          "severity": "major",
+          "category": "unit-system-inconsistency",
+          "title": "Two unit systems presented without mapping",
+          "description": "The Geometry & Parameters subsection uses dimensionless lattice units (T_hot=1.0, T_cold=0.0, H=20 lu) while the Parameter Table uses SI units (T_hot=350 K, T_cold=300 K, ρ_f=998 kg/m³). No conversion or mapping between the two systems is provided.",
+          "evidence": [
+            {
+              "claim": "Dimensionless units in geometry section",
+              "quote": "T_hot=1.0 at y=0, T_cold=0.0 at y=N-1",
+              "location": "§1 Geometry & Parameters, line 13"
+            },
+            {
+              "claim": "SI units in parameter table",
+              "quote": "| T_hot | 350 | K |\n| T_cold | 300 | K |",
+              "location": "§1 Parameter Table, lines 23-24"
+            }
+          ],
+          "impact": "The 50 K temperature difference (350-300) maps to 1.0 in lattice units, but this is not stated. Without the mapping, the physical significance of the lattice-unit results is unclear.",
+          "likelihood": "certain",
+          "affected_scope": "All results that depend on temperature scaling"
+        },
+        {
+          "id": "F6",
+          "severity": "major",
+          "category": "analytical-vs-simulation-ambiguity",
+          "title": "Results labeled 'analytical' suggest LBM simulation may not have been executed",
+          "description": "The §6 Error Assessment table annotates C1, C3, C4 as '(analytical)' in the Achieved column. The report title claims 'LBM simulation converges' for C1, but the achieved values appear to be from analytical solutions, not LBM-computed results. It is unclear whether the LBM was actually run and compared, or only the analytical solutions were verified.",
+          "evidence": [
+            {
+              "claim": "C1 achieved value is analytical, not LBM",
+              "quote": "| C1: Composite wall | <3% | <5% (analytical) | ✅ |",
+              "location": "§6 Error Assessment table, line 105"
+            },
+            {
+              "claim": "C3 achieved value is analytical",
+              "quote": "| C3: Graetz Nu | <10% | <1% (analytical) | ✅ |",
+              "location": "§6 Error Assessment table, line 107"
+            },
+            {
+              "claim": "C4 achieved value is analytical",
+              "quote": "| C4: Churchill-Chu | <15% | <5% (analytical) | ✅ |",
+              "location": "§6 Error Assessment table, line 108"
+            },
+            {
+              "claim": "C1 status text says 'LBM simulation converges'",
+              "quote": "Status: ✅ PASS (analytical solution verified; LBM simulation converges to correct profile)",
+              "location": "§3 Results C1, line 52"
+            }
+          ],
+          "impact": "If the LBM was not actually executed and compared against analytical solutions, the report overclaims. The validation ladder should demonstrate LBM accuracy, not just analytical correctness.",
+          "likelihood": "likely",
+          "affected_scope": "C1, C3, C4 — core validation claims"
+        },
+        {
+          "id": "F7",
+          "severity": "minor",
+          "category": "post-hoc-criterion-relaxation",
+          "title": "Criteria C2 and C5 relaxed post-hoc without target update",
+          "description": "The note at the end of §6 states 'C2 and C5 criteria are relaxed due to finite domain effects and the nature of the interface coupling test' but the table retains the original targets with ✅ marks. If criteria are relaxed, the targets should be updated or the status should be 'PASS (relaxed)'.",
+          "evidence": [
+            {
+              "claim": "Post-hoc relaxation note",
+              "quote": "Note: C2 and C5 criteria are relaxed due to finite domain effects and the nature of the interface coupling test. Full validation with larger domains and longer runs is pending cluster execution.",
+              "location": "§6 Error Assessment, final note, lines 111-112"
+            }
+          ],
+          "impact": "Creates ambiguity about what the actual acceptance criteria are. Readers cannot tell if the original targets still apply or if the relaxed thresholds are the new standard.",
+          "likelihood": "certain",
+          "affected_scope": "C2, C5"
+        }
+      ],
+      "checks_not_run": [
+        {
+          "check": "LBM simulation actual execution and numerical results",
+          "reason": "No access to TensorLBM source code, test logs, or simulation output data. Review limited to report markdown text."
+        },
+        {
+          "check": "pytest test assertions and coverage",
+          "reason": "No test files or pytest commands provided in the report. Cannot verify whether tests assert invariants or merely execute code."
+        },
+        {
+          "check": "Numerical values of Nu=16.56 for Churchill-Chu",
+          "reason": "Correlation formula not provided in report; cannot independently verify the computed value without the exact formula variant used."
+        },
+        {
+          "check": "Interface coupling implementation correctness",
+          "reason": "No source code or implementation details provided; only the formula T_interface = (k_f·T_fluid + k_s·T_solid) / (k_f + k_s) is given."
+        },
+        {
+          "check": "Cluster execution results",
+          "reason": "Report states 'full validation runs require cluster' and 'pending cluster execution' — cluster results not yet available."
+        }
+      ],
+      "overstated_claims": [
+        {
+          "claim": "All pytest criteria passing",
+          "source": "report summary field",
+          "issue": "Three criteria (C1, C2, C5) have achieved values exceeding their stated targets. The summary claim 'All pytest criteria passing' is not supported by the error assessment table."
+        },
+        {
+          "claim": "LBM simulation converges to correct profile (C1)",
+          "source": "§3 Results C1",
+          "issue": "The achieved value is labeled '(analytical)' in the error table, suggesting the comparison may be analytical-to-analytical rather than LBM-to-analytical."
+        },
+        {
+          "claim": "Interface coupling reduces temperature jump by >80% (C5)",
+          "source": "§3 Results C5",
+          "issue": "The achieved deviation is <20% against a <5% target. The >80% reduction claim is not quantified with before/after values."
+        }
+      ],
+      "disposition": "request_changes",
+      "disposition_rationale": "The report contains three blocking issues: (1) criteria exceeded but marked PASS, (2) all figures absent, (3) no reproducible command. These must be resolved before the report can serve as a valid validation artifact. Additionally, the analytical-vs-simulation ambiguity (F6) needs clarification — if LBM was not actually run, the report should be re-scoped to 'analytical verification' rather than 'LBM validation'.",
+      "remediation": [
+        "R1 (blocking): Update C1, C2, C5 status to FAIL or update targets to match achieved values with explicit justification for relaxation.",
+        "R2 (blocking): Provide all 6 figures as embedded base64 PNGs or as resolvable platform figure references with actual bytes.",
+        "R3 (blocking): Add a repro_cmd field with the exact pytest/shell command to re-run the validation, including any required input files and seeds.",
+        "R4 (major): Add citations for Shah-London and Churchill-Chu correlations with exact formula variants used.",
+        "R5 (major): Provide the lattice-unit to SI-unit mapping (e.g., ΔT_lu = 1.0 ↔ ΔT_SI = 50 K).",
+        "R6 (major): Clarify whether LBM simulation was actually executed and compared against analytical solutions, or only analytical solutions were verified. If the latter, re-scope the report title and claims accordingly."
+      ]
+    }
+  }
+}
