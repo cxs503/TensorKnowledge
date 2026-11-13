@@ -1,0 +1,453 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.v1.wp-11243-01.schema.json",
+  "title": "asset_manifest.v1 — pinned shape for KF package wp-11243-01",
+  "description": "Structural schema for the asset_manifest.json emitted by scripts/kf_wp_11243_01_register.py. Pins the fields actually produced so that the contract's schema_pass acceptance item is a reproducible check. Where this file and the platform-side schema disagree, the platform gate wins.",
+  "type": "object",
+  "required": [
+    "schema",
+    "manifest_version",
+    "package_id",
+    "task_type",
+    "report_id",
+    "lane",
+    "source",
+    "counts",
+    "assets",
+    "unresolved_references",
+    "claims",
+    "integrity"
+  ],
+  "properties": {
+    "schema": {
+      "const": "asset_manifest.v1"
+    },
+    "manifest_version": {
+      "const": "1.0"
+    },
+    "package_id": {
+      "const": "wp-11243-01"
+    },
+    "task_type": {
+      "const": "01-asset-registration"
+    },
+    "report_id": {
+      "const": "11243"
+    },
+    "lane": {
+      "const": "C"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "uri",
+        "field",
+        "hash_alg",
+        "hash",
+        "chars",
+        "bytes_utf8",
+        "title",
+        "scenario_key"
+      ],
+      "properties": {
+        "uri": {
+          "const": "tensor://reports/11243"
+        },
+        "field": {
+          "const": "markdown"
+        },
+        "hash_alg": {
+          "const": "sha256"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "bytes_utf8": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scenario_key": {
+          "const": "tensordem-cg-upscaling"
+        },
+        "report_status": {
+          "type": "string"
+        },
+        "platform_figures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "http_status",
+              "bytes"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "http_status": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "png_width": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "png_height": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "platform_tags": {
+          "type": "array"
+        },
+        "snapshot_path": {
+          "type": "string"
+        },
+        "record_summary": {
+          "type": "object",
+          "required": [
+            "field",
+            "sha256",
+            "text"
+          ],
+          "properties": {
+            "field": {
+              "const": "summary"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "chars": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "assets",
+        "by_class",
+        "by_resolution",
+        "locators",
+        "locators_resolved",
+        "claims"
+      ],
+      "properties": {
+        "assets": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "by_class": {
+          "type": "object"
+        },
+        "by_resolution": {
+          "type": "object"
+        },
+        "locators": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "locators_resolved": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "claims": {
+          "const": 0
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "asset_id",
+          "asset_class",
+          "label",
+          "in_report_section",
+          "locator",
+          "resolution",
+          "resolution_check",
+          "note"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "pattern": "^A[0-9]{2}$"
+          },
+          "asset_class": {
+            "enum": [
+              "source_document",
+              "figure_attachment",
+              "data_table",
+              "specification_block"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "in_report_section": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolution": {
+            "enum": [
+              "resolved_in_source",
+              "referenced_unresolved"
+            ]
+          },
+          "locator": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/markdown_locator"
+              },
+              {
+                "$ref": "#/definitions/record_locator"
+              }
+            ]
+          },
+          "resolution_check": {
+            "type": "object",
+            "required": [
+              "check",
+              "result"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "unresolved_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "asset_id",
+          "asset_class",
+          "label",
+          "locator",
+          "resolution",
+          "resolution_check",
+          "note"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "pattern": "^U[0-9]{2}$"
+          },
+          "asset_class": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolution": {
+            "const": "referenced_unresolved"
+          },
+          "locator": {
+            "$ref": "#/definitions/record_locator"
+          },
+          "resolution_check": {
+            "type": "object",
+            "required": [
+              "check",
+              "result"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 0,
+      "description": "Empty by contract: task_type=01 registers assets, it does not extract claims."
+    },
+    "integrity": {
+      "type": "object",
+      "required": [
+        "quote_uniqueness",
+        "hash_matches_contract",
+        "locator_verification",
+        "duplicate_ids",
+        "checks"
+      ],
+      "properties": {
+        "locator_verification": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "asset_id",
+              "source_field",
+              "resolved"
+            ],
+            "properties": {
+              "asset_id": {
+                "type": "string"
+              },
+              "resolved": {
+                "type": "boolean"
+              },
+              "uniqueness_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "quote_len": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "duplicate_ids": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "checks": {
+          "type": "object",
+          "required": [
+            "source_hash_matches_contract",
+            "chars_match_contract",
+            "all_locators_resolved",
+            "no_duplicate_ids",
+            "claims_empty_by_contract",
+            "no_verified_marks_emitted"
+          ],
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "markdown_locator": {
+      "type": "object",
+      "required": [
+        "method",
+        "source_field",
+        "start_char",
+        "end_char",
+        "start_line",
+        "end_line",
+        "quote"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "char_span",
+            "document"
+          ]
+        },
+        "source_field": {
+          "const": "markdown"
+        },
+        "start_char": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_char": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start_line": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "char_len": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "record_locator": {
+      "type": "object",
+      "required": [
+        "method",
+        "source_field",
+        "pointer",
+        "quote"
+      ],
+      "properties": {
+        "method": {
+          "const": "record_field"
+        },
+        "source_field": {
+          "enum": [
+            "record",
+            "markdown"
+          ]
+        },
+        "pointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}
