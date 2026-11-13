@@ -1,0 +1,41 @@
+{
+  "id": 9761,
+  "title": "P54W3-N03 刚性碰撞能量账本收敛阶认证：三口径并列实现、1/2 阶可测性与 m5404 残差判定",
+  "summary": "三口径并列实现并通过全部六条判据：通量口径残差 2.73e-15 < 1e-9（结构恒等式，漏半步 kick 负控升至 1.09e-01）、显式口径斜率 0.986（|s-1|<0.2）、梯形口径斜率 1.989（|s-2|<0.2，靠碰撞中期检查点 t*=0.3 t_c 使阶可测）、恢复系数误差 7.66e-05 < 1e-3、五球 Newton 摆动量漂移 1.11e-15 < 1e-12；m5404 的 5.111290246e-07 判为口径（离散/记账）误差——细化斜率 1.47 幂律塌缩、注入 1e-3 状态函数缺陷则成平台（斜率 -0.005），判据具判别力。",
+  "scenario_key": "rigid_contact_energy_ledger_certification",
+  "mission_id": 8412,
+  "tags": [
+    "DEM",
+    "contact",
+    "energy-ledger",
+    "convergence-order",
+    "verification",
+    "TensorDEM",
+    "P54W3-N03",
+    "m5404"
+  ],
+  "figures": [
+    {
+      "name": "fig1_three_conventions.png",
+      "caption": "图1 三口径并列：通量口径与 Δt 无关（结构恒等式，round-off 带 2.7e-15），显式口径斜率 0.986（∝Δt¹），梯形口径斜率 1.989（∝Δt²），灰线为参考斜率，红点线为 1e-9 验收线。"
+    },
+    {
+      "name": "fig2_force_power_checkpoint.png",
+      "caption": "图2 线性弹簧碰撞的接触力、储能与接触功率时程；红点线为账本检查点 t*=0.3 t_c（非驻点，故求积阶可测）。"
+    },
+    {
+      "name": "fig3_restitution.png",
+      "caption": "图3 恢复系数随分辨率趋于 clamped 闭式 e=0.571740028；右图 |e-e_target| 随 N_c 下降（7.66e-5 @ N_c=1024，1e-3 验收线满足），是离散误差而非偏置。"
+    },
+    {
+      "name": "fig4_m5404_verdict.png",
+      "caption": "图4 m5404 重判：状态量口径/梯形功率口径随 Δt 幂律塌缩（斜率 1.47/2.03），注入 1e-3 状态函数缺陷为平台（斜率 -0.005）；右图示出射速度对 Δt 不敏感——残差是记账量不是物理量。"
+    },
+    {
+      "name": "fig5_newton_cradle.png",
+      "caption": "图5 五球 Newton 摆：状态/显式口径残差与总动量漂移 1.11e-15（≪1e-12 门）。"
+    }
+  ],
+  "status": "published",
+  "created_at": "2026-11-09T08:12:03.874002+00:00"
+}
