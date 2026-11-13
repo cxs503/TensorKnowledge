@@ -1,0 +1,46 @@
+{
+  "package_id": "wp-11107-01",
+  "report_id": "11107",
+  "verified_at": "2026-11-12T01:52:02Z",
+  "source_hash": "sha256:799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982",
+  "checks": [
+    {
+      "id": "valid_json",
+      "check": "asset_manifest.json and kf_result.json parse as JSON objects",
+      "pass": true,
+      "evidence": "parsed asset_manifest.json (17901 bytes) and kf_result.json (19895 bytes)"
+    },
+    {
+      "id": "schema_pass",
+      "check": "kf_result.v1.schema.json + asset_manifest.wp-11107-01.schema.json validation",
+      "pass": true,
+      "evidence": "envelope=True manifest=True errors=[]"
+    },
+    {
+      "id": "source_hash_matches",
+      "check": "platform re-fetched markdown sha256 == provenance.source_hash == contract input.source_hash",
+      "pass": true,
+      "evidence": "recomputed=sha256:799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982 envelope=sha256:799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982 contract=sha256:799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982 chars=13319"
+    },
+    {
+      "id": "source_locator_resolvable",
+      "check": "every locator re-resolves character-for-character against the fresh markdown (quote, span, line, occurrence count)",
+      "pass": true,
+      "evidence": "locators=11 failures=[]"
+    },
+    {
+      "id": "no_duplicate_ids",
+      "check": "asset_id values are unique",
+      "pass": true,
+      "evidence": "ids=['A01', 'A02', 'A03', 'A04', 'A05', 'A06', 'A07']"
+    },
+    {
+      "id": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "check": "claims[] empty (contract: no forced claim generation) -> condition holds vacuously; each asset instead carries a locator",
+      "pass": true,
+      "evidence": "claims=0 assets_with_locator=7/7 reason=Contract wp-11107-01 objective is register_assets=true / classify_report_type=false and no"
+    }
+  ],
+  "all_pass": true,
+  "note": "These flags are self-checks of this工序's own acceptance items; they are not a platform verification verdict and nothing here is marked verified."
+}
