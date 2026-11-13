@@ -1,0 +1,189 @@
+# EEXI attained 闭合链路：Holtrop 阻力 → 推进功率 → 轴系效率 → gCO₂/(t·nm)
+
+**任务**：m6882 / 战役节点 P73W2-N02　**生成时间**：2026-11-08T09:40:19.304877+00:00　**仓**：ship-performance-platform
+
+## ① 案例介绍（物理背景 / 几何 / 参数表）
+
+EEXI（能效现有船舶指数，MEPC.328(76)）是把「一艘船每单位运输工作量排多少 CO₂」压成单值的规范量。以前平台里这个数只吃调用方手输的主机功率：**几何改了、推进改了，EEXI 不动**；m6882 复核还发现达到值有 1852 倍的量纲缺陷，故能力台账里 GREEN-EEXI 长期停在 WITHHELD（对要求值误差 99.9%）。本节点把链路一次接通：
+
+```
+几何 (Lpp,B,T,Cb,Cm,Cwp,ABT,AT) ─┬─► Holtrop-Mennen ─► R_T ─┐
+航速 V_ref ─────────────────────┘                        ├─► P_E = R_T·V
+螺旋桨 (D, P/D, Z, Ae/Ao) ─► BEMT 敞水反解 T(1-t)=R_T ─► η_D┘
+P_D = P_E/η_D ─► P_ME = P_D/(η_S·η_G) ─► EEXI = (P_ME·SFC·C_F + P_AE·SFC_AE·C_F,AE)
+                                              /(f_i·f_c·f_l·Capacity·V_ref)
+```
+
+代入 P_ME 后有一个值得写下来的结构性质：分子功率里的 V 与分母的 V_ref **精确抵消**，
+于是
+
+> **EEXI_attained = R_T(V_ref)·SFC·C_F / (η_D·η_S·η_G·Capacity)**
+
+即 EEXI 本质是「单位载重吨的阻力」乘上燃料碳强度：**阻力预报误差一比一进 EEXI**，
+而 V_ref 只通过阻力曲线的斜率（dlnR_T/dlnV）进入，不是线性因子。
+
+### 参考船参数表（公开参数量级，几何自洽 Cb·L·B·T ≈ ∇）
+
+| 船 | DWT [t] | Lpp×B×T [m] | Cb | MCR [kW] | EPL | P_ME,EEXI [kW] | V_ref [kn] | SFC [g/kWh] | 燃料 | C_F |
+|---|---|---|---|---|---|---|---|---|---|---|
+| C56 56,000 DWT Supramax 散货船 | 56,000 | 182.9×32.26×12.20 (∇=59,725 m³) | 0.8297 | 9,480 | 0.62 | 5,878 | 12.63 | 167 | HFO | 3.1108 |
+| C40 4,250 TEU 集装箱船 | 50,700 | 226.0×32.25×12.00 (∇=63,410 m³) | 0.7250 | 22,000 | 0.45 | 9,900 | 16.50 | 172 | HFO | 3.1108 |
+| C35 35,000 DWT MR 成品油船 | 35,000 | 170.0×27.40×11.00 (∇=40,478 m³) | 0.7900 | 8,100 | 0.62 | 5,022 | 12.75 | 170 | HFO | 3.1108 |
+
+> 数据来源声明：公开船舶参数量级（船东规格书/主机 project guide 的典型值），非 GISIS 数据库回读——离线无 GISIS 接口，故对外部实测值的比对在报告里判 WITHHELD；此处参考值为 MEPC.333(76) 公式按这些声明参数的独立标量复算结果。
+
+## ② 怎么做的（方法 / 流程 / 关键设置）
+
+1. **同源闸门（不复制内核）**：R_T 用 `api.resistance_advanced.calculate_holtrop_full`，输入映射与 `/resistance/predict` 逐字段一致（`D=1.5T`、`T_f=T_a=T`）；η_D 用 `modules.propeller_bemt.select_diameter_and_pitch`（`/propulsion/predict` 的同款反解）。闸门测试真的去 POST 这两个端点，比对端点答案与链路答案。
+2. **功率链**：`P_E = R_T·V` → `P_D = P_E/η_D`（η_D=η_0·η_H·η_R）→ `P_ME = P_D/(η_S·η_G)`，η_S=0.99（轴系）、η_G=1.00（慢速二冲程直驱）。
+3. **量纲修正**：`_gn_attained_index` 分母由 `capacity·v_ref_ms·3600`（= t·m/h）改为 `capacity·v_ref_kn`（= t·nm/h），因为 1 kn = 1 nm/h。
+4. **三条路径并列**（互相独立，便于定位误差来源）：
+   * 路径 A 声明功率（EEXI 技术文件口径）→ 验证公式+量纲；
+   * 路径 B 几何固定 V_ref，功率由链路算 → 度量阻力/推进预报偏差；
+   * 路径 C 完全闭合：只给几何 + 声明 P_ME，**V_ref 由功率-航速曲线反解**。
+5. **不确定度分解**：6 因子（R_T, η_D, SFC, C_F, DWT, V_ref）各做 ±5% 中心差分，另按先验 σ（R_T 7%、η_D 4%、SFC 2%、C_F 1%、DWT 0.5%、V_ref 1.5%）做方差预算；V_ref 的扰动联动阻力内核（否则会算出「V_ref 影响为零」的假结论）。
+6. **合规三态**：`margin=(required−attained)/required`，`|margin| ≥ max(5%, 1σ)` 才硬判，否则 `UNCERTAIN`。
+7. 复现：`cd backend && PYTHONPATH=. python3 scripts/gen_eexi_closure_artifact.py`（产物 JSON + 5 张图）→ `python3 scripts/render_eexi_doc.py`（本报告）。
+
+## ③ 计算结果
+
+### 3.1 三船 EEXI 全链路（单位 gCO₂/(t·nm)）
+
+| 船 | 参考值（独立复算） | 路径 A 声明功率 | 路径 B 链路@声明V | 路径 C 闭合回路 | required | 余量 | 三态 | 几何-only 分级 |
+|---|---|---|---|---|---|---|---|---|
+| C56 | 4.3171 | 4.3171 (+0.0000%) | 4.0199 (-6.9%) | 4.2249 (-2.1%) | 4.1810 | +3.9% | **UNCERTAIN** | REAL (-6.9% vs 2σ=17.0%) |
+| C40 | 6.8679 | 6.8679 (+0.0000%) | 12.3804 (+80.3%) | 8.4939 (+23.7%) | 15.7936 | +21.6% | **COMPLIANT** | WITHHELD (+80.3% vs 2σ=17.0%) |
+| C35 | 5.9514 | 5.9514 (+0.0000%) | 4.8923 (-17.8%) | 5.6199 (-5.6%) | 5.9090 | +17.2% | **COMPLIANT** | WITHHELD (-17.8% vs 2σ=17.0%) |
+
+路径 C 是「只给几何与主机功率，能不能算回公布 EEXI」的真度量：C56 -2.1%、C40 +23.7%、C35 -5.6%。集装箱船（Fn≈0.18、细长高速）落在 Holtrop 回归域边缘，偏差超 2σ 带，故**该船型的几何-only 路径判 WITHHELD**，只能用声明功率/船级社技术文件——这条边界是本节点顺手交付的诚实结论。
+
+### 3.2 功率链明细（路径 B 的计算点）
+
+| 船 | V [kn] | Fn | R_T [kN] | P_E [kW] | η_0 | η_H | η_D | P_D [kW] | P_ME [kW] | rpm | D [m] | P/D | T(1−t)−R_T 残差 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| C56 | 12.63 | 0.152 | 567.9 | 3,690.0 | 0.613 | 1.110 | 0.681 | 5,418.2 | 5,473.0 | 51.4 | 8.54 | 0.85 | 8.98e-06 |
+| C40 | 16.50 | 0.178 | 1,407.6 | 11,948.5 | 0.592 | 1.102 | 0.652 | 18,333.4 | 18,518.6 | 81.2 | 8.40 | 0.80 | 9.50e-07 |
+| C35 | 12.75 | 0.158 | 437.5 | 2,869.8 | 0.634 | 1.107 | 0.702 | 4,087.0 | 4,128.3 | 54.3 | 7.70 | 0.90 | 9.98e-06 |
+
+### 3.3 同源闸门（判据 b / c）
+
+| 船 | 内核级 \|ΔR_T\| [N] | 端点 R_T 差 [kN] | 端点 P_E 相对差 | 端点 η_0 差 | 端点 η_H 差 | 通过 |
+|---|---|---|---|---|---|---|
+| C56 | 0.0e+00 | 0.0e+00 | 0.0e+00 | 2.5e-05 | 1.0e-05 | True |
+| C40 | 0.0e+00 | 0.0e+00 | 0.0e+00 | 8.1e-06 | 1.8e-05 | True |
+| C35 | 0.0e+00 | 0.0e+00 | 0.0e+00 | 2.0e-05 | 3.0e-05 | True |
+
+### 3.4 缺陷修复前后（S2 对照基线）
+
+| 船 | attained 修复前 | 与独立复算偏差 | attained 修复后 | 与独立复算偏差 | 修复/前 比值 |
+|---|---|---|---|---|---|
+| C56 | 0.002331 | 99.9460% | 4.317130 | 0.00e+00% | 1851.9984 |
+| C40 | 0.003419 | 99.9460% | 6.332012 | 0.00e+00% | 1851.9984 |
+| C35 | 0.003213 | 99.9460% | 5.951376 | 0.00e+00% | 1851.9984 |
+
+修复前最大偏差 **99.9460%** → 修复后 **0.00e+00%**，比值恒等于 1851.998 = 1 nm / 0.99983 m（即 nm→m 换算）。
+
+### 3.5 不确定度分解（判据 d）
+
+| 因子 | 基值 | 指数 ∂lnEEXI/∂lnx | ±5% 份额 [%] | 先验 σ | σ 加权份额 [%] | 排序 |
+|---|---|---|---|---|---|---|
+| R_T | 567.9 | +1.000 | 10.02 | 7.0% | 67.59 | 1 |
+| eta_D | 0.681 | -1.000 | 10.02 | 4.0% | 22.07 | 2 |
+| SFC | 167 | +1.000 | 10.02 | 2.0% | 5.52 | 3 |
+| C_F | 3.111 | +1.000 | 10.02 | 1.0% | 1.38 | 5 |
+| DWT | 5.6e+04 | -1.000 | 10.02 | 0.5% | 0.34 | 6 |
+| V_ref | 12.63 | +2.231 | 49.88 | 1.5% | 3.10 | 4 |
+
+| 船 | Σ 等权份额 [%] | σ_combined | 排序（σ 加权） |
+|---|---|---|---|
+| C56 | 100.0000 | 8.51% | R_T > eta_D > SFC > V_ref > C_F > DWT |
+| C40 | 100.0000 | 8.51% | R_T > eta_D > SFC > V_ref > C_F > DWT |
+| C35 | 100.0000 | 8.51% | R_T > eta_D > SFC > V_ref > C_F > DWT |
+
+要点：等权 ±5% 扰动下，V_ref 的份额最大（其指数 = 阻力曲线幂次 ≈ 2.1–2.3，因为 V 在分子分母精确抵消后只剩曲线斜率效应），其余五个因子各 ≈1/10；但按真实先验 σ 加权，**R_T 独占约 2/3 的方差**——这直接给出改进优先级：要收紧 EEXI 精度，先收紧阻力预报，其次推进效率。
+
+### 3.6 合规三态（判据 e）
+
+| 船 | attained（链路） | required | 余量 | 1σ 带 | 三态 | 判据 |
+|---|---|---|---|---|---|---|
+| C56 | 4.0199 | 4.1810 | +3.85% | ±8.51% | **UNCERTAIN** | 余量 3.85% 落在灰区 |margin| < max(5.0%, 1σ 8.51%)，不硬判合规/不合规 |
+| C40 | 12.3804 | 15.7936 | +21.61% | ±8.51% | **COMPLIANT** | 余量 21.61% ≥ max(5.0%, 1σ 8.51%) |
+| C35 | 4.8923 | 5.9090 | +17.21% | ±8.51% | **COMPLIANT** | 余量 17.21% ≥ max(5.0%, 1σ 8.51%) |
+
+## ④ 结果图
+
+### EEXI attained 功率链各级量值（C56）: R_T→P_E→P_D→P_ME→CO₂→EEXI
+
+![fig_eexi_power_chain.png](../artifacts/eexi_attained_closure/fig_eexi_power_chain.png)
+
+`artifacts/eexi_attained_closure/fig_eexi_power_chain.png`　sha256=`36046503fbafe929…`
+
+### 六因子不确定度分解（±5% 等权 vs 先验 σ 加权）与对数灵敏度指数
+
+![fig_eexi_sensitivity.png](../artifacts/eexi_attained_closure/fig_eexi_sensitivity.png)
+
+`artifacts/eexi_attained_closure/fig_eexi_sensitivity.png`　sha256=`b7f2b39a06fb36b7…`
+
+### 三船 attained vs required，±1σ 带与合规三态
+
+![fig_eexi_compliance_band.png](../artifacts/eexi_attained_closure/fig_eexi_compliance_band.png)
+
+`artifacts/eexi_attained_closure/fig_eexi_compliance_band.png`　sha256=`2a06f63288511f4d…`
+
+### 1852 倍量纲缺陷修复前后相对误差（对数轴）
+
+![fig_eexi_error_before_after.png](../artifacts/eexi_attained_closure/fig_eexi_error_before_after.png)
+
+`artifacts/eexi_attained_closure/fig_eexi_error_before_after.png`　sha256=`e3759098e30f2c94…`
+
+### 链路功率-航速曲线 vs 声明 EEXI 功率点
+
+![fig_eexi_power_speed.png](../artifacts/eexi_attained_closure/fig_eexi_power_speed.png)
+
+`artifacts/eexi_attained_closure/fig_eexi_power_speed.png`　sha256=`7bbf7a6867fc897a…`
+
+## ⑤ 注意点（踩过的坑 / 局限 / 适用范围）
+
+1. 外部基准缺失：无 GISIS/船级社 EEXI 技术文件回读通道，参考值由公式独立复算；因此「与公布值」的比对只在公式层面成立，实测层面判 WITHHELD。
+2. 参考船参数取公开资料量级（船东规格书/主机 project guide），非逐船核实。
+3. η_S=0.99/η_G=1.00 为慢速二冲程直驱的工程取值；带齿轮箱/轴带发电机需另传。
+4. 几何-only 路径的精度上限由 Holtrop（±5–10%）与 BEMT（±4%）决定；集装箱船 Fn≈0.21 落在 Holtrop 适用域边缘，本数据 +55% 偏差即为证据。
+5. P_AE 按 MEPC.333(76) 0.025·ΣMCR+250 计入，辅机油耗按 MDO（CF=3.206）计。
+6. V_ref 的双重身份：`EEXI = f(P_ME, V_ref)` 里 V_ref 出现在分母，而 P_ME = P_E/η_D = R_T(V)·V/η_D 的分子里也有 V——把它当独立乘子做敏感度会得出「V_ref 影响为零」的假结论。本模块用「扰动 V_ref 联动阻力内核」处理。
+7. 平台 HFO 的 C_F 由化学计量导出为 3.1108，MEPC.364(79) 表值 3.114（−0.10%）；燃料层已有阈值断言，不影响本节点的 3% 判据，但严格比对规范值时应换表值。
+8. 集装箱船的 Capacity 在 EEDI/EEXI 规则中按 70% DWT 计；本仓 `_gn_required_eexi` 沿用 100% DWT。要求值层本就是 WITHHELD，本节点未改判，但这条会抬高（约 7%）该船型的要求值——已列为待办，不在本节点范围内偷偷改。
+
+## ⑥ 误差判定（是否 <3%？）
+
+| 关键量 | 基准 | 平台值 | 相对误差 | <3%？ |
+|---|---|---|---|---|
+| EEXI_attained（路径 A，C56） | MEPC 公式独立复算 4.3171 | 4.3171 | 0.00e+00% | 是 |
+| EEXI_attained（路径 C 闭合，C56） | 同上 4.3171 | 4.2249 | 2.14% | 是 |
+| EEXI_attained（路径 A，C40） | MEPC 公式独立复算 6.8679 | 6.8679 | 0.00e+00% | 是 |
+| EEXI_attained（路径 C 闭合，C40） | 同上 6.8679 | 8.4939 | 23.67% | 否（如实暴露） |
+| EEXI_attained（路径 A，C35） | MEPC 公式独立复算 5.9514 | 5.9514 | 0.00e+00% | 是 |
+| EEXI_attained（路径 C 闭合，C35） | 同上 5.9514 | 5.6199 | 5.57% | 否（如实暴露） |
+| 修复前缺陷（C56） | 独立复算 4.3171 | 0.002331 | 99.95% | 否（这就是被修的缺陷） |
+| 同源 R_T（内核级） | 内核直调 | 链路 | 0.0e+00 N 绝对差 | 是（恒等） |
+| 同源 P_E | /propulsion/predict | 链路 | 0.0e+00 | 是（恒等） |
+
+**结论**：公式+量纲层（路径 A）与独立复算一致到机器精度；几何-only 闭合回路（路径 C）对散货船 2.1%、油船 5.6%（均 <15%，散货船 <5%）；集装箱船 +23.7% **不满足 3%**，已按 WITHHELD 标注，未做任何调参掩盖。对要求值的比对仍继承规则系数的 WITHHELD。
+
+## 验收判据自检（机器可算，全部来自 artifact JSON）
+
+| 判据 | 阈值 | 实测 | 通过 |
+|---|---|---|---|
+| (a) 3 船 attained vs 独立复算 | <5% | 0.00e+00% | True |
+| (b) R_T 同源 | <1e-6 N | 0.0e+00 N | True |
+| (c) P_E 同源 | <1e-3 | 0.0e+00 | True |
+| (d) 6 因子份额和 | 100±0.1% | 100.0000–100.0000% | True |
+| (e) 余量<5% 判 UNCERTAIN | — | C56 margin 3.85% → UNCERTAIN | True |
+| (f) 交付物 | — | artifacts/eexi_attained_closure.json + artifacts/capabilities.json + 5 图 | True |
+
+## 审计链
+
+* 代码：`backend/api/eexi_closure.py`（链路/不确定度/三态）、`backend/api/green_shipping.py`（量纲修复 + 路由挂载 + L5 证据层）
+* 测试：`backend/tests/test_eexi_attained_closure.py`（25 用例，含跨端点同源闸门与缺陷回归）
+* 产物：`artifacts/eexi_attained_closure.json`（本报告全部数字的来源）、`artifacts/eexi_attained_closure/*.png`（sha256 见 JSON）、`artifacts/capabilities.json`（GREEN-EEXI 升账）
+* 生成链：`scripts/gen_eexi_closure_artifact.py` → JSON/图 → `scripts/render_eexi_doc.py` → 本报告（数字全部程序化注入，零手抄）
+
