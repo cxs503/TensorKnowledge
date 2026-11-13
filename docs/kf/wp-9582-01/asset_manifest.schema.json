@@ -1,0 +1,408 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.wp-9582-01.schema.json",
+  "title": "asset_manifest.v1 (KF work package wp-9582-01, task_type=01-asset-registration)",
+  "description": "Package-scoped pin of the asset_manifest shape actually emitted for report 9582. The repo-wide schemas/asset_manifest.v1.schema.json is not reusable here: it constrains package_id to the constant 'wp-448-01' and report_id to '448', so it cannot validate any other work package. This file exists so that the acceptance item schema_pass is a reproducible check rather than an assertion. If the platform-side schema differs, the platform gate wins and this artifact must be revised. Char offsets are Python str indices into the markdown; line numbers are 1-based. Locator semantics: method=char_span means md[start_char:end_char] == quote; method=document means the span is exactly the whole markdown field (start_char==0 and end_char==len(markdown)) while quote is a unique human-readable anchor inside it. Any other combination is a locator defect.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "package_id",
+    "task_type",
+    "report_id",
+    "source",
+    "counts",
+    "assets",
+    "claims",
+    "integrity"
+  ],
+  "properties": {
+    "schema": {
+      "const": "asset_manifest.v1"
+    },
+    "package_id": {
+      "const": "wp-9582-01"
+    },
+    "task_type": {
+      "const": "01-asset-registration"
+    },
+    "report_id": {
+      "const": "9582"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "uri",
+        "field",
+        "hash_alg",
+        "hash",
+        "chars",
+        "bytes_utf8",
+        "title",
+        "scenario_key",
+        "contract",
+        "platform_figures",
+        "platform_tags"
+      ],
+      "properties": {
+        "uri": {
+          "const": "tensor://reports/9582"
+        },
+        "field": {
+          "const": "markdown"
+        },
+        "hash_alg": {
+          "const": "sha256"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "bytes_utf8": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scenario_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_hash",
+            "chars",
+            "title",
+            "scenario_key",
+            "hash_matches",
+            "chars_match",
+            "title_matches",
+            "scenario_key_matches"
+          ],
+          "properties": {
+            "source_hash": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "chars": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scenario_key": {
+              "type": "string"
+            },
+            "hash_matches": {
+              "type": "boolean"
+            },
+            "chars_match": {
+              "type": "boolean"
+            },
+            "title_matches": {
+              "type": "boolean"
+            },
+            "scenario_key_matches": {
+              "type": "boolean"
+            }
+          }
+        },
+        "platform_figures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "caption_chars",
+              "png_bytes_present"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "caption_chars": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "png_bytes_present": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "platform_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assets",
+        "by_class",
+        "by_resolution",
+        "resolved_in_source",
+        "referenced_unresolved",
+        "declared_absent"
+      ],
+      "properties": {
+        "assets": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "by_class": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "by_resolution": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "resolved_in_source": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "referenced_unresolved": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "declared_absent": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "asset_id",
+          "asset_class",
+          "label",
+          "in_report_section",
+          "resolution",
+          "resolution_check",
+          "locator",
+          "note"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "pattern": "^A[0-9]{2}$"
+          },
+          "asset_class": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "in_report_section": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolution": {
+            "enum": [
+              "resolved_in_source",
+              "referenced_unresolved",
+              "declared_absent"
+            ]
+          },
+          "resolution_check": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "check",
+              "result"
+            ],
+            "properties": {
+              "check": {
+                "type": "string",
+                "minLength": 1
+              },
+              "result": {
+                "enum": [
+                  "resolved",
+                  "unresolved",
+                  "absent",
+                  "present"
+                ]
+              }
+            }
+          },
+          "locator": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "method",
+              "start_char",
+              "end_char",
+              "start_line",
+              "end_line",
+              "quote",
+              "unique"
+            ],
+            "properties": {
+              "method": {
+                "enum": [
+                  "char_span",
+                  "document"
+                ]
+              },
+              "start_char": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end_char": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "start_line": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "end_line": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unique": {
+                "type": "boolean"
+              }
+            }
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "Objective of wp-9582-01 is register_assets only (classify_report_type=false, no extraction), so an empty array is the correct complete result and must not be padded to hit a metric. Any claim that is emitted must carry an evidence locator or an explicit status.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "claim_id",
+          "text"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "evidence_locator"
+            ]
+          },
+          {
+            "required": [
+              "status"
+            ]
+          }
+        ],
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "minLength": 3
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_locator": {
+            "type": "object"
+          },
+          "status": {
+            "enum": [
+              "supported",
+              "partially-supported",
+              "unresolved",
+              "refuted"
+            ]
+          }
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "quote_uniqueness",
+        "hash_recomputed_locally",
+        "hash_matches_contract",
+        "chars_match_contract",
+        "no_duplicate_ids"
+      ],
+      "properties": {
+        "quote_uniqueness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "total",
+            "unique",
+            "non_unique_ids"
+          ],
+          "properties": {
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "unique": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "non_unique_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "hash_recomputed_locally": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "hash_matches_contract": {
+          "type": "boolean"
+        },
+        "chars_match_contract": {
+          "type": "boolean"
+        },
+        "no_duplicate_ids": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
