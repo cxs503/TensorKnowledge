@@ -1,0 +1,108 @@
+{
+  "package_id": "wp-12073-01",
+  "report_id": "12073",
+  "verified_at": "2026-11-12T02:28:05.113136+00:00",
+  "tool": "scripts/kf_wp12073_01_asset_manifest.py --verify",
+  "checks": {
+    "valid_json": {
+      "status": "pass",
+      "detail": {
+        "asset_manifest.json": true,
+        "kf_result.json": true
+      }
+    },
+    "schema_pass": {
+      "status": "pass",
+      "detail": {
+        "envelope_schema": "schemas/kf_result.v1.schema.json",
+        "manifest_schema": "docs/kf/wp-12073-01/asset_manifest.schema.json",
+        "errors": []
+      }
+    },
+    "source_locator_resolvable": {
+      "status": "pass",
+      "detail": {
+        "assets_checked": 32,
+        "failures": []
+      }
+    },
+    "source_hash_matches": {
+      "status": "pass",
+      "detail": {
+        "contract": "sha256:362fbe90ba196e81f94aa4f6dd9d74bc5f69c729e7eb9f99a125fb9415bea850",
+        "recomputed": "sha256:362fbe90ba196e81f94aa4f6dd9d74bc5f69c729e7eb9f99a125fb9415bea850",
+        "chars": 3446,
+        "contract_chars": 3446,
+        "chars_match": true,
+        "envelope_hash": "sha256:362fbe90ba196e81f94aa4f6dd9d74bc5f69c729e7eb9f99a125fb9415bea850",
+        "envelope_hash_matches": true
+      }
+    },
+    "no_duplicate_ids": {
+      "status": "pass",
+      "detail": {
+        "n_ids": 32,
+        "duplicates": []
+      }
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "status": "pass",
+      "detail": {
+        "n_claims": 0,
+        "missing_evidence_or_status": [],
+        "note": "claims=[] is a complete result per contract note ('claims 允许为空数组')"
+      }
+    },
+    "figure_bytes_rehash": {
+      "status": "pass",
+      "detail": [
+        {
+          "name": "fig1_cumulative_cii_band.png",
+          "status": "pass",
+          "recomputed": "sha256:3e6edcded54851aa3cc6dd0c8b74680afc0519e75b08ae210f18b8027ada30e1",
+          "manifest": "sha256:3e6edcded54851aa3cc6dd0c8b74680afc0519e75b08ae210f18b8027ada30e1",
+          "bytes": 61079
+        },
+        {
+          "name": "fig2_projection_deviation.png",
+          "status": "pass",
+          "recomputed": "sha256:2d559898ded6eda4a541a916544ef47702bac8e7a25c7724140fb225e67d715c",
+          "manifest": "sha256:2d559898ded6eda4a541a916544ef47702bac8e7a25c7724140fb225e67d715c",
+          "bytes": 83655
+        },
+        {
+          "name": "fig3_speed_and_disturbance.png",
+          "status": "pass",
+          "recomputed": "sha256:b5ff23fcac85030f75e952fc6e04347b32c4cdcd409d870a8f747a57ea72cf80",
+          "manifest": "sha256:b5ff23fcac85030f75e952fc6e04347b32c4cdcd409d870a8f747a57ea72cf80",
+          "bytes": 59543
+        },
+        {
+          "name": "fig4_root_cause.png",
+          "status": "pass",
+          "recomputed": "sha256:b54d83ab73784a70db0638881ffc3d7d87a9750a41d34130e57a07d4c8769401",
+          "manifest": "sha256:b54d83ab73784a70db0638881ffc3d7d87a9750a41d34130e57a07d4c8769401",
+          "bytes": 32435
+        },
+        {
+          "name": "fig5_correction_sensitivity.png",
+          "status": "pass",
+          "recomputed": "sha256:f17685826598cdd7da4785f2e0f2b85a9890982825167d3c5f5cbc673db15e99",
+          "manifest": "sha256:f17685826598cdd7da4785f2e0f2b85a9890982825167d3c5f5cbc673db15e99",
+          "bytes": 66230
+        }
+      ],
+      "note": "advisory extra check, NOT a contract acceptance item"
+    }
+  },
+  "overall": "pass",
+  "acceptance_items": [
+    "valid_json",
+    "schema_pass",
+    "source_locator_resolvable",
+    "source_hash_matches",
+    "no_duplicate_ids",
+    "all_claims_have_evidence_or_explicit_unresolved_status"
+  ],
+  "note": "only the contract acceptance items decide `overall`; figure_bytes_rehash is advisory"
+}
