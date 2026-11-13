@@ -1,0 +1,51 @@
+{
+ "n_reports": 9446,
+ "params": {
+  "N_PERM": 128,
+  "BANDS": 16,
+  "ROWS": 8,
+  "GRAM": 5,
+  "MD_WINDOW": 50000,
+  "JACCARD_GATE": 0.5,
+  "dup_link": "exact_sha|title_norm|skeleton(number-masked)|minhash_lsh(J>=0.5)"
+ },
+ "note": "gate=0.0 == LSH-band-only upper bound (no exact Jaccard pruning)",
+ "sweep": [
+  {
+   "gate": 0.4,
+   "lsh_pairs": 4253,
+   "pairs_accepted": 4253,
+   "dup_clusters": 764,
+   "dup_reports": 2176,
+   "dup_excess": 1412,
+   "largest_cluster": 66
+  },
+  {
+   "gate": 0.5,
+   "lsh_pairs": 4253,
+   "pairs_accepted": 4251,
+   "dup_clusters": 763,
+   "dup_reports": 2174,
+   "dup_excess": 1411,
+   "largest_cluster": 66
+  },
+  {
+   "gate": 0.7,
+   "lsh_pairs": 4253,
+   "pairs_accepted": 4195,
+   "dup_clusters": 758,
+   "dup_reports": 2161,
+   "dup_excess": 1403,
+   "largest_cluster": 65
+  },
+  {
+   "gate": 0.0,
+   "lsh_pairs": 4253,
+   "pairs_accepted": 4253,
+   "dup_clusters": 764,
+   "dup_reports": 2176,
+   "dup_excess": 1412,
+   "largest_cluster": 66
+  }
+ ]
+}
