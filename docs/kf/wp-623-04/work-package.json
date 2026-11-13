@@ -1,0 +1,54 @@
+{
+  "package_id": "wp-623-04",
+  "task_type": "04-independent-review",
+  "version": "1.0.0",
+  "input": {
+    "report_id": "623",
+    "source_uri": "tensor://reports/623",
+    "source_field": "markdown",
+    "source_hash": "sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf",
+    "upstream_packages": [
+      {
+        "package_id": "wp-623-01",
+        "status": "completed"
+      }
+    ],
+    "reviewed_package": {
+      "package_id": "wp-623-01",
+      "claims_sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "evidence_sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "objective": {
+    "judge_semantic_fidelity": true
+  },
+  "constraints": {
+    "review_prompt_not_copied_from_producer": true,
+    "reviewer_context_excludes_producer_explanation": true,
+    "do_not_mark_claims_as_verified": true,
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true
+  },
+  "output": {
+    "review_report.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "reviewer_independent": true,
+    "upstream_packages_completed": true
+  },
+  "review": {
+    "required": false,
+    "independent_reviewer": false,
+    "reviewer_role": "red-team-reviewer"
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "in-review",
+    "path": "docs/kf/wp-623-04",
+    "notes": "Owner YAML contract encoded as-is, except: version '1.0' -> schema const '1.0.0', and three schema-mandatory constraint keys (every_claim_must_have_source_locator, do_not_invent_missing_information, preserve_uncertainty) added; the YAML only named two of the five mandatory constraints. Both deviations are declared in review_report.json -> contract_deviations. reviewed_package digests = sha256(b'[]') because wp-623-01 ships no claims.json/evidence.json (empty claim set is its legal result); the digest therefore identifies the empty set, not a file."
+  }
+}

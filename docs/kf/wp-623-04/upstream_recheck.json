@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "A1.source_hash_live_vs_contract": {
+   "ok": true,
+   "detail": "live=sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf contract=sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf"
+  },
+  "A2.source_hash_live_vs_manifest": {
+   "ok": true,
+   "detail": "man=sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf"
+  },
+  "A3.source_hash_live_vs_kf_result": {
+   "ok": true,
+   "detail": "kf_result=sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf"
+  },
+  "A4.chars_bytes_lines": {
+   "ok": true,
+   "detail": "live=(7281, 7324, 151) man=(7281, 7324, 151)"
+  },
+  "A5.char_count_vs_owner_yaml": {
+   "ok": true,
+   "detail": "live=7281 owner_yaml=7281"
+  },
+  "B1.locator_quotes_verbatim_on_declared_line": {
+   "ok": true,
+   "detail": "15 quoted locators re-checked; failures=[]"
+  },
+  "B2.identity_facts_verbatim": {
+   "ok": true,
+   "detail": "facts=5 bad=[]"
+  },
+  "B4.no_degenerate_quotes": {
+   "ok": false,
+   "detail": "identity_facts with <12-char or >100-occurrence quotes=[{'fact_id': 'closing-note', 'line': 150, 'quote': '', 'chars': 0, 'occurrences': 7282, 'line_text': '', 'claimed_quote_in_source': True, 'claimed_resolved': True}]"
+  },
+  "B3.symbol_refs_verbatim_and_token_in_quote": {
+   "ok": true,
+   "detail": "symbols=3 bad=[]"
+  },
+  "C1.counts_recomputed": {
+   "ok": true,
+   "detail": "recomputed=(16, 1, 2, 13) claimed=(16, 1, 2, 13)"
+  },
+  "C2.kind_histogram_recomputed": {
+   "ok": true,
+   "detail": "recomputed={'report_markdown/resolved': 1, 'embedded_figure/metadata_only': 2, 'source_code_reference/unresolved': 8, 'figure_reference/unresolved': 4, 'data_artifact_reference/unresolved': 1} claimed={'data_artifact_reference/unresolved': 1, 'embedded_figure/metadata_only': 2, 'figure_reference/unresolved': 4, 'report_markdown/resolved': 1, 'source_code_reference/unresolved': 8}"
+  },
+  "C3.ids_unique": {
+   "ok": true,
+   "detail": "ids=19 unique=19 dupes=[]"
+  },
+  "C4.locators_cover_every_markdown_asset": {
+   "ok": true,
+   "detail": "locators=17 markdown_assets=14"
+  },
+  "D1.all_body_paths_registered": {
+   "ok": true,
+   "detail": "body_tokens=11 registered_refs=14 missing=[]"
+  },
+  "E1.figure_names_match_record": {
+   "ok": true,
+   "detail": "record=['dem3d_scale_benchmark', 'dem3d_energy_drift'] manifest=['dem3d_scale_benchmark', 'dem3d_energy_drift']"
+  },
+  "E2.figure_captions_verbatim_record_fields": {
+   "ok": true,
+   "detail": "captions compared byte-wise to record.figures[*].caption"
+  },
+  "E3.record_fields_match": {
+   "ok": true,
+   "detail": "title/scenario/mission vs record 'DEM3D Large-Scale Particle Benchmark: 10k-100k Wall-Clock Scaling Study'/'SIR-PC2|V02'/705"
+  },
+  "F1.kf_result_schema": {
+   "ok": true,
+   "detail": "errors=[]"
+  },
+  "F2.no_self_verification_marker_in_outputs": {
+   "ok": true,
+   "detail": "markers=[]"
+  },
+  "F3.claims_empty_and_reasoned": {
+   "ok": true,
+   "detail": "claims=0 reason_len=362"
+  }
+ },
+ "failures": [
+  {
+   "check": "B4.no_degenerate_quotes",
+   "detail": "identity_facts with <12-char or >100-occurrence quotes=[{'fact_id': 'closing-note', 'line': 150, 'quote': '', 'chars': 0, 'occurrences': 7282, 'line_text': '', 'claimed_quote_in_source': True, 'claimed_resolved': True}]"
+  }
+ ],
+ "summary": {
+  "checks_total": 20,
+  "checks_failed": 1,
+  "live_source_hash": "sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf",
+  "upstream_package": "docs/kf/wp-623-01",
+  "upstream_producer": "kf-worker/m15515"
+ }
+}
