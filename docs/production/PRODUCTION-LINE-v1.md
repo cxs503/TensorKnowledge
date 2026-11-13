@@ -25,6 +25,13 @@
 | 机器验收 | `scripts/validate_work_package.py` | `gate-report.json` | 不能判定语义保真、不能给 L3 |
 | 独立审核 + 综合 | 独立审核 Agent / 强模型抽样 / 综合 Agent | `review_events.json`、`synthesis.json` | 不能看生产者解释；不能越级给 L3（平台验证单才行） |
 
+**执行面（m15913 补齐）**：`ke/wp_line.py`——入口 `python -m ke.wp_line`，平台派发用
+`scripts/run_wp_line.py`。它把 §2 的五工序落成 DAG：上游未清则下游不跑、05 只在基础加工
+完成后启动、05 输入只收 L2/L3 且已独立批准的包（其余带理由码拒收）。门禁有效性由
+`python -m ke.wp_line bench` 复算：参考标签取本仓 `GATE-RULES.md` 夹具矩阵（先于实现
+写定），另加 21 个单点变异证明每条规则都能被具体缺陷弄红。运行工件与复现命令见
+`docs/production/RUNNER.md` 与 `docs/production/run-artifacts/`。
+
 ---
 
 ## 1. 标准工作包契约 v1

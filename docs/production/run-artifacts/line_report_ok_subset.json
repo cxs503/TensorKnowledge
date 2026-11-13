@@ -1,0 +1,141 @@
+{
+  "line": "wp-line-v1",
+  "gate": "ko-gate-v1",
+  "root": "/tmp/wp-line-ok-70g1wax8/extraction",
+  "order": [
+    "01-asset-registration",
+    "02-classification-parse",
+    "03-knowledge-extraction",
+    "04-independent-review",
+    "05-synthesis-research"
+  ],
+  "n_packages": 3,
+  "n_unknown_task_type": 0,
+  "processes": [
+    {
+      "task_type": "01-asset-registration",
+      "label": "asset registration",
+      "exit_gate": "G1",
+      "agent_tier": "standard",
+      "depends_on": [],
+      "n_packages": 0,
+      "n_cleared": 0,
+      "n_failed": 0,
+      "n_blocked_upstream": 0,
+      "packages": []
+    },
+    {
+      "task_type": "02-classification-parse",
+      "label": "classification / parse",
+      "exit_gate": "G1",
+      "agent_tier": "standard",
+      "depends_on": [
+        "01-asset-registration"
+      ],
+      "n_packages": 0,
+      "n_cleared": 0,
+      "n_failed": 0,
+      "n_blocked_upstream": 0,
+      "packages": []
+    },
+    {
+      "task_type": "03-knowledge-extraction",
+      "label": "knowledge extraction",
+      "exit_gate": "G1+G2",
+      "agent_tier": "standard",
+      "depends_on": [
+        "02-classification-parse"
+      ],
+      "n_packages": 3,
+      "n_cleared": 3,
+      "n_failed": 0,
+      "n_blocked_upstream": 0,
+      "packages": [
+        {
+          "package_id": "wp-ok-basic",
+          "task_type": "03-knowledge-extraction",
+          "verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+          "level": "L2",
+          "ceiling_reason": "MISSING_PLATFORM_VERIFICATION_TICKET",
+          "review_state": "approved",
+          "failed_rules": [],
+          "counts": {
+            "claims": 5,
+            "evidence": 4,
+            "provenance": 4,
+            "unresolved": 1
+          },
+          "n_checks": 22,
+          "status": "cleared"
+        },
+        {
+          "package_id": "wp-ok-verified",
+          "task_type": "03-knowledge-extraction",
+          "verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+          "level": "L3",
+          "ceiling_reason": "OK_PLATFORM_VERIFIED",
+          "review_state": "approved",
+          "failed_rules": [],
+          "counts": {
+            "claims": 5,
+            "evidence": 4,
+            "provenance": 4,
+            "unresolved": 1
+          },
+          "n_checks": 22,
+          "status": "cleared"
+        },
+        {
+          "package_id": "wp-ok-zero-claim",
+          "task_type": "03-knowledge-extraction",
+          "verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+          "level": "L1",
+          "ceiling_reason": "EMPTY_PACKAGE_NO_CLAIM_TO_VERIFY",
+          "review_state": "approved",
+          "failed_rules": [],
+          "counts": {
+            "claims": 0,
+            "evidence": 0,
+            "provenance": 0,
+            "unresolved": 0
+          },
+          "n_checks": 22,
+          "status": "cleared"
+        }
+      ]
+    },
+    {
+      "task_type": "04-independent-review",
+      "label": "independent review",
+      "exit_gate": "G3",
+      "agent_tier": "strong",
+      "depends_on": [
+        "03-knowledge-extraction"
+      ],
+      "n_packages": 0,
+      "n_cleared": 0,
+      "n_failed": 0,
+      "n_blocked_upstream": 0,
+      "packages": []
+    },
+    {
+      "task_type": "05-synthesis-research",
+      "label": "synthesis research",
+      "exit_gate": "G1+G3",
+      "agent_tier": "strong",
+      "depends_on": [
+        "01-asset-registration",
+        "02-classification-parse",
+        "03-knowledge-extraction",
+        "04-independent-review"
+      ],
+      "n_packages": 0,
+      "n_cleared": 0,
+      "n_failed": 0,
+      "n_blocked_upstream": 0,
+      "packages": []
+    }
+  ],
+  "base_processing_complete": true,
+  "synthesis_unblocked": true
+}

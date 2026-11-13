@@ -1,0 +1,285 @@
+{
+  "line": "wp-line-v1",
+  "generated_from": "/tmp/wp-line-ok-70g1wax8/extraction",
+  "ready": true,
+  "blocked_reason": null,
+  "n_eligible_packages": 2,
+  "n_refused_packages": 1,
+  "n_claims": 10,
+  "n_duplicate_candidates": 5,
+  "eligible_packages": [
+    {
+      "package_id": "wp-ok-basic",
+      "report_id": "9001",
+      "level": "L2",
+      "n_claims": 5
+    },
+    {
+      "package_id": "wp-ok-verified",
+      "report_id": "9001",
+      "level": "L3",
+      "n_claims": 5
+    }
+  ],
+  "refusals": [
+    {
+      "package_id": "wp-ok-zero-claim",
+      "code": "NOT_EVIDENCE_BOUND",
+      "detail": "level=L1 reason=EMPTY_PACKAGE_NO_CLAIM_TO_VERIFY"
+    }
+  ],
+  "duplicates": [
+    {
+      "claim_id": "tkc:synthetic-9001:two-stage-pipeline",
+      "other_claim_id": "tkc:synthetic-9001:two-stage-pipeline",
+      "similarity": 1.0,
+      "packages": [
+        "wp-ok-verified",
+        "wp-ok-basic"
+      ]
+    },
+    {
+      "claim_id": "tkc:synthetic-9001:window-seven-median",
+      "other_claim_id": "tkc:synthetic-9001:window-seven-median",
+      "similarity": 1.0,
+      "packages": [
+        "wp-ok-verified",
+        "wp-ok-basic"
+      ]
+    },
+    {
+      "claim_id": "tkc:synthetic-9001:variance-reduction",
+      "other_claim_id": "tkc:synthetic-9001:variance-reduction",
+      "similarity": 1.0,
+      "packages": [
+        "wp-ok-verified",
+        "wp-ok-basic"
+      ]
+    },
+    {
+      "claim_id": "tkc:synthetic-9001:limitation-24-records",
+      "other_claim_id": "tkc:synthetic-9001:limitation-24-records",
+      "similarity": 1.0,
+      "packages": [
+        "wp-ok-verified",
+        "wp-ok-basic"
+      ]
+    },
+    {
+      "claim_id": "tkc:synthetic-9001:second-dataset",
+      "other_claim_id": "tkc:synthetic-9001:second-dataset",
+      "similarity": 1.0,
+      "packages": [
+        "wp-ok-verified",
+        "wp-ok-basic"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "package_id": "wp-ok-basic",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:two-stage-pipeline",
+        "statement": "The report describes a two-stage pipeline that normalises inputs before aggregation.",
+        "claim_type": "methodological",
+        "epistemic_status": "draft",
+        "modality": "asserted",
+        "scope": {
+          "domain": "synthetic-fixture",
+          "system": "normalisation pipeline"
+        },
+        "evidence_refs": [
+          "tke:synthetic-9001:two-stage-pipeline"
+        ],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "package_id": "wp-ok-basic",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:window-seven-median",
+        "statement": "Stage one applies a fixed window of 7 samples and reports the median of the window.",
+        "claim_type": "methodological",
+        "epistemic_status": "draft",
+        "modality": "asserted",
+        "scope": {
+          "domain": "synthetic-fixture",
+          "system": "normalisation pipeline"
+        },
+        "evidence_refs": [
+          "tke:synthetic-9001:window-seven-median"
+        ],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "package_id": "wp-ok-basic",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:variance-reduction",
+        "statement": "The pipeline reduced variance by 41.2 percent on the bundled sample set.",
+        "claim_type": "descriptive",
+        "epistemic_status": "draft",
+        "modality": "asserted",
+        "scope": {
+          "domain": "synthetic-fixture",
+          "system": "normalisation pipeline"
+        },
+        "evidence_refs": [
+          "tke:synthetic-9001:variance-reduction"
+        ],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "package_id": "wp-ok-basic",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:limitation-24-records",
+        "statement": "The variance reduction is established for the bundled 24-record sample set only.",
+        "claim_type": "interpretive",
+        "epistemic_status": "draft",
+        "modality": "asserted",
+        "scope": {
+          "domain": "synthetic-fixture",
+          "system": "normalisation pipeline"
+        },
+        "evidence_refs": [
+          "tke:synthetic-9001:limitation-24-records"
+        ],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "package_id": "wp-ok-basic",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:second-dataset",
+        "statement": "A second data set corroborates the variance reduction.",
+        "claim_type": "hypothesis",
+        "epistemic_status": "draft",
+        "modality": "hypothetical",
+        "evidence_refs": [],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0",
+        "notes": [
+          "candidate claim; the source explicitly says no second experiment was run"
+        ]
+      }
+    },
+    {
+      "package_id": "wp-ok-verified",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:two-stage-pipeline",
+        "statement": "The report describes a two-stage pipeline that normalises inputs before aggregation.",
+        "claim_type": "methodological",
+        "epistemic_status": "draft",
+        "modality": "asserted",
+        "scope": {
+          "domain": "synthetic-fixture",
+          "system": "normalisation pipeline"
+        },
+        "evidence_refs": [
+          "tke:synthetic-9001:two-stage-pipeline"
+        ],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "package_id": "wp-ok-verified",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:window-seven-median",
+        "statement": "Stage one applies a fixed window of 7 samples and reports the median of the window.",
+        "claim_type": "methodological",
+        "epistemic_status": "draft",
+        "modality": "asserted",
+        "scope": {
+          "domain": "synthetic-fixture",
+          "system": "normalisation pipeline"
+        },
+        "evidence_refs": [
+          "tke:synthetic-9001:window-seven-median"
+        ],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "package_id": "wp-ok-verified",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:variance-reduction",
+        "statement": "The pipeline reduced variance by 41.2 percent on the bundled sample set.",
+        "claim_type": "descriptive",
+        "epistemic_status": "draft",
+        "modality": "asserted",
+        "scope": {
+          "domain": "synthetic-fixture",
+          "system": "normalisation pipeline"
+        },
+        "evidence_refs": [
+          "tke:synthetic-9001:variance-reduction"
+        ],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "package_id": "wp-ok-verified",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:limitation-24-records",
+        "statement": "The variance reduction is established for the bundled 24-record sample set only.",
+        "claim_type": "interpretive",
+        "epistemic_status": "draft",
+        "modality": "asserted",
+        "scope": {
+          "domain": "synthetic-fixture",
+          "system": "normalisation pipeline"
+        },
+        "evidence_refs": [
+          "tke:synthetic-9001:limitation-24-records"
+        ],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "package_id": "wp-ok-verified",
+      "report_id": "9001",
+      "claim": {
+        "id": "tkc:synthetic-9001:second-dataset",
+        "statement": "A second data set corroborates the variance reduction.",
+        "claim_type": "hypothesis",
+        "epistemic_status": "draft",
+        "modality": "hypothetical",
+        "evidence_refs": [],
+        "created_at": "2026-11-12T00:00:00Z",
+        "created_by": "agent-synthetic-0000",
+        "version": "0.1.0",
+        "notes": [
+          "candidate claim; the source explicitly says no second experiment was run"
+        ]
+      }
+    }
+  ],
+  "note": "duplicates are candidates, not merges: merging is a semantic judgement reserved for the synthesis reviewer"
+}

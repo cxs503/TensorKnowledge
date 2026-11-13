@@ -1,0 +1,483 @@
+{
+  "line": "wp-line-v1",
+  "gate": "ko-gate-v1",
+  "reference": {
+    "source": "/root/tp-agent/work/m15913/docs/production/GATE-RULES.md",
+    "n_fixtures": 8
+  },
+  "thresholds": {
+    "verdict_agreement": 1.0,
+    "rule_agreement": 1.0,
+    "level_agreement": 1.0,
+    "mutation_detection": 1.0,
+    "rule_coverage": 0.9
+  },
+  "metrics": {
+    "verdict_agreement": 1.0,
+    "rule_agreement": 1.0,
+    "level_agreement": 1.0,
+    "mutation_detection": 1.0,
+    "rule_coverage": 1.0
+  },
+  "n_fixtures": 8,
+  "fixtures": {
+    "bad-no-evidence": {
+      "ref_verdict": "FAIL_STRUCTURAL",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "ref_rules": [
+        "S11"
+      ],
+      "got_rules": [
+        "S11"
+      ],
+      "ref_level": "L0",
+      "got_level": "L0",
+      "verdict_match": true,
+      "rules_match": true,
+      "level_match": true
+    },
+    "bad-quote-offset": {
+      "ref_verdict": "FAIL_EVIDENCE",
+      "got_verdict": "FAIL_EVIDENCE",
+      "ref_rules": [
+        "E3",
+        "E4",
+        "E7"
+      ],
+      "got_rules": [
+        "E3",
+        "E4",
+        "E7"
+      ],
+      "ref_level": "L1",
+      "got_level": "L1",
+      "verdict_match": true,
+      "rules_match": true,
+      "level_match": true
+    },
+    "bad-self-review": {
+      "ref_verdict": "FAIL_STRUCTURAL",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "ref_rules": [
+        "S15"
+      ],
+      "got_rules": [
+        "S15"
+      ],
+      "ref_level": "L0",
+      "got_level": "L0",
+      "verdict_match": true,
+      "rules_match": true,
+      "level_match": true
+    },
+    "bad-source-hash": {
+      "ref_verdict": "FAIL_EVIDENCE",
+      "got_verdict": "FAIL_EVIDENCE",
+      "ref_rules": [
+        "E2"
+      ],
+      "got_rules": [
+        "E2"
+      ],
+      "ref_level": "L1",
+      "got_level": "L1",
+      "verdict_match": true,
+      "rules_match": true,
+      "level_match": true
+    },
+    "bad-verified": {
+      "ref_verdict": "FAIL_STRUCTURAL",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "ref_rules": [
+        "S4",
+        "S8",
+        "S9"
+      ],
+      "got_rules": [
+        "S4",
+        "S8",
+        "S9"
+      ],
+      "ref_level": "L0",
+      "got_level": "L0",
+      "verdict_match": true,
+      "rules_match": true,
+      "level_match": true
+    },
+    "ok-basic": {
+      "ref_verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+      "got_verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+      "ref_rules": [],
+      "got_rules": [],
+      "ref_level": "L2",
+      "got_level": "L2",
+      "verdict_match": true,
+      "rules_match": true,
+      "level_match": true
+    },
+    "ok-verified": {
+      "ref_verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+      "got_verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+      "ref_rules": [],
+      "got_rules": [],
+      "ref_level": "L3",
+      "got_level": "L3",
+      "verdict_match": true,
+      "rules_match": true,
+      "level_match": true
+    },
+    "ok-zero-claim": {
+      "ref_verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+      "got_verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+      "ref_rules": [],
+      "got_rules": [],
+      "ref_level": "L1",
+      "got_level": "L1",
+      "verdict_match": true,
+      "rules_match": true,
+      "level_match": true
+    }
+  },
+  "n_mutations": 21,
+  "n_mutations_detected": 21,
+  "mutations": [
+    {
+      "name": "m01-claim-without-evidence",
+      "breaks": "every claim has evidence or unresolved",
+      "expect_rule": "S11",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S11",
+        "S13"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m02-source-hash-tampered",
+      "breaks": "contract hash equals the source bytes",
+      "expect_rule": "E2",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_EVIDENCE",
+      "got_rules": [
+        "E2"
+      ],
+      "got_level": "L1",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m03-locator-offset-shifted",
+      "breaks": "quote sits at the declared offsets",
+      "expect_rule": "E4",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_EVIDENCE",
+      "got_rules": [
+        "E3",
+        "E4",
+        "E7"
+      ],
+      "got_level": "L1",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m04-quote-bytes-tampered",
+      "breaks": "quote hash matches the quote bytes",
+      "expect_rule": "E5",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_EVIDENCE",
+      "got_rules": [
+        "E3",
+        "E4",
+        "E5",
+        "E7"
+      ],
+      "got_level": "L1",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m05-trivial-quote",
+      "breaks": "a quote is longer than the triviality floor",
+      "expect_rule": "E6",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_EVIDENCE",
+      "got_rules": [
+        "E3",
+        "E4",
+        "E6",
+        "E7"
+      ],
+      "got_level": "L1",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m06-duplicate-claim-id",
+      "breaks": "record ids are unique",
+      "expect_rule": "S6",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S13",
+        "S6"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m07-invalid-json",
+      "breaks": "every artefact is valid JSON",
+      "expect_rule": "S2",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S10",
+        "S12",
+        "S13",
+        "S2"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m08-producer-self-verified",
+      "breaks": "producers never mark claims verified",
+      "expect_rule": "S8",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S4",
+        "S8",
+        "S9"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m09-summary-counts-inflated",
+      "breaks": "summary counts match the files",
+      "expect_rule": "S13",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S13"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m10-package-carries-own-approval",
+      "breaks": "03 packages ship no review material",
+      "expect_rule": "S15",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S15"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m11-artefact-missing",
+      "breaks": "declared artefacts are present",
+      "expect_rule": "S1",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S1",
+        "S10",
+        "S12",
+        "S13",
+        "S7"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m12-zero-claim-without-reason",
+      "breaks": "an empty result states why",
+      "expect_rule": "S12",
+      "base": "ok-zero-claim",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S12",
+        "S4",
+        "S5"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m13-review-not-declared",
+      "breaks": "review is required and independent",
+      "expect_rule": "M1",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "M1",
+        "S3"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m14-report-id-mismatch",
+      "breaks": "source identity agrees across files",
+      "expect_rule": "S14",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S14"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m15-provenance-emptied",
+      "breaks": "summary counts match provenance",
+      "expect_rule": "S13",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S13"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m16-orphan-evidence",
+      "breaks": "claim/evidence references are closed",
+      "expect_rule": "S10",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "S10",
+        "S13",
+        "S4"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m17-illegal-review-transition",
+      "breaks": "review events follow the state machine",
+      "expect_rule": "M2",
+      "base": "ok-basic",
+      "got_verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+      "got_rules": [
+        "M2"
+      ],
+      "got_level": "L2",
+      "verdict_changed": false,
+      "detected": true
+    },
+    {
+      "name": "m18-source-unreachable",
+      "breaks": "the source document is reachable",
+      "expect_rule": "E1",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_STRUCTURAL",
+      "got_rules": [
+        "E1",
+        "E2",
+        "E3",
+        "E7",
+        "S14"
+      ],
+      "got_level": "L0",
+      "verdict_changed": true,
+      "detected": true
+    },
+    {
+      "name": "m19-reviewer-prompt-copied",
+      "breaks": "review prompt is not copied from the producer prompt",
+      "expect_rule": "M4",
+      "base": "ok-basic",
+      "got_verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+      "got_rules": [
+        "M4"
+      ],
+      "got_level": "L2",
+      "verdict_changed": false,
+      "detected": true
+    },
+    {
+      "name": "m20-producer-explanation-in-review-context",
+      "breaks": "review context excludes the producer explanation",
+      "expect_rule": "M5",
+      "base": "ok-basic",
+      "got_verdict": "FAIL_SEMANTIC_PREP",
+      "got_rules": [
+        "M5"
+      ],
+      "got_level": "n/a",
+      "verdict_changed": false,
+      "detected": true
+    },
+    {
+      "name": "m21-approval-signed-by-producer",
+      "breaks": "reviewer identity differs from every producer identity",
+      "expect_rule": "M3",
+      "base": "ok-basic",
+      "got_verdict": "PASS_PROGRAMMATIC_PENDING_REVIEW",
+      "got_rules": [
+        "M2",
+        "M3"
+      ],
+      "got_level": "L2",
+      "verdict_changed": false,
+      "detected": true
+    }
+  ],
+  "rules": {
+    "n_implemented": 27,
+    "n_exercised": 27,
+    "uncovered": [],
+    "implemented": {
+      "E1": 2,
+      "E2": 2,
+      "E3": 1,
+      "E4": 1,
+      "E5": 1,
+      "E6": 1,
+      "E7": 1,
+      "M1": 1,
+      "M2": 1,
+      "M3": 1,
+      "M4": 2,
+      "M5": 1,
+      "S1": 1,
+      "S10": 1,
+      "S11": 1,
+      "S12": 2,
+      "S13": 1,
+      "S14": 1,
+      "S15": 1,
+      "S2": 1,
+      "S3": 2,
+      "S4": 1,
+      "S5": 1,
+      "S6": 1,
+      "S7": 1,
+      "S8": 1,
+      "S9": 1
+    }
+  },
+  "below_threshold": {},
+  "pass": true
+}
