@@ -1,0 +1,160 @@
+{
+ "mission_audited": 15913,
+ "audit_mission": 15922,
+ "anchor": "KBM-RCI-F1-SPEC",
+ "A1_benchmark_rerun": {
+  "stored_metrics": {
+   "verdict_agreement": 1.0,
+   "rule_agreement": 1.0,
+   "level_agreement": 1.0,
+   "mutation_detection": 1.0,
+   "rule_coverage": 1.0
+  },
+  "rerun_metrics": {
+   "verdict_agreement": 1.0,
+   "rule_agreement": 1.0,
+   "level_agreement": 1.0,
+   "mutation_detection": 1.0,
+   "rule_coverage": 1.0
+  },
+  "field_equal": {
+   "metrics": true,
+   "n_fixtures": true,
+   "n_mutations": true,
+   "n_mutations_detected": true,
+   "below_threshold": true,
+   "pass": true,
+   "thresholds": true,
+   "fixtures": true,
+   "mutations": true
+  },
+  "all_equal": true,
+  "n_fixtures": 8,
+  "n_mutations": 21,
+  "n_mutations_detected": 21
+ },
+ "A2_negative_control": {
+  "tampered_row": "bad-no-evidence verdict FAIL_STRUCTURAL -> PASS_...",
+  "exit_code": 3,
+  "metrics": {
+   "verdict_agreement": 0.875,
+   "rule_agreement": 1.0,
+   "level_agreement": 1.0,
+   "mutation_detection": 1.0,
+   "rule_coverage": 1.0
+  },
+  "below_threshold": {
+   "verdict_agreement": {
+    "ref": 1.0,
+    "got": 0.875
+   }
+  },
+  "detected_shift": true
+ },
+ "A3_registered_benchmark_cases": {
+  "anchor": "KBM-RCI-F1-SPEC",
+  "rows": 0,
+  "table_totals": "25 anchors=25",
+  "ref_source_used": "docs/production/GATE-RULES.md 夹具矩阵（m15494 commit a1c0c76 先于实现 355218c）"
+ },
+ "A4_run_artifacts": {
+  "benchmark.json": {
+   "exists": true,
+   "json_valid": true,
+   "bytes": 11232
+  },
+  "line_report.json": {
+   "exists": true,
+   "json_valid": true,
+   "bytes": 6454
+  },
+  "synthesis_input.json": {
+   "exists": true,
+   "json_valid": true,
+   "bytes": 8782
+  },
+  "asset_registration.json": {
+   "exists": true,
+   "json_valid": true,
+   "bytes": 1608
+  },
+  "RESULTS.md": {
+   "exists": true,
+   "json_valid": null,
+   "bytes": 6175
+  },
+  "RUN-LOG.md": {
+   "exists": true,
+   "json_valid": null,
+   "bytes": 1461
+  }
+ },
+ "A5_live_hash_roundtrip": {
+  "n": 5,
+  "n_match": 5,
+  "rows": [
+   {
+    "report_id": "15050",
+    "reachable": true,
+    "declared": "sha256:f0e9443043caa8dc55c54c09f1151351dad03df18ca4930aa6f142621036b788",
+    "recomputed": "sha256:f0e9443043caa8dc55c54c09f1151351dad03df18ca4930aa6f142621036b788",
+    "hash_match": true,
+    "len_match": true
+   },
+   {
+    "report_id": "15048",
+    "reachable": true,
+    "declared": "sha256:c57675380b12f4ae0fe5eec450e2e4240ed15e73b5890c0f855f3f08b8e1f723",
+    "recomputed": "sha256:c57675380b12f4ae0fe5eec450e2e4240ed15e73b5890c0f855f3f08b8e1f723",
+    "hash_match": true,
+    "len_match": true
+   },
+   {
+    "report_id": "15047",
+    "reachable": true,
+    "declared": "sha256:4bd338c40a90c245f3fe64963a3dc1ce051b65efbacb3f865971119533c76d1e",
+    "recomputed": "sha256:4bd338c40a90c245f3fe64963a3dc1ce051b65efbacb3f865971119533c76d1e",
+    "hash_match": true,
+    "len_match": true
+   },
+   {
+    "report_id": "15045",
+    "reachable": true,
+    "declared": "sha256:60e03f194ca853f8d58a3c6075ad1e74c57b15c788adc111d3abfdb29d86c2cd",
+    "recomputed": "sha256:60e03f194ca853f8d58a3c6075ad1e74c57b15c788adc111d3abfdb29d86c2cd",
+    "hash_match": true,
+    "len_match": true
+   },
+   {
+    "report_id": "15044",
+    "reachable": true,
+    "declared": "sha256:c0e164f64203f4b28bcf3a428625e87bffc6897761b3d45220806abce530c3c5",
+    "recomputed": "sha256:c0e164f64203f4b28bcf3a428625e87bffc6897761b3d45220806abce530c3c5",
+    "hash_match": true,
+    "len_match": true
+   }
+  ]
+ },
+ "A6_report_sections": {
+  "report_id": 15052,
+  "chars": 6994,
+  "sections_present": {
+   "①": true,
+   "②": true,
+   "③": true,
+   "④": true,
+   "⑤": true,
+   "⑥": true
+  },
+  "all_six": true,
+  "n_figures": 1,
+  "error_lt_3pct_stated": true
+ },
+ "verdict": {
+  "A1_reproducible": true,
+  "A2_falsifiable": true,
+  "A3_registered_case": false,
+  "A5_live_loop_closed": true,
+  "A6_six_sections": true
+ }
+}
