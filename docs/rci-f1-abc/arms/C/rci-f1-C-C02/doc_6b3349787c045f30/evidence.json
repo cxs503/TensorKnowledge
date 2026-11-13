@@ -1,0 +1,296 @@
+{
+ "doc_id": "doc:6b3349787c045f30",
+ "package_id": "rci-f1-C-C02",
+ "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+ "evidence_schema": "rci-f1.evidence/1.0",
+ "evidence": [
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-01-ev1",
+   "claim_id": "rci-f1:c:C02-6b334978-01",
+   "kind": "verbatim_quote",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    3,
+    6
+   ],
+   "span": [
+    39,
+    180
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "> 审计对象：`/nfs/wangxi/tensor_eco/TensorDEM`（104 个 .py 模块）\n> 审计日期：2026-10-21\n> 审计方法：只读源码 + 已有测试用例，不修改任何 src/ 代码\n> 所有\"已有\"论断均附 `file:line` 证据，零手抄。"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-01-ev2",
+   "claim_id": "rci-f1:c:C02-6b334978-01",
+   "kind": "section_context",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    1,
+    1
+   ],
+   "span": [
+    0,
+    37
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "# SI-0D: TensorDEM 能力审计（Phase 0 — 纯读）"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-02-ev1",
+   "claim_id": "rci-f1:c:C02-6b334978-02",
+   "kind": "verbatim_quote",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    16,
+    16
+   ],
+   "span": [
+    339,
+    557
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "| 颗粒形状族（仅球体/无 clump） | `dem3d.py` | **有测试** | 直接 | `dem3d.py:19` \"3-D bonded-sphere model\"；`dem3d.py:130-133` 仅支持 box/cylinder_xz，粒子坐标=格点×2×radius，纯球体；`dem3d.py:355` 接触检测 `overlap = (2 * cfg.radius - cdistance)` 纯球-球 |"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-02-ev2",
+   "claim_id": "rci-f1:c:C02-6b334978-02",
+   "kind": "section_context",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    12,
+    12
+   ],
+   "span": [
+    212,
+    234
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "### 1-A 碎冰块接触模型（dem3d）"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-03-ev1",
+   "claim_id": "rci-f1:c:C02-6b334978-03",
+   "kind": "verbatim_quote",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    17,
+    17
+   ],
+   "span": [
+    558,
+    783
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "| 接触本构（法向弹簧+阻尼，无切向摩擦） | `dem3d.py` | **有测试** | 直接 | `dem3d.py:364` `contact_mag = cfg.contact_stiffness * overlap - cfg.contact_damping * vn` 仅法向；`dem3d.py:29` 默认 `contact_damping=5.0`；无 `friction`/`restitution` 参数（全库搜索零结果） |"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-03-ev2",
+   "claim_id": "rci-f1:c:C02-6b334978-03",
+   "kind": "section_context",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    12,
+    12
+   ],
+   "span": [
+    212,
+    234
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "### 1-A 碎冰块接触模型（dem3d）"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-04-ev1",
+   "claim_id": "rci-f1:c:C02-6b334978-04",
+   "kind": "verbatim_quote",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    18,
+    18
+   ],
+   "span": [
+    784,
+    971
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "| 恢复系数标定 | 无专门模块 | **仅原型** | 间接 | `dem3d.py:364` 法向阻尼通过 `contact_damping` 参数实现能量耗散，但无 restitution→damping 的解析映射函数；`dem3d_energy.py:55-84` `_dissipation_rates()` 可量化阻尼耗散率，用于后验拟合但不提供预标定接口 |"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-04-ev2",
+   "claim_id": "rci-f1:c:C02-6b334978-04",
+   "kind": "section_context",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    12,
+    12
+   ],
+   "span": [
+    212,
+    234
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "### 1-A 碎冰块接触模型（dem3d）"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-05-ev1",
+   "claim_id": "rci-f1:c:C02-6b334978-05",
+   "kind": "verbatim_quote",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    19,
+    19
+   ],
+   "span": [
+    972,
+    1168
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "| 键合断裂（拉/剪应变准则） | `dem3d.py` | **有测试** | 直接 | `dem3d.py:27-28` `breaking_strain=0.015, shear_breaking_strain=0.03`；`dem3d.py:304-319` `_commit_fracture()` 拉/剪双准则；测试 `test_dem3d.py:40-48` 验证断裂不可逆 |"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-05-ev2",
+   "claim_id": "rci-f1:c:C02-6b334978-05",
+   "kind": "section_context",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    12,
+    12
+   ],
+   "span": [
+    212,
+    234
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "### 1-A 碎冰块接触模型（dem3d）"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-06-ev1",
+   "claim_id": "rci-f1:c:C02-6b334978-06",
+   "kind": "verbatim_quote",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    130,
+    130
+   ],
+   "span": [
+    8434,
+    8475
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "- **流体主步**：`dt_fluid`（LBM 典型 1e-5~1e-4 s）"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-06-ev2",
+   "claim_id": "rci-f1:c:C02-6b334978-06",
+   "kind": "section_context",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    128,
+    128
+   ],
+   "span": [
+    8418,
+    8432
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "### 5.3 时钟节拍建议"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-07-ev1",
+   "claim_id": "rci-f1:c:C02-6b334978-07",
+   "kind": "verbatim_quote",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    132,
+    132
+   ],
+   "span": [
+    8571,
+    8613
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "- 参照现有 `calibrated_wet_coupling.py:23` 的模式"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-07-ev2",
+   "claim_id": "rci-f1:c:C02-6b334978-07",
+   "kind": "section_context",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    128,
+    128
+   ],
+   "span": [
+    8418,
+    8432
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "### 5.3 时钟节拍建议"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-08-ev1",
+   "claim_id": "rci-f1:c:C02-6b334978-08",
+   "kind": "verbatim_quote",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    133,
+    133
+   ],
+   "span": [
+    8614,
+    8688
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "- **交换节拍**：每 `exchange_steps` 个流体步交换一次（参照 `calibrated_wet_coupling.py:62`）"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-08-ev2",
+   "claim_id": "rci-f1:c:C02-6b334978-08",
+   "kind": "section_context",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    128,
+    128
+   ],
+   "span": [
+    8418,
+    8432
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "### 5.3 时钟节拍建议"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-09-ev1",
+   "claim_id": "rci-f1:c:C02-6b334978-09",
+   "kind": "verbatim_quote",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    134,
+    134
+   ],
+   "span": [
+    8689,
+    8784
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "- **建议**：3D 耦合沿用 2D 已验证的 subcycling 架构，将 `exchange_state()` 从 `dem.py:389-400` 模式扩展到 `dem3d.py`"
+  },
+  {
+   "evidence_id": "rci-f1:c:C02-6b334978-09-ev2",
+   "claim_id": "rci-f1:c:C02-6b334978-09",
+   "kind": "section_context",
+   "path": "docs/rci-f1-abc/snapshot/doc_6b3349787c045f30/SI-0D-TensorDEM.md",
+   "lines": [
+    128,
+    128
+   ],
+   "span": [
+    8418,
+    8432
+   ],
+   "sha256": "218b1eddb92332d46ea755f07b5b5c18c5a0c0407bccc6c6b22c74b21c1aa2a3",
+   "quote": "### 5.3 时钟节拍建议"
+  }
+ ]
+}

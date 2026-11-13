@@ -1,0 +1,154 @@
+{
+ "doc_id": "doc:05082d8dc8aef859",
+ "package_id": "rci-f1-C-C01",
+ "lane": "C",
+ "path": "docs/rci-f1-abc/snapshot/doc_05082d8dc8aef859/ARTIFACT_STORAGE.md",
+ "sha256": "0d956d0c782d180e3e5671b34c1e0198658278ac6b37374ebc17b32e9b651d39",
+ "sha256_prefix_expected": "0d956d0c782d",
+ "sha256_verified": true,
+ "doc_type": "research",
+ "tier": "C",
+ "blocks": 13,
+ "lines": 49,
+ "sentences_candidate": 21,
+ "claims": 6,
+ "claims_with_locator": 6,
+ "claims_with_stated_conditions": 0,
+ "no_forced_claim_generation": true,
+ "zero_claim_doc": false,
+ "drop_histogram": {
+  "no_assertion_cue": 12,
+  "boilerplate": 2,
+  "too_short": 1
+ },
+ "drops": [
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    41,
+    94
+   ],
+   "quote": "TensorPhysics provides two explicit storage backends:"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    96,
+    151
+   ],
+   "quote": "- `LocalArtifactStore` for local development and tests."
+  },
+  {
+   "reason": "boilerplate",
+   "span": [
+    152,
+    225
+   ],
+   "quote": "Its references use\n  `file://` URIs and are not portable across machines."
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    226,
+    285
+   ],
+   "quote": "- `S3ArtifactStore` for S3 and S3-compatible object stores."
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    286,
+    360
+   ],
+   "quote": "Install the optional\n  dependency with `python -m pip install -e '.[s3]'`."
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    384,
+    524
+   ],
+   "quote": "Configure credentials through the normal boto3 provider chain (environment,\nshar"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    525,
+    665
+   ],
+   "quote": "Do not put\ncredentials in code, command-line arguments, manifests, or repository"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    666,
+    762
+   ],
+   "quote": "For a compatible endpoint,\nset `TENSORPHYSICS_S3_ENDPOINT_URL`; set `AWS_REGION`"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1168,
+    1252
+   ],
+   "quote": "The sample CSV should\nbe replaced by a real solver output in an application adap"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1254,
+    1429
+   ],
+   "quote": "To also register the manifest with TensorPlatform, set\n`TENSORPLATFORM_URL`, `TE"
+  },
+  {
+   "reason": "boilerplate",
+   "span": [
+    1430,
+    1551
+   ],
+   "quote": "Registration\nsends compact manifest metadata and S3 artifact references only; it"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1552,
+    1644
+   ],
+   "quote": "The API token needs the platform's\n`datasets:upload` permission for the target o"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2195,
+    2253
+   ],
+   "quote": "Test against the intended service before\n  production use."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    2254,
+    2279
+   ],
+   "quote": "- Keep manifests compact."
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2280,
+    2379
+   ],
+   "quote": "Store field arrays, trajectories and other large\n  payloads as artifacts and ref"
+  }
+ ],
+ "drops_truncated": 0,
+ "quality_mean": 17.0,
+ "claim_form_histogram": {
+  "quantitative": 2,
+  "observational": 3,
+  "normative": 1
+ },
+ "verification": "see ../../verify/<pkg>.json and ../../<pkg>/review.json"
+}
