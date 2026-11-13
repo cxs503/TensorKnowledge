@@ -1,0 +1,55 @@
+{
+  "package_id": "wp-5606-04",
+  "task_type": "04-independent-review",
+  "version": "1.0.0",
+  "mission_id": "15835",
+  "input": {
+    "report_id": "5606",
+    "source_uri": "tensor://reports/5606",
+    "source_field": "markdown",
+    "source_hash": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+    "upstream_packages": [
+      {
+        "package_id": "wp-5606-01",
+        "status": "completed"
+      }
+    ],
+    "reviewed_package": {
+      "package_id": "wp-5606-01",
+      "claims_sha256": "sha256:b356d0a864f81d2848bd04231023380b925de0f70d0ee25a177f67f9296fd964",
+      "evidence_sha256": "sha256:dcfdf32eb8cc81ef349c7052bc4b83f0c04cb4a676626c807e6c926faf6ce920"
+    }
+  },
+  "objective": {
+    "judge_semantic_fidelity": true
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true,
+    "review_prompt_not_copied_from_producer": true,
+    "reviewer_context_excludes_producer_explanation": true
+  },
+  "output": {
+    "review_report.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "reviewer_independent": true,
+    "upstream_packages_completed": true
+  },
+  "review": {
+    "required": true,
+    "independent_reviewer": true,
+    "reviewer_role": "red-team-reviewer"
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "in-review",
+    "path": "artifacts/wp-5606-04",
+    "notes": "独立审核：上下文=原文+上游 KO，未看生产者解释。reviewed_package 的两条摘要是对被审材料（20 条溯源记录 / 图件账本+表 1）自算的，非上游 claims.json/evidence.json（该工序未产出这两份文件）。"
+  }
+}
