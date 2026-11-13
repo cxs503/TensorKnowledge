@@ -1,0 +1,698 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-5577-01",
+  "task_type": "01-asset-registration",
+  "report_id": "5577",
+  "lane": "KF 工序 01 · asset-registration",
+  "producer": "scripts/wp5577_build_report.py",
+  "source": {
+    "uri": "tensor://reports/5577",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+    "chars": 3702,
+    "bytes_utf8": 5707,
+    "lines": 96,
+    "title": "BP 示范工程报告：Agent 科研生产闭环端到端实证（IN12-P8 / m4936）",
+    "scenario_key": "campaign/bp-demo-in12p8",
+    "platform_figures": [
+      {
+        "name": "fig1_resistance_spectrum.png",
+        "caption": "图 1 KCS 总阻力—航速谱：引擎实测 vs Holtrop-Mennen 主链同参数复算 vs 仓内 m2082 基准点"
+      },
+      {
+        "name": "fig2_deviation_spectrum.png",
+        "caption": "图 2 偏差谱：逐航速点相对偏差与四项验证判据偏差，绿带为 ±3%"
+      },
+      {
+        "name": "fig3_evidence_chain.png",
+        "caption": "图 3 证据链：任务组织→引擎调用→算力管理→独立验证 四阶段机读状态与耗时"
+      }
+    ],
+    "platform_tags": [
+      "BP示范工程",
+      "科研闭环",
+      "阻力",
+      "Holtrop-Mennen",
+      "report_gate",
+      "honest-fail"
+    ],
+    "fetched_via": "GET /api/v1/tensor/reports/5577",
+    "hash_verified": "本地重算 sha256 + 双次拉取比对（acceptance AC01/AC02）"
+  },
+  "counts": {
+    "assets": 23,
+    "by_class": {
+      "data_artifact_reference": 1,
+      "data_table": 4,
+      "dataset_reference": 2,
+      "embedded_figure": 3,
+      "endpoint_reference": 2,
+      "literature_reference": 3,
+      "metric_evidence": 1,
+      "report_markdown": 1,
+      "service_reference": 1,
+      "source_code_reference": 4,
+      "symbol_reference": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 5,
+      "referenced_unresolved": 16,
+      "declared_absent": 2
+    },
+    "kind_status_histogram": {
+      "data_artifact_reference/referenced_unresolved": 1,
+      "data_table/resolved_in_source": 4,
+      "dataset_reference/declared_absent": 1,
+      "dataset_reference/referenced_unresolved": 1,
+      "embedded_figure/referenced_unresolved": 3,
+      "endpoint_reference/referenced_unresolved": 2,
+      "literature_reference/referenced_unresolved": 3,
+      "metric_evidence/declared_absent": 1,
+      "report_markdown/resolved_in_source": 1,
+      "service_reference/referenced_unresolved": 1,
+      "source_code_reference/referenced_unresolved": 4,
+      "symbol_reference/referenced_unresolved": 1
+    },
+    "resolved_in_source": 5,
+    "referenced_unresolved": 16,
+    "declared_absent": 2,
+    "locators": 23,
+    "locators_unique": 23,
+    "claims": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "report-5577 markdown（知识仓侧唯一源，逐字节入包）",
+      "in_report_section": "全文",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 3701,
+        "start_line": 1,
+        "end_line": 96,
+        "quote": "## ① 案例介绍\n\n**物理背景**：示范算例为 KRISO 公开基准船 KCS 集装箱船的静水裸船体阻力预报。总阻力按\nR_T=(1+k)R_F+R_W+R_B+R_TR+R_A+R_APP 分解，兴波阻力取 Holtrop & Mennen (1982) /\nHoltrop (1984) 回归 R_W = c1·c2·c5·∇·ρg·exp(m1·Fn^d + m2·cos(λ·Fn^-2))，d = -0.9。\n该式对 Fn 呈强非线性（m1·Fn^-0.9 在指数上），故任何\"按 Fn 分段的多项式\"近似都会在中等\nFn 段产生成倍偏差——本单发现的缺陷即源于此。\n\n| 量 | 值 | 单位 |\n|---|---|---|\n| Lpp / B / T | 230.0 / 32.2 / 10.8 | m |\n| ∇ | 52030 | m³ |\n| Cb / Cm / Cwp | 0.6509 / 0.9849 / 0.7630 | — |\n| 设计航速 / Fn | 24.00 / 0.2600 | kn / — |\n| 几何先验（Cb 反算偏差） | 0.0617（<1% 通过） | % |\n\n## ② 怎么做的\n\n一条命令 `python -m bp_demo.run` 复跑四阶段闭环，每阶段留 sha256 证据：\n\n1. **任务组织**：平台任务池快照（上限 200 条）→ 战役节点 / 执行者 / 状态分布；\n2. **引擎调用**：从本工作树起临时 uvicorn（8103，跑完即关停），对\n   `/api/v1/calculations/resistance` 发 5 航速 + 2 条负控（∇ 偏 8%、Cb=1.4 → 必须 422）\n   + 1 次确定性复调；\n3. **算力管理**：`cluster_exec.py nodes` 探活 外协方双节点 loong64，失败回落冻结快照；\n4. **独立验证**：ITTC-57 闭式复算、系数场自洽、单一物理源对标、KVLCC2 文献锚点、pytest；\n5. 渲染 3 图 + 报告 → 过六要素报告门（report_gate）。\n\n**本轮修复**：端点 Cr 原为 `Cr = 0.005·C4(Fn)·C1·C2·C3` 分段多项式 mock；改为\nCr = R_W(V)/(½ρV²S)，R_W 直接调 `physics/holtrop` 单一源（不复制经验公式）；另把缺省\nCwp 从 `0.75+0.25Cb`（KCS 给 0.913，实船 0.763）改为 Momo/Schneekluth 回归 (1+2Cb)/3\n（KCS 0.767、KVLCC2 0.873）。\n\n## ③ 计算结果\n\n| V [kn] | Fn | Re | S [m²] | Cf | Cr | Rf [kN] | Rw [kN] | RT [kN] | Ct |\n|---|---|---|---|---|---|---|---|---|---|\n| 12.00 | 0.1300 | 1.193e+09 | 8975 | 0.00150 | 0.00002 | 332.6 | 2.6 | 335.2 | 0.00191 |\n| 15.00 | 0.1625 | 1.491e+09 | 8975 | 0.00146 | 0.00009 | 508.7 | 24.0 | 532.7 | 0.00194 |\n| 18.00 | 0.1949 | 1.790e+09 | 8975 | 0.00143 | 0.00028 | 720.1 | 109.4 | 829.4 | 0.00210 |\n| 21.00 | 0.2274 | 2.088e+09 | 8975 | 0.00140 | 0.00061 | 966.2 | 330.2 | 1296.4 | 0.00242 |\n| 24.00 | 0.2600 | 2.387e+09 | 8975 | 0.00138 | 0.00109 | 1246.8 | 764.8 | 2011.6 | 0.00287 |\n\n| 路径 | Cr | RT [kN] | 相对主链基准偏差 [%] |\n|---|---|---|---|\n| 修复前（mock） | 0.008036 | 6882.59 | 243.10 |\n| 修复后（工作树临时实例） | 0.001091 | 2011.61 | 0.28 |\n| 部署实例 http://127.0.0.1:8002（旧构建） | 0.008036 | 7401.24 | 268.96 |\n\n引擎方法标签：`ITTC-57摩擦阻力 + ITTC-1978粗糙度补贴 + Holtrop-Mennen(1984)兴波阻力(physics.holtrop 单一源)`；调用 8 次全部按契约行事\n（成功率 100.00%），延迟 p50 0.004 s；\n负控 422：几何 True、Cb True；\n确定性复调 True；回归测试 41 passed, 3 skipped, 1 warning in 1.25s；\n报告门 8/8；工件索引 20 条，复算命中\n20/20。\n\n## ④ 结果图\n\n图 1 航速—阻力谱、图 2 偏差谱（含 ±3% 带）、图 3 四阶段证据链状态图，见内嵌附图；\nPNG 的 sha256 已登记在 artifacts/bp_demo/sha256_index.json。\n\n## ⑤ 注意点\n\n- **同仓两套阻力链**：`/calculations/resistance`（旧 mock）与 `/resistance/predict`\n  （Holtrop 主链）并存，m2082 并一只并主链 → 必须做跨端点同点一致性回归；\n- **部署漂移**：常驻 8002 是旧构建，同点仍返回 7401.24 kN；修复需重新部署\n  才对外生效，本报告数字取自工作树临时实例；\n- **既有用例腐化**：tests/test_resistance_ittc78.py 因符号 `_legacy_cr_mock` 移除、\n  `physics.holtrop` 缺 backend 路径而整文件收集失败；本轮补路径 + skipif 守卫后\n  41 passed / 3 skipped；\n- **局限**：端点无 (1+k)/附体通道，与含形因子的全尺度数据对标系统性偏低约\n  17.3%；未取得 KCS 水池试验原始数据表，单一源对标属同级而非\n  实验对标；Cwp/Cm 缺省仍为估算，非常规船型不适用；Holtrop 适用域 Fn 0.10–0.45。\n\n## ⑥ 误差判定\n\n| 项 | 验证内容 | 实测 | 基准 | 单位 | 偏差[%] | 是否<3% |\n|---|---|---|---|---|---|---|\n| V1a | ITTC-57 摩擦系数闭式复算 | 0.001378 | 0.00137787601167074 | - | 0.009 | 是 |\n| V1b | 系数场自洽 cf_total+cr-ct | 0.0 | 0.0 | - | 0.000 | 是 |\n| V2 | KCS 设计点总阻力 Rt（单一物理源对标） | 2011.61 | 2005.99 | kN | 0.280 | 是 |\n| V3 | 遗留 mock Cr 的同点复算（修复前） | 6882.59 | 2005.99 | kN | 243.102 | 否 |\n| V4 | KVLCC2 全尺度 Rt vs 文献（含附体/形因子） | 1621.66 | 1960.0 | kN | -17.262 | 否 |\n\n逐项回答：\n\n- **V1a ITTC-57 摩擦系数闭式复算**：偏差 0.009% → 是否<3%：是\n- **V1b 系数场自洽 cf_total+cr-ct**：偏差 0.000% → 是否<3%：是\n- **V2 KCS 设计点总阻力 Rt（单一物理源对标）**：偏差 0.280% → 是否<3%：是\n- **V3 遗留 mock Cr 的同点复算（修复前）**：偏差 243.102% → 是否<3%：否\n- **V4 KVLCC2 全尺度 Rt vs 文献（含附体/形因子）**：偏差 -17.262% → 是否<3%：否\n\n**HONEST-FAIL**：V4（KVLCC2 全尺度，偏差 -17.26%）与 V3\n（遗留 mock，偏差 243.10%）**不满足 <3%**：前者因端点缺形因子/\n附体通道，后者即被修复的缺陷本身（保留为审计证据）；外部 EFD 对标与七维指标中\n「生态/商业/经济性」标 **NOT RUN**（缺 KCS 试验数据表与跨仓/用户/计费口径证据），不以估算充数。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "quote == md[start_char:end_char] 且 md.count(quote) == 1，行号由偏移反算",
+        "result": "resolved"
+      },
+      "note": "locator 覆盖全文；quote 即整篇 markdown；哈希见 source.hash。"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "data_table",
+      "label": "KCS 主尺度与船型参数表（Lpp/B/T/∇/Cb/Cm/Cwp/设计航速）",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 292,
+        "end_char": 509,
+        "start_line": 9,
+        "end_line": 15,
+        "quote": "| 量 | 值 | 单位 |\n|---|---|---|\n| Lpp / B / T | 230.0 / 32.2 / 10.8 | m |\n| ∇ | 52030 | m³ |\n| Cb / Cm / Cwp | 0.6509 / 0.9849 / 0.7630 | — |\n| 设计航速 / Fn | 24.00 / 0.2600 | kn / — |\n| 几何先验（Cb 反算偏差） | 0.0617（<1% 通过） | % |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "quote == md[start_char:end_char] 且 md.count(quote) == 1，行号由偏移反算",
+        "result": "resolved"
+      },
+      "note": "表内数字为源报告自述算例参数；本工序只登记位置，不复算物理量。"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "data_table",
+      "label": "航速—阻力谱表（5 航速点 Cf/Cr/Rf/Rw/RT/Ct）",
+      "in_report_section": "③ 计算结果",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1162,
+        "end_char": 1738,
+        "start_line": 36,
+        "end_line": 42,
+        "quote": "| V [kn] | Fn | Re | S [m²] | Cf | Cr | Rf [kN] | Rw [kN] | RT [kN] | Ct |\n|---|---|---|---|---|---|---|---|---|---|\n| 12.00 | 0.1300 | 1.193e+09 | 8975 | 0.00150 | 0.00002 | 332.6 | 2.6 | 335.2 | 0.00191 |\n| 15.00 | 0.1625 | 1.491e+09 | 8975 | 0.00146 | 0.00009 | 508.7 | 24.0 | 532.7 | 0.00194 |\n| 18.00 | 0.1949 | 1.790e+09 | 8975 | 0.00143 | 0.00028 | 720.1 | 109.4 | 829.4 | 0.00210 |\n| 21.00 | 0.2274 | 2.088e+09 | 8975 | 0.00140 | 0.00061 | 966.2 | 330.2 | 1296.4 | 0.00242 |\n| 24.00 | 0.2600 | 2.387e+09 | 8975 | 0.00138 | 0.00109 | 1246.8 | 764.8 | 2011.6 | 0.00287 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "quote == md[start_char:end_char] 且 md.count(quote) == 1，行号由偏移反算",
+        "result": "resolved"
+      },
+      "note": "源报告主结果表；本包不重算其数值（重算属 04 独立审核工序）。"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "data_table",
+      "label": "修复前/修复后/部署实例三路径偏差对照表",
+      "in_report_section": "③ 计算结果",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1740,
+        "end_char": 1949,
+        "start_line": 44,
+        "end_line": 48,
+        "quote": "| 路径 | Cr | RT [kN] | 相对主链基准偏差 [%] |\n|---|---|---|---|\n| 修复前（mock） | 0.008036 | 6882.59 | 243.10 |\n| 修复后（工作树临时实例） | 0.001091 | 2011.61 | 0.28 |\n| 部署实例 http://127.0.0.1:8002（旧构建） | 0.008036 | 7401.24 | 268.96 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "quote == md[start_char:end_char] 且 md.count(quote) == 1，行号由偏移反算",
+        "result": "resolved"
+      },
+      "note": "记录 mock Cr 缺陷量级（+243.10%）与修复后偏差（+0.28%）。"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "data_table",
+      "label": "误差判定表 V1a–V4（含 HONEST-FAIL 项）",
+      "in_report_section": "⑥ 误差判定",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2816,
+        "end_char": 3239,
+        "start_line": 77,
+        "end_line": 83,
+        "quote": "| 项 | 验证内容 | 实测 | 基准 | 单位 | 偏差[%] | 是否<3% |\n|---|---|---|---|---|---|---|\n| V1a | ITTC-57 摩擦系数闭式复算 | 0.001378 | 0.00137787601167074 | - | 0.009 | 是 |\n| V1b | 系数场自洽 cf_total+cr-ct | 0.0 | 0.0 | - | 0.000 | 是 |\n| V2 | KCS 设计点总阻力 Rt（单一物理源对标） | 2011.61 | 2005.99 | kN | 0.280 | 是 |\n| V3 | 遗留 mock Cr 的同点复算（修复前） | 6882.59 | 2005.99 | kN | 243.102 | 否 |\n| V4 | KVLCC2 全尺度 Rt vs 文献（含附体/形因子） | 1621.66 | 1960.0 | kN | -17.262 | 否 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "quote == md[start_char:end_char] 且 md.count(quote) == 1，行号由偏移反算",
+        "result": "resolved"
+      },
+      "note": "V3/V4 为 honest-FAIL 项，登记为源报告证据而非本包结论。"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "embedded_figure",
+      "label": "fig1_resistance_spectrum.png（KCS 总阻力—航速谱）",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2204,
+        "end_char": 2252,
+        "start_line": 59,
+        "end_line": 59,
+        "quote": "图 1 航速—阻力谱、图 2 偏差谱（含 ±3% 带）、图 3 四阶段证据链状态图，见内嵌附图；",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "GET /tensor/reports/5577/figures/<name> 探活（record 已声明该图）",
+        "result": "unresolved",
+        "http_status": 404,
+        "bytes": 0
+      },
+      "note": "平台 record /figures/0 声明了该图（含 caption），但图字节端点未返回内容 → 不可达；不伪造。",
+      "probe": {
+        "kind": "platform_figure",
+        "name": "fig1_resistance_spectrum.png",
+        "pointer": "/figures/0/name",
+        "http_status": 404,
+        "bytes": 0
+      }
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "embedded_figure",
+      "label": "fig2_deviation_spectrum.png（偏差谱，含 ±3% 带）",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2204,
+        "end_char": 2252,
+        "start_line": 59,
+        "end_line": 59,
+        "quote": "图 1 航速—阻力谱、图 2 偏差谱（含 ±3% 带）、图 3 四阶段证据链状态图，见内嵌附图；",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "GET /tensor/reports/5577/figures/<name> 探活（record 已声明该图）",
+        "result": "unresolved",
+        "http_status": 404,
+        "bytes": 0
+      },
+      "note": "同上：record 声明 /figures/1，字节不可达。",
+      "probe": {
+        "kind": "platform_figure",
+        "name": "fig2_deviation_spectrum.png",
+        "pointer": "/figures/1/name",
+        "http_status": 404,
+        "bytes": 0
+      }
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "embedded_figure",
+      "label": "fig3_evidence_chain.png（四阶段证据链状态图）",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2204,
+        "end_char": 2252,
+        "start_line": 59,
+        "end_line": 59,
+        "quote": "图 1 航速—阻力谱、图 2 偏差谱（含 ±3% 带）、图 3 四阶段证据链状态图，见内嵌附图；",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "GET /tensor/reports/5577/figures/<name> 探活（record 已声明该图）",
+        "result": "unresolved",
+        "http_status": 404,
+        "bytes": 0
+      },
+      "note": "同上：record 声明 /figures/2，字节不可达。",
+      "probe": {
+        "kind": "platform_figure",
+        "name": "fig3_evidence_chain.png",
+        "pointer": "/figures/2/name",
+        "http_status": 404,
+        "bytes": 0
+      }
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "source_code_reference",
+      "label": "bp_demo 包入口（python -m bp_demo.run）",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 522,
+        "end_char": 574,
+        "start_line": 19,
+        "end_line": 19,
+        "quote": "一条命令 `python -m bp_demo.run` 复跑四阶段闭环，每阶段留 sha256 证据：",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "本工作树存在性探测（跨仓引用按纪律一律 unresolved，禁止造同名文件）",
+        "result": "unresolved",
+        "path": "bp_demo/",
+        "exists_in_this_worktree": false
+      },
+      "note": "属 ship-performance-platform（工程仓）代码；本知识仓不造同名目录，登记「引用存在、内容未取」。",
+      "probe": {
+        "kind": "repo_path",
+        "path": "bp_demo/",
+        "exists_in_this_worktree": false
+      }
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "source_code_reference",
+      "label": "physics/holtrop（兴波阻力单一源实现）",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 986,
+        "end_char": 1049,
+        "start_line": 30,
+        "end_line": 30,
+        "quote": "Cr = R_W(V)/(½ρV²S)，R_W 直接调 `physics/holtrop` 单一源（不复制经验公式）；另把缺省",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "本工作树存在性探测（跨仓引用按纪律一律 unresolved，禁止造同名文件）",
+        "result": "unresolved",
+        "path": "physics/",
+        "exists_in_this_worktree": false
+      },
+      "note": "跨仓单一物理源；本工序不复制经验公式，故只登记引用。",
+      "probe": {
+        "kind": "repo_path",
+        "path": "physics/",
+        "exists_in_this_worktree": false
+      }
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_resistance_ittc78.py（阻力回归用例）",
+      "in_report_section": "⑤ 注意点",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2511,
+        "end_char": 2581,
+        "start_line": 68,
+        "end_line": 68,
+        "quote": "- **既有用例腐化**：tests/test_resistance_ittc78.py 因符号 `_legacy_cr_mock` 移除、",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "本工作树存在性探测（跨仓引用按纪律一律 unresolved，禁止造同名文件）",
+        "result": "unresolved",
+        "path": "tests/test_resistance_ittc78.py",
+        "exists_in_this_worktree": false
+      },
+      "note": "工程仓用例；本仓无同名文件（AC14 反向校验，禁止伪造）。",
+      "probe": {
+        "kind": "repo_path",
+        "path": "tests/test_resistance_ittc78.py",
+        "exists_in_this_worktree": false
+      }
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "source_code_reference",
+      "label": "cluster_exec.py nodes（外协方双节点探活）",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 760,
+        "end_char": 825,
+        "start_line": 25,
+        "end_line": 25,
+        "quote": "3. **算力管理**：`cluster_exec.py nodes` 探活 外协方双节点 loong64，失败回落冻结快照；",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "本工作树存在性探测（跨仓引用按纪律一律 unresolved，禁止造同名文件）",
+        "result": "unresolved",
+        "path": "cluster_exec.py",
+        "exists_in_this_worktree": false
+      },
+      "note": "集群执行器脚本在平台/工程仓，本仓无副本。",
+      "probe": {
+        "kind": "repo_path",
+        "path": "cluster_exec.py",
+        "exists_in_this_worktree": false
+      }
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/bp_demo/sha256_index.json（3 张 PNG 的哈希索引）",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2253,
+        "end_char": 2307,
+        "start_line": 60,
+        "end_line": 60,
+        "quote": "PNG 的 sha256 已登记在 artifacts/bp_demo/sha256_index.json。",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "本工作树存在性探测（跨仓引用按纪律一律 unresolved，禁止造同名文件）",
+        "result": "unresolved",
+        "path": "artifacts/bp_demo/sha256_index.json",
+        "exists_in_this_worktree": false
+      },
+      "note": "工程仓工件索引；本仓无该 artifact 目录 → 无法据其交叉校验 fig1–fig3 的 sha256。",
+      "probe": {
+        "kind": "repo_path",
+        "path": "artifacts/bp_demo/sha256_index.json",
+        "exists_in_this_worktree": false
+      }
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "endpoint_reference",
+      "label": "POST /api/v1/calculations/resistance（旧阻力端点）",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 669,
+        "end_char": 744,
+        "start_line": 23,
+        "end_line": 23,
+        "quote": "   `/api/v1/calculations/resistance` 发 5 航速 + 2 条负控（∇ 偏 8%、Cb=1.4 → 必须 422）",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "跨仓/外部引用：登记引用存在、内容未取（不探测、不复制）",
+        "result": "unresolved",
+        "scope": "ship-performance-platform:8001"
+      },
+      "note": "端点属船舶平台仓运行面；本仓不做在线复调（复调属 04 工序）。",
+      "probe": {
+        "kind": "external_service",
+        "path": "ship-performance-platform:8001"
+      }
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "endpoint_reference",
+      "label": "GET /resistance/predict（Holtrop 主链端点）",
+      "in_report_section": "⑤ 注意点",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2319,
+        "end_char": 2390,
+        "start_line": 64,
+        "end_line": 64,
+        "quote": "- **同仓两套阻力链**：`/calculations/resistance`（旧 mock）与 `/resistance/predict`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "跨仓/外部引用：登记引用存在、内容未取（不探测、不复制）",
+        "result": "unresolved",
+        "scope": "ship-performance-platform:8001"
+      },
+      "note": "同仓两套阻力链之一；跨端点一致性回归属工程仓职责。",
+      "probe": {
+        "kind": "external_service",
+        "path": "ship-performance-platform:8001"
+      }
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "service_reference",
+      "label": "http://127.0.0.1:8002（旧构建部署实例）",
+      "in_report_section": "③ 计算结果",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1884,
+        "end_char": 1949,
+        "start_line": 48,
+        "end_line": 48,
+        "quote": "| 部署实例 http://127.0.0.1:8002（旧构建） | 0.008036 | 7401.24 | 268.96 |",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "跨仓/外部引用：登记引用存在、内容未取（不探测、不复制）",
+        "result": "unresolved",
+        "scope": "127.0.0.1:8002"
+      },
+      "note": "源报告自述「部署漂移」：常驻实例为旧构建。本包不探测外部端口，登记其存在与风险。",
+      "probe": {
+        "kind": "external_service",
+        "path": "127.0.0.1:8002"
+      }
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "literature_reference",
+      "label": "Holtrop & Mennen (1982)",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 62,
+        "end_char": 132,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "R_T=(1+k)R_F+R_W+R_B+R_TR+R_A+R_APP 分解，兴波阻力取 Holtrop & Mennen (1982) /",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "跨仓/外部引用：登记引用存在、内容未取（不探测、不复制）",
+        "result": "unresolved",
+        "scope": "ISP 1982"
+      },
+      "note": "外部文献，本仓无副本；兴波阻力回归形式的出处。",
+      "probe": {
+        "kind": "external_document",
+        "path": "ISP 1982"
+      }
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "literature_reference",
+      "label": "Holtrop (1984)",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 133,
+        "end_char": 211,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "Holtrop (1984) 回归 R_W = c1·c2·c5·∇·ρg·exp(m1·Fn^d + m2·cos(λ·Fn^-2))，d = -0.9。",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "跨仓/外部引用：登记引用存在、内容未取（不探测、不复制）",
+        "result": "unresolved",
+        "scope": "ISP 1984"
+      },
+      "note": "外部文献（d=-0.9 修正项的来源），本仓无副本。",
+      "probe": {
+        "kind": "external_document",
+        "path": "ISP 1984"
+      }
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "dataset_reference",
+      "label": "KRISO 公开基准船 KCS（几何/基准数据）",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11,
+        "end_char": 61,
+        "start_line": 3,
+        "end_line": 3,
+        "quote": "**物理背景**：示范算例为 KRISO 公开基准船 KCS 集装箱船的静水裸船体阻力预报。总阻力按",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "跨仓/外部引用：登记引用存在、内容未取（不探测、不复制）",
+        "result": "unresolved",
+        "scope": "KRISO KCS"
+      },
+      "note": "外部公开基准几何；本仓无几何数据文件（几何先验复算属工程仓 04 工序）。",
+      "probe": {
+        "kind": "external_dataset",
+        "path": "KRISO KCS"
+      }
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "literature_reference",
+      "label": "KVLCC2 文献锚点（全尺度 Rt）",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 826,
+        "end_char": 884,
+        "start_line": 26,
+        "end_line": 26,
+        "quote": "4. **独立验证**：ITTC-57 闭式复算、系数场自洽、单一物理源对标、KVLCC2 文献锚点、pytest；",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "跨仓/外部引用：登记引用存在、内容未取（不探测、不复制）",
+        "result": "unresolved",
+        "scope": "KVLCC2 literature"
+      },
+      "note": "外部文献锚点，本仓无副本；源报告 V4 用其判定 -17.262% 偏差。",
+      "probe": {
+        "kind": "external_document",
+        "path": "KVLCC2 literature"
+      }
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "symbol_reference",
+      "label": "_legacy_cr_mock（被移除的遗留 mock 符号）",
+      "in_report_section": "⑤ 注意点",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2511,
+        "end_char": 2581,
+        "start_line": 68,
+        "end_line": 68,
+        "quote": "- **既有用例腐化**：tests/test_resistance_ittc78.py 因符号 `_legacy_cr_mock` 移除、",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "本工作树存在性探测（跨仓引用按纪律一律 unresolved，禁止造同名文件）",
+        "result": "unresolved",
+        "path": "symbol:_legacy_cr_mock",
+        "exists_in_this_worktree": false
+      },
+      "note": "符号已从工程仓删除；登记其名以固化「缺陷-移除」审计链，本仓不复活该符号。",
+      "probe": {
+        "kind": "repo_path",
+        "path": "symbol:_legacy_cr_mock",
+        "exists_in_this_worktree": false
+      }
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "dataset_reference",
+      "label": "KCS 水池试验原始数据表（EFD）",
+      "in_report_section": "⑤ 注意点",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2711,
+        "end_char": 2747,
+        "start_line": 72,
+        "end_line": 72,
+        "quote": "  17.3%；未取得 KCS 水池试验原始数据表，单一源对标属同级而非",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "源报告显式声明该资产不可得/未运行（declared absent），非本包臆断",
+        "result": "absent"
+      },
+      "note": "源报告显式声明未取得 → declared_absent；这是 V2 只能同级对标、不能实验对标的根因。",
+      "probe": {
+        "kind": "declared_absent",
+        "path": "KCS EFD table"
+      }
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "metric_evidence",
+      "label": "七维指标「生态/商业/经济性」标定证据（跨仓/用户/计费口径）",
+      "in_report_section": "⑥ 误差判定",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3643,
+        "end_char": 3701,
+        "start_line": 96,
+        "end_line": 96,
+        "quote": "「生态/商业/经济性」标 **NOT RUN**（缺 KCS 试验数据表与跨仓/用户/计费口径证据），不以估算充数。",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "源报告显式声明该资产不可得/未运行（declared absent），非本包臆断",
+        "result": "absent"
+      },
+      "note": "源报告显式声明 NOT RUN（缺跨仓/用户/计费口径证据）→ declared_absent，不以估算充数。",
+      "probe": {
+        "kind": "declared_absent",
+        "path": "seven-dim metric evidence"
+      }
+    }
+  ],
+  "claims": [],
+  "claims_empty_reason": "objective.classify_report_type=false：01 工序只登记资产与可达性，不做知识抽取；造 claim 会违反 no_forced_claim_generation，故 claims=[] 是完整结果。",
+  "integrity": {
+    "quote_uniqueness": {
+      "assets": 23,
+      "unique": 23
+    },
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": {
+      "status": "not_applicable",
+      "reason": "GET /tensor/reports/5577 记录不含 markdown 哈希字段（无 contract_source_hash 可比），以「双次拉取 sha256 稳定」+「本地重算」代替，属 NOT_APPLICABLE 而非不符。"
+    }
+  },
+  "limitations": [
+    "图字节不可达（fig1–fig3 平台端点未返回内容），故 3 张图只能登记为 referenced_unresolved，其 sha256 无法与源报告 artifacts/bp_demo/sha256_index.json 交叉校验（该索引亦为跨仓未取）。",
+    "本工序不重算源报告任何物理量（阻力/精度判定属 04 独立审核工序）。"
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "package_id": "wp-5577-01",
+  "report_id": "5577",
+  "task_type": "01-asset-registration",
+  "generated_by": "scripts/wp5577_build_report.py",
+  "verdict": "PASS",
+  "items_total": 16,
+  "items_pass": 16,
+  "items": [
+    {
+      "id": "AC01",
+      "check": "源 markdown 字符数 / UTF-8 字节数与 manifest 一致",
+      "expected": [
+        3702,
+        5707
+      ],
+      "observed": [
+        3702,
+        5707
+      ],
+      "pass": true
+    },
+    {
+      "id": "AC02",
+      "check": "双次拉取 sha256 一致（平台未声明 contract_source_hash，用一致性替代）",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "id": "AC03",
+      "check": "asset_manifest 通过 schemas/asset_manifest.v1.schema.json",
+      "expected": "valid",
+      "observed": "valid",
+      "pass": true
+    },
+    {
+      "id": "AC04",
+      "check": "kf_result 通过 schemas/kf_result.v1.schema.json",
+      "expected": "valid",
+      "observed": "valid",
+      "pass": true
+    },
+    {
+      "id": "AC05",
+      "check": "quote == md[start_char:end_char]（逐资产切片自洽）",
+      "expected": 23,
+      "observed": 23,
+      "pass": true
+    },
+    {
+      "id": "AC06",
+      "check": "quote 在源 markdown 中唯一",
+      "expected": 23,
+      "observed": 23,
+      "pass": true
+    },
+    {
+      "id": "AC07",
+      "check": "行号可由字符偏移反算复现",
+      "expected": 23,
+      "observed": 23,
+      "pass": true
+    },
+    {
+      "id": "AC08",
+      "check": "asset_id 连续无重复（A01..A23）",
+      "expected": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "A14",
+        "A15",
+        "A16",
+        "A17",
+        "A18",
+        "A19",
+        "A20",
+        "A21",
+        "A22",
+        "A23"
+      ],
+      "observed": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "A14",
+        "A15",
+        "A16",
+        "A17",
+        "A18",
+        "A19",
+        "A20",
+        "A21",
+        "A22",
+        "A23"
+      ],
+      "pass": true
+    },
+    {
+      "id": "AC09",
+      "check": "counts 三类合计 == 资产条数",
+      "expected": [
+        23,
+        23
+      ],
+      "observed": [
+        23,
+        23
+      ],
+      "pass": true
+    },
+    {
+      "id": "AC10",
+      "check": "平台 record 声明的图全部登记为资产",
+      "expected": 3,
+      "observed": 3,
+      "pass": true
+    },
+    {
+      "id": "AC11",
+      "check": "图字节可达数（0..3，honest 观测；不作本包失败项）",
+      "expected": "recorded_honestly",
+      "observed": "recorded_honestly",
+      "pass": true
+    },
+    {
+      "id": "AC12",
+      "check": "claims 为空且带 claims_empty_reason",
+      "expected": [
+        0,
+        true
+      ],
+      "observed": [
+        0,
+        true
+      ],
+      "pass": true
+    },
+    {
+      "id": "AC13",
+      "check": "包内无 .pyc / __pycache__（原 PR#152 的二进制污染不复现）",
+      "expected": [],
+      "observed": [],
+      "pass": true
+    },
+    {
+      "id": "AC14",
+      "check": "跨仓引用未在本仓伪造同名文件（存在性探测全 false）",
+      "expected": [],
+      "observed": [],
+      "pass": true
+    },
+    {
+      "id": "AC15",
+      "check": "fig1 PNG 落盘且 sha256 与登记一致",
+      "expected": "6bb04a761c25bbbcf6dfbb4a3e6950ad86b2814e31513cb2601684b8ad140e7f",
+      "observed": "6bb04a761c25bbbcf6dfbb4a3e6950ad86b2814e31513cb2601684b8ad140e7f",
+      "pass": true
+    },
+    {
+      "id": "AC16",
+      "check": "fig1 PNG 体积 > 10 KB（非空图）",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    }
+  ],
+  "figure": {
+    "path": "docs/kf/wp-5577-01/fig1_asset_resolution.png",
+    "sha256": "6bb04a761c25bbbcf6dfbb4a3e6950ad86b2814e31513cb2601684b8ad140e7f",
+    "bytes": 107121
+  },
+  "notes": [
+    "AC02：平台未声明 report 5577 的 markdown 哈希 → 以双次拉取一致性代替（NOT_APPLICABLE→passed by substitution）。",
+    "AC11：图字节 0/3 是 honest 观测（端点未返回内容），不作本包失败项，但已写入 manifest.limitations 供后续工序追讨。"
+  ]
+}
