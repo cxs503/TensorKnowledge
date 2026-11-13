@@ -1,0 +1,618 @@
+{
+  "package_id": "wp-12080-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12080",
+  "provenance": {
+    "source_uri": "tensor://reports/12080",
+    "source_field": "markdown",
+    "source_hash": "sha256:fe235db998e65d47ead6658e95916dbdf9764ffd213002e7ffe8ca58809c93e0",
+    "source_chars": 7931,
+    "source_bytes_utf8": 12918,
+    "source_title": "P333W2-N04 DP 时域闭环与单点失效漂移：时域降额因子 + DP-2/3 失效漂移判据",
+    "scenario_key": "dp_time_domain",
+    "contract_version": "1.0",
+    "lane": "C",
+    "work_package": "wp-12080-01",
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/12080",
+    "local_copy": "runs/wp-12080-01/report_12080.md",
+    "generator": "scripts/kf_wp12080_01_register.py",
+    "verifier": "scripts/kf_wp12080_01_verify.py",
+    "producer": "agent/m15741",
+    "emitted_at": "2026-11-12T02:23:11",
+    "verification_status": "not_verified",
+    "notes": "task_type=01: 只登记源资产与字节哈希，不做抽取；claims=[] 为合法完整结果。"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-12080-01",
+      "task_type": "01-asset-registration",
+      "report_id": "12080",
+      "source": {
+        "uri": "tensor://reports/12080",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "fe235db998e65d47ead6658e95916dbdf9764ffd213002e7ffe8ca58809c93e0",
+        "chars": 7931,
+        "bytes_utf8": 12918,
+        "title": "P333W2-N04 DP 时域闭环与单点失效漂移：时域降额因子 + DP-2/3 失效漂移判据",
+        "scenario_key": "dp_time_domain",
+        "platform_figures": [
+          "fig_envelopes.png",
+          "fig_drift.png",
+          "fig_attribution.png"
+        ],
+        "platform_tags": [
+          "DP",
+          "动力定位",
+          "capability-plot",
+          "single-point-failure",
+          "time-domain",
+          "drift",
+          "P333W2-N04"
+        ]
+      },
+      "counts": {
+        "assets": 25,
+        "by_class": {
+          "artifact_set": 1,
+          "code_module": 2,
+          "document": 1,
+          "figure": 3,
+          "heading": 1,
+          "limitation_set": 1,
+          "numeric_anchor": 2,
+          "parameter_set": 1,
+          "prereg_lock": 1,
+          "rest_endpoint": 1,
+          "statement": 1,
+          "table": 8,
+          "test_module": 1,
+          "verdict_summary": 1
+        },
+        "by_resolution": {
+          "declared_absent": 1,
+          "referenced_unresolved": 7,
+          "resolved_in_source": 17
+        },
+        "resolved_in_source": 17,
+        "referenced_unresolved": 7,
+        "declared_absent": 1
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "document",
+          "label": "报告正文 markdown（头部元信息 + 数据来源声明；全文身份由 sha256/字符数承载）",
+          "in_report_section": "sec@char55",
+          "locator": {
+            "method": "char_span",
+            "start_char": 55,
+            "end_char": 178,
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "> 节点 P333W2-N04 · 仓 ship-performance-platform · 域：操纵/稳性（DP）· 本报告全部数字由 `artifacts/dp_time_domain/acceptance.json` 程序化注入，零手抄。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "sha256(markdown) recomputed locally vs contract source_hash; chars vs contract chars",
+            "result": "resolved"
+          },
+          "note": "文档整体身份见 asset_manifest.source（sha256/字符/字节）；本定位锚定头部声明块"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "heading",
+          "label": "报告标题行",
+          "in_report_section": "sec@char0",
+          "locator": {
+            "method": "char_span",
+            "start_char": 0,
+            "end_char": 53,
+            "start_line": 1,
+            "end_line": 1,
+            "quote": "# P333W2-N04 · 动力定位时域闭环与单点失效漂移：时域降额因子 + DP-2/3 失效漂移判据",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "anchor line unique in markdown",
+            "result": "resolved"
+          },
+          "note": "标题与契约 title 逐字一致"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "table",
+          "label": "主尺度/几何参数表（8 行，含 Cb/L/B/T/L_over_B/B_over_T/displacement_t）",
+          "in_report_section": "sec@char406",
+          "locator": {
+            "method": "char_span",
+            "start_char": 406,
+            "end_char": 558,
+            "start_line": 9,
+            "end_line": 17,
+            "quote": "| 几何量 | 值 |\n|---|---|\n| L | 90.000 |\n| B | 20.000 |\n| T | 6.500 |\n| Cb | 0.700 |\n| L_over_B | 4.500 |\n| B_over_T | 3.077 |\n| displacement_t | 8394.750 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table block unique in markdown",
+            "result": "resolved"
+          },
+          "note": "几何量供下游抽取，本工序不抽取"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "table",
+          "label": "DP-2 推力器布置表（4 台：2 全回转 + 2 异站位侧推）",
+          "in_report_section": "sec@char659",
+          "locator": {
+            "method": "char_span",
+            "start_char": 659,
+            "end_char": 955,
+            "start_line": 21,
+            "end_line": 26,
+            "quote": "| 推力器 | x (m) | y (m) | T_max (kN) | 类型 | 方位角速率 (°/s) |\n|---|---|---|---|---|---|\n| stern_az_port | -37.0 | -5.0 | 300 | azimuth | 2.5 |\n| stern_az_stbd | -37.0 | 5.0 | 300 | azimuth | 2.5 |\n| bow_tunnel_fwd | 33.0 | 0.0 | 450 | tunnel | 0.0 |\n| bow_tunnel_aft | 24.0 | 0.0 | 450 | tunnel | 0.0 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table block unique in markdown",
+            "result": "resolved"
+          },
+          "note": "含 x/y/T_max/类型/方位角速率列"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "table",
+          "label": "惯量/阻尼参数表（M11/M22/M66/D11/D22/D66/三个时间常数）",
+          "in_report_section": "sec@char957",
+          "locator": {
+            "method": "char_span",
+            "start_char": 957,
+            "end_char": 1161,
+            "start_line": 28,
+            "end_line": 38,
+            "quote": "| 惯量/阻尼 | 值 |\n|---|---|\n| M11 | 9.066e+06 |\n| M22 | 1.343e+07 |\n| M66 | 7.14e+09 |\n| D11 | 1.492e+05 |\n| D22 | 7.795e+05 |\n| D66 | 1.169e+07 |\n| tau_x_s | 60.75 |\n| tau_y_s | 17.23 |\n| tau_psi_s | 610.6 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table block unique in markdown",
+            "result": "resolved"
+          },
+          "note": "阻尼口径=DR 线性化频段值"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "prereg_lock",
+          "label": "预声明判据 analysis.PREDECLARED（watch circle/容差/仿真时步）",
+          "in_report_section": "sec@char2020",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2020,
+            "end_char": 2063,
+            "start_line": 50,
+            "end_line": 50,
+            "quote": "**预声明判据**（先于看结果写死在 `analysis.PREDECLARED`）：",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "anchor line unique; JSON 正文为其后紧邻代码块（本工序不复制块内文本）",
+            "result": "resolved"
+          },
+          "note": "判据先于结果声明，是下游复核 C1–C6 的门槛值来源"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "parameter_set",
+          "label": "计算工况（Hs/Tp/流速/μ/R/12 来向/共线假设）",
+          "in_report_section": "sec@char2504",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2504,
+            "end_char": 2673,
+            "start_line": 78,
+            "end_line": 78,
+            "quote": "**工况**：Hs=2.0 m、Tp=8.0 s、流速 0.51 m/s、推力利用率上限 μ=0.8、watch circle R=20.0 m、12 来向。风声/流向/浪向共线（标准 capability plot 做法）。时域来向不变性（载荷只依赖相对艏向）使 12×12 (艏向×来向) 网格精确等价于 12 个相对角（测试钉住）。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "paragraph unique in markdown",
+            "result": "resolved"
+          },
+          "note": "工况参数单一来源行"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "table",
+          "label": "计算结果主表（12 来向 × 静力/时域/intact/worst-1/降额）",
+          "in_report_section": "sec@char2691",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2691,
+            "end_char": 3428,
+            "start_line": 82,
+            "end_line": 95,
+            "quote": "| 来向 (°) | 静力 intact (m/s) | 时域 intact (m/s) | 降额 intact | 静力 worst-1 (m/s) | 时域 worst-1 (m/s) | 降额 worst-1 |\n|---|---|---|---|---|---|---|\n| 0 | 33.6 | 0.0 | N/A | 22.6 | 0.0 | N/A |\n| 30 | 36.6 | 31.1 | 0.849 | 24.2 | 21.4 | 0.884 |\n| 60 | 33.9 | 0.0 | N/A | 30.7 | 0.0 | N/A |\n| 90 | 28.0 | 24.1 | 0.861 | 27.8 | 0.0 | N/A |\n| 120 | 28.7 | 24.1 | 0.842 | 27.1 | 24.1 | 0.890 |\n| 150 | 32.4 | 36.7 | 1.132 | 25.3 | 25.5 | 1.009 |\n| 180 | 40.4 | 38.0 | 0.941 | 27.4 | 26.9 | 0.983 |\n| 210 | 32.4 | 36.7 | 1.132 | 24.5 | 25.5 | 1.044 |\n| 240 | 28.7 | 25.5 | 0.891 | 26.1 | 22.8 | 0.870 |\n| 270 | 28.0 | 24.1 | 0.861 | 27.4 | 24.1 | 0.881 |\n| 300 | 33.9 | 0.0 | N/A | 32.0 | 0.0 | N/A |\n| 330 | 36.6 | 31.1 | 0.849 | 24.2 | 21.4 | 0.884 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table block unique in markdown",
+            "result": "resolved"
+          },
+          "note": "下游抽取的主数字表"
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "numeric_anchor",
+          "label": "降额因子均值与静力包线最小值（intact 0.696 / worst-1 0.620）",
+          "in_report_section": "sec@char3430",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3430,
+            "end_char": 3561,
+            "start_line": 97,
+            "end_line": 97,
+            "quote": "降额因子（有定义的扇区）：intact 均值 0.696，worst-1 均值 0.620；静力包线最小值 intact 28.0 m/s / worst-1 22.6 m/s。**降额因子 < 1 即“静力可行但时域守不住”的量化幅度**，方向与物理预期一致。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "paragraph unique in markdown",
+            "result": "resolved"
+          },
+          "note": "量级锚点；缺陷扇区不计入均值"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "table",
+          "label": "C1 静力一致性表（3 组增益，位置误差/L）",
+          "in_report_section": "sec@char3604",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3604,
+            "end_char": 3885,
+            "start_line": 101,
+            "end_line": 105,
+            "quote": "| 工况 | 增益系数 | x_ss (m) | y_ss (m) | 位置误差 (m) | 误差/L | 判定 |\n|---|---|---|---|---|---|---|\n| intact | 3.0 | 0.0003 | 0.0001 | 0.0003 | 3.47e-06 | PASS |\n| fail_azimuth | 3.0 | 0.0003 | 0.0001 | 0.0003 | 3.47e-06 | PASS |\n| intact | 1.0 | -0.0445 | 0.1483 | 0.1548 | 1.72e-03 | PASS |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table block unique in markdown",
+            "result": "resolved"
+          },
+          "note": "C1 判据 <0.5%·L"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "statement",
+          "label": "C2 包含关系被否证（honest FAIL，21/36 反例）",
+          "in_report_section": "sec@char3953",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3953,
+            "end_char": 4032,
+            "start_line": 109,
+            "end_line": 109,
+            "quote": "**C2 包含关系**（静力可行 ⊆ 时域可保持）：36 个静力可行点中 21 个时域守不住 ⇒ **被否证（honest FAIL）**。定源表（前 6）：",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "paragraph unique in markdown",
+            "result": "resolved"
+          },
+          "note": "否定性结论，保持原样不得改写成通过"
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "table",
+          "label": "C3/C4 单点失效漂移表（失衡力/等效阻尼/漂移速度/解析锚/R²/漂出时刻）",
+          "in_report_section": "sec@char4567",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4567,
+            "end_char": 4878,
+            "start_line": 124,
+            "end_line": 134,
+            "quote": "| 量 | 值 |\n|---|---|\n| 失效工况 | fail_azimuth @ 40 m/s, 来向 0°, t=60 s |\n| 失衡力 |F_unbal| | 421.8 kN |\n| 等效阻尼系数 |F|/|ν| | 150166 N·s/m |\n| 时域稳态漂移速度 | 2.8091 m/s |\n| 解析锚 |D⁻¹F_unbal| | 2.8265 m/s |\n| C3 相对误差 (<5%) | 0.617% |\n| C4 漂移距离-时间 R² (30–300 s, >0.99) | 0.99841 |\n| 漂出 R=20 m 的时刻 | 33 s |\n| 漂移方向 | 180.0°（机体系） |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table block unique in markdown",
+            "result": "resolved"
+          },
+          "note": "C3 判据 <5%，C4 判据 R²>0.99"
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "numeric_anchor",
+          "label": "正横失效敏感性 c3_c4_beam_sensitivity（稳态漂移不存在的适用边界）",
+          "in_report_section": "sec@char4880",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4880,
+            "end_char": 5051,
+            "start_line": 136,
+            "end_line": 136,
+            "quote": "正横工况敏感性（`c3_c4_beam_sensitivity`，说明稳态漂移存在的条件）：失衡力 3272 kN、漂移速度 0.907 m/s、C3 误差 1.394、C4 R² 0.880。正横失效后残余力矩使船缓慢转动、相对风向随之改变，**稳态漂移不存在**，解析锚只对“失衡量近似定常”的工况成立——这是本判据的适用范围，写进局限。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "paragraph unique in markdown",
+            "result": "resolved"
+          },
+          "note": "声明 C3 解析锚的适用范围"
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "table",
+          "label": "C6 海况敏感性表（Hs=2/3 m 静力/时域 worst-1 最小风速）",
+          "in_report_section": "sec@char5267",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5267,
+            "end_char": 5448,
+            "start_line": 146,
+            "end_line": 149,
+            "quote": "| Hs (m) | 静力 worst-1 最小风速 (m/s) | 时域 worst-1 最小风速 (m/s) | 控制来向 (°) | 静力满足 20 m/s? | 时域满足? |\n|---|---|---|---|---|---|\n| 2 | 22.6 | 0.0 | 0 | 是 | 否 |\n| 3 | 20.3 | 0.0 | 30 | 是 | 否 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table block unique in markdown",
+            "result": "resolved"
+          },
+          "note": "海况升档不翻转定性结论，只削余量"
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "figure",
+          "label": "图 1 fig_envelopes.png（静力/时域包线 + 降额因子场）",
+          "in_report_section": "sec@char5611",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5611,
+            "end_char": 5635,
+            "start_line": 155,
+            "end_line": 155,
+            "quote": "![包线](fig_envelopes.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform metadata GET /tensor/reports/12080 -> figures[].name",
+            "result": "present"
+          },
+          "note": "图件在平台 figures 元数据中登记，二进制不在 markdown 内；本工序不下载图件"
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "figure",
+          "label": "图 2 fig_drift.png（失效漂移轨迹与 C4 线性区）",
+          "in_report_section": "sec@char5700",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5700,
+            "end_char": 5720,
+            "start_line": 159,
+            "end_line": 159,
+            "quote": "![漂移](fig_drift.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform metadata GET /tensor/reports/12080 -> figures[].name",
+            "result": "present"
+          },
+          "note": "同上：仅登记引用，不抽取像素"
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "figure",
+          "label": "图 3 fig_attribution.png（C2 反例时间历程与推力利用率）",
+          "in_report_section": "sec@char5774",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5774,
+            "end_char": 5800,
+            "start_line": 163,
+            "end_line": 163,
+            "quote": "![定源](fig_attribution.png)",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform metadata GET /tensor/reports/12080 -> figures[].name",
+            "result": "present"
+          },
+          "note": "同上"
+        },
+        {
+          "asset_id": "A18",
+          "asset_class": "artifact_set",
+          "label": "工件三元组 artifacts/dp_time_domain/{acceptance,capability_envelopes,drift_case}.json",
+          "in_report_section": "sec@char7301",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7301,
+            "end_char": 7415,
+            "start_line": 193,
+            "end_line": 193,
+            "quote": "* 工件：`artifacts/dp_time_domain/{acceptance,capability_envelopes,drift_case}.json`、`fig_*.png`（含 sha 无关的 base64 副本）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "filesystem probe in this worktree (repo=TensorKnowledge)",
+            "result": "unresolved"
+          },
+          "note": "工件属 ship-performance-platform 仓，本工作树内不存在"
+        },
+        {
+          "asset_id": "A19",
+          "asset_class": "code_module",
+          "label": "可复算入口 modules.dp_time_domain.run_acceptance（分 stage + assemble）",
+          "in_report_section": "sec@char7416",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7416,
+            "end_char": 7559,
+            "start_line": 194,
+            "end_line": 194,
+            "quote": "* 可复算命令：`cd backend && python -m modules.dp_time_domain.run_acceptance --stage <static|time_intact|time_fail|c1|c2|drift|c5|c6> ... --assemble`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "filesystem probe in this worktree (repo=TensorKnowledge)",
+            "result": "unresolved"
+          },
+          "note": "复算命令原文保留；代码不在本仓"
+        },
+        {
+          "asset_id": "A20",
+          "asset_class": "code_module",
+          "label": "平台单源波谱 physics.wave_spectrum_core（一阶波频力谱来源）",
+          "in_report_section": "sec@char1714",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1714,
+            "end_char": 2018,
+            "start_line": 48,
+            "end_line": 48,
+            "quote": "**环境载荷**：风/流为傅里叶谐波族系数（**DECLARED 工程缺省，非 OCIMF 标定**），20 m/s 正横风合力 0.239 MN（量级窗口 0.10–0.45 MN 由测试钉住）；偏航力矩系数取 `sin2ψ+sin4ψ` 组合，保证正横来向力矩严格为零（对称船体必要条件，测试钉住）；一阶波频力 = Froude-Krylov × 声明型绕射低通，波谱取平台单源 `physics.wave_spectrum_core`；二阶漂力按幅值平方尺度律（Hs=2/3 m 下 3/4 倍关系由测试钉住）。风/流载荷对**相对速度**的依赖是真实物理（漂移降低相对流速），时域里始终按相对速度算。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "filesystem probe in this worktree (repo=TensorKnowledge)",
+            "result": "unresolved"
+          },
+          "note": "跨仓依赖声明，本仓无实现"
+        },
+        {
+          "asset_id": "A21",
+          "asset_class": "test_module",
+          "label": "测试面（42 例）：modules/dp_time_domain/tests（含 test_env_vessel.py / test_allocation.py）",
+          "in_report_section": "sec@char7560",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7560,
+            "end_char": 7658,
+            "start_line": 195,
+            "end_line": 195,
+            "quote": "* 测试：`python -m pytest modules/dp_time_domain/tests -q`（42 例，含分配器双坑回归、几何校验、谱/漂力量级窗、C1–C5 内核、工件一致性）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "filesystem probe in this worktree (repo=TensorKnowledge)",
+            "result": "unresolved"
+          },
+          "note": "测试代码与用例数（42 例）为报告声明，未在本工序复核"
+        },
+        {
+          "asset_id": "A22",
+          "asset_class": "rest_endpoint",
+          "label": "REST 端点 api.py 未挂载到 main.py（本期只交付库 + 判据 + 工件）",
+          "in_report_section": "sec@char6513",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6513,
+            "end_char": 6623,
+            "start_line": 175,
+            "end_line": 175,
+            "quote": "7. 未完成：REST 端点（`api.py`）未挂载到 `main.py`，本期只交付库 + 判据 + 工件；方位角层是“合力方向 + 侧推力偶”的启发式，未做角度-力矩联合优化（MPC/全 QP 对照留待后续节点）。",
+            "unique": true
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "grep main.py / api.py in this worktree (repo=TensorKnowledge)",
+            "result": "absent"
+          },
+          "note": "报告自述未完成项，登记为缺失而非缺陷修复目标"
+        },
+        {
+          "asset_id": "A23",
+          "asset_class": "table",
+          "label": "误差判定表（关键量 vs 基准，逐项回答是否 <3%）",
+          "in_report_section": "sec@char6658",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6658,
+            "end_char": 7098,
+            "start_line": 179,
+            "end_line": 186,
+            "quote": "| 关键量 | 本节点结果 | 基准/判据 | 是否 <3%（或满足判据） |\n|---|---|---|---|\n| C1 时域稳态位置 vs 静力平衡点 | 1.72e-01% · L | <3% | 是 |\n| C3 漂移速度 vs |F_unbal|/等效阻尼解析式 | 0.617% | <5%（判据）；<3% 亦成立 | 是（0.617%） |\n| C4 漂移距离-时间线性拟合 R² | 0.99841（≈1） | R²>0.99 | 是 |\n| 风载荷量级 vs 工程窗口（20 m/s 正横） | 0.239 MN ∈ [0.10, 0.45] | 落在窗口内 | 是 |\n| 一阶波频力 RMS vs 惯性尺度（8000 t 船 Hs=2 m） | 3.40 MN（MN 级，测试窗口 1–10 MN） | 量级自检 | 是 |\n| C2 包含关系（静力 ⊆ 时域） | 21/36 反例 | 预声明要求 0 反例 | **否（honest FAIL）** |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table block unique in markdown",
+            "result": "resolved"
+          },
+          "note": "含唯一 honest FAIL 行（C2）"
+        },
+        {
+          "asset_id": "A24",
+          "asset_class": "verdict_summary",
+          "label": "判定汇总字面量（C1 true / C2 false / C3–C6 true）",
+          "in_report_section": "sec@char7659",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7659,
+            "end_char": 7835,
+            "start_line": 196,
+            "end_line": 196,
+            "quote": "* 判定汇总：{\"C1_static_consistency\": true, \"C2_inclusion\": false, \"C3_drift_analytic\": true, \"C4_drift_linear\": true, \"C5_layered_falsifiable\": true, \"C6_sea_state_reported\": true}",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "line unique in markdown",
+            "result": "resolved"
+          },
+          "note": "原样登记，不改写为 verified"
+        },
+        {
+          "asset_id": "A25",
+          "asset_class": "limitation_set",
+          "label": "局限章节（7 条局限/适用范围，含实现缺陷扇区与 DECLARED 载荷系数）",
+          "in_report_section": "sec@char5854",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5854,
+            "end_char": 5880,
+            "start_line": 167,
+            "end_line": 167,
+            "quote": "## ⑤ 注意点（踩过的坑 / 局限 / 适用范围）",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "section heading line unique in markdown",
+            "result": "resolved"
+          },
+          "note": "局限与结论同权保留：C2 FAIL、三扇区不收敛、系数 DECLARED"
+        }
+      ],
+      "claims": [],
+      "integrity": {
+        "quote_uniqueness": "every locator.quote is exactly md[start_char:end_char] and occurs exactly once in the source markdown (checked at build time and re-checked by scripts/kf_wp12080_01_verify.py)",
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true
+      }
+    }
+  },
+  "claims": []
+}
