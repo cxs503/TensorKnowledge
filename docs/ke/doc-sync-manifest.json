@@ -1,0 +1,87 @@
+{
+  "schema": "tk-doc-sync-manifest/1",
+  "note": "每条=文档状态声明 -> 机器谓词。done=true 表示该能力已实现；checker 同时核对文档措辞(- [x]/done)与实现是否一致。",
+  "claims": [
+    {
+      "doc": "ROADMAP.md",
+      "text": "PostgreSQL 生产存储实现",
+      "impl": [
+        "file_exists",
+        "ke/apistore.py"
+      ],
+      "done": true
+    },
+    {
+      "doc": "ROADMAP.md",
+      "text": "REST API 实现",
+      "impl": [
+        "endpoint_present",
+        "/ko"
+      ],
+      "done": true
+    },
+    {
+      "doc": "ROADMAP.md",
+      "text": "上下文组装端点",
+      "impl": [
+        "endpoint_present",
+        "/kb/search"
+      ],
+      "done": true
+    },
+    {
+      "doc": "ROADMAP.md",
+      "text": "review-event 接入存储层",
+      "impl": [
+        "endpoint_present",
+        "/ko/{ko_id:path}/review"
+      ],
+      "done": true
+    },
+    {
+      "doc": "README.md",
+      "text": "KE API 检索/上下文组装",
+      "impl": [
+        "endpoint_present",
+        "/kb/search"
+      ],
+      "done": true
+    },
+    {
+      "doc": "docs/ke/proto.md",
+      "text": "PostgreSQL 是权威存储",
+      "impl": [
+        "file_exists",
+        "docs/ke/backends.md"
+      ],
+      "done": true
+    },
+    {
+      "doc": "docs/ke/m8802-acceptance.md",
+      "text": "m8802",
+      "impl": [
+        "file_exists",
+        "docs/ke/m8802-acceptance.md"
+      ],
+      "done": true
+    },
+    {
+      "doc": "docs/ke/boundary-audit.md",
+      "text": "领域语义边界审计",
+      "impl": [
+        "file_exists",
+        "docs/ke/boundary-audit.md"
+      ],
+      "done": true
+    },
+    {
+      "doc": "docs/ke/stats.md",
+      "text": "统计口径三分离（自动生成",
+      "impl": [
+        "file_exists",
+        "docs/ke/stats.json"
+      ],
+      "done": true
+    }
+  ]
+}
