@@ -68,3 +68,23 @@ B/C 按设计交 KBM-RCI-F1-FACTORY(15495) 泳道（`task_key=rci-f1-abc-lane-b/
 - 三臂差异含**模型档位捆绑**（A 强档 vs B/C 普通档），不得单向归因于「组织方式」；
   报告并列 B vs C（切审核+Skill 的边际贡献）与 C vs A（产线 vs 单强 Agent）。
 - 截止本单结算时点，三臂均在跑，五指标全部 NOT_STARTED/WITHHELD —— 不预设结论、不填占位数字。
+## 第二轮（m15896）：仪器先行
+
+第一轮 honest-FAIL 的复核结论不是「实验失败」，而是「测量仪器不存在」：
+冻结语料/批次/预注册全在 `.gitignore` 忽略的 `artifacts/`（干净检出 v1 测试 5 红），
+独立反查器 `rci_f1_verify.py` 只在别的工作树，B 臂实测 `agent_count=1 / degraded-single-agent` 却无人审计。
+
+本轮把三件仪器做进主干并逐个注入故障验证：
+
+| 仪器 | 入口 | 验证 |
+|---|---|---|
+| 语料入版本 + 逐字节 sha256 | `scripts/rci_f1_corpus.py verify` | 60/60；篡改 1 字节即判死 |
+| 独立证据反查（禁采信自报） | `scripts/rci_f1_verify.py --lane B` | 130/130；四类注入故障各自判死 |
+| 结算 + 臂身份审计 + MO2 | `scripts/rci_f1_settle.py` | agent_count 1≠20 → `DESCRIPTIVE_ONLY`；token 缺失 → M1 WITHHELD |
+| 可判定性（非劣效/κ/聚类） | `scripts/rci_f1_power.py` | 恒等/单调/蒙特卡洛双路径复算 |
+
+关键数字（`round2/power.json`）：p≈0.90、n=60/臂 时 Wilson 半宽 **7.7pp** ≫ 3pp 门，
+把握度 **0.079**，最小可证明界 **15.3pp**，3pp 门需 n/臂 ≈ **1570**（真实差 0）或 **15353**（−2pp）；
+κ 半宽 ≤0.10 需人工 **201** 条。判定仍 **WITHHELD**（A/C 无产物，B 身份不符）。
+
+详见 `round2/RESEARCH.md`、`round2/METHOD-AND-PREREG-V2.md`（v2 追加条款 P1–P6）、`round2/REPORT-round2.md`。
