@@ -1,0 +1,51 @@
+{
+  "experiment": "figure-bytes retrievability（正对照区分『报告没传图』与『平台不存图』）",
+  "report_id": "5577",
+  "endpoint": "/tensor/reports/<rid>/figures/<name>",
+  "target_figures": [
+    "fig1_resistance_spectrum.png",
+    "fig2_deviation_spectrum.png",
+    "fig3_evidence_chain.png"
+  ],
+  "targets": [
+    {
+      "http_status": 404,
+      "payload_bytes": 0,
+      "body_bytes": 29,
+      "payload_sha256": null,
+      "name": "fig1_resistance_spectrum.png"
+    },
+    {
+      "http_status": 404,
+      "payload_bytes": 0,
+      "body_bytes": 29,
+      "payload_sha256": null,
+      "name": "fig2_deviation_spectrum.png"
+    },
+    {
+      "http_status": 404,
+      "payload_bytes": 0,
+      "body_bytes": 29,
+      "payload_sha256": null,
+      "name": "fig3_evidence_chain.png"
+    }
+  ],
+  "controls": [
+    {
+      "http_status": 200,
+      "payload_bytes": 71730,
+      "body_bytes": 71730,
+      "payload_sha256": "010769471374eadbd69e4ea47765880602851f353cefa1f49fd5d44677abe964",
+      "report_id": "11621",
+      "name": "fig1_geometry.png"
+    }
+  ],
+  "control_used": {
+    "report_id": "11621",
+    "name": "fig1_geometry.png"
+  },
+  "all_targets_404": true,
+  "control_ok": true,
+  "probe_valid": true,
+  "conclusion": "平台端同路由可取回图字节（正对照 report 11621 的 fig1_geometry.png → 200 / 71730 B / sha256 010769471374eadb…），而 report 5577 的 3 张声明图全部 404 ⇒ 缺口在报告侧（图字节从未随报告落库），不是平台不存图、也不是路由变更。"
+}
