@@ -1,0 +1,39 @@
+{
+ "id": 12866,
+ "title": "AUV 潜器空间/垂直面操纵性：Munk 力矩解析锚 + 回转椭球 Lamb 附加质量 + 定深纵倾闭环（m12371）",
+ "summary": "从零实现潜器操纵性模型：Lamb 系数两条独立路线偏差 2.8e-14（判据 3%）、Munk 力矩系数 2.06%（判据 5%）、定深闭环稳态误差 0.0331%（判据 2%），19 项 pytest 全绿。",
+ "scenario_key": "auv_manoeuvrability_vertical_plane",
+ "mission_id": 12371,
+ "stage": null,
+ "tags": [
+  "AUV",
+  "manoeuvrability",
+  "Munk moment",
+  "Lamb added mass",
+  "depth keeping",
+  "vertical plane",
+  "IN51-W5-N06",
+  "ship-performance-platform"
+ ],
+ "figures": [
+  {
+   "name": "fig1_lamb_coefficients.png",
+   "caption": "Lamb 附加质量系数 k1(λ)、k2(λ)：闭式解曲线与独立求积路线散点重合，球极限 0.5 与 Lamb 表 λ=5 值作外部校验"
+  },
+  {
+   "name": "fig2_munk_convergence.png",
+   "caption": "Munk 力矩系数：精确椭球锚 vs 细长体条带实现随 λ 收敛；右图相对偏差（对数轴）与 5% 判据线，设计艇 λ=20 处 2.06%"
+  },
+  {
+   "name": "fig3_depth_keeping.png",
+   "caption": "定深纵倾闭环时历：深度/纵倾/舵偏与 Newton 代数平衡值（虚线）及 (w,θ) 相图；深度稳态误差 0.033%"
+  },
+  {
+   "name": "fig4_munk_vs_alpha.png",
+   "caption": "设计艇 C_M(α) 精确 vs 条带；右图纵倾刚度预算：舵 −322.0 与 Munk +126.2 → 净 −195.8 N·m·s"
+  }
+ ],
+ "status": "published",
+ "created_by": 1,
+ "created_at": "2026-11-10T23:37:43.399784+00:00"
+}
