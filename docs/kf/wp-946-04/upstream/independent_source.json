@@ -1,0 +1,37 @@
+{
+ "report_id": 946,
+ "title": "AI 原生基础设施演化图 v2（替代报告 941）：十方向 × 六准则可复算覆盖度审计",
+ "scenario_key": "ai-native-infra",
+ "mission_id": 1237,
+ "tags": [
+  "AI原生基础设施",
+  "演化图",
+  "覆盖度矩阵",
+  "可复算审计",
+  "证据分级",
+  "返工重发",
+  "引用报告941"
+ ],
+ "figures": [
+  {
+   "name": "fig1_coverage_matrix",
+   "caption": "图 1 十方向 × 六准则覆盖度矩阵（左：逐准则 0–3 分；右：总分与强/中/弱带位）。rubric 与判据见方法节，分数由 build_evidence.py 复算，非人工填写。"
+  },
+  {
+   "name": "fig2_seat_model_decoupling",
+   "caption": "图 2 席位身份与底层模型解耦实测（左：各席位承接任务按模型着色；右：样本规模）。来源：missions 表只读 API 视图 + fleet.json。"
+  },
+  {
+   "name": "fig3_selfheal_evidence",
+   "caption": "图 3 自愈机制实测证据（左：autoheal 复活事件时间线，逐守护；右：fleet_supervisor 巡检间隔直方图与实测中位）。来源：/var/log/tp-fleet/autoheal.log、/var/log/tp-fleet-supervisor.log。"
+  },
+  {
+   "name": "fig4_claim_grades",
+   "caption": "图 4 报告断言证据分级（可复算 vs 定性观察）。用于替代自评打分：可复算断言占比即本报告的稳健性下界。"
+  }
+ ],
+ "chars_codepoints": 14281,
+ "chars_utf8_bytes": 26523,
+ "sha256": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552",
+ "retrieved_by": "wp-946-04 independent retrieval (platform API)"
+}
