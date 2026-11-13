@@ -1,0 +1,1084 @@
+{
+ "review_report_version": "1.0",
+ "package_id": "wp-1561-04",
+ "task_type": "04-independent-review",
+ "report_id": "1561",
+ "reviewer_role": "red-team-reviewer",
+ "reviewed_package": {
+  "package_id": "wp-1561-01",
+  "task_type": "01-asset-registration",
+  "source_hash": "sha256:19203e6ea7f05573f0b06835f9c0e1f08fb54fc5481787ace02487d5ac6d1620",
+  "artifacts": {
+   "README.md": "sha256:c2067dcdce992f0eac5e25bedf3a7fee75037c401e12a81b65019b06e52745bb",
+   "asset_manifest.json": "sha256:b8651154fdb772feafa5e59b595dd66fb3c702e38b12f9978a96acb986490ac2",
+   "fig_inventory.png": "sha256:896a7d6c36ae685ce270cc286db4b2772bf640e862454c3fb8a3a203e9f32b05",
+   "figure_fetch.json": "sha256:dc4b4982afc3769903eddf37d80d430ab89fd38a235925a64bb27adcc25ed695",
+   "kf_result.json": "sha256:0d3fc8cb53ad45e1937bceffbb827bd59930c03e172fccb07108d25cf9147da3",
+   "publication.json": "sha256:6d83d6466e3a347b09e43c399afc095cc57c41f9ecdc0874eefa88298c0e0f32",
+   "report_record.json": "sha256:1b3a8976ba8d14f845eafea21f97d42889eb25daef5dbc6b538a1722269d3f25",
+   "selfcheck.json": "sha256:08f9537e7f0b394d87a817fe6be3c0e791401ff90c4e7f0ae821194abf1a77bb",
+   "source/report_1561.md": "sha256:19203e6ea7f05573f0b06835f9c0e1f08fb54fc5481787ace02487d5ac6d1620"
+  }
+ },
+ "disposition": "approve-with-notes",
+ "ledger_decision": "approve",
+ "disposition_reason": "no blocking finding; 26/30 checks reproduced, 3 non-blocking check(s) failed (C5b, C12, C11), 1 declared not_run. Hash pinning, locator resolution, envelope schema and zero-claim legality all hold; the residual items are traceability wording, not fabrication.",
+ "blocking_findings": [],
+ "scope": {
+  "in_scope": [
+   "byte identity of report 1561 markdown (contract vs snapshot vs live API)",
+   "kf_result.v1 envelope of wp-1561-01 (schema, source identity, zero-claim legality)",
+   "asset manifest accuracy re-derived from the source text (quotes, line locators, tallies)",
+   "observation set: quote binding + arithmetic re-derivation",
+   "independence and prompt-independence mechanics",
+   "arithmetic self-consistency of the numbers the subject report itself prints"
+  ],
+  "out_of_scope": [
+   "re-running the propulsion endpoint / BEMT kernel (lives in ship-performance-platform)",
+   "figure payload content (binaries not served: HTTP 404 on every name)",
+   "resistance R_T absolute accuracy (cross-domain, no reference dataset inside the report)",
+   "knowledge extraction (工序 03) — task 01 registers assets and emits zero claims"
+  ],
+  "claims_assessment": "wp-1561-01 declares zero knowledge claims, so there is no claim of its own to assess for truth; what is assessed here are its factual statements about the source. This review marks nothing as verified — verification is computed by the platform gate."
+ },
+ "independence": {
+  "reviewer": "agent/m15823 (TensorKnowledge) · package wp-1561-04 · red-team-reviewer",
+  "producer": [
+   "agent/m15529 (TensorKnowledge) · package wp-1561-01"
+  ],
+  "basis": "distinct-identity",
+  "limitations": [
+   "reviewer and producer run on the same platform and the same model family: independence is identity-level and method-level, not model-level",
+   "without --live the review degrades to the pinned snapshot (A4 becomes not_run); with --live the live markdown hash was compared byte-exactly",
+   "I listed the reviewed package directory and opened its README.md/selfcheck.json while scoping it. selfcheck.json is treated as an object under test (C10 audits it by recomputation; its ok:true is never copied), and README prose is cited nowhere as evidence. This is a disclosure, not a claim of perfect context isolation.",
+   "no strong-model second sample was drawn (that is a platform-side job, not available here)"
+  ]
+ },
+ "context_isolation": {
+  "evidence_basis": [
+   "report 1561 markdown (platform API or byte snapshot)",
+   "docs/kf/wp-1561-01/asset_manifest.json",
+   "docs/kf/wp-1561-01/kf_result.json"
+  ],
+  "objects_under_test_not_evidence": [
+   "docs/kf/wp-1561-01/selfcheck.json",
+   "docs/kf/wp-1561-01/README.md"
+  ],
+  "producer_explanation_used_as_support": false
+ },
+ "checks": [
+  {
+   "id": "A1",
+   "name": "source_hash_recompute",
+   "status": "pass",
+   "method": "sha256 over the UTF-8 bytes of the reviewed markdown (no newline normalisation)",
+   "detail": {
+    "computed": "sha256:19203e6ea7f05573f0b06835f9c0e1f08fb54fc5481787ace02487d5ac6d1620",
+    "contract": "sha256:19203e6ea7f05573f0b06835f9c0e1f08fb54fc5481787ace02487d5ac6d1620",
+    "equal": true
+   },
+   "evidence": [
+    "docs/kf/wp-1561-01/source/report_1561.md"
+   ]
+  },
+  {
+   "id": "A2",
+   "name": "source_size_and_shape",
+   "status": "pass",
+   "method": "recomputed byte/char/line counts and the first line",
+   "detail": {
+    "utf8_bytes": 11620,
+    "characters": 7340,
+    "lines": 162,
+    "first_line": "# m1838 · /propulsion/predict 推力闭合修复：从 Kt=0.3-0.2J 直线式到 BEMT 反解转速"
+   },
+   "evidence": []
+  },
+  {
+   "id": "A3",
+   "name": "six_sections_present",
+   "status": "pass",
+   "method": "substring scan for the six mandated section headers",
+   "detail": {
+    "## ①": true,
+    "## ②": true,
+    "## ③": true,
+    "## ④": true,
+    "## ⑤": true,
+    "## ⑥": true
+   },
+   "evidence": []
+  },
+  {
+   "id": "A4",
+   "name": "snapshot_equals_live_api",
+   "status": "pass",
+   "method": "GET /tensor/reports/1561 -> sha256(markdown) vs the pinned snapshot",
+   "detail": {
+    "live": "sha256:19203e6ea7f05573f0b06835f9c0e1f08fb54fc5481787ace02487d5ac6d1620",
+    "snapshot": "sha256:19203e6ea7f05573f0b06835f9c0e1f08fb54fc5481787ace02487d5ac6d1620",
+    "equal": true,
+    "live_utf8_bytes": 11620,
+    "live_title": "m1838 推进端点推力闭合修复：Kt=0.3-0.2J 直线式 → BEMT 反解转速，5 型船闸门 verdict_fail=0"
+   },
+   "evidence": []
+  },
+  {
+   "id": "B1",
+   "name": "envelope_schema_validate",
+   "status": "pass",
+   "method": "jsonschema.validate(kf_result.json, schemas/kf_result.v1.schema.json)",
+   "detail": {
+    "ok": true,
+    "error": "",
+    "package_id": "wp-1561-01",
+    "task_type": "01-asset-registration",
+    "report_id": "1561"
+   },
+   "evidence": []
+  },
+  {
+   "id": "B2",
+   "name": "envelope_source_identity",
+   "status": "pass",
+   "method": "provenance.source_hash / source_field / report_id vs contract",
+   "detail": {
+    "source_hash": "sha256:19203e6ea7f05573f0b06835f9c0e1f08fb54fc5481787ace02487d5ac6d1620",
+    "source_field": "markdown",
+    "report_id": "1561"
+   },
+   "evidence": []
+  },
+  {
+   "id": "B3",
+   "name": "envelope_manifest_equals_file",
+   "status": "pass",
+   "method": "canonical-JSON comparison of outputs['asset_manifest.json'] vs asset_manifest.json",
+   "detail": {
+    "equal": true,
+    "output_keys": [
+     "asset_manifest.json"
+    ]
+   },
+   "evidence": []
+  },
+  {
+   "id": "B4",
+   "name": "zero_claim_legality",
+   "status": "pass",
+   "method": "task 01 declares no knowledge claims; contract allows an empty claims array",
+   "detail": {
+    "envelope_claims": 0,
+    "manifest_claims": 0
+   },
+   "evidence": []
+  },
+  {
+   "id": "C1",
+   "name": "asset_inventory_shape",
+   "status": "pass",
+   "method": "count + uniqueness + contiguity of asset_id",
+   "detail": {
+    "total": 57,
+    "unique": 57,
+    "contiguous": true,
+    "first": "1561-a000",
+    "last": "1561-a056"
+   },
+   "evidence": []
+  },
+  {
+   "id": "C2",
+   "name": "quote_verbatim_all_assets",
+   "status": "pass",
+   "method": "exact substring test of every asset quote against the markdown",
+   "detail": {
+    "checked": 57,
+    "not_found": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "C3",
+   "name": "line_locator_matches",
+   "status": "pass",
+   "method": "the quote's first line must be contained in the source line the locator names",
+   "detail": {
+    "checked": 57,
+    "mismatch_count": 0,
+    "mismatches": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "C4",
+   "name": "counts_tally_rederived",
+   "status": "pass",
+   "method": "recount kind / resolvability / total from the asset array vs manifest.counts",
+   "detail": {
+    "total": 57,
+    "by_kind": {
+     "report_document": 1,
+     "section": 6,
+     "code_block": 3,
+     "table": 3,
+     "figure": 5,
+     "code_path": 4,
+     "artifact_path": 4,
+     "test_path": 1,
+     "api_endpoint": 4,
+     "command": 1,
+     "run_output_token": 3,
+     "api_contract_field_list": 1,
+     "gate_predicate": 8,
+     "citation_reference": 6,
+     "report_cross_reference": 7
+    },
+    "by_resolvability": {
+     "resolved_in_markdown": 17,
+     "declared_and_markdown_referenced_binary_not_served": 5,
+     "referenced_only_not_resolvable_from_this_record": 14,
+     "named_no_locator": 21
+    },
+    "declared_total": 57
+   },
+   "evidence": []
+  },
+  {
+   "id": "C5",
+   "name": "non_resolved_assets_declared",
+   "status": "pass",
+   "method": "every non-resolved asset carries one of the four declared resolvability statuses (no silent drop of an unresolvable asset)",
+   "detail": {
+    "non_resolved": 40,
+    "statuses_off_vocabulary": [],
+    "by_status": {
+     "resolved_in_markdown": 17,
+     "declared_and_markdown_referenced_binary_not_served": 5,
+     "referenced_only_not_resolvable_from_this_record": 14,
+     "named_no_locator": 21
+    }
+   },
+   "evidence": []
+  },
+  {
+   "id": "C5b",
+   "name": "non_resolved_reason_attached",
+   "status": "fail",
+   "method": "does each non-resolved asset say WHY (prose reason / binary probe / worktree flag), not only THAT it is unresolved",
+   "detail": {
+    "non_resolved": 40,
+    "status_only_no_reason": [
+     "1561-a025",
+     "1561-a028"
+    ],
+    "count_status_only": 2
+   },
+   "evidence": []
+  },
+  {
+   "id": "C6",
+   "name": "observation_quotes_verbatim",
+   "status": "pass",
+   "method": "exact substring test of every quote attached to an observation",
+   "detail": {
+    "observations": [
+     "1561-o000",
+     "1561-o001",
+     "1561-o002",
+     "1561-o003"
+    ],
+    "quotes_checked": 5,
+    "not_found": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "C7",
+   "name": "observation_o000_arithmetic_rederived",
+   "status": "pass",
+   "method": "|130790-115000| over each denominator named in the two sentences",
+   "detail": {
+    "delta_m3": 15790.0,
+    "over_geometry_pct": 12.07,
+    "over_displacement_pct": 13.73,
+    "registered_as": "1561-o000 (unresolved)"
+   },
+   "evidence": []
+  },
+  {
+   "id": "C8",
+   "name": "no_self_verification_marker",
+   "status": "pass",
+   "method": "byte scan of every JSON in the reviewed package for verification field names",
+   "detail": {
+    "markers_found": [],
+    "files_scanned": [
+     "asset_manifest.json",
+     "figure_fetch.json",
+     "kf_result.json",
+     "publication.json",
+     "report_record.json",
+     "selfcheck.json"
+    ]
+   },
+   "evidence": []
+  },
+  {
+   "id": "C9",
+   "name": "figures_registered",
+   "status": "pass",
+   "method": "declared figure count vs registered figure assets",
+   "detail": {
+    "declared_in_record": 5,
+    "registered_assets": 5,
+    "labels": [
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "binary_probe": [
+     {
+      "endpoint": "/tensor/reports/1561/figures/fig1_thrust_power.png",
+      "method": "GET",
+      "http_status": 404,
+      "error_body": "{\"detail\":\"figure not found\"}",
+      "resolvable": false
+     },
+     {
+      "endpoint": "/tensor/reports/1561/figures/fig2_cross_pe.png",
+      "method": "GET",
+      "http_status": 404,
+      "error_body": "{\"detail\":\"figure not found\"}",
+      "resolvable": false
+     },
+     {
+      "endpoint": "/tensor/reports/1561/figures/fig3_eta0_vs_diameter.png",
+      "method": "GET",
+      "http_status": 404,
+      "error_body": "{\"detail\":\"figure not found\"}",
+      "resolvable": false
+     },
+     {
+      "endpoint": "/tensor/reports/1561/figures/fig4_open_water.png",
+      "method": "GET",
+      "http_status": 404,
+      "error_body": "{\"detail\":\"figure not found\"}",
+      "resolvable": false
+     },
+     {
+      "endpoint": "/tensor/reports/1561/figures/fig5_pitch_sweep.png",
+      "method": "GET",
+      "http_status": 404,
+      "error_body": "{\"detail\":\"figure not found\"}",
+      "resolvable": false
+     }
+    ]
+   },
+   "evidence": []
+  },
+  {
+   "id": "C10",
+   "name": "producer_selfcheck_audited_not_trusted",
+   "status": "pass",
+   "method": "the producer's own check list is treated as a claim set: its items are re-derived independently by C1-C9/B1-B4, its `ok` flag is never copied",
+   "detail": {
+    "producer_reported_items": 18,
+    "producer_reported_ok": true,
+    "producer_reported_failed": [],
+    "rederived_by": "C1-C9 + B1-B4 + E1-E5"
+   },
+   "evidence": []
+  },
+  {
+   "id": "C12",
+   "name": "record_title_reproducible_from_markdown",
+   "status": "fail",
+   "method": "substring test of the pinned record title against the markdown; both strings recorded so downstream can see which one is quotable",
+   "detail": {
+    "record_title": "m1838 推进端点推力闭合修复：Kt=0.3-0.2J 直线式 → BEMT 反解转速，5 型船闸门 verdict_fail=0",
+    "record_title_source": "live GET /tensor/reports/1561",
+    "markdown_h1": "# m1838 · /propulsion/predict 推力闭合修复：从 Kt=0.3-0.2J 直线式到 BEMT 反解转速",
+    "record_title_found_in_markdown": false,
+    "common_prefix": "m1838 ",
+    "impact": "a quote taken from record.title would not resolve against the source text; only the H1 is quotable"
+   },
+   "evidence": []
+  },
+  {
+   "id": "C11",
+   "name": "declared_line_count_rederived",
+   "status": "fail",
+   "method": "recompute the number of lines with str.splitlines() and md.count(newline)",
+   "detail": {
+    "declared_lines": 163,
+    "a000_line_count": 163,
+    "actual_splitlines": 162,
+    "actual_newline_count": 162,
+    "ends_with_newline": true,
+    "impact": "no locator is affected (max locator line = 160); the number in the manifest equals count(newline)+1, i.e. it counts a phantom final line"
+   },
+   "evidence": []
+  },
+  {
+   "id": "D1",
+   "name": "figure_payload_reachable",
+   "status": "pass",
+   "method": "live GET /tensor/reports/1561/figures/<name> for the 5 declared figures",
+   "detail": {
+    "probes": {
+     "fig1_thrust_power.png": {
+      "http": 404,
+      "bytes": null
+     },
+     "fig2_cross_pe.png": {
+      "http": 404,
+      "bytes": null
+     },
+     "fig3_eta0_vs_diameter.png": {
+      "http": 404,
+      "bytes": null
+     },
+     "fig4_open_water.png": {
+      "http": 404,
+      "bytes": null
+     },
+     "fig5_pitch_sweep.png": {
+      "http": 404,
+      "bytes": null
+     }
+    },
+    "all_404": true,
+    "consistent_with_registration": "1561-o001",
+    "note": "binary still not served: registration observation remains accurate"
+   },
+   "evidence": []
+  },
+  {
+   "id": "E1",
+   "name": "subject_closure_arithmetic_rederived",
+   "status": "pass",
+   "method": "per ship: t=0.5Cb-0.12, w=0.5Cb-0.05, T_req=R_T/(1-t), I2=[R_T/0.9,R_T/0.7], P_E=R_T*V*0.514444, I3=[P_E/0.78,P_E/0.5], eta_D=eta0*eta_H, J=V(1-w)/(nD), I4=T(1-t)/R_T",
+   "detail": {
+    "per_ship": {
+     "KCS": {
+      "t": 0.2055,
+      "w": 0.2755,
+      "eta_H": 1.0966,
+      "T_req_kN": 1606.5,
+      "T_new_kN": 1606.5,
+      "T_rel_err": 2.8e-05,
+      "I2_lo": 1418.2,
+      "I2_hi": 1823.4,
+      "I2_reported": [
+       1418.2,
+       1823.4
+      ],
+      "I2_in_band": true,
+      "P_E_kW": 9850.0,
+      "P_E_reported": 9849.0,
+      "I3_lo": 12627.0,
+      "I3_hi": 19698.0,
+      "I3_reported": [
+       12626.0,
+       19697.0
+      ],
+      "P_D_in_band": true,
+      "etaD_from_etaH": 0.624,
+      "etaD_reported": 0.624,
+      "J_recomputed": 0.488,
+      "J_reported": 0.488,
+      "J_interval_from_int_rpm": [
+       0.485,
+       0.49
+      ],
+      "PD_interval_from_int_rpm": [
+       16091.0,
+       15570.0
+      ],
+      "D_over_T": 0.7,
+      "C_T": 2.23,
+      "eta_I": 0.715,
+      "eta0_over_etaI": 0.796,
+      "P_D_from_KQ_kW": 15829.0,
+      "P_D_rel_err": 0.0034,
+      "I4_lo": 0.881,
+      "I4_hi": 1.133,
+      "I4_reported": [
+       0.881,
+       1.133
+      ],
+      "I4_contains_1": true,
+      "T_old_over_new": 0.454,
+      "P_old_over_new": 0.52,
+      "J_in_rpm_interval": true,
+      "PD_in_rpm_interval": true
+     },
+     "KVLCC2": {
+      "t": 0.2849,
+      "w": 0.3549,
+      "eta_H": 1.1085,
+      "T_req_kN": 5385.0,
+      "T_new_kN": 5385.0,
+      "T_rel_err": 4e-06,
+      "I2_lo": 4278.7,
+      "I2_hi": 5501.1,
+      "I2_reported": [
+       4278.7,
+       5501.2
+      ],
+      "I2_in_band": true,
+      "P_E_kW": 30706.0,
+      "P_E_reported": 30703.0,
+      "I3_lo": 39363.0,
+      "I3_hi": 61406.0,
+      "I3_reported": [
+       39363.0,
+       61407.0
+      ],
+      "P_D_in_band": true,
+      "etaD_from_etaH": 0.625,
+      "etaD_reported": 0.625,
+      "J_recomputed": 0.461,
+      "J_reported": 0.458,
+      "J_interval_from_int_rpm": [
+       0.456,
+       0.466
+      ],
+      "PD_interval_from_int_rpm": [
+       49945.0,
+       46791.0
+      ],
+      "D_over_T": 0.7,
+      "C_T": 2.38,
+      "eta_I": 0.704,
+      "eta0_over_etaI": 0.801,
+      "P_D_from_KQ_kW": 48351.0,
+      "P_D_rel_err": 0.0161,
+      "I4_lo": 0.979,
+      "I4_hi": 1.259,
+      "I4_reported": [
+       0.979,
+       1.259
+      ],
+      "I4_contains_1": true,
+      "T_old_over_new": 0.536,
+      "P_old_over_new": 0.683,
+      "J_in_rpm_interval": true,
+      "PD_in_rpm_interval": true
+     },
+     "Feeder120": {
+      "t": 0.23,
+      "w": 0.3,
+      "eta_H": 1.1,
+      "T_req_kN": 538.7,
+      "T_new_kN": 538.8,
+      "T_rel_err": 0.000183,
+      "I2_lo": 460.9,
+      "I2_hi": 592.6,
+      "I2_reported": [
+       460.9,
+       592.6
+      ],
+      "I2_in_band": true,
+      "P_E_kW": 2987.0,
+      "P_E_reported": 2988.0,
+      "I3_lo": 3831.0,
+      "I3_hi": 5976.0,
+      "I3_reported": [
+       3830.0,
+       5975.0
+      ],
+      "P_D_in_band": true,
+      "etaD_from_etaH": 0.626,
+      "etaD_reported": 0.625,
+      "J_recomputed": 0.49,
+      "J_reported": 0.491,
+      "J_interval_from_int_rpm": [
+       0.488,
+       0.492
+      ],
+      "PD_interval_from_int_rpm": [
+       4870.0,
+       4756.0
+      ],
+      "D_over_T": 0.7,
+      "C_T": 2.19,
+      "eta_I": 0.718,
+      "eta0_over_etaI": 0.793,
+      "P_D_from_KQ_kW": 4813.0,
+      "P_D_rel_err": 0.0075,
+      "I4_lo": 0.909,
+      "I4_hi": 1.169,
+      "I4_reported": [
+       0.909,
+       1.169
+      ],
+      "I4_contains_1": true,
+      "T_old_over_new": 0.495,
+      "P_old_over_new": 0.587,
+      "J_in_rpm_interval": true,
+      "PD_in_rpm_interval": true
+     },
+     "Aframax": {
+      "t": 0.29,
+      "w": 0.36,
+      "eta_H": 1.1094,
+      "T_req_kN": 2793.0,
+      "T_new_kN": 2793.0,
+      "T_rel_err": 1.5e-05,
+      "I2_lo": 2203.3,
+      "I2_hi": 2832.9,
+      "I2_reported": [
+       2203.3,
+       2832.9
+      ],
+      "I2_in_band": true,
+      "P_E_kW": 14792.0,
+      "P_E_reported": 14791.0,
+      "I3_lo": 18963.0,
+      "I3_hi": 29582.0,
+      "I3_reported": [
+       18963.0,
+       29582.0
+      ],
+      "P_D_in_band": true,
+      "etaD_from_etaH": 0.588,
+      "etaD_reported": 0.588,
+      "J_recomputed": 0.428,
+      "J_reported": 0.425,
+      "J_interval_from_int_rpm": [
+       0.424,
+       0.431
+      ],
+      "PD_interval_from_int_rpm": [
+       25316.0,
+       24191.0
+      ],
+      "D_over_T": 0.7,
+      "C_T": 2.96,
+      "eta_I": 0.669,
+      "eta0_over_etaI": 0.792,
+      "P_D_from_KQ_kW": 24749.0,
+      "P_D_rel_err": 0.0159,
+      "I4_lo": 0.986,
+      "I4_hi": 1.268,
+      "I4_reported": [
+       0.986,
+       1.268
+      ],
+      "I4_contains_1": true,
+      "T_old_over_new": 0.44,
+      "P_old_over_new": 0.531,
+      "J_in_rpm_interval": true,
+      "PD_in_rpm_interval": true
+     },
+     "Ferry": {
+      "t": 0.19,
+      "w": 0.26,
+      "eta_H": 1.0946,
+      "T_req_kN": 1799.0,
+      "T_new_kN": 1799.0,
+      "T_rel_err": 7e-06,
+      "I2_lo": 1619.1,
+      "I2_hi": 2081.7,
+      "I2_reported": [
+       1619.1,
+       2081.7
+      ],
+      "I2_in_band": true,
+      "P_E_kW": 14993.0,
+      "P_E_reported": 14992.0,
+      "I3_lo": 19221.0,
+      "I3_hi": 29984.0,
+      "I3_reported": [
+       19220.0,
+       29984.0
+      ],
+      "P_D_in_band": true,
+      "etaD_from_etaH": 0.516,
+      "etaD_reported": 0.516,
+      "J_recomputed": 0.353,
+      "J_reported": 0.353,
+      "J_interval_from_int_rpm": [
+       0.353,
+       0.354
+      ],
+      "PD_interval_from_int_rpm": [
+       29204.0,
+       28921.0
+      ],
+      "D_over_T": 0.7,
+      "C_T": 4.37,
+      "eta_I": 0.603,
+      "eta0_over_etaI": 0.781,
+      "P_D_from_KQ_kW": 29063.0,
+      "P_D_rel_err": 0.0,
+      "I4_lo": 0.864,
+      "I4_hi": 1.111,
+      "I4_reported": [
+       0.864,
+       1.111
+      ],
+      "I4_contains_1": true,
+      "T_old_over_new": 0.222,
+      "P_old_over_new": 0.206,
+      "J_in_rpm_interval": true,
+      "PD_in_rpm_interval": true
+     }
+    },
+    "rho_assumed_kg_m3": 1025.0,
+    "knot_m_s": 0.514444,
+    "worst_T_rel_err": 0.000183
+   },
+   "evidence": []
+  },
+  {
+   "id": "E2",
+   "name": "subject_loading_and_actuator_disk_bound",
+   "status": "pass",
+   "method": "C_T=T/(0.5 rho Va^2 pi D^2/4); eta_I=2/(1+sqrt(1+C_T)); test eta0<=eta_I and whether the quoted Ferry C_T=4.37 is reproduced",
+   "detail": {
+    "per_ship": {
+     "KCS": {
+      "C_T": 2.23,
+      "eta_I": 0.715,
+      "eta0_over_etaI": 0.796
+     },
+     "KVLCC2": {
+      "C_T": 2.38,
+      "eta_I": 0.704,
+      "eta0_over_etaI": 0.801
+     },
+     "Feeder120": {
+      "C_T": 2.19,
+      "eta_I": 0.718,
+      "eta0_over_etaI": 0.793
+     },
+     "Aframax": {
+      "C_T": 2.96,
+      "eta_I": 0.669,
+      "eta0_over_etaI": 0.792
+     },
+     "Ferry": {
+      "C_T": 4.37,
+      "eta_I": 0.603,
+      "eta0_over_etaI": 0.781
+     }
+    },
+    "ferry_C_T_matches_quoted_4_37": true
+   },
+   "evidence": []
+  },
+  {
+   "id": "E3",
+   "name": "subject_ratio_ranges_rederived",
+   "status": "pass",
+   "method": "recompute min/max of T_old/T_new and P_old/P_new over the 5 rows vs the quoted ranges",
+   "detail": {
+    "computed_T": [
+     0.222,
+     0.536
+    ],
+    "quoted_T": [
+     0.222,
+     0.536
+    ],
+    "computed_P": [
+     0.206,
+     0.683
+    ],
+    "quoted_P": [
+     0.207,
+     0.683
+    ]
+   },
+   "evidence": []
+  },
+  {
+   "id": "E4",
+   "name": "subject_etaD_range_vs_band",
+   "status": "pass",
+   "method": "reported eta_D range vs the I3 band 0.50-0.78 quoted in the report; plus the same range at eta_R=0.98",
+   "detail": {
+    "reported_eta_D": [
+     0.516,
+     0.625
+    ],
+    "band": [
+     0.5,
+     0.78
+    ],
+    "min_margin_to_floor": 0.016,
+    "min_eta_D_if_eta_R_0_98": 0.5057
+   },
+   "evidence": []
+  },
+  {
+   "id": "E5",
+   "name": "subject_provenance_identity_present",
+   "status": "pass",
+   "method": "regex scan of the markdown for a commit sha / payload digest",
+   "detail": {
+    "hex_like_tokens": [],
+    "count": 0,
+    "consistent_with": "1561-o002 (no commit identity inside the report)"
+   },
+   "evidence": []
+  },
+  {
+   "id": "F1",
+   "name": "reviewer_independent",
+   "status": "pass",
+   "method": "scripts/ke_state_machine.is_independent(reviewer, producer)",
+   "detail": {
+    "reviewer": "agent/m15823 (TensorKnowledge) · package wp-1561-04 · red-team-reviewer",
+    "producer": [
+     "agent/m15529 (TensorKnowledge) · package wp-1561-01",
+     "agent/m15529 (TensorKnowledge) · package wp-1561-01"
+    ],
+    "independent": true,
+    "basis": "distinct-identity"
+   },
+   "evidence": []
+  },
+  {
+   "id": "F2",
+   "name": "prompt_not_copied_from_producer",
+   "status": "pass",
+   "method": "char 5-gram Jaccard(producer-v1.md, review_prompt.md) < 0.5",
+   "detail": {
+    "jaccard": 0.0945,
+    "threshold": 0.5,
+    "chars_compared": [
+     1272,
+     2424
+    ]
+   },
+   "evidence": []
+  },
+  {
+   "id": "G1",
+   "name": "checks_not_run",
+   "status": "not_run",
+   "method": "declared explicitly instead of silently skipped",
+   "detail": {
+    "not_run": [
+     "closure residual 1.11e-05 (needs the propulsion endpoint, not in this repo)",
+     "pytest 28 items in ship-performance-platform (repo not checked out here)",
+     "12 vs 32 radial stations convergence 0.6%/0.05% (needs the BEMT kernel)",
+     "figure payload content (binaries not served, see D1)",
+     "R_T absolute accuracy vs towing tank (resistance domain, no dataset in the report)",
+     "BEMT heavy-load optimism 15-20% vs B4-70 measured series (no dataset in the report)"
+    ],
+    "reason": "each item needs an artifact outside report 1561 + wp-1561-01"
+   },
+   "evidence": []
+  }
+ ],
+ "findings": [
+  {
+   "id": "F-01",
+   "severity": "low",
+   "blocking": false,
+   "title": "record title != markdown H1, and the drift is not registered as an observation",
+   "detail": "The record `title` (identical to this package's contract input.title) reads '推进端点推力闭合修复' while the document H1 reads '/propulsion/predict 推力闭合修复'. wp-1561-01 pins both strings (report.title, asset 1561-a000) but registers no observation for the difference, so a downstream step that quotes the record title emits a string that does not exist in the markdown.",
+   "evidence": [
+    {
+     "quote": "# m1838 · /propulsion/predict 推力闭合修复：从 Kt=0.3-0.2J 直线式到 BEMT 反解转速",
+     "where": "markdown line 1 (the only quotable form)"
+    },
+    {
+     "record_field": "title",
+     "value": "m1838 推进端点推力闭合修复：Kt=0.3-0.2J 直线式 → BEMT 反解转速，5 型船闸门 verdict_fail=0",
+     "record": "live GET /tensor/reports/1561",
+     "note": "not present in the markdown; see check C12"
+    }
+   ],
+   "recommendation": "03+ must quote from markdown only; registering a 'title_drift' observation would close the gap."
+  },
+  {
+   "id": "F-02",
+   "severity": "low",
+   "blocking": false,
+   "title": "'eta_R = 1.0 is conservative' points the optimistic way for power adequacy",
+   "detail": "With eta_D = eta0*eta_H*eta_R and P_D = P_E/eta_D, eta_R=1.0 (instead of the report's own Holtrop-typical 0.98) raises eta_D by ~2% and therefore lowers the predicted delivered power. At eta_R=0.98 the minimum reported eta_D falls to 0.5057 against the report's own 0.50 band floor (margin 0.016 at eta_R=1.0). The band still holds, but the word 'conservative' is not licensed by the direction of the change. Not a defect of the registration (01 does not judge correctness).",
+   "evidence": [
+    {
+     "quote": "η_R 默认 1.0（偏保守：Holtrop 回归值约 0.98）",
+     "where": "## ⑤ 注意点 3"
+    },
+    {
+     "quote": "1. **Ferry 落在 I3 带边上（η_D=0.516）**。",
+     "where": "## ⑤ 注意点 1"
+    }
+   ],
+   "recommendation": "extraction must keep the numeric qualifier and may not keep the word 'conservative'."
+  },
+  {
+   "id": "F-03",
+   "severity": "info",
+   "blocking": false,
+   "title": "two denominators in one geometry bullet (registered as 1561-o000) — arithmetic reproduced",
+   "detail": "|130790-115000|/130790 = 12.07% (printed as '偏差 -12.1%') and /115000 = 13.73% ('相差 13.7%'). Both statements are right for their own denominator; nothing is fabricated. The upstream registration as unresolved is correct and sufficient.",
+   "evidence": [
+    {
+     "quote": "- **Aframax**：Cb·L·B·T=130790 m³，输入排水量=115000，偏差 -12.1%（>10%：吃水/方形系数与排水量不自洽，请核对是否为设计吃水）",
+     "where": "## ⑤ 注意点 4"
+    },
+    {
+     "quote": "其中 Aframax 的 Cb·L·B·T 与输入排水量相差 13.7%",
+     "where": "## ⑤ 注意点 4 (same bullet)"
+    }
+   ],
+   "recommendation": "none for 01; 03 must carry both numbers together with their denominators."
+  },
+  {
+   "id": "F-04",
+   "severity": "medium",
+   "blocking": false,
+   "title": "five declared figures have no retrievable payload -> figure-borne statements are unverifiable",
+   "detail": "All five figure endpoints still answer HTTP 404 on re-probe, so observation 1561-o001 is accurate rather than stale. The markdown only describes the curves in prose; any 03/05 statement that reads a value off fig1-fig5 inherits unsupported evidence.",
+   "evidence": [
+    {
+     "quote": "图 1 `fig1_thrust_power.png`：I2/I3 判据——需求带（蓝带）与平台值（蓝点=修复后，红方=修复前，",
+     "where": "## ④ 结果图"
+    },
+    {
+     "probe": {
+      "fig1_thrust_power.png": 404,
+      "fig2_cross_pe.png": 404,
+      "fig3_eta0_vs_diameter.png": 404,
+      "fig4_open_water.png": 404,
+      "fig5_pitch_sweep.png": 404
+     }
+    }
+   ],
+   "recommendation": "keep figure claims 'partially-supported'; never quote a number that only exists inside a 404 payload."
+  },
+  {
+   "id": "F-05",
+   "severity": "info",
+   "blocking": false,
+   "title": "subject-report arithmetic is self-consistent for 5/5 ships; residual differences trace to integer rpm",
+   "detail": "T_req = R_T/(1-t) reproduces the reported thrust on all five ships (worst relative difference 0.000183), and eta_D = eta0*eta_H, J = V(1-w)/(nD), D/T = 0.70 and the I2/I3/I4 bands all reproduce to the printed decimals. Reported rpm is an integer, so J (prop. to 1/n) and P_D (prop. to n^3) are only determined to +-0.5 rpm: the recomputed P_D differs from the printed P_D by up to 0.016 relative, inside that interval. The gas-tight residual 1.11e-05 itself remains not_run.",
+   "evidence": [
+    {
+     "quote": "关键量：推力闭合残差 |T(1−t)−R_T|/R_T 最大 **1.11e-05**；η_D 区间 **0.516–0.625**",
+     "where": "## ③ 计算结果"
+    },
+    {
+     "computed": {
+      "KCS": {
+       "T_rel_err": 2.8e-05,
+       "J_recomputed": 0.488,
+       "J_reported": 0.488,
+       "C_T": 2.23,
+       "eta0_over_etaI": 0.796
+      },
+      "KVLCC2": {
+       "T_rel_err": 4e-06,
+       "J_recomputed": 0.461,
+       "J_reported": 0.458,
+       "C_T": 2.38,
+       "eta0_over_etaI": 0.801
+      },
+      "Feeder120": {
+       "T_rel_err": 0.000183,
+       "J_recomputed": 0.49,
+       "J_reported": 0.491,
+       "C_T": 2.19,
+       "eta0_over_etaI": 0.793
+      },
+      "Aframax": {
+       "T_rel_err": 1.5e-05,
+       "J_recomputed": 0.428,
+       "J_reported": 0.425,
+       "C_T": 2.96,
+       "eta0_over_etaI": 0.792
+      },
+      "Ferry": {
+       "T_rel_err": 7e-06,
+       "J_recomputed": 0.353,
+       "J_reported": 0.353,
+       "C_T": 4.37,
+       "eta0_over_etaI": 0.781
+      }
+     }
+    }
+   ],
+   "recommendation": "quote rpm together with the +-0.5 rpm granularity whenever J or P_D is quoted."
+  },
+  {
+   "id": "F-06",
+   "severity": "low",
+   "blocking": false,
+   "title": "two non-resolved assets carry a status but no reason",
+   "detail": "2 assets (1561-a025, 1561-a028) say only 'referenced_only_not_resolvable_from_this_record' with no prose reason, no present_in_worktree flag and no binary probe — the other 38 non-resolved assets carry at least one of those. Status-only is explicit, not a silent drop, hence non-blocking.",
+   "evidence": [
+    {
+     "asset": "1561-a025",
+     "quote": "/propulsion/predict",
+     "where": "markdown line 23"
+    },
+    {
+     "asset": "1561-a028",
+     "quote": "chain_gate --live",
+     "where": "markdown line 85"
+    }
+   ],
+   "recommendation": "add a one-line reason (why it is not resolvable) for a025/a028."
+  },
+  {
+   "id": "F-07",
+   "severity": "low",
+   "blocking": false,
+   "title": "declared line count 163 vs 162 actual lines",
+   "detail": "manifest.report.lines and asset 1561-a000.line_count both say 163, while the text has 162 lines and 162 newline characters (the file ends with a newline). The declared value equals count(newline)+1, i.e. it counts a phantom final line. No locator is affected (largest locator line = 160).",
+   "evidence": [
+    {
+     "computed": {
+      "declared_lines": 163,
+      "a000_line_count": 163,
+      "actual_splitlines": 162,
+      "actual_newline_count": 162,
+      "ends_with_newline": true,
+      "impact": "no locator is affected (max locator line = 160); the number in the manifest equals count(newline)+1, i.e. it counts a phantom final line"
+     },
+     "where": "asset_manifest.json report.lines"
+    }
+   ],
+   "recommendation": "state the counting rule or use splitlines(); hash pinning is unaffected."
+  }
+ ],
+ "counts": {
+  "checks": 30,
+  "pass": 26,
+  "fail": 3,
+  "not_run": 1,
+  "findings": 7,
+  "blocking_findings": 0
+ },
+ "acceptance_selfcheck": {
+  "valid_json": "ok — review_report.json + kf_result.json round-trip through json.load (emit.log)",
+  "schema_pass": "ok — outputs['review_report.json'] carrier envelope validated against schemas/kf_result.v1.schema.json at emission (emit.log)",
+  "reviewer_independent": "ok — True (distinct-identity); see F1",
+  "upstream_packages_completed": "ok — wp-1561-01 present with 8 byte-hashed artifacts (reviewed_package.artifacts) and envelope passing B1-B4"
+ },
+ "checks_not_run": [
+  "closure residual 1.11e-05 (needs the propulsion endpoint, not in this repo)",
+  "pytest 28 items in ship-performance-platform (repo not checked out here)",
+  "12 vs 32 radial stations convergence 0.6%/0.05% (needs the BEMT kernel)",
+  "figure payload content (binaries not served, see D1)",
+  "R_T absolute accuracy vs towing tank (resistance domain, no dataset in the report)",
+  "BEMT heavy-load optimism 15-20% vs B4-70 measured series (no dataset in the report)"
+ ],
+ "repro_cmd": "python3 scripts/kf_wp1561_04_checks.py --live --probe-figures && python3 scripts/kf_wp1561_04_emit.py && python3 -m pytest tests/test_wp1561_04_review.py -q",
+ "artifacts": {
+  "checks_raw": "docs/kf/wp-1561-04/review_checks.json",
+  "figure": "docs/kf/wp-1561-04/fig_review_checks.png",
+  "review_prompt": "docs/kf/wp-1561-04/review_prompt.md"
+ }
+}
