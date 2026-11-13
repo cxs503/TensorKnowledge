@@ -1,0 +1,49 @@
+{
+  "selfchecks": [
+    {
+      "item": "valid_json",
+      "ok": true,
+      "why": "asset_manifest.json / kf_result.json 均由 json.dumps 产出并被 json.load 回读"
+    },
+    {
+      "item": "schema_pass",
+      "ok": true,
+      "why": "kf_result.v1=True, asset_manifest.v1.wp-14214-01=True"
+    },
+    {
+      "item": "source_locator_resolvable",
+      "ok": true,
+      "why": "23 条 locator 全部 str.find 命中且次数==1；violations=0"
+    },
+    {
+      "item": "source_hash_matches",
+      "ok": true,
+      "why": "sha256:edc85090268afe8220c9108650aed655c05b017bb1bb29cdfffa382b7d2d1af9 == 契约 sha256:edc85090268afe8220c9108650aed655c05b017bb1bb29cdfffa382b7d2d1af9"
+    },
+    {
+      "item": "no_duplicate_ids",
+      "ok": true,
+      "why": "asset_id 唯一：24/24"
+    },
+    {
+      "item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "ok": true,
+      "why": "claims=[] （契约允许空数组，无强制造 claim）"
+    },
+    {
+      "item": "[附加] evidence_quotes_verbatim",
+      "ok": true,
+      "why": "7 条一致性登记引文全部可在 source_field 内逐字定位；violations=0"
+    }
+  ],
+  "schema_validation": {
+    "kf_result": {
+      "ok": true,
+      "errors": []
+    },
+    "asset_manifest": {
+      "ok": true,
+      "errors": []
+    }
+  }
+}
