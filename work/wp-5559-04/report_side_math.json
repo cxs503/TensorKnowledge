@@ -1,0 +1,280 @@
+{
+  "derivations": [
+    {
+      "name": "grid_cells",
+      "reviewer_value": 1048576,
+      "stated_value": 1048576,
+      "rel_tol": 0,
+      "agrees": true,
+      "note": ""
+    },
+    {
+      "name": "domain_extent_km",
+      "reviewer_value": 2.048,
+      "stated_value": 2.05,
+      "rel_tol": 0.005,
+      "agrees": true,
+      "note": "stated to 2 dp"
+    },
+    {
+      "name": "coverage_from_count_control",
+      "reviewer_value": 0.619999885559082,
+      "stated_value": 0.619999885559082,
+      "rel_tol": 0,
+      "agrees": true,
+      "note": ""
+    },
+    {
+      "name": "coverage_rel_error",
+      "reviewer_value": 1.8458212574888566e-07,
+      "stated_value": 1.8458212574888566e-07,
+      "rel_tol": 1e-06,
+      "agrees": true,
+      "note": ""
+    },
+    {
+      "name": "coverage_quantization_bound",
+      "reviewer_value": 7.690921906502017e-07,
+      "stated_value": 7.690921906502017e-07,
+      "rel_tol": 1e-09,
+      "agrees": true,
+      "note": ""
+    },
+    {
+      "name": "frazil_window_hours",
+      "reviewer_value": 17.098058260977268,
+      "stated_value": 17.1,
+      "rel_tol": 0.0005,
+      "agrees": true,
+      "note": "report states 17.10 h"
+    },
+    {
+      "name": "frazil_window_start_h",
+      "reviewer_value": 99.22686956077814,
+      "stated_value": 99.23,
+      "rel_tol": 0.0001,
+      "agrees": true,
+      "note": ""
+    },
+    {
+      "name": "frazil_window_end_h",
+      "reviewer_value": 116.32492782175541,
+      "stated_value": 116.32,
+      "rel_tol": 0.0001,
+      "agrees": true,
+      "note": ""
+    },
+    {
+      "name": "ridge_mean_spacing_from_count",
+      "reviewer_value": 149.2537313432836,
+      "stated_value": 148.83725288423133,
+      "rel_tol": 1e-06,
+      "agrees": false,
+      "note": "120 km / 804 ridges vs reported 148.84 m mean spacing"
+    },
+    {
+      "name": "isostatic_k_max",
+      "reviewer_value": 8.49074074074074,
+      "stated_value": 8.49,
+      "rel_tol": 0.001,
+      "agrees": true,
+      "note": "report section 5.3 states 8.49"
+    },
+    {
+      "name": "keel_porosity_implied",
+      "reviewer_value": 0.10949737285615152,
+      "stated_value": 0.10949737285615146,
+      "rel_tol": 0.0001,
+      "agrees": true,
+      "note": "p solved from k = rho_i/(rho_w - rho_i(1-p)) with rho_i=917, rho_w=1025"
+    },
+    {
+      "name": "frazil_phi_L_from_nu_peak",
+      "reviewer_value": 0.12765660322081018,
+      "stated_value": 0.1277,
+      "rel_tol": 0.002,
+      "agrees": true,
+      "note": "invert nu/nu_w = (1-phi_L/phi_max)^-alpha"
+    },
+    {
+      "name": "frazil_nu_from_phi_L",
+      "reviewer_value": 2.1633091580555917,
+      "stated_value": 2.1625914115232416,
+      "rel_tol": 0.002,
+      "agrees": true,
+      "note": "forward check"
+    }
+  ],
+  "inconsistencies": [
+    {
+      "quantity": "浮冰谱斜率（抽样端）",
+      "displayed_base": 2.05,
+      "displayed_measured": 2.17,
+      "stated_rel_err": 0.05003,
+      "reviewer_rel_err_from_displayed": 0.05853658536585372,
+      "abs_gap": 0.00850658536585372,
+      "implied_measured_from_stated_err": 2.1525615,
+      "note": "the two displayed numbers do not reproduce the displayed relative error; the stated error implies the value in implied_measured_from_stated_err"
+    }
+  ],
+  "verification_table_recheck": {
+    "相关长度 L": {
+      "row": [
+        "平整冰",
+        "相关长度 L",
+        "60.0 m",
+        "57.20 m",
+        "4.666e-02"
+      ],
+      "base": 60.0,
+      "measured": 57.2,
+      "stated_rel_err": 0.04666,
+      "reviewer_rel_err_from_displayed": 0.04666666666666662
+    },
+    "磨道宽度 W": {
+      "row": [
+        "平整冰",
+        "磨道宽度 W",
+        "40.0 m",
+        "40.0020 m",
+        "4.883e-05"
+      ],
+      "base": 40.0,
+      "measured": 40.002,
+      "stated_rel_err": 4.883e-05,
+      "reviewer_rel_err_from_displayed": 5.0000000000061104e-05
+    },
+    "浮冰谱斜率（抽样端）": {
+      "row": [
+        "碎冰",
+        "浮冰谱斜率（抽样端）",
+        "2.050",
+        "2.170",
+        "5.003e-02"
+      ],
+      "base": 2.05,
+      "measured": 2.17,
+      "stated_rel_err": 0.05003,
+      "reviewer_rel_err_from_displayed": 0.05853658536585372
+    },
+    "浮冰谱斜率（场反测）": {
+      "row": [
+        "碎冰",
+        "浮冰谱斜率（场反测）",
+        "2.130（同支撑对照）",
+        "1.947",
+        "8.552e-02"
+      ],
+      "base": 2.13,
+      "measured": 1.947,
+      "stated_rel_err": 0.08552,
+      "reviewer_rel_err_from_displayed": 0.0859154929577464
+    },
+    "间距均值 λ": {
+      "row": [
+        "冰脊",
+        "间距均值 λ",
+        "150.0 m",
+        "148.84 m",
+        "7.752e-03"
+      ],
+      "base": 150.0,
+      "measured": 148.84,
+      "stated_rel_err": 0.007752,
+      "reviewer_rel_err_from_displayed": 0.007733333333333311
+    },
+    "帆高均值 0.3+λ_s": {
+      "row": [
+        "冰脊",
+        "帆高均值 0.3+λ_s",
+        "1.000 m",
+        "1.0256 m",
+        "2.561e-02"
+      ],
+      "base": 1.0,
+      "measured": 1.0256,
+      "stated_rel_err": 0.02561,
+      "reviewer_rel_err_from_displayed": 0.025600000000000067
+    },
+    "龙骨-帆比 k": {
+      "row": [
+        "冰脊",
+        "龙骨-帆比 k",
+        "4.40",
+        "4.400000",
+        "0.000e+00"
+      ],
+      "base": 4.4,
+      "measured": 4.4,
+      "stated_rel_err": 0.0,
+      "reviewer_rel_err_from_displayed": 0.0
+    },
+    "黏度峰 ν/ν_w": {
+      "row": [
+        "frazil",
+        "黏度峰 ν/ν_w",
+        "≥ ν_crit=2.00",
+        "2.1626",
+        "—"
+      ],
+      "base": 2.0,
+      "measured": 2.1626,
+      "stated_rel_err": null,
+      "reviewer_rel_err_from_displayed": 0.08129999999999993
+    }
+  },
+  "g3_applicability": {
+    "evidence_per_state": {
+      "level_ice": "REAL",
+      "broken_ice": "REAL",
+      "pressure_ridge": "REAL",
+      "frazil_event": "REAL"
+    },
+    "in_domain_fraction_per_state": {
+      "level_ice": null,
+      "broken_ice": null,
+      "pressure_ridge": 0.9925373134328358,
+      "frazil_event": 1.0
+    },
+    "states_with_null_fraction_but_REAL_evidence": [
+      "level_ice",
+      "broken_ice"
+    ],
+    "states_checked": [
+      "pressure_ridge",
+      "frazil_event"
+    ],
+    "pass_flag": true,
+    "minimum_fraction_checked": 0.9925373134328358
+  },
+  "domain_parameter_check": {
+    "declared": {
+      "b": 2.05,
+      "D_max_m": 90.0,
+      "sail_range_m": [
+        0.3,
+        4.0
+      ],
+      "deltaT_K": 0.18
+    },
+    "domain": {
+      "floe_slope_b": [
+        1.5,
+        3.0
+      ],
+      "floe_D_max": 200.0,
+      "sail": [
+        0.3,
+        4.0
+      ],
+      "supercooling": 0.2
+    },
+    "b_in_domain": true,
+    "D_max_in_domain": true,
+    "deltaT_in_domain": true,
+    "ridge_sail_violations_declared": [
+      "6/804 (0.7%) sails outside [0.3,4.0] m where keel/sail ratio is calibrated"
+    ],
+    "keel_porosity_inside_measured_band_0.1_0.3": true
+  }
+}
