@@ -1,0 +1,47 @@
+{
+  "package_id": "wp-14041-01",
+  "report_id": "14041",
+  "verified_at": "2026-11-12T03:02:47.806573+00:00",
+  "note": "self-check only; the authoritative verification is the platform gate.",
+  "manifest": "docs/kf/wp-14041-01/asset_manifest.json",
+  "manifest_sha256": "77c2f7ec3a6116fc0579ffaee47ce655180ce3806ee18625620b392be15bd0ab",
+  "acceptance": {
+    "valid_json": {
+      "pass": true,
+      "detail": "json.loads OK for asset_manifest.json and kf_result.json (both written and re-read)"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": "jsonschema draft2020-12 errors=0 [] | asset_manifest.v1 checked with its four package-pinned consts relaxed (package_id/task_type/report_id/source.uri), kf_result.v1 checked as shipped"
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "detail": "checked 27 locators against live markdown (60 lines); unresolvable=[]"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": "recomputed=sha256:4bc4b0b4cfb133914e8ff18a867690e903e952d20b7967e798c83cc6acfa5256 manifest=sha256:4bc4b0b4cfb133914e8ff18a867690e903e952d20b7967e798c83cc6acfa5256 envelope=sha256:4bc4b0b4cfb133914e8ff18a867690e903e952d20b7967e798c83cc6acfa5256 contract=sha256:4bc4b0b4cfb133914e8ff18a867690e903e952d20b7967e798c83cc6acfa5256 chars=2990/2990"
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "detail": "assets=27 unique=27"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "detail": "claims=0 violating=0 (empty array: vacuously satisfied per contract notes)"
+    },
+    "do_not_mark_claims_as_verified": {
+      "pass": true,
+      "detail": "claims=0, none carries status='verified'"
+    },
+    "report_id_scoped": {
+      "pass": true,
+      "detail": "single report_id=14041 (no other report is read or written)"
+    },
+    "manifest_hash_matches_envelope": {
+      "pass": true,
+      "detail": "recomputed=sha256:77c2f7ec3a6116fc0579ffaee47ce655180ce3806ee18625620b392be15bd0ab envelope-embedded=identical object (same serialization)"
+    }
+  },
+  "all_pass": true
+}
