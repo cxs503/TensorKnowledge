@@ -1,0 +1,41 @@
+[
+ {
+  "id": "tkr:wp-895-01:review-wp895-04",
+  "object_ref": "package:wp-895-01",
+  "object_version": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39",
+  "decision": "approve",
+  "reviewer": {
+   "id": "agent/m15817",
+   "reviewer_type": "agent",
+   "role": "red-team-reviewer"
+  },
+  "reviewed_at": "2026-11-12T03:10:00Z",
+  "policy_version": "ke-review-v0.1",
+  "rationale": "身份/结构/证据/附件四轴独立重算通过；F1/F2 属源报告内容缺陷，作为下游抽取的 carry-forward 约束登记，不阻断登记工序。",
+  "findings": [
+   {
+    "severity": "major",
+    "finding": "t_c=0.20 s 不是求解出的穿越时刻，而是**应力场抽样栅格**（每 20 步 = 0.2 s）上的首个超阈采样点：该采样点 σ₁ 已达阈值 1.31 倍。用报告自带的压碎律 F=p(A)·A 与 C=2.6 MPa·m^0.5（F∝δ^0.5）配等速推进，σ∝√t，反解得真穿越时刻≈0.117 s，相对 0.20 s 偏 41%。报告 §5 的不确定度预算只给接触斑敏感性 ±25%，未计入抽样栅格项。⇒ 若 03 工序把 0.20 s 原样提为知识断言，属超出原文支撑的精度声明。"
+   },
+   {
+    "severity": "minor",
+    "finding": "两列数据与报告自带压碎律不同口径：以 δ=0.294 m 代入 p=C·A^−0.5、A=2δtanα·h 得 1.5521 MN，与 1.514 MN 差 2.51%；而峰值行（δ=2.730 m → 4.7296 MN vs 4.72934 MN）只差 0.00%。说明触发行更可能报的是船体推进量 ξ 而非接触穿透 δ（δ=ξ−w≈0.280 m），原文未标注两列口径。"
+   },
+   {
+    "severity": "minor",
+    "finding": "attachments 只登记平台 figures 元数据的 6 张 PNG，而原文 §3.7 图清单有 7 行（含 impact_animation.gif）。GIF 仅以 artifacts 条目出现（locator 可定位，覆盖在并集上完整），但只读 attachments 的下游工序会漏掉该图。建议 manifest 增加 `figure_rows_in_body` 计数或把 GIF 纳入 attachments。"
+   },
+   {
+    "severity": "informational",
+    "finding": "图注断言的数字与正文同量但口径不同：caption 写 \"wavelength error 0.001%, group velocity error 0.00%\"，正文 §3.1 为 0.0011%/0.0038%（两位小数舍入后 0.00%）。图注属平台 figures 元数据而非正文，登记时未标注\"数字来自图注元数据\"，下游若按图注取数会得到 0.00% 的失真精度。"
+   },
+   {
+    "severity": "informational",
+    "finding": "平台记录 title 与原文 H1 有 2 字差异（H1 多了\"船首\"），manifest 取记录 title （契约字段）合法，但按 H1 做 join/grep 的下游会失配。建议 01 工序显式登记 h1_vs_record_title_diff 供机器检测（当前只写在自由文本 notes 里）。"
+   }
+  ],
+  "conditions": [
+   "wp-895-03 抽取 t_c 时必须携带 F1 的 0.12–0.20 s 区间口径"
+  ]
+ }
+]
