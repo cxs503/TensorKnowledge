@@ -1,0 +1,38 @@
+{
+ "id": 11204,
+ "title": "FEM 弹塑性本构(von Mises J2)与 3D 混合模式 cohesive 单元：CT / 三点弯曲验证",
+ "summary": "TensorPhysics 新增 fem_nonlinear：J2 径向返回 + 一致切线、3D I/II/III cohesive、平面应变 Q4 Newton + EDI J。CT 峰值载荷 0.104%、CT 弹性 J 0.081%、CT 弹塑性 J 6.05%、SE(B) J 3.20%、SE(B) 粘聚区峰值 1.38%、混合模式断裂能 0.38% —— 6 项机器判据全部 PASS；pytest 40 项全绿含 5 项负控。",
+ "scenario_key": "p273w3-n01-fem-elastoplastic-cohesive",
+ "mission_id": 9422,
+ "stage": null,
+ "tags": [
+  "FEM",
+  "elastoplasticity",
+  "J2",
+  "cohesive",
+  "mixed-mode",
+  "fracture",
+  "J-integral",
+  "ASTM E399",
+  "ASTM E1820",
+  "TensorPhysics"
+ ],
+ "figures": [
+  {
+   "name": "fig1_ct_field_and_seb_cohesive",
+   "caption": "CT sigma_yy field (J2 plane strain, P=45 kN) and SE(B) cohesive load-displacement"
+  },
+  {
+   "name": "fig2_mixed_mode_and_j2",
+   "caption": "mixed-mode I/II/III fracture energy vs extended BK law; J2 uniaxial response"
+  },
+  {
+   "name": "fig3_j_comparison_and_convergence",
+   "caption": "elastoplastic CT J (EDI vs ASTM E1820 eta-method) and J mesh convergence"
+  }
+ ],
+ "status": "published",
+ "created_by": 1,
+ "created_at": "2026-11-10T11:59:27.754090+00:00",
+ "markdown": "# FEM 弹塑性本构（von Mises J2）与 3D 混合模式 cohesive 单元：CT / 三点弯曲验证\n\n**节点** p273w3-n01-fem-elastoplastic-cohesive ｜ **仓** TensorPhysics ｜ **模块** `src/tensorphysics/fem_nonlinear/` ｜ **分支** `agent/m9422`\n\n## ① 案例介绍（物理背景 / 几何 / 参数）\n\n线弹性断裂评估无法给出真实材料的失效载荷与峰后软化段。本节点把平台的结构\n完整性能力从「线弹性 + 解析 K」推进到「弹塑性本构 + 界面损伤」：\n\n* **von Mises J2 弹塑性**：小应变径向返回映射 + 算法一致切线，用于紧凑拉伸\n  试样（CT）的极限载荷与 J 积分；\n* **3D 混合模式 cohesive**：双线性牵引-分离律（模式 I/II/III）+ 扩展\n  Benzeggagh-Kenane 准则，用于三点弯曲梁（SE(B)）的全过程载荷-位移曲线。\n\n几何与材料（ASTM E399/E1820 标准比例，SI 单位）：\n\n| 量 | CT | SE(B) |\n|---|---|---|\n| 宽度 W | 50 mm | 25 mm |\n| 厚度 B | 25 mm | 25 mm |\n| 初始裂纹 a/W | 0.50 | 0.50 |\n| 跨距 S | — | 4W = 100 mm |\n| 弹性常数 | E = 200 GPa, nu = 0.3 | 同左 |\n| 塑性 | sigma_y = 1000 MPa (小范围屈服) / 350 MPa (弹塑性), 线性硬化 H = 20 / 10 GPa | 同左 |\n| 界面 | — | K_n=K_s=K_t=1e16 Pa/m, t_n0=600 MPa, G_Ic=2000 J/m² |\n\n界面参数满足 `K >> sigma_max^2/(2G_c)`（delta_0/delta_f = 0.009），粘聚区长度\n约 0.5 mm，远小于韧带 12.5 mm，处于小范围桥接极限（可对照 LEFM）。\n\n## ② 怎么做的（方法 / 流程 / 关键设置 / 工具链）\n\n1. **本构层** `j2_plasticity.py`：小应变径向返回映射（线性 / Swift 等向硬化），\n   一致切线 `C_ep = K 1x1 + 2G alpha I_dev - 2G[3G/(3G+H') - (1-alpha)] NxN`，\n   以中心差分逐分量校核（相对误差 < 1e-6），并提供批量向量化版本供 FE 装配。\n2. **界面层** `cohesive3d.py`：双线性牵引-分离律 + 二次应力起裂判据 + 三模式扩展 BK\n   `G_c = G_Ic + (G_shear,c - G_Ic)(G_shear/G_T)^eta`，\n   `G_shear,c = G_IIc + (G_IIIc - G_IIc) G_III/G_shear`；\n   8 节点（4 对节点）界面单元、2x2 高斯积分、数值一致切线、拉压不对称（压缩不损伤）。\n3. **求解层** `plane_strain_fem.py`：平面应变 Q4 双线性单元，Newton-Raphson 带回溯\n   线搜索，载荷 / 位移控制，对称面 mode-I 粘聚弹簧线，等效域积分（EDI）J 积分\n   （裂纹扩展方向可配 x/y）。裂纹用**节点复制完整模型**离散：半模型的对称线落在\n   EDI 积分域内会引入面项污染（实测偏差 -50% / -82%），完整模型下该面项恒为零。\n4. **锚点层** `anchors.py`：ASTM E399 CT / SE(B) 几何因子、`J = K^2(1-nu^2)/E`、\n   ASTM E1820 eta 因子（CT：`eta_pl = 2 + 0.522(1-a/W)`）。\n5. **判据层** `verification.py` + `scripts/m9422_run_verification.py`：一键产出全部\n   数字（`artifacts/m9422/verification.json`、`acceptance.json`），报告零手抄。\n\n## ③ 计算结果（程序化注入，零手抄）\n\n### 判据总表\n\n| 判据 | 量值 | 门限 | 结论 | 细节 |\n|---|---|---|---|---|\n| C1 CT 峰值载荷误差 | +0.104% | <5% | PASS | P_fem=34689 N vs ASTM P_Q=34725 N |\n| C1b SE(B) 粘聚区峰值载荷误差 | +1.385% | <5% | PASS | P_peak=7674 N vs LEFM P=7782 N |\n| C2 CT 弹性 J 误差 | +0.081% | <8% | PASS | EDI J vs G=K^2(1-nu^2)/E, ring spread 0.1404% |\n| C2 CT 弹塑性 J 误差 | +6.047% | <8% | PASS | EDI J vs ASTM E1820 eta-method, J_pl/J=0.19 |\n| C2 SE(B) J 误差 | +3.202% | <8% | PASS | EDI J (72x60 mesh) vs ASTM SE(B) K |\n| C3 混合模式断裂能误差 | +0.385% | <10% | PASS | 3-D cohesive element energy vs extended BK law (phase 0-90 deg + mode III) |\n\n### 载荷 / J 数值对照\n\n| 量 | 本工作 | 基准 | 相对误差 |\n|---|---|---|---|\n| CT 峰值载荷 [N] | 34689 | ASTM E399 P_Q = 34725 | -0.104% |\n| CT 弹性 J [J/m²] | 1957.7 | K²(1−ν²)/E = 1956.1 | +0.081% |\n| CT 弹塑性 J [J/m²] | 60485 | E1820 η 法 = 57036 | +6.047% |\n| SE(B) J [J/m²] | 136.34 | K²(1−ν²)/E = 132.11 | +3.202% |\n| SE(B) 粘聚区峰值载荷 [N] | 7674 | LEFM = 7782 | -1.385% |\n\n* CT 弹塑性算例塑性占比 `J_pl/J = 0.191`；η 法与 EDI 在小载荷差 +0.08%，随塑性增长到 +6.05%，符合 η 法在中等范围屈服下的已知精度。\n* EDI 环带无关性：CT 弹性态环带 (r_in,r_out) 自 (0.02W,0.12W) 至 (0.04W,0.24W)，\n  J 相对散布 +0.14%；SE(B) 为 +0.03%。\n\n### 3D 混合模式断裂能（模式相角 0–90° + 纯 III 型）\n\n| 相角 [°] | 扩展 BK 解析 G_c [J/m²] | 律级积分功 | 单元级积分功 | 误差 |\n|---|---|---|---|---|\n| 0 | 200.00 | 200.00 | 199.23 | -0.385% |\n| 15 | 206.94 | 206.93 | 206.15 | -0.378% |\n| 30 | 250.00 | 250.00 | 249.15 | -0.339% |\n| 45 | 341.42 | 341.42 | 340.45 | -0.283% |\n| 60 | 459.81 | 459.81 | 458.71 | -0.239% |\n| 75 | 560.49 | 560.49 | 559.29 | -0.214% |\n| 90 | 600.00 | 600.00 | 598.76 | -0.206% |\n| 纯 III（反平面） | 800.00 | — | 798.64 | -0.170% |\n\n### 网格收敛（V&V 表）\n\n| CT n_y | 单元数 | J 误差 | SE(B) n_y×n_x | 单元数 | J 误差 |\n|---|---|---|---|---|---|\n| 12 | 1392 | +0.47% | 24×20 | 1440 | +23.14% |\n| 16 | 1856 | -0.88% | 36×30 | 2880 | +11.42% |\n| 22 | 2552 | +0.08% | 48×40 | 4800 | +6.59% |\n| 30 | 3480 | +0.59% | 60×50 | 7440 | +4.42% |\n| 40 | 4640 | +0.42% | 72×60 | 10656 | +3.20% |\n\nCT 的 EDI J 在粗网格上即收敛到 1% 内（域积分是全局量，对裂尖网格不敏感）；\nSE(B) 因 Q4 弯曲剪切锁死收敛较慢（23% → 11% → 6.6% → 4.4% → 3.2%），\n报告取 72×60 网格（3.2%），并给出完整收敛序列。\n\n## ④ 结果图（场量云图 + 与解析/基准的比较曲线）\n\n![图1 CT 应力场与 SE(B) 粘聚区载荷-位移](figures/m9422/fig1_ct_field_and_seb_cohesive.png)\n\n图 1 左：CT 试样（平面应变、J2、P = 45 kN）σ_yy 云图，裂尖高度集中与韧带弯曲应力场\n清晰可见；右：SE(B) 三点弯曲梁在对称面 mode-I 粘聚区下的完整载荷-位移曲线，\n峰值与 LEFM 重合（-1.38%），峰后软化由界面损伤驱动。\n\n![图2 混合模式断裂能与 J2 单轴响应](figures/m9422/fig2_mixed_mode_and_j2.png)\n\n图 2 左：3D cohesive 在 0–90° 相角的断裂能与扩展 BK 解析律逐点一致，并给出纯 III 型\n（反平面）断裂能；右：J2 返回映射的单轴应力-应变（两档屈服强度）。\n\n![图3 J 对比与网格收敛](figures/m9422/fig3_j_comparison_and_convergence.png)\n\n图 3 左：CT 弹塑性 J（EDI）与 ASTM E1820 η 法独立估计随载荷的对比；右：两类试样 J\n积分离散误差随网格尺度的收敛，落在 8% 验收线内。\n\n## ⑤ 注意点（踩过的坑 / 局限 / 适用域）\n\n1. **半模型的 EDI 陷阱**：裂纹面与对称面重合时，半模型的对称线落在积分域内部，\n   域积分缺少沿对称线的面项，实测 J 偏小 50%（CT）/ 82%（SE(B)）。本实现改为节点\n   复制完整模型，该面项恒为零；`j_integral(symmetry_factor=2)` 仅保留给必须用半模型的\n   场合，并在 docstring 中写明成立条件。\n2. **裂纹扩展方向**：SE(B) 裂纹沿 +y 生长，EDI 公式须换成 `[σ_ij u_j,2 - W δ_2i] q,i`\n   （`crack_axis=1`）；用错轴向会得到近乎为零的 J。\n3. **粘聚区参数自洽**：双线性律要求 `K_n >> σ_max²/(2G_Ic)`，否则 δ0 ≈ δf，界面退化为\n   「瞬间全损」——初版取 K_n = 1e14 时峰值载荷偏低 58%。\n4. **snap-through 与步长**：裂尖首个界面点起裂时刚度突降，位移控制同样会失稳；\n   采用失败步折半（bisection）自动细分后 60 步全部收敛。\n5. **塑性迭代极限环**：Gauss 点在一次 Newton 循环内往返塑性加载/弹性卸载时，一致切线\n   不再保证下降方向，需回溯线搜索。\n6. **Q4 弯曲精度**：SE(B) 以弯曲为主，双线性四边形剪切锁死导致收敛阶偏低，工程精度需\n   ≥48×40 网格；Q8 / 减缩积分未实现。\n7. **适用域**：小应变、单调加载、无接触、结构化网格；未含几何非线性、循环塑性\n   （随动硬化/棘轮）、界面摩擦与率效应。\n\n## ⑥ 误差判定（逐项回答是否 <3%）\n\n| 关键量 | 基准 | 误差 | 是否 <3% |\n|---|---|---|---|\n| CT 弹性 J | ASTM / 解析 / BK | +0.081% | 是 |\n| CT 峰值载荷 | ASTM / 解析 / BK | -0.104% | 是 |\n| SE(B) 粘聚区峰值载荷 | ASTM / 解析 / BK | -1.385% | 是 |\n| 混合模式断裂能（单元级最大） | ASTM / 解析 / BK | +0.385% | 是 |\n| CT 弹塑性 J（19% 塑性占比） | ASTM / 解析 / BK | +6.047% | 否 |\n| SE(B) J（72×60 网格） | ASTM / 解析 / BK | +3.202% | 否 |\n\n未达 3% 的两项（CT 弹塑性 J 6.05%、SE(B) J 3.20%）均满足本节点判据（<8%）；原因\n已定位：前者源于 η 法本身在中等塑性下的近似（塑性占比 19%），后者是 Q4 弯曲锁死的\n离散误差（收敛序列完整给出，可继续加密降低）。如实标注，不做粉饰。\n\n## 附：可复现性\n\n```\npython scripts/m9422_run_verification.py   # 全部数字 -> artifacts/m9422/*.json\npython scripts/m9422_figures.py            # 判据表 + 三张图\npython -m pytest tests/test_fem_elastoplastic_cohesive3d.py -q   # 40 项，含负控\n```\n\n运行总耗时 154 s（本机单核）；单元数 CT 2552、SE(B) 10656；pytest 40 项 19 s 全绿。"
+}
