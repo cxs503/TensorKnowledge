@@ -1,0 +1,378 @@
+{
+ "package_id": "wp-5687-04",
+ "task_type": "04-independent-review",
+ "report_id": "5687",
+ "provenance": {
+  "source_hash": "sha256:a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d",
+  "source_field": "markdown",
+  "producer": "agent/m15838 red-team reviewer",
+  "emitted_at": "2026-11-12T02:53:51.162092+00:00",
+  "notes": "independent review of wp-5687-01; verdict advisory, no claim marked verified"
+ },
+ "outputs": {
+  "review_report.json": {
+   "package_id": "wp-5687-04",
+   "task_type": "04-independent-review",
+   "contract_version": "1.0",
+   "reviewed_package": "wp-5687-01",
+   "reviewed_task_type": "01-asset-registration",
+   "report_id": "5687",
+   "reviewer_role": "red-team-reviewer",
+   "independence": {
+    "context_inputs": [
+     "report 5687 markdown (sha256-pinned)",
+     "upstream machine product: kf_result.json / asset_manifest.json / verification.json"
+    ],
+    "excluded": [
+     "producer narrative / report_body.md / producer worktree notes"
+    ],
+    "producer_explanation_read": false,
+    "shared_worktree_with_producer": false,
+    "not_self_review": true,
+    "limitation": "same model family as producer; independence is procedural (fresh recomputation from report bytes), not organisational."
+   },
+   "decision": {
+    "verdict": "pass",
+    "verdict_is_advisory": true,
+    "not_a_verified_mark": true,
+    "rule": {
+     "verdict_pass_requires": [
+      "all gate checks pass",
+      "zero blocking findings (B1-B5)"
+     ],
+     "blocking_classes": {
+      "B1": "source hash unrecomputable or divergent",
+      "B2": "locator quote not contiguous verbatim substring at declared line",
+      "B3": "fabricated resolution status",
+      "B4": "claim presented as verified / extracted claims hidden by empty claims list",
+      "B5": "JSON or schema invalidity of delivered envelope"
+     },
+     "declared_before_running": true
+    },
+    "gate_checks_green": "13/13",
+    "blocking_findings": 0,
+    "non_blocking_findings": 6,
+    "rationale": "core contract (hash-pinned source, contiguous verbatim locators, no fabricated resolution, no verified marks, schema-valid envelope) is independently reproduced; remaining findings are inventory coverage and label-accuracy defects."
+   },
+   "checks": [
+    {
+     "id": "C1",
+     "check": "asset_manifest.json parses as JSON",
+     "result": "pass",
+     "detail": "11 assets parsed",
+     "blocking_class": null
+    },
+    {
+     "id": "C2",
+     "check": "kf_result.json parses as JSON",
+     "result": "pass",
+     "detail": "top keys=['outputs', 'package_id', 'provenance', 'report_id', 'task_type']",
+     "blocking_class": null
+    },
+    {
+     "id": "C3",
+     "check": "kf_result.json conforms to schemas/kf_result.v1.schema.json",
+     "result": "pass",
+     "detail": "validated against schemas/kf_result.v1.schema.json",
+     "blocking_class": null
+    },
+    {
+     "id": "C4",
+     "check": "report markdown sha256 matches contract + manifest declarations",
+     "result": "pass",
+     "detail": "actual=a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d contract=a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d env=a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d manifest=a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d",
+     "blocking_class": null
+    },
+    {
+     "id": "C5",
+     "check": "declared chars/bytes_utf8 match recomputed size",
+     "result": "pass",
+     "detail": "chars=4236 bytes_utf8=6382 declared=4236/6382",
+     "blocking_class": null
+    },
+    {
+     "id": "C6",
+     "check": "manifest provenance metadata equals platform report record",
+     "result": "pass",
+     "detail": "mission_id=4975 tags=6 created_at=2026-11-07T01:36:36.516756+00:00 report_id=5687",
+     "blocking_class": null
+    },
+    {
+     "id": "C7",
+     "check": "asset ids distinct",
+     "result": "pass",
+     "detail": "11 ids, 11 distinct",
+     "blocking_class": null
+    },
+    {
+     "id": "C8",
+     "check": "summary.asset_count/by_kind equals recomputed tally",
+     "result": "pass",
+     "detail": "asset_count=11 len(assets)=11 by_kind_recomputed={'report_markdown/resolved': 1, 'embedded_figure/metadata_only': 3, 'source_code_reference/unresolved': 6, 'document_reference/unresolved': 1}",
+     "blocking_class": null
+    },
+    {
+     "id": "C9",
+     "check": "every markdown_line locator quote is contiguous verbatim text at declared line",
+     "result": "pass",
+     "detail": "checked=7 bad=[]",
+     "blocking_class": null
+    },
+    {
+     "id": "C10",
+     "check": "embedded_figure assets equal platform figures[] name/caption/index",
+     "result": "pass",
+     "detail": "report figures=['fig1_parallelism_saturation.png', 'fig2_coverage_heatmap.png', 'fig3_bp_coverage.png'] manifest=['fig1_parallelism_saturation.png', 'fig2_coverage_heatmap.png', 'fig3_bp_coverage.png']",
+     "blocking_class": null
+    },
+    {
+     "id": "C11",
+     "check": "no fabricated resolution: resolved assets re-hash, metadata_only assets claim no bytes",
+     "result": "pass",
+     "detail": "resolved=['r5687:source'] fabricated=[] metadata_only_without_payload=True",
+     "blocking_class": null
+    },
+    {
+     "id": "C12",
+     "check": "claims list empty and no verified mark asserted",
+     "result": "pass",
+     "detail": "manifest claims=0 envelope claims=0 'verified' in report markdown=False",
+     "blocking_class": null
+    },
+    {
+     "id": "C13",
+     "check": "declared output sha256/bytes equal the delivered manifest bytes",
+     "result": "pass",
+     "detail": "sha256=3766d86fed43dfb57fd1e16566678314182fb59c1a195e322075a6ceaa5d2e0c bytes=10450",
+     "blocking_class": null
+    },
+    {
+     "id": "C14",
+     "check": "all 6 upstream verification.json assertions reproduce here",
+     "result": "pass",
+     "detail": "reproduced={'valid_json': True, 'schema_pass': True, 'source_locator_resolvable': True, 'source_hash_matches': True, 'no_duplicate_ids': True, 'all_claims_have_evidence_or_explicit_unresolved_status': True} mismatches={}",
+     "blocking_class": null
+    },
+    {
+     "id": "C15",
+     "check": "artifact_endpoint_probe statuses reproduce (both 404)",
+     "result": "pass",
+     "detail": "live={'/tensor/reports/5687/artifacts': 404, '/tensor/artifacts?report_id=5687': 404} normalized={'/tensor/reports/5687/artifacts': 'http_404', '/tensor/artifacts?report_id=5687': 'http_404'} declared={'/tensor/reports/5687/artifacts': 'http_404', '/tensor/artifacts?report_id=5687': 'http_404'}",
+     "blocking_class": null
+    },
+    {
+     "id": "C16",
+     "check": "no report-declared path silently absent from the asset inventory",
+     "result": "fail",
+     "detail": "path_like_tokens=['artifacts/chronicle/', 'crosscheck.py', 'tools/chronicle/collector.py', 'tools/chronicle/metrics.py'] unregistered=['artifacts/chronicle/'] declared_bundle_lines=['artifacts/chronicle/']",
+     "blocking_class": null
+    },
+    {
+     "id": "C17",
+     "check": "summary.distinct_referenced_paths is basename-normalized",
+     "result": "fail",
+     "detail": "declared=5 raw_paths=['GLOBAL_CHRONICLE.md', 'crosscheck.py', 'metrics.py', 'tools/chronicle/collector.py', 'tools/chronicle/metrics.py'] basename_normalized=4 ['GLOBAL_CHRONICLE.md', 'collector.py', 'crosscheck.py', 'metrics.py']",
+     "blocking_class": null
+    },
+    {
+     "id": "C18",
+     "check": "manifest schema_note ('no kf_* schema shipped') holds at repository HEAD",
+     "result": "fail",
+     "detail": "schemas/kf_*.json at HEAD=['kf_result.v1.schema.json']",
+     "blocking_class": null
+    }
+   ],
+   "locator_verification": [
+    {
+     "asset_id": "r5687:ref:01",
+     "line": 22,
+     "quote_chars": 65,
+     "verbatim_at_line": true,
+     "quote": "按任务书「若 T1 未并 main 则自带最小采集并声明」：本单自带 `tools/chronicle/collector.py`"
+    },
+    {
+     "asset_id": "r5687:ref:02",
+     "line": 30,
+     "quote_chars": 62,
+     "verbatim_at_line": true,
+     "quote": "2. **5 项指标**（`tools/chronicle/metrics.py`，纯函数 + PG 装载分离，离线可测）："
+    },
+    {
+     "asset_id": "r5687:ref:03",
+     "line": 36,
+     "quote_chars": 60,
+     "verbatim_at_line": true,
+     "quote": "3. **交叉验证**（`crosscheck.py`）：独立手算 SQL（查询文本不复用 metrics.py 构造）"
+    },
+    {
+     "asset_id": "r5687:ref:04",
+     "line": 36,
+     "quote_chars": 60,
+     "verbatim_at_line": true,
+     "quote": "3. **交叉验证**（`crosscheck.py`）：独立手算 SQL（查询文本不复用 metrics.py 构造）"
+    },
+    {
+     "asset_id": "r5687:ref:05",
+     "line": 40,
+     "quote_chars": 80,
+     "verbatim_at_line": true,
+     "quote": "   工件 `artifacts/chronicle/`（GLOBAL_CHRONICLE.md + 5 指标 CSV + crosscheck + 3 图）。"
+    },
+    {
+     "asset_id": "r5687:ref:06",
+     "line": 84,
+     "quote_chars": 50,
+     "verbatim_at_line": true,
+     "quote": "基准 = 独立手算 SQL（crosscheck.py，查询文本与 metrics.py 不同源）："
+    },
+    {
+     "asset_id": "r5687:ref:07",
+     "line": 84,
+     "quote_chars": 50,
+     "verbatim_at_line": true,
+     "quote": "基准 = 独立手算 SQL（crosscheck.py，查询文本与 metrics.py 不同源）："
+    }
+   ],
+   "coverage_enumeration": {
+    "path_like_tokens": [
+     "artifacts/chronicle/",
+     "crosscheck.py",
+     "tools/chronicle/collector.py",
+     "tools/chronicle/metrics.py"
+    ],
+    "unregistered": [
+     "artifacts/chronicle/"
+    ],
+    "registered_path_references": [
+     "GLOBAL_CHRONICLE.md",
+     "crosscheck.py",
+     "metrics.py",
+     "tools/chronicle/collector.py",
+     "tools/chronicle/metrics.py"
+    ]
+   },
+   "findings": [
+    {
+     "id": "F1",
+     "severity": "low",
+     "blocking": false,
+     "claim_under_review": "manifest schema_note asserts no kf_* JSON Schema is shipped in the repository",
+     "evidence": {
+      "quote_manifest": "No kf_result/asset_manifest JSON Schema file is shipped in this repository (schemas/ has no kf_*.json); shape follows the wp-542-01 contract keys (package_id/task_type/report_id/provenance/outputs) and is self-described below.",
+      "fact": "schemas/kf_result.v1.schema.json exists at HEAD (git log -1 -- schemas/kf_result.v1.schema.json)",
+      "note": "producer checkout lacks it, so the note is true for that tree but stale for HEAD; the envelope nevertheless validates against it (check C3)"
+     },
+     "reproduction": "python3 -c \"import json,jsonschema;jsonschema.validate(json.load(open('docs/kf/wp-5687-04/upstream_snapshot/kf_result.json')),json.load(open('schemas/kf_result.v1.schema.json')))\"",
+     "remedy": "drop the schema_note or pin it to the producing commit."
+    },
+    {
+     "id": "F2",
+     "severity": "low",
+     "blocking": false,
+     "claim_under_review": "asset inventory covers every path-like reference declared in the report",
+     "evidence": {
+      "report_quote": "工件 `artifacts/chronicle/`（GLOBAL_CHRONICLE.md + 5 指标 CSV + crosscheck + 3 图）。",
+      "line": 40,
+      "unregistered_tokens": [
+       "artifacts/chronicle/"
+      ],
+      "registered": [
+       "GLOBAL_CHRONICLE.md",
+       "crosscheck.py",
+       "metrics.py",
+       "tools/chronicle/collector.py",
+       "tools/chronicle/metrics.py"
+      ]
+     },
+     "reproduction": "python3 docs/kf/wp-5687-04/verify_wp5687_01.py  (check C16)",
+     "remedy": "register the artifact directory as one unresolved directory-level asset, or state in limitations that bundle members without declared names are out of inventory scope."
+    },
+    {
+     "id": "F3",
+     "severity": "low",
+     "blocking": false,
+     "claim_under_review": "ref:05 path_reference identifies the declared file",
+     "evidence": {
+      "manifest": {
+       "asset_id": "r5687:ref:05",
+       "path_reference": "GLOBAL_CHRONICLE.md"
+      },
+      "report_quote": "工件 `artifacts/chronicle/`（GLOBAL_CHRONICLE.md + 5 指标 CSV + crosscheck + 3 图）。",
+      "line": 40,
+      "why": "the report places the file under artifacts/chronicle/; the basename alone resolves to a different (nonexistent) candidate path. Status is unresolved, so no false resolve."
+     },
+     "reproduction": "python3 docs/kf/wp-5687-04/verify_wp5687_01.py  (checks C9/C11)",
+     "remedy": "carry the containing directory: path_reference=artifacts/chronicle/GLOBAL_CHRONICLE.md."
+    },
+    {
+     "id": "F4",
+     "severity": "low",
+     "blocking": false,
+     "claim_under_review": "summary.distinct_referenced_paths=5 counts distinct referenced files",
+     "evidence": {
+      "declared": 5,
+      "basename_normalized": 4,
+      "paths": [
+       "GLOBAL_CHRONICLE.md",
+       "crosscheck.py",
+       "metrics.py",
+       "tools/chronicle/collector.py",
+       "tools/chronicle/metrics.py"
+      ],
+      "why": "tools/chronicle/metrics.py and metrics.py are the same file counted twice"
+     },
+     "reproduction": "python3 docs/kf/wp-5687-04/verify_wp5687_01.py  (check C17)",
+     "remedy": "normalize by basename or record the raw-string definition explicitly (it does document occurrence-level identity, so this is a metric-label nit)."
+    },
+    {
+     "id": "F5",
+     "severity": "medium",
+     "blocking": false,
+     "claim_under_review": "upstream verification.json check 'source_locator_resolvable: pass (unresolvable=[])' reads as 'all references resolved'",
+     "evidence": {
+      "quote": "{\"pass\": true, \"detail\": \"checked 11 locators; unresolvable=[]\"}",
+      "fact": "7 of 11 assets carry resolution.status=unresolved; the check actually measures locator well-formedness, not target resolution",
+      "impact": "a downstream gate keyed on this name could record 7 unresolved references as resolved"
+     },
+     "reproduction": "python3 -c \"import json;m=json.load(open('docs/kf/wp-5687-04/upstream_snapshot/asset_manifest.json'));print(sum(a['resolution']['status']=='unresolved' for a in m['assets']))\"",
+     "remedy": "split into locator_wellformed (pass) and targets_resolved (7 unresolved) or rename."
+    },
+    {
+     "id": "F6",
+     "severity": "low",
+     "blocking": false,
+     "claim_under_review": "the report's data assets (4 tables / 6 parameter rows with SQL provenance) are neither registered nor declared out of scope",
+     "evidence": {
+      "report_quote": "| missions 区间行 | 4642 | `-- src: select id, created_at, finished_at, status, claimed_by, repo from tensor_dev_missions where created_at <= :t_end` |",
+      "why": "kind vocabulary has no data/table kind and limitations do not say data assets are excluded"
+     },
+     "reproduction": "python3 docs/kf/wp-5687-04/verify_wp5687_01.py  (check C16)",
+     "remedy": "add 'data/table references are outside the 01 kind vocabulary' to limitations."
+    }
+   ],
+   "checks_not_run": [
+    "byte-level verification of the referenced source files (tools/chronicle/*.py) — outside this worktree, listed unresolved by the upstream package itself",
+    "verification of the report's numeric claims (M1-M5, crosscheck) — those belong to the 03/05 line, not to 01-asset-registration",
+    "platform-side gate recomputation (verification is platform-computed; not claimed here)",
+    "producer-side write-boundary adherence across other report_ids — no access to the producer's write log; only report 5687 artefacts were inspected"
+   ],
+   "overstated_claims": [
+    "upstream verification.json check name source_locator_resolvable (see F5)",
+    "manifest schema_note about missing kf_* schema (see F1)"
+   ],
+   "provenance": {
+    "source_uri": "tensor://reports/5687",
+    "source_field": "markdown",
+    "source_hash": "sha256:a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d",
+    "reviewed_artifacts": {
+     "kf_result.json": "sha256:77e5d6d8c97a42353959dc2eddc6d1391060cd5812476d85adf625023d5d37ff",
+     "asset_manifest.json": "sha256:3766d86fed43dfb57fd1e16566678314182fb59c1a195e322075a6ceaa5d2e0c",
+     "verification.json": "sha256:dd4f04b5331b69c4e619e7b3c89ce76d4a07ac0cb6b2fd7b7db93655e318ea7d",
+     "upstream_worktree_package_dir": "docs/kf/wp-5687-01"
+    },
+    "snapshot_dir": "docs/kf/wp-5687-04/upstream_snapshot",
+    "emitted_at": "2026-11-12T02:53:51.162092+00:00"
+   }
+  }
+ }
+}

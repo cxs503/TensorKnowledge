@@ -1,0 +1,282 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-5687-01",
+  "task_type": "01-asset-registration",
+  "report_id": "5687",
+  "schema_note": "No kf_result/asset_manifest JSON Schema file is shipped in this repository (schemas/ has no kf_*.json); shape follows the wp-542-01 contract keys (package_id/task_type/report_id/provenance/outputs) and is self-described below.",
+  "generated_at": "2026-11-12T01:28:44.194191+00:00",
+  "provenance": {
+    "source_uri": "tensor://reports/5687",
+    "source_field": "markdown",
+    "source_hash": "sha256:a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d",
+    "hash_algo": "sha256",
+    "hashed_bytes": "markdown encoded as utf-8",
+    "source_chars": 4236,
+    "source_bytes_utf8": 6382,
+    "report_title": "IN18-T2 战史官编年史与指标计算器成熟化：零手抄 GLOBAL_CHRONICLE 管线（5 指标 + 3 硬判据对拍全 PASS）",
+    "report_scenario_key": "chronicle-metrics-in18-t2",
+    "report_mission_id": 4975,
+    "report_created_at": "2026-11-07T01:36:36.516756+00:00",
+    "report_tags": [
+      "IN18-T2",
+      "chronicle",
+      "metrics",
+      "zero-handcopy",
+      "crosscheck",
+      "TensorPlatform"
+    ],
+    "fetched_via": "GET /api/v1/tensor/reports/5687",
+    "generator": "scripts/kf/build_asset_manifest_5687.py",
+    "contract_version": "1.0"
+  },
+  "resolution_status_vocabulary": {
+    "resolved": "bytes located and hashed (source markdown or a file inside this worktree)",
+    "unresolved": "reference parsed from the report but the target is not present in this package's scope",
+    "metadata_only": "platform lists the asset but stores no byte payload, so no hash is claimable"
+  },
+  "assets": [
+    {
+      "asset_id": "r5687:source",
+      "kind": "report_markdown",
+      "uri": "tensor://reports/5687",
+      "source_field": "markdown",
+      "title": "IN18-T2 战史官编年史与指标计算器成熟化：零手抄 GLOBAL_CHRONICLE 管线（5 指标 + 3 硬判据对拍全 PASS）",
+      "chars": 4236,
+      "bytes_utf8": 6382,
+      "sha256": "a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d",
+      "locator": {
+        "scheme": "report_field",
+        "field": "markdown"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/5687"
+      }
+    },
+    {
+      "asset_id": "r5687:figure:01",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/5687#figures[0]",
+      "name": "fig1_parallelism_saturation.png",
+      "caption": "图1 并行度曲线(M1)+饱和度时序(M4)，1h 桶 UTC",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 0
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record lists this figure by name+caption only; no png_base64 payload is stored in figures[], so no byte hash can be computed"
+      }
+    },
+    {
+      "asset_id": "r5687:figure:02",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/5687#figures[1]",
+      "name": "fig2_coverage_heatmap.png",
+      "caption": "图2 十仓×战役计划覆盖度热图(M3)",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 1
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record lists this figure by name+caption only; no png_base64 payload is stored in figures[], so no byte hash can be computed"
+      }
+    },
+    {
+      "asset_id": "r5687:figure:03",
+      "kind": "embedded_figure",
+      "uri": "tensor://reports/5687#figures[2]",
+      "name": "fig3_bp_coverage.png",
+      "caption": "图3 BP 章节覆盖度(M5)",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "scheme": "report_field",
+        "field": "figures",
+        "index": 2
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "has_payload": false,
+        "reason": "report record lists this figure by name+caption only; no png_base64 payload is stored in figures[], so no byte hash can be computed"
+      }
+    },
+    {
+      "asset_id": "r5687:ref:01",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/5687#line=22",
+      "path_reference": "tools/chronicle/collector.py",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 22,
+        "quote": "按任务书「若 T1 未并 main 则自带最小采集并声明」：本单自带 `tools/chronicle/collector.py`"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r5687:ref:02",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/5687#line=30",
+      "path_reference": "tools/chronicle/metrics.py",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 30,
+        "quote": "2. **5 项指标**（`tools/chronicle/metrics.py`，纯函数 + PG 装载分离，离线可测）："
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r5687:ref:03",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/5687#line=36",
+      "path_reference": "crosscheck.py",
+      "line_pin": null,
+      "via": "backticked_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 36,
+        "quote": "3. **交叉验证**（`crosscheck.py`）：独立手算 SQL（查询文本不复用 metrics.py 构造）"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r5687:ref:04",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/5687#line=36",
+      "path_reference": "metrics.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 36,
+        "quote": "3. **交叉验证**（`crosscheck.py`）：独立手算 SQL（查询文本不复用 metrics.py 构造）"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r5687:ref:05",
+      "kind": "document_reference",
+      "uri": "tensor://reports/5687#line=40",
+      "path_reference": "GLOBAL_CHRONICLE.md",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 40,
+        "quote": "   工件 `artifacts/chronicle/`（GLOBAL_CHRONICLE.md + 5 指标 CSV + crosscheck + 3 图）。"
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r5687:ref:06",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/5687#line=84",
+      "path_reference": "crosscheck.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 84,
+        "quote": "基准 = 独立手算 SQL（crosscheck.py，查询文本与 metrics.py 不同源）："
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    },
+    {
+      "asset_id": "r5687:ref:07",
+      "kind": "source_code_reference",
+      "uri": "tensor://reports/5687#line=84",
+      "path_reference": "metrics.py",
+      "line_pin": null,
+      "via": "bare_ref",
+      "declared_sha256": null,
+      "locator": {
+        "scheme": "markdown_line",
+        "line": 84,
+        "quote": "基准 = 独立手算 SQL（crosscheck.py，查询文本与 metrics.py 不同源）："
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree"
+      }
+    }
+  ],
+  "claims": [],
+  "claims_note": "Contract notes allow an empty claims array for task_type 01-asset-registration; no extraction performed.",
+  "summary": {
+    "asset_count": 11,
+    "by_kind": {
+      "report_markdown/resolved": 1,
+      "embedded_figure/metadata_only": 3,
+      "source_code_reference/unresolved": 6,
+      "document_reference/unresolved": 1
+    },
+    "resolved": 1,
+    "unresolved": 7,
+    "metadata_only": 3,
+    "claims": 0,
+    "distinct_referenced_paths": 5
+  },
+  "identity_granularity": "Reference assets are occurrence-level: identity is (path_reference, markdown_line), so the same file cited on different lines yields different asset_ids carrying their own quotes. distinct_referenced_paths reports the deduplicated view.",
+  "artifact_endpoint_probe": {
+    "/tensor/reports/5687/artifacts": {
+      "status": "http_404"
+    },
+    "/tensor/artifacts?report_id=5687": {
+      "status": "http_404"
+    }
+  },
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no verified marks (verification is platform-gated).",
+    "Referenced paths are resolved strictly inside the TensorKnowledge delivery worktree; source trees of other repos are outside this work package's boundary, so such entries stay unresolved by design.",
+    "Report metadata 'figures' is inventoried as-is; no figure bytes are copied into the manifest.",
+    "Output location: .gitignore ignores artifacts/ and docs/ops/filter-audit.md documents that the push gate drops artifacts/**; outputs therefore live under docs/kf/wp-5687-01/ so they are not silently filtered."
+  ]
+}

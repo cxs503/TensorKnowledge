@@ -1,0 +1,199 @@
+{
+ "checks": [
+  {
+   "id": "C1",
+   "check": "asset_manifest.json parses as JSON",
+   "result": "pass",
+   "detail": "11 assets parsed",
+   "blocking_class": null
+  },
+  {
+   "id": "C2",
+   "check": "kf_result.json parses as JSON",
+   "result": "pass",
+   "detail": "top keys=['outputs', 'package_id', 'provenance', 'report_id', 'task_type']",
+   "blocking_class": null
+  },
+  {
+   "id": "C3",
+   "check": "kf_result.json conforms to schemas/kf_result.v1.schema.json",
+   "result": "pass",
+   "detail": "validated against schemas/kf_result.v1.schema.json",
+   "blocking_class": null
+  },
+  {
+   "id": "C4",
+   "check": "report markdown sha256 matches contract + manifest declarations",
+   "result": "pass",
+   "detail": "actual=a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d contract=a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d env=a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d manifest=a4eaa764c52e072a87f6629009b94e3a5ae97d4aab543fe851599a732fcfeb3d",
+   "blocking_class": null
+  },
+  {
+   "id": "C5",
+   "check": "declared chars/bytes_utf8 match recomputed size",
+   "result": "pass",
+   "detail": "chars=4236 bytes_utf8=6382 declared=4236/6382",
+   "blocking_class": null
+  },
+  {
+   "id": "C6",
+   "check": "manifest provenance metadata equals platform report record",
+   "result": "pass",
+   "detail": "mission_id=4975 tags=6 created_at=2026-11-07T01:36:36.516756+00:00 report_id=5687",
+   "blocking_class": null
+  },
+  {
+   "id": "C7",
+   "check": "asset ids distinct",
+   "result": "pass",
+   "detail": "11 ids, 11 distinct",
+   "blocking_class": null
+  },
+  {
+   "id": "C8",
+   "check": "summary.asset_count/by_kind equals recomputed tally",
+   "result": "pass",
+   "detail": "asset_count=11 len(assets)=11 by_kind_recomputed={'report_markdown/resolved': 1, 'embedded_figure/metadata_only': 3, 'source_code_reference/unresolved': 6, 'document_reference/unresolved': 1}",
+   "blocking_class": null
+  },
+  {
+   "id": "C9",
+   "check": "every markdown_line locator quote is contiguous verbatim text at declared line",
+   "result": "pass",
+   "detail": "checked=7 bad=[]",
+   "blocking_class": null
+  },
+  {
+   "id": "C10",
+   "check": "embedded_figure assets equal platform figures[] name/caption/index",
+   "result": "pass",
+   "detail": "report figures=['fig1_parallelism_saturation.png', 'fig2_coverage_heatmap.png', 'fig3_bp_coverage.png'] manifest=['fig1_parallelism_saturation.png', 'fig2_coverage_heatmap.png', 'fig3_bp_coverage.png']",
+   "blocking_class": null
+  },
+  {
+   "id": "C11",
+   "check": "no fabricated resolution: resolved assets re-hash, metadata_only assets claim no bytes",
+   "result": "pass",
+   "detail": "resolved=['r5687:source'] fabricated=[] metadata_only_without_payload=True",
+   "blocking_class": null
+  },
+  {
+   "id": "C12",
+   "check": "claims list empty and no verified mark asserted",
+   "result": "pass",
+   "detail": "manifest claims=0 envelope claims=0 'verified' in report markdown=False",
+   "blocking_class": null
+  },
+  {
+   "id": "C13",
+   "check": "declared output sha256/bytes equal the delivered manifest bytes",
+   "result": "pass",
+   "detail": "sha256=3766d86fed43dfb57fd1e16566678314182fb59c1a195e322075a6ceaa5d2e0c bytes=10450",
+   "blocking_class": null
+  },
+  {
+   "id": "C14",
+   "check": "all 6 upstream verification.json assertions reproduce here",
+   "result": "pass",
+   "detail": "reproduced={'valid_json': True, 'schema_pass': True, 'source_locator_resolvable': True, 'source_hash_matches': True, 'no_duplicate_ids': True, 'all_claims_have_evidence_or_explicit_unresolved_status': True} mismatches={}",
+   "blocking_class": null
+  },
+  {
+   "id": "C15",
+   "check": "artifact_endpoint_probe statuses reproduce (both 404)",
+   "result": "pass",
+   "detail": "live={'/tensor/reports/5687/artifacts': 404, '/tensor/artifacts?report_id=5687': 404} normalized={'/tensor/reports/5687/artifacts': 'http_404', '/tensor/artifacts?report_id=5687': 'http_404'} declared={'/tensor/reports/5687/artifacts': 'http_404', '/tensor/artifacts?report_id=5687': 'http_404'}",
+   "blocking_class": null
+  },
+  {
+   "id": "C16",
+   "check": "no report-declared path silently absent from the asset inventory",
+   "result": "fail",
+   "detail": "path_like_tokens=['artifacts/chronicle/', 'crosscheck.py', 'tools/chronicle/collector.py', 'tools/chronicle/metrics.py'] unregistered=['artifacts/chronicle/'] declared_bundle_lines=['artifacts/chronicle/']",
+   "blocking_class": null
+  },
+  {
+   "id": "C17",
+   "check": "summary.distinct_referenced_paths is basename-normalized",
+   "result": "fail",
+   "detail": "declared=5 raw_paths=['GLOBAL_CHRONICLE.md', 'crosscheck.py', 'metrics.py', 'tools/chronicle/collector.py', 'tools/chronicle/metrics.py'] basename_normalized=4 ['GLOBAL_CHRONICLE.md', 'collector.py', 'crosscheck.py', 'metrics.py']",
+   "blocking_class": null
+  },
+  {
+   "id": "C18",
+   "check": "manifest schema_note ('no kf_* schema shipped') holds at repository HEAD",
+   "result": "fail",
+   "detail": "schemas/kf_*.json at HEAD=['kf_result.v1.schema.json']",
+   "blocking_class": null
+  }
+ ],
+ "locators": [
+  {
+   "asset_id": "r5687:ref:01",
+   "line": 22,
+   "quote_chars": 65,
+   "verbatim_at_line": true,
+   "quote": "按任务书「若 T1 未并 main 则自带最小采集并声明」：本单自带 `tools/chronicle/collector.py`"
+  },
+  {
+   "asset_id": "r5687:ref:02",
+   "line": 30,
+   "quote_chars": 62,
+   "verbatim_at_line": true,
+   "quote": "2. **5 项指标**（`tools/chronicle/metrics.py`，纯函数 + PG 装载分离，离线可测）："
+  },
+  {
+   "asset_id": "r5687:ref:03",
+   "line": 36,
+   "quote_chars": 60,
+   "verbatim_at_line": true,
+   "quote": "3. **交叉验证**（`crosscheck.py`）：独立手算 SQL（查询文本不复用 metrics.py 构造）"
+  },
+  {
+   "asset_id": "r5687:ref:04",
+   "line": 36,
+   "quote_chars": 60,
+   "verbatim_at_line": true,
+   "quote": "3. **交叉验证**（`crosscheck.py`）：独立手算 SQL（查询文本不复用 metrics.py 构造）"
+  },
+  {
+   "asset_id": "r5687:ref:05",
+   "line": 40,
+   "quote_chars": 80,
+   "verbatim_at_line": true,
+   "quote": "   工件 `artifacts/chronicle/`（GLOBAL_CHRONICLE.md + 5 指标 CSV + crosscheck + 3 图）。"
+  },
+  {
+   "asset_id": "r5687:ref:06",
+   "line": 84,
+   "quote_chars": 50,
+   "verbatim_at_line": true,
+   "quote": "基准 = 独立手算 SQL（crosscheck.py，查询文本与 metrics.py 不同源）："
+  },
+  {
+   "asset_id": "r5687:ref:07",
+   "line": 84,
+   "quote_chars": 50,
+   "verbatim_at_line": true,
+   "quote": "基准 = 独立手算 SQL（crosscheck.py，查询文本与 metrics.py 不同源）："
+  }
+ ],
+ "coverage": {
+  "path_like_tokens": [
+   "artifacts/chronicle/",
+   "crosscheck.py",
+   "tools/chronicle/collector.py",
+   "tools/chronicle/metrics.py"
+  ],
+  "unregistered": [
+   "artifacts/chronicle/"
+  ],
+  "registered_path_references": [
+   "GLOBAL_CHRONICLE.md",
+   "crosscheck.py",
+   "metrics.py",
+   "tools/chronicle/collector.py",
+   "tools/chronicle/metrics.py"
+  ]
+ }
+}
