@@ -1,0 +1,142 @@
+{
+  "package_id": "wp-13496-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13496",
+  "provenance": {
+    "source_hash": "sha256:e4fbd73df939124daad974547c532a55e3e3b83301a21c662217ed9688d966e5",
+    "source_field": "markdown",
+    "producer": "agent/m15762",
+    "emitted_at": "2026-11-12T02:27:00Z",
+    "notes": "Asset registration for report 13496: FEM elastoplastic J2 flow verification (3 cases + GCI). Hash verified against platform API response."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "report_id": "13496",
+      "source_uri": "tensor://reports/13496",
+      "source_hash": "sha256:e4fbd73df939124daad974547c532a55e3e3b83301a21c662217ed9688d966e5",
+      "source_field": "markdown",
+      "title": "p447w2-n04 FEM 弹塑性 J2 流动验证三算例：单轴硬化 2e-16 / 纯剪屈服 0% / 厚壁筒 r_p ≤0.14%（n=16）+ GCI ≤1.1%",
+      "scenario_key": "structural_elastoplastic_j2_fem_verification",
+      "assets": {
+        "source_code": [
+          {
+            "asset_id": "src-constitutive",
+            "path": "src/tensorphysics/fem_elastoplastic/constitutive.py",
+            "description": "J2 flow constitutive kernel with Mandel notation, radial return mapping, consistent tangent",
+            "section_ref": "§2 本构核"
+          },
+          {
+            "asset_id": "src-axisym",
+            "path": "src/tensorphysics/fem_elastoplastic/axisym.py",
+            "description": "Axisymmetric FEM kernel: Q8 serendipity / Q4 elements, assembly, internal pressure loading, Newton solver",
+            "section_ref": "§2 轴对称有限元核"
+          },
+          {
+            "asset_id": "src-thick-cylinder",
+            "path": "src/tensorphysics/fem_elastoplastic/thick_cylinder.py",
+            "description": "Closed-form Lamé/Hill elastoplastic thick cylinder solution with interface radius bisection",
+            "section_ref": "§2 闭式参照解"
+          },
+          {
+            "asset_id": "src-verification",
+            "path": "src/tensorphysics/fem_elastoplastic/verification.py",
+            "description": "Verification runner orchestrating cases A–D",
+            "section_ref": "§7 可复现与审计链"
+          }
+        ],
+        "tests": [
+          {
+            "asset_id": "test-j2-flow",
+            "path": "tests/test_fem_elastoplastic_j2.py",
+            "description": "18 test cases, 9.1 s all green; includes consistent tangent center-diff check, 1D vs 3D cross-validation, n_axial=1 vs 2 equivalence",
+            "section_ref": "§7 可复现与审计链"
+          }
+        ],
+        "benchmarks": [
+          {
+            "asset_id": "bench-runner",
+            "path": "benchmarks/elastoplastic_j2/run_p447w2_n04.py",
+            "description": "Benchmark runner: 33.9 s, commit 5c273c8b2789, python 3.11.6 / numpy 2.4.6",
+            "section_ref": "§7 可复现与审计链"
+          }
+        ],
+        "data_artifacts": [
+          {
+            "asset_id": "results-json",
+            "path": "artifacts/j2_elastoplastic/results.json",
+            "description": "Full criteria results, curves, profiles, figure sha256 hashes",
+            "section_ref": "§7 可复现与审计链"
+          },
+          {
+            "asset_id": "provenance-json",
+            "path": "artifacts/j2_elastoplastic/provenance.json",
+            "description": "Provenance: commit 5c273c8b2789, python 3.11.6, numpy 2.4.6, 2026-11-11T07:09:37Z",
+            "section_ref": "§7 可复现与审计链"
+          }
+        ],
+        "figures": [
+          {
+            "asset_id": "fig-a-uniaxial",
+            "path": "artifacts/j2_elastoplastic/fig_a_uniaxial.png",
+            "description": "Case A: uniaxial tension hardening curve (numerical vs analytic) and anchor-point relative errors",
+            "sha256_prefix": "4578af0384de8ce9",
+            "section_ref": "§4 结果图"
+          },
+          {
+            "asset_id": "fig-b-pure-shear",
+            "path": "artifacts/j2_elastoplastic/fig_b_pure_shear.png",
+            "description": "Case B: pure shear stress-strain curve with von Mises first-yield stress",
+            "sha256_prefix": "8ee414e0652e2eed",
+            "section_ref": "§4 结果图"
+          },
+          {
+            "asset_id": "fig-d-unloading",
+            "path": "artifacts/j2_elastoplastic/fig_d_unloading.png",
+            "description": "Case D: loading to 3% axial strain followed by unloading to zero stress",
+            "sha256_prefix": "7b34841afb89403e",
+            "section_ref": "§4 结果图"
+          },
+          {
+            "asset_id": "fig-c-profiles",
+            "path": "artifacts/j2_elastoplastic/fig_c_thick_cylinder_profiles.png",
+            "description": "Case C: radial stress distribution, yield-ratio indicator, equivalent plastic strain and axial reaction stress",
+            "sha256_prefix": "5d1d646ebcd685fd",
+            "section_ref": "§4 结果图"
+          },
+          {
+            "asset_id": "fig-c-cloud",
+            "path": "artifacts/j2_elastoplastic/fig_c_eq_stress_cloud.png",
+            "description": "Case C: equivalent-stress cloud over the meridian section",
+            "sha256_prefix": "274a0c5d78fb5989",
+            "section_ref": "§4 结果图"
+          },
+          {
+            "asset_id": "fig-e-convergence",
+            "path": "artifacts/j2_elastoplastic/fig_e_mesh_convergence.png",
+            "description": "Case E: monotone mesh convergence of interface radius and Roache GCI",
+            "sha256_prefix": "3a37db2c2de1496c",
+            "section_ref": "§4 结果图"
+          },
+          {
+            "asset_id": "fig-elast-accuracy",
+            "path": "artifacts/j2_elastoplastic/fig_elast_element_accuracy.png",
+            "description": "Diagnostic: elastic Lamé thick-cylinder stress error of Q4 vs Q8 elements",
+            "sha256_prefix": "ee2c5776db5a4b2a",
+            "section_ref": "§4 结果图"
+          }
+        ]
+      },
+      "asset_counts": {
+        "source_code": 4,
+        "tests": 1,
+        "benchmarks": 1,
+        "data_artifacts": 2,
+        "figures": 7,
+        "total": 15
+      },
+      "registered_at": "2026-11-12T02:27:00Z",
+      "registered_by": "agent/m15762"
+    }
+  },
+  "claims": []
+}
