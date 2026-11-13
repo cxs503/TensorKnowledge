@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.wp-12629-01.schema.json",
+  "title": "asset_manifest for wp-12629-01 (report 12629, task_type 01-asset-registration)",
+  "description": "Package-scoped schema authored in this work package so that acceptance item schema_pass is a reproducible check rather than an assertion. Derivation: schemas/asset_manifest.v1.schema.json (report 448) with the package/report consts re-pinned to wp-12629-01/12629 and the fields actually emitted here (checks/integrity/boundaries/claims_note) declared. If the platform-side schema differs, the platform gate wins and this file must be revised.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "package_id", "task_type", "report_id", "objective", "source", "counts", "assets", "claims", "checks", "integrity", "boundaries"],
+  "properties": {
+    "schema": {"const": "asset_manifest.v1"},
+    "package_id": {"const": "wp-12629-01"},
+    "task_type": {"const": "01-asset-registration"},
+    "report_id": {"const": "12629"},
+    "objective": {
+      "type": "object",
+      "required": ["register_assets", "classify_report_type"],
+      "properties": {
+        "register_assets": {"const": true},
+        "classify_report_type": {"const": false}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["uri", "field", "hash_alg", "hash", "chars", "bytes_utf8", "title", "scenario_key"],
+      "properties": {
+        "uri": {"const": "tensor://reports/12629"},
+        "field": {"const": "markdown"},
+        "hash_alg": {"const": "sha256"},
+        "hash": {"const": "6cbf559cfaec918c26cf69c0081a2a3dcdceee4f7870797b35a27af8ca7e10eb"},
+        "chars": {"const": 1899},
+        "bytes_utf8": {"type": "integer", "minimum": 1},
+        "contract_chars": {"const": 1899},
+        "lines": {"type": "integer", "minimum": 1},
+        "title": {"type": "string", "minLength": 1},
+        "scenario_key": {"const": "dp_timedomain"},
+        "platform_mission_id": {"type": ["integer", "null"]},
+        "platform_status": {"type": ["string", "null"]},
+        "platform_created_at": {"type": ["string", "null"]},
+        "platform_tags": {"type": "array"},
+        "platform_figures": {"type": "array"}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["assets", "by_class", "by_resolution", "resolved_in_source", "referenced_unresolved", "declared_absent", "claims"],
+      "properties": {
+        "assets": {"type": "integer", "minimum": 1},
+        "by_class": {"type": "object"},
+        "by_resolution": {"type": "object"},
+        "resolved_in_source": {"type": "integer", "minimum": 0},
+        "referenced_unresolved": {"type": "integer", "minimum": 0},
+        "declared_absent": {"type": "integer", "minimum": 0},
+        "claims": {"const": 0}
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["asset_id", "asset_class", "label", "in_report_section", "resolution", "resolution_check", "note", "locator"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^A[0-9]{2}$"},
+          "asset_class": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "in_report_section": {"type": "string", "minLength": 1},
+          "resolution": {"enum": ["resolved_in_source", "referenced_unresolved", "declared_absent"]},
+          "resolution_check": {
+            "type": "object",
+            "required": ["check", "result"],
+            "properties": {
+              "check": {"type": "string", "minLength": 1},
+              "result": {"enum": ["resolved", "unresolved", "absent", "present"]}
+            }
+          },
+          "note": {"type": "string"},
+          "locator": {
+            "type": "object",
+            "required": ["method", "start_char", "end_char", "start_line", "end_line", "quote", "unique"],
+            "properties": {
+              "method": {"enum": ["char_span", "document"]},
+              "start_char": {"type": "integer", "minimum": 0},
+              "end_char": {"type": "integer", "minimum": 1},
+              "start_line": {"type": "integer", "minimum": 1},
+              "end_line": {"type": "integer", "minimum": 1},
+              "quote": {"type": "string", "minLength": 1},
+              "unique": {"const": true},
+              "duplicate_quote_of": {"type": ["string", "null"]}
+            }
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 0,
+      "description": "Zero claims by contract (register_assets=true, classify_report_type=false)."
+    },
+    "claims_note": {"type": "string"},
+    "checks": {"type": "object", "minProperties": 1},
+    "integrity": {
+      "type": "object",
+      "required": ["quote_uniqueness", "hash_recomputed_locally", "hash_matches_contract", "no_claim_marked_verified"],
+      "properties": {
+        "quote_uniqueness": {"type": "string"},
+        "hash_recomputed_locally": {"const": true},
+        "hash_matches_contract": {"const": true},
+        "no_claim_marked_verified": {"const": true},
+        "verified_by": {"type": "string"}
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "required": ["only_report_id", "other_reports_read_or_written", "upstream_work_package_artifacts_rewritten", "claims_marked_verified"],
+      "properties": {
+        "only_report_id": {"const": "12629"},
+        "other_reports_read_or_written": {"const": false},
+        "upstream_work_package_artifacts_rewritten": {"const": false},
+        "claims_marked_verified": {"const": 0}
+      }
+    }
+  }
+}
