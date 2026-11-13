@@ -1,0 +1,498 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-9947-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9947",
+  "source": {
+    "uri": "tensor://reports/9947",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "c9857b84a9ea71ea174f3392d34e8e61403202ee154fdab059c4e9abd83fc0bf",
+    "chars": 616,
+    "bytes_utf8": 855,
+    "title": "【试点】技术路线锁定 A/B 终局对照 v1",
+    "scenario_key": "pilot-ab",
+    "platform_id": 9947,
+    "platform_mission_id": null,
+    "platform_stage": "S0",
+    "platform_status": "published",
+    "platform_created_at": "2026-11-09T14:30:57.100885+00:00",
+    "platform_title": "【试点】技术路线锁定 A/B 终局对照 v1",
+    "platform_summary": "双臂+审查+QR 全终态自动合成；判据盲裁结果与过程指标见表；终裁交 owner。",
+    "platform_figures": [],
+    "platform_tags": [
+      "A/B试点",
+      "MethodCommitment",
+      "盲裁"
+    ],
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9947",
+    "local_copy": "runs/wp-9947-01/report_9947.md"
+  },
+  "counts": {
+    "assets": 12,
+    "by_class": {
+      "document": 1,
+      "heading": 1,
+      "external_file_reference": 1,
+      "evidence_pointer": 1,
+      "model_roster": 1,
+      "table_shell": 1,
+      "acceptance_criteria": 1,
+      "decision_rule": 1,
+      "deferred_decision": 1,
+      "upstream_report_pointer": 2,
+      "figure_slot": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 7,
+      "referenced_unresolved": 4,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 7,
+    "referenced_unresolved": 4,
+    "declared_absent": 1
+  },
+  "resolution_semantics": {
+    "resolved_in_source": "内容可在源 markdown 内按 [start_char,end_char) 逐字切片，且该切片在全文唯一",
+    "referenced_unresolved": "报告只给指针（文件名/路径/键名/scenario_key），未给可校验的 id+哈希组合；本工序只登记指针与探测结果，不断言被指对象的内容身份/版本",
+    "declared_absent": "报告与平台元数据均无该资产（此处指图件）"
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "document",
+      "label": "报告正文（markdown 全文，616 字符）",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 616,
+        "start_line": 0,
+        "end_line": 14,
+        "quote": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）\n\nprereg：`/root/tp-agent/pilot_ab_prereg_20261109.md`（sha256 在 GAP-LBM-MCMP-POISEUILLE.evidence，派单前冻结）。\ndev 两臂同模型 qwen3.7-plus；B 审查席=deepseek-v4-flash；QR 两臂=glm-5.2。\n\n| 席位 | 任务 | 终态 | 墙钟 | 摘要 |\n|---|---|---|---|---|\n| a-dev | m- | - |  | - |\n| a-qr | m- | - |  | - |\n| b-dev | m- | - |  | - |\n| b-review | m- | - |  | - |\n| b-qr | m- | - |  | - |\n\n判据三主一加分（①<5% ②<10% ③<0.005·Umax ④趋势）细节见各 QR 报告（scenario_key=pilot-qr-a / pilot-qr-b）；裁决规则按 prereg：QR PASS 数→过程指标→双 FAIL 比根因深度。人工终裁与推广/否决建议交 owner。\n原始证据：pilot-a/b 两臂报告（scenario_key=pilot-arm-a / pilot-arm-b）+B 审查（pilot-ab-review）。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "span": [
+          0,
+          616
+        ],
+        "quote_occurrences": 1,
+        "detail": "re-slice of the fetched markdown at the recorded char span; quote unique in text"
+      },
+      "note": "整篇 markdown 即源资产本体；sha256 见 source.hash，由平台独立重算比对"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "heading",
+      "label": "报告标题行（自动合成时间戳）",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 39,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "span": [
+          0,
+          39
+        ],
+        "quote_occurrences": 1,
+        "detail": "re-slice of the fetched markdown at the recorded char span; quote unique in text"
+      },
+      "note": "标题行；与 API title 字段（【试点】技术路线锁定 A/B 终局对照 v1）不同名，属不同层级的标题"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "external_file_reference",
+      "label": "prereg 预注册文件路径（/root/tp-agent/pilot_ab_prereg_20261109.md）",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 41,
+        "end_char": 92,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "prereg：`/root/tp-agent/pilot_ab_prereg_20261109.md`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external_address_probe",
+        "result": "unresolved",
+        "addresses_found": {
+          "paths": [
+            "/root/tp-agent/pilot_ab_prereg_20261109.md"
+          ],
+          "urls": [],
+          "dois": [],
+          "scenario_keys": []
+        },
+        "identity_binding": "none: the report gives no report_id/sha256 for the referenced object",
+        "host_probe": [
+          {
+            "path": "/root/tp-agent/pilot_ab_prereg_20261109.md",
+            "exists_on_host": true,
+            "size_bytes": 2567,
+            "inside_worktree": false
+          }
+        ],
+        "detail": "路径在宿主上存在与否已实测并记录，但报告未给出该文件的哈希值（推迟到 A04 的 GAP 键），故不对其内容身份作断言"
+      },
+      "note": "报告给出绝对路径但未给出哈希值本身（哈希被推迟到 GAP-LBM-MCMP-POISEUILLE.evidence），本工序不据路径断言其内容身份"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "evidence_pointer",
+      "label": "GAP 证据键名 GAP-LBM-MCMP-POISEUILLE.evidence",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 93,
+        "end_char": 134,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "sha256 在 GAP-LBM-MCMP-POISEUILLE.evidence",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external_address_probe",
+        "result": "unresolved",
+        "addresses_found": {
+          "paths": [],
+          "urls": [],
+          "dois": [],
+          "scenario_keys": []
+        },
+        "identity_binding": "none: the report gives no report_id/sha256 for the referenced object"
+      },
+      "note": "仅键名，无 GAP 记录 id / URL / DOI；本工序不猜测地址"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "model_roster",
+      "label": "模型席位配置（dev 双臂 / B 审查席 / QR 双臂）",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 143,
+        "end_char": 204,
+        "start_line": 3,
+        "end_line": 3,
+        "quote": "dev 两臂同模型 qwen3.7-plus；B 审查席=deepseek-v4-flash；QR 两臂=glm-5.2。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "span": [
+          143,
+          204
+        ],
+        "quote_occurrences": 1,
+        "detail": "re-slice of the fetched markdown at the recorded char span; quote unique in text"
+      },
+      "note": "三个模型名的原文；属配置声明，不是运行日志"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "table_shell",
+      "label": "五席位终态表（表头+分隔行+5 行，表体为占位符）",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 206,
+        "end_char": 385,
+        "start_line": 5,
+        "end_line": 11,
+        "quote": "| 席位 | 任务 | 终态 | 墙钟 | 摘要 |\n|---|---|---|---|---|\n| a-dev | m- | - |  | - |\n| a-qr | m- | - |  | - |\n| b-dev | m- | - |  | - |\n| b-review | m- | - |  | - |\n| b-qr | m- | - |  | - |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "span": [
+          206,
+          385
+        ],
+        "quote_occurrences": 1,
+        "detail": "re-slice of the fetched markdown at the recorded char span; quote unique in text"
+      },
+      "note": "登记的是表格结构与本文字面值：5 行数据的「任务」列均为 m-、「终态」列均为 -、「墙钟」列均为空、「摘要」列均为 -；表内不含任何数值结果（见 notice P1）"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "acceptance_criteria",
+      "label": "判据三主一加分（①<5% ②<10% ③<0.005·Umax ④趋势）",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 387,
+        "end_char": 423,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "判据三主一加分（①<5% ②<10% ③<0.005·Umax ④趋势）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "span": [
+          387,
+          423
+        ],
+        "quote_occurrences": 1,
+        "detail": "re-slice of the fetched markdown at the recorded char span; quote unique in text"
+      },
+      "note": "四条判据与三条阈值以原文数字逐字登记；判据的物理定义（量纲/归一化方式）报告未在本文给出，其细节被指向各 QR 报告"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "decision_rule",
+      "label": "裁决规则（QR PASS 数→过程指标→双 FAIL 比根因深度）",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 472,
+        "end_char": 512,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "裁决规则按 prereg：QR PASS 数→过程指标→双 FAIL 比根因深度",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "span": [
+          472,
+          512
+        ],
+        "quote_occurrences": 1,
+        "detail": "re-slice of the fetched markdown at the recorded char span; quote unique in text"
+      },
+      "note": "规则原文；规则的完整版在 A03 指向的 prereg（未解析）"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "deferred_decision",
+      "label": "人工终裁与推广/否决建议交 owner",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 513,
+        "end_char": 532,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "人工终裁与推广/否决建议交 owner",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "span": [
+          513,
+          532
+        ],
+        "quote_occurrences": 1,
+        "detail": "re-slice of the fetched markdown at the recorded char span; quote unique in text"
+      },
+      "note": "终裁被显式推迟给 owner：本报告不含终裁结论（见 notice P2）"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "upstream_report_pointer",
+      "label": "两臂 QR 报告引用（scenario_key=pilot-qr-a / pilot-qr-b）",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 434,
+        "end_char": 470,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "scenario_key=pilot-qr-a / pilot-qr-b",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external_address_probe",
+        "result": "unresolved",
+        "addresses_found": {
+          "paths": [],
+          "urls": [],
+          "dois": [],
+          "scenario_keys": [
+            "pilot-qr-a"
+          ],
+          "probed_keys": [
+            "pilot-qr-a",
+            "pilot-qr-b"
+          ]
+        },
+        "identity_binding": "none: the report gives no report_id/sha256 for the referenced object",
+        "platform_probe": {
+          "endpoint": "/tensor/reports?scenario_key=<key>",
+          "auth": "bearer",
+          "hits": {
+            "pilot-qr-a": {
+              "report_ids": [
+                9942
+              ],
+              "count": 1
+            },
+            "pilot-qr-b": {
+              "report_ids": [
+                9940
+              ],
+              "count": 1
+            }
+          }
+        },
+        "detail": "scenario_key 在平台上可命中报告（命中 id 见 platform_probe），但本报告未写明 report_id/版本/哈希，指针→具体版本的绑定关系不由本工序断言"
+      },
+      "note": "只给 scenario_key，未给 report_id/版本/哈希；判据细节在彼处"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "upstream_report_pointer",
+      "label": "原始证据引用（pilot-arm-a / pilot-arm-b / pilot-ab-review）",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 534,
+        "end_char": 616,
+        "start_line": 14,
+        "end_line": 14,
+        "quote": "原始证据：pilot-a/b 两臂报告（scenario_key=pilot-arm-a / pilot-arm-b）+B 审查（pilot-ab-review）。",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external_address_probe",
+        "result": "unresolved",
+        "addresses_found": {
+          "paths": [],
+          "urls": [],
+          "dois": [],
+          "scenario_keys": [
+            "pilot-arm-a"
+          ],
+          "probed_keys": [
+            "pilot-arm-a",
+            "pilot-arm-b",
+            "pilot-ab-review"
+          ]
+        },
+        "identity_binding": "none: the report gives no report_id/sha256 for the referenced object",
+        "platform_probe": {
+          "endpoint": "/tensor/reports?scenario_key=<key>",
+          "auth": "bearer",
+          "hits": {
+            "pilot-arm-a": {
+              "report_ids": [
+                9566
+              ],
+              "count": 1
+            },
+            "pilot-arm-b": {
+              "report_ids": [],
+              "count": 0
+            },
+            "pilot-ab-review": {
+              "report_ids": [
+                9861
+              ],
+              "count": 1
+            }
+          }
+        },
+        "detail": "scenario_key 在平台上可命中报告（命中 id 见 platform_probe），但本报告未写明 report_id/版本/哈希，指针→具体版本的绑定关系不由本工序断言"
+      },
+      "note": "三个 scenario_key 的字面原文；报告未给出对应 report_id，身份不在此断言"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "figure_slot",
+      "label": "图件：报告无任何图件，平台 figures 字段为空",
+      "in_report_section": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 616,
+        "start_line": 0,
+        "end_line": 14,
+        "quote": "## A/B 试点终局对照（2026-11-09 14:30:57 自动合成）\n\nprereg：`/root/tp-agent/pilot_ab_prereg_20261109.md`（sha256 在 GAP-LBM-MCMP-POISEUILLE.evidence，派单前冻结）。\ndev 两臂同模型 qwen3.7-plus；B 审查席=deepseek-v4-flash；QR 两臂=glm-5.2。\n\n| 席位 | 任务 | 终态 | 墙钟 | 摘要 |\n|---|---|---|---|---|\n| a-dev | m- | - |  | - |\n| a-qr | m- | - |  | - |\n| b-dev | m- | - |  | - |\n| b-review | m- | - |  | - |\n| b-qr | m- | - |  | - |\n\n判据三主一加分（①<5% ②<10% ③<0.005·Umax ④趋势）细节见各 QR 报告（scenario_key=pilot-qr-a / pilot-qr-b）；裁决规则按 prereg：QR PASS 数→过程指标→双 FAIL 比根因深度。人工终裁与推广/否决建议交 owner。\n原始证据：pilot-a/b 两臂报告（scenario_key=pilot-arm-a / pilot-arm-b）+B 审查（pilot-ab-review）。",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "platform_figures_field+citation_scan",
+        "result": "absent",
+        "platform_figures_count": 0,
+        "image_markdown_refs": 0,
+        "detail": "平台 figures 字段为空且正文无图片引用；报告亦无「无图理由」段落，故此资产按「无图」登记"
+      },
+      "note": "报告全文无「图」声明、无 png/曲线引用，平台 figures=[]；本工序只登记「无图」这一事实，不代替上游生产图件"
+    }
+  ],
+  "claims": [],
+  "claims_note": "按工作包契约 objective.classify_report_type=false 且 notes 明确 claims 允许空数组：本工序只登记资产定位与可解析状态，不做 claim 抽取，也不对报告结论表态；claim 抽取归下游工序。资产级 resolution 已为每个条目显式给出。",
+  "notices": [
+    {
+      "id": "P1",
+      "scope": "A06",
+      "text": "五席位终态表的表体是占位符（任务列 m- / 终态列 - / 墙钟列空 / 摘要列 -），报告标题与平台 summary 所说的「终态/表」在本文中没有数值结果落地",
+      "evidence_asset": "A06"
+    },
+    {
+      "id": "P2",
+      "scope": "A08,A09",
+      "text": "判决与终裁均不在本文：裁决规则被指向 prereg(A03)，人工终裁被显式交 owner(A09)",
+      "evidence_asset": "A09"
+    },
+    {
+      "id": "P3",
+      "scope": "A10,A11",
+      "text": "判据细节与原始证据均以 scenario_key 形式外置（A10/A11），本文自足性不足：不含任何 <5%/<10%/<0.005·Umax 的实测值",
+      "evidence_asset": "A11"
+    },
+    {
+      "id": "P4",
+      "scope": "A12",
+      "text": "全文无图、平台 figures=[]：「终局对照」不含任何对照曲线或场量云图",
+      "evidence_asset": "A12"
+    },
+    {
+      "id": "P5",
+      "scope": "A10,A11",
+      "text": "指针探测：scenario_key pilot-arm-b 在平台 /tensor/reports 查询下命中 0 条（同批其余键各命中 1 条）；本工序只登记「在该查询面下不可见」这一事实，不推断原因是未发布、未生成还是权限不可见",
+      "evidence_asset": "A11",
+      "probe": {
+        "query": "GET /tensor/reports?scenario_key=<key>",
+        "zero_hit_keys": [
+          "pilot-arm-b"
+        ]
+      }
+    }
+  ],
+  "integrity": {
+    "quote_uniqueness": "每个 char_span 资产的 quote 都是源 markdown 的逐字切片，且全文出现次数==1（scripts/kf_verify_9947.py 在独立进程重取后重切片复核）",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true
+  }
+}
