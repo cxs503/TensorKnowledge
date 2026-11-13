@@ -1,0 +1,240 @@
+{
+ "package_id": "wp-2506-04",
+ "task_type": "04-independent-review",
+ "report_id": "2506",
+ "provenance": {
+  "source_hash": "sha256:c62850b3dacd416bd9d535fec206f6e8427fb10121f439c7b865b2165e5138b0",
+  "source_field": "markdown",
+  "producer": "wp-2506-04 red-team reviewer",
+  "notes": "independent review of wp-2506-01; report 2506 read-only; every quote machine-verified verbatim against the source markdown"
+ },
+ "outputs": {
+  "review_report.json": {
+   "reviewer_role": "red-team-reviewer",
+   "reviewed_package": "wp-2506-01",
+   "reviewed_report_id": "2506",
+   "reviewed_source_hash": "sha256:c62850b3dacd416bd9d535fec206f6e8427fb10121f439c7b865b2165e5138b0",
+   "verdict": "needs-fix",
+   "judge_semantic_fidelity": true,
+   "semantic_fidelity": {
+    "outcome": "needs-fix",
+    "numbers_fabricated": false,
+    "summary": "All headline numbers reproduce exactly from the source repository with the producer's own script, and two reviewer probes confirm the central negative result. However one shipped-code docstring asserts a certification the report itself retracts (F1), one replacement attribution sentence is contradicted by the report's own table (F2), and two bookkeeping claims do not match the repository (F3, F5). No fabrication was found.",
+    "severity_counts": {
+     "high": 1,
+     "medium": 3,
+     "low": 4
+    }
+   },
+   "scope_reviewed": {
+    "report_markdown": "3382 chars, sha256 matched contract",
+    "upstream_code": "src/tensorfvm/native_viscous3d.py, src/tensorfvm/native_compatible_viscous3d.py, scripts/audit_compatible_viscous_dissipativity.py, tests/test_native_compatible_viscous3d.py",
+    "reviewed_repo_head": "0f13a8d3 (TensorFVM), producer commit 81a506d8 (m2488)",
+    "read_only": true
+   },
+   "findings": [
+    {
+     "id": "F1",
+     "severity": "high",
+     "blocking": true,
+     "type": "code/docstring contradicts report",
+     "location": "src/tensorfvm/native_compatible_viscous3d.py (module docstring, delivered by wp-2506-01)",
+     "code_claim": "For affine velocity fields the cell gradients are exact, so the discrete energy identity ... holds to round-off and the coefficient of the operator is certified",
+     "report_contradicts": "native 单元梯度模板未做体积归一（本单实测其仿射场梯度偏离解析值，最大 6.17",
+     "evidence": {
+      "measurement": "reviewer probe on NativeViscous3D.gradient_matrices, random affine field",
+      "two_tetrahedra_skew0.0": 5.685079097894235,
+      "two_tetrahedra_skew0.5": 8.036678357632859,
+      "two_tetrahedra_skew1.0": 7.696398951860993,
+      "relative_deviation_range": [
+       3.456590099922983,
+       7.623078781014948
+      ],
+      "is_exact_to_roundoff": [
+       false,
+       false,
+       false
+      ]
+     },
+     "impact": "The report is right and the shipped code is wrong. A consumer who trusts the docstring will treat K as a scale-certified discretisation of -div(2 mu S) and can install a dissipative-but-wrong-magnitude viscous term in the solver. This is the exact failure mode report 5 says must not happen.",
+     "recommendation": "Replace the two docstring sentences with the report's own scope statement (dissipativity certified; scale/consistency NOT certified pending volume-normalised gradients)."
+    },
+    {
+     "id": "F2",
+     "severity": "medium",
+     "blocking": true,
+     "type": "overstated claim",
+     "claim": "- **归因修正**：m2431 把造能归给非正交修正（\"延迟修正恒耗散\"）。本单用逐面阻尼扫掠证明该结论在其自己的几何族上不成立：\n  α=0 仍造能，且 α 越小失效面越大 → 主因是融合装配 `D A G` 的**面/能量对偶性（sum-by-parts）不成立**，修正项只是把它放大。",
+     "evidence": {
+      "energy_producing_points_alpha1": 2,
+      "energy_producing_points_alpha0": 20,
+      "interpretation": "alpha=0 fails on 20/41 geometries, alpha=1 on 2/41: switching the non-orthogonal correction ON removes energy production on 18 of 20 geometries, so the correction is not merely an amplifier.",
+      "adjointness_defect_alpha1_max": 0.397206313550594,
+      "adjointness_defect_alpha0_max": 0.5718367915581669,
+      "adjointness_defect_at_skew_0.05": [
+       0.04119771800219971,
+       0.2516669796007432
+      ]
+     },
+     "impact": "The falsification of the previous attribution (non-orthogonal correction as main cause) stands, but the replacement sentence 'the correction merely amplifies it' is contradicted by the report's own count column. It matters because a reader could conclude the correction term is useless/harmful, which the data do not support.",
+     "recommendation": "State both effects explicitly: the correction restores dissipativity over most of the family (20 -> 2 failing geometries) yet raises the magnitude of the residual defect at extreme skew (|E| at skew=1: 0.39 -> 4.83). Drop 'merely amplifies'."
+    },
+    {
+     "id": "F3",
+     "severity": "medium",
+     "blocking": false,
+     "type": "factual claim vs repository state",
+     "claim": "- **默认路径未改**：`correction_damping=1.0` 与 HEAD 矩阵逐位相同（有回归用例）",
+     "evidence": {
+      "live_strict_xfails_found": [
+       "tests/test_native_energy_small.py:20 (the two-cell skew test cited in the report)",
+       "tests/test_native_viscous_order3d.py:110 (wall-adjacent divergence O(1), a different open defect)"
+      ],
+      "count": 2,
+      "note": "\"仓库唯一 strict xfail\" is false: at least two live strict xfails exist in tests/."
+     },
+     "impact": "The 'single open debt' framing understates the repository's open-defect ledger; downstream bookkeeping (debt accounting) would be wrong.",
+     "recommendation": "Say 'the two-cell skew xfail remains red' without the uniqueness claim, or enumerate the ledger."
+    },
+    {
+     "id": "F4",
+     "severity": "medium",
+     "blocking": false,
+     "type": "cited evidence does not establish the claim",
+     "claim": "- **默认路径未改**：`correction_damping=1.0` 与 HEAD 矩阵逐位相同（有回归用例）",
+     "evidence": {
+      "cited_test": "test_correction_damping_default_keeps_legacy_matrices_bitwise",
+      "test_body": "NativeViscous3D(mesh, mask, 1.3) vs NativeViscous3D(mesh, mask, 1.3, correction_damping=1.) -> both use damping 1.0; the assertion is a tautology and cannot show bitwise identity with HEAD.",
+      "independent_check": "commit 81a506d8 diff of src/tensorfvm/native_viscous3d.py changes active -> active*damping and active*(...) -> correction_damping*active*(...); multiplication by exactly 1.0 is exact in IEEE-754, so bitwise identity with the pre-change path does hold."
+     },
+     "impact": "The claim is TRUE but the cited 'regression case' proves nothing. A future change that alters the default could keep this test green.",
+     "recommendation": "Keep the claim only if backed by a golden-matrix fixture captured from the pre-change commit; otherwise mark it as 'by inspection of the diff'."
+    },
+    {
+     "id": "F5",
+     "severity": "low",
+     "blocking": false,
+     "type": "artifact-count mismatch",
+     "claim": "`tests/test_native_compatible_viscous3d.py`，6 条用例",
+     "evidence": {
+      "reviewer_run": "PYTHONPATH=src pytest tests/test_native_compatible_viscous3d.py -q -> 5 passed",
+      "def_count": 5,
+      "tests": [
+       "test_compatible_operator_is_symmetric_positive_semidefinite_across_skew_family",
+       "test_compatible_operator_dissipates_where_the_legacy_assembly_produces_energy",
+       "test_legacy_defect_survives_nonorthogonal_correction_damping",
+       "test_correction_damping_default_keeps_legacy_matrices_bitwise",
+       "test_invalid_arguments_are_rejected"
+      ]
+     },
+     "impact": "Report says 6 cases; the delivered file has 5 (the withdrawn hexa cases were already removed). Minor traceability defect.",
+     "recommendation": "Correct the count to 5 (or name the withdrawn case)."
+    },
+    {
+     "id": "F6",
+     "severity": "low",
+     "blocking": false,
+     "type": "evidence presentation",
+     "claim": "扫描汇总（41 几何）",
+     "evidence": {
+      "actual_grid": "np.linspace(0, 1, 41) -> step 0.025 (verified in scripts/audit_compatible_viscous_dissipativity.py)",
+      "published_table_rows": 14,
+      "note": "The published table is a 14-row subsample (0.000-0.900 step 0.1 plus 0.925/0.950/0.975/1.000) of the 41-row sweep and is not labelled as such; the reader cannot tell the sweep grid from it.",
+      "reviewer_artifact": "work/wp-2506-04/repro/report-table.md (all 41 rows regenerated)"
+     },
+     "impact": "Non-blocking transparency gap; no number is wrong.",
+     "recommendation": "Label the table as a subsample or publish all 41 rows."
+    },
+    {
+     "id": "F7",
+     "severity": "low",
+     "blocking": false,
+     "type": "framing / severity calibration",
+     "claim": "legacy 默认装配（α=1）在 **2 个几何**上造能，首个失效 skew=0.975（非正交角 86.22° 起）。",
+     "evidence": {
+      "first_failure_angle_deg": 86.21927414382452,
+      "family_note": "illegal face orientation begins at skew>1, i.e. the legacy failure is confined to the last 5% of the family at >=86.2 deg non-orthogonality.",
+      "still_real": true
+     },
+     "impact": "The defect is real but sits at the extreme edge of the admissible family; readers may over-estimate its practical reach on production meshes.",
+     "recommendation": "Add one sentence placing the failure at >=86 deg non-orthogonality."
+    },
+    {
+     "id": "F8",
+     "severity": "low",
+     "blocking": false,
+     "type": "uninformative error metric",
+     "claim": "本单判据是**符号/特征值证书**而非与解析解的相对误差，无文献基准可比，故不适用「<3%」条款（显式声明，不含糊",
+     "evidence": {
+      "text": "'最坏值 -3.935422（距 0 的余量 100%）' — a signed quantity has no '100% margin to zero'; the metric carries no information."
+     },
+     "impact": "Section 6 looks quantitative without being so.",
+     "recommendation": "Report the certificate margin as min |E| / max |E| or as lambda_min(K) in absolute units."
+    }
+   ],
+   "supported_claims": [
+    {
+     "claim": "**α=0（纯两点通量，既有报告称为\"延迟修正、恒耗散\"）反而在 20 个几何上造能** → 非正交修正不是主因。",
+     "status": "supported",
+     "why": "independently reproduced: alpha=0 produces energy on exactly 20 of 41 geometries (reviewer run of the producer's audit)."
+    },
+    {
+     "claim": "相容装配：E 的最小值 = -3.935422（41 点全为负），λmin(K) 最小值 = +0.360339 > 0。",
+     "status": "supported",
+     "why": "reproduced to 6 decimals: min E = -3.935422, min lambda_min(K) = 0.360339."
+    },
+    {
+     "claim": "该矩阵是平方和，故对任意网格、任意 u 恒为**对称半正定**，耗散性由构造保证",
+     "status": "supported",
+     "why": "structure checked in code: K = sum w_ij G_ij^T diag(2 mu V) G_ij with mu,V>0 is a sum of Gram matrices, hence PSD for any mesh; the 41/41 sweep is therefore a tautological sanity check, not independent physical validation (noted, not a defect, because the report says so itself)."
+    }
+   ],
+   "checks_not_run": [
+    {
+     "check": "cross-report agreement with the earlier attribution report (2468 / m2431)",
+     "status": "not_run",
+     "reason": "the package boundary forbids reading any report_id other than 2506; the claim '若把「首个失效几何」当关键量：本单 λmin 交叉点 0.975/86.22° 与 m2431 报告数值一致到所列有效位（0.000）' is therefore unverifiable by this reviewer and must be marked WITHHELD, not passed."
+    },
+    {
+     "check": "bitwise identity against the pre-change HEAD matrix",
+     "status": "partially_run",
+     "reason": "verified by diff inspection of commit 81a506d8 (multiplication by exactly 1.0), not by executing a golden-matrix test (none exists)."
+    },
+    {
+     "check": "affine consistency / second-order convergence on hexahedral interpolation meshes",
+     "status": "not_run",
+     "reason": "withdrawn from the producer's test set on the same grounds the reviewer confirms in F1; no reference implementation available for a repair within this package."
+    },
+    {
+     "check": "admission of K into a solver (sparsity/bandwidth, iterative convergence)",
+     "status": "not_run",
+     "reason": "out of scope for a review package and explicitly left open by the report."
+    }
+   ],
+   "independence_limitations": [
+    "The review used the report markdown plus the upstream repository only; no producer explanation, chat or transcript was consulted.",
+    "Reading any report_id other than 2506 is forbidden by the package boundary, so the cross-report consistency statement could not be checked.",
+    "The local TensorFVM checkout is at 0f13a8d3, later than the producer's 81a506d8; the reviewer re-ran the producer's script there, i.e. numbers were reproduced on a drifted tree (the audit and operator files were unchanged in between, but this was not exhaustively proven).",
+    "Reviewer probes measure structure (adjointness defect, affine reproduction), not a reference solution: consistency/scale of K remains unverified, exactly as the report declares.",
+    "Reproduction used the producer's own geometry family and driver script; a bug present in three_tetrahedra/two_tetrahedra geometry construction would be reproduced rather than detected."
+   ],
+   "reproduction": {
+    "harness": "reviewer-side, output written to work/wp-2506-04/repro (source repository untouched)",
+    "producer_audit_rerun": {
+     "points": 41,
+     "legacy_energy_producing_points": 2,
+     "first_failing_skew": 0.9750000000000001,
+     "first_failing_angle": 86.21927414382452,
+     "compatible_min_rate": -3.9354221388698702,
+     "compatible_min_lambda": 0.360338689076395,
+     "legacy_damping0_min_rate": -0.9600000000000002,
+     "legacy_damping0_energy_producing_points": 20,
+     "legacy_rate_at_skew1": 4.8328045449105765,
+     "legacy_rate_at_skew1_damping0": 0.39063370471576153
+    },
+    "checks": "python3 work/wp-2506-04/verify_review.py"
+   },
+   "disposition": "request changes — fix F1 docstring and F2 wording; F3/F5 are one-line corrections. Numbers and the falsification result are accepted as-is."
+  }
+ }
+}
