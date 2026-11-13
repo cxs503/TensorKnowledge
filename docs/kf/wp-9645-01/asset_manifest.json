@@ -1,0 +1,1982 @@
+{
+  "schema": "asset_manifest.v1",
+  "manifest_version": "1.0",
+  "package_id": "wp-9645-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9645",
+  "producer": "kf-worker/m18776",
+  "source": {
+    "uri": "tensor://reports/9645",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00",
+    "hash_scope": "UTF-8 bytes of the `markdown` field served by GET /api/v1/tensor/reports/9645 (byte-identical to docs/kf/wp-9645-01/source.md)",
+    "chars": 11824,
+    "bytes_utf8": 15967,
+    "lines": 196,
+    "title": "IN101-N09 ISO 19906 冰压设计分项系数目标可靠度反标定（成熟化）",
+    "scenario_key": "ice_partial_factors_target_inverse",
+    "platform_figures": [
+      "fig1_pa_joint.png",
+      "fig2_beta_vs_kappa.png",
+      "fig3_newton.png",
+      "fig4_iso_deviations.png",
+      "fig5_negative_control.png",
+      "fig6_sensitivity.png"
+    ],
+    "platform_tags": [
+      "IN101-N09",
+      "ISO19906",
+      "partial-factors",
+      "FORM",
+      "importance-sampling",
+      "negative-control",
+      "ice"
+    ],
+    "contract_hash": "sha256:a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00",
+    "contract_chars": 11824,
+    "hash_matches_contract": true,
+    "chars_matches_contract": true,
+    "title_matches_contract": true,
+    "scenario_matches_contract": true,
+    "platform_record": {
+      "id": "9645",
+      "title": "IN101-N09 ISO 19906 冰压设计分项系数目标可靠度反标定（成熟化）",
+      "summary": "两方程两未知量反问题解 (γ_f, ψ) = (1.4371, 0.9960)，κ*=1.4313，达到 β=4.000000000；Jacobian 条件数 4.79，三初值极差 7.9e-11；FORM 与闭式解析值、重要性抽样一致到 0.1% 量级；忽略 p–A 负相关使 γ_f 偏大 28.9%（检出）。机器判据 5/5 通过。",
+      "scenario_key": "ice_partial_factors_target_inverse",
+      "mission_id": 8350,
+      "status": "published",
+      "stage": null,
+      "tags": [
+        "IN101-N09",
+        "ISO19906",
+        "partial-factors",
+        "FORM",
+        "importance-sampling",
+        "negative-control",
+        "ice"
+      ],
+      "created_at": "2026-11-09T07:20:15.875461+00:00",
+      "created_by": 1,
+      "figures": [
+        {
+          "name": "fig1_pa_joint.png",
+          "caption": "图1 联合 p–A 状态：两种相关假设共享同一对边缘分布，只差 $\\rho_{\\ln p,\\ln A}$；右图为年极值冰力密度（散度膨胀即负控的物理内容）",
+          "has_payload": false
+        },
+        {
+          "name": "fig2_beta_vs_kappa.png",
+          "caption": "图2 可靠度指标随分项系数乘积的曲线、目标线、Newton 解、单变量二分解，以及 FORM/IS/粗 MC/Rao–Blackwell MC 四个独立估计",
+          "has_payload": false
+        },
+        {
+          "name": "fig3_newton.png",
+          "caption": "图3 左：三组分散初值的残差收敛（二次收敛、同一根）；右：设计值劈分约定 $\\gamma_f(\\kappa)$、$\\psi(\\kappa)$ 与解点",
+          "has_payload": false
+        },
+        {
+          "name": "fig4_iso_deviations.png",
+          "caption": "图4 与 ISO 19906 A.2×A.3 表格分项系数逐项偏差图（±15% 验收带），下图为缺口行的实际达到 $\\beta$",
+          "has_payload": false
+        },
+        {
+          "name": "fig5_negative_control.png",
+          "caption": "图5 负控：计入/忽略 p–A 负相关时的标定分项系数与载荷散度",
+          "has_payload": false
+        },
+        {
+          "name": "fig6_sensitivity.png",
+          "caption": "图6 左：包络定理伴随导数 vs 中心差分；右：标定分项系数对 $\\beta_T$ 的敏感性",
+          "has_payload": false
+        }
+      ]
+    }
+  },
+  "outline": {
+    "sections": [
+      {
+        "section_id": "S01",
+        "level": 1,
+        "heading": "# IN101-N09 — ISO 19906 ice-pressure partial-factor back-calibration at beta_T = 4.0 (mature: target-reliability inverse, FORM/IS/MC cross-checked)",
+        "start_line": 1,
+        "end_line": 14,
+        "start_char": 0,
+        "end_char": 147,
+        "chars": 651
+      },
+      {
+        "section_id": "S02",
+        "level": 2,
+        "heading": "## ① 案例介绍（物理背景 / 参数表）",
+        "start_line": 15,
+        "end_line": 33,
+        "start_char": 652,
+        "end_char": 673,
+        "chars": 833
+      },
+      {
+        "section_id": "S03",
+        "level": 2,
+        "heading": "## ② 怎么做的（方法 / 流程 / 工具链）",
+        "start_line": 34,
+        "end_line": 46,
+        "start_char": 1486,
+        "end_char": 1510,
+        "chars": 1522
+      },
+      {
+        "section_id": "S04",
+        "level": 2,
+        "heading": "## ③ 计算结果",
+        "start_line": 47,
+        "end_line": 138,
+        "start_char": 3009,
+        "end_char": 3018,
+        "chars": 4543
+      },
+      {
+        "section_id": "S05",
+        "level": 2,
+        "heading": "## ④ 结果图",
+        "start_line": 139,
+        "end_line": 164,
+        "start_char": 7553,
+        "end_char": 7561,
+        "chars": 1711
+      },
+      {
+        "section_id": "S06",
+        "level": 2,
+        "heading": "## ⑤ 注意点（坑 / 局限 / 适用范围）",
+        "start_line": 165,
+        "end_line": 173,
+        "start_char": 9265,
+        "end_char": 9288,
+        "chars": 1332
+      },
+      {
+        "section_id": "S07",
+        "level": 2,
+        "heading": "## ⑥ 误差判定（逐项 vs 基准，显式回答是否 <3 %）",
+        "start_line": 174,
+        "end_line": 189,
+        "start_char": 10598,
+        "end_char": 10629,
+        "chars": 780
+      },
+      {
+        "section_id": "S08",
+        "level": 2,
+        "heading": "## 审计链",
+        "start_line": 190,
+        "end_line": 196,
+        "start_char": 11379,
+        "end_char": 11385,
+        "chars": 445
+      }
+    ],
+    "chars": 11824,
+    "lines": 196
+  },
+  "tables": [
+    {
+      "table_id": "T01",
+      "semantic": "machine_criteria",
+      "author_label": null,
+      "header": "| 机器判据 | 结果 |",
+      "header_quote": "| 机器判据 | 结果 |\n|---|---|",
+      "start_line": 5,
+      "end_line": 11,
+      "start_char": 400,
+      "end_char": 633,
+      "n_rows": 5,
+      "locator": {
+        "method": "char_span",
+        "start_char": 400,
+        "end_char": 633,
+        "start_line": 5,
+        "end_line": 11,
+        "quote": "| 机器判据 | 结果 |\n|---|---|\n| `a_form_vs_simulation` | PASS |\n| `b_inverse_solved_unique` | PASS |\n| `c_beta_sensitivity_vs_finite_difference` | PASS |\n| `d_iso_table_deviation_map` | PASS |\n| `e_negative_control_pa_correlation` | PASS |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T02",
+      "semantic": "param_table",
+      "author_label": null,
+      "header": "| 参数 | 取值 | 说明 |",
+      "header_quote": "| 参数 | 取值 | 说明 |\n|---|---|---|",
+      "start_line": 19,
+      "end_line": 32,
+      "start_char": 946,
+      "end_char": 1484,
+      "n_rows": 12,
+      "locator": {
+        "method": "char_span",
+        "start_char": 946,
+        "end_char": 1484,
+        "start_line": 19,
+        "end_line": 32,
+        "quote": "| 参数 | 取值 | 说明 |\n|---|---|---|\n| $p_0$ | 2.500 MPa | 参考面积处冰压中值 |\n| $ex$ | 0.400 | ISO 压力–面积指数 |\n| $A_0$ / $A_{med}$ | 5.00 / 5.00 m² | 参考面积 / 年极值接触面积中值 |\n| CoV($A$) | 0.350 | 年极值接触面积对数正态变异系数 |\n| CoV($\\varepsilon_p$) | 0.150 | 压力规律认知不确定性（中值归一）|\n| CoV($k_F$) | 0.100 | 载荷模型不确定性 |\n| CoV($R$) | 0.120 | 构件抗力变异系数 |\n| 特征冰力 $F_k$ | 23.517 MN | 100 年超越（年超越概率 1e-2）|\n| 特征抗力 $R_k$ | 33.660 MN | 5 % 分位 |\n| $\\rho_{\\ln p,\\ln A}$ | -0.6737 | 由指数与面积散度解析给出 |\n| $\\sigma_{\\ln F}$ | 0.2717 | 计入负相关 |\n| $\\sigma_{\\ln F}$（$\\rho$=0 对照）| 0.4077 | 同一对边缘分布，忽略相关 |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T03",
+      "semantic": "t1_inverse",
+      "author_label": null,
+      "header": "| 量 | 值 |",
+      "header_quote": "| 量 | 值 |\n|---|---|",
+      "start_line": 51,
+      "end_line": 64,
+      "start_char": 3034,
+      "end_char": 3495,
+      "n_rows": 12,
+      "locator": {
+        "method": "char_span",
+        "start_char": 3034,
+        "end_char": 3495,
+        "start_line": 51,
+        "end_line": 64,
+        "quote": "| 量 | 值 |\n|---|---|\n| $\\gamma_f^*$ | **1.437056** |\n| $\\psi^*$ | **0.996007** |\n| $\\kappa^*=\\gamma_f^*\\psi^*$ | **1.431318** |\n| $F^*$ (设计点冰力) | 33.7950 MN |\n| $R^*$ (设计点抗力) | 33.7950 MN |\n| 达到的 $\\beta$ | 4.000000000000 |\n| $|\\beta-\\beta_T|$ | 0.00e+00 |\n| Newton 迭代数（三初值） | [7, 5, 5] |\n| $\\gamma_f^*$ 三初值极差 | 7.88e-11 |\n| Jacobian 条件数 | 4.791 |\n| $\\kappa$ 单变量二分解（独立复核）| 1.431318 ($\\beta$=4.000000000) |\n| 设计点方向余弦 $\\alpha$ | [0.3361, -0.0915, 0.8464, -0.4028] |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T04",
+      "semantic": "t2_form_verify",
+      "author_label": null,
+      "header": "| 方法 | $\\beta$ | $P_f$ | 与 FORM 相对误差 | 1σ 区间覆盖 FORM |",
+      "header_quote": "| 方法 | $\\beta$ | $P_f$ | 与 FORM 相对误差 | 1σ 区间覆盖 FORM |\n|---|---|---|---|---|",
+      "start_line": 68,
+      "end_line": 74,
+      "start_char": 3525,
+      "end_char": 3926,
+      "n_rows": 5,
+      "locator": {
+        "method": "char_span",
+        "start_char": 3525,
+        "end_char": 3926,
+        "start_line": 68,
+        "end_line": 74,
+        "quote": "| 方法 | $\\beta$ | $P_f$ | 与 FORM 相对误差 | 1σ 区间覆盖 FORM |\n|---|---|---|---|---|\n| FORM | 4.000000 | 3.1671e-05 | — | — |\n| 闭式 $\\beta_{ln}$（解析）| 4.000000 | — | 6.46e-09 | — |\n| 设计点重要性抽样 | 3.997451 | 3.2014e-05 | -6.372e-04 | 否（1σ 带仅 ±4.5e-03，比 FORM 收敛容差还窄） |\n| 粗 Monte Carlo | 3.976286 | 3.5000e-05 | -5.929e-03 | 否（95 % 带：True，区间 [3.94, 4.019]） |\n| 粗 MC + 抗力解析积分 | 4.002966 | 3.1277e-05 | +7.416e-04 | 是 |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T05",
+      "semantic": "t3_derivatives",
+      "author_label": null,
+      "header": "| 导数 | 解析（伴随）| 中心差分 | 相对误差 |",
+      "header_quote": "| 导数 | 解析（伴随）| 中心差分 | 相对误差 |\n|---|---|---|---|",
+      "start_line": 78,
+      "end_line": 83,
+      "start_char": 3966,
+      "end_char": 4245,
+      "n_rows": 4,
+      "locator": {
+        "method": "char_span",
+        "start_char": 3966,
+        "end_char": 4245,
+        "start_line": 78,
+        "end_line": 83,
+        "quote": "| 导数 | 解析（伴随）| 中心差分 | 相对误差 |\n|---|---|---|---|\n| $\\partial\\beta/\\partial\\kappa$ | 2.353844 | 2.353845 | -3.33e-07 |\n| $\\partial\\beta/\\partial\\gamma_f$ | 2.344445 | 2.344446 | -3.33e-07 |\n| $\\partial\\beta/\\partial\\psi$ | 3.382607 | 3.382608 | -3.33e-07 |\n| 最大相对误差 | | | 3.33e-07 |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T06",
+      "semantic": "t4_iso_deviation",
+      "author_label": null,
+      "header": "| 表格对（$\\gamma_F\\times\\gamma_M$）| 表格值 | $\\kappa_{table}$ | $\\Delta\\gamma_f$ | $\\Delta\\psi$ | $\\Delta\\kappa$ | 判定 | 按表设计的 $\\beta$ |",
+      "header_quote": "| 表格对（$\\gamma_F\\times\\gamma_M$）| 表格值 | $\\kappa_{table}$ | $\\Delta\\gamma_f$ | $\\Delta\\psi$ | $\\Delta\\kappa$ | 判定 | 按表设计的 $\\beta$ |\n|---|---|---|---|---|---|---|---|",
+      "start_line": 87,
+      "end_line": 98,
+      "start_char": 4283,
+      "end_char": 5648,
+      "n_rows": 10,
+      "locator": {
+        "method": "char_span",
+        "start_char": 4283,
+        "end_char": 5648,
+        "start_line": 87,
+        "end_line": 98,
+        "quote": "| 表格对（$\\gamma_F\\times\\gamma_M$）| 表格值 | $\\kappa_{table}$ | $\\Delta\\gamma_f$ | $\\Delta\\psi$ | $\\Delta\\kappa$ | 判定 | 按表设计的 $\\beta$ |\n|---|---|---|---|---|---|---|---|\n| ice_action_extreme x steel_plate_yielding | (1.35, 1.10) | 1.4850 | -6.06 % | +10.44 % | +3.75 % | 带内/偏保守 | 4.1240 |\n| ice_action_extreme x steel_plate_buckling | (1.35, 1.15) | 1.5525 | -6.06 % | +15.46 % | +8.47 % | 超差/偏保守 | 4.2738 |\n| ice_action_extreme x steel_weld_connection | (1.35, 1.25) | 1.6875 | -6.06 % | +25.50 % | +17.90 % | 超差/偏保守 | 4.5547 |\n| ice_action_abnormal x steel_plate_yielding | (1.10, 1.10) | 1.2100 | -23.45 % | +10.44 % | -15.46 % | 超差/不保守 | 3.4341 |\n| ice_action_abnormal x steel_plate_buckling | (1.10, 1.15) | 1.2650 | -23.45 % | +15.46 % | -11.62 % | 超差/不保守 | 3.5838 |\n| ice_action_abnormal x steel_weld_connection | (1.10, 1.25) | 1.3750 | -23.45 % | +25.50 % | -3.93 % | 超差/不保守 | 3.8648 |\n| ice_action_frequent x steel_plate_yielding | (1.00, 1.10) | 1.1000 | -30.41 % | +10.44 % | -23.15 % | 超差/不保守 | 3.1130 |\n| ice_action_frequent x steel_plate_buckling | (1.00, 1.15) | 1.1500 | -30.41 % | +15.46 % | -19.65 % | 超差/不保守 | 3.2627 |\n| ice_action_frequent x steel_weld_connection | (1.00, 1.25) | 1.2500 | -30.41 % | +25.50 % | -12.67 % | 超差/不保守 | 3.5436 |\n| repo_anchor gamma_ice x gamma_m | (1.25, 1.15) | 1.4375 | -13.02 % | +15.46 % | +0.43 % | 超差/偏保守 | 4.0145 |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T07",
+      "semantic": "t5_nonconservative",
+      "author_label": null,
+      "header": "| 表格对 | $\\kappa$ 缺口 | 达到的 $\\beta$ | $\\Delta\\beta$ | $P_f/P_{f,T}$ | 按表所需 $R_k$ / 标定所需 $R_k$ |",
+      "header_quote": "| 表格对 | $\\kappa$ 缺口 | 达到的 $\\beta$ | $\\Delta\\beta$ | $P_f/P_{f,T}$ | 按表所需 $R_k$ / 标定所需 $R_k$ |\n|---|---|---|---|---|---|",
+      "start_line": 102,
+      "end_line": 109,
+      "start_char": 5703,
+      "end_char": 6455,
+      "n_rows": 6,
+      "locator": {
+        "method": "char_span",
+        "start_char": 5703,
+        "end_char": 6455,
+        "start_line": 102,
+        "end_line": 109,
+        "quote": "| 表格对 | $\\kappa$ 缺口 | 达到的 $\\beta$ | $\\Delta\\beta$ | $P_f/P_{f,T}$ | 按表所需 $R_k$ / 标定所需 $R_k$ |\n|---|---|---|---|---|---|\n| ice_action_abnormal x steel_plate_yielding | +15.46 % | 3.4341 | 0.5659 | 9.39× | 28.455 / 33.660 MN |\n| ice_action_abnormal x steel_plate_buckling | +11.62 % | 3.5838 | 0.4162 | 5.35× | 29.749 / 33.660 MN |\n| ice_action_abnormal x steel_weld_connection | +3.93 % | 3.8648 | 0.1352 | 1.76× | 32.336 / 33.660 MN |\n| ice_action_frequent x steel_plate_yielding | +23.15 % | 3.1130 | 0.8870 | 29.24× | 25.869 / 33.660 MN |\n| ice_action_frequent x steel_plate_buckling | +19.65 % | 3.2627 | 0.7373 | 17.42× | 27.044 / 33.660 MN |\n| ice_action_frequent x steel_weld_connection | +12.67 % | 3.5436 | 0.4564 | 6.23× | 29.396 / 33.660 MN |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T08",
+      "semantic": "t6_negative_control",
+      "author_label": null,
+      "header": "| 模型 | $\\kappa^*$ | $\\gamma_f^*$ | $\\psi^*$ | $\\sigma_{\\ln F}$ |",
+      "header_quote": "| 模型 | $\\kappa^*$ | $\\gamma_f^*$ | $\\psi^*$ | $\\sigma_{\\ln F}$ |\n|---|---|---|---|---|",
+      "start_line": 113,
+      "end_line": 116,
+      "start_char": 6486,
+      "end_char": 6710,
+      "n_rows": 2,
+      "locator": {
+        "method": "char_span",
+        "start_char": 6486,
+        "end_char": 6710,
+        "start_line": 113,
+        "end_line": 116,
+        "quote": "| 模型 | $\\kappa^*$ | $\\gamma_f^*$ | $\\psi^*$ | $\\sigma_{\\ln F}$ |\n|---|---|---|---|---|\n| 计入 $\\rho_{\\ln p,\\ln A}$=-0.6737 | 1.431318 | 1.437056 | 0.996007 | 0.2717 |\n| 忽略相关（$\\rho$=0）| 1.740922 | 1.852433 | 0.939803 | 0.4077 |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T09",
+      "semantic": "t7_beta_t_sensitivity",
+      "author_label": null,
+      "header": "| $\\beta_T$ | $P_{f,T}$ | $\\gamma_f^*$ | $\\psi^*$ | $\\kappa^*$ | $\\mathrm{d}\\gamma_f/\\mathrm{d}\\beta_T$ |",
+      "header_quote": "| $\\beta_T$ | $P_{f,T}$ | $\\gamma_f^*$ | $\\psi^*$ | $\\kappa^*$ | $\\mathrm{d}\\gamma_f/\\mathrm{d}\\beta_T$ |\n|---|---|---|---|---|---|",
+      "start_line": 122,
+      "end_line": 127,
+      "start_char": 6881,
+      "end_char": 7242,
+      "n_rows": 4,
+      "locator": {
+        "method": "char_span",
+        "start_char": 6881,
+        "end_char": 7242,
+        "start_line": 122,
+        "end_line": 127,
+        "quote": "| $\\beta_T$ | $P_{f,T}$ | $\\gamma_f^*$ | $\\psi^*$ | $\\kappa^*$ | $\\mathrm{d}\\gamma_f/\\mathrm{d}\\beta_T$ |\n|---|---|---|---|---|---|\n| 3.30 | 4.834e-04 | 1.20749 | 0.96298 | 1.16279 | — |\n| 3.80 | 7.235e-05 | 1.36734 | 0.98646 | 1.34882 | 0.3280 |\n| 4.00 | 3.167e-05 | 1.43706 | 0.99601 | 1.43132 | 0.3620 |\n| 4.30 | 8.540e-06 | 1.54835 | 1.01050 | 1.56462 | — |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T10",
+      "semantic": "t8_param_sensitivity",
+      "author_label": null,
+      "header": "| 参数 | 名义值 | $\\partial\\beta/\\partial\\theta$ |",
+      "header_quote": "| 参数 | 名义值 | $\\partial\\beta/\\partial\\theta$ |\n|---|---|---|",
+      "start_line": 131,
+      "end_line": 137,
+      "start_char": 7313,
+      "end_char": 7551,
+      "n_rows": 5,
+      "locator": {
+        "method": "char_span",
+        "start_char": 7313,
+        "end_char": 7551,
+        "start_line": 131,
+        "end_line": 137,
+        "quote": "| 参数 | 名义值 | $\\partial\\beta/\\partial\\theta$ |\n|---|---|---|\n| exponent | 0.4000 | +1.1474 |\n| a_cov | 0.3500 | -1.8573 |\n| pressure_model_cov | 0.1500 | -2.4270 |\n| load_model_cov | 0.1000 | -1.6383 |\n| resistance_cov | 0.1200 | +0.1134 |",
+        "unique": true
+      }
+    },
+    {
+      "table_id": "T11",
+      "semantic": "error_judgement",
+      "author_label": null,
+      "header": "| 关键量 | 基准 | 误差 | <3 % ? |",
+      "header_quote": "| 关键量 | 基准 | 误差 | <3 % ? |\n|---|---|---|---|",
+      "start_line": 176,
+      "end_line": 186,
+      "start_char": 10631,
+      "end_char": 11194,
+      "n_rows": 9,
+      "locator": {
+        "method": "char_span",
+        "start_char": 10631,
+        "end_char": 11194,
+        "start_line": 176,
+        "end_line": 186,
+        "quote": "| 关键量 | 基准 | 误差 | <3 % ? |\n|---|---|---|---|\n| FORM $\\beta$ | 闭式解析 $\\beta_{ln}$ | 6.46e-09 | 是 |\n| FORM $\\beta$ | 设计点重要性抽样 | 6.37e-04 | 是 |\n| 反问题残差 $|\\beta(\\gamma^*) - \\beta_T|$ | 目标 4.0 | 0.00e+00 | 是（阈值 1e-3） |\n| 伴随 $\\partial\\beta/\\partial\\kappa$ | 中心差分 | -3.33e-07 | 是 |\n| 伴随 $\\partial\\beta/\\partial\\gamma_f$ | 中心差分 | -3.33e-07 | 是 |\n| 伴随 $\\partial\\beta/\\partial\\psi$ | 中心差分 | -3.33e-07 | 是 |\n| $\\kappa^*$（Newton）| $\\kappa^*$（二分）| 2.31e-11 | 是 |\n| 粗 MC $\\beta$ | FORM | 5.93e-03 | 是 |\n| 与 ISO A.2×A.3（极值+屈服）$\\kappa$ 偏差 | 表格 1.485 | +0.0375 | 否（表格值高于标定值，偏保守侧） |",
+        "unique": true
+      }
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "report 9645 markdown (the registered source)",
+      "in_report_section": "document",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256 of the cached UTF-8 bytes equals the pinned contract hash and the served report id equals 9645",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 147,
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "# IN101-N09 — ISO 19906 ice-pressure partial-factor back-calibration at beta_T = 4.0 (mature: target-reliability inverse, FORM/IS/MC cross-checked)",
+        "unique": true,
+        "doc_chars": 11824,
+        "doc_bytes_utf8": 15967,
+        "doc_lines": 196
+      },
+      "note": "Source of record for every locator in this manifest; cached verbatim as docs/kf/wp-9645-01/source.md, so all quotes below can be re-sliced offline."
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "source_code_reference",
+      "label": "p_area_joint.py",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1512,
+        "end_char": 1990,
+        "start_line": 36,
+        "end_line": 36,
+        "quote": "1. **联合 p–A 状态**（`p_area_joint.py`）。冰压与面积均为对数正态；ISO 幂律把两者在对数空间的相关锁定为 $\\rho_{\\ln p,\\ln A}=-ex\\,\\sigma_{\\ln A}/\\sigma_{\\ln p}$。$\\text{Nataf}$ 变换吃的是**物理**相关系数，故用对数正态的精确关系 $\\rho_{phys}=(e^{\\rho_0 s_1 s_2}-1)/\\sqrt{(e^{s_1^2}-1)(e^{s_2^2}-1)}$ 反解后传入，使组装出的可靠度问题恰好具有目标对数相关（实测 `rho0` 回代误差 < 1e-8）。由于 $\\ln F=\\ln k_F+\\ln p+\\ln A$ 是正态变量之和，$F$ 严格对数正态，失效域 $\\{R<F\\}$ 在 $u$ 空间是**半空间**，于是 FORM 在该问题上精确，并有闭式 $\\beta_{ln}=(\\mu_{\\ln R}-\\mu_{\\ln F})/\\sqrt{\\sigma_{\\ln R}^2+\\sigma_{\\ln F}^2}$ 作为解析基准。",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "p_area_joint.py",
+        "via": "inline_code",
+        "alt": "p_area_joint.py",
+        "platform_figure_name": null,
+        "platform_caption": null
+      },
+      "note": "cross-repository path (TensorPhysics); its content is not in this worktree"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "source_code_reference",
+      "label": "target_reliability_inverse.py",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1991,
+        "end_char": 2107,
+        "start_line": 37,
+        "end_line": 37,
+        "quote": "2. **反问题两方程两未知量**（`target_reliability_inverse.py`）。极限状态只通过 $\\kappa=\\gamma_f\\psi$ 依赖分项系数对（构件按 $R_k=\\kappa F_k$ 定尺），因此",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "target_reliability_inverse.py",
+        "via": "inline_code",
+        "alt": "target_reliability_inverse.py",
+        "platform_figure_name": null,
+        "platform_caption": null
+      },
+      "note": "cross-repository path (TensorPhysics); its content is not in this worktree"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "figure_reference",
+      "label": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig1_pa_joint.png",
+      "in_report_section": "④ 结果图",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7741,
+        "end_char": 7827,
+        "start_line": 143,
+        "end_line": 143,
+        "quote": "![fig1](/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig1_pa_joint.png)",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig1_pa_joint.png",
+        "via": "markdown_image",
+        "alt": "fig1",
+        "platform_figure_name": "fig1_pa_joint.png",
+        "platform_caption": "图1 联合 p–A 状态：两种相关假设共享同一对边缘分布，只差 $\\rho_{\\ln p,\\ln A}$；右图为年极值冰力密度（散度膨胀即负控的物理内容）"
+      },
+      "note": "platform record lists this figure as name+caption only (png_base64 empty: has_payload=False); absolute host path outside this worktree and not served as a platform attachment, so neither bytes nor a hash can be registered"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "figure_reference",
+      "label": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig2_beta_vs_kappa.png",
+      "in_report_section": "④ 结果图",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 8015,
+        "end_char": 8106,
+        "start_line": 147,
+        "end_line": 147,
+        "quote": "![fig2](/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig2_beta_vs_kappa.png)",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig2_beta_vs_kappa.png",
+        "via": "markdown_image",
+        "alt": "fig2",
+        "platform_figure_name": "fig2_beta_vs_kappa.png",
+        "platform_caption": "图2 可靠度指标随分项系数乘积的曲线、目标线、Newton 解、单变量二分解，以及 FORM/IS/粗 MC/Rao–Blackwell MC 四个独立估计"
+      },
+      "note": "platform record lists this figure as name+caption only (png_base64 empty: has_payload=False); absolute host path outside this worktree and not served as a platform attachment, so neither bytes nor a hash can be registered"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "figure_reference",
+      "label": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig3_newton.png",
+      "in_report_section": "④ 结果图",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 8321,
+        "end_char": 8405,
+        "start_line": 151,
+        "end_line": 151,
+        "quote": "![fig3](/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig3_newton.png)",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig3_newton.png",
+        "via": "markdown_image",
+        "alt": "fig3",
+        "platform_figure_name": "fig3_newton.png",
+        "platform_caption": "图3 左：三组分散初值的残差收敛（二次收敛、同一根）；右：设计值劈分约定 $\\gamma_f(\\kappa)$、$\\psi(\\kappa)$ 与解点"
+      },
+      "note": "platform record lists this figure as name+caption only (png_base64 empty: has_payload=False); absolute host path outside this worktree and not served as a platform attachment, so neither bytes nor a hash can be registered"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "figure_reference",
+      "label": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig4_iso_deviations.png",
+      "in_report_section": "④ 结果图",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 8587,
+        "end_char": 8679,
+        "start_line": 155,
+        "end_line": 155,
+        "quote": "![fig4](/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig4_iso_deviations.png)",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig4_iso_deviations.png",
+        "via": "markdown_image",
+        "alt": "fig4",
+        "platform_figure_name": "fig4_iso_deviations.png",
+        "platform_caption": "图4 与 ISO 19906 A.2×A.3 表格分项系数逐项偏差图（±15% 验收带），下图为缺口行的实际达到 $\\beta$"
+      },
+      "note": "platform record lists this figure as name+caption only (png_base64 empty: has_payload=False); absolute host path outside this worktree and not served as a platform attachment, so neither bytes nor a hash can be registered"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "figure_reference",
+      "label": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig5_negative_control.png",
+      "in_report_section": "④ 结果图",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 8913,
+        "end_char": 9007,
+        "start_line": 159,
+        "end_line": 159,
+        "quote": "![fig5](/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig5_negative_control.png)",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig5_negative_control.png",
+        "via": "markdown_image",
+        "alt": "fig5",
+        "platform_figure_name": "fig5_negative_control.png",
+        "platform_caption": "图5 负控：计入/忽略 p–A 负相关时的标定分项系数与载荷散度"
+      },
+      "note": "platform record lists this figure as name+caption only (png_base64 empty: has_payload=False); absolute host path outside this worktree and not served as a platform attachment, so neither bytes nor a hash can be registered"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "figure_reference",
+      "label": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig6_sensitivity.png",
+      "in_report_section": "④ 结果图",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 9174,
+        "end_char": 9263,
+        "start_line": 163,
+        "end_line": 163,
+        "quote": "![fig6](/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig6_sensitivity.png)",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/fig6_sensitivity.png",
+        "via": "markdown_image",
+        "alt": "fig6",
+        "platform_figure_name": "fig6_sensitivity.png",
+        "platform_caption": "图6 左：包络定理伴随导数 vs 中心差分；右：标定分项系数对 $\\beta_T$ 的敏感性"
+      },
+      "note": "platform record lists this figure as name+caption only (png_base64 empty: has_payload=False); absolute host path outside this worktree and not served as a platform attachment, so neither bytes nor a hash can be registered"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "data_artifact_reference",
+      "label": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/in101_n09_results.json",
+      "in_report_section": "审计链",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 11387,
+        "end_char": 11512,
+        "start_line": 192,
+        "end_line": 192,
+        "quote": "- 结果 JSON：`/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/in101_n09_results.json`（本报告所有数字的唯一来源，`run_study()` 直出）",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/in101_n09_results.json",
+        "via": "inline_code",
+        "alt": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/in101_n09_results.json",
+        "platform_figure_name": null,
+        "platform_caption": null
+      },
+      "note": "absolute host path outside this worktree and not served as a platform attachment, so neither bytes nor a hash can be registered"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "library_reference",
+      "label": "tensorphysics.structural.reliability",
+      "in_report_section": "审计链",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 11624,
+        "end_char": 11740,
+        "start_line": 194,
+        "end_line": 194,
+        "quote": "- 求解器：`tensorphysics.structural.reliability`（FORM/HL-RF、SORM、IS、MC）与 `tensorphysics.structural.distributions`（Nataf）",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "tensorphysics.structural.reliability",
+        "via": "inline_code",
+        "alt": "tensorphysics.structural.reliability",
+        "platform_figure_name": null,
+        "platform_caption": null
+      },
+      "note": "cross-repository Python package (TensorPhysics); its content is not in this worktree and is not fetched by an asset-registration package"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "library_reference",
+      "label": "tensorphysics.structural.distributions",
+      "in_report_section": "审计链",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 11624,
+        "end_char": 11740,
+        "start_line": 194,
+        "end_line": 194,
+        "quote": "- 求解器：`tensorphysics.structural.reliability`（FORM/HL-RF、SORM、IS、MC）与 `tensorphysics.structural.distributions`（Nataf）",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "tensorphysics.structural.distributions",
+        "via": "inline_code",
+        "alt": "tensorphysics.structural.distributions",
+        "platform_figure_name": null,
+        "platform_caption": null
+      },
+      "note": "cross-repository Python package (TensorPhysics); its content is not in this worktree and is not fetched by an asset-registration package"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "source_code_reference",
+      "label": "benchmarks/iso19906_partial_factors/run_in101_n09.py",
+      "in_report_section": "审计链",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "attempt to read the referenced bytes from this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 11741,
+        "end_char": 11823,
+        "start_line": 195,
+        "end_line": 195,
+        "quote": "- 复现：`PYTHONPATH=src python3 benchmarks/iso19906_partial_factors/run_in101_n09.py`",
+        "unique": true
+      },
+      "reference": {
+        "path_reference": "benchmarks/iso19906_partial_factors/run_in101_n09.py",
+        "via": "inline_code",
+        "alt": "PYTHONPATH=src python3 benchmarks/iso19906_partial_factors/run_in101_n09.py",
+        "platform_figure_name": null,
+        "platform_caption": null
+      },
+      "note": "cross-repository path (TensorPhysics); its content is not in this worktree"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "standard_table_reference",
+      "label": "ISO 19906 Annex A.2 (load factors) x A.3 (resistance factors)",
+      "in_report_section": "⑤ 注意点（坑 / 局限 / 适用范围）",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "the report states the Annex A primary text is not in the worktree and that A.2/A.3 were transcribed from secondary literature",
+        "result": "absent"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 10170,
+        "end_char": 10436,
+        "start_line": 171,
+        "end_line": 171,
+        "quote": "5. **表格值出处受限**：ISO 19906 Annex A 正文不在工作树内，A.2/A.3 为二次文献转录（`source_tier=secondary`, `primary_source_verified=False`），由它得出的裁决一律 `conditional`；仓内锚点 (1.25, 1.15) 是全可验证的。偏差 >15 % 的行中 SLS（$\\gamma_F$=1.00）行按 ULS 目标 $\\beta_T$ 裁决属于口径错配，算例的物理含义是「若把使用极限状态的分项系数用到极值状态」，不是对规范的指摘。",
+        "unique": true
+      },
+      "note": "Registered as declared_absent on the report's own authority (source_tier=secondary, primary_source_verified=False in the results JSON). No table value is copied into this manifest."
+    }
+  ],
+  "number_audit": {
+    "purpose": "recompute every number this source publishes about itself from other published numbers of the same source; no solver output is re-derived",
+    "families": {
+      "F1_kappa_product": {
+        "checks": 7,
+        "passed": 7,
+        "max_error": 7.877374115620549e-06
+      },
+      "F2_kappa_vs_ratio": {
+        "checks": 1,
+        "passed": 1,
+        "max_error": 9.073262032237408e-06
+      },
+      "F3_phi": {
+        "checks": 5,
+        "passed": 5,
+        "max_error": 4.9940376702271095e-05
+      },
+      "F4_iso_table": {
+        "checks": 40,
+        "passed": 40,
+        "max_error": 0.004695155094824877
+      },
+      "F5_nonconservative": {
+        "checks": 12,
+        "passed": 12,
+        "max_error": 0.0027208811215449964
+      },
+      "F6_negative_control": {
+        "checks": 2,
+        "passed": 2,
+        "max_error": 0.0047190923666278195
+      },
+      "F7_derivative": {
+        "checks": 2,
+        "passed": 2,
+        "max_error": 4.285714285717779e-05
+      },
+      "F8_form_table": {
+        "checks": 3,
+        "passed": 3,
+        "max_error": 0.00013486176675590417
+      },
+      "F9_adjoint_table": {
+        "checks": 3,
+        "passed": 3,
+        "max_error": 9.354018334393773e-08
+      },
+      "F10_inverse_consistency": {
+        "checks": 2,
+        "passed": 2,
+        "max_error": 0.0
+      },
+      "F11_criteria_summary": {
+        "checks": 2,
+        "passed": 2,
+        "max_error": 0.0
+      },
+      "F12_cross_section": {
+        "checks": 7,
+        "passed": 7,
+        "max_error": 0.00031387319522913504
+      }
+    },
+    "checks": [
+      {
+        "check_id": "F1.1",
+        "family": "F1_kappa_product",
+        "quantity": "kappa* = gamma_f* * psi*",
+        "declared": 1.431318,
+        "recomputed": 1.431317835392,
+        "error": 1.1500450582758083e-07,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表1 反问题解"
+      },
+      {
+        "check_id": "F1.2.1",
+        "family": "F1_kappa_product",
+        "quantity": "kappa = gamma_f * psi (计入 $\\rho_{\\ln p,\\ln A}$=-0)",
+        "declared": 1.431318,
+        "recomputed": 1.431317835392,
+        "error": 1.1500450582758083e-07,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表6 行 115"
+      },
+      {
+        "check_id": "F1.2.2",
+        "family": "F1_kappa_product",
+        "quantity": "kappa = gamma_f * psi (忽略相关（$\\rho$=0）)",
+        "declared": 1.740922,
+        "recomputed": 1.740922090699,
+        "error": 5.209825331802322e-08,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表6 行 116"
+      },
+      {
+        "check_id": "F1.3.3",
+        "family": "F1_kappa_product",
+        "quantity": "kappa*(beta_T=3.30) = gamma_f * psi",
+        "declared": 1.16279,
+        "recomputed": 1.1627887202,
+        "error": 1.1006298719321675e-06,
+        "error_kind": "relative",
+        "tolerance": 1.3634039452025379e-05,
+        "verdict": "PASS",
+        "locator": "表7 行 124"
+      },
+      {
+        "check_id": "F1.3.4",
+        "family": "F1_kappa_product",
+        "quantity": "kappa*(beta_T=3.80) = gamma_f * psi",
+        "declared": 1.34882,
+        "recomputed": 1.3488262164,
+        "error": 4.60874790577798e-06,
+        "error_kind": "relative",
+        "tolerance": 1.2433308061598953e-05,
+        "verdict": "PASS",
+        "locator": "表7 行 125"
+      },
+      {
+        "check_id": "F1.3.5",
+        "family": "F1_kappa_product",
+        "quantity": "kappa*(beta_T=4.00) = gamma_f * psi",
+        "declared": 1.43132,
+        "recomputed": 1.4313261306,
+        "error": 4.2831608178132986e-06,
+        "error_kind": "relative",
+        "tolerance": 1.1993634696538545e-05,
+        "verdict": "PASS",
+        "locator": "表7 行 126"
+      },
+      {
+        "check_id": "F1.3.6",
+        "family": "F1_kappa_product",
+        "quantity": "kappa*(beta_T=4.30) = gamma_f * psi",
+        "declared": 1.56462,
+        "recomputed": 1.564607675,
+        "error": 7.877374115620549e-06,
+        "error_kind": "relative",
+        "tolerance": 1.1373953678908477e-05,
+        "verdict": "PASS",
+        "locator": "表7 行 127"
+      },
+      {
+        "check_id": "F2.1",
+        "family": "F2_kappa_vs_ratio",
+        "quantity": "kappa* = R_k / F_k",
+        "declared": 1.431318,
+        "recomputed": 1.431305013395,
+        "error": 9.073262032237408e-06,
+        "error_kind": "relative",
+        "tolerance": 0.0002,
+        "verdict": "PASS",
+        "locator": "表1 反问题解 + 参数表"
+      },
+      {
+        "check_id": "F3.1",
+        "family": "F3_phi",
+        "quantity": "P_f(beta_T=4.00) = Phi(-beta_T)",
+        "declared": 3.1671e-05,
+        "recomputed": 3.1671242e-05,
+        "error": 7.635732164751406e-06,
+        "error_kind": "relative",
+        "tolerance": 0.005,
+        "verdict": "PASS",
+        "locator": "H1 目标行"
+      },
+      {
+        "check_id": "F3.2.9",
+        "family": "F3_phi",
+        "quantity": "P_f,T(beta_T=3.30) = Phi(-beta_T)",
+        "declared": 0.0004834,
+        "recomputed": 0.000483424142,
+        "error": 4.9940376702271095e-05,
+        "error_kind": "relative",
+        "tolerance": 0.005,
+        "verdict": "PASS",
+        "locator": "表7 行 124"
+      },
+      {
+        "check_id": "F3.2.10",
+        "family": "F3_phi",
+        "quantity": "P_f,T(beta_T=3.80) = Phi(-beta_T)",
+        "declared": 7.235e-05,
+        "recomputed": 7.2348044e-05,
+        "error": 2.703701128232827e-05,
+        "error_kind": "relative",
+        "tolerance": 0.005,
+        "verdict": "PASS",
+        "locator": "表7 行 125"
+      },
+      {
+        "check_id": "F3.2.11",
+        "family": "F3_phi",
+        "quantity": "P_f,T(beta_T=4.00) = Phi(-beta_T)",
+        "declared": 3.167e-05,
+        "recomputed": 3.1671242e-05,
+        "error": 3.9210117699468585e-05,
+        "error_kind": "relative",
+        "tolerance": 0.005,
+        "verdict": "PASS",
+        "locator": "表7 行 126"
+      },
+      {
+        "check_id": "F3.2.12",
+        "family": "F3_phi",
+        "quantity": "P_f,T(beta_T=4.30) = Phi(-beta_T)",
+        "declared": 8.54e-06,
+        "recomputed": 8.539905e-06,
+        "error": 1.1069093036738197e-05,
+        "error_kind": "relative",
+        "tolerance": 0.005,
+        "verdict": "PASS",
+        "locator": "表7 行 127"
+      },
+      {
+        "check_id": "F4.0.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (ice_action_extreme x steel_pla)",
+        "declared": 1.485,
+        "recomputed": 1.485,
+        "error": 1.4952498648150252e-16,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 89"
+      },
+      {
+        "check_id": "F4.0.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (ice_action_extreme x steel_pla)",
+        "declared": 3.75,
+        "recomputed": 3.750529232498,
+        "error": 0.0005292324975902929,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 89"
+      },
+      {
+        "check_id": "F4.0.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (ice_action_extreme x steel_pla)",
+        "declared": -6.06,
+        "recomputed": -6.057940678721,
+        "error": 0.0020593212790691595,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 89"
+      },
+      {
+        "check_id": "F4.0.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (ice_action_extreme x steel_pla)",
+        "declared": 10.44,
+        "recomputed": 10.44099087657,
+        "error": 0.0009908765701549527,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 89"
+      },
+      {
+        "check_id": "F4.1.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (ice_action_extreme x steel_pla)",
+        "declared": 1.5525,
+        "recomputed": 1.5525,
+        "error": 0.0,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 90"
+      },
+      {
+        "check_id": "F4.1.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (ice_action_extreme x steel_pla)",
+        "declared": 8.47,
+        "recomputed": 8.466462379429,
+        "error": 0.003537620570705613,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 90"
+      },
+      {
+        "check_id": "F4.1.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (ice_action_extreme x steel_pla)",
+        "declared": -6.06,
+        "recomputed": -6.057940678721,
+        "error": 0.0020593212790691595,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 90"
+      },
+      {
+        "check_id": "F4.1.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (ice_action_extreme x steel_pla)",
+        "declared": 15.46,
+        "recomputed": 15.461035916414,
+        "error": 0.0010359164142332844,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 90"
+      },
+      {
+        "check_id": "F4.2.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (ice_action_extreme x steel_wel)",
+        "declared": 1.6875,
+        "recomputed": 1.6875,
+        "error": 0.0,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 91"
+      },
+      {
+        "check_id": "F4.2.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (ice_action_extreme x steel_wel)",
+        "declared": 17.9,
+        "recomputed": 17.898328673293,
+        "error": 0.0016713267072674398,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 91"
+      },
+      {
+        "check_id": "F4.2.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (ice_action_extreme x steel_wel)",
+        "declared": -6.06,
+        "recomputed": -6.057940678721,
+        "error": 0.0020593212790691595,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 91"
+      },
+      {
+        "check_id": "F4.2.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (ice_action_extreme x steel_wel)",
+        "declared": 25.5,
+        "recomputed": 25.501125996102,
+        "error": 0.0011259961024379095,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 91"
+      },
+      {
+        "check_id": "F4.3.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (ice_action_abnormal x steel_pl)",
+        "declared": 1.21,
+        "recomputed": 1.21,
+        "error": 1.835079379545713e-16,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 92"
+      },
+      {
+        "check_id": "F4.3.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (ice_action_abnormal x steel_pl)",
+        "declared": -15.46,
+        "recomputed": -15.462531736483,
+        "error": 0.0025317364834407385,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 92"
+      },
+      {
+        "check_id": "F4.3.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (ice_action_abnormal x steel_pl)",
+        "declared": -23.45,
+        "recomputed": -23.45461833081,
+        "error": 0.004618330809641691,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 92"
+      },
+      {
+        "check_id": "F4.3.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (ice_action_abnormal x steel_pl)",
+        "declared": 10.44,
+        "recomputed": 10.44099087657,
+        "error": 0.0009908765701549527,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 92"
+      },
+      {
+        "check_id": "F4.4.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (ice_action_abnormal x steel_pl)",
+        "declared": 1.265,
+        "recomputed": 1.265,
+        "error": 0.0,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 93"
+      },
+      {
+        "check_id": "F4.4.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (ice_action_abnormal x steel_pl)",
+        "declared": -11.62,
+        "recomputed": -11.619919542687,
+        "error": 8.04573127588526e-05,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 93"
+      },
+      {
+        "check_id": "F4.4.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (ice_action_abnormal x steel_pl)",
+        "declared": -23.45,
+        "recomputed": -23.45461833081,
+        "error": 0.004618330809641691,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 93"
+      },
+      {
+        "check_id": "F4.4.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (ice_action_abnormal x steel_pl)",
+        "declared": 15.46,
+        "recomputed": 15.461035916414,
+        "error": 0.0010359164142332844,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 93"
+      },
+      {
+        "check_id": "F4.5.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (ice_action_abnormal x steel_we)",
+        "declared": 1.375,
+        "recomputed": 1.375,
+        "error": 0.0,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 94"
+      },
+      {
+        "check_id": "F4.5.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (ice_action_abnormal x steel_we)",
+        "declared": -3.93,
+        "recomputed": -3.934695155095,
+        "error": 0.004695155094824877,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 94"
+      },
+      {
+        "check_id": "F4.5.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (ice_action_abnormal x steel_we)",
+        "declared": -23.45,
+        "recomputed": -23.45461833081,
+        "error": 0.004618330809641691,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 94"
+      },
+      {
+        "check_id": "F4.5.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (ice_action_abnormal x steel_we)",
+        "declared": 25.5,
+        "recomputed": 25.501125996102,
+        "error": 0.0011259961024379095,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 94"
+      },
+      {
+        "check_id": "F4.6.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (ice_action_frequent x steel_pl)",
+        "declared": 1.1,
+        "recomputed": 1.1,
+        "error": 0.0,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 95"
+      },
+      {
+        "check_id": "F4.6.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (ice_action_frequent x steel_pl)",
+        "declared": -23.15,
+        "recomputed": -23.147756124076,
+        "error": 0.0022438759241509842,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 95"
+      },
+      {
+        "check_id": "F4.6.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (ice_action_frequent x steel_pl)",
+        "declared": -30.41,
+        "recomputed": -30.413289391645,
+        "error": 0.003289391645136419,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 95"
+      },
+      {
+        "check_id": "F4.6.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (ice_action_frequent x steel_pl)",
+        "declared": 10.44,
+        "recomputed": 10.44099087657,
+        "error": 0.0009908765701549527,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 95"
+      },
+      {
+        "check_id": "F4.7.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (ice_action_frequent x steel_pl)",
+        "declared": 1.15,
+        "recomputed": 1.15,
+        "error": 0.0,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 96"
+      },
+      {
+        "check_id": "F4.7.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (ice_action_frequent x steel_pl)",
+        "declared": -19.65,
+        "recomputed": -19.654472311534,
+        "error": 0.004472311533856299,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 96"
+      },
+      {
+        "check_id": "F4.7.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (ice_action_frequent x steel_pl)",
+        "declared": -30.41,
+        "recomputed": -30.413289391645,
+        "error": 0.003289391645136419,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 96"
+      },
+      {
+        "check_id": "F4.7.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (ice_action_frequent x steel_pl)",
+        "declared": 15.46,
+        "recomputed": 15.461035916414,
+        "error": 0.0010359164142332844,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 96"
+      },
+      {
+        "check_id": "F4.8.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (ice_action_frequent x steel_we)",
+        "declared": 1.25,
+        "recomputed": 1.25,
+        "error": 0.0,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 97"
+      },
+      {
+        "check_id": "F4.8.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (ice_action_frequent x steel_we)",
+        "declared": -12.67,
+        "recomputed": -12.66790468645,
+        "error": 0.0020953135501624587,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 97"
+      },
+      {
+        "check_id": "F4.8.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (ice_action_frequent x steel_we)",
+        "declared": -30.41,
+        "recomputed": -30.413289391645,
+        "error": 0.003289391645136419,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 97"
+      },
+      {
+        "check_id": "F4.8.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (ice_action_frequent x steel_we)",
+        "declared": 25.5,
+        "recomputed": 25.501125996102,
+        "error": 0.0011259961024379095,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 97"
+      },
+      {
+        "check_id": "F4.9.1",
+        "family": "F4_iso_table",
+        "quantity": "kappa_table = gamma_F * gamma_M (repo_anchor gamma_ice x gamma_)",
+        "declared": 1.4375,
+        "recomputed": 1.4375,
+        "error": 0.0,
+        "error_kind": "relative",
+        "tolerance": 5e-06,
+        "verdict": "PASS",
+        "locator": "表4 行 98"
+      },
+      {
+        "check_id": "F4.9.2",
+        "family": "F4_iso_table",
+        "quantity": "Delta kappa (repo_anchor gamma_ice x gamma_)",
+        "declared": 0.43,
+        "recomputed": 0.431909610583,
+        "error": 0.0019096105826814092,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 98"
+      },
+      {
+        "check_id": "F4.9.3",
+        "family": "F4_iso_table",
+        "quantity": "Delta gamma_f (repo_anchor gamma_ice x gamma_)",
+        "declared": -13.02,
+        "recomputed": -13.016611739556,
+        "error": 0.003388260443582425,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 98"
+      },
+      {
+        "check_id": "F4.9.4",
+        "family": "F4_iso_table",
+        "quantity": "Delta psi (repo_anchor gamma_ice x gamma_)",
+        "declared": 15.46,
+        "recomputed": 15.461035916414,
+        "error": 0.0010359164142332844,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表4 行 98"
+      },
+      {
+        "check_id": "F5.0.1",
+        "family": "F5_nonconservative",
+        "quantity": "Delta beta = beta_T - beta (ice_action_abnormal x steel_pl)",
+        "declared": 0.5659,
+        "recomputed": 0.5659,
+        "error": 1.1102230246251565e-16,
+        "error_kind": "absolute",
+        "tolerance": 0.0001,
+        "verdict": "PASS",
+        "locator": "表5 行 104"
+      },
+      {
+        "check_id": "F5.0.2",
+        "family": "F5_nonconservative",
+        "quantity": "P_f/P_f,T (ice_action_abnormal x steel_pl)",
+        "declared": 9.39,
+        "recomputed": 9.385877947977,
+        "error": 0.00043917596693527776,
+        "error_kind": "relative",
+        "tolerance": 0.0005591054313099042,
+        "verdict": "PASS",
+        "locator": "表5 行 104"
+      },
+      {
+        "check_id": "F5.1.1",
+        "family": "F5_nonconservative",
+        "quantity": "Delta beta = beta_T - beta (ice_action_abnormal x steel_pl)",
+        "declared": 0.4162,
+        "recomputed": 0.4162,
+        "error": 1.1102230246251565e-16,
+        "error_kind": "absolute",
+        "tolerance": 0.0001,
+        "verdict": "PASS",
+        "locator": "表5 行 105"
+      },
+      {
+        "check_id": "F5.1.2",
+        "family": "F5_nonconservative",
+        "quantity": "P_f/P_f,T (ice_action_abnormal x steel_pl)",
+        "declared": 5.35,
+        "recomputed": 5.34603944753,
+        "error": 0.0007408386168324278,
+        "error_kind": "relative",
+        "tolerance": 0.0009813084112149533,
+        "verdict": "PASS",
+        "locator": "表5 行 105"
+      },
+      {
+        "check_id": "F5.2.1",
+        "family": "F5_nonconservative",
+        "quantity": "Delta beta = beta_T - beta (ice_action_abnormal x steel_we)",
+        "declared": 0.1352,
+        "recomputed": 0.1352,
+        "error": 2.220446049250313e-16,
+        "error_kind": "absolute",
+        "tolerance": 0.0001,
+        "verdict": "PASS",
+        "locator": "表5 行 106"
+      },
+      {
+        "check_id": "F5.2.2",
+        "family": "F5_nonconservative",
+        "quantity": "P_f/P_f,T (ice_action_abnormal x steel_we)",
+        "declared": 1.76,
+        "recomputed": 1.755224243492,
+        "error": 0.0027208811215449964,
+        "error_kind": "relative",
+        "tolerance": 0.0029829545454545456,
+        "verdict": "PASS",
+        "locator": "表5 行 106"
+      },
+      {
+        "check_id": "F5.3.1",
+        "family": "F5_nonconservative",
+        "quantity": "Delta beta = beta_T - beta (ice_action_frequent x steel_pl)",
+        "declared": 0.887,
+        "recomputed": 0.887,
+        "error": 0.0,
+        "error_kind": "absolute",
+        "tolerance": 0.0001,
+        "verdict": "PASS",
+        "locator": "表5 行 107"
+      },
+      {
+        "check_id": "F5.3.2",
+        "family": "F5_nonconservative",
+        "quantity": "P_f/P_f,T (ice_action_frequent x steel_pl)",
+        "declared": 29.24,
+        "recomputed": 29.237252319191,
+        "error": 9.397876307299473e-05,
+        "error_kind": "relative",
+        "tolerance": 0.00017954856361149113,
+        "verdict": "PASS",
+        "locator": "表5 行 107"
+      },
+      {
+        "check_id": "F5.4.1",
+        "family": "F5_nonconservative",
+        "quantity": "Delta beta = beta_T - beta (ice_action_frequent x steel_pl)",
+        "declared": 0.7373,
+        "recomputed": 0.7373,
+        "error": 1.1102230246251565e-16,
+        "error_kind": "absolute",
+        "tolerance": 0.0001,
+        "verdict": "PASS",
+        "locator": "表5 行 108"
+      },
+      {
+        "check_id": "F5.4.2",
+        "family": "F5_nonconservative",
+        "quantity": "P_f/P_f,T (ice_action_frequent x steel_pl)",
+        "declared": 17.42,
+        "recomputed": 17.422157633631,
+        "error": 0.00012384422623411834,
+        "error_kind": "relative",
+        "tolerance": 0.00030137772675086107,
+        "verdict": "PASS",
+        "locator": "表5 行 108"
+      },
+      {
+        "check_id": "F5.5.1",
+        "family": "F5_nonconservative",
+        "quantity": "Delta beta = beta_T - beta (ice_action_frequent x steel_we)",
+        "declared": 0.4564,
+        "recomputed": 0.4564,
+        "error": 5.551115123125783e-17,
+        "error_kind": "absolute",
+        "tolerance": 0.0001,
+        "verdict": "PASS",
+        "locator": "表5 行 109"
+      },
+      {
+        "check_id": "F5.5.2",
+        "family": "F5_nonconservative",
+        "quantity": "P_f/P_f,T (ice_action_frequent x steel_we)",
+        "declared": 6.23,
+        "recomputed": 6.23126168579,
+        "error": 0.00020247677813839448,
+        "error_kind": "relative",
+        "tolerance": 0.0008426966292134832,
+        "verdict": "PASS",
+        "locator": "表5 行 109"
+      },
+      {
+        "check_id": "F6.1",
+        "family": "F6_negative_control",
+        "quantity": "Delta gamma_f*, percent",
+        "declared": 28.9,
+        "recomputed": 28.904719092367,
+        "error": 0.0047190923666278195,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表6 下方结论段"
+      },
+      {
+        "check_id": "F6.2",
+        "family": "F6_negative_control",
+        "quantity": "Delta kappa*, percent",
+        "declared": 21.63,
+        "recomputed": 21.630692829965,
+        "error": 0.0006928299651036696,
+        "error_kind": "absolute",
+        "tolerance": 0.011,
+        "verdict": "PASS",
+        "locator": "表6 下方结论段"
+      },
+      {
+        "check_id": "F7.1",
+        "family": "F7_derivative",
+        "quantity": "d gamma_f/d beta_T at beta_T=3.80",
+        "declared": 0.328,
+        "recomputed": 0.327957142857,
+        "error": 4.285714285717779e-05,
+        "error_kind": "absolute",
+        "tolerance": 0.0005,
+        "verdict": "PASS",
+        "locator": "表7 行 125"
+      },
+      {
+        "check_id": "F7.2",
+        "family": "F7_derivative",
+        "quantity": "d gamma_f/d beta_T at beta_T=4.00",
+        "declared": 0.362,
+        "recomputed": 0.36202,
+        "error": 1.9999999999797957e-05,
+        "error_kind": "absolute",
+        "tolerance": 0.0005,
+        "verdict": "PASS",
+        "locator": "表7 行 126"
+      },
+      {
+        "check_id": "F8.2",
+        "family": "F8_form_table",
+        "quantity": "rel. error vs FORM (设计点重要性抽样)",
+        "declared": -0.0006372,
+        "recomputed": -0.00063725,
+        "error": 7.846214206926002e-05,
+        "error_kind": "relative",
+        "tolerance": 0.002,
+        "verdict": "PASS",
+        "locator": "表2 行 72"
+      },
+      {
+        "check_id": "F8.3",
+        "family": "F8_form_table",
+        "quantity": "rel. error vs FORM (粗 Monte Carlo)",
+        "declared": -0.005929,
+        "recomputed": -0.0059285,
+        "error": 8.433836552197525e-05,
+        "error_kind": "relative",
+        "tolerance": 0.002,
+        "verdict": "PASS",
+        "locator": "表2 行 73"
+      },
+      {
+        "check_id": "F8.4",
+        "family": "F8_form_table",
+        "quantity": "rel. error vs FORM (粗 MC + 抗力解析积分)",
+        "declared": 0.0007416,
+        "recomputed": 0.0007415,
+        "error": 0.00013486176675590417,
+        "error_kind": "relative",
+        "tolerance": 0.002,
+        "verdict": "PASS",
+        "locator": "表2 行 74"
+      },
+      {
+        "check_id": "F9.72",
+        "family": "F9_adjoint_table",
+        "quantity": "rel. error adjoint vs central difference ($\\partial\\beta/\\partial\\ka)",
+        "declared": -3.33e-07,
+        "recomputed": -4.24837e-07,
+        "error": 9.183699010630189e-08,
+        "error_kind": "absolute",
+        "tolerance": 4.258368998037233e-07,
+        "verdict": "PASS",
+        "locator": "表3 行 80"
+      },
+      {
+        "check_id": "F9.73",
+        "family": "F9_adjoint_table",
+        "quantity": "rel. error adjoint vs central difference ($\\partial\\beta/\\partial\\ga)",
+        "declared": -3.33e-07,
+        "recomputed": -4.2654e-07,
+        "error": 9.354018334393773e-08,
+        "error_kind": "absolute",
+        "tolerance": 4.2754009231609156e-07,
+        "verdict": "PASS",
+        "locator": "表3 行 81"
+      },
+      {
+        "check_id": "F9.74",
+        "family": "F9_adjoint_table",
+        "quantity": "rel. error adjoint vs central difference ($\\partial\\beta/\\partial\\ps)",
+        "declared": -3.33e-07,
+        "recomputed": -2.9563e-07,
+        "error": 3.7370031843578406e-08,
+        "error_kind": "absolute",
+        "tolerance": 2.96629924547859e-07,
+        "verdict": "PASS",
+        "locator": "表3 行 82"
+      },
+      {
+        "check_id": "F10.1",
+        "family": "F10_inverse_consistency",
+        "quantity": "F* = R* at the design point",
+        "declared": 33.795,
+        "recomputed": 33.795,
+        "error": 0.0,
+        "error_kind": "absolute",
+        "tolerance": 0.0001,
+        "verdict": "PASS",
+        "locator": "表1 反问题解"
+      },
+      {
+        "check_id": "F10.2",
+        "family": "F10_inverse_consistency",
+        "quantity": "achieved beta = beta_T",
+        "declared": 4.0,
+        "recomputed": 4.0,
+        "error": 0.0,
+        "error_kind": "absolute",
+        "tolerance": 0.0001,
+        "verdict": "PASS",
+        "locator": "表1 反问题解"
+      },
+      {
+        "check_id": "F11.1",
+        "family": "F11_criteria_summary",
+        "quantity": "declared PASS count vs criteria table",
+        "declared": 5.0,
+        "recomputed": 5.0,
+        "error": 0.0,
+        "error_kind": "absolute",
+        "tolerance": 0.0,
+        "verdict": "PASS",
+        "locator": "机器判据表 + 判据汇总行"
+      },
+      {
+        "check_id": "F11.2",
+        "family": "F11_criteria_summary",
+        "quantity": "declared total vs criteria table rows",
+        "declared": 5.0,
+        "recomputed": 5.0,
+        "error": 0.0,
+        "error_kind": "absolute",
+        "tolerance": 0.0,
+        "verdict": "PASS",
+        "locator": "机器判据表 + 判据汇总行"
+      },
+      {
+        "check_id": "F12.粗 MC",
+        "family": "F12_cross_section",
+        "quantity": "error quoted in ⑥ vs 表2 (粗 MC)",
+        "declared": 0.00593,
+        "recomputed": 0.005929,
+        "error": 0.00016866250632486637,
+        "error_kind": "relative",
+        "tolerance": 0.002,
+        "verdict": "PASS",
+        "locator": "⑥ 行 185"
+      },
+      {
+        "check_id": "F12.重要性抽样",
+        "family": "F12_cross_section",
+        "quantity": "error quoted in ⑥ vs 表2 (重要性抽样)",
+        "declared": 0.000637,
+        "recomputed": 0.0006372,
+        "error": 0.00031387319522913504,
+        "error_kind": "relative",
+        "tolerance": 0.002,
+        "verdict": "PASS",
+        "locator": "⑥ 行 179"
+      },
+      {
+        "check_id": "F12.闭式",
+        "family": "F12_cross_section",
+        "quantity": "error quoted in ⑥ vs 表2 (闭式)",
+        "declared": 6.46e-09,
+        "recomputed": 6.46e-09,
+        "error": 0.0,
+        "error_kind": "relative",
+        "tolerance": 0.002,
+        "verdict": "PASS",
+        "locator": "⑥ 行 178"
+      },
+      {
+        "check_id": "F12.adj.kappa",
+        "family": "F12_cross_section",
+        "quantity": "adjoint error quoted in ⑥ vs 表3 (kappa)",
+        "declared": 3.33e-07,
+        "recomputed": 3.33e-07,
+        "error": 0.0,
+        "error_kind": "absolute",
+        "tolerance": 1e-09,
+        "verdict": "PASS",
+        "locator": "⑥ 行 181"
+      },
+      {
+        "check_id": "F12.adj.gamma_f",
+        "family": "F12_cross_section",
+        "quantity": "adjoint error quoted in ⑥ vs 表3 (gamma_f)",
+        "declared": 3.33e-07,
+        "recomputed": 3.33e-07,
+        "error": 0.0,
+        "error_kind": "absolute",
+        "tolerance": 1e-09,
+        "verdict": "PASS",
+        "locator": "⑥ 行 182"
+      },
+      {
+        "check_id": "F12.adj.psi",
+        "family": "F12_cross_section",
+        "quantity": "adjoint error quoted in ⑥ vs 表3 (psi)",
+        "declared": 3.33e-07,
+        "recomputed": 3.33e-07,
+        "error": 0.0,
+        "error_kind": "absolute",
+        "tolerance": 1e-09,
+        "verdict": "PASS",
+        "locator": "⑥ 行 183"
+      },
+      {
+        "check_id": "F12.iso",
+        "family": "F12_cross_section",
+        "quantity": "ISO pair kappa deviation ⑥ vs 表4",
+        "declared": 0.0375,
+        "recomputed": 0.0375,
+        "error": 0.0,
+        "error_kind": "absolute",
+        "tolerance": 0.0001,
+        "verdict": "PASS",
+        "locator": "⑥ 行 186"
+      }
+    ],
+    "not_audited": [
+      {
+        "id": "F5.0.3",
+        "reason": "column 'required R_k / calibrated R_k' needs the run_study() results JSON, which this package registers as unresolved; not reconstructed"
+      },
+      {
+        "id": "F5.1.3",
+        "reason": "column 'required R_k / calibrated R_k' needs the run_study() results JSON, which this package registers as unresolved; not reconstructed"
+      },
+      {
+        "id": "F5.2.3",
+        "reason": "column 'required R_k / calibrated R_k' needs the run_study() results JSON, which this package registers as unresolved; not reconstructed"
+      },
+      {
+        "id": "F5.3.3",
+        "reason": "column 'required R_k / calibrated R_k' needs the run_study() results JSON, which this package registers as unresolved; not reconstructed"
+      },
+      {
+        "id": "F5.4.3",
+        "reason": "column 'required R_k / calibrated R_k' needs the run_study() results JSON, which this package registers as unresolved; not reconstructed"
+      },
+      {
+        "id": "F5.5.3",
+        "reason": "column 'required R_k / calibrated R_k' needs the run_study() results JSON, which this package registers as unresolved; not reconstructed"
+      },
+      {
+        "id": "F6.3",
+        "reason": "the over-design beta=4.6597 quoted in the same paragraph needs the FORM solve; solver output is not re-derived here"
+      },
+      {
+        "id": "F7.edge",
+        "reason": "the two edge rows of 表7 have no neighbour to difference"
+      },
+      {
+        "id": "F8.analytic",
+        "reason": "the closed-form beta_ln row prints only its 2-digit error (6.46e-09), not the value it was computed from"
+      },
+      {
+        "id": "F9.max",
+        "reason": "表3 '最大相对误差' row is the maximum of the rows above"
+      },
+      {
+        "id": "F10.3",
+        "reason": "Jacobian condition number, three-start spread and the bisection value are solver outputs, not re-derived here"
+      }
+    ],
+    "summary": {
+      "checks": 86,
+      "passed": 86,
+      "failed": 0,
+      "all_passed": true,
+      "not_audited": 11
+    }
+  },
+  "claims": [],
+  "claims_empty_reason": "task_type=01-asset-registration carries no extraction duty (no claim generation, no classification, no verification); an empty claim list is the complete result for this package",
+  "counts": {
+    "assets": 14,
+    "by_class": {
+      "report_markdown": 1,
+      "source_code_reference": 3,
+      "figure_reference": 6,
+      "data_artifact_reference": 1,
+      "library_reference": 2,
+      "standard_table_reference": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 1,
+      "referenced_unresolved": 12,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 1,
+    "referenced_unresolved": 12,
+    "declared_absent": 1,
+    "tables": 11,
+    "sections": 8,
+    "references_scanned": 12
+  },
+  "integrity": {
+    "quote_uniqueness": "14/14 asset quotes occur exactly once in the source markdown; every locator stays unambiguous because it is an exact character slice re-checked at verify time",
+    "hash_recomputed_locally": "sha256:a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00",
+    "hash_matches_contract": true,
+    "locators_checked": 14,
+    "locators_resolved": 14,
+    "duplicate_asset_ids": 0,
+    "source_copy": "docs/kf/wp-9645-01/source.md"
+  }
+}
