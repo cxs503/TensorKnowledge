@@ -1,0 +1,134 @@
+{
+  "package_id": "wp-5624-04",
+  "task_type": "04-independent-review",
+  "report_id": "5624",
+  "provenance": {
+    "source_hash": "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839",
+    "source_field": "markdown",
+    "source_uri": "tensor://reports/5624",
+    "producer": "m15837",
+    "emitted_at": "2026-11-12T02:45:00Z",
+    "notes": "04-independent-review of wp-5624-01 (01-asset-registration); reviewer independently fetched report 5624, recomputed hash, verified all locators, ran upstream tests, and probed for defects"
+  },
+  "outputs": {
+    "review_report.json": {
+      "review_target": "wp-5624-01",
+      "review_target_type": "01-asset-registration",
+      "reviewer": "m15837",
+      "review_date": "2026-11-12",
+      "independence_statement": "Reviewer independently fetched report 5624 via platform API, recomputed sha256 hash, verified all 9 locators against raw markdown, ran all 11 upstream pytest cases, and probed for extraction defects. Did not consult producer's explanation or internal notes.",
+      "independence_limitations": [
+        "Same LLM family may share reasoning patterns with producer",
+        "Could not independently verify artifact existence (cross-worktree boundary)",
+        "Could not re-run the original artifact_indexer tool (lives in m4963's TensorPlatform worktree)"
+      ],
+      "scope_checks_performed": [
+        "Source hash recomputation (sha256 of markdown UTF-8 bytes)",
+        "Section splitting verification (7 sections, line ranges, chars, sha256)",
+        "All 9 locator quotes verified as verbatim substrings in markdown/figures",
+        "Schema validation against kf_result.v1.schema.json",
+        "Upstream pytest suite (11 tests) executed",
+        "Duplicate ID check (ref/digest/obs IDs unique)",
+        "Boundary check (only report 5624 read/written, no verified claims)",
+        "Claims policy check (claims=[] allowed for 01 task)",
+        "Figure caption matching against platform record figures field",
+        "Deterministic rebuild test (re-running generator produces identical manifest)"
+      ],
+      "findings": [
+        {
+          "severity": "medium",
+          "type": "duplicate_extraction",
+          "title": "Duplicate locator quote: 5624-ref-01 and 5624-ref-02 share identical quote",
+          "description": "Both ref-01 and ref-02 have the same locator_quote value. This phrase appears exactly once in the source markdown (line 7). Two distinct ref_ids pointing to the same single occurrence indicates a duplication bug in the path extraction regex logic.",
+          "evidence": {
+            "ref_01_quote": "`artifacts/`（0 文件）与 `runs/`（0 文件），",
+            "ref_02_quote": "`artifacts/`（0 文件）与 `runs/`（0 文件），",
+            "occurrences_in_markdown": 1,
+            "markdown_line": 7,
+            "test_coverage_gap": "test_no_duplicate_ids checks ID uniqueness but not quote uniqueness"
+          },
+          "affected_scope": "referenced_artifacts extraction; cosmetic (does not affect hash/section/claims correctness)",
+          "recommendation": "Deduplicate quotes during extraction or merge into a single ref_id with multiple source locations if intended"
+        },
+        {
+          "severity": "low",
+          "type": "ambiguity",
+          "title": "Lines count: manifest reports 46 but markdown has 47 lines (trailing empty line)",
+          "description": "The manifest reports size.lines=46. The markdown has 46 newline characters and ends with a newline, producing 47 lines when split (last line empty). Section ranges end at line 46, so 46 is defensible as content lines, but the counting method is not documented.",
+          "evidence": {
+            "manifest_lines": 46,
+            "actual_split_lines": 47,
+            "newline_count": 46,
+            "ends_with_newline": true,
+            "last_section_end_line": 46
+          },
+          "affected_scope": "metadata only; no functional impact",
+          "recommendation": "Document line counting convention"
+        },
+        {
+          "severity": "low",
+          "type": "test_environment_dependency",
+          "title": "Test suite requires artifacts/ directory which is gitignored",
+          "description": "The test fixture reads from artifacts/kf/wp-5624-01/kf_result.json, but this path is gitignored. In a fresh clone without the artifacts directory, all 11 tests fail with FileNotFoundError.",
+          "evidence": {
+            "test_fixture_path": "artifacts/kf/wp-5624-01/kf_result.json",
+            "gitignored": true,
+            "docs_mirror_exists": true,
+            "tests_without_artifacts": "11 errors (FileNotFoundError)"
+          },
+          "affected_scope": "test reproducibility in fresh clones",
+          "recommendation": "Add fallback in test fixture to try docs/ path if artifacts/ is missing"
+        },
+        {
+          "severity": "info",
+          "type": "positive_finding",
+          "title": "Internal inconsistency correctly flagged as unresolved",
+          "description": "The upstream package correctly identified the counting contradiction in the original report and registered it as observation 5624-obs-01 with status=unresolved, without inventing a resolution.",
+          "evidence": {
+            "observation_id": "5624-obs-01",
+            "status": "unresolved",
+            "conflicting_values": [
+              "0 files (artifacts/)",
+              "0 files (runs/)",
+              "102 files total",
+              "94+8=102 (Fig.1 caption)"
+            ]
+          }
+        },
+        {
+          "severity": "info",
+          "type": "positive_finding",
+          "title": "All 11 upstream tests pass; schema validation passes",
+          "description": "After providing the missing artifacts directory, all 11 pytest cases pass. The kf_result.json validates against kf_result.v1.schema.json. Source hash matches contract value. All 9 locators resolve. Boundary constraints satisfied.",
+          "evidence": {
+            "pytest_result": "11 passed",
+            "schema_validation": "pass",
+            "hash_match": true,
+            "locators_resolved": "9/9",
+            "boundary_ok": true
+          }
+        }
+      ],
+      "checks_not_run": [
+        "Independent re-execution of artifact_indexer tool (lives in m4963's TensorPlatform worktree, out of scope)",
+        "Artifact existence verification (cross-worktree boundary constraint)",
+        "Content digest value recomputation (source artifacts not in this worktree)",
+        "Figure image content verification (no png_base64 payload in figures)"
+      ],
+      "overstated_claims": [
+        {
+          "claim": "11 pytest passed (in upstream report)",
+          "reality": "Tests pass only when artifacts/ directory is populated; in a fresh clone without artifacts, all 11 tests error with FileNotFoundError. The upstream report states pytest 11 passed without noting this environmental dependency."
+        }
+      ],
+      "disposition": "approve_with_notes",
+      "disposition_rationale": "The wp-5624-01 output is structurally correct: schema-valid, hash-verified, all locators resolve, boundary constraints met, claims policy followed. The duplicate quote (ref-01/ref-02) is a medium-severity extraction bug but does not affect the core registration correctness. The lines count ambiguity and test environment dependency are low-severity issues. No blocking correctness or security defects found.",
+      "remediation": [
+        "Deduplicate ref-01/ref-02 or merge into single reference",
+        "Document line counting convention in manifest",
+        "Add docs/ fallback path in test fixture for fresh-clone reproducibility"
+      ]
+    }
+  },
+  "claims": []
+}
