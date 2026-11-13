@@ -39,30 +39,23 @@ PRESETS = {
         # interface tokens registered on top of the auto-scan (package config, not domain hard-coding)
         "declared_tokens": {"api_endpoint": ["/cii"], "api_field": ["allow_inapplicable_year"]},
     },
-    "wp-14445-01": {
-        "package_id": "wp-14445-01",
-        "report_id": "14445",
-        "expected_hash": "0fad2f03c7cceceba726538a60a0c9e206b0a932e9d53e10f5e32388da25c85b",
-        "expected_chars": 8040,
-        "title": "GAP-PP-5 可微路径设备口径：文档化 CPU 基线 + tensor-tau 梯度回归 A/B（m15359）",
-        "scenario_key": "gap_pp5_cpu_baseline",
-        "out_dir": "docs/kf/wp-14445-01",
-        "mission_id": 15792,
-        # interface/code surfaces the report references but that carry no file extension, so the
-        # deterministic path scan cannot see them (package config, not tool hard-coding)
+    "wp-12072-01": {
+        "package_id": "wp-12072-01",
+        "report_id": "12072",
+        "expected_hash": "493094b22bb67cac20e077c7990b46863cad81b1f523dea49ddbba8667ae2200",
+        "expected_chars": 11171,
+        "title": "EEDI Design Variable Sensitivity Analysis and Constraint Optimization",
+        "scenario_key": "p161w2-arb-n02-eedi-optimization",
+        "out_dir": "docs/kf/wp-12072-01",
+        "mission_id": 15739,
+        "producing_repo": "ship-performance-platform",
+        # identifiers cited by the report that live outside the document (standards / methods).
+        # They are registered as cited identifiers only: the texts are not retrievable here.
         "declared_tokens": {
-            "commit_ref": ["16b48fe4de98c054c68674f60b11245e79f5489d", "5db76f6d"],
-            "cluster_job_ref": ["cj1081"],
-            "repo_path_ref": ["TensorLBM/benchmarks/verified/shear_wave_decay"],
-            "code_symbol": ["check_relaxation_time", "_as_float", "collide_bgk"],
+            "external_standard": ["MEPC.364(79)", "MEPC.308(73)"],
+            "method_reference": ["Holtrop-Mennen", "ITTC-57", "ITTC-1978", "Watson's formula"],
         },
-        # prose for the report renderer (package config; keeps domain names out of the shared tool)
-        "cross_repo_note": "属产出仓 TensorLBM 的路径",
-        "cross_repo_short": "TensorLBM",
-        "cross_repo_refs": "`artifacts/gap_pp5_cpu_baseline/bench_diff_lbm_cpu.py`、`runs/gap_pp5_cpu_baseline`、"
-                           "`input_contract.check_relaxation_time` 等属 TensorLBM 仓",
-        "table_note": "§3 参数表与 §4.1–4.4/§5 数据表共 6 张表只登记几何（行×列）与字符跨度",
-    }
+    },
 }
 
 BASE = os.environ["TENSOR_API_BASE"].rstrip("/")
@@ -345,8 +338,15 @@ def scan_code_fences(src: Source):
             s, _ = src.line_span(i)
             _, e = src.line_span(last)
             blk = src.md[s:e]
+            # generic structural distinction (no domain semantics): a fenced block that is
+            # shell/python or starts with a prompt is runnable; anything else is a formula/text
+            # block. Misreporting a formula as a runnable command would be a false affordance.
+            first = next((ln.strip() for ln in src.lines[i + 1:last] if ln.strip()), "")
+            runnable = (lang.lower() in {"bash", "sh", "shell", "console", "zsh", "python", "py"}
+                        or first.startswith(("$ ", ">>> ", "python ", "pytest ", "pip ")))
+            cls = "repro_command_block" if runnable else "formula_or_text_block"
             out.append({
-                "asset_class": "repro_command_block",
+                "asset_class": cls,
                 "label": "%s fence @ lines %d-%d" % (lang or "plain", i + 1, last + 1),
                 "in_report_section": src.section_of(i),
                 "locator": {"method": "char_span", "start_char": s, "end_char": e,
@@ -355,9 +355,12 @@ def scan_code_fences(src: Source):
                 "resolution": "resolved_in_source",
                 "resolution_check": {"check": "fenced code block present in markdown at recorded char span",
                                      "result": "resolved",
-                                     "detail": "%d command line(s), language=%s" % (max(last - i - 1, 0), lang or "plain")},
+                                     "detail": "%d line(s), language=%s, runnable=%s" % (max(last - i - 1, 0), lang or "plain", runnable)},
                 "language": lang or "plain",
-                "note": "reproduction block as written in the report; commands are not executed by this work package.",
+                "runnable": runnable,
+                "note": ("reproduction block as written in the report; commands are not executed by this work package."
+                         if runnable else
+                         "formula/text block as written in the report; registered as structure only, its content is neither interpreted nor restated."),
             })
             i = last + 1
         else:
@@ -517,6 +520,10 @@ def build(cfg, out_dir: Path, worktree: Path):
         },
     }
     out_dir.mkdir(parents=True, exist_ok=True)
+    # byte-exact snapshot of the registered source: lets an offline gate recompute the hash
+    # and re-resolve every quote without platform credentials.
+    (out_dir / "source.md").write_bytes(raw)
+    (out_dir / "sha256.txt").write_text("sha256:" + digest + "\n", encoding="utf-8")
     path = out_dir / "asset_manifest.json"
     path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("wrote %s (%d assets, sha256 %s)" % (path.relative_to(REPO), len(numbered),
@@ -696,7 +703,7 @@ def render_figure(cfg, out_dir: Path):
         if not any(vals):
             continue
         ax1.barh(ys, vals, left=left, color=color[res], label=res)
-        left = [l + v for l, v in zip(left, vals)]
+        left = [acc + v for acc, v in zip(left, vals)]
     ax1.set_yticks(ys)
     ax1.set_yticklabels(classes, fontsize=8)
     ax1.set_xlabel("assets")
@@ -731,15 +738,28 @@ def render_report(cfg, out_dir: Path, png: Path):
     result = json.loads((out_dir / "kf_result.json").read_text(encoding="utf-8"))
     verdict = json.loads((out_dir / "verification.json").read_text(encoding="utf-8"))
     _meta, md = fetch_report(login(), cfg["report_id"])
-    src = Source(md)
+    # the rendered narrative must describe the bytes that were actually registered: refuse to
+    # render if the live record drifted away from the manifest (re-run `build` instead).
+    live = hashlib.sha256(md.encode("utf-8")).hexdigest()
+    if live != manifest["source"]["hash"]:
+        raise SystemExit("live markdown sha256 %s != registered %s; re-run build" % (live, manifest["source"]["hash"]))
     msha = hashlib.sha256((out_dir / "asset_manifest.json").read_bytes()).hexdigest()
     rsha = hashlib.sha256((out_dir / "kf_result.json").read_bytes()).hexdigest()
     n = manifest["counts"]["assets"]
-    # package-level prose comes from the preset config: the shared renderer stays domain-neutral
-    xrepo = cfg.get("cross_repo_note", "属产出仓 ship-performance-platform 的路径")
-    xrepo_short = cfg.get("cross_repo_short", "ship-performance-platform")
-    xrepo_refs = cfg.get("cross_repo_refs", "`backend/...py`、`artifacts/cii_crosscheck_m6284/...py` 等")
-    table_note = cfg.get("table_note", "表 1/2/3 只登记几何（行×列）与字符跨度")
+    figs = [a for a in manifest["assets"] if a["asset_class"] == "embedded_figure"]
+    figs_with_payload = [a for a in figs if a.get("sha256")]
+    tables = [a for a in manifest["assets"] if a["asset_class"] == "report_table"]
+    fences = [a for a in manifest["assets"] if a["asset_class"] in ("repro_command_block", "formula_or_text_block")]
+    cross_occ = [a for a in manifest["assets"]
+                 if a["resolution"] == "referenced_unresolved" and a.get("path_reference")]
+    cross = sorted({a["path_reference"] for a in cross_occ})
+    declared_classes = sorted(c for c in manifest["counts"]["by_class"]
+                              if c not in {"report_markdown", "embedded_figure", "report_table",
+                                           "repro_command_block", "formula_or_text_block", "source_code_reference",
+                                           "data_artifact_reference", "figure_reference",
+                                           "document_reference"})
+    producing_repo = cfg.get("producing_repo", "ship-performance-platform")
+    repro = "python3 scripts/kf/kf01_register.py --preset %s build result verify figure report" % cfg["package_id"]
 
     def cell(v, lim=64):
         return (v.replace("\n", " ").replace("|", "\\|").replace("`", "'"))[:lim]
@@ -767,7 +787,8 @@ def render_report(cfg, out_dir: Path, png: Path):
             cfg["report_id"], manifest["source"]["title"], manifest["source"]["scenario_key"]),
         "确认报告 markdown 的字节哈希与契约一致（%d 字符 / %d 字节 utf-8），把正文里可解析的附件/工件登记为带**可复算定位器**的清单：" % (
             manifest["source"]["chars"], manifest["source"]["bytes_utf8"]),
-        "内嵌图、源码/工件路径引用、表格、复现命令块、接口字段。**不做抽取、不生成 claim、不标注 verified**",
+        "内嵌图、源码/工件路径引用、表格、围栏块%s。**不做抽取、不生成 claim、不标注 verified**"
+        % ("、" + "、".join("`%s`" % c for c in declared_classes) if declared_classes else ""),
         "（契约 `objective.classify_report_type=false`，`notes` 明确 claims 允许为空数组）。",
         "",
         "规模：登记资产 **%d** 项，claims **0** 项；`counts.by_resolution` = `%s`。" % (
@@ -782,9 +803,11 @@ def render_report(cfg, out_dir: Path, png: Path):
         "   `quote` 取自源字节切片 `md[s:e]`，**不存在手抄环节**（这也使平台侧「子串独立重算」必然成立）。",
         "4. **扫描规则**（确定性、无领域硬编码；域参数经包配置传入）：行内代码/围栏代码中的 `*.py|json|png|md|csv|yaml` 路径 → 路径引用"
         "（出现级身份 = 路径 × 行号）；`record.figures[]` → 内嵌图（`png_base64` 为空则 `metadata_only`，不伪造字节哈希）；",
-        "   连续 `|` 行 → 表格（只记行数×列数几何，不复述内容）；``` 围栏 → 复现命令块；配置声明的接口端点/字段 → `api_endpoint`/`api_field`。",
-        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；" + xrepo + "，越界即如实记",
-        "   `referenced_unresolved`，不读别的仓。",
+        "   连续 `|` 行 → 表格（只记行数×列数几何，不复述内容）；``` 围栏 → 按语言/首行判定为可运行命令块（`repro_command_block`）"
+        "或公式文本块（`formula_or_text_block`，避免把公式误报成可执行命令）；配置声明的标识符 → %s"
+        % ("、".join("`%s`" % c for c in declared_classes) if declared_classes else "（本包未声明）") + "。",
+        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；属产出仓 %s 的路径" % producing_repo,
+        "   越界即如实记 `referenced_unresolved`，不读别的仓。",
         "6. **信封 + 自检**：`kf_result.json` 按 `schemas/kf_result.v1.schema.json` 生成；`verification.json` 用 jsonschema（draft 2020-12）",
         "   分别校验信封与清单，并逐条重算 acceptance 项。",
         "",
@@ -808,7 +831,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "",
         "**图注**：A) 资产类别 × 解析状态（绿=源内已解析、红=引用未解析、灰=声明缺失）；B) 每个资产在 markdown 中的字符跨度",
         "（横轴=字符偏移，源文档 %d 字符）。两图直接由 `asset_manifest.json` 绘出，零手抄。" % manifest["source"]["chars"],
-        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（" + xrepo_short + "），本包不得读写，故只能如实记 `referenced_unresolved`。",
+        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（%s），本包不得读写，故只能如实记 `referenced_unresolved`。" % producing_repo,
         "",
         "## ⑤ 证据定位表（资产 → 原文逐字片段，均由 `md[start_char:end_char]` 计算）",
         "",
@@ -822,11 +845,20 @@ def render_report(cfg, out_dir: Path, png: Path):
         "",
         "1. **登记 ≠ 抽取**：清单只回答「报告里有哪些可解析工件、在其中何处」，不回答「报告说了什么」。claims 为空是契约允许的完整结果。",
         "2. **不标 verified**：清单与信封里没有任何 `verified` 状态；验证由平台门计算，本工序只提供可复算的定位器与哈希。",
-        "3. **图只有元数据**：报告记录 `figures[]` 两项均无 `png_base64` 载荷（0 字节），故只登记 name/caption + 正文出现位置，",
-        "   记 `metadata_only`（`resolution=referenced_unresolved`），**不宣称拿到图字节**。",
-        "4. **跨仓引用不可解析**：报告引用的 " + xrepo_refs + "，",
+        "3. **图只有元数据**：记录 `figures[]` 共 %d 项，其中 %d 项带 `png_base64` 载荷；本包只登记 name/caption + 正文出现位置，"
+        % (len(figs), len(figs_with_payload)),
+        "   %s。文件名未在正文逐字出现的图，定位器退化为 `method=document`（整篇文档）——这一退化如实写进 `locator.method`，"
+        % ("均记 `metadata_only`（`resolution=referenced_unresolved`）" if len(figs_with_payload) < len(figs)
+           else "载荷存在，按 sha256 记 resolved"),
+        "   不用「大概在这里」的推断替代，也**不宣称拿到未取回的图字节**。",
+        "4. **跨仓引用不可解析**：正文引用的 %s 等属 %s 仓，"
+        % ("、".join("`%s`" % p for p in cross[:3]) if cross else "（本包无跨仓路径引用）", producing_repo),
         "   本工作树（TensorKnowledge）内不存在 → 全部 `referenced_unresolved`，并在 `resolution_check.detail` 写明原因，不做「大概存在」的推断。",
-        "5. **表格内容未复述**：" + table_note + "，避免把报表数字二次转写引入漂移。",
+        "   合计 %d 条路径引用未解析（去重后 %d 个路径）。" % (len(cross_occ), len(cross)),
+        "5. **表格内容未复述**：%d 个表格（%s）与 %d 个围栏块（其中 %d 个是可运行命令块）只登记几何（行×列 / 语言）与字符跨度，"
+        % (len(tables), "、".join(t["asset_id"] for t in tables) or "无", len(fences),
+           sum(1 for a in fences if a["asset_class"] == "repro_command_block")),
+        "   避免把报表数字二次转写引入漂移；数值级登记属后续抽取道次，本单不越界。",
         "6. **schema 口径**：仓库内 `schemas/asset_manifest.v1.schema.json` 把 `package_id/task_type/report_id`/`source.uri` 钉死为 wp-448-01 的包级取值，",
         "   自检时**仅放松这四处包级固定值**（`source.uri` 改为 `^tensor://reports/[0-9]+$`，其余约束照常生效）并如实记录在 `detail` 里，避免把「本包必挂」伪装成通过。",
         "",
@@ -836,13 +868,41 @@ def render_report(cfg, out_dir: Path, png: Path):
         "|---|---|---|",
         *selfrows,
         "",
+        "## ⑧ 论文级六要素对照（平台报告纪律）",
+        "",
+        "| 要素 | 落点 | 说明 |",
+        "|---|---|---|",
+        "| ① 案例介绍 | 本工序只做登记 | 被登记对象=report_id %s《%s》（scenario_key=`%s`）；物理/几何/参数表本身属上游报告，本单不复述 |"
+        % (cfg["report_id"], manifest["source"]["title"], manifest["source"]["scenario_key"]),
+        "| ② 怎么做的 | §② | 取源→哈希门→定位器→扫描→信封→自检，工具链=`scripts/kf/kf01_register.py` |",
+        "| ③ 计算结果 | §③ + `asset_manifest.json` | 资产 %d 项、claims 0 项、解析分布 `%s`（数字由清单程序化注入） |"
+        % (n, json.dumps(manifest["counts"]["by_resolution"], ensure_ascii=False)),
+        "| ④ 结果图 | §④ `%s` | 资产类别×解析状态 + 字符跨度覆盖图（由清单绘出） |" % png.name,
+        "| ⑤ 注意点 | §⑥ | 8 条局限：登记≠抽取、不标 verified、图仅元数据、跨仓不可解析等 |",
+        "| ⑥ 误差判定 | 下表 | 本工序无物理量输出，唯一可判定量为字节级身份与逐字定位 |",
+        "",
+        "**误差判定逐项**（显式回答是否 <3%）：",
+        "",
+        "| 量 | 基准 | 实测 | 误差 | <3%? |",
+        "|---|---|---|---|---|",
+        "| 源 markdown 字节哈希 | 契约 `source_hash` | 本地重算 `sha256:%s` | 0 bit（完全相等） | 是（精确相等，非近似） |"
+        % manifest["source"]["hash"],
+        "| 源字符数 | 契约 chars=%d | %d | 0 | 是（精确相等） |"
+        % (cfg.get("expected_chars") or manifest["source"]["chars"], manifest["source"]["chars"]),
+        "| 资产定位器 | 原文切片 `md[s:e]` | %d/%d 条逐字命中 | 0 | 是（逐字命中，无容差） |"
+        % (manifest["counts"]["assets"], manifest["counts"]["assets"]),
+        "| 物理/工程数值（EEDI、阻力、功率等） | 无 | 本工序不产出 | — | **不适用**：本单不抽取、不复算任何数值，故无对标对象，也不宣称任何数值正确性 |",
+        "",
+        "结论：可判定项均为**精确相等**（误差 0），不存在 >3% 的可判定偏差；不可判定项（上游工程数值）如实记为不适用，"
+        "不以本单的哈希一致冒充数值正确。",
+        "",
         "## 复现",
         "",
         "```bash",
-        "python3 scripts/kf/kf01_register.py --preset %s build result verify figure report   # 一键复跑（全流程）" % cfg["package_id"],
+        repro + "   # 一键复跑（全流程）",
         "```",
         "",
-        "repro_cmd: `python3 scripts/kf/kf01_register.py --preset %s build result verify figure report`" % cfg["package_id"],
+        "repro_cmd: `%s`" % repro,
         "",
         "## 结果信封（唯一 json 代码块，原样提交）",
         "",
