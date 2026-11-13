@@ -1,0 +1,65 @@
+[
+ {
+  "id": "F-1",
+  "severity": "minor",
+  "kind": "report-number vs artifact",
+  "claim": "报告 ⑤ 的 κ 覆盖率（Fleiss n=30=0.888、自举 n=120=0.944）",
+  "evidence": "{\"fleiss_n30\": {\"report\": 0.888, \"artifact\": 0.8962, \"abs_delta\": 0.0082}, \"boot_n120\": {\"report\": 0.944, \"artifact\": 0.9396, \"abs_delta\": 0.0044}}",
+  "impact": "定性结论（近似法 n=30 under-cover）不变；但「判据数字零手抄」在这两个数上不成立",
+  "material": false
+ },
+ {
+  "id": "F-2",
+  "severity": "blocking-for-L4",
+  "kind": "referee absent",
+  "claim": "锚点 KBM-RCI-F1-ABC 的机器裁判",
+  "evidence": "tensor_benchmark_cases anchor_slug='KBM-RCI-F1-ABC' → 0 行（全表 25 行，TensorKnowledge 域 0 行）",
+  "impact": "无注册基准行 → 五指标即便齐也无机器容差可裁；L4 不可授予",
+  "material": true
+ },
+ {
+  "id": "F-3",
+  "severity": "blocking-for-anchor",
+  "kind": "arms not executed",
+  "claim": "A=1 强独做 / B=20 / C=20 三臂同批对照",
+  "evidence": "settlement.lanes: A docs=0, C docs=0, B docs=19/60；identity.B agent_count=[1] mode=[degraded-single-agent] identity_match=false",
+  "impact": "臂间比较零数据；WITHHELD 是唯一诚实结论",
+  "material": true
+ },
+ {
+  "id": "F-4",
+  "severity": "major",
+  "kind": "lane B data are not agent data",
+  "claim": "臂 B「130/130 locator、自报偏差 0」可作为大规模 Agent 生产能力证据",
+  "evidence": "arms/B/.../provenance.json: extractor='rule-based, deterministic, no-LLM', llm_used=false, tokens=null, _exec_metrics wall_seconds=0.028/3 篇",
+  "impact": "数字度量的是反查器+确定性抽取器，不是 20 个普通 Agent；报告以身份门自认不可用于 H1–H3（诚实），但不得据此评 L4",
+  "material": true
+ },
+ {
+  "id": "F-5",
+  "severity": "minor",
+  "kind": "prereg provenance (check passed)",
+  "claim": "prereg 先行",
+  "evidence": "frozen/prereg.json 首入库于本轮 6a4037b；父 commit 3d43e3c 的 PREREG.md 已含同一 batch_digest 82f698cf… 与 prereg_id 9e4e0bf5…（in_base=True）",
+  "impact": "判据（3pp 非劣效 / κ≥0.6）确为事前冻结，非事后补写",
+  "material": false
+ },
+ {
+  "id": "F-6",
+  "severity": "minor",
+  "kind": "artifacts gitignored (root cause, fixed)",
+  "claim": "「仪器不存在」的根因",
+  "evidence": "父 commit 内 frozen/=0、snapshot/=0、verify 脚本存在=False；.gitignore 第 5 行 artifacts/",
+  "impact": "本轮已修（入库 frozen=4、snapshot=60、round2=18）；本审计据此刻意落 docs/ 而非 artifacts/",
+  "material": false
+ },
+ {
+  "id": "F-7",
+  "severity": "blocking-for-level",
+  "kind": "acceptance vs attainment",
+  "claim": "mission result.accepted=true 易被读成锚点达成",
+  "evidence": "decided_by=eco_admin；实测 5 项 PASS / 9 项 FAIL / 2 项 WITHHELD-PENDING",
+  "impact": "接受=交付验收（工件齐、可复现）≠ 锚点达成；级别按功能实质 L2",
+  "material": true
+ }
+]
