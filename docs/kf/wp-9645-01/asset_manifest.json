@@ -1,0 +1,216 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-9645-01",
+  "task_type": "01",
+  "objective": {
+    "register_assets": true,
+    "classify_report_type": false,
+    "extraction_performed": false
+  },
+  "generated_at": "2026-11-13T16:36:14Z",
+  "generator": "scripts/kf/wp_9645_01_register.py",
+  "source_asset": {
+    "uri": "tensor://reports/9645",
+    "field": "markdown",
+    "platform_record_id": 9645,
+    "hash": {
+      "algorithm": "sha256",
+      "value": "sha256:a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00",
+      "scope": "UTF-8 bytes of tensor_reports.markdown (report 9645)",
+      "contract_expected": "sha256:a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00",
+      "matches_contract": true
+    },
+    "size": {
+      "chars": 11824,
+      "bytes_utf8": 15967,
+      "lines": 196,
+      "contract_chars": 11824,
+      "chars_match_contract": true
+    },
+    "record_metadata": {
+      "title": "IN101-N09 ISO 19906 冰压设计分项系数目标可靠度反标定（成熟化）",
+      "scenario_key": "ice_partial_factors_target_inverse",
+      "tags": [
+        "IN101-N09",
+        "ISO19906",
+        "partial-factors",
+        "FORM",
+        "importance-sampling",
+        "negative-control",
+        "ice"
+      ],
+      "status": "published",
+      "created_by": 1,
+      "created_at": "2026-11-09T07:20:15.875461+00:00",
+      "mission_id": 8350,
+      "stage": null,
+      "summary_sha256": "sha256:d310ea573238e8cdd1ad04a126ebbe67050ac125db8ecd912ef45c5ba808b14b"
+    },
+    "contract_layer_hint": {
+      "value": "TensorPhysics|ice_partial_factors|A",
+      "interpreted": false,
+      "note": "契约 notes 原样登记；本工序 objective.classify_report_type=false，不解读分层标签"
+    }
+  },
+  "attachments": {
+    "count": 6,
+    "items": [
+      {
+        "name": "fig1_pa_joint.png",
+        "caption": "图1 联合 p–A 状态：两种相关假设共享同一对边缘分布，只差 $\\rho_{\\ln p,\\ln A}$；右图为年极值冰力密度（散度膨胀即负控的物理内容）"
+      },
+      {
+        "name": "fig2_beta_vs_kappa.png",
+        "caption": "图2 可靠度指标随分项系数乘积的曲线、目标线、Newton 解、单变量二分解，以及 FORM/IS/粗 MC/Rao–Blackwell MC 四个独立估计"
+      },
+      {
+        "name": "fig3_newton.png",
+        "caption": "图3 左：三组分散初值的残差收敛（二次收敛、同一根）；右：设计值劈分约定 $\\gamma_f(\\kappa)$、$\\psi(\\kappa)$ 与解点"
+      },
+      {
+        "name": "fig4_iso_deviations.png",
+        "caption": "图4 与 ISO 19906 A.2×A.3 表格分项系数逐项偏差图（±15% 验收带），下图为缺口行的实际达到 $\\beta$"
+      },
+      {
+        "name": "fig5_negative_control.png",
+        "caption": "图5 负控：计入/忽略 p–A 负相关时的标定分项系数与载荷散度"
+      },
+      {
+        "name": "fig6_sensitivity.png",
+        "caption": "图6 左：包络定理伴随导数 vs 中心差分；右：标定分项系数对 $\\beta_T$ 的敏感性"
+      }
+    ],
+    "scan": {
+      "record_figures_len": 6,
+      "markdown_image_syntax_hits": 6,
+      "markdown_url_hits": 0,
+      "returned_all": true
+    },
+    "note": "report.figures 声明 6 张图；本工序仅登记元数据，不下载图件载荷"
+  },
+  "sections": [
+    {
+      "ordinal": 1,
+      "level": 1,
+      "heading": "IN101-N09 — ISO 19906 ice-pressure partial-factor back-calibration at beta_T = 4.0 (mature: target-reliability inverse, FORM/IS/MC cross-checked)",
+      "line_start": 1,
+      "line_end": 14,
+      "chars": 652,
+      "sha256": "sha256:324623744b902eafd761137c49a68f7237211900ec41d541187677c422106d85"
+    },
+    {
+      "ordinal": 2,
+      "level": 2,
+      "heading": "① 案例介绍（物理背景 / 参数表）",
+      "line_start": 15,
+      "line_end": 33,
+      "chars": 834,
+      "sha256": "sha256:b7c1b57f1f09124cfea31115d2bc7a4092518f375b7dd351ff43dcb66719c6bb"
+    },
+    {
+      "ordinal": 3,
+      "level": 2,
+      "heading": "② 怎么做的（方法 / 流程 / 工具链）",
+      "line_start": 34,
+      "line_end": 46,
+      "chars": 1523,
+      "sha256": "sha256:1fb8c89b0a425ec70eddd4102f50fe8f2be3a99e82182ac7f1b179693689116b"
+    },
+    {
+      "ordinal": 4,
+      "level": 2,
+      "heading": "③ 计算结果",
+      "line_start": 47,
+      "line_end": 138,
+      "chars": 4544,
+      "sha256": "sha256:c9ebac602644cd4658886bf4af36231a206fdbdb182923837f816cff8f9e25b3"
+    },
+    {
+      "ordinal": 5,
+      "level": 2,
+      "heading": "④ 结果图",
+      "line_start": 139,
+      "line_end": 164,
+      "chars": 1712,
+      "sha256": "sha256:154c1cf14f5c1dd4382fdfba18467d6f5f98f75f55b4ee2e55fccd37262c9569"
+    },
+    {
+      "ordinal": 6,
+      "level": 2,
+      "heading": "⑤ 注意点（坑 / 局限 / 适用范围）",
+      "line_start": 165,
+      "line_end": 173,
+      "chars": 1333,
+      "sha256": "sha256:73fe965ebb687f2f45dd838258f70dc01d96114f69c8e66d651df973c5fcfaad"
+    },
+    {
+      "ordinal": 7,
+      "level": 2,
+      "heading": "⑥ 误差判定（逐项 vs 基准，显式回答是否 <3 %）",
+      "line_start": 174,
+      "line_end": 189,
+      "chars": 781,
+      "sha256": "sha256:f4b5a774e431fcba18dbf2cebdc80e5cce7172f8d0ca320abaf14a0f08e6774b"
+    },
+    {
+      "ordinal": 8,
+      "level": 2,
+      "heading": "审计链",
+      "line_start": 190,
+      "line_end": 196,
+      "chars": 445,
+      "sha256": "sha256:c99f702916715eaaaca7bfb095b5c4716ff4fd59e90510dde7f2f22f38b24c9f"
+    }
+  ],
+  "referenced_artifacts": [
+    {
+      "ref_id": "9645-ref-01",
+      "raw_text": "/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/in101_n09_results.json",
+      "path_kind": "absolute_worktree_path",
+      "occurrences": 1,
+      "first_line": 192,
+      "locator_quote": "- 结果 JSON：`/root/tp-agent/work/m8350/artifacts/iso19906_target_inverse/in101_n09_results.json`（本报告所有数字的唯一来源，`run_study()` 直出）",
+      "existence": "not_checked",
+      "existence_reason": "工作包边界=只触碰 report_id=9645；该路径位于 agent 工作区其它目录（工作树外），本工序不读取、不核验，避免越界取证"
+    },
+    {
+      "ref_id": "9645-ref-02",
+      "raw_text": "p_area_joint.py",
+      "path_kind": "python_module",
+      "occurrences": 1,
+      "first_line": 36,
+      "locator_quote": "1. **联合 p–A 状态**（`p_area_joint.py`）。冰压与面积均为对数正态；ISO 幂律把两者在对数空间的相关锁定为 $\\rho_{\\ln p,\\ln A}=-ex\\,\\sigma_{\\ln A}/\\sigma_{\\ln p}$。$\\text{Nataf}$ 变换吃的是**物理**相关系数，故用对数正态的精确关系 $\\rho_{phys}=(e^{\\rho_0 s_1 s_2}-1)/\\sqrt{(e^{s_1^2}-1)(e^{s_2^2}-1)}$ 反解后传入，使组装出的可靠度问题恰好具有目标对数相关（实测 `rho0` 回代误差 < 1e-8）。由于 $\\ln F=\\ln k_F+\\ln p+\\ln A$ 是正态变量之和，$F$ 严格对数正态，失效域 $\\{R<F\\}$ 在 $u$ 空间是**半空间**，于是 FORM 在该问题上精确，并有闭式 $\\beta_{ln}=(\\mu_{\\ln R}-\\mu_{\\ln F})/\\sqrt{\\sigma_{\\ln R}^2+\\sigma_{\\ln F}^2}$ 作为解析基准。",
+      "existence": "not_checked",
+      "existence_reason": "Python 模块引用，本工序不读取源码"
+    },
+    {
+      "ref_id": "9645-ref-03",
+      "raw_text": "target_reliability_inverse.py",
+      "path_kind": "python_module",
+      "occurrences": 1,
+      "first_line": 37,
+      "locator_quote": "2. **反问题两方程两未知量**（`target_reliability_inverse.py`）。极限状态只通过 $\\kappa=\\gamma_f\\psi$ 依赖分项系数对（构件按 $R_k=\\kappa F_k$ 定尺），因此",
+      "existence": "not_checked",
+      "existence_reason": "Python 模块引用，本工序不读取源码"
+    }
+  ],
+  "external_references": [],
+  "unresolved": [
+    {
+      "item": "referenced_artifacts[].existence",
+      "status": "unresolved",
+      "reason": "引用的工件/模块位于工作树之外，本包边界禁止越界读取；存在性留给上游门或后续工序"
+    }
+  ],
+  "boundary": {
+    "report_ids_read": [
+      "9645"
+    ],
+    "report_ids_written": [
+      "9645"
+    ],
+    "claims_generated": 0,
+    "claims_policy": "no_forced_claim_generation：01 工序不做抽取，envelope.claims=[] 为完整结果",
+    "verification_status": "none — 由平台门独立计算，本包不标 verified"
+  }
+}
