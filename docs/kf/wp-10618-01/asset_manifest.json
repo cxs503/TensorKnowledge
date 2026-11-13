@@ -1,0 +1,502 @@
+{
+  "schema": "asset_manifest.v1",
+  "manifest_version": "1.0",
+  "package_id": "wp-10618-01",
+  "task_type": "01-asset-registration",
+  "report_id": "10618",
+  "lane": "C",
+  "generated_at": "2026-11-10T07:48:02.653428+00:00",
+  "generated_at_policy": "pinned to record.created_at (overridable with KF_BUILD_TIMESTAMP) so that re-running this script is byte-identical -- no wall-clock drift",
+  "producer": "kf-worker/m15687",
+  "source": {
+    "uri": "tensor://reports/10618",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "19c4e1d87eb2c923fd346b060dc3b46c657691080b8600a1305e280f7a5bfd01",
+    "source_hash": "sha256:19c4e1d87eb2c923fd346b060dc3b46c657691080b8600a1305e280f7a5bfd01",
+    "contract_hash": "sha256:19c4e1d87eb2c923fd346b060dc3b46c657691080b8600a1305e280f7a5bfd01",
+    "hash_matches_contract": true,
+    "chars": 7463,
+    "bytes_utf8": 7585,
+    "contract_chars": 7463,
+    "chars_matches_contract": true,
+    "lines": 212,
+    "has_trailing_newline": true,
+    "title": "IMO Polar Code Ice Stability Assessment — Complete Implementation",
+    "scenario_key": "p485w1-n07-spp-ice-stability",
+    "mission_id": 9105,
+    "status": "published",
+    "tags": [
+      "imo-polar-code",
+      "ice-stability",
+      "gz-curve",
+      "free-surface",
+      "ship-stability"
+    ],
+    "contract_title": "IMO Polar Code Ice Stability Assessment — Complete Implementation",
+    "title_matches_contract": true,
+    "contract_scenario_key": "p485w1-n07-spp-ice-stability",
+    "scenario_matches_contract": true,
+    "platform_figures": [
+      {
+        "name": "fig1_gz_curves",
+        "caption": "Fig1 Gz Curves"
+      },
+      {
+        "name": "fig2_ice_distribution",
+        "caption": "Fig2 Ice Distribution"
+      },
+      {
+        "name": "fig3_area_criteria",
+        "caption": "Fig3 Area Criteria"
+      },
+      {
+        "name": "fig4_fsc_sensitivity",
+        "caption": "Fig4 Fsc Sensitivity"
+      }
+    ],
+    "fetched_via": "GET /api/v1/tensor/reports/10618",
+    "attachment_endpoint_probes": {
+      "figures": {
+        "path": "tensor/reports/10618/figures",
+        "http_status": 404,
+        "body_present": false
+      },
+      "artifacts": {
+        "path": "tensor/reports/10618/artifacts",
+        "http_status": 404,
+        "body_present": false
+      }
+    },
+    "markdown_node": "p485w1-n07-spp-ice-stability",
+    "node_matches_contract_scenario": true,
+    "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based (a single trailing newline does not create a phantom line); char spans are half-open [start_char, end_char) over the UTF-8-decoded markdown"
+  },
+  "counts": {
+    "assets": 18,
+    "by_class": {
+      "report_document": 1,
+      "data_table:4col": 3,
+      "data_table:5col": 1,
+      "figure_reference": 4,
+      "source_code_reference": 2,
+      "test_reference": 4,
+      "standard_reference": 3
+    },
+    "by_resolution": {
+      "resolved_in_source": 5,
+      "referenced_unresolved": 13
+    },
+    "resolved_in_source": 5,
+    "referenced_unresolved": 13,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_document",
+      "label": "report 10618 markdown (whole document)",
+      "in_report_section": "document",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 7463,
+        "start_line": 1,
+        "end_line": 212,
+        "quote": "# IMO Polar Code Ice Stability Assessment — Mission m9105",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(markdown.encode('utf-8')) recomputed locally and compared with contract.source_hash",
+        "result": "resolved"
+      },
+      "note": "chars=7463 bytes_utf8=7585; hash == contract hash (see source.hash_matches_contract)"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "data_table:4col",
+      "label": "table #1 (lines 21-31)",
+      "in_report_section": "Ship Parameters",
+      "locator": {
+        "method": "char_span",
+        "start_char": 721,
+        "end_char": 1111,
+        "start_line": 21,
+        "end_line": 31,
+        "quote": "| Parameter | Cargo Ship | Polar Vessel | Box Barge |\n|-----------|-----------|--------------|-----------|\n| L (m) | 150.0 | 80.0 | 100.0 |\n| B (m) | 24.0 | 16.0 | 20.0 |\n| T (m) | 8.0 | 5.5 | 6.0 |\n| D (m) | 14.0 | 9.0 | 10.0 |\n| Δ (tonnes) | 20000 | 5000 | 12000 |\n| Cb | 0.70 | 0.65 | 1.00 |\n| KG (m) | 7.0 | 4.5 | 5.0 |\n| h_ice (mm) | 30 | 50 | 30 |\n| ρ_ice (kg/m³) | 900 | 1000 | 900 |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim block re-found at measured char span; uniqueness counted",
+        "result": "resolved"
+      },
+      "note": "rows=11 (header+separator+9 data rows)"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "data_table:4col",
+      "label": "table #2 (lines 83-89)",
+      "in_report_section": "Hydrostatics",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2530,
+        "end_char": 2820,
+        "start_line": 83,
+        "end_line": 89,
+        "quote": "| Quantity | Cargo Ship | Polar Vessel | Box Barge |\n|----------|-----------|--------------|-----------|\n| KB (m) | 4.106 | 2.962 | 3.000 |\n| BM (m) | 6.085 | 4.242 | 5.556 |\n| KM (m) | 10.191 | 7.204 | 8.556 |\n| GM_orig (m) | 3.191 | 2.704 | 3.556 |\n| GM_corr (m) | 2.690 | 2.515 | 3.522 |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim block re-found at measured char span; uniqueness counted",
+        "result": "resolved"
+      },
+      "note": "rows=7 (header+separator+5 data rows)"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "data_table:4col",
+      "label": "table #3 (lines 93-98)",
+      "in_report_section": "Ice Accretion",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2841,
+        "end_char": 3106,
+        "start_line": 93,
+        "end_line": 98,
+        "quote": "| Quantity | Cargo Ship | Polar Vessel | Box Barge |\n|----------|-----------|--------------|-----------|\n| Total ice mass (kg) | 3888 | 2700 | 2295 |\n| Total ice weight (kN) | 38.1 | 26.5 | 22.5 |\n| δKG (mm) | 33.7 | 55.7 | 5.7 |\n| FSC (m) | 0.467 | 0.133 | 0.000 |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim block re-found at measured char span; uniqueness counted",
+        "result": "resolved"
+      },
+      "note": "rows=6 (header+separator+4 data rows)"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "data_table:5col",
+      "label": "table #4 (lines 102-106)",
+      "in_report_section": "Area Criteria (Cargo Ship)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3140,
+        "end_char": 3405,
+        "start_line": 102,
+        "end_line": 106,
+        "quote": "| Criterion | Required (m·rad) | Original | Ice-Corrected | Met? |\n|-----------|-----------------|----------|---------------|------|\n| Area 0°-30° | 0.055 | 0.218 | 0.198 | ✓ |\n| Area 0°-40° | 0.090 | 0.352 | 0.322 | ✓ |\n| Area 30°-40° | 0.030 | 0.134 | 0.124 | ✓ |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim block re-found at measured char span; uniqueness counted",
+        "result": "resolved"
+      },
+      "note": "rows=5 (header+separator+3 data rows)"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "figure_reference",
+      "label": "GZ Curves",
+      "in_report_section": "§4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3666,
+        "end_char": 3703,
+        "start_line": 121,
+        "end_line": 121,
+        "quote": "![GZ Curves](/tmp/fig1_gz_curves.png)",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('/tmp/fig1_gz_curves.png') on the delivery host",
+        "result": "absent"
+      },
+      "note": "platform record metadata: GET /tensor/reports/10618/figures -> HTTP 404; only name/caption metadata is exposed, no bytes"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "figure_reference",
+      "label": "Ice Distribution",
+      "in_report_section": "§4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3920,
+        "end_char": 3971,
+        "start_line": 127,
+        "end_line": 127,
+        "quote": "![Ice Distribution](/tmp/fig2_ice_distribution.png)",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('/tmp/fig2_ice_distribution.png') on the delivery host",
+        "result": "absent"
+      },
+      "note": "platform record metadata: GET /tensor/reports/10618/figures -> HTTP 404; only name/caption metadata is exposed, no bytes"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "figure_reference",
+      "label": "Area Criteria",
+      "in_report_section": "§4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4133,
+        "end_char": 4178,
+        "start_line": 133,
+        "end_line": 133,
+        "quote": "![Area Criteria](/tmp/fig3_area_criteria.png)",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('/tmp/fig3_area_criteria.png') on the delivery host",
+        "result": "absent"
+      },
+      "note": "platform record metadata: GET /tensor/reports/10618/figures -> HTTP 404; only name/caption metadata is exposed, no bytes"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "figure_reference",
+      "label": "FSC Sensitivity",
+      "in_report_section": "§4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4329,
+        "end_char": 4378,
+        "start_line": 139,
+        "end_line": 139,
+        "quote": "![FSC Sensitivity](/tmp/fig4_fsc_sensitivity.png)",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('/tmp/fig4_fsc_sensitivity.png') on the delivery host",
+        "result": "absent"
+      },
+      "note": "platform record metadata: GET /tensor/reports/10618/figures -> HTTP 404; only name/caption metadata is exposed, no bytes"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "source_code_reference",
+      "label": "backend/api/ice_stability.py",
+      "in_report_section": "§2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1408,
+        "end_char": 1438,
+        "start_line": 46,
+        "end_line": 46,
+        "quote": "`backend/api/ice_stability.py`",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists(<repo root>/backend/api/ice_stability.py) in the TensorKnowledge delivery worktree",
+        "result": "absent"
+      },
+      "note": "owned by ship-performance-platform, not by the delivery repo; content therefore not inspectable from here (no cross-repo read attempted)"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "source_code_reference",
+      "label": "stability_core.py",
+      "in_report_section": "§2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2385,
+        "end_char": 2404,
+        "start_line": 74,
+        "end_line": 74,
+        "quote": "`stability_core.py`",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists(<repo root>/stability_core.py) in the TensorKnowledge delivery worktree",
+        "result": "absent"
+      },
+      "note": "owned by ship-performance-platform, not by the delivery repo; content therefore not inspectable from here (no cross-repo read attempted)"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "test_reference",
+      "label": "test_single_surface_analytical",
+      "in_report_section": "§6",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6044,
+        "end_char": 6076,
+        "start_line": 178,
+        "end_line": 178,
+        "quote": "`test_single_surface_analytical`",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "test body/harness is not part of report markdown nor of this worktree",
+        "result": "unresolved"
+      },
+      "note": "only the identifier and its one-line assertion are present in the source; no executable artefact registered"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "test_reference",
+      "label": "test_gz_wall_sided_formula",
+      "in_report_section": "§6",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6243,
+        "end_char": 6271,
+        "start_line": 183,
+        "end_line": 183,
+        "quote": "`test_gz_wall_sided_formula`",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "test body/harness is not part of report markdown nor of this worktree",
+        "result": "unresolved"
+      },
+      "note": "only the identifier and its one-line assertion are present in the source; no executable artefact registered"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "test_reference",
+      "label": "test_area_0_40_equals_0_30_plus_30_40",
+      "in_report_section": "§6",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6456,
+        "end_char": 6495,
+        "start_line": 188,
+        "end_line": 188,
+        "quote": "`test_area_0_40_equals_0_30_plus_30_40`",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "test body/harness is not part of report markdown nor of this worktree",
+        "result": "unresolved"
+      },
+      "note": "only the identifier and its one-line assertion are present in the source; no executable artefact registered"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "test_reference",
+      "label": "test_single_rectangular_tank_analytical",
+      "in_report_section": "§6",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6677,
+        "end_char": 6718,
+        "start_line": 193,
+        "end_line": 193,
+        "quote": "`test_single_rectangular_tank_analytical`",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "test body/harness is not part of report markdown nor of this worktree",
+        "result": "unresolved"
+      },
+      "note": "only the identifier and its one-line assertion are present in the source; no executable artefact registered"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "standard_reference",
+      "label": "IMO Polar Code Part II-A, Chapter 2 (Intact Stability)",
+      "in_report_section": "§5",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5784,
+        "end_char": 5840,
+        "start_line": 168,
+        "end_line": 168,
+        "quote": "- IMO Polar Code Part II-A, Chapter 2 (Intact Stability)",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external standard document: not attached to the report and not in this worktree",
+        "result": "unresolved"
+      },
+      "note": "citation located verbatim; the standard text itself is out of scope for registration and is not asserted here"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "standard_reference",
+      "label": "IMO IS Code 2008, Part A, Chapter 2",
+      "in_report_section": "§5",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5841,
+        "end_char": 5878,
+        "start_line": 169,
+        "end_line": 169,
+        "quote": "- IMO IS Code 2008, Part A, Chapter 2",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external standard document: not attached to the report and not in this worktree",
+        "result": "unresolved"
+      },
+      "note": "citation located verbatim; the standard text itself is out of scope for registration and is not asserted here"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "standard_reference",
+      "label": "ISO 19906:2019 (Arctic offshore structures — ice load reference)",
+      "in_report_section": "§5",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5879,
+        "end_char": 5946,
+        "start_line": 170,
+        "end_line": 170,
+        "quote": "- ISO 19906:2019 (Arctic offshore structures — ice load reference)\n",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external standard document: not attached to the report and not in this worktree",
+        "result": "unresolved"
+      },
+      "note": "citation located verbatim; the standard text itself is out of scope for registration and is not asserted here"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": "18/18 locator quotes occur exactly once in the source markdown",
+    "quote_uniqueness_all": true,
+    "hash_recomputed_locally": "sha256:19c4e1d87eb2c923fd346b060dc3b46c657691080b8600a1305e280f7a5bfd01",
+    "hash_matches_contract": true,
+    "claim_extraction_performed": false,
+    "claims_empty_reason": "objective.classify_report_type=false and this package is 01-asset-registration only: no extraction, no forced claims",
+    "verified_marks_emitted": false
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "package_id": "wp-10618-01",
+  "report_id": "10618",
+  "checked_at": "2026-11-12T01:49:17.134674+00:00",
+  "http_status_live_fetch": 200,
+  "checks": {
+    "valid_json": {
+      "ok": true,
+      "detail": "asset_manifest.json and kf_result.json both parsed by json.load"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": "schemas/asset_manifest.v1.schema.json (package_id/report_id consts re-bound in memory for this package; upstream file untouched) -> 0 error(s); schemas/kf_result.v1.schema.json -> 0 error(s)",
+      "errors": []
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": "18/18 locators re-resolved against a second live fetch (verbatim substring == recorded char span, quote unique)",
+      "failed": []
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": "independent re-fetch hash sha256:19c4e1d87eb2c923fd346b060dc3b46c657691080b8600a1305e280f7a5bfd01 == envelope sha256:19c4e1d87eb2c923fd346b060dc3b46c657691080b8600a1305e280f7a5bfd01 == manifest 19c4e1d87eb2c923fd346b060dc3b46c657691080b8600a1305e280f7a5bfd01 == contract sha256:19c4e1d87eb2c923fd346b060dc3b46c657691080b8600a1305e280f7a5bfd01",
+      "live_recomputed": "sha256:19c4e1d87eb2c923fd346b060dc3b46c657691080b8600a1305e280f7a5bfd01"
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": "18 asset ids, 18 distinct, duplicates=none"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": "claims=0 (empty by contract, objective.classify_report_type=false); vacuously satisfied, reason recorded in integrity.claims_empty_reason",
+      "failed": []
+    },
+    "no_claim_marked_verified": {
+      "ok": true,
+      "detail": "status enum in schema has no 'verified' member; claims list empty -> nothing to mark"
+    },
+    "source_chars_match_contract": {
+      "ok": true,
+      "detail": "measured chars=7463, contract chars=7463, live chars=7463"
+    },
+    "markdown_node_matches_scenario": {
+      "ok": true,
+      "detail": "markdown '**Node**:' line = 'p485w1-n07-spp-ice-stability' == record scenario_key 'p485w1-n07-spp-ice-stability' == contract 'p485w1-n07-spp-ice-stability'"
+    }
+  },
+  "acceptance_all_pass": true,
+  "note": "Local pre-gate self-check only. verification status is computed by the platform gate from the published KF-RESULT report; this file is not a verified mark."
+}
