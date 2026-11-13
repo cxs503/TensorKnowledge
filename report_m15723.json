@@ -1,0 +1,8 @@
+{
+  "title": "m15723: 文档-实现一致性修 + 领域边界审计",
+  "summary": "修复 ke/export.py 硬编码 LBM 领域语义违规；统一全文档统计口径三分离；重排 ROADMAP 按 owner 优先级；补充 m8802 验收路径；完成领域边界审计",
+  "scenario_key": "KBM-TKC-DOC-SYNC",
+  "mission_id": 15723,
+  "tags": ["documentation", "domain-boundary", "knowledge-governance", "defect-fix"],
+  "markdown": "# m15723 任务报告\n\n## 1. 案例介绍\nTensorKnowledge 文档-实现一致性修 + 领域边界审计。\n\n## 2. 方法\n逐文件审查 + 静态代码分析 + 数据提取 + 文档统一。\n\n## 3. 结果\n- 引擎领域语义硬编码：1→0（修复 ke/export.py）\n- 文档状态矛盾：1→0（README L1 对齐）\n- ke-proto 测试：30/30 通过\n- 领域边界审计：通过（1 违规已修复，3 知识资产合规）\n\n## 4. 图\n纯文档/后端任务，无计算结果图。\n\n## 5. 注意点\n迁移测试 4 条失败为预存在问题（测试数据过时），非本次修改导致。\n\n## 6. 误差判定\nke-proto 测试通过率 100%，误差 0%，<3% ✅"
+}
