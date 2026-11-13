@@ -1,0 +1,39 @@
+{
+  "package_id": "wp-12565-01",
+  "report_id": "12565",
+  "source_hash": "sha256:a5a04a43beed973865029e9ade6c0de33a88e17a795bea13b55ef4c083571d20",
+  "contract_hash": "sha256:a5a04a43beed973865029e9ade6c0de33a88e17a795bea13b55ef4c083571d20",
+  "checks": [
+    {
+      "item": "valid_json",
+      "ok": true,
+      "evidence": "manifest + envelope round-trip through json.dumps/json.loads"
+    },
+    {
+      "item": "schema_pass",
+      "ok": true,
+      "evidence": "envelope vs schemas/kf_result.v1.schema.json (2020-12) and manifest vs schemas/asset_manifest.v1.schema.json with package/report consts re-pinned"
+    },
+    {
+      "item": "source_locator_resolvable",
+      "ok": true,
+      "evidence": "8/8 asset quotes + 18/18 anchor quotes resolve verbatim (char span, line span, occurrence count recorded)"
+    },
+    {
+      "item": "source_hash_matches",
+      "ok": true,
+      "evidence": "sha256:a5a04a43beed973865029e9ade6c0de33a88e17a795bea13b55ef4c083571d20"
+    },
+    {
+      "item": "no_duplicate_ids",
+      "ok": true,
+      "evidence": "8 asset ids, 8 distinct"
+    },
+    {
+      "item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "ok": true,
+      "evidence": "claims=[] by contract (no extraction); every non-empty asset carries a locator + explicit resolution; nothing marked verified"
+    }
+  ],
+  "all_pass": true
+}
