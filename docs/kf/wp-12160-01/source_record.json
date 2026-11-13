@@ -1,0 +1,38 @@
+{
+  "id": 12160,
+  "title": "EEXI attained 端到端闭合链路（Holtrop→P_D→η_S→gCO2/(t·nm)）成熟化：链路全闭合、端到端 <5% 被否证 + 1852 倍单位缺陷修复",
+  "summary": "建立几何→Holtrop 阻力→推进效率→交付功率→CO2→EEXI attained 的闭合链路（三型标模船：集装箱 KCS/散货 JBC/油轮 KVLCC1）。链路实现层面全部闭合（推力闭合 1.6e-5、双功率路线 1.6e-5、与 IMO 公式路径 rel_err=0），但端到端绝对精度 <5% 未达成：阻力 -7.1%~+8.1%、P_D -0.2%~+28.9%、RSS 6.9%~12.6%。同时修复 api.green_shipping 的 attained 指数 1852 倍单位缺陷（g/(t·m) vs g/(t·nm)），并对平台标模库参考列做机械审计（VLCC/JBC 的阻力列与自航功率列互斥，降级 WITHHELD/DERIVED）。",
+  "scenario_key": "p73w3-n02-eexi-maturity",
+  "mission_id": 10589,
+  "stage": null,
+  "tags": [
+    "EEXI",
+    "Holtrop",
+    "推进效率",
+    "误差传递",
+    "绿色航行",
+    "缺陷修复",
+    "数据审计"
+  ],
+  "figures": [
+    {
+      "name": "fig1_resistance_breakdown.png",
+      "caption": "图1 三型船 Holtrop-Mennen(1984) 总阻力分项与参考点审计（空心圆=过审计，红叉=未过审计不入判据）"
+    },
+    {
+      "name": "fig2_efficiency_chain.png",
+      "caption": "图2 推进效率分解 η_H/η_O/η_D 与公开 QPC、公开 w/t 推出的 η_H（黑短线）"
+    },
+    {
+      "name": "fig3_error_budget.png",
+      "caption": "图3 逐段相对误差与 RSS 总误差（黑横线），红虚线=5% 目标"
+    },
+    {
+      "name": "fig4_eexi_levels.png",
+      "caption": "图4a EEXI attained/参考线/要求值；图4b 单位代数回归闸门（1852 倍缺陷对照）"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-10T18:32:03.983671+00:00"
+}
