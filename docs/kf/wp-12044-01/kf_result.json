@@ -1,0 +1,168 @@
+{
+  "package_id": "wp-12044-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12044",
+  "provenance": {
+    "source_hash": "sha256:74cbbb52b6682ff4bb865490e1b4cce8511d023ed1a48afa19a9f2d22a0220b6",
+    "source_field": "markdown",
+    "producer": "agent/m15737",
+    "emitted_at": "2026-11-12T02:25:17Z",
+    "notes": "source_uri=tensor://reports/12044; contract_version=1.0; lane=C; chars=57; bytes_utf8=81; title=probe figure upload (write_lease D1); asset_manifest_sha256=64ee13249e12c403eae71d92559ef2a08cabf2f4dda05ce26369e77c51b9a738; verification_status=not_verified (platform gate computes verification)"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "artifact_path": "docs/kf/wp-12044-01/asset_manifest.json",
+      "artifact_sha256": "64ee13249e12c403eae71d92559ef2a08cabf2f4dda05ce26369e77c51b9a738",
+      "artifact_bytes": 5391,
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-12044-01",
+      "task_type": "01-asset-registration",
+      "report_id": "12044",
+      "source": {
+        "uri": "tensor://reports/12044",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "74cbbb52b6682ff4bb865490e1b4cce8511d023ed1a48afa19a9f2d22a0220b6",
+        "chars": 57,
+        "bytes_utf8": 81,
+        "title": "probe figure upload (write_lease D1)",
+        "scenario_key": null,
+        "platform_id": 12044,
+        "platform_mission_id": 10115,
+        "platform_tags": [
+          "probe"
+        ],
+        "platform_figures": [
+          {
+            "name": "fig1_d1_linearizability.png",
+            "caption": "probe"
+          }
+        ],
+        "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/12044",
+        "local_copy": "docs/kf/wp-12044-01/source.md"
+      },
+      "counts": {
+        "assets": 4,
+        "by_class": {
+          "source_document": 1,
+          "timestamp_token": 1,
+          "intent_statement": 1,
+          "figure_declaration": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 3,
+          "referenced_unresolved": 1
+        },
+        "resolved_in_source": 3,
+        "referenced_unresolved": 1,
+        "declared_absent": 0
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "source_document",
+          "label": "报告 markdown 正文（整篇，57 字符 / 81 字节 UTF-8，单行 + 换行）",
+          "in_report_section": "(document)",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 57,
+            "start_line": 0,
+            "end_line": 1,
+            "quote": "probe 2026-11-10T17:22:47.930890Z — 探针：验证 figures 字段可落库。\n",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "verbatim_substring_of_source_markdown",
+            "result": "resolved",
+            "occurrences": 1,
+            "char_span_matches_quote": true
+          },
+          "note": "sha256 与契约 source_hash 一致（见 source.hash）；正文仅一句探针声明，无表格/公式/数值结果，故本清单不含表、参数或结果资产。"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "timestamp_token",
+          "label": "探针写入时间戳 2026-11-10T17:22:47.930890Z",
+          "in_report_section": "(document)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6,
+            "end_char": 33,
+            "start_line": 0,
+            "end_line": 0,
+            "quote": "2026-11-10T17:22:47.930890Z",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "verbatim_substring_of_source_markdown",
+            "result": "resolved",
+            "occurrences": 1,
+            "char_span_matches_quote": true
+          },
+          "note": "ISO-8601 UTC 微秒级时刻，逐字取自正文；用于核验写租约 D1 的落库时刻。"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "intent_statement",
+          "label": "报告自述用途：探针验证 figures 字段可落库",
+          "in_report_section": "(document)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 36,
+            "end_char": 56,
+            "start_line": 0,
+            "end_line": 0,
+            "quote": "探针：验证 figures 字段可落库。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "verbatim_substring_of_source_markdown",
+            "result": "resolved",
+            "occurrences": 1,
+            "char_span_matches_quote": true
+          },
+          "note": "报告唯一实质性陈述；本工序只登记其位置，不判定该陈述真伪（不做 claim 抽取）。"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "figure_declaration",
+          "label": "图件声明 fig1_d1_linearizability.png（caption=probe，record.figures[0]）",
+          "in_report_section": "(document)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 42,
+            "end_char": 55,
+            "start_line": 0,
+            "end_line": 0,
+            "quote": "figures 字段可落库",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "figure_bytes_or_path_resolvable",
+            "result": "unresolved",
+            "platform_figures_count": 1,
+            "figure_name": "fig1_d1_linearizability.png",
+            "figure_caption": "probe",
+            "figure_has_url_or_path": false,
+            "figures_endpoint_status": 404,
+            "detail": "record.figures carries name+caption only (no path/URL/digest); GET /tensor/reports/12044/figures -> 404, so the binary cannot be resolved from the platform; the markdown names no figure file."
+          },
+          "note": "图件文件名/caption 只存在于平台 record.figures，正文未给出文件名、路径、URL 或摘要；figures 端点 404，二进制不可解析——如实标 unresolved，不臆造地址。"
+        }
+      ],
+      "claims": [],
+      "claims_note": "契约 objective.classify_report_type=false、notes 允许 claims 为空数组：本工序只做资产登记，不做知识抽取，也未对 A03 的陈述做真伪判定（no_forced_claim_generation）。",
+      "integrity": {
+        "quote_uniqueness": "每条 locator.quote 均在 source.md 中唯一出现，且 md[start:end] 逐字等于 quote（scripts/kf_wp12044_01_verify.py 复核）",
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true
+      }
+    }
+  },
+  "claims": []
+}
