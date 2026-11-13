@@ -34,9 +34,12 @@ import os
 import re
 import sqlite3
 import time
+import uuid
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
+
+from . import facets
 
 KINDS = ("claim", "evidence", "provenance", "review")
 ID_PREFIX = {"claim": "tkc:", "evidence": "tke:", "provenance": "tkp:", "review": "tkr:"}
@@ -129,7 +132,29 @@ DDL = (
     "CREATE INDEX IF NOT EXISTS ke_ko_domain_idx ON ke_ko (domain)",
     "CREATE INDEX IF NOT EXISTS ke_ko_review_idx ON ke_ko (review_status)",
     "CREATE INDEX IF NOT EXISTS ke_ko_pub_idx ON ke_ko (publication_status)",
+    """CREATE TABLE IF NOT EXISTS ke_facet (
+        ko_id  TEXT NOT NULL,
+        dim    TEXT NOT NULL,
+        value  TEXT NOT NULL,
+        field  TEXT NOT NULL,
+        weight REAL NOT NULL,
+        PRIMARY KEY (ko_id, dim, value, field)
+    )""",
+    """CREATE TABLE IF NOT EXISTS ke_usage (
+        event_id   TEXT PRIMARY KEY,
+        ko_id      TEXT NOT NULL,
+        event_type TEXT NOT NULL,
+        mission_id BIGINT,
+        consumer   TEXT,
+        artifact   TEXT,
+        context    TEXT,
+        created_at TEXT NOT NULL
+    )""",
     "CREATE INDEX IF NOT EXISTS ke_edge_dst_idx ON ke_edge (dst_id)",
+    "CREATE INDEX IF NOT EXISTS ke_facet_dim_value_idx ON ke_facet (dim, value)",
+    "CREATE INDEX IF NOT EXISTS ke_facet_field_idx ON ke_facet (dim, field)",
+    "CREATE INDEX IF NOT EXISTS ke_usage_ko_idx ON ke_usage (ko_id, event_type)",
+    "CREATE INDEX IF NOT EXISTS ke_usage_mission_idx ON ke_usage (mission_id)",
 )
 
 
@@ -239,6 +264,20 @@ def _edges(kind: str, doc: dict) -> list[tuple[str, str, str, str]]:
             if isinstance(cref, str):
                 out.append((rid, cref, rel, "evidence_claim"))
     return out
+
+
+def _index_doc(conn, rid: str, kind: str, doc: dict) -> None:
+    """Write the four-dimension retrieval projection for one object."""
+    for row in facets.project_doc(kind, doc):
+        conn.execute(
+            """INSERT INTO ke_facet (ko_id, dim, value, field, weight)
+               VALUES (%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING""",
+            (rid, row["dim"], row["value"], row["field"], row["weight"]),
+        )
+
+
+def _usage_event_id() -> str:
+    return "tku:" + uuid.uuid4().hex[:20]
 
 
 class _SQLiteConn:
@@ -356,6 +395,10 @@ class Store:
         with self.connect(write=True) as conn:
             for stmt in DDL:
                 conn.execute(stmt)
+            # one-time backfill: an older database has ke_ko rows but no facets
+            n = conn.execute("SELECT COUNT(*) AS n FROM ke_facet").fetchone()
+            if not n or int(n["n"]) == 0:
+                self._rebuild_facets_conn(conn)
 
     def ping(self) -> bool:
         try:
@@ -403,6 +446,7 @@ class Store:
                        VALUES (%s,%s,%s,%s) ON CONFLICT DO NOTHING""",
                     (src, dst, rel, ekind),
                 )
+            _index_doc(conn, rid, kind, doc)
             row = conn.execute("SELECT * FROM ke_ko WHERE id = %s", (rid,)).fetchone()
         assert row is not None
         return self._shape(row)
@@ -439,6 +483,8 @@ class Store:
                        VALUES (%s,%s,%s,%s) ON CONFLICT DO NOTHING""",
                     (src, dst, rel, ekind),
                 )
+            conn.execute("DELETE FROM ke_facet WHERE ko_id = %s", (rid,))
+            _index_doc(conn, rid, row["kind"], doc)
             row = conn.execute("SELECT * FROM ke_ko WHERE id = %s", (rid,)).fetchone()
         assert row is not None
         return self._shape(row)
@@ -455,6 +501,8 @@ class Store:
                     f"object is {row['production_status']}; only drafts are deletable"
                 )
             conn.execute("DELETE FROM ke_edge WHERE src_id = %s OR dst_id = %s", (rid, rid))
+            conn.execute("DELETE FROM ke_facet WHERE ko_id = %s", (rid,))
+            conn.execute("DELETE FROM ke_usage WHERE ko_id = %s", (rid,))
             conn.execute("DELETE FROM ke_ko WHERE id = %s", (rid,))
 
     def submit(self, rid: str, producer: str) -> dict:
@@ -759,6 +807,297 @@ class Store:
             "provenance": prov,
             "package_provenance": package_prov,
             "complete": bool(links) and all(l["source"] for l in links),
+        }
+
+    # -- retrieval projection (four dimensions) --------------------------
+    def rebuild_facets(self) -> dict:
+        """Recompute the whole projection from ``ke_ko`` (idempotent)."""
+        with self.connect(write=True) as conn:
+            n = self._rebuild_facets_conn(conn)
+        return {"rebuilt": True, "facets": n}
+
+    def _rebuild_facets_conn(self, conn) -> int:
+        conn.execute("DELETE FROM ke_facet")
+        rows = conn.execute("SELECT id, kind, doc FROM ke_ko ORDER BY id").fetchall()
+        n = 0
+        for r in rows:
+            doc = json.loads(r["doc"])
+            _index_doc(conn, r["id"], r["kind"], doc)
+            n += 1
+        return n
+
+    def by_facet(
+        self,
+        dim: str,
+        value: str,
+        *,
+        field: str | None = None,
+        kind: str | None = None,
+        domain: str | None = None,
+        limit: int = 100,
+        offset: int = 0,
+    ) -> dict:
+        """Objects whose projection has a ``dim`` facet matching ``value``.
+
+        Matching is case-folded substring (``%value%``).  ``dim='method'`` also
+        follows claim -> evidence edges, so "which claims rest on direct
+        quotation?" is answerable even though the method text lives on the
+        evidence record.  ``dim='evidence'`` additionally accepts an exact
+        object id, so a claim can be found from the evidence id it cites.
+        """
+        like = f"%{value}%"
+        with self.connect() as conn:
+            ids: set[str] = set()
+            args: list[Any] = [dim, like]
+            fsql = ("SELECT DISTINCT ko_id FROM ke_facet "
+                    "WHERE dim = %s AND LOWER(value) LIKE LOWER(%s)")
+            if field:
+                fsql += " AND field = %s"
+                args.append(field)
+            for r in conn.execute(fsql, tuple(args)).fetchall():
+                ids.add(str(r["ko_id"]))
+            if dim == "method":
+                jargs: list[Any] = [like]
+                jsql = ("""SELECT DISTINCT e.src_id AS ko_id FROM ke_edge e
+                           JOIN ke_facet f ON f.ko_id = e.dst_id AND f.dim = 'method'
+                           WHERE e.edge_kind = 'claim_evidence'
+                             AND LOWER(f.value) LIKE LOWER(%s)""")
+                if field:
+                    jsql += " AND f.field = %s"
+                    jargs.append(field)
+                for r in conn.execute(jsql, tuple(jargs)).fetchall():
+                    ids.add(str(r["ko_id"]))
+            if dim == "evidence":
+                row = conn.execute("SELECT id FROM ke_ko WHERE id = %s", (value,)).fetchone()
+                if row:
+                    ids.add(str(row["id"]))
+            if not ids:
+                return {"dim": dim, "value": value, "field": field, "total": 0,
+                        "offset": offset, "items": []}
+            idlist = sorted(ids)
+            ph = ",".join(["%s"] * len(idlist))
+            where = [f"id IN ({ph})"]
+            qargs: list[Any] = list(idlist)
+            if kind:
+                where.append("kind = %s")
+                qargs.append(kind)
+            if domain:
+                where.append("LOWER(domain) LIKE LOWER(%s)")
+                qargs.append(f"%{domain}%")
+            rows = conn.execute(
+                f"SELECT * FROM ke_ko WHERE {' AND '.join(where)} ORDER BY id",
+                tuple(qargs),
+            ).fetchall()
+            # matched facets per object (only the queried dimension)
+            mat: dict[str, list[dict]] = {}
+            if rows:
+                want = [r["id"] for r in rows]
+                ph2 = ",".join(["%s"] * len(want))
+                fargs: list[Any] = [dim] + want
+                msql = (f"SELECT ko_id, value, field, weight FROM ke_facet "
+                        f"WHERE dim = %s AND ko_id IN ({ph2})")
+                if field:
+                    msql += " AND field = %s"
+                    fargs.append(field)
+                for m in conn.execute(msql + " ORDER BY weight DESC, value", tuple(fargs)).fetchall():
+                    mat.setdefault(str(m["ko_id"]), []).append(
+                        {"value": m["value"], "field": m["field"], "weight": m["weight"]})
+                if dim == "method":
+                    # the method text lives on evidence; attribute it to the claim
+                    ph3 = ",".join(["%s"] * len(want))
+                    margs: list[Any] = [like] + want
+                    msql2 = (f"""SELECT e.src_id AS ko_id, f.value, f.field, f.weight
+                                  FROM ke_edge e JOIN ke_facet f
+                                    ON f.ko_id = e.dst_id AND f.dim = 'method'
+                                  WHERE e.edge_kind = 'claim_evidence'
+                                    AND LOWER(f.value) LIKE LOWER(%s)
+                                    AND e.src_id IN ({ph3})""")
+                    if field:
+                        msql2 += " AND f.field = %s"
+                        margs.append(field)
+                    for m in conn.execute(msql2, tuple(margs)).fetchall():
+                        mat.setdefault(str(m["ko_id"]), []).append(
+                            {"value": m["value"], "field": m["field"],
+                             "weight": m["weight"], "via": "evidence_edge"})
+        total = len(rows)
+        page = rows[offset:offset + limit]
+        items = []
+        for r in page:
+            obj = self._shape(r)
+            doc = obj.pop("doc")
+            items.append({
+                **obj,
+                "statement": doc.get("statement"),
+                "snippet": _snippet(r["search_text"], value),
+                "matched": mat.get(r["id"], []),
+            })
+        return {"dim": dim, "value": value, "field": field, "total": total,
+                "offset": offset, "items": items}
+
+    def facet_values(
+        self,
+        dim: str,
+        *,
+        q: str | None = None,
+        field: str | None = None,
+        kind: str | None = None,
+        limit: int = 100,
+    ) -> dict:
+        """Browse one dimension: distinct values + object counts."""
+        where = ["f.dim = %s"]
+        args: list[Any] = [dim]
+        if q:
+            where.append("LOWER(f.value) LIKE LOWER(%s)")
+            args.append(f"%{q}%")
+        if field:
+            where.append("f.field = %s")
+            args.append(field)
+        if kind:
+            where.append("k.kind = %s")
+            args.append(kind)
+        sql = (f"""SELECT f.value, f.field, COUNT(DISTINCT f.ko_id) AS n,
+                        MAX(f.weight) AS weight
+                   FROM ke_facet f JOIN ke_ko k ON k.id = f.ko_id
+                   WHERE {' AND '.join(where)}
+                   GROUP BY f.value, f.field
+                   ORDER BY n DESC, f.value ASC, f.field ASC LIMIT %s""")
+        args.append(limit)
+        with self.connect() as conn:
+            rows = conn.execute(sql, tuple(args)).fetchall()
+        return {"dim": dim, "q": q, "field": field, "count": len(rows),
+                "values": [{"value": r["value"], "field": r["field"],
+                            "objects": int(r["n"]), "weight": r["weight"]}
+                           for r in rows]}
+
+    # -- consumption meter (knowledge_id reference counting) ------------
+    def record_injections(self, ids: list[str], *, mission_id: int | None,
+                          consumer: str | None, context: dict | None = None) -> dict:
+        """Log one *injection* event per knowledge object returned by a query."""
+        ts = now_iso()
+        ctx = _dump(context or {})
+        n = 0
+        with self.connect(write=True) as conn:
+            for rid in ids:
+                conn.execute(
+                    """INSERT INTO ke_usage
+                           (event_id, ko_id, event_type, mission_id, consumer,
+                            artifact, context, created_at)
+                       VALUES (%s,%s,'inject',%s,%s,NULL,%s,%s)""",
+                    (_usage_event_id(), rid, mission_id, consumer, ctx, ts),
+                )
+                n += 1
+        return {"event_type": "inject", "n": n, "at": ts}
+
+    def cite(self, rid: str, *, mission_id: int | None = None,
+             consumer: str | None = None, artifact: str | None = None,
+             context: dict | None = None) -> dict:
+        """Record that a task actually *used* this object.
+
+        Idempotent per ``(ko_id, mission_id, artifact)``: re-running a task does
+        not inflate the reuse metric.  This is the metering source for
+        KPI-KB-REUSE-RATE.
+        """
+        self.get_ko(rid)  # 404 if unknown
+        ctx = _dump(context or {})
+        ts = now_iso()
+        with self.connect(write=True) as conn:
+            if mission_id is not None and artifact:
+                row = conn.execute(
+                    """SELECT event_id FROM ke_usage
+                       WHERE ko_id = %s AND event_type = 'cite'
+                         AND mission_id = %s AND artifact = %s""",
+                    (rid, mission_id, artifact),
+                ).fetchone()
+                if row:
+                    return {"duplicate": True, "event_id": row["event_id"],
+                            "knowledge_id": rid}
+            eid = _usage_event_id()
+            conn.execute(
+                """INSERT INTO ke_usage
+                       (event_id, ko_id, event_type, mission_id, consumer,
+                        artifact, context, created_at)
+                   VALUES (%s,%s,'cite',%s,%s,%s,%s,%s)""",
+                (eid, rid, mission_id, consumer, artifact, ctx, ts),
+            )
+        return {"duplicate": False, "event_id": eid, "knowledge_id": rid,
+                "mission_id": mission_id, "artifact": artifact, "at": ts}
+
+    def usage_for(self, rid: str) -> dict:
+        self.get_ko(rid)
+        with self.connect() as conn:
+            rows = conn.execute(
+                """SELECT event_type, mission_id, consumer, artifact, context, created_at
+                   FROM ke_usage WHERE ko_id = %s ORDER BY created_at, event_id""",
+                (rid,),
+            ).fetchall()
+        events = []
+        for r in rows:
+            events.append({
+                "event_type": r["event_type"],
+                "mission_id": r["mission_id"],
+                "consumer": r["consumer"],
+                "artifact": r["artifact"],
+                "context": json.loads(r["context"]) if r["context"] else {},
+                "at": r["created_at"],
+            })
+        injected = sum(1 for e in events if e["event_type"] == "inject")
+        cited = [e for e in events if e["event_type"] == "cite"]
+        artifacts = {e["artifact"] for e in cited if e["artifact"]}
+        return {
+            "knowledge_id": rid,
+            "injected": injected,
+            "cited": len(cited),
+            "distinct_artifacts": len(artifacts),
+            "reuse_rate": (len(artifacts) / injected) if injected else None,
+            "events": events,
+        }
+
+    def usage_stats(self) -> dict:
+        """KPI-KB-REUSE-RATE over the whole knowledge base.
+
+        Object-level rate = (# objects with >=1 cite) / (# objects with >=1
+        inject); event-level rate is also reported so a burst of repeated
+        injections cannot hide reuse.  Per-mission breakdown included.
+        """
+        with self.connect() as conn:
+            row = conn.execute(
+                """SELECT
+                     COUNT(DISTINCT CASE WHEN event_type='inject' THEN ko_id END) AS injected_objects,
+                     COUNT(DISTINCT CASE WHEN event_type='cite'   THEN ko_id END) AS cited_objects,
+                     COUNT(DISTINCT CASE WHEN event_type='cite' AND ko_id IN
+                           (SELECT ko_id FROM ke_usage WHERE event_type='inject')
+                           THEN ko_id END) AS cited_injected_objects,
+                     SUM(CASE WHEN event_type='inject' THEN 1 ELSE 0 END) AS injected_events,
+                     SUM(CASE WHEN event_type='cite'   THEN 1 ELSE 0 END) AS cited_events
+                   FROM ke_usage""",
+            ).fetchone() or {}
+            per_mission = conn.execute(
+                """SELECT mission_id,
+                          COUNT(DISTINCT CASE WHEN event_type='inject' THEN ko_id END) AS injected_objects,
+                          COUNT(DISTINCT CASE WHEN event_type='cite'   THEN ko_id END) AS cited_objects
+                   FROM ke_usage WHERE mission_id IS NOT NULL GROUP BY mission_id
+                   ORDER BY mission_id""",
+            ).fetchall()
+        inj_o = int(row.get("injected_objects") or 0)
+        cit_o = int(row.get("cited_objects") or 0)
+        cit_inj = int(row.get("cited_injected_objects") or 0)
+        inj_e = int(row.get("injected_events") or 0)
+        cit_e = int(row.get("cited_events") or 0)
+        return {
+            "schema": "ke-usage-stats/1",
+            "injected_objects": inj_o,
+            "cited_objects": cit_o,
+            "cited_injected_objects": cit_inj,
+            "cited_without_injection": cit_o - cit_inj,
+            "injected_events": inj_e,
+            "cited_events": cit_e,
+            # strict KPI: of the injected objects, how many were cited (<=1)
+            "kpi_kb_reuse_rate": (cit_inj / inj_o) if inj_o else None,
+            "event_reuse_rate": (cit_e / inj_e) if inj_e else None,
+            "missions": [{"mission_id": m["mission_id"],
+                          "injected_objects": int(m["injected_objects"] or 0),
+                          "cited_objects": int(m["cited_objects"] or 0)}
+                         for m in per_mission],
         }
 
     def stats(self) -> dict:

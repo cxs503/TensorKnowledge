@@ -210,3 +210,23 @@ KE_TEST_DSN='postgresql:///ke_m8801?user=postgres' pytest tests/test_ke_api.py -
 self-audit refusal, publish gating, all six query classes, search filters,
 concurrent distinct writes, concurrent same-id race (exactly one 201), plus a
 smoke test that ingests the real `knowledge/oss-lbm` package.
+## Four-dimension retrieval projection (KBM-TKC-INDEX-API)
+
+| method | path | notes |
+|---|---|---|
+| GET | `/by-concept?concept=&field=&kind=&domain=&limit=&offset=&log=&mission_id=&consumer=` | concept facet (domain/system/tags/statement tokens) |
+| GET | `/by-problem?problem=...` | problem facet (gaps/notes/limitations/open hypotheses) |
+| GET | `/by-method?method=...` | method facet; follows `claim_evidence` edges from claims to evidence |
+| GET | `/by-evidence?evidence=<id or value>` | evidence facet; exact object id also matches |
+| GET | `/facets?dim=concept\|problem\|method\|evidence&q=&field=&kind=` | browse one dimension (values + object counts) |
+| POST | `/index/rebuild` | rebuild the projection from `ke_ko` (write token) |
+| POST | `/ko/{id}/cite` | `{mission_id, consumer, artifact, context}` — idempotent per (ko, mission, artifact) |
+| GET | `/ko/{id}/usage` | per-object inject/cite ledger + reuse rate |
+| GET | `/usage/stats` | KPI-KB-REUSE-RATE + per-mission breakdown |
+
+Read endpoints accept an optional bearer lock: `KE_REQUIRE_READ_AUTH=1` requires
+`Authorization: Bearer $KE_READ_TOKEN` (fallback `KE_API_TOKEN`); unconfigured
+read token => 503, bad token => 401, same shape as the write surface.
+`log=true` on a `/by-*` query writes `ke_usage` inject events for the returned
+objects. See `docs/ke/retrieval-index.md` for the derivation rules and
+`docs/ke/tp-worker-consumption.md` for the worker wiring + KPI definition.
