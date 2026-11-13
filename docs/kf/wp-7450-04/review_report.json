@@ -1,0 +1,226 @@
+{
+  "package_id": "wp-7450-04",
+  "task_type": "04-independent-review",
+  "report_id": "7450",
+  "reviewed_package": "wp-7450-01",
+  "reviewed_source_hash": "sha256:4b20aadcaabc128bc8fb10e8f9f164de670421c2b67d36d2837fc5781d96bfac",
+  "verdict": "pass",
+  "disposition": "approve-with-notes",
+  "blocking_findings": [],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "low",
+      "blocking": false,
+      "title": "上游清单 integrity.quote_uniqueness 聚合字段自相矛盾（仅记账）",
+      "claim_in_upstream": "wp-7450-01/asset_manifest.json: integrity.quote_uniqueness = {total_quotes:19, quotes_unique_in_source:18, repeated_quotes:[]}",
+      "finding": "19 条引文里 18 条唯一 ⇒ 必有 1 条重复，但 repeated_quotes 为空表。独立重算：重复项是 A18（quote '/cii' 在原文出现 4 次）。逐资产层面 A18 已诚实声明 unique=false 并附 context_line，故定位仍精确、不影响可用性，只是聚合字段与明细不一致。",
+      "evidence": [
+        {
+          "path": "docs/kf/wp-7450-01/asset_manifest.json",
+          "field": "integrity.quote_uniqueness",
+          "note": "upstream artefact (not markdown)"
+        },
+        {
+          "quote": "   - `/cii` 请求新增 `allow_inapplicable_year`（默认 false），<2023 默认 **422**；",
+          "source_field": "markdown",
+          "note": "A18 的锚定行（第 42 行）"
+        }
+      ],
+      "verification": "25 行独立脚本：md.count('/cii')=4；其余 18 条 quote 计数均为 1",
+      "impact": "无功能影响（定位用绝对字符跨度，非子串搜索）；若下游改用子串搜索会误定位 A18",
+      "remediation": "repeated_quotes 填入 A18（或删该字段，由 quotes_unique_in_source 表达）"
+    },
+    {
+      "id": "F2",
+      "severity": "medium",
+      "blocking": false,
+      "title": "报告把「api vs service」一致性当作独立证据，但修复后两者是构造性恒等",
+      "claim_in_upstream": "report 7450 §⑥：「required CII … 基准 `services.cii_required_value`（独立实现）| 0.000e+00 相对差 | 是」",
+      "finding": "§② 自述修复手段是把 API 的参考线/Z 因子**别名**到 service、把 _gn_required_cii **委托**给 service.required_cii；因此表 1 的 「api（修复后）」列与「service」列逐位相等到 0.00e+00 是**构造保证**，不构成独立复核。真正独立的一路是 ice_kernel（另一份转录），它同样给出 0。报告未点明这一区别，基线标注「独立实现」在修复后对 api 列不成立。",
+      "evidence": [
+        {
+          "quote": "   - CII 参考线/Z 因子改为**别名**到 `services.cii_required_value`（物理上不可再漂移）；",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        },
+        {
+          "quote": "   - `_gn_required_cii` 改为**委托**服务层 `required_cii`（返回键集为旧实现的超集）；",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        },
+        {
+          "quote": "| ship_type | year | reference_2019 | Z | service | api（修复后） | ice_kernel | relΔ(api−svc) | relΔ(ice−svc) |",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        },
+        {
+          "quote": "| required CII（2023–2026，4 型 × 4 年 × 4 容量） | `services.cii_required_value`（独立实现） | 0.000e+00 相对差 | **是**（且达 1e-12 量级） |",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        }
+      ],
+      "impact": "不改变数值结论（ice_kernel 独立一路仍为 0），但削弱「三路互证」的强度表述；下游 02/03 若照抄「独立实现」会继承过度声明",
+      "remediation": "§⑥ 基线列注明「api 列为 service 的委托实现，非独立」；独立证据仅保留 ice_kernel 一路（两份独立转录互证）"
+    },
+    {
+      "id": "F3",
+      "severity": "low",
+      "blocking": false,
+      "title": "§⑥ 误差表声称 4×4×4=64 格网格，但报告只列出 16 格",
+      "claim_in_upstream": "§⑥：required CII（2023–2026，4 型 × 4 年 × 4 容量）误差 0.000e+00",
+      "finding": "表 1 只给出 Capacity=80 000 t 的 16 行；其余 3 个容量（5 000/50 000/200 000 t）的 48 格数值未出现在被审工件里，无法从 markdown 逐字核验。属于证据不可见，不是发现矛盾（16 行本身算术自洽，最大残差 2.05e-06 系 4 位小数显示舍入）。",
+      "evidence": [
+        {
+          "quote": "| required CII（2023–2026，4 型 × 4 年 × 4 容量） | `services.cii_required_value`（独立实现） | 0.000e+00 相对差 | **是**（且达 1e-12 量级） |",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        },
+        {
+          "quote": "**表 1** 三实现要求值逐位对照（Capacity = 80,000 t）",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        }
+      ],
+      "impact": "读者无法仅凭报告复核 64 格主张；需跑探针",
+      "remediation": "附全网格 CSV 或把 4 个容量的最大相对差逐项列表"
+    },
+    {
+      "id": "F4",
+      "severity": "low",
+      "blocking": false,
+      "title": "「164 项回归」不可在本上下文复核",
+      "claim_in_upstream": "报告标题与 §② 称 pytest 164 项；复现段称 # 164 passed",
+      "finding": "该测试文件属 ship-performance-platform 仓，本工作树不存在，亦无运行环境；按 adversarial-review 纪律记为 not_run（未通过 ≠ 未运行）。",
+      "evidence": [
+        {
+          "quote": "python3 -m pytest tests/test_cii_rule_arbitration_m6284.py -q      # 164 passed",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        },
+        {
+          "quote": "**类型**：验证欠账（对已合并功能 m2083 `green_shipping` 的规则复核 + 失效回归修复）",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        }
+      ],
+      "impact": "回归覆盖度无法证实；与产物正确性无直接冲突",
+      "remediation": "在可执行该仓的环境重跑并附 pytest 摘要工件"
+    },
+    {
+      "id": "F5",
+      "severity": "info",
+      "blocking": false,
+      "title": "§① 给 attained 链标 REAL，但报告未做任何 attained 计算",
+      "claim_in_upstream": "§① 部件表：attained 能量→燃油→CO₂ 链 = 可独立复算（REAL）",
+      "finding": "全篇无 attained 数值或复算，且 §⑤.5 明确把 attained 侧排除在范围外；REAL 标签属于对链的代数性质的断言而非本报告的实证结果。",
+      "evidence": [
+        {
+          "quote": "| `attained` 能量→燃油→CO₂ 链 | 纯物理/代数 | 可独立复算（REAL） |",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        },
+        {
+          "quote": "5. **适用范围**：本核对只覆盖规则算术与适用性语义，不涉及 `attained` 侧的物理输入",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        }
+      ],
+      "impact": "证据分级轻微越界；不影响 required 侧结论",
+      "remediation": "把该格的 REAL 限定为「代数链可独立复算（本报告未演算）」"
+    },
+    {
+      "id": "F6",
+      "severity": "info",
+      "blocking": false,
+      "title": "2027+ 仍返回数值，仅靠 z_extrapolated 标记区分",
+      "claim_in_upstream": "表 2：2027/2031 required=3.766208 且 z_extrapolated=True",
+      "finding": "外推区返回与 2026 相同的数值（Z 冻结 0.11），语义靠标记而非缺省拒绝传达；报告已明示标记且不宣称合规，属可接受设计，但下游抽取必须携带该字段。",
+      "evidence": [
+        {
+          "quote": "| 2027 | extrapolated | True | 3.766208 | 3.766208 |",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        },
+        {
+          "quote": "可见旧实现对 2019/2022 也给出「要求值」4.231694（应拒绝），对 2027+ 静默",
+          "source_field": "markdown",
+          "note": "verbatim from report 7450"
+        }
+      ],
+      "impact": "忽略标记的消费者可能把外推值当确定值",
+      "remediation": "02/03 抽取时把 z_extrapolated 写成必带限定词"
+    }
+  ],
+  "independence": {
+    "inputs_used": [
+      "GET /api/v1/tensor/reports/7450 .markdown (re-fetched at review time)",
+      "docs/kf/wp-7450-01/{asset_manifest,kf_result,verification,publish_receipt,report}.json/.md",
+      "schemas/{kf_result.v1,asset_manifest.v1}.schema.json"
+    ],
+    "producer_explanation_consulted": false,
+    "review_prompt_derived_from_producer": false,
+    "limitations": [
+      "同一平台账号/主机执行，非组织隔离的独立评审人；独立性体现在重算而非身份分离",
+      "无法访问 ship-performance-platform 源码、pytest 环境与 IMO 原文（离线）",
+      "平台 reports 列表接口 limit≤100 且忽略 offset，无法枚举 wp-7450-02/03 状态"
+    ]
+  },
+  "scope_checks_performed": [
+    "S1_source_hash_recomputed",
+    "S2_source_shape",
+    "S3_contract_title_tokens_locatable",
+    "U1_manifest_hash_envelope",
+    "U2_manifest_bytes",
+    "U3_envelope_source_hash",
+    "U4_manifest_source_block",
+    "L1_spans_exact",
+    "L2_quote_substring",
+    "L3_line_map_consistent",
+    "L5_token_spans_exact",
+    "L6_declared_unique_flags_honest",
+    "L7_document_span_covers_source",
+    "L4_asset_ids_unique",
+    "A1_by_class_matches",
+    "A2_by_resolution_matches",
+    "A3_unresolved_真的不存在于本工作树",
+    "A4_distinct_paths_aggregate",
+    "I1_integrity_block_self_consistent",
+    "C1_no_claims_and_no_verified",
+    "C2_report_scope_7450_only",
+    "G1_schema_kf_result",
+    "G2_schema_asset_manifest",
+    "T1_table1_arithmetic",
+    "T2_table1_three_way_equal",
+    "T3_table2_regime_semantics",
+    "T4_table3_rating_order"
+  ],
+  "checks_summary": {
+    "total": 27,
+    "pass": 26,
+    "fail": 1,
+    "hard_failures": []
+  },
+  "checks_not_run": [
+    "wp-7450-02/03 upstream packages: not visible through the reports API window (list endpoint caps limit=100 and ignores offset; no work-package endpoint)",
+    "pytest suite referenced by the source report (other repository)",
+    "live /cii behaviour of green_shipping (ship API :8002 exposes no such route in this environment; openapi.json 404)"
+  ],
+  "upstream_completion": {
+    "wp-7450-01": "present (docs/kf/wp-7450-01, 19 locators re-resolved 19/19); publish_receipt published_report_id=14675 status=published",
+    "wp-7450-02": "not observable from this context",
+    "wp-7450-03": "not observable from this context",
+    "note": "upstream_packages_completed 由平台门裁定；本审查只能证实 wp-7450-01"
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "reviewer_independent": true,
+    "upstream_packages_completed": "unknown/not_run (only 01 observable; gate decides)"
+  },
+  "quotes_verbatim_check": {
+    "checked": 14,
+    "failures": 0
+  },
+  "repro_cmd": "cd <worktree> && python3 docs/kf/wp-7450-04/verify_wp7450_04.py && python3 docs/kf/wp-7450-04/build_review.py"
+}
