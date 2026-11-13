@@ -1,0 +1,252 @@
+{
+  "report_id": "5347",
+  "upstream_manifest": "/root/tp-agent/work/m15817/docs/production/wp-5347-01/asset_manifest.json",
+  "manifest_sha256": "sha256:d6468dbe0ee596d7ad83a2315f5741b73b80d1a58e6479ebadd3b6db42cb35db",
+  "source_hash": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1",
+  "checks": [
+    {
+      "check": "R1.source_hash",
+      "ok": true,
+      "blocking": true,
+      "detail": {
+        "recomputed": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1",
+        "contract": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1",
+        "manifest": "sha256:bdd7bb0e76c120366d71fe047057056333cf83cfef6e0a2ca1ca125082a9d2e1"
+      }
+    },
+    {
+      "check": "R2.char_count",
+      "ok": true,
+      "blocking": true,
+      "detail": {
+        "recomputed_chars": 4206,
+        "bytes": 6475,
+        "contract_chars": 4206,
+        "manifest_chars": 4206
+      }
+    },
+    {
+      "check": "R3.quote_at_declared_offsets",
+      "ok": false,
+      "blocking": true,
+      "detail": {
+        "violations": [
+          {
+            "asset_id": "asset-5347-024",
+            "declared": [
+              3448,
+              3522
+            ],
+            "source_slice": "- **集群不适用**：外协方双节点 loong64 环境缺 `libflexiblas.so.3`/`scipy`，`pytest` 收集期即",
+            "shipped_quote": "- **集群不适用**：外协方双节点 loong64 环境缺 `libflexiblas.so.3`/`scipy`，`pytest` 收集期即",
+            "byte_equal": false
+          }
+        ],
+        "assets_checked": 26
+      }
+    },
+    {
+      "check": "R4.quote_sha256_matches",
+      "ok": false,
+      "blocking": true,
+      "detail": {
+        "violations": [
+          {
+            "asset_id": "asset-5347-024",
+            "recomputed": "sha256:2840238c344ba7b46b03c481b419c4301c9b31d892a1931e36ef6f214218355c",
+            "declared": "sha256:5471f57c35e9675dddb2decbd77396c6d14a00c422504b94873802f2966a799d"
+          }
+        ]
+      }
+    },
+    {
+      "check": "R5.quote_searchable_when_no_offsets",
+      "ok": true,
+      "blocking": true,
+      "detail": {
+        "violations": []
+      }
+    },
+    {
+      "check": "R6.registered_path_occurs_in_quote",
+      "ok": true,
+      "blocking": true,
+      "detail": {
+        "violations": []
+      }
+    },
+    {
+      "check": "R9.record_field_locator_resolvable",
+      "ok": true,
+      "blocking": true,
+      "detail": {
+        "violations": [],
+        "caption_violations": [],
+        "record_figure_names": [
+          "provenance_gate_matrix.png",
+          "ledger_regeneration.png"
+        ]
+      }
+    },
+    {
+      "check": "R7.counts_consistent",
+      "ok": true,
+      "blocking": true,
+      "detail": {
+        "assets": 26,
+        "declared_assets": 26,
+        "by_kind_recomputed": {
+          "environment_layout": 8,
+          "document": 1,
+          "code": 5,
+          "evidence_ledger": 1,
+          "artifact": 2,
+          "script": 2,
+          "ephemeral_sandbox": 2,
+          "test": 2,
+          "environment_dependency": 1,
+          "figure": 2
+        },
+        "by_kind_declared": {
+          "artifact": 2,
+          "code": 5,
+          "document": 1,
+          "environment_dependency": 1,
+          "environment_layout": 8,
+          "ephemeral_sandbox": 2,
+          "evidence_ledger": 1,
+          "figure": 2,
+          "script": 2,
+          "test": 2
+        },
+        "by_reach_recomputed": {
+          "environment_layout": 8,
+          "external_repo_artifact": 13,
+          "ephemeral_sandbox": 2,
+          "environment_dependency": 1,
+          "metadata_only": 2
+        },
+        "by_reach_declared": {
+          "environment_dependency": 1,
+          "environment_layout": 8,
+          "ephemeral_sandbox": 2,
+          "external_repo_artifact": 13,
+          "metadata_only": 2
+        },
+        "unresolved_recomputed": 26,
+        "unresolved_declared": 26
+      }
+    },
+    {
+      "check": "R8.coverage_probe_recall",
+      "ok": true,
+      "blocking": false,
+      "detail": {
+        "tokens_found": 22,
+        "registered_paths": 35,
+        "not_registered_count": 1,
+        "not_registered": [
+          "code/test/doc"
+        ],
+        "note": "advisory probe: manifest declares its own token grammar; misses matter only if they are real repo paths named in the report"
+      }
+    },
+    {
+      "check": "R10.record_identity_fields_match",
+      "ok": true,
+      "blocking": true,
+      "detail": {
+        "title": {
+          "manifest": "TensorDEM main CI 清红（m4829）：runner 路径断言与证据账本过期",
+          "record": "TensorDEM main CI 清红（m4829）：runner 路径断言与证据账本过期",
+          "equal": true
+        },
+        "scenario_key": {
+          "manifest": "ci_clearance",
+          "record": "ci_clearance",
+          "equal": true
+        },
+        "status": {
+          "manifest": "published",
+          "record": "published",
+          "equal": true
+        },
+        "tags": {
+          "manifest": [
+            "CI",
+            "gate",
+            "provenance",
+            "doc-evidence",
+            "TensorDEM",
+            "main-red"
+          ],
+          "record": [
+            "CI",
+            "gate",
+            "provenance",
+            "doc-evidence",
+            "TensorDEM",
+            "main-red"
+          ],
+          "equal": true
+        },
+        "created_at_prefix": {
+          "manifest": "2026-11-06T14:46:12.438974+00:00",
+          "record_starts_with_it": true
+        }
+      }
+    },
+    {
+      "check": "R11.unresolved_account_closed",
+      "ok": true,
+      "blocking": true,
+      "detail": {
+        "unresolved_paths": 26,
+        "asset_paths": 26,
+        "only_in_unresolved": [],
+        "only_in_assets": [],
+        "dup_unresolved": []
+      }
+    },
+    {
+      "check": "R12.report_ratio_reproducible",
+      "ok": true,
+      "blocking": false,
+      "detail": {
+        "rows_found": {
+          "code:TRACKED": [
+            275,
+            290
+          ],
+          "test:TRACKED": [
+            251,
+            263
+          ],
+          "指针数": [
+            831,
+            879
+          ],
+          "TRACKED占比": [
+            "0.8472",
+            "0.8476"
+          ]
+        },
+        "printed_ratio": [
+          0.8472,
+          0.8476
+        ],
+        "ratio_from_visible_rows": [
+          0.633,
+          0.6291
+        ],
+        "reproducible_from_visible_rows": false,
+        "implied_doc_tracked_not_shown": [
+          178,
+          192
+        ],
+        "conclusion": "printed ratio needs an unshown doc:TRACKED row (178 -> 192); not recomputable from the printed table alone, but arithmetically consistent with such a row"
+      }
+    }
+  ],
+  "ok": false
+}
