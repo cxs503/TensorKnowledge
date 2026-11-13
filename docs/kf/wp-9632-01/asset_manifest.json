@@ -1,0 +1,997 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-9632-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9632",
+  "lane": "B",
+  "generated_at": "2026-11-13T16:04:46.940067+00:00",
+  "producer": "kf-worker/m18694",
+  "contract_version": "1.0",
+  "schema_ref": "schemas/asset_manifest.v1.wp9632-01.schema.json",
+  "source": {
+    "uri": "tensor://reports/9632",
+    "source_field": "markdown",
+    "hash_alg": "sha256",
+    "source_hash": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+    "hash_scope": "sha256 over UTF-8 bytes of the markdown field",
+    "chars": 10749,
+    "bytes_utf8": 15670,
+    "lines": 239,
+    "title": "IN101-N07 冰脊固结热力学：龙骨大孔隙再冻结与固结度-阻力耦合",
+    "scenario_key": "ice_ridge_consolidation",
+    "report_mission_id": 8348,
+    "report_status": "published",
+    "report_stage": null,
+    "platform_tags": [
+      "IN101-N07",
+      "ice-ridge",
+      "consolidation",
+      "stefan",
+      "maxwell-eucken",
+      "TensorPhysics",
+      "sea-ice",
+      "ice-resistance"
+    ],
+    "contract_provenance": "measured from GET /api/v1/tensor/reports/9632 at package creation (no wp-9632-01 YAML in the worktree); pinned as the drift baseline",
+    "contract_source_hash": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+    "contract_chars": 10749,
+    "contract_title": "IN101-N07 冰脊固结热力学：龙骨大孔隙再冻结与固结度-阻力耦合",
+    "contract_scenario_key": "ice_ridge_consolidation",
+    "hash_matches_contract": true,
+    "chars_matches_contract": true,
+    "title_matches_contract": true,
+    "scenario_matches_contract": true
+  },
+  "assets": [
+    {
+      "asset_id": "r9632:source-markdown",
+      "kind": "report_markdown",
+      "name": "report-9632-markdown",
+      "source_uri": "tensor://reports/9632",
+      "media_type": "text/markdown",
+      "bytes": 15670,
+      "chars": 10749,
+      "lines": 239,
+      "sha256": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+      "hash_scope": "UTF-8 bytes of the `markdown` field as served by GET /api/v1/tensor/reports/9632",
+      "local_copy": "runs/wp-9632-01/source_9632.md",
+      "locator": {
+        "method": "document",
+        "source_field": "markdown",
+        "start_char": 0,
+        "end_char": 37,
+        "start_line": 1,
+        "end_line": 239,
+        "quote": "# IN101-N07 冰脊固结热力学：龙骨大孔隙再冻结与固结度-阻力耦合",
+        "unique": true,
+        "doc_chars": 10749,
+        "doc_bytes_utf8": 15670,
+        "doc_lines": 239
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9632"
+      }
+    },
+    {
+      "asset_id": "r9632:figure:01",
+      "kind": "embedded_figure",
+      "name": "fig1_consolidated_layer_growth.png",
+      "caption": "Fig 1 - consolidated layer growth vs FDD for the porosity band and the derived literature band",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "method": "record_pointer",
+        "source_field": "record",
+        "pointer": "/figures/0/name",
+        "quote": "fig1_consolidated_layer_growth.png",
+        "unique": false,
+        "record_unique": true,
+        "markdown_name_occurrences": 2,
+        "markdown_image_line": 181
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9632 figures[0]",
+        "has_payload": false,
+        "reason": "record lists name+caption only; png_base64 is empty, so no image bytes exist to hash or resolve in this record"
+      }
+    },
+    {
+      "asset_id": "r9632:figure:02",
+      "kind": "embedded_figure",
+      "name": "fig2_temperature_profiles.png",
+      "caption": "Fig 2 - 1-D temperature profiles from the enthalpy solver vs the Neumann similarity profile",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "method": "record_pointer",
+        "source_field": "record",
+        "pointer": "/figures/1/name",
+        "quote": "fig2_temperature_profiles.png",
+        "unique": false,
+        "record_unique": true,
+        "markdown_name_occurrences": 2,
+        "markdown_image_line": 185
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9632 figures[1]",
+        "has_payload": false,
+        "reason": "record lists name+caption only; png_base64 is empty, so no image bytes exist to hash or resolve in this record"
+      }
+    },
+    {
+      "asset_id": "r9632:figure:03",
+      "kind": "embedded_figure",
+      "name": "fig3_effective_conductivity.png",
+      "caption": "Fig 3 - effective conductivity: keel model vs Maxwell-Eucken parallel / series / ME-1",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "method": "record_pointer",
+        "source_field": "record",
+        "pointer": "/figures/2/name",
+        "quote": "fig3_effective_conductivity.png",
+        "unique": false,
+        "record_unique": true,
+        "markdown_name_occurrences": 2,
+        "markdown_image_line": 189
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9632 figures[2]",
+        "has_payload": false,
+        "reason": "record lists name+caption only; png_base64 is empty, so no image bytes exist to hash or resolve in this record"
+      }
+    },
+    {
+      "asset_id": "r9632:figure:04",
+      "kind": "embedded_figure",
+      "name": "fig4_strength_resistance_history.png",
+      "caption": "Fig 4 - strength and resistance histories: consolidated vs rubble term",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "method": "record_pointer",
+        "source_field": "record",
+        "pointer": "/figures/3/name",
+        "quote": "fig4_strength_resistance_history.png",
+        "unique": false,
+        "record_unique": true,
+        "markdown_name_occurrences": 2,
+        "markdown_image_line": 193
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9632 figures[3]",
+        "has_payload": false,
+        "reason": "record lists name+caption only; png_base64 is empty, so no image bytes exist to hash or resolve in this record"
+      }
+    },
+    {
+      "asset_id": "r9632:figure:05",
+      "kind": "embedded_figure",
+      "name": "fig5_criteria_summary.png",
+      "caption": "Fig 5 - achieved relative error vs tolerance for criteria (a)-(f)",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "method": "record_pointer",
+        "source_field": "record",
+        "pointer": "/figures/4/name",
+        "quote": "fig5_criteria_summary.png",
+        "unique": false,
+        "record_unique": true,
+        "markdown_name_occurrences": 2,
+        "markdown_image_line": 197
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9632 figures[4]",
+        "has_payload": false,
+        "reason": "record lists name+caption only; png_base64 is empty, so no image bytes exist to hash or resolve in this record"
+      }
+    },
+    {
+      "asset_id": "r9632:figure:06",
+      "kind": "embedded_figure",
+      "name": "fig6_sensitivity.png",
+      "caption": "Fig 6 - sensitivity of h_c(t) to snow depth and air temperature",
+      "bytes": null,
+      "sha256": null,
+      "locator": {
+        "method": "record_pointer",
+        "source_field": "record",
+        "pointer": "/figures/5/name",
+        "quote": "fig6_sensitivity.png",
+        "unique": false,
+        "record_unique": true,
+        "markdown_name_occurrences": 2,
+        "markdown_image_line": 201
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9632 figures[5]",
+        "has_payload": false,
+        "reason": "record lists name+caption only; png_base64 is empty, so no image bytes exist to hash or resolve in this record"
+      }
+    },
+    {
+      "asset_id": "r9632:ref:01",
+      "kind": "source_code_reference",
+      "path_reference": "benchmarks/ice_ridge_consolidation/write_report_md.py",
+      "via": "backticked_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 142,
+        "end_char": 195,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "benchmarks/ice_ridge_consolidation/write_report_md.py",
+        "unique": false,
+        "line_quote": "> 本报告由 `benchmarks/ice_ridge_consolidation/write_report_md.py` 从 `artifacts/ice_ridge_consolidation/results.json` 程序化生成，所有数字均来自该 JSON，无手抄。",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:02",
+      "kind": "data_artifact_reference",
+      "path_reference": "artifacts/ice_ridge_consolidation/results.json",
+      "via": "backticked_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 200,
+        "end_char": 246,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "artifacts/ice_ridge_consolidation/results.json",
+        "unique": false,
+        "line_quote": "> 本报告由 `benchmarks/ice_ridge_consolidation/write_report_md.py` 从 `artifacts/ice_ridge_consolidation/results.json` 程序化生成，所有数字均来自该 JSON，无手抄。",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:03",
+      "kind": "source_code_reference",
+      "path_reference": "benchmarks/ice_ridge_consolidation/run_validation.py",
+      "via": "backticked_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 2886,
+        "end_char": 2938,
+        "start_line": 65,
+        "end_line": 65,
+        "quote": "benchmarks/ice_ridge_consolidation/run_validation.py",
+        "unique": false,
+        "line_quote": "`numpy`（数组物理）+ `scipy` 无依赖的纯 `math.erf`/二分法（相似常数）+ 自研焓法求解器；matplotlib 出图（Agg 后端）；pytest 23 例；`benchmarks/ice_ridge_consolidation/run_validation.py` 一键复现全部数字与图。",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:04",
+      "kind": "figure_reference",
+      "path_reference": "fig1_consolidated_layer_growth.png",
+      "via": "bare_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 7622,
+        "end_char": 7656,
+        "start_line": 181,
+        "end_line": 181,
+        "quote": "fig1_consolidated_layer_growth.png",
+        "unique": false,
+        "line_quote": "![fig1_consolidated_layer_growth.png](../artifacts/ice_ridge_consolidation/figures/fig1_consolidated_layer_growth.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:05",
+      "kind": "figure_reference",
+      "path_reference": "../artifacts/ice_ridge_consolidation/figures/fig1_consolidated_layer_growth.png",
+      "via": "markdown_image",
+      "markdown_alt": "fig1_consolidated_layer_growth.png",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 7658,
+        "end_char": 7737,
+        "start_line": 181,
+        "end_line": 181,
+        "quote": "../artifacts/ice_ridge_consolidation/figures/fig1_consolidated_layer_growth.png",
+        "unique": true,
+        "line_quote": "![fig1_consolidated_layer_growth.png](../artifacts/ice_ridge_consolidation/figures/fig1_consolidated_layer_growth.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:06",
+      "kind": "figure_reference",
+      "path_reference": "fig2_temperature_profiles.png",
+      "via": "bare_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 7839,
+        "end_char": 7868,
+        "start_line": 185,
+        "end_line": 185,
+        "quote": "fig2_temperature_profiles.png",
+        "unique": false,
+        "line_quote": "![fig2_temperature_profiles.png](../artifacts/ice_ridge_consolidation/figures/fig2_temperature_profiles.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:07",
+      "kind": "figure_reference",
+      "path_reference": "../artifacts/ice_ridge_consolidation/figures/fig2_temperature_profiles.png",
+      "via": "markdown_image",
+      "markdown_alt": "fig2_temperature_profiles.png",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 7870,
+        "end_char": 7944,
+        "start_line": 185,
+        "end_line": 185,
+        "quote": "../artifacts/ice_ridge_consolidation/figures/fig2_temperature_profiles.png",
+        "unique": true,
+        "line_quote": "![fig2_temperature_profiles.png](../artifacts/ice_ridge_consolidation/figures/fig2_temperature_profiles.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:08",
+      "kind": "figure_reference",
+      "path_reference": "fig3_effective_conductivity.png",
+      "via": "bare_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 8040,
+        "end_char": 8071,
+        "start_line": 189,
+        "end_line": 189,
+        "quote": "fig3_effective_conductivity.png",
+        "unique": false,
+        "line_quote": "![fig3_effective_conductivity.png](../artifacts/ice_ridge_consolidation/figures/fig3_effective_conductivity.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:09",
+      "kind": "figure_reference",
+      "path_reference": "../artifacts/ice_ridge_consolidation/figures/fig3_effective_conductivity.png",
+      "via": "markdown_image",
+      "markdown_alt": "fig3_effective_conductivity.png",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 8073,
+        "end_char": 8149,
+        "start_line": 189,
+        "end_line": 189,
+        "quote": "../artifacts/ice_ridge_consolidation/figures/fig3_effective_conductivity.png",
+        "unique": true,
+        "line_quote": "![fig3_effective_conductivity.png](../artifacts/ice_ridge_consolidation/figures/fig3_effective_conductivity.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:10",
+      "kind": "figure_reference",
+      "path_reference": "fig4_strength_resistance_history.png",
+      "via": "bare_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 8230,
+        "end_char": 8266,
+        "start_line": 193,
+        "end_line": 193,
+        "quote": "fig4_strength_resistance_history.png",
+        "unique": false,
+        "line_quote": "![fig4_strength_resistance_history.png](../artifacts/ice_ridge_consolidation/figures/fig4_strength_resistance_history.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:11",
+      "kind": "figure_reference",
+      "path_reference": "../artifacts/ice_ridge_consolidation/figures/fig4_strength_resistance_history.png",
+      "via": "markdown_image",
+      "markdown_alt": "fig4_strength_resistance_history.png",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 8268,
+        "end_char": 8349,
+        "start_line": 193,
+        "end_line": 193,
+        "quote": "../artifacts/ice_ridge_consolidation/figures/fig4_strength_resistance_history.png",
+        "unique": true,
+        "line_quote": "![fig4_strength_resistance_history.png](../artifacts/ice_ridge_consolidation/figures/fig4_strength_resistance_history.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:12",
+      "kind": "figure_reference",
+      "path_reference": "fig5_criteria_summary.png",
+      "via": "bare_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 8425,
+        "end_char": 8450,
+        "start_line": 197,
+        "end_line": 197,
+        "quote": "fig5_criteria_summary.png",
+        "unique": false,
+        "line_quote": "![fig5_criteria_summary.png](../artifacts/ice_ridge_consolidation/figures/fig5_criteria_summary.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:13",
+      "kind": "figure_reference",
+      "path_reference": "../artifacts/ice_ridge_consolidation/figures/fig5_criteria_summary.png",
+      "via": "markdown_image",
+      "markdown_alt": "fig5_criteria_summary.png",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 8452,
+        "end_char": 8522,
+        "start_line": 197,
+        "end_line": 197,
+        "quote": "../artifacts/ice_ridge_consolidation/figures/fig5_criteria_summary.png",
+        "unique": true,
+        "line_quote": "![fig5_criteria_summary.png](../artifacts/ice_ridge_consolidation/figures/fig5_criteria_summary.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:14",
+      "kind": "figure_reference",
+      "path_reference": "fig6_sensitivity.png",
+      "via": "bare_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 8596,
+        "end_char": 8616,
+        "start_line": 201,
+        "end_line": 201,
+        "quote": "fig6_sensitivity.png",
+        "unique": false,
+        "line_quote": "![fig6_sensitivity.png](../artifacts/ice_ridge_consolidation/figures/fig6_sensitivity.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:15",
+      "kind": "figure_reference",
+      "path_reference": "../artifacts/ice_ridge_consolidation/figures/fig6_sensitivity.png",
+      "via": "markdown_image",
+      "markdown_alt": "fig6_sensitivity.png",
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 8618,
+        "end_char": 8683,
+        "start_line": 201,
+        "end_line": 201,
+        "quote": "../artifacts/ice_ridge_consolidation/figures/fig6_sensitivity.png",
+        "unique": true,
+        "line_quote": "![fig6_sensitivity.png](../artifacts/ice_ridge_consolidation/figures/fig6_sensitivity.png)",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:16",
+      "kind": "directory_reference",
+      "path_reference": "src/tensorphysics/ice_ridge_consolidation/",
+      "via": "backticked_dir",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 10367,
+        "end_char": 10409,
+        "start_line": 233,
+        "end_line": 233,
+        "quote": "src/tensorphysics/ice_ridge_consolidation/",
+        "unique": true,
+        "line_quote": "* 模块：`src/tensorphysics/ice_ridge_consolidation/`（thermal / strength / resistance / references / validation）",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "directory not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:17",
+      "kind": "source_code_reference",
+      "path_reference": "tests/test_ice_ridge_consolidation.py",
+      "via": "backticked_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 10476,
+        "end_char": 10513,
+        "start_line": 234,
+        "end_line": 234,
+        "quote": "tests/test_ice_ridge_consolidation.py",
+        "unique": true,
+        "line_quote": "* 测试：`tests/test_ice_ridge_consolidation.py`（23 例，全部通过）",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    },
+    {
+      "asset_id": "r9632:ref:18",
+      "kind": "data_artifact_reference",
+      "path_reference": "artifacts/ice_ridge_consolidation/results.json",
+      "via": "backticked_ref",
+      "markdown_alt": null,
+      "locator": {
+        "method": "char_span",
+        "source_field": "markdown",
+        "start_char": 10596,
+        "end_char": 10642,
+        "start_line": 235,
+        "end_line": 235,
+        "quote": "artifacts/ice_ridge_consolidation/results.json",
+        "unique": false,
+        "line_quote": "* 基准：`python benchmarks/ice_ridge_consolidation/run_validation.py` → `artifacts/ice_ridge_consolidation/results.json` + 6 张图",
+        "line_occurrences": 1
+      },
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in the TensorKnowledge delivery worktree",
+        "external_probe": [
+          {
+            "root": "/root/ship-performance-platform",
+            "status": "absent"
+          }
+        ]
+      }
+    }
+  ],
+  "tables": [
+    {
+      "table_id": "r9632:table:01",
+      "line_start": 14,
+      "line_end": 25,
+      "rows": 10,
+      "cols": 4,
+      "header_quote": "| 参数 | 符号 | 取值 | 出处/标签 |",
+      "header_unique": true,
+      "start_char": 636
+    },
+    {
+      "table_id": "r9632:table:02",
+      "line_start": 71,
+      "line_end": 76,
+      "rows": 4,
+      "cols": 5,
+      "header_quote": "| 网格 N | $\\Delta x$ (mm) | $\\Delta t$ (s) | 数值前缘 (m) | 与解析相对误差 |",
+      "header_unique": true,
+      "start_char": 3008
+    },
+    {
+      "table_id": "r9632:table:03",
+      "line_start": 82,
+      "line_end": 85,
+      "rows": 2,
+      "cols": 6,
+      "header_quote": "| $\\phi_{keel}$ | $k_{eff}$ 模型 | ME 并联 | ME-1（球夹杂） | 串联下界 | 相对偏差 |",
+      "header_unique": true,
+      "start_char": 3441
+    },
+    {
+      "table_id": "r9632:table:04",
+      "line_start": 91,
+      "line_end": 95,
+      "rows": 3,
+      "cols": 8,
+      "header_quote": "| 记录 | FDD (°C·d) | $T_{air}$ (°C) | 时长 (d) | 模型 $h_c$ (m) | 文献带 [lo, mid, hi] (m) | 相对 mid | 带内 |",
+      "header_unique": true,
+      "start_char": 3860
+    },
+    {
+      "table_id": "r9632:table:05",
+      "line_start": 101,
+      "line_end": 106,
+      "rows": 4,
+      "cols": 4,
+      "header_quote": "| 积雪厚度 (m) | FDD=700 时 $h_c$ (m) | $a_{model}$ (m·(°C·d)$^{-1/2}$) | 落在文献带 |",
+      "header_unique": true,
+      "start_char": 4349
+    },
+    {
+      "table_id": "r9632:table:06",
+      "line_start": 112,
+      "line_end": 121,
+      "rows": 8,
+      "cols": 3,
+      "header_quote": "| 量 | 符号 | 数值 |",
+      "header_unique": true,
+      "start_char": 4834
+    },
+    {
+      "table_id": "r9632:table:07",
+      "line_start": 127,
+      "line_end": 130,
+      "rows": 2,
+      "cols": 7,
+      "header_quote": "| 状态 | $h_c$ (m) | 固结度 | $\\sigma_c$ (MPa) | $R_{cons}$ (MN/m) | $R_{rub}$ (MN/m) | $R$ (MN/m) |",
+      "header_unique": true,
+      "start_char": 5288
+    },
+    {
+      "table_id": "r9632:table:08",
+      "line_start": 134,
+      "line_end": 141,
+      "rows": 6,
+      "cols": 5,
+      "header_quote": "| $\\kappa_r$ | 未固结度 | $R_{full}$ (MN/m) | $R_{uncons}$ (MN/m) | 比值 |",
+      "header_unique": true,
+      "start_char": 5675
+    },
+    {
+      "table_id": "r9632:table:09",
+      "line_start": 145,
+      "line_end": 150,
+      "rows": 4,
+      "cols": 4,
+      "header_quote": "| 时间 (d) | 海水孔隙 $h_c$ (m) | 淡水孔隙 $h_c$ (m) | 含 0.2 m 雪 $h_c$ (m) |",
+      "header_unique": true,
+      "start_char": 6043
+    },
+    {
+      "table_id": "r9632:table:10",
+      "line_start": 156,
+      "line_end": 162,
+      "rows": 5,
+      "cols": 6,
+      "header_quote": "| $\\phi_{keel}$ | $k_{eff}$ (W/mK) | $L_{vol}$ (MJ/m³) | $h_c$@FDD700 (m) | $a_{model}$ | $\\sigma_c$@FDD700 (MPa) |",
+      "header_unique": true,
+      "start_char": 6416
+    },
+    {
+      "table_id": "r9632:table:11",
+      "line_start": 166,
+      "line_end": 173,
+      "rows": 6,
+      "cols": 6,
+      "header_quote": "| 固结度 | $h_c$ (m) | $\\sigma_c$ (MPa) | $R_{cons}$ (MN/m) | $R_{rub}$ (MN/m) | $R$ (MN/m) |",
+      "header_unique": true,
+      "start_char": 6944
+    },
+    {
+      "table_id": "r9632:table:12",
+      "line_start": 216,
+      "line_end": 223,
+      "rows": 6,
+      "cols": 5,
+      "header_quote": "| 判据 | 关键量 vs 基准 | 误差 | 是否 <3% | 结论 |",
+      "header_unique": true,
+      "start_char": 9609
+    }
+  ],
+  "sections": [
+    {
+      "line_heading": "## 1. 案例介绍（物理背景 / 几何 / 参数表）",
+      "quote": "1. 案例介绍（物理背景 / 几何 / 参数表）",
+      "unique": true
+    },
+    {
+      "line_heading": "## 2. 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+      "quote": "2. 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+      "unique": true
+    },
+    {
+      "line_heading": "## 3. 计算结果（判据逐项）",
+      "quote": "3. 计算结果（判据逐项）",
+      "unique": true
+    },
+    {
+      "line_heading": "## 4. 结果图",
+      "quote": "4. 结果图",
+      "unique": true
+    },
+    {
+      "line_heading": "## 5. 注意点（踩过的坑 / 局限 / 适用范围）",
+      "quote": "5. 注意点（踩过的坑 / 局限 / 适用范围）",
+      "unique": true
+    },
+    {
+      "line_heading": "## 6. 误差判定（逐项回答「是否 <3%」）",
+      "quote": "6. 误差判定（逐项回答「是否 <3%」）",
+      "unique": true
+    },
+    {
+      "line_heading": "## 7. 复现与审计链",
+      "quote": "7. 复现与审计链",
+      "unique": true
+    }
+  ],
+  "claims": [],
+  "claims_empty_reason": "contract objective is register_assets only (classify_report_type=false, no extraction); emitting zero claims is the complete, non-invented result for task_type 01",
+  "counts": {
+    "assets_total": 25,
+    "assets_resolved": 1,
+    "assets_metadata_only": 6,
+    "assets_unresolved": 18,
+    "body_references": 18,
+    "distinct_referenced_paths": 17,
+    "declared_figures_in_record": 6,
+    "figures_with_bytes": 0,
+    "tables": 12,
+    "table_rows": 60,
+    "sections": 7,
+    "claims": 0,
+    "kind_status_histogram": {
+      "report_markdown/resolved": 1,
+      "embedded_figure/metadata_only": 6,
+      "source_code_reference/unresolved": 3,
+      "data_artifact_reference/unresolved": 2,
+      "figure_reference/unresolved": 12,
+      "directory_reference/unresolved": 1
+    }
+  },
+  "distinct_referenced_paths": [
+    "../artifacts/ice_ridge_consolidation/figures/fig1_consolidated_layer_growth.png",
+    "../artifacts/ice_ridge_consolidation/figures/fig2_temperature_profiles.png",
+    "../artifacts/ice_ridge_consolidation/figures/fig3_effective_conductivity.png",
+    "../artifacts/ice_ridge_consolidation/figures/fig4_strength_resistance_history.png",
+    "../artifacts/ice_ridge_consolidation/figures/fig5_criteria_summary.png",
+    "../artifacts/ice_ridge_consolidation/figures/fig6_sensitivity.png",
+    "artifacts/ice_ridge_consolidation/results.json",
+    "benchmarks/ice_ridge_consolidation/run_validation.py",
+    "benchmarks/ice_ridge_consolidation/write_report_md.py",
+    "fig1_consolidated_layer_growth.png",
+    "fig2_temperature_profiles.png",
+    "fig3_effective_conductivity.png",
+    "fig4_strength_resistance_history.png",
+    "fig5_criteria_summary.png",
+    "fig6_sensitivity.png",
+    "src/tensorphysics/ice_ridge_consolidation/",
+    "tests/test_ice_ridge_consolidation.py"
+  ],
+  "platform_probes": {
+    "/tensor/reports/9632/artifacts": {
+      "status": "http_404"
+    },
+    "/tensor/artifacts?report_id=9632": {
+      "status": "http_404"
+    }
+  },
+  "observations": [
+    "0 of 18 body path references resolve inside this TensorKnowledge worktree; the remaining 18 are declared by report 9632 relative to the producing repository's benchmarks/ and artifacts/ trees, which are not part of this checkout -- recorded as unresolved rather than guessed.",
+    "The report record carries 6 figures by name+caption only (png_base64 empty); image bytes are therefore not hashable from the record.",
+    "Locator quotes are exact character slices of the served markdown; the full line is stored alongside as line_quote for human re-checking.",
+    "Source identity is pinned as a drift baseline (measured from GET /api/v1/tensor/reports/9632 at package creation (no wp-9632-01 YAML in the worktree); pinned as the drift baseline); verify() re-fetches the record and fails on any byte change."
+  ],
+  "limitations": [
+    "Registration only: no claim is extracted, classified, or marked verified.",
+    "Artifact existence is asserted by the report text; this package does not confirm the referenced files exist upstream (no cross-repo read).",
+    "Uniqueness of a quote is a property of this document only; short path strings that recur are flagged with unique=false and line_occurrences>1."
+  ],
+  "integrity": {
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "locators_checked": 44,
+    "locators_resolved": 44,
+    "quote_uniqueness": "9/25 asset quotes occur exactly once in the markdown; 16 recur (flagged unique=false; positional locators stay unambiguous via start_line/char_span). 6 assets are additionally unique at record level.",
+    "duplicate_asset_ids": 0
+  }
+}
