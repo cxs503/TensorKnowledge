@@ -7,14 +7,17 @@
   "required": ["schema", "package_id", "task_type", "report_id", "source", "counts", "assets", "claims", "integrity"],
   "properties": {
     "schema": {"const": "asset_manifest.v1"},
-    "package_id": {"const": "wp-448-01"},
+    "package_id": {"type": "string", "pattern": "^wp-[0-9]+-[0-9]{2}$",
+                   "description": "Generalised from the wp-448-01 const so later 01-asset-registration packages (e.g. wp-9510-01) reuse the same schema; wp-448-01 still validates."},
     "task_type": {"const": "01-asset-registration"},
-    "report_id": {"const": "448"},
+    "report_id": {"type": "string", "pattern": "^[0-9]+$",
+                   "description": "Generalised from the report-448 const (see package_id note)."},
     "source": {
       "type": "object",
       "required": ["uri", "field", "hash_alg", "hash", "chars", "bytes_utf8", "title", "scenario_key"],
       "properties": {
-        "uri": {"const": "tensor://reports/448"},
+        "uri": {"type": "string", "pattern": "^tensor://reports/[0-9]+$",
+                "description": "Generalised from the report-448 const (see package_id note)."},
         "field": {"const": "markdown"},
         "hash_alg": {"const": "sha256"},
         "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
