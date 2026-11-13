@@ -1,0 +1,50 @@
+{
+ "package_id": "wp-9912-01",
+ "report_id": "9912",
+ "verification_status": "not_verified",
+ "verifier": "scripts/kf_verify_9912.py",
+ "fetched_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9912",
+ "recomputed_source_hash": "a20e4a075123e95c5fbca4c9938b39d8ddb6c317272bbef6958b3b6aa65e158d",
+ "contract_source_hash": "a20e4a075123e95c5fbca4c9938b39d8ddb6c317272bbef6958b3b6aa65e158d",
+ "source_chars": 4983,
+ "assets_checked": 43,
+ "quotes_resolved": 43,
+ "schema_errors": [],
+ "acceptance": {
+  "valid_json": {
+   "pass": true,
+   "detail": "asset_manifest.json / kf_result.json / verification.json 均可被 json 解析（本次复核即解析）"
+  },
+  "schema_pass": {
+   "pass": true,
+   "detail": "asset_manifest 按 docs/kf/wp-9912-01/asset_manifest.v1.schema.json（结构继承 schemas/asset_manifest.v1.schema.json，仅 const 固定到 9912）校验；kf_result 按 schemas/kf_result.v1.schema.json 校验；错误 0 条"
+  },
+  "source_locator_resolvable": {
+   "pass": true,
+   "detail": "43 个资产的 quote 在**重新抓取**的 markdown 中逐一按 start_char/end_char 复现（失败 0）；每 quote 所在行与 start_line 一致（不一致 0）"
+  },
+  "source_hash_matches": {
+   "pass": true,
+   "detail": "重算 a20e4a075123e95c5fbca4c9938b39d8ddb6c317272bbef6958b3b6aa65e158d vs 契约 a20e4a075123e95c5fbca4c9938b39d8ddb6c317272bbef6958b3b6aa65e158d vs kf_result a20e4a075123e95c5fbca4c9938b39d8ddb6c317272bbef6958b3b6aa65e158d vs manifest a20e4a075123e95c5fbca4c9938b39d8ddb6c317272bbef6958b3b6aa65e158d；字符数 4983（契约 4983）"
+  },
+  "no_duplicate_ids": {
+   "pass": true,
+   "detail": "43 个 asset_id，唯一 43 个"
+  },
+  "all_claims_have_evidence_or_explicit_unresolved_status": {
+   "pass": true,
+   "detail": "claims 数量 0（本包允许为空数组）；逐条断言 evidence_locator 或显式 status（空集上为真，且未生成任何 claim 已记录在 claims_note）"
+  }
+ },
+ "extra_checks": {
+  "envelope_matches_artifact": {
+   "pass": true,
+   "detail": "kf_result.outputs['asset_manifest.json'] 与磁盘 artifact 的字段漂移 []"
+  },
+  "no_verified_marks": {
+   "pass": true,
+   "detail": "资产与 provenance 中均无 verified 标记（verification_status=not_verified）"
+  }
+ },
+ "note": "Self-check by the same agent that produced the artifact; platform gate remains authoritative and may recompute independently."
+}
