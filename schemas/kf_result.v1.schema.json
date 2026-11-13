@@ -1,134 +1,104 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.invalid/schemas/kf_result.v1.schema.json",
-  "title": "Knowledge Factory work-package result envelope v1",
-  "description": "平台侧结果信封：任何工序（01-05）的产出都包一层同样的信封，结构门才有统一验收面。工序 03 建议同时按 TensorKnowledge 的 claims/evidence/provenance 字段名组织，SPEC 到位后由外部 schema 叠加校验，本文件不改。",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/kf_result.v1.schema.json",
+  "title": "KF-RESULT v1 — 报告→知识产线工序结果",
+  "description": "报告→知识产线（KBM-RCI-F1-FACTORY）各工序（01 资产登记 / 02 分类解析 / 03 知识抽取 / 04 独立审核 / 05 综合研究）的机器可校验结果。provenance.source_hash 必须与 source_uri 所指报告的 markdown 字节哈希一致（平台独立重算，不一致判门失败）。",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "package_id",
-    "task_type",
-    "report_id",
-    "provenance",
-    "outputs"
-  ],
+  "required": ["package_id", "task_type", "report_id", "provenance", "outputs"],
   "properties": {
     "package_id": {
       "type": "string",
-      "pattern": "^wp-[A-Za-z0-9][A-Za-z0-9_.:-]*-[0-9]{2}$"
+      "pattern": "^wp-[a-z0-9][a-z0-9-]{2,63}$",
+      "description": "稳定工作包标识。一报告一工序一包，不复用。"
     },
     "task_type": {
+      "enum": [
+        "01-asset-registration",
+        "02-classification-parse",
+        "03-knowledge-extraction",
+        "04-independent-review",
+        "05-synthesis-research"
+      ],
+      "description": "五工序之一。"
+    },
+    "contract_version": {
       "type": "string",
-      "pattern": "^[0-9]{2}(-[a-z0-9-]+)?$",
-      "description": "工序短码（01-05）或契约全名（如 03-knowledge-extraction），二者等价。"
+      "pattern": "^[0-9]+\\.[0-9]+$",
+      "const": "1.0",
+      "description": "契约版本。"
     },
     "report_id": {
       "type": "string",
-      "pattern": "^[0-9]+$"
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "description": "tensor_reports.id 的源报告。"
     },
     "provenance": {
       "type": "object",
-      "additionalProperties": true,
-      "required": [
-        "source_hash",
-        "source_field"
-      ],
+      "additionalProperties": false,
+      "required": ["source_uri", "source_field", "source_hash"],
       "properties": {
-        "source_hash": {
+        "source_uri": {
           "type": "string",
-          "pattern": "^sha256:[0-9a-f]{64}$"
+          "pattern": "^(https?://\\S+|file://\\S+|tensor://\\S+)$",
+          "description": "源报告位置。"
         },
         "source_field": {
-          "enum": [
-            "markdown",
-            "summary",
-            "record"
-          ]
+          "enum": ["markdown", "summary", "record"],
+          "description": "source_hash 覆盖的报告字段。"
         },
-        "producer": {
-          "type": "string"
+        "source_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "description": "源报告 markdown 字节哈希（平台独立重算）。"
         },
-        "emitted_at": {
-          "type": "string"
+        "source_hash_matches": {
+          "type": "boolean",
+          "description": "本工序独立重算的哈希与 source_uri 声明是否一致。"
         },
-        "notes": {
-          "type": "string"
-        }
+        "title": { "type": "string" },
+        "scenario_key": { "type": "string" },
+        "chars": { "type": "integer" }
       }
     },
     "outputs": {
       "type": "object",
+      "additionalProperties": false,
       "minProperties": 1,
-      "description": "键名=工序声明的输出文件名（见 contracts），值=该文件内容对象。",
-      "additionalProperties": {
-        "type": [
-          "object",
-          "array",
-          "string",
-          "number",
-          "boolean",
-          "null"
-        ]
-      }
-    },
-    "claims": {
-      "type": "array",
-      "description": "工序 03 的知识对象候选；零条=合法完整结果（不得为填指标而造知识）。",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "claim_id",
-          "text",
-          "status"
-        ],
-        "properties": {
-          "claim_id": {
-            "type": "string",
-            "minLength": 3,
-            "maxLength": 96
-          },
-          "text": {
-            "type": "string",
-            "minLength": 1
-          },
-          "status": {
-            "enum": [
-              "supported",
-              "partially-supported",
-              "unresolved",
-              "refuted"
-            ]
-          },
-          "evidence": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "quote"
-              ],
-              "properties": {
-                "quote": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "source_field": {
-                  "enum": [
-                    "markdown",
-                    "summary",
-                    "record"
-                  ]
-                },
-                "note": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "unresolved_reason": {
-            "type": "string"
-          }
+      "properties": {
+        "asset_manifest.json": {
+          "type": "object",
+          "description": "01 资产登记产物：源哈希 + 附件清单 + 可达性。"
+        },
+        "classification.json": {
+          "type": "object",
+          "description": "02 分类解析产物。"
+        },
+        "claims.json": {
+          "type": "array",
+          "description": "03 知识抽取产物（可为空数组）。"
+        },
+        "evidence.json": {
+          "type": "array",
+          "description": "03 知识抽取产物。"
+        },
+        "provenance.json": {
+          "type": "array",
+          "description": "03 知识抽取产物。"
+        },
+        "extraction_summary.json": {
+          "type": "object",
+          "description": "03 知识抽取产物。"
+        },
+        "review_report.json": {
+          "type": "object",
+          "description": "04 独立审核产物。"
+        },
+        "synthesis.json": {
+          "type": "object",
+          "description": "05 综合研究产物。"
         }
       }
     }
