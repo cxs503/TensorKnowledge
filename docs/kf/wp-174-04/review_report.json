@@ -1,0 +1,57 @@
+{
+  "review_id": "wp-174-04-review",
+  "package_id_reviewed": "wp-174-01",
+  "report_id": "174",
+  "reviewer": "m15786",
+  "reviewed_at": "2026-11-12T02:35:00Z",
+  "disposition": "approve_with_notes",
+  "severity_ranked_findings": [
+    {
+      "severity": "INFO",
+      "finding": "Occurrence counts use backticked_literal scope",
+      "evidence": "verification.json c7 check uses scope='backticked_literal'; manifest occurrences count backticked refs only (e.g., 174-ref-01: manifest=1, backticked=1, raw=2). The raw count includes absolute-path variants in the evidence index section (174-ref-04 through 174-ref-07). This is correct behavior but the scope distinction could be more explicit in the manifest.",
+      "likelihood": "certain",
+      "affected_scope": "referenced_artifacts[].occurrences",
+      "remediation": "No action required; scope is documented in verification.json. Consider adding 'scope' field to artifact entries for clarity."
+    },
+    {
+      "severity": "INFO",
+      "finding": "Section char counts include trailing newlines",
+      "evidence": "Section chars sum to 4258 matching markdown length. Individual section char counts include the newline after the last line of each section (verified: section 1 claimed=168, split+join=167, +1 newline=168). This is consistent and correct.",
+      "likelihood": "certain",
+      "affected_scope": "sections[].chars",
+      "remediation": "No action required; partition is verified complete with no gaps/overlaps."
+    }
+  ],
+  "checks_performed": [
+    {"check": "source_hash_independent_recompute", "result": "pass", "detail": "sha256:80399c1b032528fcf6e3e1a9cf08ad6b68bb68920b622223fc5062ec4f0287e3 matches contract"},
+    {"check": "chars_count", "result": "pass", "detail": "4258 chars matches contract"},
+    {"check": "section_partition", "result": "pass", "detail": "20 sections, lines 1-164, no gaps/overlaps, chars sum=4258"},
+    {"check": "locator_quotes_in_markdown", "result": "pass", "detail": "9/9 locator quotes found verbatim in markdown"},
+    {"check": "ext_ref_locator_quotes", "result": "pass", "detail": "2/2 external reference locator quotes found"},
+    {"check": "boundary_single_report", "result": "pass", "detail": "report_ids_read=['174'], report_ids_written=['174']"},
+    {"check": "schema_required_fields", "result": "pass", "detail": "package_id/task_type/report_id/provenance/outputs all present"},
+    {"check": "schema_patterns", "result": "pass", "detail": "package_id, task_type, report_id, source_hash, source_field all match patterns"},
+    {"check": "schema_additionalProperties", "result": "pass", "detail": "No extra top-level keys beyond allowed set"},
+    {"check": "claims_empty_for_01", "result": "pass", "detail": "claims=[] is correct for 01-asset-registration task"},
+    {"check": "source_snapshot_hash", "result": "pass", "detail": "Snapshot hash matches recomputed hash"},
+    {"check": "source_snapshot_bytes", "result": "pass", "detail": "6395 bytes matches UTF-8 encoding of markdown"},
+    {"check": "verification_all_checks_pass", "result": "pass", "detail": "13/13 verification checks pass"},
+    {"check": "gate_replica_structure", "result": "pass", "detail": "structure_gate and evidence_gate both ok"},
+    {"check": "unresolved_items_justified", "result": "pass", "detail": "2 unresolved items with valid boundary-based reasons"},
+    {"check": "no_verified_marking", "result": "pass", "detail": "verification_status='none', no verified claims"}
+  ],
+  "checks_not_run": [
+    {"check": "artifact_file_existence", "reason": "Boundary constraint: artifacts are in m61/m63 work directories outside report 174 scope; wp-174-01 correctly marks as unresolved"},
+    {"check": "external_api_live_response", "reason": "Boundary constraint: /tensor/reports/166 and /169 are different report_ids; wp-174-01 correctly marks as unresolved"},
+    {"check": "jsonschema_draft202012_validation", "reason": "Relied on wp-174-01's self-reported schema pass (c2); independent schema validation would require jsonschema library installation"}
+  ],
+  "overstated_claims": [],
+  "independence_limitations": [
+    "Review performed without access to wp-174-01 producer's internal reasoning or scripts",
+    "Artifact file existence not verified (boundary constraint)",
+    "External API endpoints not called (boundary constraint)",
+    "Schema validation relied on self-reported pass; independent jsonschema validation not performed"
+  ],
+  "summary": "wp-174-01 (01-asset-registration for report 174) passes all independent checks. Source hash, chars count, section partition, locator quotes, boundary compliance, and schema structure all verified. Two INFO-level notes on occurrence count scope and section char counting method. No blocking issues found. Disposition: approve_with_notes."
+}
