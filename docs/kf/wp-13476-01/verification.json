@@ -1,0 +1,62 @@
+{
+  "package_id": "wp-13476-01",
+  "report_id": "13476",
+  "verified_at": "2026-11-12T02:32:30Z",
+  "checker": "scripts/kf_wp13476_01_register.py verify",
+  "all_pass": true,
+  "checks": [
+    {
+      "id": "valid_json",
+      "ok": true,
+      "detail": "asset_manifest.json + kf_result.json both parse"
+    },
+    {
+      "id": "schema_pass",
+      "ok": true,
+      "detail": {
+        "kf_result.v1": "valid",
+        "asset_manifest (pinned)": "valid"
+      }
+    },
+    {
+      "id": "source_locator_resolvable",
+      "ok": true,
+      "detail": {
+        "locators": 17,
+        "markdown_locators": 14,
+        "record_locators": 3,
+        "unresolvable": [],
+        "checked_against": "fresh GET /tensor/reports/13476 (markdown slice + record.figures)"
+      }
+    },
+    {
+      "id": "source_hash_matches",
+      "ok": true,
+      "detail": {
+        "recomputed": "sha256:da5ef00db5752534a6f7d70022bd449a88f4ad649ba36e458dc246c61b2392c0",
+        "contract": "sha256:da5ef00db5752534a6f7d70022bd449a88f4ad649ba36e458dc246c61b2392c0",
+        "manifest": "sha256:da5ef00db5752534a6f7d70022bd449a88f4ad649ba36e458dc246c61b2392c0",
+        "provenance": "sha256:da5ef00db5752534a6f7d70022bd449a88f4ad649ba36e458dc246c61b2392c0"
+      }
+    },
+    {
+      "id": "no_duplicate_ids",
+      "ok": true,
+      "detail": {
+        "assets": 17,
+        "distinct": 17,
+        "duplicates": []
+      }
+    },
+    {
+      "id": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "ok": true,
+      "detail": {
+        "claims": 0,
+        "empty_claims_with_explicit_reason": true,
+        "reason": "Contract wp-13476-01 sets objective.register_assets=true, objective.classify_report_type=false, constraints.no_forced_claim_generation=true, and notes state 'claims 允许为空数组'. This package registers asset identity only (report_id, markdown byte hash, declared figures/artefacts and their in-source locators); extraction is a downstream package, so an empty claims array is the complete result, not an omission."
+      }
+    }
+  ],
+  "note": "Local self-check only. It does not mark claims verified and does not replace the platform gate; the gate outcome is whatever the platform computes."
+}
