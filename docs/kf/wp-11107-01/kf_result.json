@@ -1,0 +1,382 @@
+{
+  "package_id": "wp-11107-01",
+  "task_type": "01-asset-registration",
+  "report_id": "11107",
+  "provenance": {
+    "source_hash": "sha256:799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15690",
+    "emitted_at": "2026-11-12T01:49:59Z",
+    "notes": "01-asset-registration for report 11107: identity + declared artefacts only; claims intentionally empty per contract objective."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.wp-11107-01",
+      "manifest_version": "1.0",
+      "package_id": "wp-11107-01",
+      "task_type": "01-asset-registration",
+      "report_id": "11107",
+      "lane": "C",
+      "generated_at": "2026-11-12T01:49:59Z",
+      "producer": "kf-worker/m15690",
+      "contract": {
+        "source_uri": "tensor://reports/11107",
+        "source_field": "markdown",
+        "source_hash": "sha256:799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982",
+        "chars": 13319,
+        "title": "P202W1-N09 TensorFEM 疲劳裂纹扩展验证面：C(T) 试样 Paris 律 da/dN-dK、门槛值与断裂韧性标定",
+        "scenario_key": "fatigue-crack-growth-ct-specimen",
+        "objective": {
+          "register_assets": true,
+          "classify_report_type": false
+        }
+      },
+      "source": {
+        "report_id": "11107",
+        "uri": "tensor://reports/11107",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982",
+        "hash_matches_contract": true,
+        "chars": 13319,
+        "chars_match_contract": true,
+        "bytes_utf8": 13335,
+        "lines": 276,
+        "has_crlf": false,
+        "has_trailing_newline": true,
+        "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)), 1-based",
+        "fetched_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/11107 (Bearer env TENSOR_AGENT_USER)",
+        "record": {
+          "id": 11107,
+          "title": "P202W1-N09 TensorFEM 疲劳裂纹扩展验证面：C(T) 试样 Paris 律 da/dN-dK、门槛值与断裂韧性标定",
+          "title_matches_contract": true,
+          "scenario_key": "fatigue-crack-growth-ct-specimen",
+          "scenario_matches_contract": true,
+          "mission_id": 9374,
+          "status": "published",
+          "stage": null,
+          "created_at": "2026-11-10T11:10:29.031393+00:00",
+          "created_by": 1,
+          "tags": [
+            "TensorFEM",
+            "fatigue",
+            "fracture-mechanics",
+            "ASTM-E647",
+            "ASTM-E399",
+            "Paris-law",
+            "J-integral",
+            "quarter-point",
+            "Miner-rule",
+            "P202W1-N09"
+          ],
+          "figures_declared": [
+            {
+              "name": "fig1_paris_curve.png",
+              "caption": "da/dN - dK in log-log coordinates: ASTM E647 secant data (50 points), log-log fit (R2 = 0.999998), threshold-modified Paris law, and the ASTM 1e-10 m/cycle threshold criterion."
+            },
+            {
+              "name": "fig2_crack_path.png",
+              "caption": "Crack path across the C(T) specimen at five cycle stations (a/W = 0.30 -> 0.695) and the a/W - N history."
+            },
+            {
+              "name": "fig3_j_integral.png",
+              "caption": "K_J on successive contours at a/W = 0.40 (path independence), the three mesh-refinement levels and the ASTM E399 f(a/W) value."
+            },
+            {
+              "name": "fig4_stress_field.png",
+              "caption": "sigma_yy field of the pin-loaded C(T) specimen at P_max, a/W = 0.40, computed with the quarter-point finite-element model."
+            }
+          ]
+        }
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "source_document",
+          "label": "report markdown (source_uri tensor://reports/11107, field markdown)",
+          "in_report_section": "whole document, line 1 .. 276",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 13319,
+            "start_line": 1,
+            "end_line": 276,
+            "quote": "# TensorFEM: C(T) fatigue crack growth, Paris law and threshold calibration (ASTM E647 / E399)",
+            "quote_sha256": "7756b311d837513430e085d77b873dc3aee315a8a08f6bcf272042d9d58ebb7c",
+            "occurrences_in_source": 1,
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "sha256 over the markdown UTF-8 bytes recomputed at registration and compared with contract input.source_hash; chars compared with contract input.chars",
+            "result": "resolved",
+            "measured_sha256": "799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982",
+            "measured_chars": 13319,
+            "measured_bytes_utf8": 13335
+          },
+          "note": "Identity of the registered source. Whitespace/newlines are part of the hashed payload, so the hash pins the exact byte sequence, not a normalised view."
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "figure_reference",
+          "label": "fig1_paris_curve.png — da/dN - dK in log-log coordinates: ASTM E647 secant data (50 points), log-log fit (R2 = 0.999998), threshold-modified Paris law, and the ASTM 1e-10 m/cycle threshold criterion.",
+          "in_report_section": "§4 Figures (absolute path bullet); metadata: record.figures[0]",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8964,
+            "end_char": 9036,
+            "start_line": 206,
+            "end_line": 206,
+            "quote": "/root/tp-agent/work/m9374/artifacts/fatigue_ct_e647/fig1_paris_curve.png",
+            "quote_sha256": "115223fc41cceaee5e1de17a023072a7ffb397d6b32e142ac6f692898a0b0e75",
+            "occurrences_in_source": 1,
+            "unique": true
+          },
+          "resolution": "resolved_external",
+          "resolution_check": {
+            "check": "os.path probe of the absolute path quoted in §4 (bytes + sha256), plus platform probe GET /tensor/reports/11107/artifacts -> 404 (no artefact endpoint on this platform build)",
+            "result": "resolved",
+            "platform_artifacts_endpoint_status": 404,
+            "bytes": 89619,
+            "sha256": "c203cc588f3e2284e560a0b654447c32cd6f39a60878794d01a6de325f963e23"
+          },
+          "note": "PNG bytes live in the producer mission worktree (/root/tp-agent/work/m9374), outside this delivery worktree; the platform serves no figure bytes, so registration records path+size+sha256 instead of copying the binary. Durability: host-local path, not part of TensorKnowledge. Worktree dir name 'm9374' normalised (strip leading 'm') matches record.mission_id '9374' -- a directory-name hint only, corroborating but NOT proof that these files belong to this report."
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "figure_reference",
+          "label": "fig2_crack_path.png — Crack path across the C(T) specimen at five cycle stations (a/W = 0.30 -> 0.695) and the a/W - N history.",
+          "in_report_section": "§4 Figures (absolute path bullet); metadata: record.figures[1]",
+          "locator": {
+            "method": "char_span",
+            "start_char": 9163,
+            "end_char": 9234,
+            "start_line": 208,
+            "end_line": 208,
+            "quote": "/root/tp-agent/work/m9374/artifacts/fatigue_ct_e647/fig2_crack_path.png",
+            "quote_sha256": "883b901f324adb0cd526690320b58668d3615e97a2f43f049a7ebb727297d02e",
+            "occurrences_in_source": 1,
+            "unique": true
+          },
+          "resolution": "resolved_external",
+          "resolution_check": {
+            "check": "os.path probe of the absolute path quoted in §4 (bytes + sha256), plus platform probe GET /tensor/reports/11107/artifacts -> 404 (no artefact endpoint on this platform build)",
+            "result": "resolved",
+            "platform_artifacts_endpoint_status": 404,
+            "bytes": 76478,
+            "sha256": "8561d9cf5dc6b9ff4bf8a2db3b9d241d821cae34fee4af16ba853d8ed102d107"
+          },
+          "note": "PNG bytes live in the producer mission worktree (/root/tp-agent/work/m9374), outside this delivery worktree; the platform serves no figure bytes, so registration records path+size+sha256 instead of copying the binary. Durability: host-local path, not part of TensorKnowledge. Worktree dir name 'm9374' normalised (strip leading 'm') matches record.mission_id '9374' -- a directory-name hint only, corroborating but NOT proof that these files belong to this report."
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "figure_reference",
+          "label": "fig3_j_integral.png — K_J on successive contours at a/W = 0.40 (path independence), the three mesh-refinement levels and the ASTM E399 f(a/W) value.",
+          "in_report_section": "§4 Figures (absolute path bullet); metadata: record.figures[2]",
+          "locator": {
+            "method": "char_span",
+            "start_char": 9322,
+            "end_char": 9393,
+            "start_line": 210,
+            "end_line": 210,
+            "quote": "/root/tp-agent/work/m9374/artifacts/fatigue_ct_e647/fig3_j_integral.png",
+            "quote_sha256": "257ac67e612cd1b71fe32622397ce2f12a527a135f83c4a3e1f429e686ff98a8",
+            "occurrences_in_source": 1,
+            "unique": true
+          },
+          "resolution": "resolved_external",
+          "resolution_check": {
+            "check": "os.path probe of the absolute path quoted in §4 (bytes + sha256), plus platform probe GET /tensor/reports/11107/artifacts -> 404 (no artefact endpoint on this platform build)",
+            "result": "resolved",
+            "platform_artifacts_endpoint_status": 404,
+            "bytes": 60904,
+            "sha256": "ad056e60554abe511ca4df0125759cdead1f9ef23b985962887a64cd696348ac"
+          },
+          "note": "PNG bytes live in the producer mission worktree (/root/tp-agent/work/m9374), outside this delivery worktree; the platform serves no figure bytes, so registration records path+size+sha256 instead of copying the binary. Durability: host-local path, not part of TensorKnowledge. Worktree dir name 'm9374' normalised (strip leading 'm') matches record.mission_id '9374' -- a directory-name hint only, corroborating but NOT proof that these files belong to this report."
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "figure_reference",
+          "label": "fig4_stress_field.png — sigma_yy field of the pin-loaded C(T) specimen at P_max, a/W = 0.40, computed with the quarter-point finite-element model.",
+          "in_report_section": "§4 Figures (absolute path bullet); metadata: record.figures[3]",
+          "locator": {
+            "method": "char_span",
+            "start_char": 9502,
+            "end_char": 9575,
+            "start_line": 212,
+            "end_line": 212,
+            "quote": "/root/tp-agent/work/m9374/artifacts/fatigue_ct_e647/fig4_stress_field.png",
+            "quote_sha256": "5398071b20f7d8bab83805de25143324cd84f85f566307e0a0d8c49132252e83",
+            "occurrences_in_source": 1,
+            "unique": true
+          },
+          "resolution": "resolved_external",
+          "resolution_check": {
+            "check": "os.path probe of the absolute path quoted in §4 (bytes + sha256), plus platform probe GET /tensor/reports/11107/artifacts -> 404 (no artefact endpoint on this platform build)",
+            "result": "resolved",
+            "platform_artifacts_endpoint_status": 404,
+            "bytes": 91861,
+            "sha256": "eca731898eb405b0e27b4224b34915040eaf7ebc236db7dcbefcec84b7c46598"
+          },
+          "note": "PNG bytes live in the producer mission worktree (/root/tp-agent/work/m9374), outside this delivery worktree; the platform serves no figure bytes, so registration records path+size+sha256 instead of copying the binary. Durability: host-local path, not part of TensorKnowledge. Worktree dir name 'm9374' normalised (strip leading 'm') matches record.mission_id '9374' -- a directory-name hint only, corroborating but NOT proof that these files belong to this report."
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "producer_workspace_reference",
+          "label": "/root/tp-agent/work/m9374 (mission worktree that produced §4 figure paths and the run)",
+          "in_report_section": "§4 Figures",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8964,
+            "end_char": 8989,
+            "start_line": 206,
+            "end_line": 206,
+            "quote": "/root/tp-agent/work/m9374",
+            "quote_sha256": "36f976490495315b02cdef12ab83167cab3536feb693210d11bf4acc7ae9ed56",
+            "occurrences_in_source": 4,
+            "unique": false
+          },
+          "resolution": "resolved_external",
+          "resolution_check": {
+            "check": "os.path probe of the quoted directory; occurrence count measured (non-unique is reported, not hidden)",
+            "result": "resolved"
+          },
+          "note": "Registered as a provenance pointer only: it is the producer's working tree, not an artefact the knowledge base should depend on (host-local, purgeable)."
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "code_reference",
+          "label": "tensorfem.fatigue.ct_specimen (verification face identifier named in the report subtitle/summary)",
+          "in_report_section": "subtitle (line 3) and record.summary",
+          "locator": {
+            "method": "char_span",
+            "start_char": 143,
+            "end_char": 172,
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "tensorfem.fatigue.ct_specimen",
+            "quote_sha256": "72e222fc69c2772da3136c10490f6b6dfc341c04e9100ae4664ca4a38b4dfa77",
+            "occurrences_in_source": 1,
+            "unique": true
+          },
+          "resolution": "resolved_external",
+          "resolution_check": {
+            "check": "grep for the symbol in python/config source of the delivery worktree (scope excludes .git, docs/, tests/ and this package's own artefacts, i.e. no other work package's outputs are read); a miss means the face is not defined here and stays unresolved rather than 'absent by design'",
+            "result": "resolved",
+            "grep_hits": [
+              "scripts/kf_wp11107_01_report.py"
+            ],
+            "grep_scope": "TensorKnowledge worktree source files (*.py/*.toml/*.cfg), excluding .git, docs/, tests/ and this package's own outputs"
+          },
+          "note": "The face lives in TensorFEM, not in the knowledge repo; registering it as an unresolved reference keeps the downstream工序 from assuming local code."
+        }
+      ],
+      "cross_references": [
+        {
+          "kind": "relative_figure_path_in_criteria_summary",
+          "refers_to_asset_id": "A02",
+          "quote": "artifacts/fatigue_ct_e647/fig1_paris_curve.png",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8738,
+            "end_char": 8784,
+            "start_line": 202,
+            "end_line": 202,
+            "quote": "artifacts/fatigue_ct_e647/fig1_paris_curve.png",
+            "quote_sha256": "78d85fb750503edf00ba2c265baeb44a6949a154d040dd2c3990b7e0a5012167",
+            "occurrences_in_source": 2,
+            "unique": false
+          },
+          "resolves_in_delivery_worktree": false,
+          "note": "C8_figures criterion quotes the repo-relative form; the file is not part of TensorKnowledge, so this path alone does not resolve here"
+        },
+        {
+          "kind": "relative_figure_path_in_criteria_summary",
+          "refers_to_asset_id": "A03",
+          "quote": "artifacts/fatigue_ct_e647/fig2_crack_path.png",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8788,
+            "end_char": 8833,
+            "start_line": 202,
+            "end_line": 202,
+            "quote": "artifacts/fatigue_ct_e647/fig2_crack_path.png",
+            "quote_sha256": "a29fb65ca1061b25c02f9576ccd7e3452e4a58a221a522b658aff725beca1bc1",
+            "occurrences_in_source": 2,
+            "unique": false
+          },
+          "resolves_in_delivery_worktree": false,
+          "note": "C8_figures criterion quotes the repo-relative form; the file is not part of TensorKnowledge, so this path alone does not resolve here"
+        },
+        {
+          "kind": "relative_figure_path_in_criteria_summary",
+          "refers_to_asset_id": "A04",
+          "quote": "artifacts/fatigue_ct_e647/fig3_j_integral.png",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8837,
+            "end_char": 8882,
+            "start_line": 202,
+            "end_line": 202,
+            "quote": "artifacts/fatigue_ct_e647/fig3_j_integral.png",
+            "quote_sha256": "9caac7557f153725b857613eaea29e5960c137c7c96e66d3675a0bdc2220cd06",
+            "occurrences_in_source": 2,
+            "unique": false
+          },
+          "resolves_in_delivery_worktree": false,
+          "note": "C8_figures criterion quotes the repo-relative form; the file is not part of TensorKnowledge, so this path alone does not resolve here"
+        },
+        {
+          "kind": "relative_figure_path_in_criteria_summary",
+          "refers_to_asset_id": "A05",
+          "quote": "artifacts/fatigue_ct_e647/fig4_stress_field.png",
+          "locator": {
+            "method": "char_span",
+            "start_char": 8886,
+            "end_char": 8933,
+            "start_line": 202,
+            "end_line": 202,
+            "quote": "artifacts/fatigue_ct_e647/fig4_stress_field.png",
+            "quote_sha256": "5ff5624ba108bdef5e62b880ec8201a47ce4659739bdd0ac5c8d2489e0287500",
+            "occurrences_in_source": 2,
+            "unique": false
+          },
+          "resolves_in_delivery_worktree": false,
+          "note": "C8_figures criterion quotes the repo-relative form; the file is not part of TensorKnowledge, so this path alone does not resolve here"
+        }
+      ],
+      "counts": {
+        "assets": 7,
+        "by_class": {
+          "code_reference": 1,
+          "figure_reference": 4,
+          "producer_workspace_reference": 1,
+          "source_document": 1
+        },
+        "by_resolution": {
+          "resolved_external": 6,
+          "resolved_in_source": 1
+        },
+        "figures_declared_in_record": 4,
+        "figure_paths_quoted_in_body": 4,
+        "figure_paths_resolvable_on_disk": 4,
+        "claims": 0
+      },
+      "id_integrity": {
+        "ids_checked": 7,
+        "duplicates": [],
+        "unique": true,
+        "cross_reference_entries": 4,
+        "cross_reference_note": "cross_references point back to asset_id via refers_to_asset_id, so no identifier is declared twice"
+      },
+      "claims": [],
+      "claims_empty_reason": "Contract wp-11107-01 objective is register_assets=true / classify_report_type=false and notes state 'claims 允许为空数组' with constraint no_forced_claim_generation=true. This工序 registers asset identity (report_id, markdown byte hash, declared attachments/artefacts) only; knowledge extraction is a downstream工序, so claims=[] is the complete result, not an omission.",
+      "unresolved": [],
+      "notes": [
+        "Registration only: no numbers from the report body were copied into this manifest; every value here is measured (hash/char count/file size/char span) by the script.",
+        "No claim in this manifest is marked verified; verification is the platform gate's job."
+      ]
+    }
+  },
+  "claims": []
+}
