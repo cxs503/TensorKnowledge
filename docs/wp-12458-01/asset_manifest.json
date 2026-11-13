@@ -1,0 +1,110 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-12458-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12458",
+  "source": {
+    "uri": "tensor://reports/12458",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "e82df280a4f31a4a0aba360eaf3761377251d4c4bb18458c5140ea7eb8921ee5",
+    "chars": 79,
+    "bytes_utf8": 79,
+    "title": "test report",
+    "scenario_key": "test",
+    "platform_id": 12458,
+    "platform_mission_id": 11091,
+    "platform_figures": [],
+    "platform_tags": [
+      "test"
+    ],
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/12458",
+    "local_copy": "runs/wp-12458-01/report_12458.md"
+  },
+  "counts": {
+    "assets": 3,
+    "by_class": {
+      "document": 1,
+      "heading": 1,
+      "statement": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 3
+    },
+    "resolved_in_source": 3,
+    "referenced_unresolved": 0,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "document",
+      "label": "报告 markdown 全文（源资产本体）",
+      "in_report_section": "(document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 79,
+        "start_line": 0,
+        "end_line": 2,
+        "quote": "# Test Report\n\nThis is a test report with sufficient length to pass validation.",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved"
+      },
+      "note": "整篇 markdown 即源资产；sha256 见 source.hash"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "heading",
+      "label": "报告标题",
+      "in_report_section": "(document)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 13,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "# Test Report",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved"
+      },
+      "note": "标题行；与 API title 字段同源"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "statement",
+      "label": "报告正文声明（验证用文本）",
+      "in_report_section": "# Test Report",
+      "locator": {
+        "method": "char_span",
+        "start_char": 15,
+        "end_char": 79,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "This is a test report with sufficient length to pass validation.",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved"
+      },
+      "note": "正文唯一声明行；无数字/无外部引用，仅作长度与格式验证"
+    }
+  ],
+  "claims": [],
+  "claims_note": "按工作包契约 objective.classify_report_type=false 且 notes 允许 claims 为空数组：本工序只登记资产定位，不做 claim 抽取；claim 抽取由下游工作包负责。",
+  "integrity": {
+    "quote_uniqueness": "all quotes confirmed unique substrings of source markdown (scripts/kf_register_12458.py, checks.source_locator_resolvable)",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true
+  }
+}
