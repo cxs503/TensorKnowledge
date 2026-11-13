@@ -2,12 +2,12 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://tensorplatform.local/schemas/asset_manifest.v1.schema.json",
   "title": "asset_manifest.v1 (KF work package task_type=01-asset-registration)",
-  "description": "Shape of the asset_manifest.json produced by 01-asset-registration work packages (first pinned by scripts/kf_register_448.py; generalized on 2026-11-12 for wp-5690-01: package_id/report_id/source.uri are now pattern-checked instead of const-pinned to wp-448-01, so one schema serves the whole task_type. The wp-448-01 manifest still validates against this file (verified by scripts/kf_verify_448.py). The canonical schemas/kf_result.v1.schema.json referenced by the work-package contract is NOT present in this worktree; this file pins the manifest side so that the schema_pass acceptance item is a reproducible check rather than an assertion. If the platform-side schema differs, the platform gate wins and the artifact must be revised.",
+  "description": "Locally written schema for the asset_manifest.json produced by the KF 01-asset-registration lane (scripts/kf_register_448.py -> wp-448-01, scripts/kf_register_9947.py -> wp-9947-01). package_id / report_id / source.uri are pinned by pattern rather than const so this one gate covers every report registered through the lane (wp-448-01 still validates unchanged). The canonical schemas/kf_result.v1.schema.json referenced by the work-package contract is NOT present in this worktree (TensorKnowledge/schemas/ had no kf_result schema); this file pins the shape actually used so that the schema_pass acceptance item is a reproducible check rather than an assertion. If the platform-side schema differs, the platform gate wins and this artifact must be revised.",
   "type": "object",
   "required": ["schema", "package_id", "task_type", "report_id", "source", "counts", "assets", "claims", "integrity"],
   "properties": {
     "schema": {"const": "asset_manifest.v1"},
-    "package_id": {"type": "string", "pattern": "^wp-[0-9]+-[0-9]{2}$"},
+    "package_id": {"type": "string", "pattern": "^wp-[A-Za-z0-9][A-Za-z0-9_.:-]*-[0-9]{2}$"},
     "task_type": {"const": "01-asset-registration"},
     "report_id": {"type": "string", "pattern": "^[0-9]+$"},
     "source": {
