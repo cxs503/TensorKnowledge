@@ -1,0 +1,680 @@
+{
+  "package_id": "wp-9582-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9582",
+  "provenance": {
+    "source_hash": "sha256:cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15661",
+    "emitted_at": "2026-11-12T01:42:48.702841+00:00",
+    "notes": "Registration only: report_id 9582 markdown pinned byte-exact and hashed locally; asset locators are char spans re-resolved against those bytes. No extraction, no verified marks."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-9582-01",
+      "task_type": "01-asset-registration",
+      "report_id": "9582",
+      "source": {
+        "uri": "tensor://reports/9582",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+        "chars": 11293,
+        "bytes_utf8": 16772,
+        "title": "P82W2-N02 碎冰堆积体 μ(I) 流变标定：孔隙率场、力链网络与等效黏度（DEM）",
+        "scenario_key": "ice_rubble_rheology_dem",
+        "contract": {
+          "source_hash": "sha256:cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+          "chars": 11293,
+          "title": "P82W2-N02 碎冰堆积体 μ(I) 流变标定：孔隙率场、力链网络与等效黏度（DEM）",
+          "scenario_key": "ice_rubble_rheology_dem",
+          "hash_matches": true,
+          "chars_match": true,
+          "title_matches": true,
+          "scenario_key_matches": true
+        },
+        "platform_figures": [
+          {
+            "name": "porosity_fields.png",
+            "caption_chars": 280,
+            "png_bytes_present": false
+          },
+          {
+            "name": "mu_of_I_fit.png",
+            "caption_chars": 295,
+            "png_bytes_present": false
+          },
+          {
+            "name": "mu_I_residuals.png",
+            "caption_chars": 295,
+            "png_bytes_present": false
+          },
+          {
+            "name": "force_chain_vs_I.png",
+            "caption_chars": 280,
+            "png_bytes_present": false
+          },
+          {
+            "name": "contact_orientation.png",
+            "caption_chars": 236,
+            "png_bytes_present": false
+          },
+          {
+            "name": "viscosity.png",
+            "caption_chars": 196,
+            "png_bytes_present": false
+          }
+        ],
+        "platform_tags": [
+          "DEM",
+          "rubble",
+          "mu(I)",
+          "force-chain",
+          "porosity",
+          "rheology",
+          "TensorDEM",
+          "P82W2-N02",
+          "P82W4-N02"
+        ]
+      },
+      "counts": {
+        "assets": 22,
+        "by_class": {
+          "report_source_markdown": 1,
+          "figure_reference": 6,
+          "preregistration_reference": 1,
+          "code_reference": 5,
+          "data_artifact_reference": 3,
+          "test_reference": 2,
+          "code_reference_module": 3,
+          "literature_data_reference": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 1,
+          "referenced_unresolved": 20,
+          "declared_absent": 1
+        },
+        "resolved_in_source": 1,
+        "referenced_unresolved": 20,
+        "declared_absent": 1
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "report_source_markdown",
+          "label": "报告源资产：markdown 全文（本工序的输入字节）",
+          "in_report_section": "whole document",
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "pinned byte copy re-read; sha256/len re-measured from those bytes",
+            "result": "resolved"
+          },
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 11293,
+            "start_line": 1,
+            "end_line": 207,
+            "quote": "# P82W2-N02 碎冰堆积体动态演化与运动学：孔隙率场、力链网络与 μ(I) 流变标定",
+            "unique": true
+          },
+          "note": "字节级副本 runs/wp-9582-01/source_9582.md；sha256 于该副本重算，用于 provenance.source_hash。 本副本 16772 bytes / 11293 chars。"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "figure_reference",
+          "label": "porosity_fields.png（孔隙率场云图）",
+          "in_report_section": "④ 结果图",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "name in §④ bold lead-in AND record.figures[].name match AND png_base64 non-empty",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 7165,
+            "end_char": 7471,
+            "start_line": 158,
+            "end_line": 158,
+            "quote": "**porosity_fields.png** — Porosity field phi(x,t) of one steady snapshot per scenario on the required grid h = 5 d50. White dots are particle centres. The field is built from exact circle/rectangle intersections, so its area integral reproduces the global porosity to round-off (audited per run, <= 1e-12).",
+            "unique": true
+          },
+          "note": "图名+caption 在 §④ 可定位；PNG 像素字节未随报告记录附带。 记录侧 figures[] 命中=True，png_base64 长度=0。"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "figure_reference",
+          "label": "mu_of_I_fit.png（μ–I 拟合与场景点）",
+          "in_report_section": "④ 结果图",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "name in §④ bold lead-in AND record.figures[].name match AND png_base64 non-empty",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 7473,
+            "end_char": 7916,
+            "start_line": 160,
+            "end_line": 160,
+            "quote": "**mu_of_I_fit.png** — Measured friction coefficient against the inertial number for the three scenarios, one point per (scenario, imposed rate) with the seed as replicate; error bars are the standard error over seeds. Solid line: pooled element-test law; dashed: simple-shear element test alone. Pooled R^2 = 0.803, shear-only R^2 = 0.920; the channel points (mu ~ 0.07-0.10) are drag dominated and are a validation case, not calibration data.",
+            "unique": true
+          },
+          "note": "图名+caption 在 §④ 可定位；PNG 像素字节未随报告记录附带。 记录侧 figures[] 命中=True，png_base64 长度=0。"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "figure_reference",
+          "label": "mu_I_residuals.png（主判据残差与容差带）",
+          "in_report_section": "④ 结果图",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "name in §④ bold lead-in AND record.figures[].name match AND png_base64 non-empty",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 7918,
+            "end_char": 8255,
+            "start_line": 162,
+            "end_line": 162,
+            "quote": "**mu_I_residuals.png** — Residuals of the pooled element-test quadratic fit with the pre-registered residual tolerance (+-0.05). The residual standard deviation is inside the tolerance band, yet R^2 stays below 0.95 because the friction range spanned by the data is only ~0.10; the residuals are structured by solid fraction, not random.",
+            "unique": true
+          },
+          "note": "图名+caption 在 §④ 可定位；PNG 像素字节未随报告记录附带。 记录侧 figures[] 命中=True，png_base64 长度=0。"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "figure_reference",
+          "label": "force_chain_vs_I.png（Z / A_c / 强链载荷份额 vs I）",
+          "in_report_section": "④ 结果图",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "name in §④ bold lead-in AND record.figures[].name match AND png_base64 non-empty",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 8257,
+            "end_char": 8564,
+            "start_line": 164,
+            "end_line": 164,
+            "quote": "**force_chain_vs_I.png** — Coordination number Z, strong-network anisotropy A_c and the share of the load carried by the 20 % strongest contacts, per run. Z stays in the isostatic band (3-4 in 2-D) over two decades of I, while A_c grows with I: the backbone becomes more directional as the flow gets faster.",
+            "unique": true
+          },
+          "note": "图名+caption 在 §④ 可定位；PNG 像素字节未随报告记录附带。 记录侧 figures[] 命中=True，png_base64 长度=0。"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "figure_reference",
+          "label": "contact_orientation.png（接触方向极分布）",
+          "in_report_section": "④ 结果图",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "name in §④ bold lead-in AND record.figures[].name match AND png_base64 non-empty",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 8566,
+            "end_char": 8832,
+            "start_line": 166,
+            "end_line": 166,
+            "quote": "**contact_orientation.png** — Polar distribution of contact-branch orientations folded onto [0, pi): the force-weighted distribution is far more peaked than the count-weighted one, i.e. the load is carried by a minority of aligned contacts (the force-chain network).",
+            "unique": true
+          },
+          "note": "图名+caption 在 §④ 可定位；PNG 像素字节未随报告记录附带。 记录侧 figures[] 命中=True，png_base64 长度=0。"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "figure_reference",
+          "label": "viscosity.png（等效黏度与文献窗）",
+          "in_report_section": "④ 结果图",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "name in §④ bold lead-in AND record.figures[].name match AND png_base64 non-empty",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 8834,
+            "end_char": 9050,
+            "start_line": 168,
+            "end_line": 168,
+            "quote": "**viscosity.png** — Equivalent viscosity eta = mu(I) P / gamma_dot at three confining pressures with the literature acceptance window; the star is the pre-registered reference state (P = 10 kPa, gamma_dot = 0.1 1/s).",
+            "unique": true
+          },
+          "note": "图名+caption 在 §④ 可定位；PNG 像素字节未随报告记录附带。 记录侧 figures[] 命中=True，png_base64 长度=0。"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "preregistration_reference",
+          "label": "prereg/rubble_rheology_prereg.json（预注册阈值+Amendment）",
+          "in_report_section": "② 怎么做的 / 审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 1685,
+            "end_char": 1882,
+            "start_line": 32,
+            "end_line": 32,
+            "quote": "**工具链**：预注册 `prereg/rubble_rheology_prereg.json`（阈值先于生产扫描声明，含 Amendment 1）；扫描 `scripts/run_rubble_rheology.py`（集群 20 并发，60 runs）；拟合/验收/绘图 `scripts/analyse_rubble_rheology.py`；全部数字写入 `summary.json`。",
+            "unique": true
+          },
+          "note": "路径字面量可定位；文件本体不在报告记录内，需到 TensorDEM 检出取回。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "code_reference",
+          "label": "src/tensordem/rubble_scenarios.py（DEM 场景定义）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 10777,
+            "end_char": 10861,
+            "start_line": 200,
+            "end_line": 200,
+            "quote": "- 场景/后处理代码：`src/tensordem/rubble_scenarios.py`、`src/tensordem/rubble_postprocess.py`",
+            "unique": true
+          },
+          "note": "路径字面量可定位；文件本体不在报告记录内，需到 TensorDEM 检出取回。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "code_reference",
+          "label": "src/tensordem/rubble_postprocess.py（后处理模块）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 10777,
+            "end_char": 10861,
+            "start_line": 200,
+            "end_line": 200,
+            "quote": "- 场景/后处理代码：`src/tensordem/rubble_scenarios.py`、`src/tensordem/rubble_postprocess.py`",
+            "unique": true
+          },
+          "note": "路径字面量可定位；文件本体不在报告记录内，需到 TensorDEM 检出取回。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "code_reference",
+          "label": "scripts/run_rubble_rheology.py（扫描脚本）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 1685,
+            "end_char": 1882,
+            "start_line": 32,
+            "end_line": 32,
+            "quote": "**工具链**：预注册 `prereg/rubble_rheology_prereg.json`（阈值先于生产扫描声明，含 Amendment 1）；扫描 `scripts/run_rubble_rheology.py`（集群 20 并发，60 runs）；拟合/验收/绘图 `scripts/analyse_rubble_rheology.py`；全部数字写入 `summary.json`。",
+            "unique": true
+          },
+          "note": "路径字面量可定位；文件本体不在报告记录内，需到 TensorDEM 检出取回。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "code_reference",
+          "label": "scripts/analyse_rubble_rheology.py（拟合/验收/绘图脚本）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 1685,
+            "end_char": 1882,
+            "start_line": 32,
+            "end_line": 32,
+            "quote": "**工具链**：预注册 `prereg/rubble_rheology_prereg.json`（阈值先于生产扫描声明，含 Amendment 1）；扫描 `scripts/run_rubble_rheology.py`（集群 20 并发，60 runs）；拟合/验收/绘图 `scripts/analyse_rubble_rheology.py`；全部数字写入 `summary.json`。",
+            "unique": true
+          },
+          "note": "路径字面量可定位；文件本体不在报告记录内，需到 TensorDEM 检出取回。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "data_artifact_reference",
+          "label": "artifacts/rubble_rheology/runs/*.json（逐 run 数字）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 10942,
+            "end_char": 11036,
+            "start_line": 202,
+            "end_line": 202,
+            "quote": "- 逐 run 数字：`artifacts/rubble_rheology/runs/*.json`；汇总：`artifacts/rubble_rheology/summary.json`",
+            "unique": true
+          },
+          "note": "路径通配符可定位；逐 run 数据本体不在报告记录内。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "data_artifact_reference",
+          "label": "artifacts/rubble_rheology/summary.json（汇总）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 10942,
+            "end_char": 11036,
+            "start_line": 202,
+            "end_line": 202,
+            "quote": "- 逐 run 数字：`artifacts/rubble_rheology/runs/*.json`；汇总：`artifacts/rubble_rheology/summary.json`",
+            "unique": true
+          },
+          "note": "路径字面量可定位；汇总数据本体不在报告记录内。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "code_reference",
+          "label": "scripts/ablate_compression_kinematics.py（压缩运动学消融）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 11037,
+            "end_char": 11124,
+            "start_line": 203,
+            "end_line": 203,
+            "quote": "- 消融：`scripts/ablate_compression_kinematics.py` → `artifacts/rubble_rheology_ablation/`",
+            "unique": true
+          },
+          "note": "路径字面量可定位；文件本体不在报告记录内。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "data_artifact_reference",
+          "label": "artifacts/rubble_rheology_ablation/（消融输出目录）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 11037,
+            "end_char": 11124,
+            "start_line": 203,
+            "end_line": 203,
+            "quote": "- 消融：`scripts/ablate_compression_kinematics.py` → `artifacts/rubble_rheology_ablation/`",
+            "unique": true
+          },
+          "note": "目录路径可定位；目录内容不在报告记录内。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "test_reference",
+          "label": "tests/test_rubble_postprocess.py（19 项含 4 负控）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 11125,
+            "end_char": 11225,
+            "start_line": 204,
+            "end_line": 204,
+            "quote": "- 测试：`tests/test_rubble_postprocess.py`（19 项，含 4 个负控）+ `tests/test_rubble_kinematics.py`（5 项，运动学一致性）",
+            "unique": true
+          },
+          "note": "路径字面量可定位；测试文件本体不在报告记录内。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A18",
+          "asset_class": "test_reference",
+          "label": "tests/test_rubble_kinematics.py（5 项运动学一致性）",
+          "in_report_section": "审计链",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 11125,
+            "end_char": 11225,
+            "start_line": 204,
+            "end_line": 204,
+            "quote": "- 测试：`tests/test_rubble_postprocess.py`（19 项，含 4 个负控）+ `tests/test_rubble_kinematics.py`（5 项，运动学一致性）",
+            "unique": true
+          },
+          "note": "路径字面量可定位；测试文件本体不在报告记录内。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A19",
+          "asset_class": "code_reference_module",
+          "label": "tensordem.rubble_postprocess（后处理模块引用）",
+          "in_report_section": "② 怎么做的",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 683,
+            "end_char": 746,
+            "start_line": 19,
+            "end_line": 19,
+            "quote": "**后处理（`tensordem.rubble_postprocess`，与求解器解耦的纯 NumPy/SciPy 模块）**",
+            "unique": true
+          },
+          "note": "模块引用可定位（与 A10 的文件路径是同一工件，登记口径不同：模块名 vs 相对路径）。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A20",
+          "asset_class": "code_reference_module",
+          "label": "tensordem.rubble_scenarios（场景模块引用）",
+          "in_report_section": "② 怎么做的",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 1304,
+            "end_char": 1370,
+            "start_line": 26,
+            "end_line": 26,
+            "quote": "**DEM 场景（`tensordem.rubble_scenarios`，基于 `tensordem.granular2d`）**",
+            "unique": true
+          },
+          "note": "模块引用可定位；模块源码本体不在报告记录内。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A21",
+          "asset_class": "code_reference_module",
+          "label": "tensordem.granular2d（颗粒引擎基座引用）",
+          "in_report_section": "② 怎么做的",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path literal present in source; file bytes attached to report record? (record has no artifact field); path present in this TensorKnowledge worktree?",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 1304,
+            "end_char": 1370,
+            "start_line": 26,
+            "end_line": 26,
+            "quote": "**DEM 场景（`tensordem.rubble_scenarios`，基于 `tensordem.granular2d`）**",
+            "unique": true
+          },
+          "note": "模块引用可定位；模块源码本体不在报告记录内。 本工作树同名路径存在=False（不在本仓即需跨仓取回）。"
+        },
+        {
+          "asset_id": "A22",
+          "asset_class": "literature_data_reference",
+          "label": "Guimarães et al. 2022 逐点数据（文献锚点）",
+          "in_report_section": "⑤ 注意点 / ⑥ 误差判定",
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "literal WITHHELD declaration present in source",
+            "result": "absent"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 9642,
+            "end_char": 9705,
+            "start_line": 178,
+            "end_line": 178,
+            "quote": "6. **文献锚点为量级窗**：Guimarães et al. 2022 未数字化逐点数据，逐点对比标注 WITHHELD。",
+            "unique": true
+          },
+          "note": "报告显式声明该数据未数字化、逐点对比 WITHHELD —— 属于「报告自己声明不存在」的资产，不得当作可用基准。"
+        }
+      ],
+      "claims": [],
+      "integrity": {
+        "quote_uniqueness": {
+          "total": 22,
+          "unique": 22,
+          "non_unique_ids": []
+        },
+        "hash_recomputed_locally": "sha256:cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+        "hash_matches_contract": true,
+        "chars_match_contract": true,
+        "no_duplicate_ids": true
+      }
+    },
+    "selfcheck.json": {
+      "package_id": "wp-9582-01",
+      "authority": "local self-check only; the platform gate is authoritative and re-computes the hash independently",
+      "checked_at": "2026-11-12T01:42:48.814558+00:00",
+      "source_hash": "sha256:cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+      "acceptance": [
+        {
+          "id": "valid_json",
+          "name": "all emitted JSON re-parses from disk",
+          "pass": true,
+          "detail": {
+            "files": [
+              "asset_manifest.json",
+              "kf_result.json"
+            ],
+            "errors": []
+          }
+        },
+        {
+          "id": "schema_pass",
+          "name": "asset_manifest.json vs package-pinned schema + kf_result.json vs canonical kf_result.v1",
+          "pass": true,
+          "detail": {
+            "manifest_errors": [],
+            "envelope_errors": [],
+            "schemas": [
+              "asset_manifest.schema.json",
+              "schemas/kf_result.v1.schema.json"
+            ]
+          }
+        },
+        {
+          "id": "source_locator_resolvable",
+          "name": "every locator re-resolves to its verbatim quote in the pinned markdown",
+          "pass": true,
+          "detail": {
+            "locators_checked": 22,
+            "failures": [],
+            "rule": "char_span: md[start:end]==quote; document: start==0 and end==len(markdown); all: quote unique in markdown and start_line consistent"
+          }
+        },
+        {
+          "id": "source_hash_matches",
+          "name": "sha256 + char count of the pinned bytes equal the contract values",
+          "pass": true,
+          "detail": {
+            "recomputed": "sha256:cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+            "contract": "sha256:cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+            "chars": 11293,
+            "contract_chars": 11293
+          }
+        },
+        {
+          "id": "no_duplicate_ids",
+          "name": "asset_id values unique",
+          "pass": true,
+          "detail": {
+            "n": 22,
+            "unique": 22,
+            "ids": [
+              "A01",
+              "A02",
+              "A03",
+              "A04",
+              "A05",
+              "A06",
+              "A07",
+              "A08",
+              "A09",
+              "A10",
+              "A11",
+              "A12",
+              "A13",
+              "A14",
+              "A15",
+              "A16",
+              "A17",
+              "A18",
+              "A19",
+              "A20",
+              "A21",
+              "A22"
+            ]
+          }
+        },
+        {
+          "id": "all_claims_have_evidence_or_explicit_unresolved_status",
+          "name": "claims either carry an evidence locator or an explicit status; claims=[] is the complete result for a registration-only package",
+          "pass": true,
+          "detail": {
+            "claims": 0,
+            "violations": [],
+            "rationale": "objective.register_assets=true, objective.classify_report_type=false -> no extraction"
+          }
+        }
+      ],
+      "selfcheck_pass": true,
+      "failed": []
+    }
+  },
+  "claims": []
+}

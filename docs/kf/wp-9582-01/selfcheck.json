@@ -1,0 +1,99 @@
+{
+  "package_id": "wp-9582-01",
+  "authority": "local self-check only; the platform gate is authoritative and re-computes the hash independently",
+  "checked_at": "2026-11-12T01:42:48.814558+00:00",
+  "source_hash": "sha256:cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+  "acceptance": [
+    {
+      "id": "valid_json",
+      "name": "all emitted JSON re-parses from disk",
+      "pass": true,
+      "detail": {
+        "files": [
+          "asset_manifest.json",
+          "kf_result.json"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "id": "schema_pass",
+      "name": "asset_manifest.json vs package-pinned schema + kf_result.json vs canonical kf_result.v1",
+      "pass": true,
+      "detail": {
+        "manifest_errors": [],
+        "envelope_errors": [],
+        "schemas": [
+          "asset_manifest.schema.json",
+          "schemas/kf_result.v1.schema.json"
+        ]
+      }
+    },
+    {
+      "id": "source_locator_resolvable",
+      "name": "every locator re-resolves to its verbatim quote in the pinned markdown",
+      "pass": true,
+      "detail": {
+        "locators_checked": 22,
+        "failures": [],
+        "rule": "char_span: md[start:end]==quote; document: start==0 and end==len(markdown); all: quote unique in markdown and start_line consistent"
+      }
+    },
+    {
+      "id": "source_hash_matches",
+      "name": "sha256 + char count of the pinned bytes equal the contract values",
+      "pass": true,
+      "detail": {
+        "recomputed": "sha256:cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+        "contract": "sha256:cd99f31bff62078104eee95ff0cf1aea33f377552b7c68921986b05451ee9f5f",
+        "chars": 11293,
+        "contract_chars": 11293
+      }
+    },
+    {
+      "id": "no_duplicate_ids",
+      "name": "asset_id values unique",
+      "pass": true,
+      "detail": {
+        "n": 22,
+        "unique": 22,
+        "ids": [
+          "A01",
+          "A02",
+          "A03",
+          "A04",
+          "A05",
+          "A06",
+          "A07",
+          "A08",
+          "A09",
+          "A10",
+          "A11",
+          "A12",
+          "A13",
+          "A14",
+          "A15",
+          "A16",
+          "A17",
+          "A18",
+          "A19",
+          "A20",
+          "A21",
+          "A22"
+        ]
+      }
+    },
+    {
+      "id": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "name": "claims either carry an evidence locator or an explicit status; claims=[] is the complete result for a registration-only package",
+      "pass": true,
+      "detail": {
+        "claims": 0,
+        "violations": [],
+        "rationale": "objective.register_assets=true, objective.classify_report_type=false -> no extraction"
+      }
+    }
+  ],
+  "selfcheck_pass": true,
+  "failed": []
+}
