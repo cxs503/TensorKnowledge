@@ -1,0 +1,937 @@
+# KF-RESULT wp-11415-01
+
+**工序**：01-asset-registration（Lane C）｜**报告**：`tensor://reports/11415`（report_id=11415）
+**标题（源）**：IS Code 2008 §2.3 天气衡准完整链：φ1 查表 + 面积判据验证（m9667 / p176w1-n10）
+**场景**：`ship-performance/stability/weather-criterion-imo-2008` ｜ **源哈希**：`sha256:d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50`（契约值一致，平台可独立重算）
+**规模**：markdown 7903 字符 / 12279 字节 UTF-8 ｜ **登记资产 28 项**（resolved_in_source 21 / referenced_unresolved 6 / declared_absent 1）｜**claims 0 条**（本工序不抽取）
+
+---
+
+## ① 本工序做了什么
+
+在报告→知识产线上，本单只做「源资产登记」这一道工序：把 report 11415 的 markdown 与其附件/工件**可定位地**登记下来，给下游工序一个可复算的输入面——不做知识抽取、不做类型判定、不对报告结论做任何复核或改判。
+
+具体交付：
+
+1. **源字节确认**：按平台接口取回 `markdown`，本地重算 sha256 = `d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50`，与工作包契约 `source_hash` 逐位一致；字符数 7903 与契约 `chars` 一致。
+2. **资产登记 28 项**：每项给出 `asset_class`、所在章节、**字符区间定位**（start/end char + 行号 + 逐字引文 + 唯一性）、`resolution`（resolved / referenced_unresolved / declared_absent）与**机器可复核的 resolution_check**。
+3. **可解析附件落指纹**：源报告声明的 4 张图件（`fig1_gz_areas.png`、`fig2_ratio_verdicts.png`、`fig3_theta1_phi1_chain.png`、`fig4_interp_error.png`）经 `GET /tensor/reports/11415/figures/<name>` 取回图件本体，逐张记录 bytes 与 sha256。
+4. **不可解析项如实入账 7 项**（unresolved 6 + absent 1）：未臆造路径或地址，只登记「报告说了什么 + 为什么此刻不可解析」。
+5. **claims = 空数组（显式）**：契约 `objective.register_assets=true`、`classify_report_type=false`，notes 明确「claims 允许为空数组」；空数组 = 本工序不抽取，而非取不到证的省略（见 ⑤-6）。
+
+## ② 怎么做的（步骤 / 工具 / 关键设置）
+
+1. **取源**（`scripts/kf_fetch_11415.py`）：`POST /auth/login` 取 token → `GET /tensor/reports/11415`（Bearer）→ 落 `runs/wp-11415-01/report_11415.json` 与 `.md`；再逐图 `GET /tensor/reports/11415/figures/<name>` 落 `runs/wp-11415-01/figures/`，记 bytes/sha256/content-type 于 `figures_manifest.json`。
+2. **哈希门**（`scripts/kf_register_11415.py`）：生成器先重算 markdown sha256 与契约比对，不一致立即 `FATAL` 退出（防止在别的版本上登记）；同时校验 platform `id` 与字符数。
+3. **锚点切片定位**：每个资产用一段**唯一子串**锚定到某一源行，再按相对行偏移取 `start_char/end_char` 切片作为 `quote`；生成期硬校验「锚点命中行数==1」且「`markdown.count(quote)==1`」，否则报错不出件。全程零手抄：引文来自切片，非转录。
+4. **resolution_check 机器判据**（不同资产类别走不同证据，不靠断言）：
+   - 代码/测试/工件路径 → `worktree_path_exists`（本工作树= TensorKnowledge，文件属 ship-performance-platform → 判 unresolved 并列出缺失路径）；
+   - 外部规范 → `address_extraction`（仅在报告文本内检索 URL/DOI，未找到即 unresolved，不联网猜）；
+   - 图件 → `platform_figure_binary_fetch`（HTTP 200 + PNG magic + bytes + sha256）；
+   - 规范表转录 → `spec_original_copy_in_source`（检出 `TABLE_PROVENANCE.verified = False` 状态标记，据此判 declared_absent）。
+5. **结构门**：`schemas/kf_result.v1.schema.json`（信封）+ `schemas/asset_manifest.v1.wp-11415-01.schema.json`（本工序 manifest 形状，`additionalProperties=false`）双 schema 用 jsonschema 校验。注意 448 号包留下的 `asset_manifest.v1.schema.json` 是 `const wp-448-01`，跨报告不可复用，故本包单钉一份而不改动它。
+6. **独立复核**（`scripts/kf_verify_11415.py`）：不复用生成器的记账，重新从 API 快照重算哈希，重新按偏移推行号比对 `quote == markdown[start:end]`，重算 counts，重跑 schema，并断言「无任何自标 verified」。15 项检查全绿 → `runs/wp-11415-01/verify_report.json`。
+7. **验收测试**（`tests/test_kf_wp_11415_01.py`）：17 例，把契约 6 条 acceptance 逐条映射到机器人检查，另加边界（report_id 唯一性）、图件指纹与磁盘字节一致、claims 空数组的显式性。
+8. **配图**：`scripts/kf_figure_11415.py` 纯函数于 manifest 生成资产定位图（x = 源文档字符位置，y = 资产，色 = resolution；右侧子图为 resolution 分布），图中数字全部来自 manifest，无手填。
+
+关键设置：只读写 report_id=11415；不调用平台 verification；`verification_status="not_verified"` 原样上报；`docs/` 为持久件（本仓 `.gitignore` 忽略 `artifacts/`，故 manifest 正本落 `docs/kf/wp-11415-01/`，`artifacts/` 仅为本地同字节镜像）。
+
+## ③ 产出物清单（输出文件 → 要点 / 字节 / 指纹）
+
+| 文件 | 要点 | bytes | sha256（前 16 位） |
+|---|---|---|---|
+| `scripts/kf_fetch_11415.py` | 取源：报告 markdown + 4 张图件本体（含 per-figure sha256） | 4361 | `3be3bc2192ac181c…` |
+| `scripts/kf_register_11415.py` | 生成器：锚点切片定位 + 机器判据 → asset_manifest.json | 22263 | `ff7f2a1a332f3c9b…` |
+| `scripts/kf_verify_11415.py` | 独立校验器：重算哈希/切片/schema/计数 → verify_report.json | 10106 | `9695c7cb96b7eb1c…` |
+| `scripts/kf_figure_11415.py` | 本报告图件（纯函数于 manifest） | 4160 | `b4af69cabd1525a4…` |
+| `schemas/asset_manifest.v1.wp-11415-01.schema.json` | 本工序 manifest 形状钉死（schema_pass 的一半） | 5780 | `84ad8ebe42c97053…` |
+| `tests/test_kf_wp_11415_01.py` | 17 例验收测试（acceptance 逐项映射） | 6760 | `915dc83420c68036…` |
+| `runs/wp-11415-01/report_11415.md` | 报告 markdown 本地副本（哈希基准） | 12279 | `d8bc42883f1fa1d2…` |
+| `runs/wp-11415-01/report_11415.json` | API 原始 payload（title/tags/figures/markdown） | 14145 | `622d5f93b40e45fc…` |
+| `runs/wp-11415-01/figures_manifest.json` | 4 张图件的字节/指纹/URL 记录 | 2432 | `05704f7696045ee9…` |
+| `runs/wp-11415-01/kf_result.wp-11415-01.json` | KF 结果信封（kf_result.v1） | 51989 | `79bcdf88af5c2e3c…` |
+| `runs/wp-11415-01/verify_report.json` | 15 项机器校验结果 | 7693 | `42f11420ea1a63be…` |
+| `docs/kf/wp-11415-01/asset_manifest.json` | ★ 交付物：资产清单（28 项） | 47725 | `d039cf17da2e5aeb…` |
+| `docs/kf/wp-11415-01/fig_asset_locator_map.png` | 本报告配图：登记资产的文档定位图 | 149383 | `ea6507163afcaa6f…` |
+
+★ 交付物正本就是 `docs/kf/wp-11415-01/asset_manifest.json`（47725 字节，sha256 `d039cf17da2e5aebb1bd5b3ae0d0e0be19b6e222e4b4839fda2242ed2755e7b5`），其内容与本报告末尾 JSON 块的 `outputs["asset_manifest.json"]` **逐字段相等**（由 `kf_verify_11415.py::outputs_manifest_equals_artifact_file` 机器证明）。
+
+## ④ 证据定位表（资产 → 原文引文片段 / 字符区间 / 定位结果）
+
+下表由 `asset_manifest.json` 程序化渲染；引文是源 markdown 的**逐字前缀**（超 70 字截断），完整引文与精确字符区间见交付物。`check` 列即该资产 resolution 的机器判据名/结果。
+
+| # | 资产（类别） | 原文引文片段（逐字） | 字符区间 | 行 | resolution | check→result |
+|---|---|---|---|---|---|---|
+| A01 | 报告全文 markdown（本工序的唯一上游）（source_document） | `# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10） /  / **节点*…` | 0–7903 | 0–198 | resolved_in_source | sha256_of_markdown_vs_contract→resolved |
+| A02 | 报告标题（含节点号 m9667 / p176w1-n10）（document_header） | `# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）` | 0–59 | 0–0 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A03 | IS Code 2008 (MSC.267(85)) Part A …（external_standard） | `**规范**：IS Code 2008 (MSC.267(85)) Part A §2.3 severe wind and rolling …` | 137–216 | 3–3 | referenced_unresolved | address_extraction→unresolved |
+| A04 | 实现模块 backend/services/weather_crit…（code_pointer） | ``**实现**：`backend/services/weather_criterion_iso.py`（纯函数）＋`` | 217–273 | 4–4 | referenced_unresolved | worktree_path_exists→unresolved |
+| A05 | API 端点 POST /api/v1/weather-criter…（api_endpoint） | ``backend/api/weather_criterion_iso.py`（`POST /api/v1/weather-criterion…`` | 274–356 | 5–5 | referenced_unresolved | worktree_path_exists→unresolved |
+| A06 | 证据工件 artifacts/weather_criterion_i…（evidence_artifact） | ``**证据工件**：`artifacts/weather_criterion_imo_2008_m9667/results.json`（表值指…`` | 357–461 | 6–7 | referenced_unresolved | worktree_path_exists→unresolved |
+| A07 | 规范测试 tests/test_weather_criterion_…（test_pointer） | ``**pytest**：`tests/test_weather_criterion_imo_m9667.py`（22 例全绿）`` | 462–524 | 8–8 | referenced_unresolved | worktree_path_exists→unresolved |
+| A08 | 船型参数表（6 船；Δ/GM/A/A-Z 输入 + lw/θ/a/b…（table） | `\| 算例 \| Δ [t] \| GM [m] \| A/Δ [m²/t] \| lw1 [m] \| lw2 [m] \| θ1 [°]…` | 1212–2222 | 32–39 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A09 | 完整链六步（lw / φ1 查表 / GZ / 角度 / 面积 / …（method_description） | ``1. **lw**：`wind_heeling_lever(P,A,Z,Δ)` = P·A·Z/(1000·g·Δ)，非正输入显式报错； /…`` | 2388–3146 | 48–61 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A10 | 交叉验证设计 + 结构恒等式 b−a 分解（validation_design） | ``**交叉验证设计**：被测模块（Simpson+二分）与独立参考（`quad`+`brentq`，GZ 解析式 / 独立重写）走两条不同算法…`` | 3148–3295 | 63–65 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A11 | 三张规范表 2.3.1-1/2/3 的数字化转录（TABLE_PRO…（spec_table_set） | `2. **表值转录保真度未复核**：三张表是 IS Code 2008 表 2.3.1-1/2/3 的**数字化转录**， /    本环境…` | 6453–6663 | 162–165 | declared_absent | spec_original_copy_in_source→absent |
+| A12 | 一键复现脚本 tests/m9667_weather_criteri…（repro_script） | ``python3 tests/m9667_weather_criterion_verify.py` 一键复现全部工件与本报告。`` | 3353–3416 | 68–68 | referenced_unresolved | worktree_path_exists→unresolved |
+| A13 | C1 风倾力臂 vs 手算表（6 行，阈值 <1%）（table） | `\| 算例 \| lw1 手算 [m] \| lw1 模块 [m] \| 相对误差 \| 判定 \| / \|---\|---\|---\|…` | 3468–3887 | 74–81 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A14 | C2 φ1 插值误差扫描（7056 组表节点中点）（scan_result） | `扫描 7056 组**表节点中点**（避开节点，否则误差恒 0 = 假绿）： /  / * 默认口径 linear vs 平滑参考：max …` | 3960–4219 | 87–95 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A15 | C3 面积比判据与 3 合规 / 3 不合规分类（verdict_set） | ` / 3 条合规（b/a = 4.92, 5.45, 4.68）、 / 3 条不合规（b/a = 0.466, 0.395, 0.764）。…` | 4260–4461 | 98–104 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A16 | C4 负控表（GM 2 → 1e-06，6 行）（table） | `\| GM [m] \| θ1 [°] \| b/a \| 判定 \| / \|---\|---\|---\|---\| / \| 2 \|…` | 4474–4767 | 108–115 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A17 | C4 负控说明（零风压极限 / GM→0 / 无穿越）（negative_control） | ``* **零风压**（P=0）：lw1=lw2=0、a=0、b/a = ∞ → 自动**合规**（空判据极限， /   显式分支并在 `rea…`` | 4769–5102 | 117–124 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A18 | C5 与共享内核 GZ 积分自洽表（6 行，阈值 1%）（table） | `\| 算例 \| 模块 GZ 积分 [m·rad] \| 内核梯形积分 [m·rad] \| 相对误差 \| b/a（曲线输入） \| b/…` | 5126–5633 | 128–135 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A19 | C6 pytest 计数（22 例，阈值 15）（test_evidence） | ``tests/test_weather_criterion_imo_m9667.py` 共 **22 例**（阈值 15）， / 全绿；覆盖…`` | 5762–5872 | 143–144 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A20 | fig1_gz_areas.png（GZ+lw2 与 a/b 面积着…（figure） | `* **fig1_gz_areas.png** —— 合规（S1_bulk_50k）与不合规（S6_ferry_A4000）各一船的 /  …` | 5885–5996 | 148–149 | resolved_in_source | platform_figure_binary_fetch→present |
+| A21 | fig2_ratio_verdicts.png（6 船 b/a 条形…（figure） | `* **fig2_ratio_verdicts.png** —— 6 船 b/a 条形图（阈值 1.0），模块 vs 独立参考；` | 5997–6061 | 150–150 | resolved_in_source | platform_figure_binary_fetch→present |
+| A22 | fig3_theta1_phi1_chain.png（φ1 查表链与…（figure） | `* **fig3_theta1_phi1_chain.png** —— φ1 查表链三张表（X1(B/d)、X2(Cb)、s(T_r)） /…` | 6062–6146 | 151–152 | resolved_in_source | platform_figure_binary_fetch→present |
+| A23 | fig4_interp_error.png（C2 插值误差分布）（figure） | `* **fig4_interp_error.png** —— C2 插值误差分布（linear 读法 vs 平滑参考）与 0.5° 门限。` | 6147–6216 | 153–153 | resolved_in_source | platform_figure_binary_fetch→present |
+| A24 | §6 误差判定表（6 关键量 vs 基准，是否 <3%）（table） | `\| 关键量 \| 基准 \| 误差 \| 是否 <3% \| / \|---\|---\|---\|---\| / \| lw1 \| 手…` | 7125–7488 | 179–186 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A25 | 结论 + 规范表转录保真度 WITHHELD 声明（uncertainty_flag） | ``**结论**：C1–C6 六条机器判据全部 PASS（`results.json.all_pass = True`）。 / **但存在一项口…`` | 7490–7666 | 188–191 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A26 | 面积口径偏差与理由（方法自主权申报）（deviation_declaration） | `> 偏差与理由（方法自主权申报）：1) 节点文字把面积写作"0°→交点 / 交点到 φ2"， / > 本实现按 IS Code 的**风侧分…` | 7668–7902 | 193–197 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A27 | 几何自检守卫（Cb∈[0.30,1.00]、D>T、Δ 往返为 0）（algorithm_guard） | ``Cb/L/B/Δ 自检（`ship_geometry`：Cb∈[0.30,1.00]、D>T、Δ=ρ·L·B·T·Cb 往返误差为 0）。`` | 1046–1115 | 27–27 | resolved_in_source | char_span_in_source_markdown→resolved |
+| A28 | GZ 生成口径：共享内核 stability_core 壁舷式 GZ…（model_formula） | ``**船型参数表**（6 条完整船型；GZ 曲线由平台共享内核 `stability_core` / 壁舷式 `GZ = sinφ(GM + …`` | 1117–1210 | 29–30 | resolved_in_source | char_span_in_source_markdown→resolved |
+
+类别分布：table=5, figure=4, algorithm_guard=1, api_endpoint=1, code_pointer=1, deviation_declaration=1（共 21 类 / 28 项）。
+
+## ⑤ 注意点与局限
+
+1. **本工序只登记不复核**：报告 C1–C6 的数字（lw1 误差 0.00e+00、b/a 偏差 3.57e-14、pytest 22 例等）本工序原样登记为「报告声称」，没有重跑、没有改判。要判这些结论必须另起工序，且需外部仓（ship-performance-platform）检出。
+2. **7 项不可解析/缺失项的真实原因**（unresolved 6 + declared_absent 1，逐项见 ④ 的 check 列）：A03 external_standard(referenced_unresolved)；A04 code_pointer(referenced_unresolved)；A05 api_endpoint(referenced_unresolved)；A06 evidence_artifact(referenced_unresolved)；A07 test_pointer(referenced_unresolved)；A11 spec_table_set(declared_absent)；A12 repro_script(referenced_unresolved)。这些是**报告引用了、但本工作树/本接口解析不到**的对象；未臆造路径、未联网补地址。
+3. **证据工件指纹被截断**：A06 引用的 `results.json` 报告只给出 `sha256=fede60c8a40fb583…`（16/64 位），即使拿到文件也无法逐位比对——登记为 unresolved 并显式记录 `fingerprint_hex_len`。
+4. **规范表保真度沿用 WITHHELD**：A11 记录 IS Code 2008 表 2.3.1-1/2/3 为数字化转录、报告自述无原件逐格复核（`TABLE_PROVENANCE.verified = False`）。本工序不改写这一不确定度，只把它作为源内状态登记为 declared_absent。
+5. **图件为「可解析」不等于「内容正确」**：4 张图件本体取回并落 sha256（2a050f5c7a8723cc…），证明的是字节可得与可复现，不是图中像素与报告数字一致。
+6. **claims 空数组是选择，不是缺口**：契约允许空数组且本工序 objective 不含抽取；报告本身含大量可抽取断言（如 b/a 判据、θ1 必要性），留待 03 工序在有独立证据门时处理，此处不预生成以免污染下游证据链。
+7. **持久化口径**：本仓 `.gitignore` 忽略 `artifacts/`，故正本落 `docs/kf/wp-11415-01/`；`artifacts/wp-11415-01/asset_manifest.json` 仅为同字节本地镜像（校验器断言两者相等）。
+
+## ⑥ 自检：逐条对照 acceptance
+
+| acceptance 项 | 判据（机器） | 结果 |
+|---|---|---|
+| `valid_json` | `valid_json` | ✅ pass |
+| `schema_pass` | `kf_result_schema` + `asset_manifest_schema` | ✅ pass |
+| `source_locator_resolvable` | `source_locator_resolvable` | ✅ pass |
+| `source_hash_matches` | `source_hash_matches` + `source_chars_match_contract` | ✅ pass |
+| `no_duplicate_ids` | `no_duplicate_ids` | ✅ pass |
+| `all_claims_have_evidence_or_explicit_unresolved_status` | `all_claims_have_evidence_or_explicit_unresolved_status` | ✅ pass |
+
+机器人检查全表（`runs/wp-11415-01/verify_report.json`，`all_pass=True`）：
+
+| 检查项 | 结果 | 关键证据 |
+|---|---|---|
+| `source_hash_matches` | ✅ | `{"api_sha256": "d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50", "file_sha256": "d8bc42883f1…` |
+| `source_chars_match_contract` | ✅ | `{"api_chars": 7903, "contract_chars": 7903}` |
+| `kf_result_schema` | ✅ | `{"errors": []}` |
+| `asset_manifest_schema` | ✅ | `{"errors": []}` |
+| `valid_json` | ✅ | `{"parsed_files": ["runs/wp-11415-01/kf_result.wp-11415-01.json", "artifacts/wp-11415-01/asset_manifest.json"]}` |
+| `report_id_boundary` | ✅ | `{"report_id": "11415", "uri": "tensor://reports/11415", "package_id": "wp-11415-01"}` |
+| `source_locator_resolvable` | ✅ | `{"failures": [], "checked": 28, "detail": "quote == markdown[start_char:end_char] AND count(quote)==1 AND line…` |
+| `no_duplicate_ids` | ✅ | `{"n": 28, "unique": 28, "contiguous": true}` |
+| `all_claims_have_evidence_or_explicit_unresolved_status` | ✅ | `{"n_claims": 0, "offending": [], "note": "0 claims is legitimate here (register_assets only); empty != unverif…` |
+| `counts_consistent` | ✅ | `{"assets": 28, "by_class": {"source_document": 1, "document_header": 1, "external_standard": 1, "code_pointer"…` |
+| `resolution_checks_machine_backed` | ✅ | `{"checks": {"A01": "sha256_of_markdown_vs_contract", "A02": "char_span_in_source_markdown", "A03": "address_ex…` |
+| `no_self_declared_verified` | ✅ | `{"verification_status_values": ["not_verified"], "outputs_equals_artifact": true, "detail": "verification is c…` |
+| `artifact_mirror_identical` | ✅ | `{"artifact_sha256": "d039cf17da2e5aebb1bd5b3ae0d0e0be19b6e222e4b4839fda2242ed2755e7b5", "mirror_sha256": "d039…` |
+| `artifact_hash_matches_provenance` | ✅ | `{"declared": "d039cf17da2e5aebb1bd5b3ae0d0e0be19b6e222e4b4839fda2242ed2755e7b5", "recomputed": "d039cf17da2e5a…` |
+| `outputs_manifest_equals_artifact_file` | ✅ | `{"artifact_sha256": "d039cf17da2e5aebb1bd5b3ae0d0e0be19b6e222e4b4839fda2242ed2755e7b5"}` |
+
+**诚实结论**：6 条 acceptance 全部 ✅（机器判据 + 17 例 pytest）。本工序**未复核**报告的技术结论，**未**改动任何上游产物，**未**自标 verified；源报告自述的规范表转录保真度不确定（WITHHELD）在本工序内保持原样。
+
+## 复跑命令（一键）
+
+```bash
+# 工作树根执行；需要 TENSOR_API_BASE / TENSOR_AGENT_USER / TENSOR_AGENT_PASS
+python3 scripts/kf_fetch_11415.py \
+ && python3 scripts/kf_register_11415.py \
+ && python3 scripts/kf_verify_11415.py \
+ && python3 scripts/kf_figure_11415.py \
+ && python3 -m pytest tests/test_kf_wp_11415_01.py -q \
+ && python3 scripts/kf_publish_11415.py
+```
+
+产物：`docs/kf/wp-11415-01/asset_manifest.json`（正本）+ `runs/wp-11415-01/*`（快照/指纹/校验/信封）。
+
+## 结果信封（KF-RESULT 唯一 JSON 代码块）
+```json
+{
+  "package_id": "wp-11415-01",
+  "task_type": "01-asset-registration",
+  "report_id": "11415",
+  "provenance": {
+    "source_uri": "tensor://reports/11415",
+    "source_field": "markdown",
+    "source_hash": "sha256:d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50",
+    "source_chars": 7903,
+    "source_bytes_utf8": 12279,
+    "source_title": "IS Code 2008 §2.3 天气衡准完整链：φ1 查表 + 面积判据验证（m9667 / p176w1-n10）",
+    "scenario_key": "ship-performance/stability/weather-criterion-imo-2008",
+    "contract_version": "1.0",
+    "lane": "C",
+    "work_package": "wp-11415-01",
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/11415 (Bearer TENSOR_AGENT_USER token)",
+    "local_copy": "runs/wp-11415-01/report_11415.md",
+    "artifact_path": "docs/kf/wp-11415-01/asset_manifest.json",
+    "artifact_sha256": "d039cf17da2e5aebb1bd5b3ae0d0e0be19b6e222e4b4839fda2242ed2755e7b5",
+    "artifact_bytes": 47725,
+    "artifact_durable_mirror": "artifacts/wp-11415-01/asset_manifest.json",
+    "generator": "scripts/kf_register_11415.py",
+    "verifier": "scripts/kf_verify_11415.py",
+    "verification_status": "not_verified"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-11415-01",
+      "task_type": "01-asset-registration",
+      "report_id": "11415",
+      "source": {
+        "uri": "tensor://reports/11415",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50",
+        "chars": 7903,
+        "bytes_utf8": 12279,
+        "title": "IS Code 2008 §2.3 天气衡准完整链：φ1 查表 + 面积判据验证（m9667 / p176w1-n10）",
+        "scenario_key": "ship-performance/stability/weather-criterion-imo-2008",
+        "platform_id": 11415,
+        "platform_mission_id": 9667,
+        "platform_status": "published",
+        "platform_figures": [
+          "fig1_gz_areas.png",
+          "fig2_ratio_verdicts.png",
+          "fig3_theta1_phi1_chain.png",
+          "fig4_interp_error.png"
+        ],
+        "platform_tags": [
+          "IMO",
+          "IS Code 2008",
+          "天气衡准",
+          "完整稳性",
+          "GZ",
+          "φ1",
+          "面积判据",
+          "验证",
+          "m9667"
+        ],
+        "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/11415 (Bearer TENSOR_AGENT_USER token)",
+        "local_copy": "runs/wp-11415-01/report_11415.md",
+        "contract_source_hash": "sha256:d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50",
+        "contract_chars": 7903
+      },
+      "counts": {
+        "assets": 28,
+        "by_class": {
+          "source_document": 1,
+          "document_header": 1,
+          "external_standard": 1,
+          "code_pointer": 1,
+          "api_endpoint": 1,
+          "evidence_artifact": 1,
+          "test_pointer": 1,
+          "table": 5,
+          "method_description": 1,
+          "validation_design": 1,
+          "spec_table_set": 1,
+          "repro_script": 1,
+          "scan_result": 1,
+          "verdict_set": 1,
+          "negative_control": 1,
+          "test_evidence": 1,
+          "figure": 4,
+          "uncertainty_flag": 1,
+          "deviation_declaration": 1,
+          "algorithm_guard": 1,
+          "model_formula": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 21,
+          "referenced_unresolved": 6,
+          "declared_absent": 1
+        },
+        "resolved_in_source": 21,
+        "referenced_unresolved": 6,
+        "declared_absent": 1
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "source_document",
+          "label": "报告全文 markdown（本工序的唯一上游）",
+          "in_report_section": "(preamble)",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 7903,
+            "start_line": 0,
+            "end_line": 198,
+            "quote": "# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）\n\n**节点**：p176w1-n10-imo-weather-criterion ｜ **仓**：ship-performance-platform ｜\n**规范**：IS Code 2008 (MSC.267(85)) Part A §2.3 severe wind and rolling criterion\n**实现**：`backend/services/weather_criterion_iso.py`（纯函数）＋\n`backend/api/weather_criterion_iso.py`（`POST /api/v1/weather-criterion-iso/check`）\n**证据工件**：`artifacts/weather_criterion_imo_2008_m9667/results.json`（表值指纹\nsha256=`fede60c8a40fb583…`）、4 张图\n**pytest**：`tests/test_weather_criterion_imo_m9667.py`（22 例全绿）\n\n---\n\n## 1. 案例介绍（物理背景 / 几何 / 参数表）\n\n船舶完整稳性的**气象衡准**（weather criterion）判定船在阵风 + 波浪横摇联合作用下\n是否具有足够的复原能量储备。IS Code 2008 把它写成一条\"能量收支\"判据：\n\n* 定常风压 P = 504 Pa（≈28.7 m/s，ρ_air=1.225）产生定常风倾力臂\n  `lw1 = P·A·Z/(1000·g·Δ)`，阵风力臂 `lw2 = 1.5·lw1`；\n* 船在波浪中先向上风侧横摇 **θ1（φ1）**，随后被阵风压向下风侧，直到 GZ 曲线与\n  lw2 线相交（θc）；交点之后 GZ > lw2，复原能量开始积累，直到\n  `θ2 = min(θ_进水, 50°)`；\n* 风倾能量 a 与复原能量 b 之比较：**b ≥ a**（即 b/a ≥ 1），同时定常风静横倾角\n  **θ0 ≤ 16°**。\n\n本节点补齐的正是旧实现缺失的 **θ1 查表链**（`θ1 = 109·k·X1·X2·√(r·s)`，\nX1=X1(B/d)、X2=X2(Cb)、s=s(T_r) 三张规范表 + k/r 两个系数）。几何输入一律先做\nCb/L/B/Δ 自检（`ship_geometry`：Cb∈[0.30,1.00]、D>T、Δ=ρ·L·B·T·Cb 往返误差为 0）。\n\n**船型参数表**（6 条完整船型；GZ 曲线由平台共享内核 `stability_core`\n壁舷式 `GZ = sinφ(GM + ½BM tan²φ)` 生成，进水角为设计输入）：\n\n| 算例 | Δ [t] | GM [m] | A/Δ [m²/t] | lw1 [m] | lw2 [m] | θ1 [°] | θ0 [°] | θc [°] | θ2 [°] | a [m·rad] | b [m·rad] | b/a | 参考 b/a | 判定 |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n| S1_bulk_50k | 61,323 | 2.50 | 0.022 | 0.0124 | 0.0187 | 23.32 | 0.28 | 0.43 | 45 | 0.2400 | 1.1818 | 4.924 | 4.924 | COMPLIANT |\n| S2_tanker_110k | 126,936 | 5.39 | 0.011 | 0.0073 | 0.0110 | 23.41 | 0.08 | 0.12 | 48 | 0.4881 | 2.6598 | 5.449 | 5.449 | COMPLIANT |\n| S3_container_60k | 51,772 | 2.08 | 0.050 | 0.0348 | 0.0522 | 20.33 | 0.96 | 1.44 | 40 | 0.1685 | 0.7891 | 4.683 | 4.683 | COMPLIANT |\n| S4_fishing_200t | 443 | 0.65 | 0.215 | 0.0375 | 0.0562 | 27.51 | 3.26 | 4.87 | 26 | 0.1191 | 0.0555 | 0.466 | 0.466 | NON_COMPLIANT |\n| S5_cargo_df20 | 6,520 | 1.40 | 0.080 | 0.0266 | 0.0399 | 27.08 | 1.09 | 1.63 | 20 | 0.1982 | 0.0783 | 0.395 | 0.395 | NON_COMPLIANT |\n| S6_ferry_A4000 | 21,115 | 0.70 | 0.189 | 0.0827 | 0.1241 | 17.78 | 6.23 | 8.68 | 25 | 0.0946 | 0.0722 | 0.764 | 0.764 | NON_COMPLIANT |\n\n（a = ∫_{−θ1}^{θc}(lw2−GZ)dθ 风倾能量；b = ∫_{θc}^{θ2}(GZ−lw2)dθ 复原能量；\n\"参考 b/a\" = 独立实现 scipy `quad`+`brentq` 的同一物理量。）\n\n## 2. 怎么做的（方法 / 流程 / 关键设置 / 工具链）\n\n完整链（与节点要求一一对应）：\n\n1. **lw**：`wind_heeling_lever(P,A,Z,Δ)` = P·A·Z/(1000·g·Δ)，非正输入显式报错；\n2. **φ1 查表**：`roll_angle_in_wind()` → `T_r = 2π·k_roll/√(g·GM)`（k_roll=0.35B，\n   文献带 0.30–0.45B）→ s(T_r) 查表；r = 0.73+0.6·OG/d（OG=KG−d）；X1(B/d)、\n   X2(Cb) 查表；`θ1 = 109·k·X1·X2·√(r·s)`，k 由船型预设给出\n   （`round_bilge`=1.0，`bilge_keel`=0.7），可显式覆盖。\n   插值双档：默认 `linear`（规范表常规读法）、可选 `pchip`（自研\n   Fritsch–Carlson 保单调三次，与 scipy `PchipInterpolator` 逐点一致）。表域外\n   **端点钳制，不外推**，并置 clamped 标记；\n3. **GZ 曲线**：注入式（`gz_fn` 解析式 或 `gz_curve` 点列，负横倾按奇对称延拓）；\n   平台侧曲线复用共享内核 `stability_core`（不另起一套）；\n4. **角度**：θ0 解 GZ=lw1（二分法），θc 解 GZ=lw2，θ2=min(θ_进水,50°)；\n5. **面积**：复合 Simpson（2000 段）在**弧度**上积分（`_area`，输出 m·rad）；\n6. **判定**：b/a ≥ 1 ∧ θ0 ≤ 16°；同时输出\"无 θ1（0° 起算）变体\"用于口径敏感性\n   对照，以及 `gz_integral_0_to_θ2` 供与 GZ 端点交叉核对。\n\n**交叉验证设计**：被测模块（Simpson+二分）与独立参考（`quad`+`brentq`，GZ 解析式\n独立重写）走两条不同算法路径；再加一条**结构恒等式**：\n`b − a = ∫_{θ1}^{θ2}GZ dθ − lw2·(θ1+θ2)`（θc 相消 → 判据与面积分割点无关）。\n\n工具链：Python 3.11 / numpy / scipy / matplotlib；测试 pytest；\n`python3 tests/m9667_weather_criterion_verify.py` 一键复现全部工件与本报告。\n\n## 3. 计算结果（数字表，程序化注入）\n\n### C1 风倾力臂 vs 手算（阈值 <1%）\n\n| 算例 | lw1 手算 [m] | lw1 模块 [m] | 相对误差 | 判定 |\n|---|---|---|---|---|\n| S1_bulk_50k | 0.012441 | 0.012441 | 0.00e+00 | PASS |\n| S2_tanker_110k | 0.007336 | 0.007336 | 0.00e+00 | PASS |\n| S3_container_60k | 0.034832 | 0.034832 | 0.00e+00 | PASS |\n| S4_fishing_200t | 0.037476 | 0.037476 | 0.00e+00 | PASS |\n| S5_cargo_df20 | 0.026633 | 0.026633 | 0.00e+00 | PASS |\n| S6_ferry_A4000 | 0.082728 | 0.082728 | 0.00e+00 | PASS |\n\nmax 相对误差 = **0.00e+00**（两式逐项同形，误差落在机器精度）。\n\n### C2 φ1 查表插值误差（阈值 <0.5°）\n\n扫描 7056 组**表节点中点**（避开节点，否则误差恒 0 = 假绿）：\n\n* 默认口径 linear vs 平滑参考：max **0.1564°**、\n  均值 0.0195°、p95 0.0584°；\n* 平滑口径 pchip vs 平滑参考：max **1.78e-14°**\n  （实现自洽性，与 scipy 逐点一致）；\n* 两档口径互差 max 0.1564°（口径敏感性，如实登记）；\n* 表节点处两种口径均逐值精确（max 0.0e+00）；\n* 表域外端点钳制、数据通道一致性 0.0e+00°。\n\n### C3 面积比判据与分类（3 合规 / 3 不合规，准确率 100%）\n\n3 条合规（b/a = 4.92, 5.45, 4.68）、\n3 条不合规（b/a = 0.466, 0.395, 0.764）。\n分类准确率（模块 vs 预期）= **100%**；\n模块 vs 独立参考判决一致率 = **100%**；\nb/a 相对偏差 max = **3.57e-14**，面积相对偏差 max =\n3.69e-14，能量恒等式残差 max = 9.73e-14 m·rad。\n\n### C4 负控\n\n| GM [m] | θ1 [°] | b/a | 判定 |\n|---|---|---|---|\n| 2 | 28.80 | 0.3803 | NON_COMPLIANT |\n| 1 | 25.41 | 0.4041 | NON_COMPLIANT |\n| 0.5 | 21.16 | 0.4234 | NON_COMPLIANT |\n| 0.2 | 16.22 | 0.3449 | NON_COMPLIANT |\n| 0.05 | 16.22 | 0.1274 | NON_COMPLIANT |\n| 1e-06 | 16.22 | 0.0694 | NON_COMPLIANT |\n\n* **零风压**（P=0）：lw1=lw2=0、a=0、b/a = ∞ → 自动**合规**（空判据极限，\n  显式分支并在 `reasons` 声明，不是数值巧合）；\n* **GM→0**：T_r→∞、s 落表下限 0.030、θ1 饱和于 16.22°，\n  复原裕度丧失 → b/a → **0.0694** → 自动**不合规**；\n  准静态段（GM ≤ 0.5 m）b/a 单调递减（True）；\n  **全域非单调**（GM↑ 使 θ1↑ 与复原力臂↑ 竞争）——该物理事实显式入账；\n* **无穿越**负控：GZ_max≈0.015 m ≪ lw2=0.284 m → b=0、b/a=0 → 不合规，\n  `reasons` 明确指出\"不穿越\"。\n\n### C5 与既有 GZ 曲线端点自洽\n\n| 算例 | 模块 GZ 积分 [m·rad] | 内核梯形积分 [m·rad] | 相对误差 | b/a（曲线输入） | b/a（解析式输入） |\n|---|---|---|---|---|---|\n| S1_bulk_50k | 1.196458 | 1.196458 | 2.77e-10 | 4.924 | 4.924 |\n| S2_tanker_110k | 2.669130 | 2.669130 | 3.51e-09 | 5.449 | 5.449 |\n| S3_container_60k | 0.825029 | 0.825029 | 1.32e-07 | 4.683 | 4.683 |\n| S4_fishing_200t | 0.078641 | 0.078641 | 1.59e-11 | 0.466 | 0.466 |\n| S5_cargo_df20 | 0.091661 | 0.091661 | 4.54e-16 | 0.395 | 0.395 |\n| S6_ferry_A4000 | 0.116310 | 0.116310 | 3.58e-16 | 0.764 | 0.764 |\n\nmax 相对误差 = **1.32e-07**（阈值 1%）；\n`services` 内联 GZ 解析式与共享内核逐点差 ≤ 0.0e+00 m；\n曲线注入 vs 解析式注入的 b/a 相对差 max 1.90e-04。\n\n### C6 pytest\n\n`tests/test_weather_criterion_imo_m9667.py` 共 **22 例**（阈值 15），\n全绿；覆盖 C1–C5 每一条判据 + 端点端到端 + 表值出处诚实性 + API 路由形状。\n\n## 4. 结果图\n\n* **fig1_gz_areas.png** —— 合规（S1_bulk_50k）与不合规（S6_ferry_A4000）各一船的\n  GZ 曲线 + lw2 线 + a（红）/b（绿）面积着色 + −θ1、θ2 标线；\n* **fig2_ratio_verdicts.png** —— 6 船 b/a 条形图（阈值 1.0），模块 vs 独立参考；\n* **fig3_theta1_phi1_chain.png** —— φ1 查表链三张表（X1(B/d)、X2(Cb)、s(T_r)）\n  与 θ1(GM) 敏感性；\n* **fig4_interp_error.png** —— C2 插值误差分布（linear 读法 vs 平滑参考）与 0.5° 门限。\n\n## 5. 注意点（踩坑 / 局限 / 适用范围）\n\n1. **θ1 项是判据的\"牙齿\"**：若按\"0°→交点\"简化口径（θ1≡0，平台旧\n   `weather-criterion` 的口径），同 6 船的 b/a 变成\n   16996, 236751, 1204, 23, 137, 7，全部\"合规\"——\n   判据几乎恒真；引入 θ1 后才有区分度（0.40–5.45），3 条船判决翻转。\n   这是本节点相对旧实现的能力增量，也说明**不能省略 θ1**。\n2. **表值转录保真度未复核**：三张表是 IS Code 2008 表 2.3.1-1/2/3 的**数字化转录**，\n   本环境无规范原件逐格复核（`TABLE_PROVENANCE.verified = False`）。因此所有判据\n   只测插值精度/单调性/量级锚（θ1 落在 6°–30° 的工程带），**不把表值保真度当已验证**；\n   `tables=` 参数支持整表外注，换入经核对表不需改代码。\n3. **假绿陷阱**：首版 C2 扫描点恰好落在表节点上，误差恒等于 0（1e-14）——看似完美，\n   实际什么也没测；改为\"节点中点 + 表域内\"后才出现真实误差（0.156°）。同类：\n   首版扫描让 T_r 越出表域（20.5 s），把\"端点钳制 vs 外推\"当成插值误差（0.70°）。\n4. **GZ 曲线来源限制**：验证用壁舷式解析曲线（平台共享内核），它比真实 KN 曲线\n   \"更陡\"，因此大角度复原能量偏乐观；真实船舶需接 KN/GZ 数据表（接口已支持\n   `gz_curve` 注入）。\n5. **本模块不做的事**：受风面积 A 与形心高度 Z 由上层/设计输入（不做上层建筑投影\n   估算）；不替代完整稳性全套判据（初稳性高、大角稳性、进水角等另有端点）。\n6. **横摇阻尼系数 k 的口径**：k=1.0（圆舭）/0.7（舭部尖削或设舭龙骨）按命名预设\n   暴露、可覆盖；默认圆舭口径给出**更大 θ1**（更保守）。\n\n## 6. 误差判定（逐项回答\"是否 <3%\"）\n\n| 关键量 | 基准 | 误差 | 是否 <3% |\n|---|---|---|---|\n| lw1 | 手算逐项乘除（6 船） | 0.00e+00 | **是** |\n| b/a（6 船） | scipy quad + brentq 独立实现 | 3.57e-14 | **是** |\n| 面积 a、b | 同上（自适应积分） | 3.69e-14 | **是** |\n| GZ 积分 ∫₀^θ² | 共享内核梯形积分 | 1.32e-07 | **是** |\n| θ1 查表 | 平滑参考（同表值的收敛插值） | 0.1564° | **是**（<0.5° 门限；θ1≈0.2 rad 时 0.5° ≈ 4% 角量级） |\n| 能量恒等式 b−a | 解析积分恒等式 | 9.73e-14 m·rad | **是** |\n\n**结论**：C1–C6 六条机器判据全部 PASS（`results.json.all_pass = True`）。\n**但存在一项口径不确定**：三张规范表的**数值转录保真度**未经原件复核（见 5.2），\n该不确定性不影响上述\"实现/数值\"层面的误差结论，但影响\"与主管机关计算结果逐位一致\"\n的结论——此项如实标 WITHHELD，不做粉饰。\n\n> 偏差与理由（方法自主权申报）：1) 节点文字把面积写作\"0°→交点 / 交点到 φ2\"，\n> 本实现按 IS Code 的**风侧分支**定义 a = ∫_{−θ1}^{θc}(lw2−GZ)dθ，因为 θ1 不进\n> 面积则 φ1 查表链对判据无影响、判据退化为恒真（见注意点 1）；两种口径的数值在\n> `ratio_b_over_a_no_theta1` 字段并列给出，可自行核对。\n> 2) 结论量级以 b/a（复原/风倾）表述，等价于规范的 b ≥ a。\n",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "sha256_of_markdown_vs_contract",
+            "result": "resolved",
+            "recomputed": "sha256:d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50",
+            "contract": "sha256:d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50",
+            "chars": 7903,
+            "bytes_utf8": 12279
+          },
+          "note": "method=document：覆盖全文 0..len(markdown)；sha256 与契约 source_hash 一致"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "document_header",
+          "label": "报告标题（含节点号 m9667 / p176w1-n10）",
+          "in_report_section": "(preamble)",
+          "locator": {
+            "method": "char_span",
+            "start_char": 0,
+            "end_char": 59,
+            "start_line": 0,
+            "end_line": 0,
+            "quote": "# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "标题与平台 title 字段逐字一致"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "external_standard",
+          "label": "IS Code 2008 (MSC.267(85)) Part A §2.3 天气衡准条款",
+          "in_report_section": "# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 137,
+            "end_char": 216,
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "**规范**：IS Code 2008 (MSC.267(85)) Part A §2.3 severe wind and rolling criterion",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "address_extraction",
+            "result": "unresolved",
+            "addresses_found": [],
+            "detail": "仅在报告文本内检索 URL/DOI（不联网、不猜测地址）；规范号本身可由人工检索"
+          },
+          "note": "规范标识可按号人工检索，但报告内无 URL/DOI/本地副本，平台侧不可解析"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "code_pointer",
+          "label": "实现模块 backend/services/weather_criterion_iso.py（纯函数）",
+          "in_report_section": "# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 217,
+            "end_char": 273,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "**实现**：`backend/services/weather_criterion_iso.py`（纯函数）＋",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_exists",
+            "paths": [
+              "backend/services/weather_criterion_iso.py"
+            ],
+            "missing": [
+              "backend/services/weather_criterion_iso.py"
+            ],
+            "result": "unresolved",
+            "detail": "路径属 ship-performance-platform 仓；本工作树为 TensorKnowledge，缺文件=不可解析"
+          },
+          "note": "属 ship-performance-platform 仓的代码路径，本工作树（TensorKnowledge）内不存在"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "api_endpoint",
+          "label": "API 端点 POST /api/v1/weather-criterion-iso/check（backend/api/weather_criterion_iso.py）",
+          "in_report_section": "# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 274,
+            "end_char": 356,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "`backend/api/weather_criterion_iso.py`（`POST /api/v1/weather-criterion-iso/check`）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_exists",
+            "paths": [
+              "backend/api/weather_criterion_iso.py"
+            ],
+            "missing": [
+              "backend/api/weather_criterion_iso.py"
+            ],
+            "result": "unresolved",
+            "detail": "路径属 ship-performance-platform 仓；本工作树为 TensorKnowledge，缺文件=不可解析"
+          },
+          "note": "仅路由声明；本工序不调用该端点、不复核其响应"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "evidence_artifact",
+          "label": "证据工件 artifacts/weather_criterion_imo_2008_m9667/results.json（表值指纹截断）",
+          "in_report_section": "# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 357,
+            "end_char": 461,
+            "start_line": 6,
+            "end_line": 7,
+            "quote": "**证据工件**：`artifacts/weather_criterion_imo_2008_m9667/results.json`（表值指纹\nsha256=`fede60c8a40fb583…`）、4 张图",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_exists",
+            "paths": [
+              "artifacts/weather_criterion_imo_2008_m9667/results.json"
+            ],
+            "missing": [
+              "artifacts/weather_criterion_imo_2008_m9667/results.json"
+            ],
+            "result": "unresolved",
+            "detail": "路径属 ship-performance-platform 仓；本工作树为 TensorKnowledge，缺文件=不可解析；且报告只给截断指纹（16/64 位），无法比对完整 sha256",
+            "fingerprint_prefix": "fede60c8a40fb583",
+            "fingerprint_hex_len": 16,
+            "fingerprint_full_sha256": false
+          },
+          "note": "指纹仅给出前 16 位十六进制 + 省略号，无法与任何完整 sha256 比对；工件本体不在本工作树"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "test_pointer",
+          "label": "规范测试 tests/test_weather_criterion_imo_m9667.py（22 例全绿）",
+          "in_report_section": "# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 462,
+            "end_char": 524,
+            "start_line": 8,
+            "end_line": 8,
+            "quote": "**pytest**：`tests/test_weather_criterion_imo_m9667.py`（22 例全绿）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_exists",
+            "paths": [
+              "tests/test_weather_criterion_imo_m9667.py"
+            ],
+            "missing": [
+              "tests/test_weather_criterion_imo_m9667.py"
+            ],
+            "result": "unresolved",
+            "detail": "路径属 ship-performance-platform 仓；本工作树为 TensorKnowledge，缺文件=不可解析"
+          },
+          "note": "测试本体在外部仓；本工序只登记声明，不复跑该测试"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "table",
+          "label": "船型参数表（6 船；Δ/GM/A/A-Z 输入 + lw/θ/a/b/b-a 结果）",
+          "in_report_section": "## 1. 案例介绍（物理背景 / 几何 / 参数表）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1212,
+            "end_char": 2222,
+            "start_line": 32,
+            "end_line": 39,
+            "quote": "| 算例 | Δ [t] | GM [m] | A/Δ [m²/t] | lw1 [m] | lw2 [m] | θ1 [°] | θ0 [°] | θc [°] | θ2 [°] | a [m·rad] | b [m·rad] | b/a | 参考 b/a | 判定 |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n| S1_bulk_50k | 61,323 | 2.50 | 0.022 | 0.0124 | 0.0187 | 23.32 | 0.28 | 0.43 | 45 | 0.2400 | 1.1818 | 4.924 | 4.924 | COMPLIANT |\n| S2_tanker_110k | 126,936 | 5.39 | 0.011 | 0.0073 | 0.0110 | 23.41 | 0.08 | 0.12 | 48 | 0.4881 | 2.6598 | 5.449 | 5.449 | COMPLIANT |\n| S3_container_60k | 51,772 | 2.08 | 0.050 | 0.0348 | 0.0522 | 20.33 | 0.96 | 1.44 | 40 | 0.1685 | 0.7891 | 4.683 | 4.683 | COMPLIANT |\n| S4_fishing_200t | 443 | 0.65 | 0.215 | 0.0375 | 0.0562 | 27.51 | 3.26 | 4.87 | 26 | 0.1191 | 0.0555 | 0.466 | 0.466 | NON_COMPLIANT |\n| S5_cargo_df20 | 6,520 | 1.40 | 0.080 | 0.0266 | 0.0399 | 27.08 | 1.09 | 1.63 | 20 | 0.1982 | 0.0783 | 0.395 | 0.395 | NON_COMPLIANT |\n| S6_ferry_A4000 | 21,115 | 0.70 | 0.189 | 0.0827 | 0.1241 | 17.78 | 6.23 | 8.68 | 25 | 0.0946 | 0.0722 | 0.764 | 0.764 | NON_COMPLIANT |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "表头+分隔+6 数据行共 8 行；数值零手抄改动"
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "method_description",
+          "label": "完整链六步（lw / φ1 查表 / GZ / 角度 / 面积 / 判定）",
+          "in_report_section": "## 2. 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2388,
+            "end_char": 3146,
+            "start_line": 48,
+            "end_line": 61,
+            "quote": "1. **lw**：`wind_heeling_lever(P,A,Z,Δ)` = P·A·Z/(1000·g·Δ)，非正输入显式报错；\n2. **φ1 查表**：`roll_angle_in_wind()` → `T_r = 2π·k_roll/√(g·GM)`（k_roll=0.35B，\n   文献带 0.30–0.45B）→ s(T_r) 查表；r = 0.73+0.6·OG/d（OG=KG−d）；X1(B/d)、\n   X2(Cb) 查表；`θ1 = 109·k·X1·X2·√(r·s)`，k 由船型预设给出\n   （`round_bilge`=1.0，`bilge_keel`=0.7），可显式覆盖。\n   插值双档：默认 `linear`（规范表常规读法）、可选 `pchip`（自研\n   Fritsch–Carlson 保单调三次，与 scipy `PchipInterpolator` 逐点一致）。表域外\n   **端点钳制，不外推**，并置 clamped 标记；\n3. **GZ 曲线**：注入式（`gz_fn` 解析式 或 `gz_curve` 点列，负横倾按奇对称延拓）；\n   平台侧曲线复用共享内核 `stability_core`（不另起一套）；\n4. **角度**：θ0 解 GZ=lw1（二分法），θc 解 GZ=lw2，θ2=min(θ_进水,50°)；\n5. **面积**：复合 Simpson（2000 段）在**弧度**上积分（`_area`，输出 m·rad）；\n6. **判定**：b/a ≥ 1 ∧ θ0 ≤ 16°；同时输出\"无 θ1（0° 起算）变体\"用于口径敏感性\n   对照，以及 `gz_integral_0_to_θ2` 供与 GZ 端点交叉核对。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "步骤 1–6 原文；含插值双档与端点钳制口径"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "validation_design",
+          "label": "交叉验证设计 + 结构恒等式 b−a 分解",
+          "in_report_section": "## 2. 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3148,
+            "end_char": 3295,
+            "start_line": 63,
+            "end_line": 65,
+            "quote": "**交叉验证设计**：被测模块（Simpson+二分）与独立参考（`quad`+`brentq`，GZ 解析式\n独立重写）走两条不同算法路径；再加一条**结构恒等式**：\n`b − a = ∫_{θ1}^{θ2}GZ dθ − lw2·(θ1+θ2)`（θc 相消 → 判据与面积分割点无关）。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "quad+brentq 独立路径与 θc 相消恒等式的文字声明"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "spec_table_set",
+          "label": "三张规范表 2.3.1-1/2/3 的数字化转录（TABLE_PROVENANCE.verified = False）",
+          "in_report_section": "## 5. 注意点（踩坑 / 局限 / 适用范围）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6453,
+            "end_char": 6663,
+            "start_line": 162,
+            "end_line": 165,
+            "quote": "2. **表值转录保真度未复核**：三张表是 IS Code 2008 表 2.3.1-1/2/3 的**数字化转录**，\n   本环境无规范原件逐格复核（`TABLE_PROVENANCE.verified = False`）。因此所有判据\n   只测插值精度/单调性/量级锚（θ1 落在 6°–30° 的工程带），**不把表值保真度当已验证**；\n   `tables=` 参数支持整表外注，换入经核对表不需改代码。",
+            "unique": true
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "spec_original_copy_in_source",
+            "result": "absent",
+            "state_flag_found": true,
+            "flag": "TABLE_PROVENANCE.verified = False",
+            "detail": "报告自述无规范原件逐格复核 → 规范表本体不在源内，且无外部可解析地址"
+          },
+          "note": "报告自述本环境无规范原件逐格复核 → 规范表数值本体不可得，不登记为已验证资产"
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "repro_script",
+          "label": "一键复现脚本 tests/m9667_weather_criterion_verify.py",
+          "in_report_section": "## 2. 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3353,
+            "end_char": 3416,
+            "start_line": 68,
+            "end_line": 68,
+            "quote": "`python3 tests/m9667_weather_criterion_verify.py` 一键复现全部工件与本报告。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_exists",
+            "paths": [
+              "tests/m9667_weather_criterion_verify.py"
+            ],
+            "missing": [
+              "tests/m9667_weather_criterion_verify.py"
+            ],
+            "result": "unresolved",
+            "detail": "路径属 ship-performance-platform 仓；本工作树为 TensorKnowledge，缺文件=不可解析"
+          },
+          "note": "脚本不在本工作树；跨仓复现需外部检出"
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "table",
+          "label": "C1 风倾力臂 vs 手算表（6 行，阈值 <1%）",
+          "in_report_section": "### C1 风倾力臂 vs 手算（阈值 <1%）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3468,
+            "end_char": 3887,
+            "start_line": 74,
+            "end_line": 81,
+            "quote": "| 算例 | lw1 手算 [m] | lw1 模块 [m] | 相对误差 | 判定 |\n|---|---|---|---|---|\n| S1_bulk_50k | 0.012441 | 0.012441 | 0.00e+00 | PASS |\n| S2_tanker_110k | 0.007336 | 0.007336 | 0.00e+00 | PASS |\n| S3_container_60k | 0.034832 | 0.034832 | 0.00e+00 | PASS |\n| S4_fishing_200t | 0.037476 | 0.037476 | 0.00e+00 | PASS |\n| S5_cargo_df20 | 0.026633 | 0.026633 | 0.00e+00 | PASS |\n| S6_ferry_A4000 | 0.082728 | 0.082728 | 0.00e+00 | PASS |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "上游自报相对误差 0.00e+00；本工序只登记不复核"
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "scan_result",
+          "label": "C2 φ1 插值误差扫描（7056 组表节点中点）",
+          "in_report_section": "### C2 φ1 查表插值误差（阈值 <0.5°）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3960,
+            "end_char": 4219,
+            "start_line": 87,
+            "end_line": 95,
+            "quote": "扫描 7056 组**表节点中点**（避开节点，否则误差恒 0 = 假绿）：\n\n* 默认口径 linear vs 平滑参考：max **0.1564°**、\n  均值 0.0195°、p95 0.0584°；\n* 平滑口径 pchip vs 平滑参考：max **1.78e-14°**\n  （实现自洽性，与 scipy 逐点一致）；\n* 两档口径互差 max 0.1564°（口径敏感性，如实登记）；\n* 表节点处两种口径均逐值精确（max 0.0e+00）；\n* 表域外端点钳制、数据通道一致性 0.0e+00°。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "含 linear/pchip 双档与假绿陷阱的原始误差数字"
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "verdict_set",
+          "label": "C3 面积比判据与 3 合规 / 3 不合规分类",
+          "in_report_section": "### C3 面积比判据与分类（3 合规 / 3 不合规，准确率 100%）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4260,
+            "end_char": 4461,
+            "start_line": 98,
+            "end_line": 104,
+            "quote": "\n3 条合规（b/a = 4.92, 5.45, 4.68）、\n3 条不合规（b/a = 0.466, 0.395, 0.764）。\n分类准确率（模块 vs 预期）= **100%**；\n模块 vs 独立参考判决一致率 = **100%**；\nb/a 相对偏差 max = **3.57e-14**，面积相对偏差 max =\n3.69e-14，能量恒等式残差 max = 9.73e-14 m·rad。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "分类准确率 100%、b/a 偏差 3.57e-14 等自报数字"
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "table",
+          "label": "C4 负控表（GM 2 → 1e-06，6 行）",
+          "in_report_section": "### C4 负控",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4474,
+            "end_char": 4767,
+            "start_line": 108,
+            "end_line": 115,
+            "quote": "| GM [m] | θ1 [°] | b/a | 判定 |\n|---|---|---|---|\n| 2 | 28.80 | 0.3803 | NON_COMPLIANT |\n| 1 | 25.41 | 0.4041 | NON_COMPLIANT |\n| 0.5 | 21.16 | 0.4234 | NON_COMPLIANT |\n| 0.2 | 16.22 | 0.3449 | NON_COMPLIANT |\n| 0.05 | 16.22 | 0.1274 | NON_COMPLIANT |\n| 1e-06 | 16.22 | 0.0694 | NON_COMPLIANT |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "θ1 饱和 16.22° 与 b/a→0.0694 的原文数字"
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "negative_control",
+          "label": "C4 负控说明（零风压极限 / GM→0 / 无穿越）",
+          "in_report_section": "### C4 负控",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4769,
+            "end_char": 5102,
+            "start_line": 117,
+            "end_line": 124,
+            "quote": "* **零风压**（P=0）：lw1=lw2=0、a=0、b/a = ∞ → 自动**合规**（空判据极限，\n  显式分支并在 `reasons` 声明，不是数值巧合）；\n* **GM→0**：T_r→∞、s 落表下限 0.030、θ1 饱和于 16.22°，\n  复原裕度丧失 → b/a → **0.0694** → 自动**不合规**；\n  准静态段（GM ≤ 0.5 m）b/a 单调递减（True）；\n  **全域非单调**（GM↑ 使 θ1↑ 与复原力臂↑ 竞争）——该物理事实显式入账；\n* **无穿越**负控：GZ_max≈0.015 m ≪ lw2=0.284 m → b=0、b/a=0 → 不合规，\n  `reasons` 明确指出\"不穿越\"。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "零风压合规分支与非单调性的显式入账"
+        },
+        {
+          "asset_id": "A18",
+          "asset_class": "table",
+          "label": "C5 与共享内核 GZ 积分自洽表（6 行，阈值 1%）",
+          "in_report_section": "### C5 与既有 GZ 曲线端点自洽",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5126,
+            "end_char": 5633,
+            "start_line": 128,
+            "end_line": 135,
+            "quote": "| 算例 | 模块 GZ 积分 [m·rad] | 内核梯形积分 [m·rad] | 相对误差 | b/a（曲线输入） | b/a（解析式输入） |\n|---|---|---|---|---|---|\n| S1_bulk_50k | 1.196458 | 1.196458 | 2.77e-10 | 4.924 | 4.924 |\n| S2_tanker_110k | 2.669130 | 2.669130 | 3.51e-09 | 5.449 | 5.449 |\n| S3_container_60k | 0.825029 | 0.825029 | 1.32e-07 | 4.683 | 4.683 |\n| S4_fishing_200t | 0.078641 | 0.078641 | 1.59e-11 | 0.466 | 0.466 |\n| S5_cargo_df20 | 0.091661 | 0.091661 | 4.54e-16 | 0.395 | 0.395 |\n| S6_ferry_A4000 | 0.116310 | 0.116310 | 3.58e-16 | 0.764 | 0.764 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "max 相对误差 1.32e-07；曲线/解析式注入口径并列"
+        },
+        {
+          "asset_id": "A19",
+          "asset_class": "test_evidence",
+          "label": "C6 pytest 计数（22 例，阈值 15）",
+          "in_report_section": "### C6 pytest",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5762,
+            "end_char": 5872,
+            "start_line": 143,
+            "end_line": 144,
+            "quote": "`tests/test_weather_criterion_imo_m9667.py` 共 **22 例**（阈值 15），\n全绿；覆盖 C1–C5 每一条判据 + 端点端到端 + 表值出处诚实性 + API 路由形状。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "仅计数声明；用例清单与运行日志未随报告给出"
+        },
+        {
+          "asset_id": "A20",
+          "asset_class": "figure",
+          "label": "fig1_gz_areas.png（GZ+lw2 与 a/b 面积着色）",
+          "in_report_section": "## 4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5885,
+            "end_char": 5996,
+            "start_line": 148,
+            "end_line": 149,
+            "quote": "* **fig1_gz_areas.png** —— 合规（S1_bulk_50k）与不合规（S6_ferry_A4000）各一船的\n  GZ 曲线 + lw2 线 + a（红）/b（绿）面积着色 + −θ1、θ2 标线；",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "figure_name": "fig1_gz_areas.png",
+            "url": "http://127.0.0.1:8010/api/v1/tensor/reports/11415/figures/fig1_gz_areas.png",
+            "http_status": 200,
+            "check": "platform_figure_binary_fetch",
+            "result": "present",
+            "png_magic": true,
+            "png_bytes": 138148,
+            "png_sha256": "sha256:2a050f5c7a8723ccb6ff191c42b426cf7472f064272cecfe287815cb43f7596d",
+            "local_copy": "runs/wp-11415-01/figures/fig1_gz_areas.png",
+            "caption": "GZ 曲线 + lw2 阵风力臂线与面积 a/b：左=合规（S1_bulk_50k, b/a=4.92），右=不合规（S6_ferry_A4000, b/a=0"
+          },
+          "note": "图件本体经 GET /tensor/reports/11415/figures/<name> 取回并留 sha256（见 resolution_check）"
+        },
+        {
+          "asset_id": "A21",
+          "asset_class": "figure",
+          "label": "fig2_ratio_verdicts.png（6 船 b/a 条形图）",
+          "in_report_section": "## 4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5997,
+            "end_char": 6061,
+            "start_line": 150,
+            "end_line": 150,
+            "quote": "* **fig2_ratio_verdicts.png** —— 6 船 b/a 条形图（阈值 1.0），模块 vs 独立参考；",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "figure_name": "fig2_ratio_verdicts.png",
+            "url": "http://127.0.0.1:8010/api/v1/tensor/reports/11415/figures/fig2_ratio_verdicts.png",
+            "http_status": 200,
+            "check": "platform_figure_binary_fetch",
+            "result": "present",
+            "png_magic": true,
+            "png_bytes": 60316,
+            "png_sha256": "sha256:dc8714af9f62780b65cd1019611d98d1ac661dd41f7769a6bd71e34facd0b873",
+            "local_copy": "runs/wp-11415-01/figures/fig2_ratio_verdicts.png",
+            "caption": "6 船型 b/a（阈值 1.0）：3 合规 + 3 不合规，模块与独立 quad 参考判决一致率 100%"
+          },
+          "note": "图件本体经 GET /tensor/reports/11415/figures/<name> 取回并留 sha256（见 resolution_check）"
+        },
+        {
+          "asset_id": "A22",
+          "asset_class": "figure",
+          "label": "fig3_theta1_phi1_chain.png（φ1 查表链与 θ1(GM)）",
+          "in_report_section": "## 4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6062,
+            "end_char": 6146,
+            "start_line": 151,
+            "end_line": 152,
+            "quote": "* **fig3_theta1_phi1_chain.png** —— φ1 查表链三张表（X1(B/d)、X2(Cb)、s(T_r)）\n  与 θ1(GM) 敏感性；",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "figure_name": "fig3_theta1_phi1_chain.png",
+            "url": "http://127.0.0.1:8010/api/v1/tensor/reports/11415/figures/fig3_theta1_phi1_chain.png",
+            "http_status": 200,
+            "check": "platform_figure_binary_fetch",
+            "result": "present",
+            "png_magic": true,
+            "png_bytes": 129544,
+            "png_sha256": "sha256:862d7ba6a2f3c878dacfae7d8d5bcc5adc7a644d54f5c5fe4cac1d741897f1a9",
+            "local_copy": "runs/wp-11415-01/figures/fig3_theta1_phi1_chain.png",
+            "caption": "φ1 查表链：X1(B/d)、X2(Cb)、s(T_r) 三表与 θ1(GM) 敏感性"
+          },
+          "note": "图件本体经 GET /tensor/reports/11415/figures/<name> 取回并留 sha256（见 resolution_check）"
+        },
+        {
+          "asset_id": "A23",
+          "asset_class": "figure",
+          "label": "fig4_interp_error.png（C2 插值误差分布）",
+          "in_report_section": "## 4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6147,
+            "end_char": 6216,
+            "start_line": 153,
+            "end_line": 153,
+            "quote": "* **fig4_interp_error.png** —— C2 插值误差分布（linear 读法 vs 平滑参考）与 0.5° 门限。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "figure_name": "fig4_interp_error.png",
+            "url": "http://127.0.0.1:8010/api/v1/tensor/reports/11415/figures/fig4_interp_error.png",
+            "http_status": 200,
+            "check": "platform_figure_binary_fetch",
+            "result": "present",
+            "png_magic": true,
+            "png_bytes": 56631,
+            "png_sha256": "sha256:2b441faa6fb8944e25f5f2f56a6e2e64d60775f7f4483895db88df1bf576756e",
+            "local_copy": "runs/wp-11415-01/figures/fig4_interp_error.png",
+            "caption": "C2 插值误差分布（linear 读法 vs 平滑参考），max 0.156° < 0.5° 门限"
+          },
+          "note": "图件本体经 GET /tensor/reports/11415/figures/<name> 取回并留 sha256（见 resolution_check）"
+        },
+        {
+          "asset_id": "A24",
+          "asset_class": "table",
+          "label": "§6 误差判定表（6 关键量 vs 基准，是否 <3%）",
+          "in_report_section": "## 6. 误差判定（逐项回答\"是否 <3%\"）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7125,
+            "end_char": 7488,
+            "start_line": 179,
+            "end_line": 186,
+            "quote": "| 关键量 | 基准 | 误差 | 是否 <3% |\n|---|---|---|---|\n| lw1 | 手算逐项乘除（6 船） | 0.00e+00 | **是** |\n| b/a（6 船） | scipy quad + brentq 独立实现 | 3.57e-14 | **是** |\n| 面积 a、b | 同上（自适应积分） | 3.69e-14 | **是** |\n| GZ 积分 ∫₀^θ² | 共享内核梯形积分 | 1.32e-07 | **是** |\n| θ1 查表 | 平滑参考（同表值的收敛插值） | 0.1564° | **是**（<0.5° 门限；θ1≈0.2 rad 时 0.5° ≈ 4% 角量级） |\n| 能量恒等式 b−a | 解析积分恒等式 | 9.73e-14 m·rad | **是** |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "逐项“是”；θ1 项附 0.5° 门限与角量级换算"
+        },
+        {
+          "asset_id": "A25",
+          "asset_class": "uncertainty_flag",
+          "label": "结论 + 规范表转录保真度 WITHHELD 声明",
+          "in_report_section": "## 6. 误差判定（逐项回答\"是否 <3%\"）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7490,
+            "end_char": 7666,
+            "start_line": 188,
+            "end_line": 191,
+            "quote": "**结论**：C1–C6 六条机器判据全部 PASS（`results.json.all_pass = True`）。\n**但存在一项口径不确定**：三张规范表的**数值转录保真度**未经原件复核（见 5.2），\n该不确定性不影响上述\"实现/数值\"层面的误差结论，但影响\"与主管机关计算结果逐位一致\"\n的结论——此项如实标 WITHHELD，不做粉饰。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "报告自标 WITHHELD；本工序不把该不确定性降级或升级"
+        },
+        {
+          "asset_id": "A26",
+          "asset_class": "deviation_declaration",
+          "label": "面积口径偏差与理由（方法自主权申报）",
+          "in_report_section": "## 6. 误差判定（逐项回答\"是否 <3%\"）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7668,
+            "end_char": 7902,
+            "start_line": 193,
+            "end_line": 197,
+            "quote": "> 偏差与理由（方法自主权申报）：1) 节点文字把面积写作\"0°→交点 / 交点到 φ2\"，\n> 本实现按 IS Code 的**风侧分支**定义 a = ∫_{−θ1}^{θc}(lw2−GZ)dθ，因为 θ1 不进\n> 面积则 φ1 查表链对判据无影响、判据退化为恒真（见注意点 1）；两种口径的数值在\n> `ratio_b_over_a_no_theta1` 字段并列给出，可自行核对。\n> 2) 结论量级以 b/a（复原/风倾）表述，等价于规范的 b ≥ a。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "风侧分支 a=∫_{−θ1}^{θc} 的口径偏差与并列字段说明"
+        },
+        {
+          "asset_id": "A27",
+          "asset_class": "algorithm_guard",
+          "label": "几何自检守卫（Cb∈[0.30,1.00]、D>T、Δ 往返为 0）",
+          "in_report_section": "## 1. 案例介绍（物理背景 / 几何 / 参数表）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1046,
+            "end_char": 1115,
+            "start_line": 27,
+            "end_line": 27,
+            "quote": "Cb/L/B/Δ 自检（`ship_geometry`：Cb∈[0.30,1.00]、D>T、Δ=ρ·L·B·T·Cb 往返误差为 0）。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "几何先验证原则在报告内的落点；实现本体在外部仓"
+        },
+        {
+          "asset_id": "A28",
+          "asset_class": "model_formula",
+          "label": "GZ 生成口径：共享内核 stability_core 壁舷式 GZ = sinφ(GM + ½BM tan²φ)",
+          "in_report_section": "## 1. 案例介绍（物理背景 / 几何 / 参数表）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1117,
+            "end_char": 1210,
+            "start_line": 29,
+            "end_line": 30,
+            "quote": "**船型参数表**（6 条完整船型；GZ 曲线由平台共享内核 `stability_core`\n壁舷式 `GZ = sinφ(GM + ½BM tan²φ)` 生成，进水角为设计输入）：",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "曲线来源与解析式；KN 曲线接入为报告自述局限"
+        }
+      ],
+      "claims": [],
+      "claims_note": "本工作包 objective 仅为 register_assets（classify_report_type=false），契约 notes 明确 claims 允许为空数组；本工序不做 claim 抽取、不生成任何结论，抽取交下游工作包。空数组=无 claim，而非“claim 无法取证”的省略。",
+      "integrity": {
+        "quote_uniqueness": "每个 locator.quote 经 md.count(quote)==1 与 char-span 切片等值双检（scripts/kf_verify_11415.py）",
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "no_duplicate_ids": true,
+        "verification_status": "not_verified",
+        "verification_note": "verification 由平台门计算；本工序不自行标 verified"
+      }
+    }
+  },
+  "claims": []
+}
+```
