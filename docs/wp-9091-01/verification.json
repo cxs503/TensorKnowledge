@@ -1,0 +1,129 @@
+{
+  "package_id": "wp-9091-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9091",
+  "verifier": "scripts/kf_verify_wp9091_01.py",
+  "manifest_sha256": "894ac2325a507b767286e141207d8db752b143938815b345b955fd2936e0626b",
+  "source_sha256": "89c2a8f978e2915cb079337441118458e78017bcb4a177c38d8c8a00cc8c6f17",
+  "source_chars": 10060,
+  "source_bytes_utf8": 10955,
+  "counts": {
+    "assets": 29,
+    "by_class": {
+      "document": 1,
+      "heading": 1,
+      "status_statement": 1,
+      "artifact_index_declaration": 1,
+      "table": 6,
+      "external_file_set": 1,
+      "parameter_set": 2,
+      "verification_statement": 5,
+      "formula": 1,
+      "external_dataset": 2,
+      "platform_figure_set": 1,
+      "defect_pointer": 1,
+      "consequence_statement": 1,
+      "mechanism_spec": 1,
+      "limitation_set": 1,
+      "external_reference": 1,
+      "reproduce_commands": 1,
+      "honest_disclaimer": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 24,
+      "referenced_unresolved": 4,
+      "declared_absent": 1
+    }
+  },
+  "checks": [
+    {
+      "name": "valid_json",
+      "status": "pass",
+      "ok": true,
+      "detail": {
+        "manifest": "artifacts/wp-9091-01/asset_manifest.json",
+        "envelope": "runs/wp-9091-01/kf_result.wp-9091-01.json"
+      }
+    },
+    {
+      "name": "schema_pass",
+      "status": "pass",
+      "ok": true,
+      "detail": {
+        "schema": "schemas/asset_manifest.v1.generic.schema.json",
+        "note": "report-agnostic generalisation of v1 (pattern instead of const)"
+      }
+    },
+    {
+      "name": "schema_pass.regression_v1",
+      "status": "pass",
+      "ok": true,
+      "detail": {
+        "note": "docs/wp-448-01/asset_manifest.json still validates against the untouched schemas/asset_manifest.v1.schema.json (consts intact)"
+      }
+    },
+    {
+      "name": "source_locator_resolvable",
+      "status": "pass",
+      "ok": true,
+      "detail": {
+        "assets_checked": 29,
+        "failures": []
+      }
+    },
+    {
+      "name": "source_hash_matches",
+      "status": "pass",
+      "ok": true,
+      "detail": {
+        "local_sha256": "89c2a8f978e2915cb079337441118458e78017bcb4a177c38d8c8a00cc8c6f17",
+        "contract": "89c2a8f978e2915cb079337441118458e78017bcb4a177c38d8c8a00cc8c6f17",
+        "manifest": "89c2a8f978e2915cb079337441118458e78017bcb4a177c38d8c8a00cc8c6f17",
+        "envelope": "sha256:89c2a8f978e2915cb079337441118458e78017bcb4a177c38d8c8a00cc8c6f17",
+        "chars": 10060,
+        "bytes_utf8": 10955
+      }
+    },
+    {
+      "name": "no_duplicate_ids",
+      "status": "pass",
+      "ok": true,
+      "detail": {
+        "assets": 29,
+        "unique_assets": 29,
+        "claims": 0
+      }
+    },
+    {
+      "name": "claims_evidence_or_status",
+      "status": "pass",
+      "ok": true,
+      "detail": {
+        "claims": 0,
+        "note": "claims are allowed to be empty for task_type=01 (no extraction); provenance.verification_status=not_verified so nothing is self-declared verified",
+        "problems": []
+      }
+    },
+    {
+      "name": "scope_isolation",
+      "status": "pass",
+      "ok": true,
+      "detail": {
+        "report_id": "9091",
+        "source_uri": "tensor://reports/9091",
+        "out_of_source_spans": []
+      }
+    }
+  ],
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_locator_resolvable": true,
+    "source_hash_matches": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true
+  },
+  "all_pass": true,
+  "verification_status": "not_verified",
+  "note": "本文件是本工序自检记录；正式 verification 由平台门计算，本工序不自标 verified"
+}
