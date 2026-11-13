@@ -6,8 +6,12 @@
  "envelope_report_id": true,
  "envelope_task_type": true,
  "envelope_package_id": true,
- "schema_pass": true,
- "schema_errors": [],
+ "schema_pass": false,
+ "schema_errors": [
+  "[]: Additional properties are not allowed ('claims' was unexpected)",
+  "['provenance']: Additional properties are not allowed ('emitted_at', 'notes', 'producer' were unexpected)",
+  "['provenance']: 'source_uri' is a required property"
+ ],
  "no_duplicate_ids": true,
  "outputs_has_asset_manifest": true,
  "outputs_equal_committed_manifest": true,
@@ -25,6 +29,8 @@
  "figure_payload_mismatch": [],
  "figures_all_resolvable": true,
  "counts_consistent": true,
- "FAILURES": [],
- "ok": true
+ "FAILURES": [
+  "schema_pass"
+ ],
+ "ok": false
 }
