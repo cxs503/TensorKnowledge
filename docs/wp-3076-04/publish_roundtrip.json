@@ -1,0 +1,52 @@
+{
+  "report_id": 14956,
+  "title": "KF-RESULT wp-3076-04",
+  "mission_id": 15826,
+  "scenario_key": "paper-line-provenance-gate",
+  "tags": [
+    "kf-wp:wp-3076-04",
+    "kf-results",
+    "independent-review",
+    "paper-production",
+    "provenance-gate",
+    "adversarial-review",
+    "needs-fix"
+  ],
+  "markdown": {
+    "local_sha256": "1c23a62e395815d3cfe1534ac4863a6ac451237df310e532832bbb2f959ebcdc",
+    "chars": 34711,
+    "json_blocks": 1,
+    "fetched_sha256": "1c23a62e395815d3cfe1534ac4863a6ac451237df310e532832bbb2f959ebcdc",
+    "byte_equal": true
+  },
+  "figure": {
+    "name": "fig_deviation_boundary.png",
+    "local_bytes": 120227,
+    "local_sha256": "e401cb6f78f67c04e84a6948fccc93a877cbad2d618b01295be3e449b818fb25",
+    "http_status": 200,
+    "fetched_sha256": "e401cb6f78f67c04e84a6948fccc93a877cbad2d618b01295be3e449b818fb25",
+    "byte_equal": true
+  },
+  "checks": {
+    "markdown_roundtrip": true,
+    "single_json_block": true,
+    "figure_endpoint_200": true,
+    "figure_bytes_equal": true,
+    "superseded_chain_recorded": true
+  },
+  "superseded_reports": [
+    {
+      "report_id": 14946,
+      "superseded_by": 14953,
+      "reason": "first publication; body lacked the explicit 误差判定(<3%) table required by report discipline, had unescaped '|' inside table cells, and a quote-cell fence collision"
+    },
+    {
+      "report_id": 14953,
+      "superseded_by": 14956,
+      "reason": "outputs moved from the gitignored artifacts/ to the committed package dir docs/wp-3076-04/; ③ paths corrected; result envelope unchanged"
+    }
+  ],
+  "superseded_note": "only the report named in report_id (14956) is the deliverable of this work package; earlier ids are kept for audit (reports are immutable: PUT/PATCH/DELETE all return 405)",
+  "known_cosmetics": "markdown tables in the delivered body escape '|' inside cells and use a spaced double-backtick fence for quotes that themselves contain a backtick; the JSON result envelope is unaffected by rendering",
+  "verdict": "PASS"
+}
