@@ -1,0 +1,10 @@
+-- m15906 verdict for m15721 KBM-TKC-GOV-SCALE
+INSERT INTO tensor_maturity_verdicts (repo, scope, mission_id, level, evidence, verdict_by)
+VALUES (
+    'TensorKnowledge',
+    'm15721 KBM-TKC-GOV-SCALE',
+    15906,
+    3,
+    '{"impl_files":["ke/gov.py:1303 lines (EntityRegistry,Counting,ReviewPool,build_kos,dedupe,cross_validate,run_governance)","scripts/kbm_gov_w1.py:296 lines (CLI runner: run/verify/queue)","scripts/kbm_gov_ablation.py:259 lines (calibration+sensitivity+figures)","scripts/ke_state_machine.py:328 lines (review state machine)"],"entry":"scripts/kbm_gov_w1.py (CLI: run/verify/queue subcommands)","run_artifacts":"runs/kbm-gov-w1/ (1.7MB total: ko.jsonl 165KB, crossval.json 382KB, dedup-clusters.json 53KB, entity-resolution.jsonl 344KB, discarded.jsonl 375KB, review/ledger.jsonl 124KB, review/votes.jsonl 190KB, 4 figures PNG)","tests":"tests/test_kbm_gov.py: 25/25 passed (entity resolution, dedup, crossval, contradiction, review pool, bucket reconciliation, end-to-end determinism, pilot artifact reconciliation)","integration_callers":["scripts/kbm_gov_w1.py","scripts/kbm_gov_ablation.py"],"benchmark":{"tensor_benchmark_cases_exists":false,"note":"No formal benchmark cases in tensor_benchmark_cases table for KBM-TKC-GOV-SCALE. Validation via: (1) pilot batch of 200 reports with 8 verify checks all green, (2) contradiction detector calibration with controlled injection (recall=1.00 at >=15% threshold, 0 false positives), (3) dedup sensitivity sweep (monotonic, threshold effective)","pilot_stats":{"raw_records":200,"ko_pending_review":153,"governed_objects":89,"duplicate_rate":0.163399,"contradiction_pairs":0,"review_pass_rate":0.699346},"verify_checks":{"ledger_chain_ok":true,"dedupe_recomputes":true,"crossval_recomputes":true,"slice_sha256_matches":true,"all_ko_relocate":true,"buckets_reconcile":true,"writeback_matches_ledger":true,"refusals_accounted":true}},"repro_cmd":"python scripts/kbm_gov_w1.py verify --out runs/kbm-gov-w1","external_anchor":null}',
+    'board-audit'
+);
