@@ -1,0 +1,144 @@
+{
+  "package_id": "wp-14137-01",
+  "report_id": "14137",
+  "total": 18,
+  "passed": 18,
+  "failed": 0,
+  "checks": [
+    {
+      "item": "valid_json:asset_manifest",
+      "result": "PASS",
+      "detail": "artifacts/wp-14137-01/asset_manifest.json parses",
+      "evidence": {}
+    },
+    {
+      "item": "valid_json:kf_result",
+      "result": "PASS",
+      "detail": "runs/wp-14137-01/kf_result.wp-14137-01.json parses",
+      "evidence": {}
+    },
+    {
+      "item": "source_hash_matches:local_recompute",
+      "result": "PASS",
+      "detail": "sha256(runs md)=6f65040f0d3483ee5ca35f81c0fa4e5af147165e066e6c9c1cdb9a815faa8c30",
+      "evidence": {
+        "contract": "6f65040f0d3483ee5ca35f81c0fa4e5af147165e066e6c9c1cdb9a815faa8c30"
+      }
+    },
+    {
+      "item": "source_hash_matches:manifest_field",
+      "result": "PASS",
+      "detail": "manifest.source.hash",
+      "evidence": {
+        "value": "6f65040f0d3483ee5ca35f81c0fa4e5af147165e066e6c9c1cdb9a815faa8c30"
+      }
+    },
+    {
+      "item": "source_hash_matches:envelope_provenance",
+      "result": "PASS",
+      "detail": "envelope.provenance.source_hash",
+      "evidence": {
+        "value": "sha256:6f65040f0d3483ee5ca35f81c0fa4e5af147165e066e6c9c1cdb9a815faa8c30"
+      }
+    },
+    {
+      "item": "source_hash_matches:platform_refetch",
+      "result": "PASS",
+      "detail": "re-fetched from platform API",
+      "evidence": {
+        "fresh_sha256": "6f65040f0d3483ee5ca35f81c0fa4e5af147165e066e6c9c1cdb9a815faa8c30"
+      }
+    },
+    {
+      "item": "source_chars_matches_contract",
+      "result": "PASS",
+      "detail": "len(markdown)=7569 contract=7569",
+      "evidence": {}
+    },
+    {
+      "item": "schema_pass",
+      "result": "PASS",
+      "detail": "asset_manifest.v1 (identity consts substituted for this package) + kf_result.v1 both validate",
+      "evidence": {}
+    },
+    {
+      "item": "source_locator_resolvable:quote_slices",
+      "result": "PASS",
+      "detail": "24 assets; md[start:end]==quote for all",
+      "evidence": {
+        "failures": []
+      }
+    },
+    {
+      "item": "source_locator_resolvable:quote_unique",
+      "result": "PASS",
+      "detail": "every quote is a unique substring of the markdown",
+      "evidence": {
+        "failures": []
+      }
+    },
+    {
+      "item": "source_locator_resolvable:line_numbers_consistent",
+      "result": "PASS",
+      "detail": "start_line/end_line recomputed from char offsets match",
+      "evidence": {
+        "failures": []
+      }
+    },
+    {
+      "item": "no_duplicate_ids",
+      "result": "PASS",
+      "detail": "24 asset ids, 24 unique",
+      "evidence": {}
+    },
+    {
+      "item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "PASS",
+      "detail": "claims=0 (empty array is legitimate here: no extraction in task_type 01)",
+      "evidence": {}
+    },
+    {
+      "item": "kf_result_claims_constraint",
+      "result": "PASS",
+      "detail": "envelope claims=0",
+      "evidence": {}
+    },
+    {
+      "item": "envelope_outputs_equal_manifest",
+      "result": "PASS",
+      "detail": "outputs['asset_manifest.json'] is byte-identical in content to the artifact file",
+      "evidence": {}
+    },
+    {
+      "item": "envelope_identity",
+      "result": "PASS",
+      "detail": "package_id/report_id/task_type fields",
+      "evidence": {}
+    },
+    {
+      "item": "not_marked_verified",
+      "result": "PASS",
+      "detail": "no asset carries a 'verified' label; registration only",
+      "evidence": {}
+    },
+    {
+      "item": "counts_consistent",
+      "result": "PASS",
+      "detail": "counts.by_resolution / counts.assets recomputed",
+      "evidence": {
+        "recomputed": {
+          "referenced_unresolved": 19,
+          "resolved_in_source": 5
+        }
+      }
+    }
+  ],
+  "gate_parity": {
+    "ok": true,
+    "detail": "report 14921: stored json block equals runs/.../kf_result.wp-14137-01.json",
+    "report_id": 14921,
+    "json_blocks": 1,
+    "title": "KF-RESULT wp-14137-01",
+    "tags_ok": true
+  }
+}
