@@ -1,0 +1,554 @@
+{
+  "package_id": "wp-14478-01",
+  "task_type": "01-asset-registration",
+  "report_id": "14478",
+  "provenance": {
+    "source_uri": "tensor://reports/14478",
+    "source_field": "markdown",
+    "source_hash": "sha256:8fbd643e2e79a0fece5f9ae2fbe87a0045f268d61da54927711e260c14b206b0",
+    "producer": "kf-wp14478-01 asset registration (scripts/kf_register_14478.py)",
+    "emitted_at": "2026-11-12T02:37:16+00:00",
+    "notes": "hash = sha256 of the exact UTF-8 bytes of the report markdown field; recomputed from the platform on every verify run"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-14478-01",
+      "task_type": "01-asset-registration",
+      "report_id": "14478",
+      "objective": {
+        "register_assets": true,
+        "classify_report_type": false
+      },
+      "source": {
+        "uri": "tensor://reports/14478",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "8fbd643e2e79a0fece5f9ae2fbe87a0045f268d61da54927711e260c14b206b0",
+        "chars": 6156,
+        "bytes_utf8": 9430,
+        "contract_chars": 6156,
+        "title": "CASE-CYLINDER-DRAG-FVM: TensorFVM DFG 2D-1 cylinder drag case (per-quantity <5% verdict)",
+        "scenario_key": "case-cylinder-drag-fvm",
+        "platform_mission_id": 15406,
+        "platform_status": "published",
+        "platform_created_at": "2026-11-11T23:32:12.640144+00:00",
+        "platform_tags": [
+          "CASE-CYLINDER-DRAG-FVM",
+          "TensorFVM",
+          "DFG-2D-1",
+          "benchmark",
+          "drag"
+        ],
+        "platform_figures": []
+      },
+      "counts": {
+        "assets": 20,
+        "by_class": {
+          "source_document": 1,
+          "reference_authority_page": 1,
+          "reference_page_archive": 2,
+          "provenance_manifest": 1,
+          "reference_data": 1,
+          "reference_parser": 1,
+          "case_harness": 1,
+          "contract_test": 1,
+          "report_tool": 1,
+          "solver_run_output": 1,
+          "analysis_output": 1,
+          "native_solver_outputs": 1,
+          "repo_doc": 1,
+          "report_document": 1,
+          "solver_code": 1,
+          "reference_constant": 1,
+          "cluster_job": 1,
+          "figure_set": 1,
+          "solver_config": 1
+        },
+        "by_payload_status": {
+          "in_report_record": 1,
+          "external_url_declared": 1,
+          "external_repo_path_declared": 12,
+          "declared_payload_missing": 5,
+          "declared_in_source_only": 1
+        },
+        "reference_values_quoted": 3,
+        "claims": 0
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "source_document",
+          "label": "tensor://reports/14478 markdown（本包登记的唯一原文）",
+          "in_report_section": "全文（document locator）",
+          "locator": {
+            "method": "document",
+            "source_field": "markdown",
+            "start_char": 0,
+            "end_char": 6156,
+            "start_line": 1,
+            "end_line": 145,
+            "quote": "# CASE-CYLINDER-DRAG-FVM: DFG 2D-1 圆柱阻力算例（TensorFVM）—— honest-FAIL（计算未取回）\n\n> 状态：**honest-FAIL / fail_stage = compute_wait（集群排队未取回结果）**\n> 本文件在计算作业仍在集群排队时写成，不含任何未经计算的“got”数字。已交付的是可复现的\n> 算例 harness、机器解析的",
+            "unique": true
+          },
+          "payload": {
+            "status": "in_report_record",
+            "checked_how": "GET /tensor/reports/14478 → field markdown; sha256 + char count recomputed and compared with the work-package contract",
+            "evidence": {
+              "sha256": "8fbd643e2e79a0fece5f9ae2fbe87a0045f268d61da54927711e260c14b206b0",
+              "chars": 6156,
+              "bytes_utf8": 9430
+            }
+          },
+          "note": "Whole-document locator: span covers the entire pinned markdown; the envelope provenance.source_hash is this asset's hash."
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "reference_authority_page",
+          "label": "Turek 组 FeatFlow DFG 2D-1 官网页（Re=20 参考值来源）",
+          "in_report_section": "① 参考值出处",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 805,
+            "end_char": 915,
+            "start_line": 24,
+            "end_line": 24,
+            "quote": "https://wwwold.mathematik.tu-dortmund.de/~featflow/en/benchmarks/cfdbenchmarking/flow/dfg_benchmark1_re20.html",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_url_declared",
+            "checked_how": "URL quoted verbatim from the markdown; not fetched by this package (external network, and the source itself reports fetch restrictions in ‘生态摩擦’ item 4)",
+            "declared": {
+              "used_for": "C_D=5.57953523384 / C_L=0.010618948146 / p_diff=0.11752016697 Pa (§③ 参考值表)"
+            }
+          },
+          "note": "Payload bytes are NOT registered here: the archived copy is A03."
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "reference_page_archive",
+          "label": "归档页 featflow_re20.html（Re=20 官网页原文）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 4967,
+            "end_char": 4985,
+            "start_line": 125,
+            "end_line": 125,
+            "quote": "featflow_re20.html",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "path quoted verbatim; the file lives in the TensorFVM repo worktree (artifacts/case-cylinder-drag-fvm/reference/), which is outside this report record and this TensorKnowledge worktree — no bytes fetched or hashed by this package"
+          },
+          "note": "Registered as a path+role only; its sha256 is said to be recorded in fetch_manifest.json (A05), not re-derived here."
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "reference_page_archive",
+          "label": "归档页 featflow_re100.html（Re=100 同族页，本算例未用其数值）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 4990,
+            "end_char": 5009,
+            "start_line": 125,
+            "end_line": 125,
+            "quote": "featflow_re100.html",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "same boundary as A03 — path quoted verbatim, bytes not fetched"
+          },
+          "note": "The report does not state that any Re=100 value enters the verdict; it is listed only among archived pages."
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "provenance_manifest",
+          "label": "fetch_manifest.json（URL + sha256 归档清单）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 5020,
+            "end_char": 5055,
+            "start_line": 126,
+            "end_line": 126,
+            "quote": "`fetch_manifest.json`（URL + sha256）",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "path and declared content (‘URL + sha256’) quoted verbatim; file not read by this package"
+          },
+          "note": "The per-URL sha256 values are NOT reproduced here — reading them would require the TensorFVM worktree."
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "reference_data",
+          "label": "reference.json（正则解析结果 + 匹配位置）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 5056,
+            "end_char": 5085,
+            "start_line": 126,
+            "end_line": 126,
+            "quote": "`reference.json`（解析结果 + 匹配位置）",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "path quoted verbatim; file not read by this package"
+          },
+          "note": "The three reference numbers are registered as quoted report text (source_document quotes in the delivery report), not from this JSON."
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "reference_parser",
+          "label": "fetch_reference.py（抓取→正则→reference.json，含 drift 比对）",
+          "in_report_section": "① 参考值出处",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 1418,
+            "end_char": 1504,
+            "start_line": 31,
+            "end_line": 31,
+            "quote": "`artifacts/case-cylinder-drag-fvm/reference/fetch_reference.py`（抓取→正则→`reference.json`",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "path quoted verbatim; script not executed by this package"
+          },
+          "note": "零手抄 mechanism claimed by the source; this package does not re-run it (out of boundary)."
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "case_harness",
+          "label": "scripts/case_cylinder_drag_fvm.py（solve / analyze / report 三入口）",
+          "in_report_section": "② 方法与实现",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 1761,
+            "end_char": 1818,
+            "start_line": 40,
+            "end_line": 40,
+            "quote": "本单新增算例级 harness `scripts/case_cylinder_drag_fvm.py`（三个入口）",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "path quoted verbatim; harness not executed by this package (its runs/ output is absent, A11)"
+          },
+          "note": "Only the declared接口面 (3 entry points) is registered; no behaviour is asserted."
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "contract_test",
+          "label": "tests/test_case_cylinder_drag_fvm.py（合成数据契约测试）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 5218,
+            "end_char": 5265,
+            "start_line": 129,
+            "end_line": 129,
+            "quote": "`tests/test_case_cylinder_drag_fvm.py`：合成数据契约测试",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "path quoted verbatim; the file is not in this worktree and was not run",
+            "declared": {
+              "claimed_result": "pytest tests/test_case_cylinder_drag_fvm.py → 1 passed"
+            }
+          },
+          "note": "The claim ‘1 passed’ is the source's own statement (declared_in_source_only), NOT re-executed here."
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "report_tool",
+          "label": "artifacts/case-cylinder-drag-fvm/tools/post_report.py（报告投递工具）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 5363,
+            "end_char": 5425,
+            "start_line": 131,
+            "end_line": 131,
+            "quote": "`artifacts/case-cylinder-drag-fvm/tools/post_report.py`：报告投递工具",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "path quoted verbatim; file not read by this package"
+          },
+          "note": "No payload bytes registered."
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "solver_run_output",
+          "label": "artifacts/case-cylinder-drag-fvm/runs/（集群三档网格结果）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 5435,
+            "end_char": 5481,
+            "start_line": 132,
+            "end_line": 132,
+            "quote": "`artifacts/case-cylinder-drag-fvm/runs/`（集群结果）",
+            "unique": true
+          },
+          "payload": {
+            "status": "declared_payload_missing",
+            "checked_how": "the markdown itself states this path is missing (‘缺’, ‘本单未产出’); nothing to fetch, and inventing content is forbidden",
+            "declared": {
+              "missing_because": "§④ FAIL：三作业排队 9.6 min 未派发，本单预算内未取回任何 result.json"
+            }
+          },
+          "note": "Unresolved by design: the deliverable is the missing-payload record, not the numbers."
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "analysis_output",
+          "label": "artifacts/case-cylinder-drag-fvm/analysis/（判据/收敛/分项/图件）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 5483,
+            "end_char": 5498,
+            "start_line": 132,
+            "end_line": 132,
+            "quote": "`analysis/`（图件）",
+            "unique": true
+          },
+          "payload": {
+            "status": "declared_payload_missing",
+            "checked_how": "same line as A11 declares runs/ and analysis/ both absent; not synthesised here",
+            "declared": {
+              "missing_because": "analysis requires runs/, which was never retrieved"
+            }
+          },
+          "note": "Unresolved by design."
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "native_solver_outputs",
+          "label": "包内原生求解产物：result.json / fields.npz / history.json",
+          "in_report_section": "② 方法与实现",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 1856,
+            "end_char": 1903,
+            "start_line": 42,
+            "end_line": 42,
+            "quote": "（`result.json` / `fields.npz` / `history.json`）",
+            "unique": true
+          },
+          "payload": {
+            "status": "declared_payload_missing",
+            "checked_how": "output filenames quoted verbatim as the declared native format; no instance exists (runs/ absent, A11)"
+          },
+          "note": "Format declaration only — zero instances registered."
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "repo_doc",
+          "label": "docs/benchmarks-index.md（仓内基准索引，含 64×24 历史误差 13.36%）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 4595,
+            "end_char": 4634,
+            "start_line": 115,
+            "end_line": 115,
+            "quote": "`docs/benchmarks-index.md` 记录 64×24 曾出现",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "path quoted verbatim; the TensorFVM repo doc is not present in this worktree and was not read",
+            "declared": {
+              "quoted_number": "C_D 误差 ≈13.36%（源文自述的历史记录，本包未复核）"
+            }
+          },
+          "note": "The 13.36% figure is registered as the source's own statement, not verified."
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "report_document",
+          "label": "docs/case-cylinder-drag-fvm/report.md（report 入口的生成目标）",
+          "in_report_section": "② 方法与实现",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 2604,
+            "end_char": 2647,
+            "start_line": 59,
+            "end_line": 59,
+            "quote": "--out docs/case-cylinder-drag-fvm/report.md",
+            "unique": true
+          },
+          "payload": {
+            "status": "declared_in_source_only",
+            "checked_how": "path appears only inside the repro command block of the markdown; no bytes of it are in the record, so its existence is unconfirmed here"
+          },
+          "note": "Self-referential generator target of the registered report itself; not resolved by this package."
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "solver_code",
+          "label": "tensorfvm.verification.dfg 包（贴体网格 + SIMPLE/Rhie–Chow + 壁面牵引/压力重构）",
+          "in_report_section": "② 方法与实现",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 1614,
+            "end_char": 1668,
+            "start_line": 36,
+            "end_line": 36,
+            "quote": "`tensorfvm.verification.dfg` 提供贴体网格 + SIMPLE/Rhie–Chow",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "module path quoted verbatim; TensorFVM package not installed/checked out in this worktree — capability claims (REAL vs MOCK) are NOT assessed by this package"
+          },
+          "note": "Evidence-level grading of the solver is out of scope for task_type=01."
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "reference_constant",
+          "label": "包内常量 tensorfvm.verification.dfg.REFERENCE（与 reference.json 漂移比对，drift=无）",
+          "in_report_section": "① 参考值出处",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 1515,
+            "end_char": 1553,
+            "start_line": 32,
+            "end_line": 32,
+            "quote": "`tensorfvm.verification.dfg.REFERENCE`",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "symbol quoted verbatim; not readable in this worktree",
+            "declared": {
+              "drift": "无（源文自述）"
+            }
+          },
+          "note": "‘drift = 无’ is the source's assertion; this package neither recomputes nor upgrades it."
+        },
+        {
+          "asset_id": "A18",
+          "asset_class": "cluster_job",
+          "label": "集群作业三连（/tmp/m15406_dfg_*，各档独立作业）",
+          "in_report_section": "② 方法与实现",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 2695,
+            "end_char": 2777,
+            "start_line": 65,
+            "end_line": 65,
+            "quote": "PYTHONPATH=src python -m tensorfvm.verification.dfg --output /tmp/m15406_dfg_64x24",
+            "unique": true
+          },
+          "payload": {
+            "status": "declared_payload_missing",
+            "checked_how": "command quoted verbatim; the three /tmp outputs were never retrieved (§④) and /tmp is not part of any repo — nothing registered",
+            "declared": {
+              "jobs": [
+                "m15406_dfg_64x24",
+                "m15406_dfg_128x48",
+                "m15406_dfg_256x96"
+              ],
+              "state_at_write": "queued"
+            }
+          },
+          "note": "Only the 64x24 command line is the locator anchor; the other two are named in declared.jobs because each /tmp token is quoted in the source."
+        },
+        {
+          "asset_id": "A19",
+          "asset_class": "figure_set",
+          "label": "analyze 生成的 7 张图（运行点/场量/收敛等）",
+          "in_report_section": "⑥ 失败模式与工件",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 5203,
+            "end_char": 5213,
+            "start_line": 128,
+            "end_line": 128,
+            "quote": "阻力分项与 7 张图",
+            "unique": true
+          },
+          "payload": {
+            "status": "declared_payload_missing",
+            "checked_how": "the count ‘7 张图’ is quoted verbatim; analysis/ is absent (A12) and the markdown names no figure filenames",
+            "declared": {
+              "figure_count": 7
+            }
+          },
+          "note": "Individual figure names are NOT registered: the source does not name them, and inventing names is forbidden."
+        },
+        {
+          "asset_id": "A20",
+          "asset_class": "solver_config",
+          "label": "包内配置项 SolverConfig.tolerance（收敛判据 1e-6）",
+          "in_report_section": "③ 参数表",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 3606,
+            "end_char": 3630,
+            "start_line": 85,
+            "end_line": 85,
+            "quote": "`SolverConfig.tolerance`",
+            "unique": true
+          },
+          "payload": {
+            "status": "external_repo_path_declared",
+            "checked_how": "symbol quoted verbatim; source tree not present in this worktree"
+          },
+          "note": "Parameter table value (1e-6) is content of the source, not re-measured."
+        }
+      ],
+      "claims": [],
+      "claims_note": "claims intentionally empty: contract objective is asset registration only (classify_report_type=false, no extraction). Filling claims here would fabricate knowledge objects that belong to task_type 03.",
+      "integrity": {
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "chars_match_contract": true,
+        "all_locators_unique_quotes": true,
+        "verified_by": "scripts/kf_verify_14478.py (re-fetches the report independently)",
+        "no_file_outside_worktree_written": true,
+        "other_report_ids_touched": 0
+      },
+      "boundaries": {
+        "only_report_id": "14478",
+        "other_reports_read": false,
+        "upstream_artifacts_rewritten": false,
+        "claims_marked_verified": 0
+      }
+    }
+  },
+  "claims": []
+}
