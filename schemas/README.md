@@ -13,6 +13,11 @@ This directory defines portable data contracts used by TensorKnowledge. The sche
 
 The general Knowledge Object may reference these records through claim_refs, evidence_refs, provenance_refs and review_event_refs. This keeps the canonical asset portable while allowing claims, evidence and reviews to evolve independently.
 
+### Knowledge Factory production
+- kf_result.v1.schema.json: result envelope every work-package task (01-05) submits; the JSON block inside a `KF-RESULT <package_id>` report.
+- asset_manifest_kf.v1.schema.json: package-agnostic asset manifest for task_type=01 (asset-registration) - source identity, per-asset locator, resolution status. Supersedes the wp-448-01 specific asset_manifest.v1.schema.json, which is kept untouched for that package.
+- work-package-contract.schema.json: the work-package YAML a machine gate validates.
+
 ### General knowledge infrastructure
 - knowledge-object.schema.json: the domain-neutral, canonical Knowledge Object. It can represent concepts, claims, observations, theories, models, methods, procedures, skills, experiments, results, cases and other reusable knowledge assets.
 - production-task.schema.json: the bounded work package submitted to an execution provider such as TensorPlatform.
