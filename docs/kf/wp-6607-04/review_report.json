@@ -1,0 +1,452 @@
+{
+  "package_id": "wp-6607-04",
+  "task_type": "04-independent-review",
+  "report_id": "6607",
+  "target_package": "wp-6607-01",
+  "reviewer_role": "red-team-reviewer",
+  "reviewer_independent": true,
+  "independence": {
+    "reviewer_context_included": [
+      "report 6607 markdown (verbatim, freshly fetched)",
+      "upstream envelope of wp-6607-01 as published (report 14665, single json block)",
+      "repo schemas (kf_result.v1, asset_manifest.v1)"
+    ],
+    "reviewer_context_excluded": [
+      "producer prose sections 1/2/5/6 of the upstream report (only the json block is treated as the KO)",
+      "producer scripts, tests and worktree of agent/m15592",
+      "any producer explanation of the registration logic"
+    ],
+    "not_reviewed": [
+      "existence or content of the 9 registered files in the DEM worktree (they live outside this repository)",
+      "the three figures' pixels (no figure bytes reachable from the envelope)",
+      "physical validity of the report's phi_J numbers (upstream task is registration, not verification)"
+    ]
+  },
+  "verdict": "needs-fix",
+  "verdict_scope": "registration fidelity of the upstream package against the report bytes; NOT a physics verification",
+  "blocking": false,
+  "summary": "34 recomputed checks, 33 pass / 1 fail; 2 finding(s), 0 blocking. All 9 registered locators reproduce exactly from the source bytes (quote == md[start:end], declared line, unique occurrence); 1 cited path(s) missing from the manifest.",
+  "findings": [
+    {
+      "finding_id": "F1-unregistered-code-module-reference",
+      "severity": "major",
+      "blocking": false,
+      "scope": "wp-6607-01 asset_manifest.assets",
+      "evidence": {
+        "unregistered_paths": [
+          "src/tensordem/granular2d/minimizer.py"
+        ],
+        "quote": "src/tensordem/granular2d/minimizer.py",
+        "source_field": "markdown",
+        "quote_source": "report_markdown",
+        "note": "cited in §2 as the implementation module of the static potential and both minimizers, i.e. a first-class provenance target"
+      },
+      "impact": "downstream extraction/linking has no locator for the core solver module; the manifest's 'parsed 9 locatable assets' reads as exhaustive",
+      "remediation": "register the module reference (class=script, resolution=resolved_in_source) or state the inclusion rule explicitly (e.g. 'benchmark/doc/figure/test/artifact entries only')"
+    },
+    {
+      "finding_id": "F2-counting-rule-not-declared",
+      "severity": "minor",
+      "blocking": false,
+      "scope": "asset_manifest.counts",
+      "evidence": {
+        "upstream_quote": "解析出 9 个可定位附件/工件",
+        "quote_source": "upstream_package",
+        "note": "envelope prose asserts exhaustiveness without an inclusion rule; the census finds 10 distinct cited paths"
+      },
+      "impact": "the same source admits several legal counts, so the machine gate cannot recompute the number without guessing the rule",
+      "remediation": "declare inclusion_rule in counts (classes + path patterns)"
+    }
+  ],
+  "checks": [
+    {
+      "check_id": "source_hash_matches_contract",
+      "upstream_assertion": "sha256:b228e4f68599218d82dcedc7ca4166e0cc5250f9fbe34f611e86bc651a6231c1",
+      "assertion_origin": "upstream_package",
+      "recomputed": "sha256:b228e4f68599218d82dcedc7ca4166e0cc5250f9fbe34f611e86bc651a6231c1",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "source_hash_matches_upstream",
+      "upstream_assertion": "sha256:b228e4f68599218d82dcedc7ca4166e0cc5250f9fbe34f611e86bc651a6231c1",
+      "assertion_origin": "upstream_package",
+      "recomputed": "sha256:b228e4f68599218d82dcedc7ca4166e0cc5250f9fbe34f611e86bc651a6231c1",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "source_bytes",
+      "upstream_assertion": 11166,
+      "assertion_origin": "upstream_package",
+      "recomputed": 11166,
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "source_chars",
+      "upstream_assertion": 7642,
+      "assertion_origin": "upstream_package",
+      "recomputed": 7642,
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "source_lines_recomputed",
+      "upstream_assertion": "not registered by manifest",
+      "assertion_origin": "upstream_package",
+      "recomputed": 137,
+      "verdict": "pass",
+      "notes": "informational: the manifest registers chars/bytes only; lines recomputed here to drive the locator line check"
+    },
+    {
+      "check_id": "source_crlf_absent",
+      "upstream_assertion": "utf-8/lf",
+      "assertion_origin": "upstream_package",
+      "recomputed": false,
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "record_id",
+      "upstream_assertion": "6607",
+      "assertion_origin": "upstream_package",
+      "recomputed": "6607",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "record_title",
+      "upstream_assertion": "jamming 体积分数重锁：FIRE/CG 能量极小 + 双周期 + 有限尺寸标度（IN32-N02）",
+      "assertion_origin": "upstream_package",
+      "recomputed": "jamming 体积分数重锁：FIRE/CG 能量极小 + 双周期 + 有限尺寸标度（IN32-N02）",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "record_scenario_key",
+      "upstream_assertion": "dem-granular-jamming",
+      "assertion_origin": "upstream_package",
+      "recomputed": "dem-granular-jamming",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "record_status_published",
+      "upstream_assertion": "published",
+      "assertion_origin": "upstream_package",
+      "recomputed": "published",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "upstream_package_discoverable",
+      "upstream_assertion": "report tagged kf-wp:wp-6607-01",
+      "assertion_origin": "upstream_package",
+      "recomputed": "report_id=14665 title='KF-RESULT wp-6607-01'",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "upstream_single_json_block",
+      "upstream_assertion": 1,
+      "assertion_origin": "upstream_package",
+      "recomputed": 1,
+      "verdict": "pass",
+      "notes": "result channel must contain exactly one json block"
+    },
+    {
+      "check_id": "kf_result_schema_pass",
+      "upstream_assertion": "valid per kf_result.v1",
+      "assertion_origin": "upstream_package",
+      "recomputed": true,
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "asset_manifest_schema_pass",
+      "upstream_assertion": "valid per asset_manifest.v1",
+      "assertion_origin": "upstream_package",
+      "recomputed": true,
+      "verdict": "pass",
+      "notes": " | repo schema pins package_id/report_id/uri to report 448; consts relaxed in runs/wp-6607-04/asset_manifest_schema_relaxed.json"
+    },
+    {
+      "check_id": "envelope_package_id",
+      "upstream_assertion": "wp-6607-01",
+      "assertion_origin": "upstream_package",
+      "recomputed": "wp-6607-01",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "envelope_task_type",
+      "upstream_assertion": "01-asset-registration",
+      "assertion_origin": "upstream_package",
+      "recomputed": "01-asset-registration",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "single_report_scope",
+      "upstream_assertion": [
+        "6607"
+      ],
+      "assertion_origin": "upstream_package",
+      "recomputed": [
+        "6607"
+      ],
+      "verdict": "pass",
+      "notes": "no foreign report_id inside the envelope"
+    },
+    {
+      "check_id": "provenance_source_field",
+      "upstream_assertion": "markdown",
+      "assertion_origin": "upstream_package",
+      "recomputed": "markdown",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "claims_empty",
+      "upstream_assertion": [],
+      "assertion_origin": "upstream_package",
+      "recomputed": [],
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "no_verified_marks",
+      "upstream_assertion": "no verified status",
+      "assertion_origin": "upstream_package",
+      "recomputed": [],
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "quotes_verbatim",
+      "upstream_assertion": "9 quotes",
+      "assertion_origin": "upstream_package",
+      "recomputed": "all substring",
+      "verdict": "pass",
+      "notes": "failing assets: []"
+    },
+    {
+      "check_id": "spans_copy_exact",
+      "upstream_assertion": "9 char_spans",
+      "assertion_origin": "upstream_package",
+      "recomputed": "md[s:e]==quote for all",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "lines_match_offsets",
+      "upstream_assertion": "9 declared start_line",
+      "assertion_origin": "upstream_package",
+      "recomputed": "recomputed lines",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "quotes_unique_in_source",
+      "upstream_assertion": "unique=True",
+      "assertion_origin": "upstream_package",
+      "recomputed": "9 quotes count==1",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "declared_section_contains_offset",
+      "upstream_assertion": "9 in_report_section labels",
+      "assertion_origin": "upstream_package",
+      "recomputed": [],
+      "verdict": "pass",
+      "notes": "mismatches: []"
+    },
+    {
+      "check_id": "assets_total",
+      "upstream_assertion": 9,
+      "assertion_origin": "upstream_package",
+      "recomputed": 9,
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "by_class_histogram",
+      "upstream_assertion": {
+        "artifact": 1,
+        "doc": 1,
+        "figure": 3,
+        "script": 3,
+        "test": 1
+      },
+      "assertion_origin": "upstream_package",
+      "recomputed": {
+        "artifact": 1,
+        "doc": 1,
+        "figure": 3,
+        "script": 3,
+        "test": 1
+      },
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "by_resolution_counts",
+      "upstream_assertion": {
+        "resolved_in_source": 9,
+        "referenced_unresolved": 0,
+        "declared_absent": 0
+      },
+      "assertion_origin": "upstream_package",
+      "recomputed": {
+        "resolved_in_source": 9,
+        "referenced_unresolved": 0,
+        "declared_absent": 0
+      },
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "asset_ids_unique",
+      "upstream_assertion": "A01-A09",
+      "assertion_origin": "upstream_package",
+      "recomputed": 9,
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "integrity_flags",
+      "upstream_assertion": {
+        "quote_uniqueness": true,
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true
+      },
+      "assertion_origin": "upstream_package",
+      "recomputed": {
+        "quote_uniqueness": true,
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true
+      },
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "note_numbers_trace_to_source",
+      "upstream_assertion": "Pytest test suite (29 cases, 5 negative controls)",
+      "assertion_origin": "upstream_package",
+      "recomputed": "29 test functions / 5 negative controls",
+      "verdict": "pass",
+      "notes": ""
+    },
+    {
+      "check_id": "body_path_reference_census",
+      "upstream_assertion": "9 assets registered",
+      "assertion_origin": "upstream_package",
+      "recomputed": {
+        "distinct_cited_paths": 10,
+        "registered": 9,
+        "unregistered": [
+          "src/tensordem/granular2d/minimizer.py"
+        ]
+      },
+      "verdict": "fail",
+      "notes": "every backticked file path in the report must be registered or explicitly excluded"
+    },
+    {
+      "check_id": "nc_byte_offsets_would_fail",
+      "upstream_assertion": "char_span is char-indexed",
+      "assertion_origin": "upstream_package",
+      "recomputed": {
+        "assets_where_byte_slice_differs": 9
+      },
+      "verdict": "pass",
+      "notes": "negative control: interpreting the declared offsets as UTF-8 byte offsets breaks 9/9 spans, so passing the span check is informative"
+    },
+    {
+      "check_id": "nc_corrupted_quote_rejected",
+      "upstream_assertion": "verbatim test discriminates",
+      "assertion_origin": "upstream_package",
+      "recomputed": {
+        "corrupted_quote_in_source": false
+      },
+      "verdict": "pass",
+      "notes": "negative control: a 3-char mutation of the last quote is not found in the source"
+    }
+  ],
+  "evidence_index": {
+    "ledger": "runs/wp-6607-04/review_findings.json",
+    "source_snapshot": "work/wp-6607-04/source/report_6607.md",
+    "upstream_snapshot": "work/wp-6607-04/upstream/report_14665.md"
+  },
+  "claims_reviewed": [
+    {
+      "claim_id": "upstream-asset-coverage-9-complete",
+      "text": "9 locatable assets were parsed out of the report",
+      "status": "partially-supported",
+      "evidence": [
+        {
+          "upstream_quote": "解析出 9 个可定位附件/工件",
+          "source_field": "markdown",
+          "quote_origin": "upstream_package_markdown"
+        }
+      ],
+      "unresolved_reason": "9 registered entries reproduce, but the census finds 10 distinct cited paths; the manifest neither registers nor excludes src/tensordem/granular2d/minimizer.py"
+    },
+    {
+      "claim_id": "upstream-locators-resolve-to-source",
+      "text": "every locator quote is a verbatim substring at the declared span",
+      "status": "supported",
+      "evidence": [
+        {
+          "quote": "artifacts/jamming_protocol/jamming_protocol.json",
+          "source_field": "markdown",
+          "quote_origin": "report_markdown"
+        },
+        {
+          "quote": "docs/granular2d_jamming_energy_minimization.md",
+          "source_field": "markdown",
+          "quote_origin": "report_markdown"
+        },
+        {
+          "quote": "pressure_vs_phi.png",
+          "source_field": "markdown",
+          "quote_origin": "report_markdown"
+        },
+        {
+          "quote": "phi_j_vs_N.png",
+          "source_field": "markdown",
+          "quote_origin": "report_markdown"
+        },
+        {
+          "quote": "residual_history.png",
+          "source_field": "markdown",
+          "quote_origin": "report_markdown"
+        },
+        {
+          "quote": "benchmarks/jamming_protocol_ablation.py",
+          "source_field": "markdown",
+          "quote_origin": "report_markdown"
+        },
+        {
+          "quote": "benchmarks/jamming_double_periodic_verification.py",
+          "source_field": "markdown",
+          "quote_origin": "report_markdown"
+        },
+        {
+          "quote": "benchmarks/jamming_protocol_report.py",
+          "source_field": "markdown",
+          "quote_origin": "report_markdown"
+        },
+        {
+          "quote": "tests/test_granular2d_energy_minimization.py",
+          "source_field": "markdown",
+          "quote_origin": "report_markdown"
+        }
+      ]
+    }
+  ],
+  "quote_policy": "every field named 'quote' is a verbatim substring of the report markdown; strings taken from the upstream envelope are stored under 'upstream_quote'/'upstream_assertion' with quote_origin/assertion_origin",
+  "do_not_mark_claims_as_verified": true,
+  "generated_from": "scripts/kf/wp_6607_04_review.py"
+}
