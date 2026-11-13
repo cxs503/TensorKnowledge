@@ -1,0 +1,317 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-12068-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12068",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-12T02:57:36.352190+00:00",
+  "source": {
+    "uri": "tensor://reports/12068",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0",
+    "chars": 1086,
+    "bytes_utf8": 1113,
+    "title": "DG Compressible Euler: Hierarchical Verification Chain",
+    "scenario_key": "p315w1-n07-dg-compressible-euler",
+    "platform_figures": [
+      "sod_shock_tube",
+      "lax_shock_tube",
+      "isentropic_vortex",
+      "double_mach_reflection",
+      "supersonic_cylinder"
+    ],
+    "platform_tags": [
+      "DG",
+      "Euler",
+      "shock-capturing",
+      "verification"
+    ],
+    "platform_status": "published",
+    "platform_created_at": "2026-11-10T17:27:51.781402+00:00"
+  },
+  "counts": {
+    "assets": 9,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 5,
+      "report_table": 3
+    },
+    "by_resolution": {
+      "resolved_in_source": 4,
+      "referenced_unresolved": 5
+    },
+    "resolved_in_source": 4,
+    "referenced_unresolved": 5,
+    "declared_absent": 0,
+    "distinct_referenced_paths": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "source markdown of report 12068",
+      "in_report_section": "(whole document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 1086,
+        "start_line": 1,
+        "end_line": 41,
+        "quote": "# DG Compressible Euler: Hierarchical Verification Chain\n\n## 1. Introduction\nHigh-order DG solver for compressible Euler (γ=1.4) with HLLC flux, SSP-RK3, TVB/WENO limiters.\n\n## 2. Methodology\n- Modal DG with Legendre basis, tensor-product for 2D\n- HLLC numerical flux, SSP-RK3 time integration\n- TVB/WENO shock capturing, positivity filter\n\n## 3. Results\n\n### 3.1 Sod Shock Tube (a)\n| Field | L2 Error | <2%? |\n|-------|----------|------|\n| Density | 0.504% | ✅ |\n| Pressure | 0.627% | ✅ |\n\n### 3.2 Lax Shock Tube (b)\n| Field | L2 Error | <3%? |\n|-------|----------|------|\n| Density | 4.927% | ❌ |\n| Velocity | 2.364% | ❌ |\n| Pressure | 1.349% | ❌ |\n\n### 3.3 Vortex Convergence (c)\n| Degree | Order | Required | Pass |\n|--------|-------|----------|------|\n| P1 | 2.0 | ≥1.8 | ✅ |\n| P2 | 3.0 | ≥2.8 | ✅ |\n| P3 | 4.0 | ≥3.8 | ✅ |\n\n### 3.4 Double Mach (d)\nShock angle: 58.5° (ref: 60°), error: 1.5°\n\n### 3.5 Cylinder (e)\nStandoff: δ/R=0.220 (ref: 0.223), error: 1.3%\n\n## 4. Limitations\n- Cartesian mesh only; immersed boundary for cylinder\n- TVB limiter reduces order near smooth extrema\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "GET /tensor/reports/12068 markdown field + sha256 over utf-8 bytes",
+        "result": "resolved",
+        "detail": "chars=1086 bytes_utf8=1113 sha256=de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0"
+      },
+      "source_uri": "tensor://reports/12068",
+      "note": "the source asset itself; its byte hash is the provenance anchor of this work package.",
+      "kind": "report_markdown"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "sod_shock_tube",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 1086,
+        "start_line": 1,
+        "end_line": 41,
+        "quote": "# DG Compressible Euler: Hierarchical Verification Chain\n\n## 1. Introduction\nHigh-order DG solver for compressible Euler (γ=1.4) with HLLC flux, SSP-RK3, TVB/WENO limiters.\n\n## 2. Methodology\n- Modal DG with Legendre basis, tensor-product for 2D\n- HLLC numerical flux, SSP-RK3 time integration\n- TVB/WENO shock capturing, positivity filter\n\n## 3. Results\n\n### 3.1 Sod Shock Tube (a)\n| Field | L2 Error | <2%? |\n|-------|----------|------|\n| Density | 0.504% | ✅ |\n| Pressure | 0.627% | ✅ |\n\n### 3.2 Lax Shock Tube (b)\n| Field | L2 Error | <3%? |\n|-------|----------|------|\n| Density | 4.927% | ❌ |\n| Velocity | 2.364% | ❌ |\n| Pressure | 1.349% | ❌ |\n\n### 3.3 Vortex Convergence (c)\n| Degree | Order | Required | Pass |\n|--------|-------|----------|------|\n| P1 | 2.0 | ≥1.8 | ✅ |\n| P2 | 3.0 | ≥2.8 | ✅ |\n| P3 | 4.0 | ≥3.8 | ✅ |\n\n### 3.4 Double Mach (d)\nShock angle: 58.5° (ref: 60°), error: 1.5°\n\n### 3.5 Cylinder (e)\nStandoff: δ/R=0.220 (ref: 0.223), error: 1.3%\n\n## 4. Limitations\n- Cartesian mesh only; immersed boundary for cylinder\n- TVB limiter reduces order near smooth extrema\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12068#figures[0]",
+      "caption": "Sod shock tube: DG P2 vs exact",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure",
+      "label": "lax_shock_tube",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 1086,
+        "start_line": 1,
+        "end_line": 41,
+        "quote": "# DG Compressible Euler: Hierarchical Verification Chain\n\n## 1. Introduction\nHigh-order DG solver for compressible Euler (γ=1.4) with HLLC flux, SSP-RK3, TVB/WENO limiters.\n\n## 2. Methodology\n- Modal DG with Legendre basis, tensor-product for 2D\n- HLLC numerical flux, SSP-RK3 time integration\n- TVB/WENO shock capturing, positivity filter\n\n## 3. Results\n\n### 3.1 Sod Shock Tube (a)\n| Field | L2 Error | <2%? |\n|-------|----------|------|\n| Density | 0.504% | ✅ |\n| Pressure | 0.627% | ✅ |\n\n### 3.2 Lax Shock Tube (b)\n| Field | L2 Error | <3%? |\n|-------|----------|------|\n| Density | 4.927% | ❌ |\n| Velocity | 2.364% | ❌ |\n| Pressure | 1.349% | ❌ |\n\n### 3.3 Vortex Convergence (c)\n| Degree | Order | Required | Pass |\n|--------|-------|----------|------|\n| P1 | 2.0 | ≥1.8 | ✅ |\n| P2 | 3.0 | ≥2.8 | ✅ |\n| P3 | 4.0 | ≥3.8 | ✅ |\n\n### 3.4 Double Mach (d)\nShock angle: 58.5° (ref: 60°), error: 1.5°\n\n### 3.5 Cylinder (e)\nStandoff: δ/R=0.220 (ref: 0.223), error: 1.3%\n\n## 4. Limitations\n- Cartesian mesh only; immersed boundary for cylinder\n- TVB limiter reduces order near smooth extrema\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12068#figures[1]",
+      "caption": "Lax shock tube: DG P2 vs exact",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "embedded_figure",
+      "label": "isentropic_vortex",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 1086,
+        "start_line": 1,
+        "end_line": 41,
+        "quote": "# DG Compressible Euler: Hierarchical Verification Chain\n\n## 1. Introduction\nHigh-order DG solver for compressible Euler (γ=1.4) with HLLC flux, SSP-RK3, TVB/WENO limiters.\n\n## 2. Methodology\n- Modal DG with Legendre basis, tensor-product for 2D\n- HLLC numerical flux, SSP-RK3 time integration\n- TVB/WENO shock capturing, positivity filter\n\n## 3. Results\n\n### 3.1 Sod Shock Tube (a)\n| Field | L2 Error | <2%? |\n|-------|----------|------|\n| Density | 0.504% | ✅ |\n| Pressure | 0.627% | ✅ |\n\n### 3.2 Lax Shock Tube (b)\n| Field | L2 Error | <3%? |\n|-------|----------|------|\n| Density | 4.927% | ❌ |\n| Velocity | 2.364% | ❌ |\n| Pressure | 1.349% | ❌ |\n\n### 3.3 Vortex Convergence (c)\n| Degree | Order | Required | Pass |\n|--------|-------|----------|------|\n| P1 | 2.0 | ≥1.8 | ✅ |\n| P2 | 3.0 | ≥2.8 | ✅ |\n| P3 | 4.0 | ≥3.8 | ✅ |\n\n### 3.4 Double Mach (d)\nShock angle: 58.5° (ref: 60°), error: 1.5°\n\n### 3.5 Cylinder (e)\nStandoff: δ/R=0.220 (ref: 0.223), error: 1.3%\n\n## 4. Limitations\n- Cartesian mesh only; immersed boundary for cylinder\n- TVB limiter reduces order near smooth extrema\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12068#figures[2]",
+      "caption": "Isentropic vortex density",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "embedded_figure",
+      "label": "double_mach_reflection",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 1086,
+        "start_line": 1,
+        "end_line": 41,
+        "quote": "# DG Compressible Euler: Hierarchical Verification Chain\n\n## 1. Introduction\nHigh-order DG solver for compressible Euler (γ=1.4) with HLLC flux, SSP-RK3, TVB/WENO limiters.\n\n## 2. Methodology\n- Modal DG with Legendre basis, tensor-product for 2D\n- HLLC numerical flux, SSP-RK3 time integration\n- TVB/WENO shock capturing, positivity filter\n\n## 3. Results\n\n### 3.1 Sod Shock Tube (a)\n| Field | L2 Error | <2%? |\n|-------|----------|------|\n| Density | 0.504% | ✅ |\n| Pressure | 0.627% | ✅ |\n\n### 3.2 Lax Shock Tube (b)\n| Field | L2 Error | <3%? |\n|-------|----------|------|\n| Density | 4.927% | ❌ |\n| Velocity | 2.364% | ❌ |\n| Pressure | 1.349% | ❌ |\n\n### 3.3 Vortex Convergence (c)\n| Degree | Order | Required | Pass |\n|--------|-------|----------|------|\n| P1 | 2.0 | ≥1.8 | ✅ |\n| P2 | 3.0 | ≥2.8 | ✅ |\n| P3 | 4.0 | ≥3.8 | ✅ |\n\n### 3.4 Double Mach (d)\nShock angle: 58.5° (ref: 60°), error: 1.5°\n\n### 3.5 Cylinder (e)\nStandoff: δ/R=0.220 (ref: 0.223), error: 1.3%\n\n## 4. Limitations\n- Cartesian mesh only; immersed boundary for cylinder\n- TVB limiter reduces order near smooth extrema\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[3] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12068#figures[3]",
+      "caption": "Double Mach reflection schematic",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[3] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "embedded_figure",
+      "label": "supersonic_cylinder",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 1086,
+        "start_line": 1,
+        "end_line": 41,
+        "quote": "# DG Compressible Euler: Hierarchical Verification Chain\n\n## 1. Introduction\nHigh-order DG solver for compressible Euler (γ=1.4) with HLLC flux, SSP-RK3, TVB/WENO limiters.\n\n## 2. Methodology\n- Modal DG with Legendre basis, tensor-product for 2D\n- HLLC numerical flux, SSP-RK3 time integration\n- TVB/WENO shock capturing, positivity filter\n\n## 3. Results\n\n### 3.1 Sod Shock Tube (a)\n| Field | L2 Error | <2%? |\n|-------|----------|------|\n| Density | 0.504% | ✅ |\n| Pressure | 0.627% | ✅ |\n\n### 3.2 Lax Shock Tube (b)\n| Field | L2 Error | <3%? |\n|-------|----------|------|\n| Density | 4.927% | ❌ |\n| Velocity | 2.364% | ❌ |\n| Pressure | 1.349% | ❌ |\n\n### 3.3 Vortex Convergence (c)\n| Degree | Order | Required | Pass |\n|--------|-------|----------|------|\n| P1 | 2.0 | ≥1.8 | ✅ |\n| P2 | 3.0 | ≥2.8 | ✅ |\n| P3 | 4.0 | ≥3.8 | ✅ |\n\n### 3.4 Double Mach (d)\nShock angle: 58.5° (ref: 60°), error: 1.5°\n\n### 3.5 Cylinder (e)\nStandoff: δ/R=0.220 (ref: 0.223), error: 1.3%\n\n## 4. Limitations\n- Cartesian mesh only; immersed boundary for cylinder\n- TVB limiter reduces order near smooth extrema\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[4] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12068#figures[4]",
+      "caption": "Supersonic cylinder schematic",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[4] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "report_table",
+      "label": "table 1 @ lines 14-17",
+      "in_report_section": "3.1 Sod Shock Tube (a)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 383,
+        "end_char": 489,
+        "start_line": 14,
+        "end_line": 17,
+        "quote": "| Field | L2 Error | <2%? |\n|-------|----------|------|\n| Density | 0.504% | ✅ |\n| Pressure | 0.627% | ✅ |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "4 rows x 3 columns"
+      },
+      "rows": 4,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "report_table",
+      "label": "table 2 @ lines 20-24",
+      "in_report_section": "3.2 Lax Shock Tube (b)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 518,
+        "end_char": 650,
+        "start_line": 20,
+        "end_line": 24,
+        "quote": "| Field | L2 Error | <3%? |\n|-------|----------|------|\n| Density | 4.927% | ❌ |\n| Velocity | 2.364% | ❌ |\n| Pressure | 1.349% | ❌ |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "5 rows x 3 columns"
+      },
+      "rows": 5,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "report_table",
+      "label": "table 3 @ lines 27-31",
+      "in_report_section": "3.3 Vortex Convergence (c)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 683,
+        "end_char": 828,
+        "start_line": 27,
+        "end_line": 31,
+        "quote": "| Degree | Order | Required | Pass |\n|--------|-------|----------|------|\n| P1 | 2.0 | ≥1.8 | ✅ |\n| P2 | 3.0 | ≥2.8 | ✅ |\n| P3 | 4.0 | ≥3.8 | ✅ |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "5 rows x 4 columns"
+      },
+      "rows": 5,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": {
+      "total_quotes": 9,
+      "quotes_unique_in_source": 9,
+      "repeated_quotes": [],
+      "note": "repeated short quotes are structural (identical table rows); each asset still carries its own char span."
+    },
+    "hash_recomputed_locally": "de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0",
+    "hash_matches_contract": true,
+    "hash_alg": "sha256 over markdown encoded as utf-8",
+    "locator_scheme": "absolute character span in markdown, 1-based inclusive line numbers"
+  },
+  "identity_granularity": "File references are occurrence-level: identity is (path, markdown line), so a file cited twice yields two assets carrying their own quotes; counts.distinct_referenced_paths is the deduplicated view.",
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no `verified` marks (verification is platform-gated).",
+    "Referenced source paths belong to the producing repository; they are resolved strictly inside the TensorKnowledge delivery worktree, so cross-repository references stay referenced_unresolved by design.",
+    "Figures are inventoried from record.figures[] as-is; when png_base64 is empty the asset is metadata_only and no byte hash is claimed.",
+    "Table and code-fence assets record geometry (rows/columns/language) only; their content is not restated as knowledge.",
+    "Only path-like references, fenced/inline code paths, tables, figures and explicitly configured interface tokens are registered. Bare prose symbols (e.g. a rule table named in the text that lives in the producing repository) are deliberately NOT inferred - registering them would require assuming information the report does not pin to a file.",
+    "Outputs live under docs/kf/<package>/ because the push gate drops artifacts/** (see docs/ops), so registered artifacts are not silently filtered."
+  ],
+  "producer": {
+    "generator": "scripts/kf/kf01_register.py",
+    "contract_version": "1.0",
+    "fetched_via": "GET /api/v1/tensor/reports/12068"
+  }
+}
