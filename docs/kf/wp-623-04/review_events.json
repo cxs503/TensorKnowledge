@@ -1,0 +1,40 @@
+[
+ {
+  "id": "tkr:review:wp-623-04",
+  "object_ref": "wp-623-01",
+  "object_version": "1.0.0",
+  "decision": "approve",
+  "reviewer": {
+   "id": "kf-worker/m15800",
+   "reviewer_type": "agent",
+   "role": "red-team-reviewer"
+  },
+  "reviewed_at": "2026-11-12T02:40:05.456197+00:00",
+  "policy_version": "ke-review-v0.1",
+  "rationale": "Independent re-resolution of wp-623-01 against report 623: source hash, 16 assets, 17 locators, 5 identity facts, 3 symbol references and all declared counts reproduce (28 checks, 26 pass). Approved for the asset-registration deliverable with two recorded, non-blocking defects (F-01 overstated 'self-consistent' observation, F-02 vacuous empty quote) and one qualification that downstream 03 must carry (100k reproducibility is single-run). Nothing is marked verified by this review.",
+  "findings": [
+   {
+    "severity": "major",
+    "finding": "F-01 observations[0] 'self-consistent' is contradicted by report lines 82/117 on 100k reproducibility (non-blocking for the registry; blocking for any 100k reproducibility claim)",
+    "related_evidence_refs": [
+     "r623:source-markdown"
+    ]
+   },
+   {
+    "severity": "minor",
+    "finding": "F-02 identity_facts closing-note carries an empty quote, so it resolves vacuously and inflates the locator count 17 -> 16 non-vacuous",
+    "related_evidence_refs": [
+     "r623:source-markdown"
+    ]
+   },
+   {
+    "severity": "informational",
+    "finding": "F-03/F-04/F-05: chord-ratio metric hides local exponent 1.62 at the top end; zero energy drift is not evidence of integrator accuracy in a dissipative run; the upstream self-check document is not shipped"
+   }
+  ],
+  "conditions": [
+   "F-01: qualify observations[0] on the next revision of wp-623-01, and attach partially-supported (2 of 3 cases) to any downstream reproducible_hash claim.",
+   "F-02: replace the empty closing-note quote with the line-151 text, or drop the fact and report 16/16 non-vacuous locators."
+  ]
+ }
+]

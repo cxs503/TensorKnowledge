@@ -1,0 +1,126 @@
+{
+ "checks": {
+  "single_json_block": {
+   "ok": true,
+   "detail": "json_blocks=1"
+  },
+  "no_stray_json_fence_token": {
+   "ok": true,
+   "detail": "occurrences of the ```json token anywhere in the document = 1"
+  },
+  "json_block_equals_kf_result_file": {
+   "ok": true,
+   "detail": "block text parsed and compared to kf_result.json"
+  },
+  "json_block_text_equals_file": {
+   "ok": true,
+   "detail": "block_chars=26671"
+  },
+  "title_line": {
+   "ok": true,
+   "detail": "# KF-RESULT wp-623-04"
+  },
+  "six_sections": {
+   "ok": true,
+   "detail": []
+  },
+  "repro_cmd_present": {
+   "ok": true,
+   "detail": "bash block + scripts named"
+  },
+  "source_hash_recomputed": {
+   "ok": true,
+   "detail": "source=live API live=sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf envelope=sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf"
+  },
+  "envelope_source_hash_equals_contract_input": {
+   "ok": true,
+   "detail": "sha256:b513d521df6b393c365a587d49bc06f2482396a01228ed72f53d9e7132d86dcf"
+  },
+  "body_citations_verbatim": {
+   "ok": true,
+   "detail": "13 citations re-resolved; bad=[]"
+  },
+  "review_report_quotes_verbatim": {
+   "ok": true,
+   "detail": "14 evidence quotes (13 non-empty) re-resolved; bad=[]"
+  },
+  "empty_quotes_documented": {
+   "ok": true,
+   "detail": "empty quotes=[150]"
+  },
+  "evidence_quote_sha256_recomputed": {
+   "ok": true,
+   "detail": "14 evidence lines hashed"
+  },
+  "schema_kf_result": {
+   "ok": true,
+   "detail": []
+  },
+  "schema_work_package": {
+   "ok": false,
+   "detail": [
+    "True was expected",
+    "True was expected"
+   ]
+  },
+  "schema_review_events": {
+   "ok": true,
+   "detail": []
+  },
+  "review_state_legal": {
+   "ok": true,
+   "detail": "state=approved codes=['OK_APPROVED'] producer_ids=['kf-worker/m15515']"
+  },
+  "reviewer_independent": {
+   "ok": true,
+   "detail": [
+    {
+     "ok": true,
+     "basis": "distinct-identity"
+    }
+   ]
+  },
+  "no_verified_field_in_outputs": {
+   "ok": true,
+   "detail": []
+  },
+  "verdict_uses_no_verified_word": {
+   "ok": true,
+   "detail": "pass_with_findings"
+  },
+  "checks_summary_arithmetic": {
+   "ok": true,
+   "detail": "claimed total/passed=28/25 recomputed=28/25"
+  },
+  "every_finding_has_evidence_and_repro": {
+   "ok": true,
+   "detail": [
+    "F-01",
+    "F-02",
+    "F-03",
+    "F-04",
+    "F-05"
+   ]
+  },
+  "failed_checks_referenced_by_findings": {
+   "ok": true,
+   "detail": [
+    "B4.no_degenerate_quotes",
+    "P4.vacuous_quote_counted_resolved",
+    "P7.no_reproducibility_contradiction"
+   ]
+  }
+ },
+ "ok": false,
+ "summary": {
+  "checks_total": 23,
+  "checks_failed": [
+   "schema_work_package"
+  ],
+  "ok": false,
+  "checks_result_envelope_ok": true,
+  "declared_conflict": "schema_work_package fails only because the owner YAML declares review.required/independent_reviewer=false while schemas/work-package-contract.schema.json 04 branch pins both to const true; see review_report.json -> contract_schema_conflicts",
+  "source": "live API",
+  "note": "self-check only: no claim is marked verified here; the platform gate recomputes hash/locators and the verification level."
+ }
+}

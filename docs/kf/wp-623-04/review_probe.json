@@ -1,0 +1,94 @@
+{
+ "checks": {
+  "P1.kf_result_outputs_equal_shipped_files": {
+   "ok": true,
+   "detail": {
+    "asset_manifest.json": true
+   }
+  },
+  "P2.occurrence_counts_true": {
+   "ok": true,
+   "detail": "mismatches=[]"
+  },
+  "P3.unresolved_list_complete": {
+   "ok": true,
+   "detail": "assets=13 list=13 diff=[]"
+  },
+  "P4.vacuous_quote_counted_resolved": {
+   "ok": false,
+   "detail": "vacuously true identity_facts=['closing-note']"
+  },
+  "P5.figure_probe_reproduced": {
+   "ok": true,
+   "detail": "live={'dem3d_scale_benchmark': {'http_status': 404, 'bytes': 29}, 'dem3d_energy_drift': {'http_status': 404, 'bytes': 29}} claimed={'dem3d_scale_benchmark': {'http_status': 404, 'bytes': 29}, 'dem3d_energy_drift': {'http_status': 404, 'bytes': 29}}"
+  },
+  "P6a.ms_per_step_arithmetic": {
+   "ok": true,
+   "detail": {
+    "scale_10k": {
+     "ms_step": 1454.0,
+     "reported": 1454,
+     "rel_err": 0.0
+    },
+    "scale_50k": {
+     "ms_step": 4966.0,
+     "reported": 4966,
+     "rel_err": 0.0
+    },
+    "scale_100k": {
+     "ms_step": 15870.0,
+     "reported": 15872,
+     "rel_err": 0.00012600806451612903
+    }
+   }
+  },
+  "P6b.ratio_1p12_reproduced": {
+   "ok": true,
+   "detail": "ideal=14177.2ms actual=15870.0ms ratio=1.1194 (report text: 14,180 and 1.12)"
+  },
+  "P7.no_reproducibility_contradiction": {
+   "ok": false,
+   "detail": "claim@[82] vs limitation@[117]"
+  }
+ },
+ "findings": [],
+ "degenerate_quote_facts": {
+  "identity_facts_total": 5,
+  "vacuously_true": [
+   "closing-note"
+  ],
+  "locators_claimed_resolved": 17,
+  "non_vacuous_locators": 16
+ },
+ "scaling": {
+  "exponent_10k_50k": 0.788,
+  "exponent_50k_100k": 1.619,
+  "chord_ratio_vs_ideal_from_10k": 1.1194,
+  "timed_steps_per_case": {
+   "scale_10k": 10,
+   "scale_50k": 5,
+   "scale_100k": 1
+  },
+  "cost_per_particle_us": {
+   "scale_10k": 136.551,
+   "scale_50k": 98.04,
+   "scale_100k": 152.856
+  }
+ },
+ "contradiction": {
+  "reproducibility_claim_lines": [
+   82
+  ],
+  "reproducibility_claim_quote": "All three cases produce identical SHA-256 state digests across independent runs: **PASS** ✅",
+  "limitation_lines": [
+   117
+  ],
+  "limitation_quote": "1. **100k single-step measurement**: The full reproducibility double-run (2× init + 4× steps) would require ~133s, exceeding the 120s shell timeout. The single-step measurement provides the per-step time but not the full reproducibility verification for 100k.",
+  "verdict_row_quote": "| reproducible_hash | True | bool |"
+ },
+ "energy_metric": {
+  "dissipative_settings_quote": "**Solver settings**: bond_stiffness=2000 N/m, contact_stiffness=5000 N/m, contact_damping=5.0, drag=2.0, tool_speed=0.01 m/s, dt=0.10×recommended_dt.",
+  "zero_drift_rows": 3,
+  "confirmatory_sentence": "- **Exact energy conservation**: Zero energy drift confirms the Velocity-Verlet integrator and energy audit ledger are correctly implemented"
+ }
+}
