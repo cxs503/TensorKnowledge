@@ -1,0 +1,238 @@
+{
+  "schema": "kf.asset_manifest.v1",
+  "package_id": "wp-297-01",
+  "task_type": "01-asset-registration",
+  "contract_version": "1.0",
+  "lane": "C",
+  "report_id": "297",
+  "generated_at": "2026-11-12T00:50:02+00:00",
+  "generator": {
+    "script": "artifacts/kf-wp-297-01/build_manifest.py",
+    "repro_cmd": "python3 artifacts/kf-wp-297-01/build_manifest.py --refresh-source && python3 artifacts/kf-wp-297-01/build_report.py",
+    "extraction_performed": false,
+    "claims_verified": false
+  },
+  "source": {
+    "report_id": "297",
+    "source_uri": "tensor://reports/297",
+    "source_field": "markdown",
+    "source_hash": "sha256:426c49ee6920408fa082092a086ef85edf1da0d566a63dfad66dba81549cc77a",
+    "chars": 1633,
+    "title": "DTMB 5415 对标算例验收报告：几何验证与阻力计算",
+    "scenario_key": "dtmb5415_benchmark",
+    "declared_title": "DTMB 5415 对标算例验收报告：几何验证与阻力计算",
+    "declared_scenario_key": "dtmb5415_benchmark",
+    "platform_metadata": {},
+    "retrieval_channel": "snapshot artifacts/kf-wp-297-01/source_report_297.md",
+    "snapshot_path": "artifacts/kf-wp-297-01/source_report_297.md",
+    "hash_verified": true,
+    "chars_verified": true
+  },
+  "assets": [
+    {
+      "asset_id": "A-297-0001",
+      "asset_type": "geometry_input",
+      "raw_reference": "ASCII STL",
+      "locators": [
+        {
+          "char_start": 228,
+          "char_end": 237,
+          "line": 9,
+          "quote": "ASCII STL",
+          "verified": true
+        }
+      ],
+      "resolution": {
+        "status": "unresolved_no_path",
+        "method": "text scan for a file name or URI adjacent to the geometry mention",
+        "detail": "the source names the input format ('ASCII STL') and its size but never gives a file name, path or URI; the actual geometry file is not addressable from the report text and is therefore recorded as unresolved rather than invented."
+      },
+      "attributes": [
+        {
+          "name": "declared_mesh_size",
+          "locator": {
+            "char_start": 238,
+            "char_end": 254,
+            "line": 9,
+            "quote": "(912 顶点, 304 面片)",
+            "verified": true
+          },
+          "quote": "(912 顶点, 304 面片)"
+        }
+      ]
+    },
+    {
+      "asset_id": "A-297-0002",
+      "asset_type": "bibliographic_citation",
+      "raw_reference": "Holtrop (1984)",
+      "locators": [
+        {
+          "char_start": 310,
+          "char_end": 324,
+          "line": 10,
+          "quote": "Holtrop (1984)",
+          "verified": true
+        }
+      ],
+      "resolution": {
+        "status": "reference_only_not_retrieved",
+        "method": "text scan only",
+        "detail": "bibliographic reference cited by the report; no full text or data is carried by the report payload."
+      }
+    },
+    {
+      "asset_id": "A-297-0003",
+      "asset_type": "service_endpoint",
+      "raw_reference": "POST /api/v1/resistance/predict",
+      "locators": [
+        {
+          "char_start": 338,
+          "char_end": 369,
+          "line": 10,
+          "quote": "POST /api/v1/resistance/predict",
+          "verified": true
+        }
+      ],
+      "resolution": {
+        "status": "unresolved_external_service",
+        "method": "text scan only (no runtime probe in this work package)",
+        "detail": "the endpoint belongs to the ship-performance platform API surface, not to TensorKnowledge; asset registration records the reference without probing it."
+      }
+    },
+    {
+      "asset_id": "A-297-0004",
+      "asset_type": "standard_reference",
+      "raw_reference": "ITTC-1957",
+      "locators": [
+        {
+          "char_start": 383,
+          "char_end": 392,
+          "line": 11,
+          "quote": "ITTC-1957",
+          "verified": true
+        },
+        {
+          "char_start": 808,
+          "char_end": 817,
+          "line": 28,
+          "quote": "ITTC-1957",
+          "verified": true
+        }
+      ],
+      "resolution": {
+        "status": "reference_only_not_retrieved",
+        "method": "text scan only",
+        "detail": "bibliographic reference cited by the report; no full text or data is carried by the report payload."
+      }
+    },
+    {
+      "asset_id": "A-297-0005",
+      "asset_type": "bibliographic_citation",
+      "raw_reference": "Stern et al. (1996)",
+      "locators": [
+        {
+          "char_start": 402,
+          "char_end": 421,
+          "line": 11,
+          "quote": "Stern et al. (1996)",
+          "verified": true
+        }
+      ],
+      "resolution": {
+        "status": "reference_only_not_retrieved",
+        "method": "text scan only",
+        "detail": "bibliographic reference cited by the report; no full text or data is carried by the report payload."
+      }
+    },
+    {
+      "asset_id": "A-297-0006",
+      "asset_type": "artifact_file",
+      "raw_reference": "artifacts/dtmb_resistance.json",
+      "locators": [
+        {
+          "char_start": 986,
+          "char_end": 1016,
+          "line": 36,
+          "quote": "artifacts/dtmb_resistance.json",
+          "verified": true
+        }
+      ],
+      "resolution": {
+        "status": "unresolved",
+        "method": "filename search under repository checkout + inspection of report payload",
+        "detail": "no file with this name exists in the TensorKnowledge checkout; report payload figures field = None (empty), so no bytes are carried by tensor://reports/297. The path is a textual pointer only; registration does not follow it (no extraction, and the file likely lives in another repository)."
+      }
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "C-297-0001",
+      "statement": "the markdown byte payload of report_id=297 hashes to sha256:426c49ee6920408fa082092a086ef85edf1da0d566a63dfad66dba81549cc77a, which equals the sha256 declared by work package wp-297-01",
+      "status": "supported",
+      "evidence": {
+        "type": "content_hash",
+        "algorithm": "sha256",
+        "value": "426c49ee6920408fa082092a086ef85edf1da0d566a63dfad66dba81549cc77a",
+        "expected": "426c49ee6920408fa082092a086ef85edf1da0d566a63dfad66dba81549cc77a",
+        "encoding": "utf-8 bytes of the markdown field, no normalisation",
+        "repro_cmd": "python3 -c \"import hashlib,json;print(hashlib.sha256(open('artifacts/kf-wp-297-01/source_report_297.md','rb').read()).hexdigest())\""
+      }
+    },
+    {
+      "claim_id": "C-297-0002",
+      "statement": "the markdown field of report_id=297 is 1633 characters long, matching the 1633 characters declared by work package wp-297-01",
+      "status": "supported",
+      "evidence": {
+        "type": "measurement",
+        "metric": "len(markdown) in unicode characters",
+        "value": 1633,
+        "expected": 1633,
+        "repro_cmd": "python3 -c \"print(len(open('artifacts/kf-wp-297-01/source_report_297.md',encoding='utf-8').read()))\""
+      }
+    },
+    {
+      "claim_id": "C-297-0003",
+      "statement": "the platform metadata title of the report differs from the H1 title printed in the markdown field; both are recorded verbatim so downstream steps do not have to choose between them",
+      "status": "supported",
+      "evidence": {
+        "type": "locator+metadata",
+        "markdown_h1": {
+          "char_start": 2,
+          "char_end": 20,
+          "line": 1,
+          "quote": "DTMB 5415 对标算例验收报告",
+          "verified": true
+        },
+        "platform_metadata_title": "DTMB 5415 对标算例验收报告：几何验证与阻力计算",
+        "platform_metadata_scenario_key": "dtmb5415_benchmark"
+      }
+    }
+  ],
+  "summary": {
+    "n_assets": 6,
+    "n_claims": 3,
+    "assets_by_type": {
+      "artifact_file": 1,
+      "bibliographic_citation": 2,
+      "geometry_input": 1,
+      "service_endpoint": 1,
+      "standard_reference": 1
+    },
+    "resolution_status_counts": {
+      "unresolved_no_path": 1,
+      "reference_only_not_retrieved": 3,
+      "unresolved_external_service": 1,
+      "unresolved": 1
+    },
+    "open_items": [
+      "A-297-0001:ASCII STL",
+      "A-297-0003:POST /api/v1/resistance/predict",
+      "A-297-0006:artifacts/dtmb_resistance.json"
+    ]
+  },
+  "out_of_scope": [
+    "content extraction of report 297 (objective.classify_report_type=false, notes: no extraction)",
+    "verification of any report claim (verification is computed by the platform gate)",
+    "resolution/transfer of the referenced data file or geometry file"
+  ]
+}
