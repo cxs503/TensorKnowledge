@@ -1,0 +1,307 @@
+{
+ "anchor": "KBM-RCI-F1-ABC",
+ "batch_digest": "82f698cf0738271cea0b6af7b59edf631e002c27aa266acda00bae7a5266900d",
+ "prereg_id": "9e4e0bf551c63599548c2f9d9ef19b562c1eed0bdbeab5a614ac75a8d18a201f",
+ "corpus": {
+  "batch_digest": "82f698cf0738271cea0b6af7b59edf631e002c27aa266acda00bae7a5266900d",
+  "docs_expected": 60,
+  "docs_present": 60,
+  "docs_sha_ok": 60,
+  "missing": [],
+  "mismatches": [],
+  "frozen_root": "/root/tp-agent/work/m15896/docs/rci-f1-abc/frozen",
+  "snapshot_root": "/root/tp-agent/work/m15896/docs/rci-f1-abc/snapshot",
+  "prereg_present": true,
+  "work_packages_present": true,
+  "upstream_source_present": true,
+  "passed": true,
+  "rate": 1.0
+ },
+ "lanes": {
+  "A": {
+   "packages_planned": 1,
+   "packages_with_artifacts": 0,
+   "docs_completed": 0,
+   "docs_expected_total": 60,
+   "pass_rate": 0.0,
+   "claims": 0,
+   "locators": "0/0",
+   "locator_resolution": null,
+   "statement_verbatim_rate": null,
+   "docs_with_full_artifacts": 0,
+   "selfreport_inflation_total": null,
+   "evidence_gate_pass": false,
+   "compute_core_seconds_sum": 0,
+   "wall_seconds_sum": 0,
+   "design_agents": 1,
+   "identity_match": false,
+   "usable_for_hypotheses": false
+  },
+  "B": {
+   "packages_planned": 20,
+   "packages_with_artifacts": 7,
+   "docs_completed": 19,
+   "docs_expected_total": 60,
+   "pass_rate": 0.3167,
+   "claims": 130,
+   "locators": "130/130",
+   "locator_resolution": 1.0,
+   "statement_verbatim_rate": 1.0,
+   "docs_with_full_artifacts": 18,
+   "selfreport_inflation_total": 0,
+   "evidence_gate_pass": true,
+   "compute_core_seconds_sum": 0.199,
+   "wall_seconds_sum": 0.204,
+   "design_agents": 20,
+   "identity_match": false,
+   "usable_for_hypotheses": false
+  },
+  "C": {
+   "packages_planned": 20,
+   "packages_with_artifacts": 0,
+   "docs_completed": 0,
+   "docs_expected_total": 60,
+   "pass_rate": 0.0,
+   "claims": 0,
+   "locators": "0/0",
+   "locator_resolution": null,
+   "statement_verbatim_rate": null,
+   "docs_with_full_artifacts": 0,
+   "selfreport_inflation_total": null,
+   "evidence_gate_pass": false,
+   "compute_core_seconds_sum": 0,
+   "wall_seconds_sum": 0,
+   "design_agents": 20,
+   "identity_match": false,
+   "usable_for_hypotheses": false
+  }
+ },
+ "identity": {
+  "A": {
+   "lane": "A",
+   "designed_agent_count": 1,
+   "observed_agent_count": [],
+   "observed_modes": [],
+   "designed_review": "none",
+   "observed_review": "unobservable-in-artifacts",
+   "identity_match": false,
+   "reason": "回执 agent_count=n/a ≠ 设计 1（mode=[]）→ 该臂不得用于 H1-H3，按 MO3 记 DESCRIPTIVE_ONLY"
+  },
+  "B": {
+   "lane": "B",
+   "designed_agent_count": 20,
+   "observed_agent_count": [
+    1
+   ],
+   "observed_modes": [
+    "degraded-single-agent"
+   ],
+   "designed_review": "none",
+   "observed_review": "unobservable-in-artifacts",
+   "identity_match": false,
+   "reason": "回执 agent_count=[1] ≠ 设计 20（mode=['degraded-single-agent']）→ 该臂不得用于 H1-H3，按 MO3 记 DESCRIPTIVE_ONLY"
+  },
+  "C": {
+   "lane": "C",
+   "designed_agent_count": 20,
+   "observed_agent_count": [],
+   "observed_modes": [],
+   "designed_review": "independent",
+   "observed_review": "unobservable-in-artifacts",
+   "identity_match": false,
+   "reason": "回执 agent_count=n/a ≠ 设计 20（mode=[]）→ 该臂不得用于 H1-H3，按 MO3 记 DESCRIPTIVE_ONLY"
+  }
+ },
+ "metrics": {
+  "anchor": "KBM-RCI-F1-ABC",
+  "batch_digest": "82f698cf0738271cea0b6af7b59edf631e002c27aa266acda00bae7a5266900d",
+  "n_batch": 60,
+  "arms": {
+   "A": {
+    "n_packages_recorded": 0,
+    "metrics": {
+     "M1_unit_cost": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     },
+     "M2_throughput": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     },
+     "M3_extraction_accuracy": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     },
+     "M4_evidence_completeness": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     },
+     "M5_knowledge_reuse": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     }
+    }
+   },
+   "B": {
+    "n_packages_recorded": 7,
+    "metrics": {
+     "M1_unit_cost": {
+      "status": "WITHHELD",
+      "value": null,
+      "reason": "7/7 个回执无 token 计量（MO2：缺失记 WITHHELD，禁以 0 计入；否则无计量臂的成本被系统性低估，H3 判定失真）",
+      "components_partial": {
+       "compute_core_seconds_per_doc": 0.0105,
+       "agent_hours_per_doc": 0.0
+      }
+     },
+     "M2_throughput": {
+      "status": "REAL",
+      "value": 335294.118,
+      "components": {
+       "docs_passed": 19,
+       "wall_hours": 0.0
+      }
+     },
+     "M3_extraction_accuracy": {
+      "status": "WITHHELD",
+      "value": null,
+      "reason": "无盲审回执"
+     },
+     "M4_evidence_completeness": {
+      "status": "REAL",
+      "value": 1.0,
+      "components": {
+       "locator_success_rate": 1.0,
+       "evidence_coverage": 1.0,
+       "locators": 130,
+       "claims": 130
+      }
+     },
+     "M5_knowledge_reuse": {
+      "status": "PENDING",
+      "value": null,
+      "reason": "首周窗口未结算（T+7d，MO2 禁填 0）"
+     }
+    },
+    "totals": {
+     "tokens": 0,
+     "compute_core_seconds": 0.2,
+     "wall_seconds": 0.2,
+     "agents": 0,
+     "docs_completed": 19,
+     "docs_passed": 19,
+     "pass_rate": 1.0
+    }
+   },
+   "C": {
+    "n_packages_recorded": 0,
+    "metrics": {
+     "M1_unit_cost": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     },
+     "M2_throughput": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     },
+     "M3_extraction_accuracy": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     },
+     "M4_evidence_completeness": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     },
+     "M5_knowledge_reuse": {
+      "status": "NOT_STARTED",
+      "value": null,
+      "reason": "臂未启动/无执行回执（MO3）"
+     }
+    }
+   }
+  },
+  "verdict": {
+   "inputs": {
+    "A": {
+     "M1_unit_cost": null,
+     "M2_throughput": null,
+     "M3_extraction_accuracy": null,
+     "M4_evidence_completeness": null,
+     "M5_knowledge_reuse": null
+    },
+    "B": {
+     "M1_unit_cost": null,
+     "M2_throughput": 335294.118,
+     "M3_extraction_accuracy": null,
+     "M4_evidence_completeness": 1.0,
+     "M5_knowledge_reuse": null
+    },
+    "C": {
+     "M1_unit_cost": null,
+     "M2_throughput": null,
+     "M3_extraction_accuracy": null,
+     "M4_evidence_completeness": null,
+     "M5_knowledge_reuse": null
+    }
+   },
+   "hypotheses": {},
+   "verdict": "WITHHELD",
+   "reason": "关键质量指标不可得（A/C 的 M3/M4 未结算）→ WITHHELD，不判成立与否",
+   "conditions": []
+  },
+  "blind": {
+   "n_scored": 0,
+   "n_human": 0,
+   "kappa": {},
+   "kappa_ok": false,
+   "kappa_min": 0.6,
+   "human_required": 30,
+   "human_enough": false
+  }
+ },
+ "judge_frozen_rule": {
+  "inputs": {
+   "A": {
+    "M1_unit_cost": null,
+    "M2_throughput": null,
+    "M3_extraction_accuracy": null,
+    "M4_evidence_completeness": null,
+    "M5_knowledge_reuse": null
+   },
+   "B": {
+    "M1_unit_cost": null,
+    "M2_throughput": 335294.118,
+    "M3_extraction_accuracy": null,
+    "M4_evidence_completeness": 1.0,
+    "M5_knowledge_reuse": null
+   },
+   "C": {
+    "M1_unit_cost": null,
+    "M2_throughput": null,
+    "M3_extraction_accuracy": null,
+    "M4_evidence_completeness": null,
+    "M5_knowledge_reuse": null
+   }
+  },
+  "hypotheses": {},
+  "verdict": "WITHHELD",
+  "reason": "关键质量指标不可得（A/C 的 M3/M4 未结算）→ WITHHELD，不判成立与否",
+  "conditions": []
+ },
+ "blocking": [
+  "臂 A 零产物（MO3：全部指标 WITHHELD，不推断）",
+  "臂 B 身份不符设计（回执 agent_count=[1] ≠ 设计 20（mode=['degraded-single-agent']）→ 该臂不得用于 H1-H3，按 MO3 记 DESCRIPTIVE_ONLY）",
+  "臂 C 零产物（MO3：全部指标 WITHHELD，不推断）"
+ ],
+ "verdict": "WITHHELD",
+ "verdict_reason": "臂 A 零产物（MO3：全部指标 WITHHELD，不推断）；臂 B 身份不符设计（回执 agent_count=[1] ≠ 设计 20（mode=['degraded-single-agent']）→ 该臂不得用于 H1-H3，按 MO3 记 DESCRIPTIVE_ONLY）；臂 C 零产物（MO3：全部指标 WITHHELD，不推断）"
+}
