@@ -69,7 +69,9 @@
     "conditions": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["description"],
+      "required": [
+        "description"
+      ],
       "properties": {
         "description": {
           "type": "string",
@@ -77,12 +79,20 @@
         },
         "assumptions": {
           "type": "array",
-          "items": {"type": "string", "minLength": 1},
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "description": "显式假设列表（不可省的关键近似）。"
         },
         "validity_range": {
           "type": "object",
-          "additionalProperties": {"type": ["string", "number"]},
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
           "description": "定量适用域，如 {\"Re\": \"1e3-1e5\", \"Cb\": \"0.55-0.85\"}。"
         }
       }
@@ -91,15 +101,29 @@
       "type": "array",
       "minItems": 1,
       "description": "证据必填且必须可回链：report_id（TP tensor_reports.id）+ section（报告内小节锚）+ evidence_type + artifact_ref。空证据的知识对象只能是 unverified，且不得进入 L2/L3。",
-      "items": {"$ref": "#/$defs/EvidenceRef"}
+      "items": {
+        "$ref": "#/$defs/EvidenceRef"
+      }
     },
     "confidence": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["level"],
+      "required": [
+        "level"
+      ],
       "properties": {
-        "level": {"enum": ["high", "medium", "low"]},
-        "score": {"type": "number", "minimum": 0, "maximum": 1},
+        "level": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
         "basis": {
           "enum": [
             "analytic_reference",
@@ -112,61 +136,180 @@
             "unassessed"
           ]
         },
-        "note": {"type": "string"}
+        "note": {
+          "type": "string"
+        }
       },
       "description": "置信度≠验证状态：confidence 是产生方的评估，verification_status 是平台门的结论，两者不可互相替代。"
     },
     "verification_status": {
-      "enum": ["unverified", "report_claimed", "platform_verified"],
+      "enum": [
+        "unverified",
+        "report_claimed",
+        "platform_verified"
+      ],
       "description": "状态机：unverified -> report_claimed -> platform_verified；reopen 时 platform_verified -> report_claimed。platform_verified 只可由平台验证单写入（gate_state=confirmed 且 gate_level>=2），Agent 不得自宣布。"
     },
     "verification": {
       "type": "object",
       "additionalProperties": false,
       "description": "平台验证单回执。verification_status=platform_verified 时必填，且必须与 ko_verification 表内票据一致（只由平台侧写入）。",
-      "required": ["ticket_id", "source", "gate_state", "gate_level", "verdict_by", "verdict_at"],
+      "required": [
+        "ticket_id",
+        "source",
+        "gate_state",
+        "gate_level",
+        "verdict_by",
+        "verdict_at"
+      ],
       "properties": {
-        "ticket_id": {"type": "string", "minLength": 1},
-        "source": {"enum": ["maturity_gate", "benchmark_gate", "xval_gate", "repro_gate"]},
-        "gate_state": {"enum": ["confirmed", "reopened"]},
-        "gate_level": {"type": "integer", "minimum": 0, "maximum": 4},
-        "verdict_by": {"type": "string", "minLength": 1},
-        "verdict_at": {"type": "string", "format": "date-time"},
-        "maturity_verdict_id": {"type": ["integer", "null"]},
-        "mission_id": {"type": ["integer", "null"]}
+        "ticket_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "enum": [
+            "maturity_gate",
+            "benchmark_gate",
+            "xval_gate",
+            "repro_gate"
+          ]
+        },
+        "gate_state": {
+          "enum": [
+            "confirmed",
+            "reopened"
+          ]
+        },
+        "gate_level": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "verdict_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verdict_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "maturity_verdict_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "mission_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "subject_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "被裁定对象内容摘要（= content_sha256(doc)）；对象级裁定必填（v1.1 G1）"
+        },
+        "subject_scope": {
+          "enum": [
+            "object",
+            "mission"
+          ]
+        },
+        "evidence_ref": {
+          "type": "object",
+          "description": "裁定依据指针；subject_scope='mission' 时必须在 knowledge_ids 枚举被覆盖的对象（v1.1 G2）",
+          "properties": {
+            "knowledge_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "report_ids": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
       }
     },
     "limitations": {
       "type": "array",
-      "items": {"type": "string", "minLength": 1},
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
       "description": "已知局限/失效边界/不确定性。允许为空数组，但不允许缺字段（缺字段=没做局限检查）。"
     },
     "relations": {
       "type": "array",
-      "items": {"$ref": "#/$defs/Relation"},
+      "items": {
+        "$ref": "#/$defs/Relation"
+      },
       "description": "L2 关联网络边。关系本身不确立证据或确定性，仅表达结构。"
     },
     "next_actions": {
       "type": "array",
-      "items": {"$ref": "#/$defs/NextAction"},
+      "items": {
+        "$ref": "#/$defs/NextAction"
+      },
       "description": "待办：补证、送平台验证、复现、退役等。空数组=已闭环。"
     },
     "provenance": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["producer", "created_at"],
+      "required": [
+        "producer",
+        "created_at"
+      ],
       "properties": {
-        "producer": {"type": "string", "minLength": 1},
-        "producer_role": {"enum": ["agent", "human", "platform"]},
-        "mission_id": {"type": ["integer", "null"]},
-        "node_id": {"type": ["string", "null"]},
-        "created_at": {"type": "string", "format": "date-time"},
-        "updated_at": {"type": "string", "format": "date-time"},
-        "pipeline": {"type": "string"},
-        "generator_version": {"type": "string"},
+        "producer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_role": {
+          "enum": [
+            "agent",
+            "human",
+            "platform"
+          ]
+        },
+        "mission_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "node_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "pipeline": {
+          "type": "string"
+        },
+        "generator_version": {
+          "type": "string"
+        },
         "derived_from": {
           "type": "array",
-          "items": {"type": "string"},
+          "items": {
+            "type": "string"
+          },
           "description": "上游知识对象 ID / 报告 / 数据集引用（PROV-O entity 链）。"
         },
         "content_sha256": {
@@ -175,7 +318,11 @@
           "description": "规范化 JSON（键排序、无空白）的 sha256；发布后不可变，变更=新版本。"
         },
         "storage_level": {
-          "enum": ["L1", "L2", "L3"],
+          "enum": [
+            "L1",
+            "L2",
+            "L3"
+          ],
           "description": "L0 原件不在此对象内（归 TensorData，只增不覆盖）；L1 结构化记录；L2 已入关联网络（relations 非空）；L3 平台已验证。一致性由校验器强制。"
         }
       }
@@ -186,95 +333,268 @@
     },
     "data_references": {
       "type": "array",
-      "items": {"$ref": "#/$defs/ArtifactRef"},
+      "items": {
+        "$ref": "#/$defs/ArtifactRef"
+      },
       "description": "数据集/L0 原件引用（TensorData 资产 ID + sha256）。"
     }
   },
   "allOf": [
     {
-      "if": {"properties": {"verification_status": {"const": "platform_verified"}}, "required": ["verification_status"]},
+      "if": {
+        "properties": {
+          "verification_status": {
+            "const": "platform_verified"
+          }
+        },
+        "required": [
+          "verification_status"
+        ]
+      },
       "then": {
-        "required": ["verification"],
+        "required": [
+          "verification"
+        ],
         "properties": {
           "verification": {
-            "properties": {"gate_state": {"const": "confirmed"}},
+            "properties": {
+              "gate_state": {
+                "const": "confirmed"
+              }
+            },
             "allOf": [
               {
-                "properties": {"gate_level": {"minimum": 2}},
-                "required": ["gate_level"]
+                "properties": {
+                  "gate_level": {
+                    "minimum": 2
+                  }
+                },
+                "required": [
+                  "gate_level"
+                ]
               }
             ]
           },
           "provenance": {
-            "properties": {"storage_level": {"const": "L3"}},
-            "required": ["storage_level"]
+            "properties": {
+              "storage_level": {
+                "const": "L3"
+              }
+            },
+            "required": [
+              "storage_level"
+            ]
           }
         }
       }
     },
     {
-      "if": {"properties": {"provenance": {"properties": {"storage_level": {"const": "L3"}}, "required": ["storage_level"]}}, "required": ["provenance"]},
-      "then": {"properties": {"verification_status": {"const": "platform_verified"}}}
+      "if": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "storage_level": {
+                "const": "L3"
+              }
+            },
+            "required": [
+              "storage_level"
+            ]
+          }
+        },
+        "required": [
+          "provenance"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verification_status": {
+            "const": "platform_verified"
+          }
+        }
+      }
     },
     {
-      "if": {"properties": {"verification_status": {"enum": ["unverified", "report_claimed"]}}, "required": ["verification_status"]},
-      "then": {"properties": {"provenance": {"properties": {"storage_level": {"enum": ["L1", "L2"]}}}}}
+      "if": {
+        "properties": {
+          "verification_status": {
+            "enum": [
+              "unverified",
+              "report_claimed"
+            ]
+          }
+        },
+        "required": [
+          "verification_status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "storage_level": {
+                "enum": [
+                  "L1",
+                  "L2"
+                ]
+              }
+            }
+          }
+        }
+      }
     },
     {
-      "if": {"properties": {"provenance": {"properties": {"storage_level": {"const": "L2"}}, "required": ["storage_level"]}}, "required": ["provenance"]},
-      "then": {"required": ["relations"], "properties": {"relations": {"minItems": 1}}}
+      "if": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "storage_level": {
+                "const": "L2"
+              }
+            },
+            "required": [
+              "storage_level"
+            ]
+          }
+        },
+        "required": [
+          "provenance"
+        ]
+      },
+      "then": {
+        "required": [
+          "relations"
+        ],
+        "properties": {
+          "relations": {
+            "minItems": 1
+          }
+        }
+      }
     }
   ],
   "$defs": {
-    "Hex64": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "Hex64": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
     "ArtifactRef": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["kind", "ref"],
+      "required": [
+        "kind",
+        "ref"
+      ],
       "properties": {
         "kind": {
-          "enum": ["tensor_data_artifact", "repo_path", "report_figure", "report_section", "url", "none"],
+          "enum": [
+            "tensor_data_artifact",
+            "repo_path",
+            "report_figure",
+            "report_section",
+            "url",
+            "none"
+          ],
           "description": "tensor_data_artifact = TensorData data_artifacts.id（权威、内容寻址）；repo_path = 仓内工作树相对路径；report_figure = TP tensor_reports.figures[].name；none 仅允许用于 report_section 类证据。"
         },
-        "ref": {"type": "string", "minLength": 1},
-        "sha256": {"oneOf": [{"$ref": "#/$defs/Hex64"}, {"type": "null"}]},
-        "repo": {"type": "string"},
-        "commit": {"type": "string"},
-        "media_type": {"type": "string"},
-        "note": {"type": "string"}
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Hex64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repo": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        },
+        "media_type": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
       }
     },
     "SectionRef": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["heading"],
+      "required": [
+        "heading"
+      ],
       "description": "报告内小节锚。heading 为报告 markdown 中的原始标题文本（含编号/emoji，不做规范改写）；anchor 为去噪 slug；span 为 [start,end) 字符偏移；section_sha256 为该切片 sha256，用于抗篡改。",
       "properties": {
-        "heading": {"type": "string", "minLength": 1},
-        "anchor": {"type": "string", "pattern": "^[a-z0-9\u4e00-\u9fff][a-z0-9\u4e00-\u9fff-]*$"},
+        "heading": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchor": {
+          "type": "string",
+          "pattern": "^[a-z0-9一-鿿][a-z0-9一-鿿-]*$"
+        },
         "span": {
           "type": "array",
-          "items": {"type": "integer", "minimum": 0},
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
           "minItems": 2,
           "maxItems": 2
         },
-        "section_sha256": {"oneOf": [{"$ref": "#/$defs/Hex64"}, {"type": "null"}]},
-        "excerpt": {"type": "string", "maxLength": 2000}
+        "section_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Hex64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "excerpt": {
+          "type": "string",
+          "maxLength": 2000
+        }
       }
     },
     "EvidenceRef": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["report_id", "section", "evidence_type", "artifact_ref"],
+      "required": [
+        "report_id",
+        "section",
+        "evidence_type",
+        "artifact_ref"
+      ],
       "properties": {
-        "evidence_id": {"type": "string", "pattern": "^ev:[0-9a-f]{16}$"},
+        "evidence_id": {
+          "type": "string",
+          "pattern": "^ev:[0-9a-f]{16}$"
+        },
         "report_id": {
           "type": "integer",
           "minimum": 1,
           "description": "TensorPlatform tensor_reports.id（真实在库报告）。跨库引用只存 ID，不复制正文。"
         },
-        "report_kind": {"enum": ["tensor_report", "external"], "default": "tensor_report"},
-        "section": {"$ref": "#/$defs/SectionRef"},
+        "report_kind": {
+          "enum": [
+            "tensor_report",
+            "external"
+          ],
+          "default": "tensor_report"
+        },
+        "section": {
+          "$ref": "#/$defs/SectionRef"
+        },
         "evidence_type": {
           "enum": [
             "measurement",
@@ -288,21 +608,40 @@
           ]
         },
         "relation": {
-          "enum": ["supports", "refutes", "quantifies", "limits", "reproduces"],
+          "enum": [
+            "supports",
+            "refutes",
+            "quantifies",
+            "limits",
+            "reproduces"
+          ],
           "default": "supports",
           "description": "该证据对 claim 的作用方向。refutes 必须配套 type=negative_result 或 next_actions。"
         },
-        "artifact_ref": {"$ref": "#/$defs/ArtifactRef"},
+        "artifact_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
         "resolution": {
           "type": "object",
           "additionalProperties": false,
           "description": "摄取时解析结果（由校验器/管线写入，人工不可手填）。三闸全绿才计为可追溯。",
           "properties": {
-            "report_resolved": {"type": "boolean"},
-            "section_resolved": {"type": "boolean"},
-            "artifact_resolved": {"type": "boolean"},
-            "resolver_version": {"type": "string"},
-            "resolved_at": {"type": "string", "format": "date-time"}
+            "report_resolved": {
+              "type": "boolean"
+            },
+            "section_resolved": {
+              "type": "boolean"
+            },
+            "artifact_resolved": {
+              "type": "boolean"
+            },
+            "resolver_version": {
+              "type": "string"
+            },
+            "resolved_at": {
+              "type": "string",
+              "format": "date-time"
+            }
           }
         }
       }
@@ -310,7 +649,10 @@
     "Relation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["type", "target_id"],
+      "required": [
+        "type",
+        "target_id"
+      ],
       "properties": {
         "type": {
           "enum": [
@@ -326,14 +668,21 @@
             "replicated_by"
           ]
         },
-        "target_id": {"type": "string", "minLength": 1},
-        "note": {"type": "string"}
+        "target_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string"
+        }
       }
     },
     "NextAction": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["action"],
+      "required": [
+        "action"
+      ],
       "properties": {
         "action": {
           "enum": [
@@ -346,9 +695,16 @@
             "split_object"
           ]
         },
-        "detail": {"type": "string"},
-        "owner": {"type": "string"},
-        "anchor": {"type": "string", "description": "回流锚（任务榜/战役节点），如 KBM-RCI-S2-SCHEMA。"}
+        "detail": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "anchor": {
+          "type": "string",
+          "description": "回流锚（任务榜/战役节点），如 KBM-RCI-S2-SCHEMA。"
+        }
       }
     }
   }
