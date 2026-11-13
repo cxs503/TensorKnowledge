@@ -330,3 +330,91 @@ def test_builder_detects_tampered_manifest(builder, md, record, manifest):
     tampered3["task_type"] = "03-knowledge-extraction"
     with pytest.raises(jsonschema.ValidationError):
         jsonschema.validate(tampered3, schema)
+
+# ---------------------------------------------------------------------------
+# 图字节探活工件（404 的归因必须可复算，而不是散文断言）
+# ---------------------------------------------------------------------------
+@pytest.fixture(scope="module")
+def probe_artifact() -> dict:
+    return json.loads((SRC / "figure_probe.json").read_text(encoding="utf-8"))
+
+
+def test_probe_artifact_covers_declared_figures(record, probe_artifact):
+    declared = [f["name"] for f in record["figures"]]
+    assert probe_artifact["report_id"] == "5577"
+    assert sorted(probe_artifact["target_figures"]) == sorted(declared)
+    assert sorted(t["name"] for t in probe_artifact["targets"]) == sorted(declared)
+    for t in probe_artifact["targets"]:
+        assert isinstance(t["http_status"], int)
+        assert t["payload_bytes"] >= 0 and t["body_bytes"] >= 0
+
+
+def test_probe_artifact_has_a_working_positive_control(probe_artifact):
+    """正对照取自同路由的另一份报告：必须 200 且载荷非空、带 sha256。"""
+    ctl = probe_artifact["controls"][0]
+    assert ctl["report_id"] != probe_artifact["report_id"]
+    assert ctl["http_status"] == 200
+    assert ctl["payload_bytes"] > 0
+    assert len(ctl["payload_sha256"]) == 64
+    assert probe_artifact["control_used"]["name"] == ctl["name"]
+    assert probe_artifact["control_ok"] is True
+    assert probe_artifact["probe_valid"] is True
+
+
+def test_probe_artifact_verdict_is_recomputed_not_declared(builder, probe_artifact):
+    """把工件里的 targets/controls 重新喂给纯函数 evaluate_probe，判定必须逐字段复现。"""
+    recomputed = builder.evaluate_probe(probe_artifact["targets"], probe_artifact["controls"])
+    for key in ("all_targets_404", "control_ok", "probe_valid", "conclusion"):
+        assert recomputed[key] == probe_artifact[key], key
+    assert recomputed["control_used"] == probe_artifact["control_used"]
+
+
+def test_probe_artifact_status_agrees_with_manifest(manifest, probe_artifact):
+    status = {t["name"]: t["http_status"] for t in probe_artifact["targets"]}
+    figs = [a for a in manifest["assets"] if a["asset_class"] == "embedded_figure"]
+    assert figs
+    for a in figs:
+        name = a["probe"]["name"]
+        assert a["resolution_check"]["http_status"] == status[name]
+        assert a["probe"]["http_status"] == status[name]
+        assert a["resolution"] == "referenced_unresolved"
+
+
+def test_evaluate_probe_rejects_an_invalid_control(builder, probe_artifact):
+    """变异测试：正对照失效（404）时，404 归因必须被判为无效 —— 不许两边甩锅。"""
+    bad = json.loads(json.dumps(probe_artifact))
+    bad["controls"][0].update({"http_status": 404, "payload_bytes": 0, "payload_sha256": None})
+    verdict = builder.evaluate_probe(bad["targets"], bad["controls"])
+    assert verdict["control_ok"] is False
+    assert verdict["probe_valid"] is False
+    assert "无效" in verdict["conclusion"]
+    # 目标图其实可达时，同样不许判「报告侧缺图」
+    reachable = json.loads(json.dumps(probe_artifact))
+    reachable["targets"][1].update({"http_status": 200, "payload_bytes": 1234,
+                                    "payload_sha256": "0" * 64})
+    verdict2 = builder.evaluate_probe(reachable["targets"], reachable["controls"])
+    assert verdict2["all_targets_404"] is False
+    assert verdict2["probe_valid"] is False
+
+
+def test_probe_figure_bytes_short_circuits_on_first_good_control(builder):
+    """探活顺序固定：第一个可用正对照命中即停；首个候选失败则落到下一个。"""
+    calls = []
+
+    def fake_fetch(path):
+        calls.append(path)
+        if "/reports/5577/figures/" in path:
+            return {"http_status": 404, "payload_bytes": 0, "body_bytes": 29, "payload_sha256": None}
+        if "/reports/11621/" in path:
+            return {"http_status": 500, "payload_bytes": 0, "body_bytes": 5, "payload_sha256": None}
+        return {"http_status": 200, "payload_bytes": 70557, "body_bytes": 70557,
+                "payload_sha256": "9" * 64}
+
+    art = builder.probe_figure_bytes(["a.png", "b.png"], token="t",
+                                     candidates=(("11621", "x.png"), ("14965", "y.png")),
+                                     fetch=fake_fetch)
+    assert art["probe_valid"] is True
+    assert art["control_used"] == {"report_id": "14965", "name": "y.png"}
+    assert len(art["controls"]) == 2
+    assert len(art["targets"]) == 2
+    assert sum(1 for c in calls if "/reports/5577/" in c) == 2
