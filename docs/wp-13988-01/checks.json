@@ -1,0 +1,102 @@
+{
+  "package_id": "wp-13988-01",
+  "report_id": "13988",
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_locator_resolvable": true,
+    "source_hash_matches": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true
+  },
+  "checks": [
+    {
+      "check": "source_hash_matches",
+      "status": "pass",
+      "detail": "sha256(markdown)=79d795674f0b13f828d8933af64612a1addb30cb8a8b903f7ab136f0508442b9 contract=79d795674f0b13f828d8933af64612a1addb30cb8a8b903f7ab136f0508442b9"
+    },
+    {
+      "check": "source_chars_match_contract",
+      "status": "pass",
+      "detail": "chars=6222 contract=6222 bytes_utf8=9227"
+    },
+    {
+      "check": "report_id_matches",
+      "status": "pass",
+      "detail": "platform id=13988"
+    },
+    {
+      "check": "source_locator_resolvable",
+      "status": "pass",
+      "detail": "all 29 locators are unique substrings of source markdown (failures: none)"
+    },
+    {
+      "check": "no_duplicate_ids",
+      "status": "pass",
+      "detail": "29 asset_id, 29 unique; claims=[] so no claim_id collision possible"
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "status": "pass",
+      "detail": "claims=[] (objective.classify_report_type=false, no extraction in this work package); constraint vacuously satisfied, no claim asserted"
+    },
+    {
+      "check": "valid_json",
+      "status": "pass",
+      "detail": "manifest re-parsed from disk; 37547 bytes"
+    },
+    {
+      "check": "manifest_schema_pass",
+      "status": "pass",
+      "detail": "asset_manifest validates against docs/wp-13988-01/asset_manifest.v1.schema.json (derived local copy)"
+    },
+    {
+      "check": "manifest_schema_negative_control",
+      "status": "pass",
+      "detail": "negative control: manifest without 'counts' is rejected as expected"
+    },
+    {
+      "check": "schema_pass",
+      "status": "pass",
+      "detail": "kf_result envelope validates against schemas/kf_result.v1.schema.json (sha256=170dba8b0b5d54012490aaadc0b68647a9520ecb869e9d03f873afb99b74c076) | negative control: envelope missing required keys is rejected as expected"
+    },
+    {
+      "check": "durable_mirror_identical",
+      "status": "pass",
+      "detail": "docs/wp-13988-01/asset_manifest.json sha256 == artifacts copy sha256 (096b1a8741db4fddfa8fb7a968053b9e65a5a10a8ea7f6907757dd545be9b30b)"
+    }
+  ],
+  "all_pass": true,
+  "manifest_sha256": "096b1a8741db4fddfa8fb7a968053b9e65a5a10a8ea7f6907757dd545be9b30b",
+  "manifest_bytes": 37547,
+  "counts": {
+    "assets": 29,
+    "by_class": {
+      "document": 1,
+      "heading": 1,
+      "run_identity": 1,
+      "vcs_reference": 1,
+      "statement_set": 1,
+      "code_pointer": 2,
+      "numeric_anchor": 4,
+      "external_dataset": 1,
+      "table": 6,
+      "external_artifact_set": 1,
+      "mechanism_doc": 1,
+      "repro_command": 1,
+      "statement": 3,
+      "negative_control": 1,
+      "figure_declaration": 1,
+      "external_figure": 2,
+      "limitation_set": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 22,
+      "referenced_unresolved": 7
+    },
+    "resolved_in_source": 22,
+    "referenced_unresolved": 7,
+    "declared_absent": 0
+  },
+  "schema_file": "docs/wp-13988-01/asset_manifest.v1.schema.json"
+}

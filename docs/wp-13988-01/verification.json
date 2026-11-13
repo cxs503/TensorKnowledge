@@ -1,0 +1,66 @@
+{
+  "package_id": "wp-13988-01",
+  "report_id": "13988",
+  "ok": true,
+  "fresh_source_hash": "sha256:79d795674f0b13f828d8933af64612a1addb30cb8a8b903f7ab136f0508442b9",
+  "manifest_sha256": "096b1a8741db4fddfa8fb7a968053b9e65a5a10a8ea7f6907757dd545be9b30b",
+  "envelope_sha256": "939d6f09cd66fcc2d1e2fe4d0ebef64846d2cae7d6d7191ee34e7d91615da861",
+  "verified_at_note": "就地复算，非平台门；平台门结论以平台为准",
+  "checks": [
+    {
+      "check": "source_hash_matches",
+      "status": "pass",
+      "detail": "fresh sha256=79d795674f0b13f828d8933af64612a1addb30cb8a8b903f7ab136f0508442b9 contract=79d795674f0b13f828d8933af64612a1addb30cb8a8b903f7ab136f0508442b9"
+    },
+    {
+      "check": "source_chars_match_contract",
+      "status": "pass",
+      "detail": "fresh chars=6222 contract=6222"
+    },
+    {
+      "check": "valid_json",
+      "status": "pass",
+      "detail": "artifacts/wp-13988-01/asset_manifest.json re-parsed (sha256=096b1a8741db4fddfa8fb7a968053b9e65a5a10a8ea7f6907757dd545be9b30b)"
+    },
+    {
+      "check": "manifest_hash_matches_fresh_source",
+      "status": "pass",
+      "detail": "manifest source.hash == fresh sha256 of API markdown"
+    },
+    {
+      "check": "source_locator_resolvable",
+      "status": "pass",
+      "detail": "29 assets: quote unique=29/29, char-span exact=29/29 (offenders span=[] unique=[])"
+    },
+    {
+      "check": "no_duplicate_ids",
+      "status": "pass",
+      "detail": "asset_id 29/29 unique, claim_id 0/0 unique"
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "status": "pass",
+      "detail": "claims=0; every claim carries evidence or an explicit status"
+    },
+    {
+      "check": "referenced_unresolved_still_unresolved",
+      "status": "pass",
+      "detail": "4 path-referenced assets re-tested against the worktree (of 7 referenced_unresolved); offenders=none"
+    },
+    {
+      "check": "schema_pass",
+      "status": "pass",
+      "detail": "manifest validates against docs/wp-13988-01/asset_manifest.v1.schema.json | envelope validates against schemas/kf_result.v1.schema.json | negative control: schema rejects envelope missing required keys"
+    },
+    {
+      "check": "envelope_source_hash_matches",
+      "status": "pass",
+      "detail": "envelope provenance.source_hash == sha256(fresh markdown)"
+    },
+    {
+      "check": "no_asset_marked_verified",
+      "status": "pass",
+      "detail": "no asset/locator field promotes a claim to verified (offenders=none)"
+    }
+  ]
+}
