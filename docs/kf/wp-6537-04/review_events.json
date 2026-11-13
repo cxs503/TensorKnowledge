@@ -1,0 +1,58 @@
+[
+  {
+    "id": "tkr:wp-6537-04:request-changes",
+    "object_ref": "wp-6537-01",
+    "object_version": "sha256:5afa3314a56cda0010c8de63fea5f5218d8009f8a6388220ead0f5cf668468a2",
+    "decision": "request-changes",
+    "reviewer": {
+      "id": "agent/m15847",
+      "reviewer_type": "agent",
+      "role": "red-team-reviewer"
+    },
+    "reviewed_at": "2026-11-12T03:40:00Z",
+    "policy_version": "ke-review-v0.1",
+    "rationale": "登记主体合格（37/37 资产在各自声明字段内逐字可定位、源哈希逐位一致、零 claim 合法、无自封验证字段），但 manifest 的 integrity.quote_uniqueness 断言与 6/37 条 locator 的 start_char/end_char 语义不符（对象跨度 vs quote 偏移），需改述或改编码；另 7 条源报告数字缺陷须作为 wp-6537-03 的 carry-forward 约束（见 review_report.json）。",
+    "findings": [
+      {
+        "severity": "major",
+        "finding": "FN-6537-04-01 表 3.3 的六船罚金共用同一套年度能量：五条非 FAME 船拟合出同一值 145.23 TJ（LNGC-174k 与 BC-82k 无差别），FAME 行 152.49 TJ = 1.05×（sfoc_scale）"
+      },
+      {
+        "severity": "major",
+        "finding": "FN-6537-04-02 同一年（2035）同一限值下，联营基线罚金与表 3.3 独立罚金之和不一致（差 -3.76%）"
+      },
+      {
+        "severity": "major",
+        "finding": "FN-6537-04-03 纯联营罚金无法由报告自印的 (GI, 年度能量) 复算：声明值为复算值的 34.6%"
+      },
+      {
+        "severity": "minor",
+        "finding": "FN-6537-04-10 联营 MILP 的燃料单价矩阵未印出（只有总成本与最优组合），最优性不可独立复算"
+      },
+      {
+        "severity": "major",
+        "finding": "FN-6537-04-04 表 3.5 标题为“能量等价切换”，实测 12 行年度能量 72.03–430.3 TJ（跨 6 倍），甲醇/氨约减半"
+      },
+      {
+        "severity": "minor",
+        "finding": "FN-6537-04-05 判据①“附件 II 默认 WtT 复现”严格说是内部一致性闸，措辞易被摘成外部复现"
+      },
+      {
+        "severity": "minor",
+        "finding": "FN-6537-04-06 3 行 TtW 用印出的 LHV/CF/N2O(0.0006) 复算残差 -0.08–-0.05 gCO2e/MJ（≤0.12%）"
+      },
+      {
+        "severity": "major",
+        "finding": "FN-6537-04-07 上游 locator 把“对象跨度”写进 start_char/end_char，6/37 条严格 field[start:end]==quote 不成立"
+      },
+      {
+        "severity": "informational",
+        "finding": "FN-6537-04-09 locator 使用保留词 verified:true 表示字节比对通过（不在 S9 扫描面，无契约违反）"
+      },
+      {
+        "severity": "minor",
+        "finding": "FN-6537-04-08 5 张图的字节在本平台不可达（探测全 404）：登记为 metadata_only 是诚实的，但图像内容不可复核"
+      }
+    ]
+  }
+]
