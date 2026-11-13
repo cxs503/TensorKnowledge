@@ -1,0 +1,29 @@
+{
+  "schema_checks": {
+    "validator": "jsonschema Draft7 (shared schema declares draft-07)",
+    "against_shared_schema": {
+      "errors": [
+        "package_id",
+        "report_id",
+        "source/uri"
+      ],
+      "errors_are_identity_consts_only": true,
+      "explanation": "The shared schema pins wp-448-01's identity; every reported error must be one of package_id/report_id/source/uri — that is the evidence that only the identity consts differ."
+    },
+    "against_derived_schema": {
+      "errors": [],
+      "pass": true
+    }
+  },
+  "kf_result_envelope_check": {
+    "schema": "schemas/kf_result.v1.schema.json",
+    "errors": [],
+    "pass": true
+  },
+  "verification_ok": true,
+  "verification_failures": [],
+  "hash_matches_contract": true,
+  "chars_matches_contract": true,
+  "assets": 11,
+  "claims": 0
+}
