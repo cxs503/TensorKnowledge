@@ -38,6 +38,30 @@ PRESETS = {
         "out_dir": "docs/kf/wp-7450-01",
         # interface tokens registered on top of the auto-scan (package config, not domain hard-coding)
         "declared_tokens": {"api_endpoint": ["/cii"], "api_field": ["allow_inapplicable_year"]},
+    },
+    "wp-14445-01": {
+        "package_id": "wp-14445-01",
+        "report_id": "14445",
+        "expected_hash": "0fad2f03c7cceceba726538a60a0c9e206b0a932e9d53e10f5e32388da25c85b",
+        "expected_chars": 8040,
+        "title": "GAP-PP-5 可微路径设备口径：文档化 CPU 基线 + tensor-tau 梯度回归 A/B（m15359）",
+        "scenario_key": "gap_pp5_cpu_baseline",
+        "out_dir": "docs/kf/wp-14445-01",
+        "mission_id": 15792,
+        # interface/code surfaces the report references but that carry no file extension, so the
+        # deterministic path scan cannot see them (package config, not tool hard-coding)
+        "declared_tokens": {
+            "commit_ref": ["16b48fe4de98c054c68674f60b11245e79f5489d", "5db76f6d"],
+            "cluster_job_ref": ["cj1081"],
+            "repo_path_ref": ["TensorLBM/benchmarks/verified/shear_wave_decay"],
+            "code_symbol": ["check_relaxation_time", "_as_float", "collide_bgk"],
+        },
+        # prose for the report renderer (package config; keeps domain names out of the shared tool)
+        "cross_repo_note": "属产出仓 TensorLBM 的路径",
+        "cross_repo_short": "TensorLBM",
+        "cross_repo_refs": "`artifacts/gap_pp5_cpu_baseline/bench_diff_lbm_cpu.py`、`runs/gap_pp5_cpu_baseline`、"
+                           "`input_contract.check_relaxation_time` 等属 TensorLBM 仓",
+        "table_note": "§3 参数表与 §4.1–4.4/§5 数据表共 6 张表只登记几何（行×列）与字符跨度",
     }
 }
 
@@ -711,6 +735,11 @@ def render_report(cfg, out_dir: Path, png: Path):
     msha = hashlib.sha256((out_dir / "asset_manifest.json").read_bytes()).hexdigest()
     rsha = hashlib.sha256((out_dir / "kf_result.json").read_bytes()).hexdigest()
     n = manifest["counts"]["assets"]
+    # package-level prose comes from the preset config: the shared renderer stays domain-neutral
+    xrepo = cfg.get("cross_repo_note", "属产出仓 ship-performance-platform 的路径")
+    xrepo_short = cfg.get("cross_repo_short", "ship-performance-platform")
+    xrepo_refs = cfg.get("cross_repo_refs", "`backend/...py`、`artifacts/cii_crosscheck_m6284/...py` 等")
+    table_note = cfg.get("table_note", "表 1/2/3 只登记几何（行×列）与字符跨度")
 
     def cell(v, lim=64):
         return (v.replace("\n", " ").replace("|", "\\|").replace("`", "'"))[:lim]
@@ -754,8 +783,8 @@ def render_report(cfg, out_dir: Path, png: Path):
         "4. **扫描规则**（确定性、无领域硬编码；域参数经包配置传入）：行内代码/围栏代码中的 `*.py|json|png|md|csv|yaml` 路径 → 路径引用"
         "（出现级身份 = 路径 × 行号）；`record.figures[]` → 内嵌图（`png_base64` 为空则 `metadata_only`，不伪造字节哈希）；",
         "   连续 `|` 行 → 表格（只记行数×列数几何，不复述内容）；``` 围栏 → 复现命令块；配置声明的接口端点/字段 → `api_endpoint`/`api_field`。",
-        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；属产出仓 ship-performance-platform 的路径",
-        "   越界即如实记 `referenced_unresolved`，不读别的仓。",
+        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；" + xrepo + "，越界即如实记",
+        "   `referenced_unresolved`，不读别的仓。",
         "6. **信封 + 自检**：`kf_result.json` 按 `schemas/kf_result.v1.schema.json` 生成；`verification.json` 用 jsonschema（draft 2020-12）",
         "   分别校验信封与清单，并逐条重算 acceptance 项。",
         "",
@@ -779,7 +808,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "",
         "**图注**：A) 资产类别 × 解析状态（绿=源内已解析、红=引用未解析、灰=声明缺失）；B) 每个资产在 markdown 中的字符跨度",
         "（横轴=字符偏移，源文档 %d 字符）。两图直接由 `asset_manifest.json` 绘出，零手抄。" % manifest["source"]["chars"],
-        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（ship-performance-platform），本包不得读写，故只能如实记 `referenced_unresolved`。",
+        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（" + xrepo_short + "），本包不得读写，故只能如实记 `referenced_unresolved`。",
         "",
         "## ⑤ 证据定位表（资产 → 原文逐字片段，均由 `md[start_char:end_char]` 计算）",
         "",
@@ -795,9 +824,9 @@ def render_report(cfg, out_dir: Path, png: Path):
         "2. **不标 verified**：清单与信封里没有任何 `verified` 状态；验证由平台门计算，本工序只提供可复算的定位器与哈希。",
         "3. **图只有元数据**：报告记录 `figures[]` 两项均无 `png_base64` 载荷（0 字节），故只登记 name/caption + 正文出现位置，",
         "   记 `metadata_only`（`resolution=referenced_unresolved`），**不宣称拿到图字节**。",
-        "4. **跨仓引用不可解析**：报告引用的 `backend/...py`、`artifacts/cii_crosscheck_m6284/...py` 等属 ship-performance-platform 仓，",
+        "4. **跨仓引用不可解析**：报告引用的 " + xrepo_refs + "，",
         "   本工作树（TensorKnowledge）内不存在 → 全部 `referenced_unresolved`，并在 `resolution_check.detail` 写明原因，不做「大概存在」的推断。",
-        "5. **表格内容未复述**：表 1/2/3 只登记几何（行×列）与字符跨度，避免把报表数字二次转写引入漂移。",
+        "5. **表格内容未复述**：" + table_note + "，避免把报表数字二次转写引入漂移。",
         "6. **schema 口径**：仓库内 `schemas/asset_manifest.v1.schema.json` 把 `package_id/task_type/report_id`/`source.uri` 钉死为 wp-448-01 的包级取值，",
         "   自检时**仅放松这四处包级固定值**（`source.uri` 改为 `^tensor://reports/[0-9]+$`，其余约束照常生效）并如实记录在 `detail` 里，避免把「本包必挂」伪装成通过。",
         "",
@@ -810,10 +839,10 @@ def render_report(cfg, out_dir: Path, png: Path):
         "## 复现",
         "",
         "```bash",
-        "python3 scripts/kf/kf01_register.py --preset wp-7450-01 build result verify figure report   # 一键复跑（全流程）",
+        "python3 scripts/kf/kf01_register.py --preset %s build result verify figure report   # 一键复跑（全流程）" % cfg["package_id"],
         "```",
         "",
-        "repro_cmd: `python3 scripts/kf/kf01_register.py --preset wp-7450-01 build result verify figure report`",
+        "repro_cmd: `python3 scripts/kf/kf01_register.py --preset %s build result verify figure report`" % cfg["package_id"],
         "",
         "## 结果信封（唯一 json 代码块，原样提交）",
         "",
@@ -841,7 +870,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "markdown": text,
         "figures": [{
             "name": png.name,
-            "caption": "wp-7450-01 asset inventory & locator coverage map (computed from asset_manifest.json)",
+            "caption": "%s asset inventory & locator coverage map (computed from asset_manifest.json)" % cfg["package_id"],
             "png_base64": base64.b64encode(png.read_bytes()).decode(),
         }],
     }
