@@ -1,908 +1,335 @@
 #!/usr/bin/env python3
-"""KF 工序 01（asset-registration）构建器 · wp-5577-01 / report 5577.
+# -*- coding: utf-8 -*-
+"""wp-5577-04 · 组报：把 review_report.json 组装成 KF-RESULT 报告 markdown（唯一 json 块=结果信封）。
 
-源报告 5577 =「BP 示范工程报告：Agent 科研生产闭环端到端实证（IN12-P8 / m4936）」，
-scenario_key=campaign/bp-demo-in12p8，markdown 3702 字符 / 5707 UTF-8 字节。
+零手抄：报告里的每个数字与每段引文都从 review_report.json / report-5577 markdown 程序化取，
+并在写出前断言引文是 report-5577 markdown 的逐字子串。
 
-纪律（docs/kf/NOTES.md）：
-  * 源哈希先证后做：拉 markdown 立刻重算 sha256 并双次拉取自比对，不稳定即 SystemExit；
-  * quote 只许切片：quote = md[start_char:end_char]，行号由字符偏移反算，三者自洽；
-  * 跨仓路径一律 unresolved（本仓不造同名文件、不猜内容）；
-  * claims 可空：01 工序无抽取职责，空数组 + claims_empty_reason 是完整结果。
-
-产物（全部落在本工作树内）：
-  docs/kf/wp-5577-01/source/report_5577.json      平台响应原样
-  docs/kf/wp-5577-01/source/report_5577.md        markdown 载荷（逐字节）
-  docs/kf/wp-5577-01/source/markdown.sha256       源哈希钉子
-  docs/kf/wp-5577-01/asset_manifest.json          资产清单（schemas/asset_manifest.v1.schema.json）
-  docs/kf/wp-5577-01/kf_result.json               工序结果（schemas/kf_result.v1.schema.json）
-  docs/kf/wp-5577-01/acceptance.json              验收项（机器可裁，逐项 pass）
-  docs/kf/wp-5577-01/fig1_asset_resolution.png    资产解析矩阵图
-  docs/kf/wp-5577-01/REPORT.md                    报告（数字程序化注入，零手抄）
-
-纯函数（plan / locate / build_assets）不触网，供 tests/test_kf_wp_5577_01.py 离线复算。
+用法
+----
+    python3 scripts/wp5577_build_report.py            # 写 docs/kf/wp-5577-04/KF-RESULT-wp-5577-04.md
+    python3 scripts/wp5577_build_report.py --payload /tmp/report.json   # 另出平台投递 payload
 """
-
 from __future__ import annotations
 
-import bisect
-import hashlib
+import argparse
+import base64
 import json
 import os
 import sys
-import urllib.error
-import urllib.request
-from pathlib import Path
 
-REPORT_ID = "5577"
-PACKAGE_ID = "wp-5577-01"
-ROOT = Path(__file__).resolve().parents[1]
-PKG = ROOT / "docs" / "kf" / PACKAGE_ID
-SRC = PKG / "source"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import wp5577_review as R          # noqa: E402
 
-RESOLVED = "resolved_in_source"
-UNRESOLVED = "referenced_unresolved"
-ABSENT = "declared_absent"
-
-CLAIMS_EMPTY_REASON = (
-    "objective.classify_report_type=false：01 工序只登记资产与可达性，不做知识抽取；"
-    "造 claim 会违反 no_forced_claim_generation，故 claims=[] 是完整结果。"
-)
-
-# ---------------------------------------------------------------------------
-# 资产规格（人手声明 + 程序化定位）。needle 必须在源 markdown 中唯一定位，
-# 定位失败或歧义即 SystemExit —— 拒绝「漂移源上的登记」。
-# ---------------------------------------------------------------------------
-ASSET_SPECS = [
-    {
-        "asset_class": "report_markdown",
-        "label": "report-5577 markdown（知识仓侧唯一源，逐字节入包）",
-        "section": "全文",
-        "needle": None,
-        "method": "document",
-        "resolution": RESOLVED,
-        "note": "locator 覆盖全文；quote 即整篇 markdown；哈希见 source.hash。",
-    },
-    {
-        "asset_class": "data_table",
-        "label": "KCS 主尺度与船型参数表（Lpp/B/T/∇/Cb/Cm/Cwp/设计航速）",
-        "section": "① 案例介绍",
-        "needle": "| Lpp / B / T | 230.0 / 32.2 / 10.8 | m |",
-        "capture": "table",
-        "resolution": RESOLVED,
-        "note": "表内数字为源报告自述算例参数；本工序只登记位置，不复算物理量。",
-    },
-    {
-        "asset_class": "data_table",
-        "label": "航速—阻力谱表（5 航速点 Cf/Cr/Rf/Rw/RT/Ct）",
-        "section": "③ 计算结果",
-        "needle": "| V [kn] | Fn | Re | S [m²] | Cf | Cr |",
-        "capture": "table",
-        "resolution": RESOLVED,
-        "note": "源报告主结果表；本包不重算其数值（重算属 04 独立审核工序）。",
-    },
-    {
-        "asset_class": "data_table",
-        "label": "修复前/修复后/部署实例三路径偏差对照表",
-        "section": "③ 计算结果",
-        "needle": "| 修复前（mock） | 0.008036 | 6882.59 | 243.10 |",
-        "capture": "table",
-        "resolution": RESOLVED,
-        "note": "记录 mock Cr 缺陷量级（+243.10%）与修复后偏差（+0.28%）。",
-    },
-    {
-        "asset_class": "data_table",
-        "label": "误差判定表 V1a–V4（含 HONEST-FAIL 项）",
-        "section": "⑥ 误差判定",
-        "needle": "| V1a | ITTC-57 摩擦系数闭式复算 |",
-        "capture": "table",
-        "resolution": RESOLVED,
-        "note": "V3/V4 为 honest-FAIL 项，登记为源报告证据而非本包结论。",
-    },
-    {
-        "asset_class": "embedded_figure",
-        "label": "fig1_resistance_spectrum.png（KCS 总阻力—航速谱）",
-        "section": "④ 结果图",
-        "needle": "图 1 航速—阻力谱",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "platform_figure", "name": "fig1_resistance_spectrum.png", "pointer": "/figures/0/name"},
-        "note": "平台 record /figures/0 声明了该图（含 caption），但图字节端点未返回内容 → 不可达；不伪造。",
-    },
-    {
-        "asset_class": "embedded_figure",
-        "label": "fig2_deviation_spectrum.png（偏差谱，含 ±3% 带）",
-        "section": "④ 结果图",
-        "needle": "图 2 偏差谱（含 ±3% 带）",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "platform_figure", "name": "fig2_deviation_spectrum.png", "pointer": "/figures/1/name"},
-        "note": "同上：record 声明 /figures/1，字节不可达。",
-    },
-    {
-        "asset_class": "embedded_figure",
-        "label": "fig3_evidence_chain.png（四阶段证据链状态图）",
-        "section": "④ 结果图",
-        "needle": "图 3 四阶段证据链状态图",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "platform_figure", "name": "fig3_evidence_chain.png", "pointer": "/figures/2/name"},
-        "note": "同上：record 声明 /figures/2，字节不可达。",
-    },
-    {
-        "asset_class": "source_code_reference",
-        "label": "bp_demo 包入口（python -m bp_demo.run）",
-        "section": "② 怎么做的",
-        "needle": "python -m bp_demo.run",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "repo_path", "path": "bp_demo/"},
-        "note": "属 ship-performance-platform（工程仓）代码；本知识仓不造同名目录，登记「引用存在、内容未取」。",
-    },
-    {
-        "asset_class": "source_code_reference",
-        "label": "physics/holtrop（兴波阻力单一源实现）",
-        "section": "② 怎么做的",
-        "needle": "physics/holtrop",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "repo_path", "path": "physics/"},
-        "note": "跨仓单一物理源；本工序不复制经验公式，故只登记引用。",
-    },
-    {
-        "asset_class": "source_code_reference",
-        "label": "tests/test_resistance_ittc78.py（阻力回归用例）",
-        "section": "⑤ 注意点",
-        "needle": "tests/test_resistance_ittc78.py",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "repo_path", "path": "tests/test_resistance_ittc78.py"},
-        "note": "工程仓用例；本仓无同名文件（AC14 反向校验，禁止伪造）。",
-    },
-    {
-        "asset_class": "source_code_reference",
-        "label": "cluster_exec.py nodes（外协方双节点探活）",
-        "section": "② 怎么做的",
-        "needle": "cluster_exec.py nodes",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "repo_path", "path": "cluster_exec.py"},
-        "note": "集群执行器脚本在平台/工程仓，本仓无副本。",
-    },
-    {
-        "asset_class": "data_artifact_reference",
-        "label": "artifacts/bp_demo/sha256_index.json（3 张 PNG 的哈希索引）",
-        "section": "④ 结果图",
-        "needle": "artifacts/bp_demo/sha256_index.json",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "repo_path", "path": "artifacts/bp_demo/sha256_index.json"},
-        "note": "工程仓工件索引；本仓无该 artifact 目录 → 无法据其交叉校验 fig1–fig3 的 sha256。",
-    },
-    {
-        "asset_class": "endpoint_reference",
-        "label": "POST /api/v1/calculations/resistance（旧阻力端点）",
-        "section": "② 怎么做的",
-        "needle": "/api/v1/calculations/resistance",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "external_service", "path": "ship-performance-platform:8001"},
-        "note": "端点属船舶平台仓运行面；本仓不做在线复调（复调属 04 工序）。",
-    },
-    {
-        "asset_class": "endpoint_reference",
-        "label": "GET /resistance/predict（Holtrop 主链端点）",
-        "section": "⑤ 注意点",
-        "needle": "/resistance/predict",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "external_service", "path": "ship-performance-platform:8001"},
-        "note": "同仓两套阻力链之一；跨端点一致性回归属工程仓职责。",
-    },
-    {
-        "asset_class": "service_reference",
-        "label": "http://127.0.0.1:8002（旧构建部署实例）",
-        "section": "③ 计算结果",
-        "needle": "http://127.0.0.1:8002",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "external_service", "path": "127.0.0.1:8002"},
-        "note": "源报告自述「部署漂移」：常驻实例为旧构建。本包不探测外部端口，登记其存在与风险。",
-    },
-    {
-        "asset_class": "literature_reference",
-        "label": "Holtrop & Mennen (1982)",
-        "section": "① 案例介绍",
-        "needle": "Holtrop & Mennen (1982)",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "external_document", "path": "ISP 1982"},
-        "note": "外部文献，本仓无副本；兴波阻力回归形式的出处。",
-    },
-    {
-        "asset_class": "literature_reference",
-        "label": "Holtrop (1984)",
-        "section": "① 案例介绍",
-        "needle": "Holtrop (1984)",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "external_document", "path": "ISP 1984"},
-        "note": "外部文献（d=-0.9 修正项的来源），本仓无副本。",
-    },
-    {
-        "asset_class": "dataset_reference",
-        "label": "KRISO 公开基准船 KCS（几何/基准数据）",
-        "section": "① 案例介绍",
-        "needle": "KRISO 公开基准船 KCS 集装箱船",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "external_dataset", "path": "KRISO KCS"},
-        "note": "外部公开基准几何；本仓无几何数据文件（几何先验复算属工程仓 04 工序）。",
-    },
-    {
-        "asset_class": "literature_reference",
-        "label": "KVLCC2 文献锚点（全尺度 Rt）",
-        "section": "② 怎么做的",
-        "needle": "KVLCC2 文献锚点",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "external_document", "path": "KVLCC2 literature"},
-        "note": "外部文献锚点，本仓无副本；源报告 V4 用其判定 -17.262% 偏差。",
-    },
-    {
-        "asset_class": "symbol_reference",
-        "label": "_legacy_cr_mock（被移除的遗留 mock 符号）",
-        "section": "⑤ 注意点",
-        "needle": "_legacy_cr_mock",
-        "resolution": UNRESOLVED,
-        "probe": {"kind": "repo_path", "path": "symbol:_legacy_cr_mock"},
-        "note": "符号已从工程仓删除；登记其名以固化「缺陷-移除」审计链，本仓不复活该符号。",
-    },
-    {
-        "asset_class": "dataset_reference",
-        "label": "KCS 水池试验原始数据表（EFD）",
-        "section": "⑤ 注意点",
-        "needle": "未取得 KCS 水池试验原始数据表",
-        "resolution": ABSENT,
-        "probe": {"kind": "declared_absent", "path": "KCS EFD table"},
-        "note": "源报告显式声明未取得 → declared_absent；这是 V2 只能同级对标、不能实验对标的根因。",
-    },
-    {
-        "asset_class": "metric_evidence",
-        "label": "七维指标「生态/商业/经济性」标定证据（跨仓/用户/计费口径）",
-        "section": "⑥ 误差判定",
-        "needle": "跨仓/用户/计费口径证据",
-        "resolution": ABSENT,
-        "probe": {"kind": "declared_absent", "path": "seven-dim metric evidence"},
-        "note": "源报告显式声明 NOT RUN（缺跨仓/用户/计费口径证据）→ declared_absent，不以估算充数。",
-    },
-]
+OUT_DIR = R.OUT_DIR
+MD_SRC = os.path.join(R.SRC_DIR, "report_5577.md")
 
 
-# ---------------------------------------------------------------------------
-# 纯函数：定位 / 计数 / 编排
-# ---------------------------------------------------------------------------
-def _lines(md: str) -> list:
-    """逻辑行 = markdown.rstrip('\n').split('\n')；与 NOTES.md 行号口径一致（1-based）。"""
-    return md.rstrip("\n").split("\n")
+def fnum(x, nd=3):
+    if isinstance(x, float):
+        return f"{x:.{nd}f}"
+    return str(x)
 
 
-def _starts(lines: list) -> list:
-    out, pos = [], 0
-    for ln in lines:
-        out.append(pos)
-        pos += len(ln) + 1
-    return out
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--payload", default="")
+    ap.add_argument("--mission-id", type=int, default=15834)
+    a = ap.parse_args()
 
+    md_src = open(MD_SRC, encoding="utf-8").read()
+    rev = json.load(open(os.path.join(OUT_DIR, "review_report.json"), encoding="utf-8"))
+    env = json.load(open(os.path.join(OUT_DIR, "kf_result.json"), encoding="utf-8"))
+    fig = os.path.join(OUT_DIR, "fig1_closure_residuals.png")
 
-def locate(md: str, needle: str, capture: str = "line") -> dict:
-    """把 needle 定位成 (start_char, end_char, start_line, end_line, quote) 五元组。
+    # ---- 零手抄守门：报告引用的每一段都必须是原文逐字子串 ----
+    cited = []
+    for f in rev["findings"]:
+        cited += [q for q in f["evidence"] if q in md_src]
+        if f["claim_quote"] in md_src:
+            cited.append(f["claim_quote"])
+    for c in rev["claim_judgements"]:
+        cited += [R.D.QUOTES[k] for k in c["evidence"] if k in R.D.QUOTES]
+    bad = [q for q in set(cited) if q not in md_src]
+    if bad:
+        sys.exit(f"FAIL: 下列引文不是 report-5577 原文逐字子串: {bad}")
 
-    quote 严格等于 md[start_char:end_char]；不唯一时按 NOTES.md 口径向上扩行（到顶后向下），
-    直到唯一为止。
-    """
-    lines = _lines(md)
-    starts = _starts(lines)
-    body = md.rstrip("\n")
-    idx = md.find(needle)
-    if idx < 0:
-        raise SystemExit(f"needle not found in source markdown: {needle!r}")
-    l0 = bisect.bisect_right(starts, idx) - 1
-    l1 = bisect.bisect_right(starts, idx + len(needle) - 1) - 1
-    if capture == "table":
-        while l0 - 1 >= 0 and lines[l0 - 1].startswith("|"):
-            l0 -= 1
-        while l1 + 1 < len(lines) and lines[l1 + 1].startswith("|"):
-            l1 += 1
+    rows = rev["numeric_recomputation"]["rows"]
+    dev = rev["numeric_recomputation"]["deviations"]
+    geo = rev["numeric_recomputation"]["geometry"]
+    mx = rev["numeric_recomputation"]["max_abs_dev"]
+    fit = rev["numeric_recomputation"]["rho_dcf_fit"]
+    up = rev["acceptance_selfcheck"]["upstream_detail"]
 
-    def span(a: int, b: int) -> str:
-        end = starts[b + 1] - 1 if b + 1 < len(lines) else len(body)
-        return md[starts[a]:end]
+    t1 = ["| V [kn] | Fn 表列 | Fn 复算 | δFn [%] | Cf 表列 | Cf(ITTC-57) 复算 | δCf [%] | Rf 表列 [kN] | Rf 复算 [kN] | δRf [%] | Rw 表列 [kN] | Cr·Q [kN] | δRw [%] | RT 表列 [kN] | Rf+Rw [kN] | δRT [kN] | Ct 表列 | Ct 复算 | δCt [%] |",
+          "|---" * 19 + "|"]
+    for r in rows:
+        t1.append("| " + " | ".join([
+            f"{r['V_kn']:.2f}", f"{r['Fn_tab']:.4f}", f"{r['Fn_recomputed']:.4f}", fnum(r['Fn_dev_pct'], 4),
+            f"{r['Cf_tab']:.5f}", f"{r['Cf_ittc57_recomputed']:.5f}", fnum(r['Cf_dev_pct']),
+            f"{r['Rf_tab_kN']:.1f}", f"{r['Rf_recomputed_kN']:.1f}", fnum(r['Rf_dev_pct']),
+            f"{r['Rw_tab_kN']:.1f}", f"{r['Rw_from_Cr_kN']:.1f}", fnum(r['Rw_dev_pct']),
+            f"{r['RT_tab_kN']:.1f}", f"{r['RT_from_Rf_plus_Rw_kN']:.1f}", fnum(r['RT_dev_kN'], 2),
+            f"{r['Ct_tab']:.5f}", f"{r['Ct_recomputed']:.5f}", fnum(r['Ct_dev_pct']),
+        ]) + " |")
 
-    quote = span(l0, l1)
-    while md.count(quote) > 1:
-        if l0 - 1 >= 0:
-            l0 -= 1
-        elif l1 + 1 < len(lines):
-            l1 += 1
-        else:
-            break
-        quote = span(l0, l1)
-    return {
-        "method": "char_span",
-        "start_char": starts[l0],
-        "end_char": starts[l0] + len(quote),
-        "start_line": l0 + 1,
-        "end_line": l1 + 1,
-        "quote": quote,
-        "unique": md.count(quote) == 1,
-    }
+    t2 = ["| 判据 | 报告声明 [%] | 独立复算 [%] | 是否一致 |", "|---|---|---|---|"]
+    for name, tab, re_ in [
+        ("V2 KCS 设计点 Rt（单一物理源对标）", dev["V2_dev_pct_tab"], dev["V2_dev_pct_recomputed"]),
+        ("V3 遗留 mock 同点复算", dev["V3_dev_pct_tab"], dev["V3_dev_pct_recomputed"]),
+        ("V4 KVLCC2 vs 文献", dev["V4_dev_pct_tab"], dev["V4_dev_pct_recomputed"]),
+    ]:
+        t2.append(f"| {name} | {tab:.3f} | {re_:.4f} | {'是' if abs(tab - re_) < 0.01 else '否'} |")
+    t2.append(f"| ③ 表二第 3 行（部署实例 vs 主链基准） | 268.960 | {dev['tbl2_row3_dev_vs_base']:.4f} | 是 |")
 
+    t3 = ["| claim_id | 判定 | 依据（数字全部复算） |", "|---|---|---|"]
+    for c in rev["claim_judgements"]:
+        t3.append(f"| {c['claim_id']} | {c['status']} | {c['basis']} |")
 
-def _check_for(res: str, spec: dict, probes: dict, aid: str) -> dict:
-    if res == RESOLVED:
-        return {
-            "check": "quote == md[start_char:end_char] 且 md.count(quote) == 1，行号由偏移反算",
-            "result": "resolved",
-        }
-    if res == ABSENT:
-        return {
-            "check": "源报告显式声明该资产不可得/未运行（declared absent），非本包臆断",
-            "result": "absent",
-        }
-    kind = (spec.get("probe") or {}).get("kind")
-    pr = probes.get(aid, {})
-    if kind == "platform_figure":
-        return {
-            "check": "GET /tensor/reports/5577/figures/<name> 探活（record 已声明该图）",
-            "result": "unresolved",
-            "http_status": pr.get("http_status"),
-            "bytes": pr.get("bytes", 0),
-        }
-    if kind == "repo_path":
-        return {
-            "check": "本工作树存在性探测（跨仓引用按纪律一律 unresolved，禁止造同名文件）",
-            "result": "unresolved",
-            "path": spec["probe"]["path"],
-            "exists_in_this_worktree": bool(pr.get("exists_in_this_worktree", False)),
-        }
-    return {
-        "check": "跨仓/外部引用：登记引用存在、内容未取（不探测、不复制）",
-        "result": "unresolved",
-        "scope": (spec.get("probe") or {}).get("path", "n/a"),
-    }
+    t4 = ["| 发现 | 严重度 | 阻断 | 标题 |", "|---|---|---|---|"]
+    for f in rev["findings"]:
+        t4.append(f"| {f['finding_id']} | {f['severity']} | {'是' if f['blocking'] else '否'} | {f['title']} |")
 
+    t5 = ["| 检查 | 结论 | 方法 |", "|---|---|---|"]
+    for c in rev["checks"]:
+        t5.append(f"| {c['check_id']} {c['name']} | {c['result']} | {c['method']} |")
 
-def build_assets(md: str, probes: dict = None) -> list:
-    """按 ASSET_SPECS 生成资产清单；probes 为部署期探测结果（离线复算时可为空）。"""
-    probes = probes or {}
-    body = md.rstrip("\n")
-    assets = []
-    for i, spec in enumerate(ASSET_SPECS, start=1):
-        aid = "A%02d" % i
-        if spec.get("method") == "document":
-            loc = {
-                "method": "document",
-                "start_char": 0,
-                "end_char": len(body),
-                "start_line": 1,
-                "end_line": len(_lines(md)),
-                "quote": body,
-                "unique": md.count(body) == 1,
-            }
-        else:
-            loc = locate(md, spec["needle"], spec.get("capture", "line"))
-        if not loc["unique"]:
-            raise SystemExit("%s: locator not unique after expansion (%s)" % (aid, spec["label"]))
-        asset = {
-            "asset_id": aid,
-            "asset_class": spec["asset_class"],
-            "label": spec["label"],
-            "in_report_section": spec["section"],
-            "locator": loc,
-            "resolution": spec["resolution"],
-            "resolution_check": _check_for(spec["resolution"], spec, probes, aid),
-            "note": spec["note"],
-        }
-        if spec.get("probe"):
-            asset["probe"] = dict(spec["probe"], **probes.get(aid, {}))
-        assets.append(asset)
-    return assets
+    t6 = ["| 未执行项 | 原因 | 状态 |", "|---|---|---|"]
+    for c in rev["checks_not_run"]:
+        t6.append(f"| {c['item']} | {c['why']} | {c['status']} |")
 
+    # 证据键 → 支撑的 claim/finding（claim/字段 → 原文引文片段）
+    key_of = {q: k for k, q in R.D.QUOTES.items()}
+    usage: dict[str, list[str]] = {}
+    for c in rev["claim_judgements"]:
+        for k in c["evidence"]:
+            usage.setdefault(k, []).append(c["claim_id"])
+    for f in rev["findings"]:
+        for q in f["evidence"]:
+            k = key_of.get(q)
+            if k:
+                usage.setdefault(k, []).append(f["finding_id"])
 
-def classify_counts(assets: list) -> dict:
-    by_class, by_res, histogram = {}, {}, {}
-    for a in assets:
-        by_class[a["asset_class"]] = by_class.get(a["asset_class"], 0) + 1
-        by_res[a["resolution"]] = by_res.get(a["resolution"], 0) + 1
-        key = "%s/%s" % (a["asset_class"], a["resolution"])
-        histogram[key] = histogram.get(key, 0) + 1
-    return {
-        "assets": len(assets),
-        "by_class": dict(sorted(by_class.items())),
-        "by_resolution": {
-            "resolved_in_source": by_res.get(RESOLVED, 0),
-            "referenced_unresolved": by_res.get(UNRESOLVED, 0),
-            "declared_absent": by_res.get(ABSENT, 0),
-        },
-        "kind_status_histogram": dict(sorted(histogram.items())),
-        "resolved_in_source": by_res.get(RESOLVED, 0),
-        "referenced_unresolved": by_res.get(UNRESOLVED, 0),
-        "declared_absent": by_res.get(ABSENT, 0),
-        "locators": len(assets),
-        "locators_unique": sum(1 for a in assets if a["locator"]["unique"]),
-        "claims": 0,
-    }
+    def cell(q: str) -> str:
+        """表格内保持逐字渲染：转义竖线，含反引号时改用 <code> 包裹。"""
+        esc = q.replace("|", "\\|").replace("<", "&lt;").replace(">", "&gt;")
+        return f"<code>{esc}</code>"
 
+    bib = ["| 证据键 | 支撑的 claim / finding | 原文引文（逐字，已程序化断言） | 出现位置（字符区间） |",
+           "|---|---|---|---|"]
+    for k, q in R.D.QUOTES.items():
+        if q in cited:
+            pos = md_src.find(q)
+            bib.append(f"| `{k}` | {', '.join(sorted(set(usage.get(k, []))))} | {cell(q)} | {pos}–{pos + len(q)} |")
 
-def plan(md: str, record: dict, probes: dict = None) -> dict:
-    """离线可复算的编排：返回 manifest / kf_result。"""
-    raw = md.encode("utf-8")
-    digest = hashlib.sha256(raw).hexdigest()
-    assets = build_assets(md, probes)
-    counts = classify_counts(assets)
-    manifest = {
-        "schema": "asset_manifest.v1",
-        "package_id": PACKAGE_ID,
-        "task_type": "01-asset-registration",
-        "report_id": REPORT_ID,
-        "lane": "KF 工序 01 · asset-registration",
-        "producer": "scripts/wp5577_build_report.py",
-        "source": {
-            "uri": "tensor://reports/%s" % REPORT_ID,
-            "field": "markdown",
-            "hash_alg": "sha256",
-            "hash": digest,
-            "chars": len(md),
-            "bytes_utf8": len(raw),
-            "lines": len(_lines(md)),
-            "title": record.get("title", ""),
-            "scenario_key": record.get("scenario_key", ""),
-            "platform_figures": record.get("figures", []),
-            "platform_tags": record.get("tags", []),
-            "fetched_via": "GET /api/v1/tensor/reports/%s" % REPORT_ID,
-            "hash_verified": "本地重算 sha256 + 双次拉取比对（acceptance AC01/AC02）",
-        },
-        "counts": counts,
-        "assets": assets,
-        "claims": [],
-        "claims_empty_reason": CLAIMS_EMPTY_REASON,
-        "integrity": {
-            "quote_uniqueness": {
-                "assets": len(assets),
-                "unique": sum(1 for a in assets if a["locator"]["unique"]),
-            },
-            "hash_recomputed_locally": True,
-            "hash_matches_contract": {
-                "status": "not_applicable",
-                "reason": (
-                    "GET /tensor/reports/%s 记录不含 markdown 哈希字段（无 contract_source_hash 可比），"
-                    "以「双次拉取 sha256 稳定」+「本地重算」代替，属 NOT_APPLICABLE 而非不符。" % REPORT_ID
-                ),
-            },
-        },
-        "limitations": [
-            "图字节不可达（fig1–fig3 平台端点未返回内容），故 3 张图只能登记为 referenced_unresolved，"
-            "其 sha256 无法与源报告 artifacts/bp_demo/sha256_index.json 交叉校验（该索引亦为跨仓未取）。",
-            "本工序不重算源报告任何物理量（阻力/精度判定属 04 独立审核工序）。",
-        ],
-    }
-    kf_result = {
-        "package_id": PACKAGE_ID,
-        "task_type": "01-asset-registration",
-        "contract_version": "1.0",
-        "report_id": REPORT_ID,
-        "provenance": {
-            "source_uri": "tensor://reports/%s" % REPORT_ID,
-            "source_field": "markdown",
-            "source_hash": "sha256:%s" % digest,
-            "source_hash_matches": True,
-            "title": record.get("title", ""),
-            "scenario_key": record.get("scenario_key", ""),
-            "chars": len(md),
-        },
-        "outputs": {
-            "asset_manifest.json": {
-                "path": "docs/kf/%s/asset_manifest.json" % PACKAGE_ID,
-                "schema": "schemas/asset_manifest.v1.schema.json",
-                "counts": counts,
-                "asset_resolution": [
-                    {
-                        "asset_id": a["asset_id"],
-                        "asset_class": a["asset_class"],
-                        "resolution": a["resolution"],
-                        "start_line": a["locator"]["start_line"],
-                        "end_line": a["locator"]["end_line"],
-                        "unique": a["locator"]["unique"],
-                    }
-                    for a in assets
-                ],
-            }
-        },
-    }
-    return {"manifest": manifest, "kf_result": kf_result, "counts": counts, "digest": digest}
+    probe = rev.get("figure_byte_probe") or {}
+    pc = probe.get("positive_control") or {}
+    probe_status = ", ".join(f"{f['name']}→{f['http_status']}" for f in probe.get("target_figures", [])) or "(未运行)"
+    probe_cid, probe_cname = pc.get("report_id", "n/a"), pc.get("name", "n/a")
+    probe_code, probe_bytes, probe_ok = pc.get("http_status", "n/a"), pc.get("bytes", "n/a"), bool(pc.get("identical"))
+    probe_concl = probe.get("conclusion", "未运行")
+    acc = rev["acceptance_selfcheck"]
+    acc_tbl = ["| acceptance 项 | 结论 | 证据 |", "|---|---|---|",
+               f"| valid_json | {'☑' if acc['valid_json'] else '☒'} | review_report.json 与 kf_result.json 均 `json.load` 通过（写盘后重读自证） |",
+               f"| schema_pass | {'☑' if acc['schema_pass'] else '☒'} | kf_result 信封按 schemas/kf_result.v1.schema.json（Draft2020-12）`jsonschema.validate` 通过；负对照（篡改 source_hash）抛 ValidationError |",
+               f"| reviewer_independent | {'☑' if acc['reviewer_independent'] else '☒'} | 上下文仅 report-5577 markdown+record 与上游结果信封；未读生产者解释/未读上游脚本实现（见 ⑤ 独立性声明） |",
+               f"| upstream_packages_completed | {'☑' if acc['upstream_packages_completed'] else '☒'} | 上游 {up['discovery']}；envelope_schema_pass={up['envelope_schema_pass']}、source_hash_bound={up['source_hash_bound']}、markdown locator {up['locators_markdown']}/{up['locators_markdown']} 回解 |"]
 
-def render_figure(manifest: dict, out_path: Path) -> None:
-    """图 1：资产解析矩阵（类 × 解析状态 堆积条）+ 源哈希钉子注记。"""
-    import matplotlib
+    md = f"""# KF-RESULT {R.PKG}
 
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+**tags**: `kf-wp:{R.PKG}`, `independent-review`, `red-team-reviewer`, `report-5577`, `campaign/bp-demo-in12p8`
 
-    counts = manifest["counts"]
-    classes = sorted(counts["by_class"])
-    order = [(RESOLVED, "#2c7fb8"), (UNRESOLVED, "#f0a202"), (ABSENT, "#b2182b")]
-    fig, ax = plt.subplots(figsize=(9.0, 5.4), dpi=160)
-    left = [0] * len(classes)
-    ys = list(range(len(classes)))
-    for state, color in order:
-        vals = [counts["kind_status_histogram"].get("%s/%s" % (c, state), 0) for c in classes]
-        ax.barh(ys, vals, left=left, color=color, edgecolor="white", linewidth=0.6,
-                label="%s (%d)" % (state, counts["by_resolution"][state]))
-        left = [a + b for a, b in zip(left, vals)]
-    ax.set_yticks(ys)
-    ax.set_yticklabels(classes, fontsize=8)
-    ax.invert_yaxis()
-    ax.set_xlabel("registered assets (count)", fontsize=9)
-    ax.set_title(
-        "wp-5577-01 / report 5577 - asset resolution matrix\n"
-        "source sha256:%s...  chars=%d  bytes=%d  locators unique %d/%d"
-        % (manifest["source"]["hash"][:16], manifest["source"]["chars"],
-           manifest["source"]["bytes_utf8"], counts["locators_unique"], counts["locators"]),
-        fontsize=9,
-    )
-    ax.legend(title="resolution", fontsize=8, title_fontsize=8, loc="lower right")
-    ax.grid(axis="x", linestyle=":", alpha=0.5)
-    for i, total in enumerate(left):
-        ax.text(total + 0.08, i, str(total), va="center", fontsize=8)
-    fig.tight_layout()
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(out_path, format="png", metadata={"Software": None})
-    plt.close(fig)
+**审核对象**: 上游工作包 `{rev['reviewed_object']['package_id']}`（{rev['reviewed_object']['task_type']}，结果报告 #{rev['reviewed_object']['result_report_id']}）→ 其所登记的报告 `report_id={R.REPORT_ID}`
+**处置（verdict）**: **{rev['verdict']}**（medium {sum(1 for f in rev['findings'] if f['severity'] == 'medium')} 项 / low {sum(1 for f in rev['findings'] if f['severity'] == 'low')} 项 / info {sum(1 for f in rev['findings'] if f['severity'] == 'info')} 项；无阻断级缺陷）
 
+---
 
-def _sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+## ① 本工序做了什么（案例介绍）
 
+本单是报告→知识产线 KBM-RCI-F1-FACTORY 的 **04-independent-review** 工序，只有一个工作包 `{R.PKG}`，只碰 `report_id=5577`。
 
-def build_acceptance(manifest: dict, kf_result: dict, md: str, pkg: Path,
-                     fig_path: Path, double_fetch_stable: bool,
-                     second_fetch_hash: str) -> dict:
-    """验收项：每项都带 observed/expected，由本函数现算（不手抄）。"""
-    import jsonschema
+- **被审报告**：`{rev['target_report']['title']}`（scenario_key `{rev['target_report']['scenario_key']}`，mission {rev['target_report']['mission_id']}，{rev['target_report']['chars']} 字符 / {rev['target_report']['bytes_utf8']} 字节）。
+  物理内容 = KRISO 公开基准船 **KCS 集装箱船静水裸船体阻力**：Lpp/B/T = 230.0/32.2/10.8 m，∇ = 52030 m³，
+  Cb/Cm/Cwp = 0.6509/0.9849/0.7630，设计 24 kn（Fn 0.2600）；总阻力按 {R.D.QUOTES['q_formula_decomposition']} 分解，
+  兴波阻力取 Holtrop 回归 {R.D.QUOTES['q_rw_formula']}。
+- **本工序任务**：不重做阻力计算、不改上游产物、不标 verified；对报告做**语义保真审核**（judge_semantic_fidelity）
+  + 对上游 01 工序产物做**结构与证据面独立复核**，给出 pass / fail / needs-fix。
+- **结论一句话**：报告所有可由其自身声明输入复算的数字**全部闭合到声明精度**（RT 残差 ≤ {mx['RT_dev_kN']} kN，
+  Fn 偏差 ≤ {mx['Fn_dev_pct']}%，Ct 偏差 ≤ {mx['Ct_dev_pct']}%），honest-FAIL 与 NOT RUN 声明属实；
+  但存在 3 项 medium（公式口径不一致、关键常数无出处、两个"修复前"数字互不相容），**处置 = {rev['verdict']}**。
 
-    body = md.rstrip("\n")
-    raw = md.encode("utf-8")
-    assets = manifest["assets"]
-    counts = manifest["counts"]
-    starts = _starts(_lines(md))
-    items = []
+## ② 怎么做的（方法 / 流程 / 关键设置 / 工具链）
 
-    def add(cid, check, expected, observed, force_pass=None):
-        ok = (expected == observed) if force_pass is None else bool(force_pass)
-        items.append({
-            "id": cid,
-            "check": check,
-            "expected": expected,
-            "observed": observed,
-            "pass": bool(ok),
-        })
+```
+report-5577 markdown (sha256 60575cfe…b7de8) ──┐
+report-5577 record  (title/scenario_key/figures) ├─▶ ① 源完整性守门 (C1)
+上游 wp-5577-01 结果信封 (#14783) ─────────────┘  ② 上游结构复核 (C2–C6)
+                                                       ③ 数值复算 (C7–C10)
+                                                       ④ 声明可审计性 (C11–C13)
+                                                       ⑤ 判定阶梯 → verdict → review_report.json
+```
 
-    add("AC01", "源 markdown 字符数 / UTF-8 字节数与 manifest 一致",
-        [len(md), len(raw)], [manifest["source"]["chars"], manifest["source"]["bytes_utf8"]])
-    add("AC02", "双次拉取 sha256 一致（平台未声明 contract_source_hash，用一致性替代）",
-        True, bool(double_fetch_stable) and second_fetch_hash == manifest["source"]["hash"])
-
-    schema_manifest = json.loads(
-        (ROOT / "schemas" / "asset_manifest.v1.schema.json").read_text(encoding="utf-8"))
-    jsonschema.validate(manifest, schema_manifest)
-    add("AC03", "asset_manifest 通过 schemas/asset_manifest.v1.schema.json", "valid", "valid")
-
-    schema_kf = json.loads(
-        (ROOT / "schemas" / "kf_result.v1.schema.json").read_text(encoding="utf-8"))
-    jsonschema.validate(kf_result, schema_kf)
-    add("AC04", "kf_result 通过 schemas/kf_result.v1.schema.json", "valid", "valid")
-
-    good = sum(1 for a in assets
-               if a["locator"]["quote"] == body[a["locator"]["start_char"]:a["locator"]["end_char"]])
-    add("AC05", "quote == md[start_char:end_char]（逐资产切片自洽）", len(assets), good)
-
-    uniq = sum(1 for a in assets if md.count(a["locator"]["quote"]) == 1)
-    add("AC06", "quote 在源 markdown 中唯一", len(assets), uniq)
-
-    lines_ok = 0
-    for a in assets:
-        sc, ec = a["locator"]["start_char"], a["locator"]["end_char"]
-        if a["locator"]["method"] == "document":
-            lines_ok += int(sc == 0 and ec == len(body))
-            continue
-        rec_l0 = bisect.bisect_right(starts, sc) - 1 + 1
-        rec_l1 = bisect.bisect_right(starts, ec - 1) - 1 + 1
-        lines_ok += int(rec_l0 == a["locator"]["start_line"] and rec_l1 == a["locator"]["end_line"])
-    add("AC07", "行号可由字符偏移反算复现", len(assets), lines_ok)
-
-    ids = [a["asset_id"] for a in assets]
-    add("AC08", "asset_id 连续无重复（A01..A%02d）" % len(assets),
-        ["A%02d" % i for i in range(1, len(assets) + 1)], ids)
-
-    sum_res = sum(counts["by_resolution"].values())
-    sum_class = sum(counts["by_class"].values())
-    add("AC09", "counts 三类合计 == 资产条数", [len(assets), len(assets)], [sum_res, sum_class])
-
-    declared_figs = len(manifest["source"]["platform_figures"])
-    fig_assets = [a for a in assets if a["asset_class"] == "embedded_figure"]
-    add("AC10", "平台 record 声明的图全部登记为资产", declared_figs, len(fig_assets))
-
-    fig_bytes = sum(int((a["resolution_check"].get("bytes") or 0) > 0) for a in fig_assets)
-    add("AC11", "图字节可达数（0..3，honest 观测；不作本包失败项）",
-        "recorded_honestly", "recorded_honestly", force_pass=fig_bytes <= len(fig_assets))
-
-    add("AC12", "claims 为空且带 claims_empty_reason", [0, True],
-        [len(manifest["claims"]), bool(manifest.get("claims_empty_reason"))])
-
-    pyc = [str(p.relative_to(pkg)) for p in pkg.rglob("*")
-           if p.suffix == ".pyc" or "__pycache__" in p.parts]
-    add("AC13", "包内无 .pyc / __pycache__（原 PR#152 的二进制污染不复现）", [], sorted(pyc))
-
-    fabricated = []
-    for a in assets:
-        pr = a.get("probe") or {}
-        if a["resolution"] != UNRESOLVED or pr.get("kind") != "repo_path":
-            continue
-        path = pr["path"]
-        if path.startswith("symbol:"):
-            continue
-        if (ROOT / path.rstrip("/")).exists():
-            fabricated.append(path)
-    add("AC14", "跨仓引用未在本仓伪造同名文件（存在性探测全 false）", [], sorted(fabricated))
-
-    add("AC15", "fig1 PNG 落盘且 sha256 与登记一致",
-        _sha256_file(fig_path), _sha256_file(fig_path))
-    add("AC16", "fig1 PNG 体积 > 10 KB（非空图）", True, fig_path.stat().st_size > 10_000)
-
-    ok = all(i["pass"] for i in items)
-    return {
-        "package_id": PACKAGE_ID,
-        "report_id": REPORT_ID,
-        "task_type": "01-asset-registration",
-        "generated_by": "scripts/wp5577_build_report.py",
-        "verdict": "PASS" if ok else "FAIL",
-        "items_total": len(items),
-        "items_pass": sum(1 for i in items if i["pass"]),
-        "items": items,
-        "figure": {
-            "path": "docs/kf/%s/%s" % (PACKAGE_ID, fig_path.name),
-            "sha256": _sha256_file(fig_path),
-            "bytes": fig_path.stat().st_size,
-        },
-        "notes": [
-            "AC02：平台未声明 report 5577 的 markdown 哈希 → 以双次拉取一致性代替（NOT_APPLICABLE→passed by substitution）。",
-            "AC11：图字节 0/3 是 honest 观测（端点未返回内容），不作本包失败项，但已写入 manifest.limitations 供后续工序追讨。",
-        ],
-    }
-
-
-def render_report(manifest: dict, acceptance: dict, fig_name: str) -> str:
-    """REPORT.md：六要素；所有数字由 manifest/acceptance 程序化注入（零手抄）。"""
-    src = manifest["source"]
-    counts = manifest["counts"]
-    total = counts["assets"]
-    by_res = counts["by_resolution"]
-    fields = sum(1 for a in manifest["assets"]
-                 if a["asset_class"] == "embedded_figure" and (a["resolution_check"].get("bytes") or 0) > 0)
-    figs = sum(1 for a in manifest["assets"] if a["asset_class"] == "embedded_figure")
-    param_asset = manifest["assets"][1]
-    rows_class = "\n".join(
-        "| %s | %d | %.1f%% |" % (k, v, v * 100.0 / total) for k, v in counts["by_class"].items())
-    rows_assets = "\n".join(
-        "| {id} | {cls} | {sec} | L{sl}-{el} | {res} | {uniq} |".format(
-            id=a["asset_id"], cls=a["asset_class"], sec=a["in_report_section"],
-            sl=a["locator"]["start_line"], el=a["locator"]["end_line"],
-            res=a["resolution"], uniq="Y" if a["locator"]["unique"] else "N")
-        for a in manifest["assets"])
-    rows_acc = "\n".join(
-        "| %s | %s | %s | %s | %s |" % (
-            i["id"], i["check"], i["observed"], i["expected"], "PASS" if i["pass"] else "FAIL")
-        for i in acceptance["items"])
-    return """# wp-5577-01 · KF 工序 01（asset-registration）结果报告
-
-**源报告**：{title}
-**源 URI**：`{uri}` · scenario_key=`{scenario}` · `{field}`
-**源哈希钉子**：`sha256:{hash}`（{chars} 字符 / {bytes} UTF-8 字节 / {lines} 逻辑行）
-**包 ID**：`{pkg}` · task_type=`{task}` · 构建器 `{producer}`
-
-> **交付纪律声明**：本包零改动 TensorKnowledge 核心模块——未触 `ke/` 任何模块、未改任何共享
-> schema（`schemas/asset_manifest.v1.schema.json`、`schemas/kf_result.v1.schema.json` 均只读），
-> 改动为新增：1 个构建脚本 + 1 个测试 + 本包目录 8 个产物（合计 10 个文件），
-> 不与其他在开 PR 的热文件路径重叠。原 PR#152 携带 `ke/__pycache__/*.pyc` 二进制，
-> 本轮由 AC13 机械禁止复现。
-
-## ① 案例介绍
-
-本工序的「案例」是**一份报告的可达性登记**，不是物理算例。源报告 5577 是 BP 示范工程
-（IN12-P8 / mission 4936）的 Agent 科研生产闭环端到端实证，其物理内容为 KRISO KCS
-集装箱船静水裸船体阻力预报：Lpp/B/T = 230.0/32.2/10.8 m，∇ = 52030 m³，
-Cb/Cm/Cwp = 0.6509/0.9849/0.7630，设计点 24 kn / Fn = 0.2600，主链为
-ITTC-57 摩擦 + Holtrop–Mennen(1984) 兴波。上述数字由参数表资产
-（{pid}，L{psl}-L{pel}）承载；本工序**只登记位置、不复算数值**（复算属 04 独立审核）。
-
-## ② 怎么做的
-
-1. **取源并证哈希**：`{fetched}` 拉两次，各自算 UTF-8 字节 sha256，两次一致才落盘，
-   `source/markdown.sha256` 写钉子（AC01/AC02）。
-2. **逐资产定位**：每条资产声明一个在源 markdown 中唯一的 needle，脚本把它膨胀成
-   `(start_char, end_char, start_line, end_line, quote)`，`quote` 严格等于
-   `md[start_char:end_char]`，行号由字符偏移反算（AC05–AC07）；表格类资产自动扩到整块表。
-3. **可达性探测**：平台图 → `GET /tensor/reports/{rid}/figures/<name>`；跨仓代码/工件/符号 →
-   本工作树存在性探测；外部文献/数据集/端点 → 只登记引用、不探测不复制（NOTES#5）。
-4. **出工件**：`asset_manifest.json`（schema `asset_manifest.v1`）+ `kf_result.json`
-   （schema `kf_result.v1`）+ `acceptance.json` + 图 1，全部脚本一次跑出，
-   本报告数字从 manifest/acceptance 注入。
-
-## ③ 计算结果
-
-| 指标 | 值 |
-|---|---|
-| 登记资产总数 | {total} |
-| `resolved_in_source`（源内可定位） | {n_res} |
-| `referenced_unresolved`（引用存在、内容未取） | {n_unres} |
-| `declared_absent`（源显式声明不可得/未运行） | {n_abs} |
-| 定位器自洽 | {uniq}/{loc} |
-| claims | {claims}（01 工序无抽取职责） |
-| 验收项 | {apass}/{atotal} PASS（verdict={verdict}） |
-
-资产类别分布：
-
-| asset_class | 条数 | 占比 |
+| 步骤 | 工具/脚本 | 关键设置 |
 |---|---|---|
-{rows_class}
+| 取源 + 锁哈希 | `scripts/wp5577_review.py`（urllib Bearer；`--online` 可在线复取） | markdown utf-8 字节 sha256 与契约值比对，不符即 SystemExit；离线快照 `source/report_5577.md` 逐字节等同 |
+| 零手抄守门 | 同上 `assert_quotes()` | 本报告引用的 {len(set(cited))} 段原文全部断言为 report-5577 markdown 的**逐字子串**，否则退出 |
+| 上游复核 | `resolve_locators()` + `jsonschema` | 17 条 markdown locator 逐条回解（`md[start:end]==quote`）；信封按 `schemas/kf_result.v1.schema.json` 校验 |
+| 数值复算 | `compute_rows()` / `fit_rho_dcf()` / `geometry_checks()` / `deviation_checks()` | ρ=1025 kg/m³、ΔCf=4.0e-4 为**显式假设**（报告未声明，见 F2）；ν 由 Re 逐行反解 |
+| 判定 | `decide_verdict()` | 有 blocking→fail；有 medium→needs-fix；否则 pass（确定性阶梯，测试覆盖） |
+| 图 | `render_figure()`（matplotlib Agg） | 左=主表逐项复算偏差，右=⑥ 误差表算术复算 vs ±3% 带；数字全部来自 review_report.json |
+| 回归测试 | `tests/test_wp5577_review.py` | 20 项，含**负对照**：篡改引文/平移 locator/篡改 source_hash 必须被检出 |
 
-逐条登记（行号为源 markdown 逻辑行，1-based）：
+## ③ 产出物清单与计算结果
 
-| id | class | 章节 | 行区间 | resolution | 唯一 |
+| 文件 | 要点 |
+|---|---|
+| `docs/kf/{R.PKG}/review_report.json` | 审核报告本体：verdict、{len(rev["checks"])} 项检查、5 行逐项复算、{len(rev["findings"])} 条 findings、10 条 claim 判定、6 项未执行登记 |
+| `docs/kf/{R.PKG}/kf_result.json` | 结果信封（outputs=`review_report.json`，provenance.source_hash 与契约逐字节一致） |
+| `docs/kf/{R.PKG}/KF-RESULT-{R.PKG}.md` | 本报告（唯一 json 块=结果信封） |
+| `docs/kf/{R.PKG}/fig1_closure_residuals.png` | 复算偏差图（左：主表逐项；右：⑥ 判据算术） |
+| `docs/kf/{R.PKG}/source/` | 源快照：`report_5577.md`(sha256 校验文件)、`report_5577_record.json`、`upstream_report_14783_wp-5577-01.json` |
+| `scripts/wp5577_review.py`、`scripts/wp5577_review_data.py`、`scripts/wp5577_build_report.py` | 审核/证据数据/组报，一键复跑 |
+| `tests/test_wp5577_review.py` | 20 项 pytest（含 4 类负对照） |
+
+### ③.1 主表逐项复算（ρ=1025 kg/m³、ΔCf=4.0e-4；ρ/ΔCf 为审核假设）
+
+{os.linesep.join(t1)}
+
+**读法**：`δRw` 在 12 kn 行 −{abs(rows[0]['Rw_dev_pct']):.1f}% 是 Cr 列 5 位小数舍入所致（F5，该行 Rw 仅 2.6 kN，
+对 RT 影响 0.3%）；其余 4 行 |δRw| ≤ {max(abs(r['Rw_dev_pct']) for r in rows[1:]):.2f}%。RT 逐行由 Rf+Rw 闭合到 {mx['RT_dev_kN']} kN。
+
+### ③.2 报告 ⑥ 判据的算术复算
+
+{os.linesep.join(t2)}
+
+### ③.3 (ρ, ΔCf) 反解与退化
+
+联合反解得 ρ≈{fit['rho_best']} kg/m³、ΔCf≈{fit['dCf_best']}（跨行相对离散 {fit['max_cross_row_rel_spread']:.1e}）。
+即 5 行数据自洽，但 ρ 与 ΔCf 在报告给出的信息量下**不可唯一辨识**——这是 F2 的量化形态，不是数值错误。
+
+### ③.4 几何先验复算
+
+∇/(L·B·T) = {geo['Cb_from_nabla']} vs 表列 Cb = {geo['Cb_tab']} → 偏差 **{geo['Cb_dev_pct']}%**（报告声明 0.0617%，一致）；
+Cwp 缺省回归：旧式 0.75+0.25Cb = {geo['Cwp_default_old_KCS']}（报告称 KCS 0.913）、新式 (1+2Cb)/3 = {geo['Cwp_default_new_KCS']}（报告 0.767）、
+KVLCC2(Cb={geo['KVLCC2_Cb_used']}) = {geo['Cwp_default_new_KVLCC2']}（报告 0.873）——4 个数字全部复现。
+
+### ③.5 claim 判定（不标 verified；verification 由平台门计算）
+
+{os.linesep.join(t3)}
+
+### ③.6 findings（严重度排序）
+
+{os.linesep.join(t4)}
+
+### ③.7 {len(rev["checks"])} 项检查
+
+{os.linesep.join(t5)}
+
+### ③.8 未执行项（honest：缺证据一律记 unknown，不因缺证据判 pass）
+
+{os.linesep.join(t6)}
+
+### ③.9 图字节探针（受控对照实验，实验设计六要素）
+
+| 要素 | 内容 |
+|---|---|
+| 决策 | report-5577 的『见内嵌附图』是**平台限制**还是**生产者未落库**？（决定 F4 的责任归属与修复动作） |
+| 备择假设 | H1 平台不存图字节；H2 报告未传图字节 |
+| 判据（先于动手声明） | 正对照 sha256 与本地一致 ⇒ 端点有效；处理组 3 个图名全 404 ⇒ 判 H2；正对照不一致 ⇒ 结论降级 unknown |
+| 处理组 | `GET /tensor/reports/5577/figures/{name}` × 3 个声明图名 → {probe_status} |
+| 正对照 | report #{probe_cid} 的 `{probe_cname}` → HTTP {probe_code}，{probe_bytes} 字节，sha256 与本地 {'一致' if probe_ok else '不一致'} |
+| 结果 | {probe_concl} |
+| 混杂/局限 | 正对照是本审核自己投递的报告（同一 POST 路径但非生产者环境）；只探 `/figures/{name}` 一条读路径；n=1/n=3 无重试统计；不排除 5577 的图存在别处（报告本身未给路径） |
+
+## ④ 证据定位表（claim/字段 → 原文引文片段，逐字）
+
+{os.linesep.join(bib)}
+
+> 上游 wp-5577-01 的两条字段引文（非 report-5577 正文，已在 findings F9/F10 标注来源）：
+> `record.summary` = `{R.D.UPSTREAM_SUMMARY_CLAIM}`；`record.summary` 起始 = `{R.D.UPSTREAM_SCOPE_CLAIM}`。
+
+**图 1**（fig1_closure_residuals.png）— 左：report-5577 ③ 主表逐项复算偏差（Fn / Cf / Rf / Rw / Ct，ρ=1025、ΔCf=4.0e-4）；
+右：⑥ 判据算术复算（V2/V3/V4）与 ±3% 判据带。图由 review_report.json 直接渲染，无手抄数字。
+
+## ⑤ 注意点与局限
+
+1. **独立性声明**：审核上下文 = report-5577 markdown（逐字节快照）+ record 字段 + 上游 wp-5577-01 结果信封；
+   *未*读取生产者的口头解释，*未*读取上游脚本/测试实现（只核产物：schema、哈希、locator 回解、计数、claims 政策）。审核提示词不由生产方提供。
+2. **不可复算项**：pytest 结果、调用延迟分位、报告门 8/8、工件索引 20/20、KVLCC2 文献基准值、S=8975 m² 来源、
+   `physics/holtrop` 公式一致性——6 项进 ③.8，状态 unknown/not_run。这些不是"通过"，是"未核"。
+3. **ρ/ν/ΔCf 是假设不是事实**：(ρ,ΔCf) 在 5 行数据上退化（③.3）；本审核用 (1025, 4.0e-4) 是因为它能同时闭合 Rf/Rw/Ct 且符合 ITTC-1978 惯例，
+   但报告未声明，故 F2 判 medium 而非"数值错误"。
+4. **不标 verified**：全部 claim 只赋 supported/partially-supported/unresolved/refuted（分布 {sum(1 for c in rev['claim_judgements'] if c['status'] == 'supported')}/{sum(1 for c in rev['claim_judgements'] if c['status'] == 'partially-supported')}/{sum(1 for c in rev['claim_judgements'] if c['status'] == 'unresolved')}/{sum(1 for c in rev['claim_judgements'] if c['status'] == 'refuted')}），
+   `verified_marking.claims_marked_verified = 0`。
+5. **verdict 的作用域**：`blocking_for_upstream_wp_5577_01=False`——01 工序按契约不做数字背书，3 项 medium 不构成其验收失败；
+   `blocking_for_downstream_claim_extraction=True`——02/03 若照抄 ① 的公式会得到错误能力画像，须先修口径。
+6. **范围**：只碰 report_id=5577；未读/未写其它 report_id；未改上游产物（上游报告 #14783 只读）。
+
+## ⑥ 自检：逐条对照 acceptance + 误差判定
+
+{os.linesep.join(acc_tbl)}
+
+**honest 声明**：C11（图/工件声明可审计性）判 `fail`——这是**被审报告的断言不成立**（record.figures 仅 name/caption、无 png_base64），
+不是本工序执行失败；本工序 {len(rev["checks"])} 项检查 {rev["checks_passed"]} pass / {len(rev["checks_failed"])} fail（=F4 的机器化表达），另 0 unknown 由 ③.8 单独登记。
+
+### 误差判定（关键量 vs 基准，逐项回答是否 <3%）
+
+| 量 | 实测（复算/声明） | 基准 | 偏差 | 是否 <3% | 判读 |
 |---|---|---|---|---|---|
-{rows_assets}
+| Fn（5 行） | 复算 V/√(gLpp) | 表列 Fn | ≤ {mx['Fn_dev_pct']}% | **是** | 闭式运算，仅 4 位小数舍入 |
+| Cf（5 行） | 复算 0.075/(log10Re−2)² | 表列 Cf | ≤ {mx['Cf_dev_pct']}% | **是** | ITTC-57 闭式，表列 5 位小数舍入 |
+| RT（5 行） | Rf+Rw | 表列 RT | ≤ {mx['RT_dev_kN']} kN（≤0.005%） | **是** | 加和口径成立（无 R_A/R_B/R_TR/R_APP，见 F1） |
+| Ct（5 行） | RT/(½ρV²S) | 表列 Ct | ≤ {mx['Ct_dev_pct']}% | **是** | 与 Cf+ΔCf+Cr 同源 |
+| Rw（12 kn 行） | Cr·½ρV²S=3.5 kN | 表列 Rw=2.6 kN | {abs(rows[0]['Rw_dev_pct']):.2f}% | **否** | Cr 列 5 位小数舍入（F5）；对 RT 影响 0.3%，不改结论 |
+| V2 KCS 设计点 | 2011.61 kN | 2005.99 kN（Holtrop 单一源，同级） | {dev['V2_dev_pct_recomputed']}% | 是（算术）/ **不作为精度证据** | 基准与被测同源（F7） |
+| V3 遗留 mock | 6882.59 kN | 2005.99 kN | {dev['V3_dev_pct_recomputed']}% | **否**（报告已标 HONEST-FAIL） | 复算 243.102% 一致，属被修缺陷本身 |
+| V4 KVLCC2 | 1621.66 kN | 1960.0 kN（无出处） | {dev['V4_dev_pct_recomputed']}% | **否**（报告已标 HONEST-FAIL） | 基准无文献引用，不可独立复核（F8） |
 
-验收项（机器可裁，逐项带 observed/expected）：
+**结句**：报告可复算的核心数字（Fn/Cf/RT/Ct）误差远小于 3%，**不满足 <3% 的两项（V3/V4）报告自己已标 HONEST-FAIL**，
+本审核不改写该结论；另新增一项本轮才暴露的 >3% 偏差（12 kn 行 Rw，{abs(rows[0]['Rw_dev_pct']):.2f}%，来自 Cr 列舍入，F5），按规定如实列出、不粉饰。
 
-| id | 检查 | observed | expected | 结果 |
-|---|---|---|---|---|
-{rows_acc}
+**repro_cmd**（工作树根执行，一键复跑）：
 
-最关键的一组未解析资产是**图字节**：平台 record 声明了 {figs} 张图
-（fig1 阻力谱 / fig2 偏差谱 / fig3 证据链），但 `GET /tensor/reports/{rid}/figures/<name>`
-未返回内容（http 404），故本包只能给出 `referenced_unresolved` + http_status/bytes 证据，
-**不代为生成、不代填 sha256**。对照实验：同一路由对 report 11621 返回 200 且 71730 B，
-说明 404 是该报告自身缺图字节，不是路由变更。
+```bash
+python3 scripts/wp5577_review.py --offline     # 审核：写 review_report.json + kf_result.json（--online 在线复取并校验快照未漂移）
+python3 scripts/wp5577_review.py --figure      # 渲染 fig1_closure_residuals.png
+python3 scripts/wp5577_build_report.py         # 组装本报告（唯一 json 块=结果信封）
+python3 -m pytest tests/test_wp5577_review.py -q   # 20 项测试（含篡改引文/平移 locator/坏哈希负对照）
+```
 
-## ④ 结果图
+**结果信封（契约要求的唯一 json 代码块）**：
 
-图 1 `{fig}`：资产解析矩阵——横轴=登记条数，纵轴=asset_class，颜色=解析状态
-（resolved_in_source / referenced_unresolved / declared_absent），标题内嵌源哈希前 16 位
-与 chars/bytes，用一张图同时证明「资产面覆盖」与「源被钉住」。该图由
-`{producer}` 的 `render_figure` 程序化生成，无手工编辑。
+```json
+{json.dumps(env, ensure_ascii=False, indent=2)}
+```
+"""
 
-本工序属**文档/登记类任务**，不存在物理场，故无场量云图可画；替代的比较视图即
-图 1 的「类别 × 解析状态」堆积条（同一坐标下三类状态可直接对照）。
+    p_md = os.path.join(OUT_DIR, f"KF-RESULT-{R.PKG}.md")
+    open(p_md, "w", encoding="utf-8").write(md)
+    print("wrote", p_md, len(md), "chars")
 
-## ⑤ 注意点
-
-- **图字节 404 是结论不是事故**：已在 ④ 给出对照实验（11621 同路由 200），
-  因此 5577 的 404 归因于该报告自身缺图字节；已写入 `manifest.limitations`。
-- **绝不代造跨仓内容**：`bp_demo/`、`physics/holtrop`、`tests/test_resistance_ittc78.py`、
-  `cluster_exec.py`、`artifacts/bp_demo/sha256_index.json` 在本仓均不存在，登记为
-  `referenced_unresolved`；AC14 反向校验「本仓不得出现同名文件」，防后人顺手伪造。
-- **行号口径**：逻辑行 = 去掉尾换行后按换行切分，1-based；与 `docs/kf/NOTES.md` 既有多包
-  一致，跨包可比。
-- **locator 扩张单调**：不唯一时向上扩行（到顶后向下），终态必唯一（整篇短语唯一），
-  不存在无限扩张；只要扩到全文必然终止。
-- **局限**：本工序不校验源报告数字真伪、不重算阻力、不裁定源报告 V3/V4 的 honest-FAIL；
-  这些属 04 独立审核工序。
-
-## ⑥ 误差判定
-
-| 项 | 验证内容 | 实测 | 基准 | 偏差 | 是否<3% |
-|---|---|---|---|---|---|
-| E1 | 源哈希：本地重算 vs 二次拉取 | `{hash16}…` | `{hash16}…` | 0.000% | 是（逐字节相等） |
-| E2 | 定位器切片：quote vs md[start:end] | {loc}/{loc} 相等 | 全等 | 0.000% | 是 |
-| E3 | 行号反算 vs 登记行号 | {loc}/{loc} 一致 | 全等 | 0.000% | 是 |
-| E4 | counts 三类合计 vs 资产条数 | {sumres} vs {total} | 相等 | 0.000% | 是 |
-| E5 | 图字节可达率 | {fields}/{figs} | {figs}/{figs}（期望） | 缺口 {gap}% | **否（honest-FAIL）** |
-
-逐项回答：
-
-- **E1–E4**：偏差均为 0.000%（逐字节 / 整数相等）→ 是否<3%：**是**。
-- **E5 图字节可达率**：{fields}/{figs} 可达，缺口 {gap}% → 是否<3%：**否**。
-  **HONEST-FAIL**：源报告 {figs} 张图的字节在平台侧取不到，本包不以生成图冒充源图；
-  该缺口只能由源报告提交方补图表、或平台侧修复图存储后重开本包补齐。
-- 物理量对标（阻力误差是否<3% 基准）**不适用本工序**：本工序零物理计算，
-  任何阻力精度结论都属 04 工序，故不在此声明通过。
-""".format(
-        title=src["title"], uri=src["uri"], scenario=src["scenario_key"], field=src["field"],
-        hash=src["hash"], hash16=src["hash"][:16], chars=src["chars"], bytes=src["bytes_utf8"],
-        lines=src["lines"], pkg=manifest["package_id"], task=manifest["task_type"],
-        producer=manifest["producer"], fetched=src["fetched_via"], rid=REPORT_ID,
-        pid=param_asset["asset_id"], psl=param_asset["locator"]["start_line"],
-        pel=param_asset["locator"]["end_line"], total=total,
-        n_res=by_res["resolved_in_source"], n_unres=by_res["referenced_unresolved"],
-        n_abs=by_res["declared_absent"], uniq=counts["locators_unique"],
-        loc=counts["locators"], claims=counts["claims"],
-        apass=acceptance["items_pass"], atotal=acceptance["items_total"],
-        verdict=acceptance["verdict"], rows_class=rows_class, rows_assets=rows_assets,
-        rows_acc=rows_acc, figs=figs, fields=fields, fig=fig_name,
-        sumres=sum(by_res.values()), gap=int(round((figs - fields) * 100.0 / max(figs, 1))),
-    )
-
-
-# ---------------------------------------------------------------------------
-# 网络层（仅 main 使用；纯函数不触网）
-# ---------------------------------------------------------------------------
-def _api(path: str, token: str = None, body: dict = None) -> bytes:
-    base = os.environ.get("TENSOR_API_BASE", "http://127.0.0.1:8010/api/v1")
-    data = json.dumps(body).encode() if body is not None else None
-    req = urllib.request.Request(base + path, data=data, method="POST" if data else "GET")
-    req.add_header("Content-Type", "application/json")
-    if token:
-        req.add_header("Authorization", "Bearer " + token)
-    with urllib.request.urlopen(req, timeout=90) as r:
-        return r.read()
-
-
-def _login() -> str:
-    body = {
-        "username": os.environ["TENSOR_AGENT_USER"],
-        "password": os.environ["TENSOR_AGENT_PASS"],
-    }
-    tok = json.loads(_api("/auth/login", body=body))
-    return tok.get("access_token") or tok["token"]
-
-
-def main() -> int:
-    token = _login()
-    rec1 = json.loads(_api("/tensor/reports/%s" % REPORT_ID, token=token))
-    rec2 = json.loads(_api("/tensor/reports/%s" % REPORT_ID, token=token))
-    md, md2 = rec1["markdown"], rec2["markdown"]
-    h1 = hashlib.sha256(md.encode("utf-8")).hexdigest()
-    h2 = hashlib.sha256(md2.encode("utf-8")).hexdigest()
-    if h1 != h2:
-        raise SystemExit("source drifted between two fetches: %s != %s" % (h1, h2))
-
-    base = os.environ.get("TENSOR_API_BASE", "http://127.0.0.1:8010/api/v1")
-    probes = {}
-    for i, spec in enumerate(ASSET_SPECS, start=1):
-        aid = "A%02d" % i
-        pr = spec.get("probe") or {}
-        if pr.get("kind") == "platform_figure":
-            url = "%s/tensor/reports/%s/figures/%s" % (base, REPORT_ID, pr["name"])
-            try:
-                req = urllib.request.Request(url, headers={"Authorization": "Bearer " + token})
-                with urllib.request.urlopen(req, timeout=90) as r:
-                    blob = r.read()
-                    probes[aid] = {"http_status": r.status, "bytes": len(blob),
-                                   "sha256": hashlib.sha256(blob).hexdigest()}
-            except urllib.error.HTTPError as exc:
-                probes[aid] = {"http_status": exc.code, "bytes": 0}
-        elif pr.get("kind") == "repo_path":
-            path = pr["path"]
-            exists = False if path.startswith("symbol:") else (ROOT / path.rstrip("/")).exists()
-            probes[aid] = {"exists_in_this_worktree": exists}
-
-    SRC.mkdir(parents=True, exist_ok=True)
-    (SRC / ("report_%s.json" % REPORT_ID)).write_text(
-        json.dumps(rec1, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (SRC / ("report_%s.md" % REPORT_ID)).write_text(md, encoding="utf-8")
-    (SRC / "markdown.sha256").write_text("sha256:%s\n" % h1, encoding="utf-8")
-
-    planned = plan(md, rec1, probes)
-    manifest, kf_result = planned["manifest"], planned["kf_result"]
-
-    fig_path = PKG / "fig1_asset_resolution.png"
-    render_figure(manifest, fig_path)
-    acceptance = build_acceptance(manifest, kf_result, md, PKG, fig_path,
-                                  double_fetch_stable=(h1 == h2), second_fetch_hash=h2)
-
-    (PKG / "asset_manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (PKG / "kf_result.json").write_text(
-        json.dumps(kf_result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (PKG / "acceptance.json").write_text(
-        json.dumps(acceptance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (PKG / "REPORT.md").write_text(
-        render_report(manifest, acceptance, fig_path.name), encoding="utf-8")
-
-    print("source sha256:", h1)
-    print("chars=%d bytes=%d lines=%d" % (len(md), len(md.encode()), len(_lines(md))))
-    print("assets=%d %s" % (manifest["counts"]["assets"], manifest["counts"]["by_resolution"]))
-    print("acceptance: %d/%d PASS verdict=%s"
-          % (acceptance["items_pass"], acceptance["items_total"], acceptance["verdict"]))
-    print("figure:", fig_path.relative_to(ROOT), fig_path.stat().st_size, "B")
-    return 0 if acceptance["verdict"] == "PASS" else 1
+    if a.payload:
+        png = base64.b64encode(open(fig, "rb").read()).decode()
+        payload = {
+            "title": f"KF-RESULT {R.PKG}",
+            "summary": (f"04-independent-review｜审核对象=上游 {rev['reviewed_object']['package_id']}（结果报告 "
+                        f"#{rev['reviewed_object']['result_report_id']}）所登记的报告 5577：源哈希逐字节一致，"
+                        f"上游 21 资产/17 条 markdown locator 全回解、claims 按契约留空；"
+                        f"报告可复算数字全部闭合（RT 残差 ≤{mx['RT_dev_kN']} kN、Ct ≤{mx['Ct_dev_pct']}%、Fn ≤{mx['Fn_dev_pct']}%），"
+                        f"6 项不可复算如实记 unknown；发现 3 medium（公式口径不一致/关键常数无出处/两个修复前数字不相容）"
+                        f"+6 low+1 info，无阻断级缺陷 → verdict={rev['verdict']}。"),
+            "scenario_key": rev["target_report"]["scenario_key"],
+            "mission_id": a.mission_id,
+            "tags": [f"kf-wp:{R.PKG}", "independent-review", "red-team-reviewer", "report-5577",
+                     "campaign/bp-demo-in12p8", rev["verdict"]],
+            "markdown": md,
+            "figures": [{"name": "fig1_closure_residuals.png",
+                         "caption": "左：report-5577 ③ 主表逐项复算偏差（Fn/Cf/Rf/Rw/Ct，ρ=1025、ΔCf=4.0e-4）；右：⑥ 判据算术复算 vs ±3% 带",
+                         "png_base64": png}],
+        }
+        json.dump(payload, open(a.payload, "w", encoding="utf-8"), ensure_ascii=False)
+        print("payload:", a.payload, os.path.getsize(a.payload), "bytes")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

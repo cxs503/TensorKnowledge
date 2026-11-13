@@ -1,0 +1,847 @@
+{
+  "package_id": "wp-5577-04",
+  "task_type": "04-independent-review",
+  "report_id": "5577",
+  "provenance": {
+    "source_hash": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+    "source_field": "markdown",
+    "producer": "agent/m15834",
+    "emitted_at": "2026-11-12T02:52:37+00:00",
+    "notes": "source_hash 由 report-5577 markdown 的 utf-8 字节独立重算，等于契约声明 sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8；审核对象=上游工作包 wp-5577-01（结果报告 #14783）"
+  },
+  "outputs": {
+    "review_report.json": {
+      "review_report_version": "1.0",
+      "package_id": "wp-5577-04",
+      "task_type": "04-independent-review",
+      "reviewer_role": "red-team-reviewer",
+      "reviewed_object": {
+        "package_id": "wp-5577-01",
+        "task_type": "01-asset-registration",
+        "result_report_id": "14783",
+        "claim": "01-asset-registration：只登记资产，不对报告数字做正确性背书（上游 ⑤.2 明示）"
+      },
+      "target_report": {
+        "report_id": "5577",
+        "title": "BP 示范工程报告：Agent 科研生产闭环端到端实证（IN12-P8 / m4936）",
+        "scenario_key": "campaign/bp-demo-in12p8",
+        "mission_id": 4936,
+        "source_uri": "tensor://reports/5577",
+        "source_field": "markdown",
+        "source_hash": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+        "chars": 3702,
+        "bytes_utf8": 5707,
+        "contract_hash_match": true
+      },
+      "independence": {
+        "context_used": [
+          "report-5577 markdown（逐字快照 docs/kf/wp-5577-04/source/report_5577.md，sha256 与契约一致）",
+          "report-5577 record 字段（title/scenario_key/figures/tags）",
+          "上游 wp-5577-01 结果信封（结果报告 #14783 的唯一 json 块 + 其 markdown 的产出物清单）"
+        ],
+        "context_excluded": [
+          "生产者的口头解释/会话（未读取任务说明之外的任何生产者叙述）",
+          "上游工作树内的脚本与测试实现细节（只核产物本身：schema/哈希/locator/计数）",
+          "physics/holtrop 源码（不在本仓，故 R_W 公式一致性进 checks_not_run）"
+        ],
+        "limitations": [
+          "无网络：不能检索 KVLCC2 文献原表与 KCS 试验数据，故 V4 基准只能做算术复核",
+          "无船舶平台仓检出：不能复跑 /calculations/resistance 端点，全部结论基于报告自身声明输入",
+          "ρ/ν/ΔCf/S 为反解或惯例假设，不保证与生产环境一致（已作显式假设）"
+        ]
+      },
+      "verdict": "needs-fix",
+      "verdict_rationale": "无阻断级缺陷：报告所有能由其自身声明输入复算的数字全部闭合到声明精度（Fn 最大偏差 0.0281%，Cf 0.298%，RT 残差 ≤0.1 kN，Ct 0.251%，偏差表算术 4/4 一致，geometry/Cwp 回归全部复核通过），且 honest-FAIL（V3/V4）与 NOT RUN（生态/商业/经济性）声明属实。但存在 4 项 medium：①『声明的阻力模型』与『实算模型』不一致（F1）；关键常数 ρ/ν/ΔCf/S 无出处、数字只能反解（F2）；两个『修复前』数字互不相容且无解释（F3）；『见内嵌附图』被字节面探针否证（F4）。这些缺陷不阻断上游 wp-5577-01 的 01 工序验收（该工序按契约不做数字背书），但会污染下游 02/03 的 claim 抽取与 05 的验证门，故处置为 needs-fix（补充口径后重审）。",
+      "verdict_scope": {
+        "blocking_for_upstream_wp_5577_01": false,
+        "blocking_for_downstream_claim_extraction": true,
+        "fixed_items": [
+          "F1",
+          "F2",
+          "F3",
+          "F4"
+        ],
+        "non_blocking_items": [
+          "F5",
+          "F6",
+          "F7",
+          "F8",
+          "F9",
+          "F10"
+        ]
+      },
+      "checks": [
+        {
+          "check_id": "C1",
+          "name": "源完整性（sha256 / chars）",
+          "result": "pass",
+          "method": "markdown utf-8 字节 sha256 与契约声明比对",
+          "detail": {
+            "source_hash": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+            "contract_hash": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+            "chars": 3702,
+            "chars_expected": 3702,
+            "bytes_utf8": 5707
+          }
+        },
+        {
+          "check_id": "C2",
+          "name": "上游结果信封结构合法",
+          "result": "pass",
+          "method": "取上游报告 markdown 的唯一 json 块，按 schemas/kf_result.v1.schema.json（Draft2020-12）校验",
+          "detail": {
+            "upstream_package_id": "wp-5577-01",
+            "upstream_report_id": "14783"
+          }
+        },
+        {
+          "check_id": "C3",
+          "name": "上游源哈希绑定",
+          "result": "pass",
+          "method": "envelope.provenance.source_hash == sha256(report-5577 markdown) == 契约声明",
+          "detail": {
+            "bound": true,
+            "hash": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8"
+          }
+        },
+        {
+          "check_id": "C4",
+          "name": "上游 locator 逐字回解",
+          "result": "pass",
+          "method": "每条 markdown locator 检查 md[char_start:char_end]==quote 且 quote ⊂ md",
+          "detail": {
+            "markdown_locators": 17,
+            "resolved": 17,
+            "unresolved": 0,
+            "record_locators": 9
+          }
+        },
+        {
+          "check_id": "C5",
+          "name": "上游 claims 政策",
+          "result": "pass",
+          "method": "01 工序契约 objective=register_assets ⇒ env.claims 必须为空数组",
+          "detail": {
+            "claims": [],
+            "policy_holds": true
+          }
+        },
+        {
+          "check_id": "C6",
+          "name": "上游资产计数与 summary 口径",
+          "result": "pass",
+          "method": "manifest 计数 vs 上游 ④ 表 21 行；summary 的 locator 计数 vs manifest 实测",
+          "detail": {
+            "asset_count": 21,
+            "asset_status": {
+              "resolved": 2,
+              "unresolved": 19
+            },
+            "assets_by_kind": {
+              "source_document": 1,
+              "record_metadata": 1,
+              "figure": 3,
+              "declared_artifact": 9,
+              "standard_reference": 2,
+              "literature_reference": 2,
+              "benchmark_reference": 1,
+              "mission_reference": 1,
+              "gate_reference": 1
+            },
+            "locators_total": 26,
+            "summary_count_claim": "登记 21 资产（resolved 2 / unresolved 19），27 条 locator 全部逐字回解",
+            "summary_count_consistent": false
+          }
+        },
+        {
+          "check_id": "C7",
+          "name": "主表闭式复算（Fn / Re→ν / ITTC-57 Cf）",
+          "result": "pass",
+          "method": "Fn=V/√(gLpp)；ν 由 Re 反解逐行比较；Cf=0.075/(log10Re−2)²",
+          "detail": {
+            "max_abs_Fn_dev_pct": 0.0281,
+            "max_abs_Cf_dev_pct": 0.298,
+            "nu_inferred_range": [
+              1.189666e-06,
+              1.190364e-06
+            ]
+          }
+        },
+        {
+          "check_id": "C8",
+          "name": "阻力项加和与系数口径",
+          "result": "pass",
+          "method": "RT=Rf+Rw 逐行；Rw=Cr·½ρV²S；Rf=(Cf+ΔCf)·½ρV²S；Ct=RT/(½ρV²S)（ρ、ΔCf 为审核假设）",
+          "interpretation": "Rw 列的 max_abs_dev 25.8% 全部来自 12 kn 行（Cr 5 位小数舍入，见 F5）；该行 |Rw| 仅 2.6 kN，对 RT 的影响 0.3%（0.9 kN/335 kN）。",
+          "detail": {
+            "max_abs_RT_dev_kN": 0.1,
+            "max_abs_Rf_dev_pct": 0.017,
+            "max_abs_Rw_dev_pct": 25.839,
+            "max_abs_Ct_dev_pct": 0.251,
+            "assumptions": {
+              "rho_kg_m3": 1025.0,
+              "dCf": 0.0004,
+              "S_m2": 8975.0
+            }
+          }
+        },
+        {
+          "check_id": "C9",
+          "name": "几何先验与 Cwp 缺省回归",
+          "result": "pass",
+          "method": "Cb=∇/(L·B·T)；旧式 0.75+0.25Cb / 新式 (1+2Cb)/3 复算",
+          "detail": {
+            "Cb_from_nabla": 0.6505,
+            "Cb_tab": 0.6509,
+            "Cb_dev_pct": 0.0617,
+            "Cp_implied": 0.8662,
+            "Cwp_default_old_KCS": 0.9127,
+            "Cwp_default_new_KCS": 0.7673,
+            "Cwp_default_new_KVLCC2": 0.8732,
+            "KVLCC2_Cb_used": 0.8098,
+            "S_provenance": "报告未给湿表面积来源（S=8975 m² 仅出现在表格列）"
+          }
+        },
+        {
+          "check_id": "C10",
+          "name": "偏差表算术与 mock 反算",
+          "result": "pass",
+          "method": "重算 V2/V3/V4 与 ③ 表二第 3 行相对偏差；用 Cr=0.008036 复算 mock RT；反解部署实例隐含 Cr",
+          "detail": {
+            "V2_dev_pct_recomputed": 0.2802,
+            "V2_dev_pct_tab": 0.28,
+            "V3_dev_pct_recomputed": 243.1019,
+            "V3_dev_pct_tab": 243.102,
+            "V4_dev_pct_recomputed": -17.2622,
+            "V4_dev_pct_tab": -17.262,
+            "tbl2_row3_dev_vs_base": 268.957,
+            "tbl2_row3_dev_vs_fixed": 267.9262,
+            "mock_RT_recomputed_from_Cr": 6881.46,
+            "mock_RT_tab": 6882.59,
+            "mock_RT_dev_pct": 0.016,
+            "deployed_Cr_implied_by_RT": 0.008777,
+            "deployed_over_mock_Cr_ratio": 1.0922
+          }
+        },
+        {
+          "check_id": "C11",
+          "name": "『见内嵌附图』的字节面可审计性",
+          "result": "fail",
+          "method": "对 GET /tensor/reports/5577/figures/{name} 逐个取三个声明图名；record 内 png_base64 计数对照",
+          "interpretation": "result=fail 指被审报告的『见内嵌附图』断言不成立（F4），不是本审核工序执行失败。",
+          "detail": {
+            "figures_in_record": 3,
+            "figures_with_png": 0,
+            "figure_http_status": {
+              "fig1_resistance_spectrum.png": 404,
+              "fig2_deviation_spectrum.png": 404,
+              "fig3_evidence_chain.png": 404
+            }
+          }
+        },
+        {
+          "check_id": "C14",
+          "name": "图字节探针有效性（正对照）",
+          "result": "pass",
+          "method": "取回本审核自身投递报告的同名图，与本地 PNG 比 sha256（判据先于动手：一致=端点确实能取回字节）",
+          "detail": {
+            "control": {
+              "report_id": "14965",
+              "name": "fig1_closure_residuals.png",
+              "http_status": 200,
+              "bytes": 70557,
+              "sha256_remote": "9995ecbf4d4c755073a476cf0bcf8be3d8784e265ab421e35fcb221e4e1876ef",
+              "sha256_local": "9995ecbf4d4c755073a476cf0bcf8be3d8784e265ab421e35fcb221e4e1876ef",
+              "identical": true
+            },
+            "conclusion": "平台端可取回图字节（正对照 sha256 一致），而 report-5577 三个声明图名全部 404 ⇒ 图字节从未随报告落库（生产者侧缺口），不是平台不存"
+          }
+        },
+        {
+          "check_id": "C12",
+          "name": "honest-FAIL 声明完整性",
+          "result": "pass",
+          "method": "检查 V3/V4 是否显式标 HONEST-FAIL、是否声明 NOT RUN 维度",
+          "detail": {
+            "v3_flagged": true,
+            "v4_flagged": true,
+            "not_run_declared": [
+              "生态",
+              "商业",
+              "经济性"
+            ],
+            "evidence": [
+              "**HONEST-FAIL**：V4（KVLCC2 全尺度，偏差 -17.26%）与 V3"
+            ]
+          }
+        },
+        {
+          "check_id": "C13",
+          "name": "不可复核声明的登记完备性",
+          "result": "pass",
+          "method": "逐条登记 checks_not_run（6 项）",
+          "detail": {
+            "count": 6
+          }
+        }
+      ],
+      "checks_passed": 13,
+      "checks_failed": [
+        "C11"
+      ],
+      "figure_byte_probe": {
+        "experiment": "figure-bytes retrievability（正对照区分『生产者没传』与『平台不存』）",
+        "target_report_id": "5577",
+        "target_figures": [
+          {
+            "name": "fig1_resistance_spectrum.png",
+            "http_status": 404,
+            "bytes": 29,
+            "sha256": null
+          },
+          {
+            "name": "fig2_deviation_spectrum.png",
+            "http_status": 404,
+            "bytes": 29,
+            "sha256": null
+          },
+          {
+            "name": "fig3_evidence_chain.png",
+            "http_status": 404,
+            "bytes": 29,
+            "sha256": null
+          }
+        ],
+        "all_target_figures_404": true,
+        "positive_control": {
+          "report_id": "14965",
+          "name": "fig1_closure_residuals.png",
+          "http_status": 200,
+          "bytes": 70557,
+          "sha256_remote": "9995ecbf4d4c755073a476cf0bcf8be3d8784e265ab421e35fcb221e4e1876ef",
+          "sha256_local": "9995ecbf4d4c755073a476cf0bcf8be3d8784e265ab421e35fcb221e4e1876ef",
+          "identical": true
+        },
+        "probe_valid": true,
+        "conclusion": "平台端可取回图字节（正对照 sha256 一致），而 report-5577 三个声明图名全部 404 ⇒ 图字节从未随报告落库（生产者侧缺口），不是平台不存"
+      },
+      "experimental_design": {
+        "decision": "report-5577 的『见内嵌附图』是平台限制还是生产者未落库？（决定 F4 的责任归属与修复动作）",
+        "alternatives": [
+          "H1 平台不存图字节（责任在平台，报告无可厚非）",
+          "H2 报告未传图字节（责任在报告，需补传）"
+        ],
+        "hypothesis": "若端点能取回任何报告的图字节，则 H1 被否证",
+        "control": {
+          "report_id": "14965",
+          "name": "fig1_closure_residuals.png",
+          "http_status": 200,
+          "bytes": 70557,
+          "sha256_remote": "9995ecbf4d4c755073a476cf0bcf8be3d8784e265ab421e35fcb221e4e1876ef",
+          "sha256_local": "9995ecbf4d4c755073a476cf0bcf8be3d8784e265ab421e35fcb221e4e1876ef",
+          "identical": true
+        },
+        "criterion_predeclared": "正对照 sha256 与本地一致 ⇒ 端点有效；处理组 3 个图名全 404 ⇒ 判 H2；若正对照不一致 ⇒ 结论降级 unknown",
+        "result": "平台端可取回图字节（正对照 sha256 一致），而 report-5577 三个声明图名全部 404 ⇒ 图字节从未随报告落库（生产者侧缺口），不是平台不存",
+        "confounders": [
+          "正对照用的是本审核自己投递的报告（同一 POST 路径，但非生产者环境）",
+          "只探了 /figures/{name} 一条读路径；可能另有存储端点未探"
+        ],
+        "limits": "样本 n=1 正对照、n=3 处理组；无重试统计；不排除 5577 的图存在别处（报告本身也未给出路径）"
+      },
+      "numeric_recomputation": {
+        "assumptions": {
+          "rho_kg_m3": 1025.0,
+          "dCf": 0.0004,
+          "S_m2": 8975.0,
+          "nu_source": "逐行由 Re=V·Lpp/ν 反解（报告未声明 ν）",
+          "note": "假设值经反解与惯例双重确认；见 rho_dcf_fit 的退化说明"
+        },
+        "rows": [
+          {
+            "V_kn": 12.0,
+            "Fn_tab": 0.13,
+            "Fn_recomputed": 0.12996,
+            "Fn_dev_pct": 0.0281,
+            "Re_tab": 1193000000.0,
+            "nu_inferred_m2s": 1.190165e-06,
+            "Cf_tab": 0.0015,
+            "Cf_ittc57_recomputed": 0.0014976,
+            "Cf_dev_pct": 0.158,
+            "Rf_tab_kN": 332.6,
+            "Rf_recomputed_kN": 332.65,
+            "Rf_dev_pct": -0.014,
+            "Rw_tab_kN": 2.6,
+            "Rw_from_Cr_kN": 3.51,
+            "Rw_dev_pct": -25.839,
+            "RT_tab_kN": 335.2,
+            "RT_from_Rf_plus_Rw_kN": 335.2,
+            "RT_dev_kN": -0.0,
+            "Ct_tab": 0.00191,
+            "Ct_recomputed": 0.00191,
+            "Ct_dev_pct": -0.116,
+            "Cr_recomputed_from_Rw": 1.5e-05
+          },
+          {
+            "V_kn": 15.0,
+            "Fn_tab": 0.1625,
+            "Fn_recomputed": 0.16245,
+            "Fn_dev_pct": 0.0281,
+            "Re_tab": 1491000000.0,
+            "nu_inferred_m2s": 1.190364e-06,
+            "Cf_tab": 0.00146,
+            "Cf_ittc57_recomputed": 0.0014575,
+            "Cf_dev_pct": 0.173,
+            "Rf_tab_kN": 508.7,
+            "Rf_recomputed_kN": 508.76,
+            "Rf_dev_pct": -0.011,
+            "Rw_tab_kN": 24.0,
+            "Rw_from_Cr_kN": 24.65,
+            "Rw_dev_pct": -2.64,
+            "RT_tab_kN": 532.7,
+            "RT_from_Rf_plus_Rw_kN": 532.7,
+            "RT_dev_kN": 0.0,
+            "Ct_tab": 0.00194,
+            "Ct_recomputed": 0.00194,
+            "Ct_dev_pct": -0.251,
+            "Cr_recomputed_from_Rw": 8.8e-05
+          },
+          {
+            "V_kn": 18.0,
+            "Fn_tab": 0.1949,
+            "Fn_recomputed": 0.19495,
+            "Fn_dev_pct": -0.0232,
+            "Re_tab": 1790000000.0,
+            "nu_inferred_m2s": 1.189832e-06,
+            "Cf_tab": 0.00143,
+            "Cf_ittc57_recomputed": 0.0014258,
+            "Cf_dev_pct": 0.298,
+            "Rf_tab_kN": 720.1,
+            "Rf_recomputed_kN": 720.1,
+            "Rf_dev_pct": 0.0,
+            "Rw_tab_kN": 109.4,
+            "Rw_from_Cr_kN": 110.44,
+            "Rw_dev_pct": -0.938,
+            "RT_tab_kN": 829.4,
+            "RT_from_Rf_plus_Rw_kN": 829.5,
+            "RT_dev_kN": -0.1,
+            "Ct_tab": 0.0021,
+            "Ct_recomputed": 0.0021,
+            "Ct_dev_pct": -0.137,
+            "Cr_recomputed_from_Rw": 0.000277
+          },
+          {
+            "V_kn": 21.0,
+            "Fn_tab": 0.2274,
+            "Fn_recomputed": 0.22744,
+            "Fn_dev_pct": -0.0159,
+            "Re_tab": 2088000000.0,
+            "nu_inferred_m2s": 1.190022e-06,
+            "Cf_tab": 0.0014,
+            "Cf_ittc57_recomputed": 0.0013998,
+            "Cf_dev_pct": 0.013,
+            "Rf_tab_kN": 966.2,
+            "Rf_recomputed_kN": 966.21,
+            "Rf_dev_pct": -0.001,
+            "Rw_tab_kN": 330.2,
+            "Rw_from_Cr_kN": 327.47,
+            "Rw_dev_pct": 0.833,
+            "RT_tab_kN": 1296.4,
+            "RT_from_Rf_plus_Rw_kN": 1296.4,
+            "RT_dev_kN": 0.0,
+            "Ct_tab": 0.00242,
+            "Ct_recomputed": 0.00241,
+            "Ct_dev_pct": 0.212,
+            "Cr_recomputed_from_Rw": 0.000615
+          },
+          {
+            "V_kn": 24.0,
+            "Fn_tab": 0.26,
+            "Fn_recomputed": 0.25993,
+            "Fn_dev_pct": 0.0281,
+            "Re_tab": 2387000000.0,
+            "nu_inferred_m2s": 1.189666e-06,
+            "Cf_tab": 0.00138,
+            "Cf_ittc57_recomputed": 0.0013778,
+            "Cf_dev_pct": 0.156,
+            "Rf_tab_kN": 1246.8,
+            "Rf_recomputed_kN": 1246.59,
+            "Rf_dev_pct": 0.017,
+            "Rw_tab_kN": 764.8,
+            "Rw_from_Cr_kN": 764.28,
+            "Rw_dev_pct": 0.068,
+            "RT_tab_kN": 2011.6,
+            "RT_from_Rf_plus_Rw_kN": 2011.6,
+            "RT_dev_kN": 0.0,
+            "Ct_tab": 0.00287,
+            "Ct_recomputed": 0.00287,
+            "Ct_dev_pct": 0.039,
+            "Cr_recomputed_from_Rw": 0.001091
+          }
+        ],
+        "max_abs_dev": {
+          "Fn_dev_pct": 0.0281,
+          "Cf_dev_pct": 0.298,
+          "Rf_dev_pct": 0.017,
+          "Rw_dev_pct": 25.839,
+          "RT_dev_kN": 0.1,
+          "Ct_dev_pct": 0.251
+        },
+        "rho_dcf_fit": {
+          "rho_best": 1018.15,
+          "dCf_best": 0.00041,
+          "max_cross_row_rel_spread": 0.00107,
+          "note": "ρ 与 ΔCf 在 5 行数据上不可唯一辨识；ρ=1025/ΔCf=4.0e-4 同样落在舍入误差内"
+        },
+        "geometry": {
+          "Cb_from_nabla": 0.6505,
+          "Cb_tab": 0.6509,
+          "Cb_dev_pct": 0.0617,
+          "Cp_implied": 0.8662,
+          "Cwp_default_old_KCS": 0.9127,
+          "Cwp_default_new_KCS": 0.7673,
+          "Cwp_default_new_KVLCC2": 0.8732,
+          "KVLCC2_Cb_used": 0.8098,
+          "S_provenance": "报告未给湿表面积来源（S=8975 m² 仅出现在表格列）"
+        },
+        "deviations": {
+          "V2_dev_pct_recomputed": 0.2802,
+          "V2_dev_pct_tab": 0.28,
+          "V3_dev_pct_recomputed": 243.1019,
+          "V3_dev_pct_tab": 243.102,
+          "V4_dev_pct_recomputed": -17.2622,
+          "V4_dev_pct_tab": -17.262,
+          "tbl2_row3_dev_vs_base": 268.957,
+          "tbl2_row3_dev_vs_fixed": 267.9262,
+          "mock_RT_recomputed_from_Cr": 6881.46,
+          "mock_RT_tab": 6882.59,
+          "mock_RT_dev_pct": 0.016,
+          "deployed_Cr_implied_by_RT": 0.008777,
+          "deployed_over_mock_Cr_ratio": 1.0922
+        }
+      },
+      "findings": [
+        {
+          "finding_id": "F1",
+          "severity": "medium",
+          "blocking": false,
+          "title": "① 的阻力分解公式与 ③ 的实算口径不一致：实算无 (1+k)，也无 R_B/R_TR/R_A/R_APP",
+          "claim_quote": "R_T=(1+k)R_F+R_W+R_B+R_TR+R_A+R_APP",
+          "evidence": [
+            "R_T=(1+k)R_F+R_W+R_B+R_TR+R_A+R_APP",
+            "端点无 (1+k)/附体通道，与含形因子的全尺度数据对标系统性偏低约",
+            "| 24.00 | 0.2600 | 2.387e+09 | 8975 | 0.00138 | 0.00109 | 1246.8 | 764.8 | 2011.6 | 0.00287 |"
+          ],
+          "analysis": "① 声明 R_T=(1+k)R_F+R_W+R_B+R_TR+R_A+R_APP；③ 主表逐行满足 RT=Rf+Rw（最大残差 0.1 kN，0.1 kN 舍入级），Rf 已含 ΔCf 粗糙度补贴、不含形因子 (1+k)。报告在 ⑤ 用『端点无 (1+k)/附体通道』解释 V4 的 -17.3%，但 ③ 未写出实际采用的定义式，于是同一份报告里『声明的模型』与『算出的模型』不是同一个；下游 claim 抽取照抄 ① 会得到错误的能力画像。",
+          "reproduction": "python3 scripts/wp5577_review.py（C8 明细 numeric_recomputation.rows[*].RT_dev_kN ≤0.1 kN；Rf 需 ΔCf≈4.0e-4 才闭合）",
+          "remediation": "③ 表头/⑤ 增一行显式定义式 R_T,impl=(C_f+ΔC_f+C_r)·½ρV²S，注明 R_B=R_TR=R_A=R_APP=0、形因子通道缺失，并给出 ρ/ν/ΔCf 取值与出处。"
+        },
+        {
+          "finding_id": "F2",
+          "severity": "medium",
+          "blocking": false,
+          "title": "关键常数（ρ、ν、ΔCf、S）无出处，数字只能反解、不可唯一复现",
+          "claim_quote": "ITTC-57摩擦阻力 + ITTC-1978粗糙度补贴 + Holtrop-Mennen(1984)兴波阻力(physics.holtrop 单一源)",
+          "evidence": [
+            "ITTC-57摩擦阻力 + ITTC-1978粗糙度补贴 + Holtrop-Mennen(1984)兴波阻力(physics.holtrop 单一源)",
+            "| 12.00 | 0.1300 | 1.193e+09 | 8975 | 0.00150 | 0.00002 | 332.6 | 2.6 | 335.2 | 0.00191 |",
+            "| 24.00 | 0.2600 | 2.387e+09 | 8975 | 0.00138 | 0.00109 | 1246.8 | 764.8 | 2011.6 | 0.00287 |"
+          ],
+          "analysis": "报告给出 Cf 与 Rf 两列，二者只差一个未声明的 ΔCf；ρ、ν 同样未给。以 (ρ,ΔCf) 联合反解得 ρ≈1018.15、ΔCf≈0.00041（跨行相对离散 1.1e-03），说明 5 行数据自洽，但 (ρ,ΔCf) 退化：ρ=1018/ΔCf=4.1e-4 与 ρ=1025/ΔCf=4.0e-4 都落在舍入误差内。『零手抄可逐字定位』的可审计性因此在这一列断链——第三方只能反解、不能复算。",
+          "reproduction": "python3 scripts/wp5577_review.py（C8 detail.assumptions 与 numeric_recomputation.rho_dcf_fit）",
+          "remediation": "③ 增列 ρ[kg/m³]、ν[m²/s]、ΔCf（注明 ITTC-1978 出处），S=8975 m² 附几何来源。"
+        },
+        {
+          "finding_id": "F3",
+          "severity": "medium",
+          "blocking": false,
+          "title": "两个『修复前』数字互不相容（6882.59 vs 7401.24），报告仅以『旧构建』带过",
+          "claim_quote": "| 部署实例 http://127.0.0.1:8002（旧构建） | 0.008036 | 7401.24 | 268.96 |",
+          "evidence": [
+            "| 修复前（mock） | 0.008036 | 6882.59 | 243.10 |",
+            "| 部署实例 http://127.0.0.1:8002（旧构建） | 0.008036 | 7401.24 | 268.96 |",
+            "常驻 8002 是旧构建，同点仍返回 7401.24 kN",
+            "Cr 原为 `Cr = 0.005·C4(Fn)·C1·C2·C3` 分段多项式 mock"
+          ],
+          "analysis": "按 ② 的 mock 式 Cr=0.008036 与同表 Rf，24 kn 应得 RT≈6881.46 kN（与报告的 6882.59 kN 差 0.016%，成立）；而部署实例 7401.24 kN 反解 Cr≈0.008777（比 mock 高 9.2%）。两行都标『修复前』却由不同公式/不同缺省所生，报告未给差异机制（⑤ 只说『旧构建』）——应显式标 WITHHELD 或给出差异来源（如旧构建的 Cwp 缺省或 Cr 版本）。",
+          "reproduction": "python3 scripts/wp5577_review.py（C10: mock_RT_recomputed_from_Cr / deployed_Cr_implied_by_RT）",
+          "remediation": "③ 表二第 3 行补旧构建的提交号与所用 Cr 公式版本；否则降级为 WITHHELD（不可复核）。"
+        },
+        {
+          "finding_id": "F4",
+          "severity": "medium",
+          "blocking": false,
+          "title": "『见内嵌附图』被字节面探针否证：三个声明图名在该端点 404，而正对照可取回且 sha256 一致",
+          "claim_quote": "见内嵌附图",
+          "evidence": [
+            "见内嵌附图"
+          ],
+          "analysis": "record 里 figures=3 条、带 png_base64 的 0 条；进一步做受控探针（scripts/wp5577_probe_figures.py）：对 `GET /tensor/reports/5577/figures/{name}` 取三个声明图名全部 **404**，而对本审核自身投递的报告（同一 POST /tensor/reports 路径写入 figures[].png_base64）取回 70557 字节、sha256 与本地 PNG 完全一致。结论：平台这条读路径**确实能取回图字节**，所以 5577 的图不是『平台不存』，而是**该报告从未把图字节落库**；报告原句『见内嵌附图』因此是不成立的断言（且报告未给出图字节存于何处）。",
+          "reproduction": "python3 scripts/wp5577_probe_figures.py --control-report-id 14965（读回 docs/kf/wp-5577-04/source/figure_probe.json；离线审核脚本 C11/C14 消费该结果）",
+          "remediation": "把三张图以 figures[].png_base64 随报告投递（平台存字节且可按名取回），或改写为『图 PNG 存于 artifacts/bp_demo/，本记录仅登记 name/caption』并给出可取回的路径。"
+        },
+        {
+          "finding_id": "F5",
+          "severity": "low",
+          "blocking": false,
+          "title": "12 kn 行 Cr 与 Rw 在声明精度下不相容（0.00002 vs 反解 0.0000148）",
+          "claim_quote": "| 12.00 | 0.1300 | 1.193e+09 | 8975 | 0.00150 | 0.00002 | 332.6 | 2.6 | 335.2 | 0.00191 |",
+          "evidence": [
+            "| 12.00 | 0.1300 | 1.193e+09 | 8975 | 0.00150 | 0.00002 | 332.6 | 2.6 | 335.2 | 0.00191 |",
+            "| 24.00 | 0.2600 | 2.387e+09 | 8975 | 0.00138 | 0.00109 | 1246.8 | 764.8 | 2011.6 | 0.00287 |"
+          ],
+          "analysis": "12 kn：Cr=0.00002×½ρV²S(=175 262 kN，ρ=1025)=3.5 kN，同表 Rw=2.6 kN；由 Rw 反解 Cr=0.00002（5 位小数应显示 0.00001，表列 0.00002 偏大 33%）。其余 4 行闭合到舍入级（最大 |Rw_dev| 2.64%）。对 RT 影响 0.3%（0.9 kN / 335 kN），不改结论，但『可逐字定位』的表不应自相矛盾。",
+          "reproduction": "python3 scripts/wp5577_review.py（numeric_recomputation.rows[0].Cr_recomputed_from_Rw）",
+          "remediation": "Cr 列增至 6 位小数，或注明『Cr 由未舍入 Rw 计算』。"
+        },
+        {
+          "finding_id": "F6",
+          "severity": "low",
+          "blocking": false,
+          "title": "过度概括：由单一 mock 实现推出『任何按 Fn 分段的多项式都会成倍偏差』",
+          "claim_quote": "按 Fn 分段的多项式",
+          "evidence": [
+            "按 Fn 分段的多项式",
+            "段产生成倍偏差——本单发现的缺陷即源于此。",
+            "Cr 原为 `Cr = 0.005·C4(Fn)·C1·C2·C3` 分段多项式 mock"
+          ],
+          "analysis": "被否证的只是 /calculations/resistance 里那一组 C4(Fn) 分段系数（0.008036 vs 0.00109，约 7.4 倍）。『任何分段多项式』是全称断言，报告未对该族给出证明，也未对比其它分段实现——结论外推过度，按 S 分级不应据此树立方法论结论。",
+          "reproduction": "读 ① 第 2 段与 ② 『本轮修复』段即可复现该叙述（无需运行）",
+          "remediation": "改为『本实现所用的 C4(Fn) 分段插值在 Fn≈0.26 处把 Cr 抬高约 7.4 倍（0.008036 vs 0.00109）』。"
+        },
+        {
+          "finding_id": "F7",
+          "severity": "low",
+          "blocking": false,
+          "title": "V2 的 0.280%<3% 属同级自洽，不是精度验证；⑥ 表『基准』列未标属性",
+          "claim_quote": "| V2 | KCS 设计点总阻力 Rt（单一物理源对标） | 2011.61 | 2005.99 | kN | 0.280 | 是 |",
+          "evidence": [
+            "| V2 | KCS 设计点总阻力 Rt（单一物理源对标） | 2011.61 | 2005.99 | kN | 0.280 | 是 |",
+            "未取得 KCS 水池试验原始数据表，单一源对标属同级而非",
+            "**HONEST-FAIL**：V4（KVLCC2 全尺度，偏差 -17.26%）与 V3"
+          ],
+          "analysis": "基准 2005.99 kN 与被测 2011.61 kN 同出 Holtrop 单一源（⑤ 自述『单一源对标属同级而非实验对标』），复算偏差 0.2802% 与声明一致，但它只证明两条调用路径同源一致，不构成对物理真值的精度证据；⑥ 表无『基准类型』列，下游易把 0.280% 误读为实验对标误差。",
+          "reproduction": "python3 scripts/wp5577_review.py（C10: V2_dev_pct_recomputed）",
+          "remediation": "⑥ 表增『基准类型』列（self-consistency / literature / EFD），V2 标 self-consistency。"
+        },
+        {
+          "finding_id": "F8",
+          "severity": "low",
+          "blocking": false,
+          "title": "V4 文献基准 1960.0 kN 无出处、KVLCC2 几何/工况未给 ⇒ -17.26% 不可独立复核",
+          "claim_quote": "| V4 | KVLCC2 全尺度 Rt vs 文献（含附体/形因子） | 1621.66 | 1960.0 | kN | -17.262 | 否 |",
+          "evidence": [
+            "| V4 | KVLCC2 全尺度 Rt vs 文献（含附体/形因子） | 1621.66 | 1960.0 | kN | -17.262 | 否 |",
+            "端点无 (1+k)/附体通道，与含形因子的全尺度数据对标系统性偏低约",
+            "**HONEST-FAIL**：V4（KVLCC2 全尺度，偏差 -17.26%）与 V3"
+          ],
+          "analysis": "报告未给 KVLCC2 的 L/B/T/Cb/S/航速，也未给 1960.0 kN 的文献名与表号。本审核只能复核百分比算术（复算 -17.262% vs 声明 -17.262%，一致），不能复核物理量，故该行的『否』无法区分是模型缺陷还是基准不当。",
+          "reproduction": "python3 scripts/wp5577_review.py（C10: V4_dev_pct_recomputed）",
+          "remediation": "补 KVLCC2 参数表 + 文献引用（作者/年/表号/工况/附体假设），否则该行标 WITHHELD。"
+        },
+        {
+          "finding_id": "F9",
+          "severity": "low",
+          "blocking": false,
+          "title": "上游 wp-5577-01 的 summary 计数口径与 manifest 不一致（27 vs 26 locator）",
+          "claim_quote": "登记 21 资产（resolved 2 / unresolved 19），27 条 locator 全部逐字回解",
+          "evidence": [
+            "登记 21 资产（resolved 2 / unresolved 19），27 条 locator 全部逐字回解"
+          ],
+          "analysis": "manifest 实测 locator 26 条（markdown 17 + record 9），上游 ② 自己也写『17 条 + 9 条』=26、③ 写『26 locator』；summary 的『27 条』疑为把 ast-5577-01 的 content_ref 整篇跨度也计作 locator。该串取自上游 record.summary 字段（非正文引文），仅计数口径不一致；schema/哈希/locator 回解三项验收结论不受影响。",
+          "reproduction": "python3 scripts/wp5577_review.py（C6 明细 locators_total / summary_locator_count_claim）",
+          "remediation": "summary 改为『26 条 locator（17 markdown + 9 record）+ 1 条整篇 content_ref』。"
+        },
+        {
+          "finding_id": "F10",
+          "severity": "info",
+          "blocking": false,
+          "title": "上游 01 的范围声明准确：19 unresolved = 源记录缺字节副本，非登记遗漏",
+          "claim_quote": "01-asset-registration for report 5577",
+          "evidence": [
+            "01-asset-registration for report 5577",
+            "登记 21 资产（resolved 2 / unresolved 19），27 条 locator 全部逐字回解"
+          ],
+          "analysis": "独立复核（均取自上游记录字段，非 report-5577 正文）：21 资产（resolved 2 / unresolved 19）与其 ④ 表 21 行一致；17/17 条 markdown locator 在原文对应字符区间逐字命中；claims=[] 与 01 契约（objective=register_assets）一致；上游 ⑤.2 明示不对报告数字做正确性背书，本审核确认属实——故其 unresolved/不背书是设计而非缺漏。",
+          "reproduction": "python3 scripts/wp5577_review.py（C2–C6）",
+          "remediation": "无需修复。"
+        }
+      ],
+      "claim_judgements": [
+        {
+          "claim_id": "clm-5577-c1",
+          "text": "端点 Cr 已由分段多项式 mock 改为 Cr=R_W(V)/(½ρV²S)，R_W 取 physics.holtrop 单一源",
+          "status": "supported",
+          "basis": "24 kn 行 Rw=764.8 kN 与 Cr=0.00109 在 Q=½ρV²S(ρ=1025)=701 186 kN 下闭环（Cr 反解 0.00109，偏差 0.068%）；5 行 Rw 最大偏差 25.839%。",
+          "evidence": [
+            "q_fix_formula",
+            "q_row_24kn"
+          ]
+        },
+        {
+          "claim_id": "clm-5577-c2",
+          "text": "KCS 设计点总阻力 Rt 与基准偏差 0.280%<3%",
+          "status": "partially-supported",
+          "basis": "百分比算术复核一致（0.2802% vs 0.280%），但基准与被测同源（Holtrop 单一源），该偏差是自洽性而非精度证据；见 F7。",
+          "evidence": [
+            "q_v2_row",
+            "q_no_efd"
+          ]
+        },
+        {
+          "claim_id": "clm-5577-c3",
+          "text": "修复前 mock 的 KCS Rt=6882.59 kN（偏差 243.10%）",
+          "status": "supported",
+          "basis": "用 Cr=0.008036 与同表 Rf=1246.8 kN 复算 RT=6881.46 kN，与 6882.59 kN 差 0.016%；偏差百分比复算 243.1019%（声明 243.102%）。",
+          "evidence": [
+            "q_tbl2_mock",
+            "q_mock_cr_formula"
+          ]
+        },
+        {
+          "claim_id": "clm-5577-c4",
+          "text": "部署实例 8002（旧构建）同点返回 7401.24 kN，偏差 268.96%",
+          "status": "unresolved",
+          "basis": "该 RT 反解 Cr≈0.008777，与报告 mock Cr=0.008036 不一致，且未给旧构建的公式/构建号；偏差算术本身可复算（268.957%）。见 F3。",
+          "evidence": [
+            "q_tbl2_deployed",
+            "q_drift"
+          ]
+        },
+        {
+          "claim_id": "clm-5577-c5",
+          "text": "Cb 反算偏差 0.0617%（<1% 通过）",
+          "status": "supported",
+          "basis": "∇/(LBT)=52030/79984.8=0.6505，与表列 Cb=0.6509 相差 0.0617%。",
+          "evidence": [
+            "q_geom_row"
+          ]
+        },
+        {
+          "claim_id": "clm-5577-c6",
+          "text": "缺省 Cwp 由 0.75+0.25Cb 改为 Momo/Schneekluth (1+2Cb)/3，KCS 得 0.767、KVLCC2 得 0.873",
+          "status": "supported",
+          "basis": "复算：旧式 KCS 0.9127（报告称 0.913）；新式 KCS 0.7673（报告 0.767）、KVLCC2(Cb=0.8098) 0.8732（报告 0.873）。",
+          "evidence": [
+            "q_cwp_old",
+            "q_cwp_new",
+            "q_cwp_values"
+          ]
+        },
+        {
+          "claim_id": "clm-5577-c7",
+          "text": "8 次调用 100% 按契约、延迟 p50 0.004 s、41 passed/3 skipped、报告门 8/8、工件索引 20/20",
+          "status": "unresolved",
+          "basis": "全部为报告自述：运行日志、report_gate 输出、artifacts/bp_demo/sha256_index.json 均未随记录落库，无字节可核（见 checks_not_run）。唯一可做的内部一致性检查：5 航速+2 负控+1 复调=8，与『8 次』自洽。",
+          "evidence": [
+            "q_calls",
+            "q_latency",
+            "q_pytest",
+            "q_gate"
+          ]
+        },
+        {
+          "claim_id": "clm-5577-c8",
+          "text": "任何按 Fn 分段的多项式近似都会在中等 Fn 段产生成倍偏差",
+          "status": "refuted",
+          "basis": "证据只覆盖本仓被删的一组 C4(Fn) 系数（0.008036 vs 0.00109，约 7.4 倍），不支持『任何』这一全称量化；属过度外推。见 F6。",
+          "evidence": [
+            "q_universal_claim",
+            "q_universal_claim_2"
+          ]
+        },
+        {
+          "claim_id": "clm-5577-c9",
+          "text": "端点无 (1+k)/附体通道，故与含形因子的全尺度数据对标系统性偏低约 17.3%",
+          "status": "partially-supported",
+          "basis": "C8 证实实算 RT=Rf(含ΔCf)+Rw、无 (1+k)；但 -17.3% 的文献基准 1960.0 kN 无出处，无法判定偏低是否全由缺 (1+k) 造成（见 F8）。",
+          "evidence": [
+            "q_no_form_factor",
+            "q_v4_row"
+          ]
+        },
+        {
+          "claim_id": "clm-5577-c10",
+          "text": "三张结果图已随报告内嵌",
+          "status": "unresolved",
+          "basis": "record.figures=3 条仅有 name/caption，带 png_base64 的 0 条；图内容不可审计。见 F4。",
+          "evidence": [
+            "q_figures"
+          ]
+        }
+      ],
+      "overstated_claims": [
+        {
+          "quote": "按 Fn 分段的多项式段产生成倍偏差——本单发现的缺陷即源于此。",
+          "finding": "F6",
+          "why": "单一被删实现（C4(Fn) 分组系数）不足以支撑『任何分段多项式』的全称量化"
+        },
+        {
+          "quote": "| V2 | KCS 设计点总阻力 Rt（单一物理源对标） | 2011.61 | 2005.99 | kN | 0.280 | 是 |",
+          "finding": "F7",
+          "why": "0.280% 的基准与被测同源，是自洽性而非精度；表头未标基准类型，易被读成实验对标"
+        },
+        {
+          "quote": "见内嵌附图",
+          "finding": "F4",
+          "why": "记录只带 name/caption，无 PNG 字节，『见内嵌附图』在记录层面不成立"
+        },
+        {
+          "quote": "| 部署实例 http://127.0.0.1:8002（旧构建） | 0.008036 | 7401.24 | 268.96 |",
+          "finding": "F3",
+          "why": "该行数字隐含的 Cr 与报告自己给出的 mock Cr 相差 9.2%，却被并列为『修复前』"
+        }
+      ],
+      "checks_not_run": [
+        {
+          "item": "pytest 结果（41 passed / 3 skipped / 1 warning）",
+          "why": "测试日志与工件索引（artifacts/bp_demo/sha256_index.json）未随报告记录落库，无字节可核",
+          "status": "unknown"
+        },
+        {
+          "item": "引擎调用成功率与延迟分位（8 次调用、p50 0.004 s）",
+          "why": "无调用 trace 工件；仅能核对 5 航速+2 负控+1 复调=8 的自洽性",
+          "status": "unknown"
+        },
+        {
+          "item": "报告门 8/8 与工件索引复算 20/20",
+          "why": "report_gate 输出不在本记录内，无法复核门实现与输入",
+          "status": "unknown"
+        },
+        {
+          "item": "KVLCC2 文献基准 1960.0 kN 的真实值与工况",
+          "why": "报告无文献引用/表号，也无 KVLCC2 几何；离线环境不可检索文献",
+          "status": "unknown"
+        },
+        {
+          "item": "S=8975 m²（湿表面积）的正确性",
+          "why": "报告未给来源/公式；本审核不引外部数据核对，避免以估算充数",
+          "status": "unknown"
+        },
+        {
+          "item": "R_W 与 physics.holtrop 的公式一致性",
+          "why": "physics/holtrop 源码不在本仓（TensorKnowledge），本审核无源码可读",
+          "status": "not_run"
+        }
+      ],
+      "verified_marking": {
+        "claims_marked_verified": 0,
+        "note": "本审核只赋 supported/partially-supported/unresolved/refuted；verification 由平台门计算，审核方不标 verified"
+      },
+      "acceptance_selfcheck": {
+        "valid_json": true,
+        "schema_pass": true,
+        "reviewer_independent": true,
+        "upstream_packages_completed": true,
+        "upstream_detail": {
+          "discovery": "scenario_key=campaign/bp-demo-in12p8 过滤只命中两份：源报告 #5577 与上游结果 #14783(wp-5577-01)",
+          "envelope_schema_pass": true,
+          "source_hash_bound": true,
+          "locators_markdown": 17,
+          "locators_markdown_unresolved": 0
+        }
+      },
+      "repro_cmd": "cd <worktree> && python3 scripts/wp5577_review.py --offline && python3 scripts/wp5577_review.py --figure && python3 -m pytest tests/test_wp5577_review.py -q"
+    }
+  }
+}
