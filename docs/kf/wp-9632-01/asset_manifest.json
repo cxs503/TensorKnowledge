@@ -1,0 +1,633 @@
+{
+  "schema": "asset_manifest.v1",
+  "manifest_version": "1.0",
+  "package_id": "wp-9632-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9632",
+  "lane": "B",
+  "generated_at": "2026-11-12T01:42:44.864200+00:00",
+  "producer": "kf-worker/m15662",
+  "source": {
+    "report_id": "9632",
+    "uri": "tensor://reports/9632",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+    "source_hash": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+    "contract_source_hash": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+    "hash_match": true,
+    "chars": 10749,
+    "contract_chars": 10749,
+    "chars_match_contract": true,
+    "bytes_utf8": 15670,
+    "lines": 237,
+    "has_trailing_newline": true,
+    "local_copy": "runs/wp-9632-01/source_9632.md",
+    "fetched_via": "GET /api/v1/tensor/reports/9632 (Authorization: Bearer)",
+    "title": "IN101-N07 冰脊固结热力学：龙骨大孔隙再冻结与固结度-阻力耦合",
+    "contract_title": "IN101-N07 冰脊固结热力学：龙骨大孔隙再冻结与固结度-阻力耦合",
+    "title_matches_contract": true,
+    "scenario_key": "ice_ridge_consolidation",
+    "contract_scenario_key": "ice_ridge_consolidation",
+    "scenario_matches_contract": true,
+    "platform_mission_id": 8348,
+    "platform_status": "published",
+    "platform_tags": [
+      "IN101-N07",
+      "ice-ridge",
+      "consolidation",
+      "stefan",
+      "maxwell-eucken",
+      "TensorPhysics",
+      "sea-ice",
+      "ice-resistance"
+    ],
+    "platform_figures": [
+      {
+        "name": "fig1_consolidated_layer_growth.png",
+        "caption": "Fig 1 - consolidated layer growth vs FDD for the porosity band and the derived literature band"
+      },
+      {
+        "name": "fig2_temperature_profiles.png",
+        "caption": "Fig 2 - 1-D temperature profiles from the enthalpy solver vs the Neumann similarity profile"
+      },
+      {
+        "name": "fig3_effective_conductivity.png",
+        "caption": "Fig 3 - effective conductivity: keel model vs Maxwell-Eucken parallel / series / ME-1"
+      },
+      {
+        "name": "fig4_strength_resistance_history.png",
+        "caption": "Fig 4 - strength and resistance histories: consolidated vs rubble term"
+      },
+      {
+        "name": "fig5_criteria_summary.png",
+        "caption": "Fig 5 - achieved relative error vs tolerance for criteria (a)-(f)"
+      },
+      {
+        "name": "fig6_sensitivity.png",
+        "caption": "Fig 6 - sensitivity of h_c(t) to snow depth and air temperature"
+      }
+    ]
+  },
+  "counts": {
+    "assets": 23,
+    "by_class": {
+      "report_markdown": 1,
+      "platform_figure": 6,
+      "source_code_reference": 3,
+      "data_artifact_reference": 1,
+      "figure_reference": 6,
+      "source_directory_reference": 1,
+      "repository_reference": 1,
+      "module_reference": 1,
+      "symbol_reference": 3
+    },
+    "by_resolution": {
+      "resolved_in_source": 1,
+      "referenced_unresolved": 22
+    },
+    "resolved_in_source": 1,
+    "referenced_unresolved": 22,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "report-9632-markdown",
+      "in_report_section": "document (whole markdown field)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 10749,
+        "start_line": 1,
+        "end_line": 237,
+        "quote": "# IN101-N07 冰脊固结热力学：龙骨大孔隙再冻结与固结度-阻力耦合",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(UTF-8 bytes) of GET /api/v1/tensor/reports/9632 markdown == contract source_hash, and len(markdown) == contract chars",
+        "result": "resolved"
+      },
+      "note": "hash sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841, 10749 chars / 15670 bytes / 237 lines; byte copy runs/wp-9632-01/source_9632.md"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "platform_figure",
+      "label": "fig1_consolidated_layer_growth.png",
+      "in_report_section": "section 4 (结果图) + record.figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7620,
+        "end_char": 7738,
+        "start_line": 181,
+        "end_line": 181,
+        "quote": "![fig1_consolidated_layer_growth.png](../artifacts/ice_ridge_consolidation/figures/fig1_consolidated_layer_growth.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "GET /api/v1/tensor/reports/9632/figures/fig1_consolidated_layer_growth.png -> http_status 404 (29 bytes)",
+        "result": "unresolved"
+      },
+      "note": "caption: Fig 1 - consolidated layer growth vs FDD for the porosity band and the derived literature band; same figure also declared as an on-disk relative path in section 4 (separate asset row: platform metadata vs filesystem reference); figure endpoint returned no byte payload, so no figure hash is claimed"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "platform_figure",
+      "label": "fig2_temperature_profiles.png",
+      "in_report_section": "section 4 (结果图) + record.figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7837,
+        "end_char": 7945,
+        "start_line": 185,
+        "end_line": 185,
+        "quote": "![fig2_temperature_profiles.png](../artifacts/ice_ridge_consolidation/figures/fig2_temperature_profiles.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "GET /api/v1/tensor/reports/9632/figures/fig2_temperature_profiles.png -> http_status 404 (29 bytes)",
+        "result": "unresolved"
+      },
+      "note": "caption: Fig 2 - 1-D temperature profiles from the enthalpy solver vs the Neumann similarity profile; same figure also declared as an on-disk relative path in section 4 (separate asset row: platform metadata vs filesystem reference); figure endpoint returned no byte payload, so no figure hash is claimed"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "platform_figure",
+      "label": "fig3_effective_conductivity.png",
+      "in_report_section": "section 4 (结果图) + record.figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8038,
+        "end_char": 8150,
+        "start_line": 189,
+        "end_line": 189,
+        "quote": "![fig3_effective_conductivity.png](../artifacts/ice_ridge_consolidation/figures/fig3_effective_conductivity.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "GET /api/v1/tensor/reports/9632/figures/fig3_effective_conductivity.png -> http_status 404 (29 bytes)",
+        "result": "unresolved"
+      },
+      "note": "caption: Fig 3 - effective conductivity: keel model vs Maxwell-Eucken parallel / series / ME-1; same figure also declared as an on-disk relative path in section 4 (separate asset row: platform metadata vs filesystem reference); figure endpoint returned no byte payload, so no figure hash is claimed"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "platform_figure",
+      "label": "fig4_strength_resistance_history.png",
+      "in_report_section": "section 4 (结果图) + record.figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8228,
+        "end_char": 8350,
+        "start_line": 193,
+        "end_line": 193,
+        "quote": "![fig4_strength_resistance_history.png](../artifacts/ice_ridge_consolidation/figures/fig4_strength_resistance_history.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "GET /api/v1/tensor/reports/9632/figures/fig4_strength_resistance_history.png -> http_status 404 (29 bytes)",
+        "result": "unresolved"
+      },
+      "note": "caption: Fig 4 - strength and resistance histories: consolidated vs rubble term; same figure also declared as an on-disk relative path in section 4 (separate asset row: platform metadata vs filesystem reference); figure endpoint returned no byte payload, so no figure hash is claimed"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "platform_figure",
+      "label": "fig5_criteria_summary.png",
+      "in_report_section": "section 4 (结果图) + record.figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8423,
+        "end_char": 8523,
+        "start_line": 197,
+        "end_line": 197,
+        "quote": "![fig5_criteria_summary.png](../artifacts/ice_ridge_consolidation/figures/fig5_criteria_summary.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "GET /api/v1/tensor/reports/9632/figures/fig5_criteria_summary.png -> http_status 404 (29 bytes)",
+        "result": "unresolved"
+      },
+      "note": "caption: Fig 5 - achieved relative error vs tolerance for criteria (a)-(f); same figure also declared as an on-disk relative path in section 4 (separate asset row: platform metadata vs filesystem reference); figure endpoint returned no byte payload, so no figure hash is claimed"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "platform_figure",
+      "label": "fig6_sensitivity.png",
+      "in_report_section": "section 4 (结果图) + record.figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8594,
+        "end_char": 8684,
+        "start_line": 201,
+        "end_line": 201,
+        "quote": "![fig6_sensitivity.png](../artifacts/ice_ridge_consolidation/figures/fig6_sensitivity.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "GET /api/v1/tensor/reports/9632/figures/fig6_sensitivity.png -> http_status 404 (29 bytes)",
+        "result": "unresolved"
+      },
+      "note": "caption: Fig 6 - sensitivity of h_c(t) to snow depth and air temperature; same figure also declared as an on-disk relative path in section 4 (separate asset row: platform metadata vs filesystem reference); figure endpoint returned no byte payload, so no figure hash is claimed"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "benchmarks/ice_ridge_consolidation/write_report_md.py",
+      "in_report_section": "line 4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 134,
+        "end_char": 272,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "> 本报告由 `benchmarks/ice_ridge_consolidation/write_report_md.py` 从 `artifacts/ice_ridge_consolidation/results.json` 程序化生成，所有数字均来自该 JSON，无手抄。",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form backticked_path; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/ice_ridge_consolidation/results.json",
+      "in_report_section": "line 4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 134,
+        "end_char": 272,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "> 本报告由 `benchmarks/ice_ridge_consolidation/write_report_md.py` 从 `artifacts/ice_ridge_consolidation/results.json` 程序化生成，所有数字均来自该 JSON，无手抄。",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form backticked_path; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "source_code_reference",
+      "label": "benchmarks/ice_ridge_consolidation/run_validation.py",
+      "in_report_section": "line 65",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2792,
+        "end_char": 2951,
+        "start_line": 65,
+        "end_line": 65,
+        "quote": "`numpy`（数组物理）+ `scipy` 无依赖的纯 `math.erf`/二分法（相似常数）+ 自研焓法求解器；matplotlib 出图（Agg 后端）；pytest 23 例；`benchmarks/ice_ridge_consolidation/run_validation.py` 一键复现全部数字与图。",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form backticked_path; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "figure_reference",
+      "label": "../artifacts/ice_ridge_consolidation/figures/fig1_consolidated_layer_growth.png",
+      "in_report_section": "line 181",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7620,
+        "end_char": 7738,
+        "start_line": 181,
+        "end_line": 181,
+        "quote": "![fig1_consolidated_layer_growth.png](../artifacts/ice_ridge_consolidation/figures/fig1_consolidated_layer_growth.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form markdown_image; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "figure_reference",
+      "label": "../artifacts/ice_ridge_consolidation/figures/fig2_temperature_profiles.png",
+      "in_report_section": "line 185",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7837,
+        "end_char": 7945,
+        "start_line": 185,
+        "end_line": 185,
+        "quote": "![fig2_temperature_profiles.png](../artifacts/ice_ridge_consolidation/figures/fig2_temperature_profiles.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form markdown_image; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "figure_reference",
+      "label": "../artifacts/ice_ridge_consolidation/figures/fig3_effective_conductivity.png",
+      "in_report_section": "line 189",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8038,
+        "end_char": 8150,
+        "start_line": 189,
+        "end_line": 189,
+        "quote": "![fig3_effective_conductivity.png](../artifacts/ice_ridge_consolidation/figures/fig3_effective_conductivity.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form markdown_image; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "figure_reference",
+      "label": "../artifacts/ice_ridge_consolidation/figures/fig4_strength_resistance_history.png",
+      "in_report_section": "line 193",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8228,
+        "end_char": 8350,
+        "start_line": 193,
+        "end_line": 193,
+        "quote": "![fig4_strength_resistance_history.png](../artifacts/ice_ridge_consolidation/figures/fig4_strength_resistance_history.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form markdown_image; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "figure_reference",
+      "label": "../artifacts/ice_ridge_consolidation/figures/fig5_criteria_summary.png",
+      "in_report_section": "line 197",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8423,
+        "end_char": 8523,
+        "start_line": 197,
+        "end_line": 197,
+        "quote": "![fig5_criteria_summary.png](../artifacts/ice_ridge_consolidation/figures/fig5_criteria_summary.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form markdown_image; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "figure_reference",
+      "label": "../artifacts/ice_ridge_consolidation/figures/fig6_sensitivity.png",
+      "in_report_section": "line 201",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8594,
+        "end_char": 8684,
+        "start_line": 201,
+        "end_line": 201,
+        "quote": "![fig6_sensitivity.png](../artifacts/ice_ridge_consolidation/figures/fig6_sensitivity.png)",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form markdown_image; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "source_directory_reference",
+      "label": "src/tensorphysics/ice_ridge_consolidation/",
+      "in_report_section": "line 233",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10361,
+        "end_char": 10469,
+        "start_line": 233,
+        "end_line": 233,
+        "quote": "* 模块：`src/tensorphysics/ice_ridge_consolidation/`（thermal / strength / resistance / references / validation）",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form backticked_path; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_ice_ridge_consolidation.py",
+      "in_report_section": "line 234",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10470,
+        "end_char": 10525,
+        "start_line": 234,
+        "end_line": 234,
+        "quote": "* 测试：`tests/test_ice_ridge_consolidation.py`（23 例，全部通过）",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "filesystem probe under m15662",
+        "result": "unresolved"
+      },
+      "note": "reference form backticked_path; path not present in delivery worktree m15662; the report declares it inside another repo (see repo_reference assets)"
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "repository_reference",
+      "label": "TensorPhysics",
+      "in_report_section": "line 3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 39,
+        "end_char": 133,
+        "start_line": 3,
+        "end_line": 3,
+        "quote": "> 战役节点 **IN101-N07**（物理域）｜仓库 `TensorPhysics`｜模块 `tensorphysics.ice_ridge_consolidation`｜单位 SI。",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "named in report prose only; registration step does not open the owning repository/module",
+        "result": "unresolved"
+      },
+      "note": "declared_only: existence is not asserted by this package"
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "module_reference",
+      "label": "tensorphysics.ice_ridge_consolidation",
+      "in_report_section": "line 3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 39,
+        "end_char": 133,
+        "start_line": 3,
+        "end_line": 3,
+        "quote": "> 战役节点 **IN101-N07**（物理域）｜仓库 `TensorPhysics`｜模块 `tensorphysics.ice_ridge_consolidation`｜单位 SI。",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "named in report prose only; registration step does not open the owning repository/module",
+        "result": "unresolved"
+      },
+      "note": "declared_only: existence is not asserted by this package"
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "symbol_reference",
+      "label": "thermal.consolidated_layer_thickness",
+      "in_report_section": "line 39",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1747,
+        "end_char": 1890,
+        "start_line": 39,
+        "end_line": 39,
+        "quote": "两式相差 $O(Ste)$，本次基准中 1.2%–6.4%（$\\Delta T$=3.3–18.3 K），由 `thermal.consolidated_layer_thickness`（准稳态，可叠加雪热阻）与 `thermal.similarity_front`（相似解）分别给出。",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "named in report prose only; registration step does not open the owning repository/module",
+        "result": "unresolved"
+      },
+      "note": "declared_only: existence is not asserted by this package"
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "symbol_reference",
+      "label": "thermal.similarity_front",
+      "in_report_section": "line 39",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1747,
+        "end_char": 1890,
+        "start_line": 39,
+        "end_line": 39,
+        "quote": "两式相差 $O(Ste)$，本次基准中 1.2%–6.4%（$\\Delta T$=3.3–18.3 K），由 `thermal.consolidated_layer_thickness`（准稳态，可叠加雪热阻）与 `thermal.similarity_front`（相似解）分别给出。",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "named in report prose only; registration step does not open the owning repository/module",
+        "result": "unresolved"
+      },
+      "note": "declared_only: existence is not asserted by this package"
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "symbol_reference",
+      "label": "thermal.solve_porous_stefan_1d",
+      "in_report_section": "line 61",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2571,
+        "end_char": 2777,
+        "start_line": 61,
+        "end_line": 61,
+        "quote": "`thermal.solve_porous_stefan_1d` 是显式守恒焓法（线性相变、固定网格、Dirichlet 冷面 + 远端零通量），它**不知道**式 (1)–(3) 的存在，因此与之对比是独立验证；$\\phi\\to1$ 且取致密冰潜热时退化为经典 Neumann 问题。前缘由三个独立估计量给出（焓积分、$H=L_{vol}/2$ 交点、$H=0$ 交点），基准取焓积分量（能量守恒、收敛最好）。",
+        "unique": true,
+        "quote_form": "line",
+        "occurrences_in_source": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "named in report prose only; registration step does not open the owning repository/module",
+        "result": "unresolved"
+      },
+      "note": "declared_only: existence is not asserted by this package"
+    }
+  ],
+  "claims": [],
+  "claims_note": "empty by contract: objective.classify_report_type=false and this work package is registration only -- no extraction, no verified marks",
+  "integrity": {
+    "quote_uniqueness": true,
+    "non_unique_quotes": [],
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "ids_unique": true,
+    "no_writes_outside_worktree": true,
+    "no_verified_marks": true
+  }
+}
