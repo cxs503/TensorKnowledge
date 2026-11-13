@@ -106,9 +106,32 @@ epistemic 分层导出：
 **铁律**：TensorKnowledge 零领域语义硬编码。领域词条/判据/算例一律通过 API/配置/工件注入，
 测试夹具使用合成域名。
 
+**领域边界审计**（m15723 · 2026-11-12）：
+- ✅ `knowledge/oss-lbm/`、`knowledge/sediment/`、`knowledge-map/ship-ocean-domain/` 为知识资产，合规
+- ✅ `data/eval_benchmarks.json` 为领域数据配置文件，合规
+- ✅ `ke/export.py` 已修复：硬编码 LBM 基准 → 运行时从数据文件加载
+- 详见 [`docs/domain-boundary-audit-m15723.md`](docs/domain-boundary-audit-m15723.md)
+
 ---
 
-## 6. KPI-KB-10K 对齐
+## 6. 统计口径三分离（全文档统一）
+
+知识治理的三个层次，不可混淆：
+
+| 层次 | 定义 | 准入条件 | 用途 |
+|---|---|---|---|
+| **原始记录**（Raw Records） | Agent 任务产出的原始 claim/evidence/provenance | 任务完成即入库 | 审计溯源、编译输入 |
+| **待评审知识对象**（Pending Review KO） | 已聚合但未经独立评审的知识对象 | 通过知识编译器聚合 | 评审输入、内部迭代 |
+| **经治理知识对象**（Governed KO） | 通过独立评审（approved）的知识对象 | 通过独立评审（禁止自批） | 训练语料、评测集、对外服务 |
+
+**KPI 对齐**：
+- 原始记录目标：100,000 条
+- 待评审 KO 目标：10,000 条
+- 经治理 KO 目标：8,000 条（published 层）
+
+---
+
+## 7. KPI-KB-10K 对齐
 
 | 指标 | 目标 | 当前状态 |
 |---|---|---|
@@ -120,7 +143,7 @@ epistemic 分层导出：
 
 ---
 
-## 7. 核心原则
+## 8. 核心原则
 
 1. **出处必引**：每条 claim 必须有 evidence 支撑，每条 evidence 必须有 source 锚点
 2. **零手抄**：所有数字/结论必须可溯源到原始记录（raw_sha256 钉死）
@@ -131,7 +154,7 @@ epistemic 分层导出：
 
 ---
 
-## 8. 长期愿景
+## 9. 长期愿景
 
 一个人（或 Agent）应该能够：
 从一个有意义的问题出发 → 识别所需知识 → 与合适的 Agent 和人协作 →

@@ -5,28 +5,37 @@
 > 试点包：`platform-test/epistemic-benchmark/pilots/m8554/`（branch agent/m8554
 > 的认知试点工件，owner 2026-11-09 验收通过；本分支将其收编为可复现夹具）。
 
-## 0. 后端收口（m8800 更新）
+## 0. 后端收口（m8800 更新 · 2026-11-12 刷新）
 
-原型的 SQLite 存储已收口为**单一权威路线**：PostgreSQL 是权威存储，SQLite 只作单测/离线
-夹具，两者共用一份数据契约与一套查询接口；差异清单与迁移工具见
-[`docs/ke/backends.md`](backends.md)。试点包夹具同时从
-`platform-test/.../pilots/m8554/`（他单号段路径，推送门禁会滤除）迁到
-`tests/fixtures/ke-pilot/`，见其 `PROVENANCE.md`。
+**PostgreSQL 是唯一权威存储**（[backends.md](backends.md) 外评定谳）：
+
+- **生产/迁移/验收数据**：一律落在 PostgreSQL（psycopg 薄层，`ke/contract.py` 同一份 DDL）
+- **SQLite 角色**：仅用于单测 / 离线夹具（`:memory:` 级），**不是第二套知识系统**
+- **历史演进**：原型阶段（2026-11-09）用 SQLite 快速验证六类查询 + 一致性校验；
+  生产阶段（2026-11-10）迁移到 PostgreSQL，双后端共用同一契约/查询/校验器，
+  差异只在 `ke/store.py` 门面层做方言翻译。
+
+详细差异清单与迁移工具见 [`docs/ke/backends.md`](backends.md)。
+试点包夹具同时从 `platform-test/.../pilots/m8554/`（他单号段路径，推送门禁会滤除）
+迁到 `tests/fixtures/ke-pilot/`，见其 `PROVENANCE.md`。
 
 ## 1. 是什么
 
 对 epistemic 记录包（claim / evidence / provenance JSON）的**最小闭环**：
 
 ```
-ingest (JSON -> SQLite)  ->  查询 (6 类)  ->  一致性校验 (schema + xref 不变量)
+ingest (JSON -> PG/SQLite)  ->  查询 (6 类)  ->  一致性校验 (schema + xref 不变量)
 ```
 
 设计约束：
 
 - **薄层**：仅 Python 标准库（`sqlite3`/`json`/`argparse`）+ `jsonschema`
-  （仓库既有依赖，见 `requirements-validation.txt`）。无服务、无网络、无新依赖。
+  （仓库既有依赖，见 `requirements-validation.txt`）+ `psycopg`（PG 后端）。
+  无服务、无网络、无新依赖。
 - **零手抄**：每条记录原文存 `raw_json` 列，查询结果可回溯到源字节
   （`ke.queries.raw_record` 与源文件逐字节等价，有测试）。
+- **零领域语义**：引擎不硬编码任何领域词条/判据/算例；域数据经 `data/` 配置文件
+  或 `knowledge/**` 工件注入（m15723 领域边界审计修复）。
 - **不变量可检**：xref 不变量与 `pilots/m8554/validate_pilot.py` 第 2 节
   同口径（见 §4）。
 
@@ -34,13 +43,16 @@ ingest (JSON -> SQLite)  ->  查询 (6 类)  ->  一致性校验 (schema + xref 
 
 | 文件 | 职责 |
 |---|---|
-| `ke/store.py` | SQLite schema + `ingest_pilot()`（幂等，单事务） |
+| `ke/contract.py` | **数据契约唯一来源**：四契约的列定义、DDL 生成、源包发现、记录→行归一化 |
+| `ke/store.py` | **门面**：`connect()` 选后端；方言翻译（占位符/冲突忽略/事务语义/行对象/排序/编码） |
 | `ke/queries.py` | 查询类 Q1–Q6（全部按 id 排序，输出确定） |
 | `ke/validate.py` | `xref_report()` / `schema_report()` / `validate_package()` |
 | `ke/cli.py` | `ingest` / `query` / `validate` / `demo` 子命令 |
+| `ke/migrate.py` | SQLite 暂存 → PG 迁移 + 对账表 |
 | `tests/test_ke_proto.py` | 15 个测试：钉死试点包查询结果 + 一致性 + 负例 |
+| `tests/test_ke_migrate.py` | 10 个测试：迁移对账 + 双后端 parity |
 
-SQLite 表：`claims` / `evidence` / `provenance`（各含 `raw_json` 原文列）+
+数据库表：`claims` / `evidence` / `provenance`（各含 `raw_json` 原文列）+
 连接表 `claim_evidence`（claim.evidence_refs 归一化）/ `evidence_claims`
 （evidence.claim_refs 归一化）+ `ingest_meta`。
 
@@ -99,8 +111,15 @@ python -m ke.cli query <pilot> --db /tmp/ke.db --type stats
 # 校验（PASS/FAIL 行与 validate_pilot.py 同形）
 python -m ke.cli validate <pilot> --db /tmp/ke.db
 
+# PostgreSQL 后端（需先配置 KE_PG_DSN）
+python -m ke.cli query <pilot> --backend pg --type stats
+
+# 迁移：SQLite → PG
+python -m ke.migrate
+
 # 测试
 python -m pytest tests/test_ke_proto.py -v
+python -m pytest tests/test_ke_migrate.py -v
 ```
 
 ## 6. 试点包实测结果（m8554，2026-11-09 快照）

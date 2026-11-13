@@ -10,10 +10,15 @@ TensorKnowledge 不是文档库、不是向量仓、不是 Agent 私有记忆。
 
 | 层 | 能力 | 状态 |
 |---|---|---|
-| **L1 · 生产沉淀** | 被动沉淀（Agent 任务完成→四契约）+ 主动收集（OSS/文献扫描） | in-progress |
+| **L1 · 生产沉淀** | 被动沉淀（Agent 任务完成→四契约）+ 主动收集（OSS/文献扫描） | planned |
 | **L2 · 治理契约** | 四契约 schema + 知识对象聚合 + 评审状态机（禁止自批） | done |
 | **L3 · 知识引擎** | 实体/边/facet 投影 + 六类查询 + 一致性校验 | in-progress |
 | **L4 · 应用出口** | KE API 检索/上下文组装 + 训练语料分层导出 | planned |
+
+**统计口径三分离**（全文档统一）：
+- **原始记录**（Raw Records）：Agent 任务产出的原始 claim/evidence/provenance，未经评审
+- **待评审知识对象**（Pending Review KO）：已聚合但未经独立评审的知识对象
+- **经治理知识对象**（Governed KO）：通过独立评审（approved）的知识对象，可进入训练集
 
 ## 快速开始
 
@@ -37,6 +42,7 @@ python -m ke.cli demo platform-test/epistemic-benchmark/pilots/m8554
 | `scripts/` | 验证器、映射构建器、状态机可执行形式 |
 | `mappings/` | 试点包映射结果（含损耗登记） |
 | `knowledge/` | 知识包（如 oss-lbm 试点） |
+| `data/` | 领域数据配置文件（引擎零领域语义，域数据经此注入） |
 | `platform-test/` | 认知基准测试与试点包 |
 | `architecture/` | 系统架构与集成契约 |
 | `curriculum/` | 人类能力框架与学习路径 |
@@ -53,7 +59,7 @@ python -m ke.cli demo platform-test/epistemic-benchmark/pilots/m8554
 ## 知识引擎
 
 四契约到知识引擎的存储/检索映射规格 v0.1 在 [docs/ke/mapping-spec.md](docs/ke/mapping-spec.md)。
-原型实现（SQLite + 六类查询 + 一致性校验）在 `ke/` 目录，详见 [docs/ke/proto.md](docs/ke/proto.md)。
+原型实现（PostgreSQL 权威存储 + SQLite 测试夹具 + 六类查询 + 一致性校验）在 `ke/` 目录，详见 [docs/ke/proto.md](docs/ke/proto.md) 和 [docs/ke/backends.md](docs/ke/backends.md)。
 选型评估（Cognee vs Graphiti vs 自研薄层）在 [docs/ke/evaluation.md](docs/ke/evaluation.md)。
 
 ## 治理原则
