@@ -1,0 +1,128 @@
+{
+ "clean_extract": "/tmp/audit_m15896_ypazffd9/clean",
+ "steps": [
+  {
+   "cmd": "/usr/local/bin/python -m pytest tests/test_rci_f1_abc.py tests/test_rci_f1_round2.py -q",
+   "returncode": 0,
+   "stdout_tail": [
+    "  /usr/lib/python3.11/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.",
+    "  The CallSpec2 alias will be removed in pytest 10.",
+    "  Update imports to use CallSpec instead.",
+    "  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed",
+    "    from _pytest.python import CallSpec2",
+    "",
+    "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+    "23 passed, 1 warning in 1.61s"
+   ],
+   "stderr_tail": []
+  },
+  {
+   "cmd": "/usr/local/bin/python scripts/rci_f1_corpus.py verify",
+   "returncode": 0,
+   "stdout_tail": [
+    "{\"batch_digest\": \"82f698cf0738271cea0b6af7b59edf631e002c27aa266acda00bae7a5266900d\", \"docs_expected\": 60, \"docs_present\": 60, \"docs_sha_ok\": 60, \"frozen_root\": \"/tmp/audit_m15896_ypazffd9/clean/docs/rci-f1-abc/frozen\", \"snapshot_root\": \"/tmp/audit_m15896_ypazffd9/clean/docs/rci-f1-abc/snapshot\", \"prereg_present\": true, \"work_packages_present\": true, \"upstream_source_present\": true, \"passed\": true, \"rate\": 1.0}"
+   ],
+   "stderr_tail": []
+  },
+  {
+   "cmd": "/usr/local/bin/python scripts/rci_f1_verify.py --lane B",
+   "returncode": 0,
+   "stdout_tail": [
+    "{\"lane\": \"B\", \"packages\": 7, \"planned\": 20, \"aggregate\": {\"docs_completed\": 19, \"claims\": 130, \"claims_with_locator\": 130, \"locators_total\": 130, \"locators_resolved\": 130, \"locators_normalized_only\": 0, \"statement_verbatim_in_window\": 130, \"docs_expected\": 21, \"locator_resolution\": 1.0, \"statement_verbatim_rate\": 1.0, \"evidence_gate_pass\": true, \"wall_seconds_sum\": 0.204, \"compute_core_seconds_sum\": 0.199, \"docs_with_full_artifacts\": 18, \"selfreport_inflation_total\": 0}}"
+   ],
+   "stderr_tail": []
+  },
+  {
+   "cmd": "/usr/local/bin/python scripts/rci_f1_settle.py",
+   "returncode": 0,
+   "stdout_tail": [
+    "{\"verdict\": \"WITHHELD\", \"lanes\": {\"A\": {\"docs\": 0, \"claims\": 0, \"loc\": null, \"usable\": false}, \"B\": {\"docs\": 19, \"claims\": 130, \"loc\": 1.0, \"usable\": false}, \"C\": {\"docs\": 0, \"claims\": 0, \"loc\": null, \"usable\": false}}}"
+   ],
+   "stderr_tail": []
+  },
+  {
+   "cmd": "/usr/local/bin/python scripts/rci_f1_power.py",
+   "returncode": 0,
+   "stdout_tail": [
+    "{\"mc_ni_power_drop2pp_margin3\": 0.0409, \"analytic_ni_power_drop2pp_margin3\": 0.0371, \"mc_kappa_coverage_n30\": 0.8962, \"mc_kappa_coverage_bootstrap_n30\": 0.9233, \"mc_kappa_coverage_n120\": 0.9396}",
+    "{\"k\": \"wilson_halfwidth_at_60\"}"
+   ],
+   "stderr_tail": []
+  }
+ ],
+ "tests_passed": 23,
+ "corpus": {
+  "batch_digest": "82f698cf0738271cea0b6af7b59edf631e002c27aa266acda00bae7a5266900d",
+  "docs_expected": 60,
+  "docs_present": 60,
+  "docs_sha_ok": 60,
+  "frozen_root": "/tmp/audit_m15896_ypazffd9/clean/docs/rci-f1-abc/frozen",
+  "snapshot_root": "/tmp/audit_m15896_ypazffd9/clean/docs/rci-f1-abc/snapshot",
+  "prereg_present": true,
+  "work_packages_present": true,
+  "upstream_source_present": true,
+  "passed": true,
+  "rate": 1.0
+ },
+ "verify_lane_b": {
+  "lane": "B",
+  "packages": 7,
+  "planned": 20,
+  "aggregate": {
+   "docs_completed": 19,
+   "claims": 130,
+   "claims_with_locator": 130,
+   "locators_total": 130,
+   "locators_resolved": 130,
+   "locators_normalized_only": 0,
+   "statement_verbatim_in_window": 130,
+   "docs_expected": 21,
+   "locator_resolution": 1.0,
+   "statement_verbatim_rate": 1.0,
+   "evidence_gate_pass": true,
+   "wall_seconds_sum": 0.204,
+   "compute_core_seconds_sum": 0.199,
+   "docs_with_full_artifacts": 18,
+   "selfreport_inflation_total": 0
+  }
+ },
+ "settle": {
+  "verdict": "WITHHELD",
+  "lanes": {
+   "A": {
+    "docs": 0,
+    "claims": 0,
+    "loc": null,
+    "usable": false
+   },
+   "B": {
+    "docs": 19,
+    "claims": 130,
+    "loc": 1.0,
+    "usable": false
+   },
+   "C": {
+    "docs": 0,
+    "claims": 0,
+    "loc": null,
+    "usable": false
+   }
+  }
+ },
+ "power_stdout": {
+  "k": "wilson_halfwidth_at_60"
+ },
+ "determinism": {
+  "docs/rci-f1-abc/round2/settlement.json": {
+   "leaves": 194,
+   "differing": 0,
+   "sample": []
+  },
+  "docs/rci-f1-abc/round2/power.json": {
+   "leaves": 130,
+   "differing": 0,
+   "sample": []
+  }
+ },
+ "artifacts_stable_after_rerun": true
+}
