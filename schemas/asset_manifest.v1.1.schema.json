@@ -1,13 +1,13 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://tensorplatform.local/schemas/asset_manifest.v1.1.schema.json",
-  "title": "asset_manifest.v1.1 (KF work package task_type=01-asset-registration, parameterized)",
-  "description": "Same shape as asset_manifest.v1 (schemas/asset_manifest.v1.schema.json, which pins package_id/report_id to wp-448-01/448 via const and therefore cannot validate a second work package), but with the report/package identity expressed as a pattern instead of a const. Structure, required keys and enums are kept identical so that artifact shape does not drift between work packages. If a platform-side canonical schema exists, the platform gate wins over this file.",
+  "title": "asset_manifest.v1.1 (task_type=01-asset-registration, package-parameterised)",
+  "description": "Shape constraints for asset_manifest.json produced by task_type=01-asset-registration work packages. v1.1 differs from v1 only in that package_id / report_id / source.uri are patterns instead of consts, so one schema file serves every report; the v1 file is left untouched because a previously delivered package (wp-448-01) validates against it. Where this file and the platform-side schema disagree, the platform gate wins.",
   "type": "object",
   "required": ["schema", "package_id", "task_type", "report_id", "source", "counts", "assets", "claims", "integrity"],
   "properties": {
-    "schema": {"const": "asset_manifest.v1.1"},
-    "package_id": {"type": "string", "pattern": "^wp-[0-9]+-01$"},
+    "schema": {"const": "asset_manifest.v1"},
+    "package_id": {"type": "string", "pattern": "^wp-[A-Za-z0-9][A-Za-z0-9_.:-]*-[0-9]{2}$"},
     "task_type": {"const": "01-asset-registration"},
     "report_id": {"type": "string", "pattern": "^[0-9]+$"},
     "source": {
@@ -15,7 +15,7 @@
       "required": ["uri", "field", "hash_alg", "hash", "chars", "bytes_utf8", "title", "scenario_key"],
       "properties": {
         "uri": {"type": "string", "pattern": "^tensor://reports/[0-9]+$"},
-        "field": {"enum": ["markdown", "summary", "record"]},
+        "field": {"const": "markdown"},
         "hash_alg": {"const": "sha256"},
         "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
         "chars": {"type": "integer", "minimum": 1},
@@ -28,9 +28,10 @@
     },
     "counts": {
       "type": "object",
-      "required": ["assets", "by_class", "by_resolution", "resolved_in_source", "referenced_unresolved", "declared_absent"],
+      "required": ["assets", "by_class", "by_resolution", "resolved_in_source",
+                   "referenced_unresolved", "declared_absent"],
       "properties": {
-        "assets": {"type": "integer", "minimum": 0},
+        "assets": {"type": "integer", "minimum": 1},
         "by_class": {"type": "object"},
         "by_resolution": {"type": "object"},
         "resolved_in_source": {"type": "integer", "minimum": 0},
@@ -43,7 +44,8 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["asset_id", "asset_class", "label", "in_report_section", "locator", "resolution", "resolution_check", "note"],
+        "required": ["asset_id", "asset_class", "label", "in_report_section", "locator",
+                     "resolution", "resolution_check", "note"],
         "properties": {
           "asset_id": {"type": "string", "pattern": "^A[0-9]{2}$"},
           "asset_class": {"type": "string", "minLength": 1},
@@ -54,19 +56,20 @@
             "type": "object",
             "required": ["check", "result"],
             "properties": {
-              "check": {"type": "string"},
+              "check": {"type": "string", "minLength": 1},
               "result": {"enum": ["resolved", "unresolved", "absent", "present"]}
             }
           },
           "locator": {
             "type": "object",
-            "required": ["method", "start_char", "end_char", "start_line", "end_line", "quote", "unique"],
+            "required": ["method", "start_char", "end_char", "start_line", "end_line",
+                         "quote", "unique"],
             "properties": {
               "method": {"enum": ["char_span", "document"]},
               "start_char": {"type": "integer", "minimum": 0},
               "end_char": {"type": "integer", "minimum": 1},
-              "start_line": {"type": "integer", "minimum": 0},
-              "end_line": {"type": "integer", "minimum": 0},
+              "start_line": {"type": "integer", "minimum": 1},
+              "end_line": {"type": "integer", "minimum": 1},
               "quote": {"type": "string", "minLength": 1},
               "unique": {"type": "boolean"}
             }
@@ -77,7 +80,7 @@
     },
     "claims": {
       "type": "array",
-      "description": "Empty is legitimate when the package declares no extraction. Each claim, if any, must carry evidence or an explicit status.",
+      "description": "Empty is legitimate for this package (objective.classify_report_type=false, no extraction). Each claim, if any, must carry an evidence locator or an explicit status.",
       "items": {
         "type": "object",
         "required": ["claim_id", "text"],

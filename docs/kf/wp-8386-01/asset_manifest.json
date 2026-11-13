@@ -1,0 +1,729 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-8386-01",
+  "task_type": "01-asset-registration",
+  "report_id": "8386",
+  "source": {
+    "uri": "tensor://reports/8386",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "4104143f4653a88fd9df9c12b93d3d05d42592aca5c835749a34f21ad85761af",
+    "chars": 20879,
+    "bytes_utf8": 27959,
+    "title": "[m7061] FuelEU 柔性三件套：RFNBO 乘子 + 岸电 OPS 抵扣 + 存借跨年滚动（判据 a–g 全 PASS）",
+    "scenario_key": "fueleu_flexible_multiyear",
+    "platform_figures": [
+      "fig_ghgie_trajectory",
+      "fig_energy_split",
+      "fig_mechanism_stack",
+      "fig_bank_ledger",
+      "fig_borrow_cap",
+      "fig_lp_vs_enum"
+    ],
+    "platform_tags": [
+      "FuelEU",
+      "RFNBO",
+      "OPS岸电",
+      "banking",
+      "borrowing",
+      "HiGHS",
+      "线性规划",
+      "碳强度",
+      "绿色航行",
+      "m7061"
+    ],
+    "title_matches_contract": true,
+    "scenario_matches_contract": true,
+    "chars_match_contract": true
+  },
+  "counts": {
+    "assets": 30,
+    "by_class": {
+      "document": 1,
+      "heading": 1,
+      "regulation_reference": 1,
+      "parameter_table": 1,
+      "parameter_set": 1,
+      "clause_register": 1,
+      "evidence_gate_statement": 1,
+      "formula_block": 4,
+      "numeric_anchor": 1,
+      "solver_declaration": 1,
+      "verification_path": 1,
+      "criteria_table": 1,
+      "data_table": 5,
+      "figure_set": 1,
+      "data_artifact_reference": 1,
+      "source_code_reference": 1,
+      "test_reference": 1,
+      "api_surface": 1,
+      "vcs_reference": 1,
+      "repro_command_block": 1,
+      "limitation_set": 1,
+      "external_evidence_gap": 1,
+      "figure_declaration_absent": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 22,
+      "referenced_unresolved": 7,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 22,
+    "referenced_unresolved": 7,
+    "declared_absent": 1
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "document",
+      "label": "报告 8386 全篇 markdown（登记对象本体）",
+      "in_report_section": "全文",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 20879,
+        "start_line": 1,
+        "end_line": 485,
+        "quote": "# FuelEU Maritime 柔性机制三件套：RFNBO 双倍乘子 + 岸电 OPS 零排放抵扣 + 存借跨年滚动",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "document_sha256_span_covers_whole_markdown",
+        "result": "resolved"
+      },
+      "note": "locator.method=document：span=整篇 [0, len)，quote=首行标题（唯一）"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "heading",
+      "label": "§1 案例介绍（章节锚）",
+      "in_report_section": "§1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 384,
+        "end_char": 394,
+        "start_line": 11,
+        "end_line": 11,
+        "quote": "## 1  案例介绍",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "章节标题即可定位小节起点"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "regulation_reference",
+      "label": "FuelEU Maritime 法规出处与计罚口径（2400 EUR/t VLSFO）",
+      "in_report_section": "§1.1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 413,
+        "end_char": 485,
+        "start_line": 15,
+        "end_line": 15,
+        "quote": "FuelEU Maritime（Regulation (EU) 2023/1805）把船用能量（燃料 + 岸电）的 **Well-to-Wake",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "法规号以转录形式出现在原文，未与 EUR-Lex 核对（见 A29）"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "parameter_table",
+      "label": "三船声明输入参数表（GT / MCR / 年度能量 / 燃料切换档 / 靠港电量）",
+      "in_report_section": "§1.2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1123,
+        "end_char": 1180,
+        "start_line": 34,
+        "end_line": 34,
+        "quote": "| 船 | 类型 | GT | MCR [kW] | 年度能量 [TJ] | 燃料切换档（份额） | 靠港电量 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "原文自注 declared（非实测），本工序只登记不评测"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "parameter_set",
+      "label": "仿真窗口与结算单元数（2025–2035 / 33 单元）",
+      "in_report_section": "§1.2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1661,
+        "end_char": 1694,
+        "start_line": 40,
+        "end_line": 40,
+        "quote": "仿真窗口：2025–2035（11 年），结算粒度 = 船 × 年",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "clause_register",
+      "label": "条款证据登记表（6 条柔性条款 × 机制证据/条款核实/可绑定判定）",
+      "in_report_section": "§1.3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1834,
+        "end_char": 1883,
+        "start_line": 48,
+        "end_line": 48,
+        "quote": "| 条款 ID | 条款号（转录） | 表号 | 机制证据 | 条款核实 | 可进入可绑定判定 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "表内 6 条均 citation_verification=WITHHELD_EXTERNAL"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "evidence_gate_statement",
+      "label": "严格模式（strict_legal）证据闸声明与 0 可绑定判定",
+      "in_report_section": "§1.3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2603,
+        "end_char": 2662,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "严格模式（`strict_legal=True`）把全部 WITHHELD 条款移出判定：乘子退回 1、OPS 按声明",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "formula_block",
+      "label": "能量流层代数定义（E_phys / E_eff / G_eff / GHGI）",
+      "in_report_section": "§2.1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2902,
+        "end_char": 2955,
+        "start_line": 72,
+        "end_line": 72,
+        "quote": "E_eff  = Σ_k w_k·E_k        （合规能量，w=2 对 RFNBO，w=1 其它）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "公式块；本工序不校验其正确性（属工序 03/04）"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "formula_block",
+      "label": "GHGI 闭式解与乘子导数（判据 a 的解析锚）",
+      "in_report_section": "§2.1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3060,
+        "end_char": 3110,
+        "start_line": 80,
+        "end_line": 80,
+        "quote": "GI(m)  = (m·s·g_r + o·g_o + q·g_q) / (m·s + o + q)",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "numeric_anchor",
+      "label": "罚金换算率 rate = 2400/3.73756e6 = 6.42e-04 EUR/gCO2e",
+      "in_report_section": "§2.2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3359,
+        "end_char": 3405,
+        "start_line": 90,
+        "end_line": 90,
+        "quote": "`rate = 2400/(3.73756e6) = 6.42e-04 EUR/gCO2e`",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "formula_block",
+      "label": "跨年账本闭合式（含 deficit 符号 +1）",
+      "in_report_section": "§2.3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3487,
+        "end_char": 3570,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "cb_t + bank_in_t + borrow_in_t − repay_out_t − bank_out_t − spill_t + deficit_t = 0",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "§5 注意点 1 记录了该符号误写过的历史坑"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "formula_block",
+      "label": "纯 banking 解析解（不依赖 LP 的独立锚）",
+      "in_report_section": "§2.3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3744,
+        "end_char": 3769,
+        "start_line": 102,
+        "end_line": 102,
+        "quote": "deficit_t = m_(t−1) − m_t",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "solver_declaration",
+      "label": "求解器与其绑定路径（scipy.optimize.linprog HiGHS）",
+      "in_report_section": "§2.4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4068,
+        "end_char": 4105,
+        "start_line": 109,
+        "end_line": 109,
+        "quote": "（本环境无 `highspy` 包，走 SciPy 的 HiGHS 绑定）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "同字符串裸写形式在 §头 与 §2.4 各出现一次，故锚点取较长唯一串"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "verification_path",
+      "label": "顶点穷尽枚举独立复核路径（numpy 仅用 linalg）",
+      "in_report_section": "§2.5",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4140,
+        "end_char": 4171,
+        "start_line": 113,
+        "end_line": 113,
+        "quote": "对小规模（3 船 × 3 年）用**顶点穷尽枚举**复核 LP",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "criteria_table",
+      "label": "机器可算判据总表（a–g，全部 PASS）",
+      "in_report_section": "§3.1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4671,
+        "end_char": 4694,
+        "start_line": 131,
+        "end_line": 131,
+        "quote": "| 判据 | 结果数字 | 阈值 | 结论 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "data_table",
+      "label": "逐年逐船合规余额表（33 行 × 10 列）",
+      "in_report_section": "§3.2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5252,
+        "end_char": 5354,
+        "start_line": 143,
+        "end_line": 143,
+        "quote": "| 船 | 年 | E_phys [MWh] | E_eff [MWh] | GHGI | GI_L | CB [1e9 gCO2e] | RFNBO 份额 | OPS 份额 | 单年罚金 [EUR] |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "33 个结算单元逐行在场"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "data_table",
+      "label": "严格模式对照表（判决恒为 WITHHELD）",
+      "in_report_section": "§3.2b",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8092,
+        "end_char": 8149,
+        "start_line": 181,
+        "end_line": 181,
+        "quote": "| 船 | 年 | GHGI（严格模式） | CB [1e9 gCO2e] | 单年罚金 [EUR] | 判决 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "data_table",
+      "label": "机制阶梯表（no_flex → fleet_pool+bank+borrow）",
+      "in_report_section": "§3.3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10122,
+        "end_char": 10178,
+        "start_line": 222,
+        "end_line": 222,
+        "quote": "| 配置 | LP 状态 | 累计罚金 [EUR] | 相对无柔性降幅 | 变量数 | 等式数 | 生效条款 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "data_table",
+      "label": "灵敏度表（energy ±30% / GWP20 vs GWP100）",
+      "in_report_section": "§3.5",
+      "locator": {
+        "method": "char_span",
+        "start_char": 15881,
+        "end_char": 15954,
+        "start_line": 341,
+        "end_line": 341,
+        "quote": "| 扰动 | GWP | 能量缩放 | 无柔性罚金 [EUR] | 单船柔性罚金 [EUR] | 船队柔性罚金 [EUR] | 平均 GHGI |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "data_table",
+      "label": "κ 灵敏度与硬模式负控表",
+      "in_report_section": "§3.6",
+      "locator": {
+        "method": "char_span",
+        "start_char": 16316,
+        "end_char": 16342,
+        "start_line": 352,
+        "end_line": 352,
+        "quote": "| κ | 硬模式状态 | 累计罚金 [EUR] |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "figure_set",
+      "label": "6 张结果图（PNG，报告 §4 逐图引用）",
+      "in_report_section": "§4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 16931,
+        "end_char": 17022,
+        "start_line": 377,
+        "end_line": 377,
+        "quote": "![fig_ghgie_trajectory.png](../../artifacts/fueleu_maritime_m7061/fig_ghgie_trajectory.png)",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_exists:artifacts/fueleu_maritime_m7061/fig_ghgie_trajectory.png",
+        "result": "absent",
+        "kind": "worktree_fs"
+      },
+      "note": "PNG 落在上游仓 ship-performance-platform 的 artifacts/ 下，本工作树不含"
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "data_artifact_reference",
+      "label": "acceptance.json（判据数字与每图 sha256 的机器产物）",
+      "in_report_section": "§8",
+      "locator": {
+        "method": "char_span",
+        "start_char": 20653,
+        "end_char": 20708,
+        "start_line": 482,
+        "end_line": 482,
+        "quote": "`artifacts/fueleu_maritime_m7061/acceptance.json`（程序化生成",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_exists:artifacts/fueleu_maritime_m7061/acceptance.json",
+        "result": "absent",
+        "kind": "worktree_fs"
+      },
+      "note": "上游仓产物，本工作树不含"
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "source_code_reference",
+      "label": "实现模块目录 backend/modules/fueleu_maritime/",
+      "in_report_section": "§8",
+      "locator": {
+        "method": "char_span",
+        "start_char": 20312,
+        "end_char": 20386,
+        "start_line": 477,
+        "end_line": 477,
+        "quote": "`backend/modules/fueleu_maritime/`（clauses / energy / compliance_balance /",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_exists:backend/modules/fueleu_maritime",
+        "result": "absent",
+        "kind": "worktree_fs"
+      },
+      "note": "上游仓目录，本工作树不含"
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "test_reference",
+      "label": "模块测试集（74 项，覆盖判据 a–g）",
+      "in_report_section": "§8",
+      "locator": {
+        "method": "char_span",
+        "start_char": 20590,
+        "end_char": 20645,
+        "start_line": 481,
+        "end_line": 481,
+        "quote": "`backend/modules/fueleu_maritime/tests/`（74 项，覆盖判据 a–g）",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_exists:backend/modules/fueleu_maritime/tests",
+        "result": "absent",
+        "kind": "worktree_fs"
+      },
+      "note": "上游仓目录，本工作树不含"
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "api_surface",
+      "label": "HTTP 路由声明 /api/v1/fueleu-maritime/{...}",
+      "in_report_section": "§8",
+      "locator": {
+        "method": "char_span",
+        "start_char": 20816,
+        "end_char": 20878,
+        "start_line": 485,
+        "end_line": 485,
+        "quote": "`/api/v1/fueleu-maritime/{registry,case,compliance,portfolio}`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "http_probe:http://127.0.0.1:8002/api/v1/fueleu-maritime/registry",
+        "result": "unresolved",
+        "http_status": 404,
+        "kind": "http"
+      },
+      "note": "实测探针见 manifest 的 resolution_check（http_status 非 2xx）"
+    },
+    {
+      "asset_id": "A26",
+      "asset_class": "vcs_reference",
+      "label": "上游基线提交 7017a623",
+      "in_report_section": "报告头",
+      "locator": {
+        "method": "char_span",
+        "start_char": 161,
+        "end_char": 180,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "**基线提交**：`7017a623`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "git_cat_file:7017a623",
+        "result": "unresolved",
+        "git_returncode": 128,
+        "kind": "git"
+      },
+      "note": "本仓（TensorKnowledge）对象库不含该提交，git cat-file 探针结果见 resolution_check"
+    },
+    {
+      "asset_id": "A27",
+      "asset_class": "repro_command_block",
+      "label": "复跑命令块（pytest 74 项 / run_case.py / gen_report.py）",
+      "in_report_section": "§7",
+      "locator": {
+        "method": "char_span",
+        "start_char": 19889,
+        "end_char": 19940,
+        "start_line": 460,
+        "end_line": 460,
+        "quote": "python3 artifacts/fueleu_maritime_m7061/run_case.py",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "命令块在场，但其执行依赖 A22/A23 所在上游仓（本工作树不可执行）"
+    },
+    {
+      "asset_id": "A28",
+      "asset_class": "limitation_set",
+      "label": "NOT_SUPPORTED 诚实清单（Art. 23(2) 加成 / 多期偿还）",
+      "in_report_section": "§7",
+      "locator": {
+        "method": "char_span",
+        "start_char": 20121,
+        "end_char": 20166,
+        "start_line": 468,
+        "end_line": 468,
+        "quote": "- Art. 23(2) 连续不合规罚金加成（NOT_SUPPORTED，累计罚金为下界）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "unique_substring_anchor_in_markdown",
+        "result": "resolved"
+      },
+      "note": "原文自述不支持项，本工序原样登记不改判"
+    },
+    {
+      "asset_id": "A29",
+      "asset_class": "external_evidence_gap",
+      "label": "EUR-Lex 原文核对缺口（WITHHELD_EXTERNAL 行）",
+      "in_report_section": "§6",
+      "locator": {
+        "method": "char_span",
+        "start_char": 19360,
+        "end_char": 19436,
+        "start_line": 442,
+        "end_line": 442,
+        "quote": "| 法规限值台阶 / 罚金单价 vs EUR-Lex 原文 | WITHHELD_EXTERNAL | 离线无外网，无法核对原文 | 无基准（声明） |",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_exists:artifacts/fueleu_maritime_m7061/eurlex",
+        "result": "absent",
+        "kind": "worktree_fs"
+      },
+      "note": "离线无外网通道，登记为不可解析，不编造核对结论"
+    },
+    {
+      "asset_id": "A30",
+      "asset_class": "figure_declaration_absent",
+      "label": "空间场量云图声明缺席（0 维法规账务模型）",
+      "in_report_section": "§4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 16795,
+        "end_char": 16822,
+        "start_line": 373,
+        "end_line": 373,
+        "quote": "（本节点是 0 维法规账务模型，没有空间场量，故无云图",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "scan_image_references_for_fieldmap(md)",
+        "result": "absent",
+        "image_refs": 6,
+        "fieldmap_like": [],
+        "absence_word_count": 1,
+        "kind": "content_scan"
+      },
+      "note": "原文显式声明无云图；本工序不据此推断任何缺失"
+    }
+  ],
+  "claims": [],
+  "claims_note": "objective.register_assets only; classify_report_type=false and no extraction -- an empty claims[] is the complete, honest result, not a missing one.",
+  "integrity": {
+    "quote_uniqueness": "each locator.quote anchored by a string occurring exactly once",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "anchors_checked": 30
+  },
+  "producer": "kf-worker/m15621"
+}
