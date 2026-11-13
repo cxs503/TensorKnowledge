@@ -1,0 +1,60 @@
+{
+  "package_id": "wp-7920-01",
+  "report_id": "7920",
+  "live_source_hash": "sha256:6e60d3f3ab63e2553858f7a08344e5c87ea0c7275bceefbd16a9cd254493961b",
+  "live_chars": 6421,
+  "assets": 11,
+  "locators_rechecked": 10,
+  "acceptance": [
+    {
+      "item": "valid_json",
+      "pass": true,
+      "detail": "asset_manifest.json + kf_result.json parsed as JSON objects"
+    },
+    {
+      "item": "schema_pass",
+      "pass": true,
+      "detail": "asset_manifest vs schemas/asset_manifest.v1.schema.json, kf_result vs schemas/kf_result.v1.schema.json; errors=0",
+      "errors": []
+    },
+    {
+      "item": "source_hash_matches",
+      "pass": true,
+      "detail": "live=sha256:6e60d3f3ab63e2553858f7a08344e5c87ea0c7275bceefbd16a9cd254493961b manifest=sha256:6e60d3f3ab63e2553858f7a08344e5c87ea0c7275bceefbd16a9cd254493961b envelope=sha256:6e60d3f3ab63e2553858f7a08344e5c87ea0c7275bceefbd16a9cd254493961b pinned=sha256:6e60d3f3ab63e2553858f7a08344e5c87ea0c7275bceefbd16a9cd254493961b",
+      "chars": {
+        "live": 6421,
+        "manifest": 6421,
+        "contract": null
+      }
+    },
+    {
+      "item": "source_locator_resolvable",
+      "pass": true,
+      "detail": "11/11 asset locators re-resolved on live bytes (10 text spans + document locator; char span + verbatim quote + line + uniqueness); 161 source lines",
+      "failures": []
+    },
+    {
+      "item": "no_duplicate_ids",
+      "pass": true,
+      "detail": "11 asset ids, duplicates=[]"
+    },
+    {
+      "item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "pass": true,
+      "detail": "0 claims; empty-claims reason stated: True"
+    },
+    {
+      "item": "envelope_matches_manifest",
+      "pass": true,
+      "detail": "kf_result.outputs['asset_manifest.json'] is byte-identical to asset_manifest.json; package_id/report_id agree"
+    },
+    {
+      "item": "counts_consistent",
+      "pass": true,
+      "detail": "assets=11 len(assets)=11 by_class_sum=11 by_resolution_sum=11"
+    }
+  ],
+  "all_ok": true,
+  "note": "Self-check only. No claim is marked verified here; the platform gate recomputes hash/locators independently.",
+  "repro_cmd": "python3 scripts/kf/publish_report.py verify --package-dir docs/kf/wp-7920-01 --record docs/kf/wp-7920-01/source_7920.json"
+}
