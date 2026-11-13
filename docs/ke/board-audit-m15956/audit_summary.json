@@ -1,0 +1,211 @@
+{
+  "schema": "board-audit/1",
+  "audit_mission": 15963,
+  "audited_worktree": "/root/tp-agent/work/m15956",
+  "anchor_slug": "KBM-TKC-DOC-SYNC",
+  "note": "基准裁判=tensor_benchmark_cases(anchor_slug)；本次查询 0 行 → 本单无登记基准，级别上限受限于此（L4 需 ref vs got + 误差）",
+  "runs": {
+    "doc_sync": {
+      "cmd": "/usr/bin/python3 scripts/tk_doc_sync.py --check",
+      "cwd": "/root/tp-agent/work/m15956",
+      "exit": 0,
+      "stdout_tail": "DOC-SYNC 9/9 pass",
+      "stderr_tail": ""
+    },
+    "stats": {
+      "cmd": "/usr/bin/python3 scripts/tk_stats.py --check",
+      "cwd": "/root/tp-agent/work/m15956",
+      "exit": 0,
+      "stdout_tail": "STATS PASS",
+      "stderr_tail": ""
+    },
+    "boundary": {
+      "cmd": "/usr/bin/python3 scripts/tk_boundary_audit.py --check",
+      "cwd": "/root/tp-agent/work/m15956",
+      "exit": 1,
+      "stdout_tail": "BOUNDARY FAIL core_violations=61",
+      "stderr_tail": ""
+    },
+    "pytest_core": {
+      "cmd": "/usr/bin/python3 -m pytest tests/test_ke_proto.py tests/test_ke_api.py -q",
+      "cwd": "/root/tp-agent/work/m15956",
+      "exit": 0,
+      "stdout_tail": "    from _pytest.python import CallSpec2\n\ntests/test_ke_api.py::test_healthz_is_open_and_reports_driver\n  /usr/lib/python3.11/site-packages/websockets/legacy/__init__.py:6: DeprecationWarning: websockets.legacy is deprecated; see https://websockets.readthedocs.io/en/stable/howto/upgrade.html for upgrade instructions\n    warnings.warn(  # deprecated in 14.0 - 2024-11-09\n\ntests/test_ke_api.py::test_healthz_is_open_and_reports_driver\n  /usr/lib/python3.11/site-packages/uvicorn/protocols/websockets/websockets_impl.py:17: DeprecationWarning: websockets.server.WebSocketServerProtocol is deprecated\n    from websockets.server import WebSocketServerProtocol\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n55 passed, 3 warnings in 10.00s",
+      "stderr_tail": ""
+    },
+    "pytest_migrate": {
+      "cmd": "/usr/bin/python3 -m pytest tests/test_ke_migrate.py -q",
+      "cwd": "/root/tp-agent/work/m15956",
+      "exit": 1,
+      "stdout_tail": "  The CallSpec2 alias will be removed in pytest 10.\n  Update imports to use CallSpec instead.\n  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed\n    from _pytest.python import CallSpec2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nFAILED tests/test_ke_migrate.py::test_source_inventory_pinned - AssertionErro...\nFAILED tests/test_ke_migrate.py::test_rollup_duplicates_collapsed_not_dropped\nFAILED tests/test_ke_migrate.py::test_reconcile_verdict_pass - assert 369 == 257\nFAILED tests/test_ke_migrate.py::test_migrate_cli_writes_reconciliation - ass...\n4 failed, 6 passed, 1 warning in 2.06s",
+      "stderr_tail": ""
+    }
+  },
+  "measured": {
+    "doc_sync_pass": "9/9",
+    "stats_digest_match": "PASS",
+    "boundary_violations": 61,
+    "boundary_check_exit": 1,
+    "pytest_passed": 55,
+    "migrate_failed": 4
+  },
+  "artifacts": {
+    "docs/ke/doc-sync-report.json": {
+      "exists": true,
+      "bytes": 2623,
+      "sha256": "4fc6fdf71192bb871ed3083d75c77f489ef565a268672f901b9f4c56b5e88f29"
+    },
+    "docs/ke/doc-sync-report.md": {
+      "exists": true,
+      "bytes": 1151,
+      "sha256": "5d5b279817420ce041d4d4a53f6f861b85a214f1b60ed6fbfd37ded378312549"
+    },
+    "docs/ke/stats.json": {
+      "exists": true,
+      "bytes": 1590,
+      "sha256": "6f904802adbe0b16e5e04f2c816169e0d805aacc6a832dae7965d1b281a7a4e4"
+    },
+    "docs/ke/stats.md": {
+      "exists": true,
+      "bytes": 748,
+      "sha256": "984c01622c7fc4532c7da46b5d91dc7f69c4ad6b80a77a3e7a13e4c1339a6558"
+    },
+    "docs/ke/boundary-audit.json": {
+      "exists": true,
+      "bytes": 23576,
+      "sha256": "a2848097003edabf7aeac0a0e45e8bd10d28e6b7a9769defda0779c768610dff"
+    },
+    "docs/ke/boundary-audit.md": {
+      "exists": true,
+      "bytes": 8531,
+      "sha256": "f1d7f55072524408cb7d4a40e56d219e8c71a5b3ecb114c95776e49054aee116"
+    },
+    "docs/ke/figures/doc-sync-stats.png": {
+      "exists": true,
+      "bytes": 35203,
+      "sha256": "1ebff892c67f0b6e70f2625816bed1a088081d323275a00df12154d07b45079b"
+    },
+    "docs/ke/m8802-acceptance.md": {
+      "exists": true,
+      "bytes": 2146,
+      "sha256": "50f25030433211017bf267c7d543f17cb64e8e00ea212cfda424cb3f9171df5f"
+    },
+    "scripts/tk_doc_sync.py": {
+      "exists": true,
+      "bytes": 4382,
+      "sha256": "73c2782607f1ec7f4ec62011ea0468ce2162f8b685a931aa311763f136308ce7"
+    },
+    "scripts/tk_stats.py": {
+      "exists": true,
+      "bytes": 6074,
+      "sha256": "5572ad9290e430fed1313811625b982c8109b12007a1ed4a4639b6480b6d0eac"
+    },
+    "scripts/tk_boundary_audit.py": {
+      "exists": true,
+      "bytes": 6300,
+      "sha256": "e07c563d5de5242e2945afecf4d145b001594062c5449d3a4884bc0060ecce8c"
+    }
+  },
+  "structure": {
+    "doc_sync": {
+      "claims": 9,
+      "predicates": {
+        "file_exists": 5,
+        "endpoint_present": 4
+      },
+      "self_referential": [
+        {
+          "doc": "docs/ke/proto.md",
+          "claim": "PostgreSQL 是权威存储",
+          "predicate": "file_exists(docs/ke/backends.md)"
+        },
+        {
+          "doc": "docs/ke/m8802-acceptance.md",
+          "claim": "m8802",
+          "predicate": "file_exists(docs/ke/m8802-acceptance.md)"
+        },
+        {
+          "doc": "docs/ke/boundary-audit.md",
+          "claim": "领域语义边界审计",
+          "predicate": "file_exists(docs/ke/boundary-audit.md)"
+        },
+        {
+          "doc": "docs/ke/stats.md",
+          "claim": "统计口径三分离（自动生成",
+          "predicate": "file_exists(docs/ke/stats.json)"
+        }
+      ],
+      "note": "自指=文档声明某能力已实现、谓词只查该文档/其产物自身是否存在，不构成文档-实现一致性证据"
+    },
+    "stats": {
+      "total": {
+        "claims": 10166,
+        "evidence": 10246,
+        "provenance": 10031,
+        "raw_records": 30443,
+        "pending_ko": 10166,
+        "governed_ko": 0,
+        "files": 248
+      },
+      "digest": "f444d1f1d376846775d6cda274d78aec42315d87f0b5ce54c54fb5d3d9d1beef"
+    },
+    "boundary": {
+      "core_files_scanned": 224,
+      "core_violations": 61,
+      "critical_files": 4,
+      "critical_term_hits": 8,
+      "verdict": "FAIL"
+    }
+  },
+  "claims_vs_measured": [
+    {
+      "key": "doc_sync_pass",
+      "claim": "文档-实现漂移门 9/9 PASS",
+      "expect": "9/9",
+      "got": "9/9",
+      "match": true
+    },
+    {
+      "key": "stats_raw",
+      "claim": "原始记录 30443",
+      "expect": 30443,
+      "got": 30443,
+      "match": true
+    },
+    {
+      "key": "stats_pending",
+      "claim": "待评审 KO 10166",
+      "expect": 10166,
+      "got": 10166,
+      "match": true
+    },
+    {
+      "key": "stats_governed",
+      "claim": "经治理 KO 0",
+      "expect": 0,
+      "got": 0,
+      "match": true
+    },
+    {
+      "key": "boundary_violations",
+      "claim": "61 处核心违规",
+      "expect": 61,
+      "got": 61,
+      "match": true
+    },
+    {
+      "key": "boundary_critical",
+      "claim": "A级 6 处",
+      "expect": 6,
+      "got": 4,
+      "match": false
+    },
+    {
+      "key": "pytest_passed",
+      "claim": "test_ke_proto+test_ke_api 55 passed",
+      "expect": 55,
+      "got": 55,
+      "match": true
+    }
+  ]
+}
