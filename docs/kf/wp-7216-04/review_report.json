@@ -1,0 +1,408 @@
+{
+  "schema": "kf-review-report.v1",
+  "package_id": "wp-7216-04",
+  "reviewed_package": "wp-7216-01",
+  "report_id": "7216",
+  "reviewer_role": "red-team-reviewer",
+  "reviewer_id": "kf-worker/m15851",
+  "reviewer_independent": true,
+  "review_context": {
+    "inputs": [
+      "live report markdown (GET /api/v1/tensor/reports/7216, hashed in this run)",
+      "upstream artefact asset_manifest.json (wp-7216-01)"
+    ],
+    "excluded": [
+      "gate_sim.json",
+      "verification.json",
+      "AUDIT_NOTES.md",
+      "any producer rationale or self-assessment prose"
+    ],
+    "note": "the producer's self-checks are the claim under review, not evidence for it"
+  },
+  "source_recomputation": {
+    "sha256": "sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b",
+    "chars": 11338,
+    "bytes_utf8": 17984,
+    "lines": 210,
+    "title": "IN31-N12: LBM Rayleigh-Benard discrete linear stability + two-phase lambda/rho decoupling and Hadamard-Rybczynski comparison",
+    "status": "published",
+    "record_figures": [
+      "hr_decoupling_settling.png",
+      "rb_base_profile.png",
+      "rb_eig_vs_sim.png",
+      "rb_growth_rate.png",
+      "rb_ra_c_convergence.png"
+    ]
+  },
+  "disposition": "approve",
+  "verdict": "pass",
+  "verdict_mapping": {
+    "pass": [
+      "approve",
+      "approve-with-notes"
+    ],
+    "needs-fix": [
+      "request-changes"
+    ],
+    "fail": [
+      "reject"
+    ]
+  },
+  "verification_status": "not_verified_by_reviewer",
+  "review_axis_note": "approving this package moves the review axis only; the verification axis (L0-L3) is computed by the platform gate and is not written here",
+  "checks": [
+    {
+      "rule": "R1.sha256_recomputed",
+      "ok": true,
+      "detail": "live=sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b manifest=sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "R2.hash_matches_contract",
+      "ok": true,
+      "detail": "live=sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b contract=sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "R3.chars",
+      "ok": true,
+      "detail": "live=11338 manifest=11338 contract=11338",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "R4.bytes_utf8",
+      "ok": true,
+      "detail": "live=17984 manifest=17984",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "R5.lines",
+      "ok": true,
+      "detail": "live(rstrip-convention)=210 manifest=210",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "R6.eol_flags",
+      "ok": true,
+      "detail": "crlf live=False manifest=False; trailing newline live=True manifest=True",
+      "severity_if_fail": "minor"
+    },
+    {
+      "rule": "R7.title_matches_record",
+      "ok": true,
+      "detail": "manifest='IN31-N12: LBM Rayleigh-Benard discrete linear stability + two-phase lambda/rho decoupling and Hadamard-Rybczynski comparison' record='IN31-N12: LBM Rayleigh-Benard discrete linear stability + two-phase lambda/rho decoupling and Hadamard-Rybczynski comparison'",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "R8.scenario_and_mission",
+      "ok": true,
+      "detail": "scenario manifest='lbm_rb_hr_validation' record='lbm_rb_hr_validation'; mission manifest=5628 record=5628",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "R9.status_matches_record",
+      "ok": true,
+      "detail": "manifest='published' record='published'",
+      "severity_if_fail": "minor"
+    },
+    {
+      "rule": "R10.attachments_manifest_not_needed",
+      "ok": true,
+      "detail": "record has no attachments field; nothing to resolve by manifest",
+      "severity_if_fail": "minor"
+    },
+    {
+      "rule": "M1.reviewer_is_not_producer",
+      "ok": true,
+      "detail": "producer='kf-worker/m15594' reviewer='kf-worker/m15851'",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "M2.producer_selfcheck_not_used_as_input",
+      "ok": true,
+      "detail": "inputs = live markdown + asset_manifest.json only; gate_sim.json / verification.json / AUDIT_NOTES.md excluded from the review context",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "C1.count_assets",
+      "ok": true,
+      "detail": "declared=40 actual=40",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "C2.by_class",
+      "ok": true,
+      "detail": "declared={'api_symbol_reference': 17, 'benchmark_script_reference': 3, 'data_artifact_reference': 6, 'directory_reference': 1, 'figure_reference': 6, 'git_branch_reference': 1, 'report_markdown': 1, 'source_code_reference': 3, 'test_reference': 2} actual={'report_markdown': 1, 'git_branch_reference': 1, 'api_symbol_reference': 17, 'directory_reference': 1, 'source_code_reference': 3, 'benchmark_script_reference': 3, 'figure_reference': 6, 'data_artifact_reference': 6, 'test_reference': 2}",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "C3.by_resolution",
+      "ok": true,
+      "detail": "declared={'referenced_unresolved': 39, 'resolved_in_source': 1} actual={'resolved_in_source': 1, 'referenced_unresolved': 39}",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "C4.resolved_pair",
+      "ok": true,
+      "detail": "declared=1/39 actual=1/39",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "C5.figure_declarations_in_prose",
+      "ok": true,
+      "detail": "declared=6 distinct prose names=6 (7 textual occurrences) registered figure assets=6; sets equal=True",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "C6.record_figures",
+      "ok": true,
+      "detail": "declared=5 record_len=5 names=['hr_decoupling_settling.png', 'rb_base_profile.png', 'rb_eig_vs_sim.png', 'rb_growth_rate.png', 'rb_ra_c_convergence.png']",
+      "severity_if_fail": "minor"
+    },
+    {
+      "rule": "C7.every_record_figure_declared_in_prose",
+      "ok": true,
+      "detail": "record figures missing from prose declarations=[]",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "C8.claims_empty_reason",
+      "ok": true,
+      "detail": "claims=[] reason_chars=332 (empty claim set is legal for a registration-only package; S12 of the line)",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "L1.char_span_in_bounds",
+      "ok": true,
+      "detail": "bad=[]",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "L2.quote_verbatim_at_span",
+      "ok": true,
+      "detail": "mismatched=[] (0 total)",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "L3.quote_sha256",
+      "ok": true,
+      "detail": "mismatched=[]",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "L4.line_numbers",
+      "ok": true,
+      "detail": "mismatched=[] (0 total)",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "L5.occurrence_lines",
+      "ok": true,
+      "detail": "declared lists match neither the substring nor the standalone reading for [] (0 total)",
+      "severity_if_fail": "minor"
+    },
+    {
+      "rule": "L6.token_inside_quote",
+      "ok": true,
+      "detail": "tokens outside their own span=[]",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "L7.locator_unique_flag",
+      "ok": true,
+      "detail": "unique flag disagrees with in-document occurrence count=[]",
+      "severity_if_fail": "minor"
+    },
+    {
+      "rule": "L8.section_attribution",
+      "ok": true,
+      "detail": "heading attribution mismatches=[] (0 total)",
+      "severity_if_fail": "minor"
+    },
+    {
+      "rule": "L9.integrity_block",
+      "ok": true,
+      "detail": "declared locators=40 unique_quotes=40 hash=True; recomputed locators=40 unique_quotes=40 hash=True",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "L11.local_copies_hash_to_declared",
+      "ok": true,
+      "detail": "local copies re-hashed=1 mismatch=none ([])",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "L10.ids_unique",
+      "ok": true,
+      "detail": "ids=40 keys=40 n=40",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "S1.backticked_coverage",
+      "ok": true,
+      "detail": "45 unique backticked tokens; 39 registered tokens; 5 unregistered (file/symbol-shaped: [])",
+      "severity_if_fail": "minor"
+    },
+    {
+      "rule": "X1.no_verified_marks",
+      "ok": true,
+      "detail": "manifest emits no verified marker; integrity.verified_marks_emitted=0",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "X2.resolution_vocabulary",
+      "ok": true,
+      "detail": "resolution values=['referenced_unresolved', 'resolved_in_source']",
+      "severity_if_fail": "critical"
+    },
+    {
+      "rule": "X3.resolution_consistent_with_check",
+      "ok": true,
+      "detail": "resolution label equals its resolution_check.result for every asset",
+      "severity_if_fail": "major"
+    },
+    {
+      "rule": "X4.figure_bytes_not_served_claim",
+      "ok": true,
+      "detail": "independent probe of the platform figure endpoint: ['/tensor/reports/7216/figures', '/tensor/reports/7216/figures/rb_growth_rate.png'] -> HTTP [404] (supports the manifest's referenced_unresolved figure class)",
+      "severity_if_fail": "minor"
+    },
+    {
+      "rule": "X5.same_basename_hits_exist",
+      "ok": true,
+      "detail": "declared same-basename hits that do not exist in this worktree=[] (checked 1 paths)",
+      "severity_if_fail": "minor"
+    }
+  ],
+  "checks_summary": {
+    "total": 37,
+    "passed": 37,
+    "failed": 0,
+    "failed_rules": []
+  },
+  "findings": [],
+  "notes": [
+    {
+      "id": "N1",
+      "severity": "minor",
+      "blocking": false,
+      "statement": "two tokens are call expressions rather than symbols; exact-token lookup must fall back to symbol_key",
+      "evidence": [
+        [
+          "A19",
+          "collide_two_component_with_gravity(f1,f2,G_12,τ1,τ2,gz1,gz2,u_eq)",
+          "collide_two_component_with_gravity"
+        ],
+        [
+          "A29",
+          "critical_rayleigh_continuous(M_list=(50,100,200))",
+          "critical_rayleigh_continuous"
+        ]
+      ]
+    },
+    {
+      "id": "N2",
+      "severity": "minor",
+      "blocking": false,
+      "statement": "the document-level locator's quote is a one-line title excerpt, not the span text; re-checking it with the repo's offset rule yields QUOTE_NOT_AT_LOCATOR. Harmless as delivered (field names differ, so a consumer falls back to quote search), but a field-name mapping would reject it",
+      "evidence": {
+        "asset": "A01",
+        "platform_rule_result": [
+          false,
+          "QUOTE_NOT_AT_LOCATOR",
+          "text[0:11338]='# IN31-N12 · LBM Rayleigh–Bénard 离散线性稳定性 + 双相黏度比/密度比解耦与 Hada' != quote '# IN31-N12 · LBM Rayleigh–Bénard 离散线性稳定性 + 双相黏度比/密度比解耦与 Hada'"
+        ],
+        "quote_occurs_once": true
+      }
+    },
+    {
+      "id": "N3",
+      "severity": "minor",
+      "blocking": false,
+      "statement": "occurrence_lines follows an undocumented 'standalone occurrence' reading (token not embedded in a longer dotted identifier); the substring reading gives extra lines. Documenting the field would stop independent re-checkers from disagreeing",
+      "evidence": {
+        "A09": {
+          "declared": [
+            40
+          ],
+          "standalone": [
+            40
+          ],
+          "substring": [
+            13,
+            40
+          ]
+        },
+        "A10": {
+          "declared": [
+            40
+          ],
+          "standalone": [
+            40
+          ],
+          "substring": [
+            13,
+            40
+          ]
+        },
+        "A18": {
+          "declared": [
+            69
+          ],
+          "standalone": [
+            69
+          ],
+          "substring": [
+            64,
+            69
+          ]
+        }
+      }
+    },
+    {
+      "id": "N4",
+      "severity": "info",
+      "blocking": false,
+      "statement": "registration carries pointers only: 39/40 assets are referenced_unresolved and the package emits zero claims, so no scientific statement of report 7216 is adjudicated here",
+      "evidence": {
+        "referenced_unresolved": 39,
+        "assets": 40,
+        "claims": [],
+        "figure_probe": {
+          "/tensor/reports/7216/figures/rb_growth_rate.png": 404,
+          "/tensor/reports/7216/figures": 404
+        }
+      }
+    }
+  ],
+  "local_copy_rehash": [
+    {
+      "asset": "A01",
+      "local_copy": "runs/wp-7216-01/source_7216.md",
+      "status": "hashed",
+      "matches_declared": true,
+      "matches_live": true,
+      "sha256": "sha256:34538b9b7245a6ecd5a792f92df4b25ae827d62e9fc72177eb74fc515e1b9e0b"
+    }
+  ],
+  "independence_limitations": [
+    "same model family as the producer; independence is institutional (different work package, different worktree/session, producer self-check files excluded as evidence), not model-level",
+    "available evidence for cross-repo assets is nil: TensorLBM bytes are outside this worktree, so 39/40 registrations cannot be confirmed or refuted here",
+    "while orienting I opened gate_sim.json / verification.json to locate the upstream artefact; no rule below uses them as evidence, every fact is recomputed from the live markdown and asset_manifest.json"
+  ],
+  "coverage": {
+    "registered_assets": 40,
+    "unregistered_backticked_tokens": [
+      "... --mode settling",
+      "Jv≈(F(x0+εv)−F(x0))/ε",
+      "ny³",
+      "| |λ|−1 | < 1e-7",
+      "τ_d = 1/2 + λ (ρ_c/ρ_d)(τ_c−1/2)"
+    ]
+  },
+  "checks_not_run": [
+    "existence of the job directories named in the report (TensorLBM bytes are not in this worktree; the manifest labels them referenced_unresolved, which this review can neither confirm nor refute)",
+    "platform-side acceptance of wp-7216-01 as its published result report (not read: this package is scoped to report_id 7216)",
+    "scientific correctness of the report's own numbers (that is a 03/05 object; this package registers pointers only and emits zero claims)"
+  ]
+}
