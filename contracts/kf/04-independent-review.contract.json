@@ -1,0 +1,48 @@
+{
+  "package_id": "wp-ko-compiler-04",
+  "task_type": "04-independent-review",
+  "version": "1.0.0",
+  "input": {
+    "report_id": "14537",
+    "source_uri": "tensor://reports/14537",
+    "reviewed_package": {
+      "package_id": "wp-ko-compiler-03",
+      "claims_sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "evidence_sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "objective": {
+    "judge_semantic_fidelity": true,
+    "contradiction_detection": true,
+    "gap_identification": true
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true,
+    "reviewer_context_excludes_producer_explanation": true,
+    "review_prompt_not_copied_from_producer": true
+  },
+  "output": {
+    "review_report.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "reviewer_independent": true
+  },
+  "review": {
+    "required": true,
+    "independent_reviewer": true,
+    "reviewer_role": "red-team-reviewer",
+    "sample_rate": 1.0
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "draft",
+    "path": "knowledge/reviews/<report_id>/review_report.json",
+    "notes": "评审人只看源文+KO；自批由 scripts/ke_state_machine.py is_independent 拒绝；评审结论不改 KO 正文，只出裁决与 needs-fix 清单。"
+  }
+}
