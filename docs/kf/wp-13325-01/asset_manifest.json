@@ -1,0 +1,601 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-13325-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13325",
+  "generated_at": "2026-11-12T02:30:07Z",
+  "source": {
+    "uri": "tensor://reports/13325",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "f7a7270b3721cd37011bb6ab66ebba8a0cb6e031b7e971c9a900b4c22acb1fe9",
+    "chars": 2078,
+    "bytes_utf8": 3243,
+    "title": "GAP-FEM-WINKLER 验证：弹性地基板 FEM 解 vs Hetényi 解析解",
+    "title_matches_contract": true,
+    "scenario_key": "winkler_hetenyi_verification",
+    "chars_matches_contract": true,
+    "platform_figures": [
+      "winkler_hetenyi_comparison"
+    ],
+    "platform_tags": [
+      "GAP-FEM-WINKLER",
+      "verification",
+      "winkler",
+      "hetenyi",
+      "ice_plate"
+    ],
+    "markdown_snapshot": "artifacts/wp-13325-01/source_markdown.md"
+  },
+  "counts": {
+    "assets": 12,
+    "by_class": {
+      "report_document": 1,
+      "parameter_table": 1,
+      "analytic_solution_expression": 1,
+      "software_component": 1,
+      "solver_settings": 1,
+      "validation_strategy": 1,
+      "result_table": 2,
+      "scaling_check": 1,
+      "figure_reference": 1,
+      "literature_reference": 1,
+      "raw_data_and_scripts": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 9,
+      "referenced_unresolved": 2,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 9,
+    "referenced_unresolved": 2,
+    "declared_absent": 1,
+    "declared_absent_scan": {
+      "file_extensions": {
+        "matches": 0,
+        "examples": []
+      },
+      "repo_or_commit_paths": {
+        "matches": 0,
+        "examples": []
+      },
+      "input_deck": {
+        "matches": 0,
+        "examples": []
+      }
+    }
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_document",
+      "label": "报告 markdown 全文（source field=markdown）",
+      "in_report_section": "document",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 47,
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "# GAP-FEM-WINKLER 验证报告：弹性地基板 FEM vs Hetényi 解析解",
+        "unique": true,
+        "document_char_start": 0,
+        "document_char_end": 2077
+      },
+      "locator_points_to": "payload",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(UTF-8 bytes) recomputed locally vs contract source_hash",
+        "result": "resolved"
+      },
+      "note": "全文注册：char span=0..len(markdown)，哈希钉住字节，见 integrity.source_hash；本行 quote 仅定位文档标题（标题与契约 title 逐字相同）。"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "parameter_table",
+      "label": "算例参数表（E, ν, t, k_f, P, D, l 共 7 行）",
+      "in_report_section": "## 1. 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 141,
+        "end_char": 376,
+        "start_line": 9,
+        "end_line": 17,
+        "quote": "| 参数 | 符号 | 值 | 单位 |\n|------|------|-----|------|\n| 弹性模量 | E | 9.0×10⁹ | Pa |\n| 泊松比 | ν | 0.33 | — |\n| 板厚 | t | 0.5 | m |\n| 地基系数 | k_f | 1.0×10⁴ | N/m³ |\n| 集中力 | P | 1.0×10⁵ | N |\n| 弯曲刚度 | D | 1.052×10⁸ | N·m |\n| 特征长度 | l | 10.13 | m |",
+        "unique": true
+      },
+      "locator_points_to": "payload",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "markdown table block sliced verbatim; row/column count parsed",
+        "result": "resolved"
+      },
+      "note": "表内 7 个物理量均可逐字解析；D 与 l 为导出量，注册时按表内 E/ν/t/k_f 重算核对（见 integrity_findings.F3，非对报告结论的验证）。"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "analytic_solution_expression",
+      "label": "Hetényi 无限板中心挠度闭式解表达式行",
+      "in_report_section": "## 1. 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 404,
+        "end_char": 497,
+        "start_line": 20,
+        "end_line": 20,
+        "quote": "2239218w(0) = \frac{P}{8\\sqrt{D k_f}} = 1.2187 \times 10^{-2} \text{ m} = 12.19 \text{ mm}2239218",
+        "unique": true
+      },
+      "locator_points_to": "payload",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "line sliced verbatim; control-character scan of the same span",
+        "result": "resolved"
+      },
+      "note": "该行可定位但**排版已损坏**：含 0x0C(form feed) 与 0x09(TAB) 控制字符，`\\frac`→`rac`、`\\times`→TAB+`imes`、`\\text`→TAB+`ext`，且行首/行尾各有一段游离数字串。本工序只登记不修复（constraints.do_not_invent_missing_information）；损坏取证见 integrity_findings.F1。"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "software_component",
+      "label": "求解器实现：TensorFEM Q4 Mindlin-Reissner 板单元 + Winkler 地基耦合",
+      "in_report_section": "## 2. 方法",
+      "locator": {
+        "method": "char_span",
+        "start_char": 509,
+        "end_char": 581,
+        "start_line": 24,
+        "end_line": 24,
+        "quote": "**数值方法**：TensorFEM Q4 Mindlin-Reissner 板单元（选择性减缩积分 SRI）+ Winkler 地基刚度耦合。",
+        "unique": true
+      },
+      "locator_points_to": "mention",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "code artifact attached in report (repo path / commit / file / input deck)",
+        "result": "unresolved"
+      },
+      "note": "提及可定位，但报告中**未附**任何代码路径、commit、版本号或输入卡片，无法从本报告解析出可复算的实现资产；resolution=referenced_unresolved。"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "solver_settings",
+      "label": "关键设置块（板尺寸/网格/边界条件/加载位置/求解器，共 5 条）",
+      "in_report_section": "## 2. 方法",
+      "locator": {
+        "method": "char_span",
+        "start_char": 593,
+        "end_char": 735,
+        "start_line": 27,
+        "end_line": 31,
+        "quote": "- 板尺寸：10l × 10l（≈ 101m × 101m），确保边界效应可忽略\n- 网格：16×16 单元（256 单元，289 节点）\n- 边界条件：简支（simply supported）\n- 集中力施加于中心最近节点\n- 求解器：直接法（torch.linalg.solve）",
+        "unique": true
+      },
+      "locator_points_to": "payload",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "bullet block sliced verbatim; 5 items present",
+        "result": "resolved"
+      },
+      "note": "板尺寸在本文档写作 10l × 10l；与 F2 记录的 §5 中 `8l 板` 表述并存，本工序不裁决以哪次运行成立。"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "validation_strategy",
+      "label": "验证策略块（4 条：中心挠度/网格收敛/径向分布/缩放律）",
+      "in_report_section": "## 2. 方法",
+      "locator": {
+        "method": "char_span",
+        "start_char": 747,
+        "end_char": 847,
+        "start_line": 34,
+        "end_line": 37,
+        "quote": "1. 中心挠度 vs Hetényi 解析解\n2. 网格收敛性（h-refinement）\n3. 挠度场径向分布 vs Kelvin kei 函数\n4. 缩放律验证（w ∝ P，w ∝ 1/√k_f）",
+        "unique": true
+      },
+      "locator_points_to": "payload",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "numbered-list block sliced verbatim; 4 items present",
+        "result": "resolved"
+      },
+      "note": "登记为“报告声称的验证面”清单本身，不表示任一验证已由本工序复核。"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "result_table",
+      "label": "中心挠度对标表（Hetényi 12.187 mm；FEM nx=16/12/8）",
+      "in_report_section": "## 3. 计算结果",
+      "locator": {
+        "method": "char_span",
+        "start_char": 874,
+        "end_char": 1062,
+        "start_line": 43,
+        "end_line": 48,
+        "quote": "| 方法 | w(0) [mm] | 相对误差 |\n|------|-----------|----------|\n| Hetényi 解析解 | 12.187 | — |\n| FEM (nx=16) | 11.908 | **2.29%** |\n| FEM (nx=12) | 11.905 | 2.31% |\n| FEM (nx=8) | 11.530 | 5.39% |",
+        "unique": true
+      },
+      "locator_points_to": "payload",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "markdown table block sliced verbatim; error column recomputed from 12.187",
+        "result": "resolved"
+      },
+      "note": "误差列与 12.187 mm 基准自洽（见 F4 重算残差，单位 pp）。"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "result_table",
+      "label": "网格收敛表（nx=4/6/8/12/16）",
+      "in_report_section": "## 3. 计算结果",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1075,
+        "end_char": 1239,
+        "start_line": 52,
+        "end_line": 58,
+        "quote": "| nx | w(0) [mm] | 误差 [%] |\n|----|-----------|----------|\n| 4 | 10.52 | 13.7 |\n| 6 | 11.07 | 9.16 |\n| 8 | 11.53 | 5.39 |\n| 12 | 11.91 | 2.31 |\n| 16 | 11.91 | 2.29 |",
+        "unique": true
+      },
+      "locator_points_to": "payload",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "markdown table block sliced verbatim; monotonicity recomputed",
+        "result": "resolved"
+      },
+      "note": "w(0) 随 nx 单调增、趋近 12.187 mm（F4 重算），与报告 `单调性 ✅` 表述一致。"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "scaling_check",
+      "label": "缩放律验证块（w∝P 比值 2.00；w∝1/√k_f 比值 1.99）",
+      "in_report_section": "## 3. 计算结果",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1252,
+        "end_char": 1330,
+        "start_line": 61,
+        "end_line": 62,
+        "quote": "- w ∝ P：载荷加倍 → 挠度比 = 2.00（误差 < 1%）✓\n- w ∝ 1/√k_f：k_f 四倍 → 挠度比 = 1.99（误差 < 1%）✓",
+        "unique": true
+      },
+      "locator_points_to": "payload",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "bullet block sliced verbatim; 2 items present",
+        "result": "resolved"
+      },
+      "note": "仅登记报告给出的比值与自报误差（<1%）；原始两次运行数据未附（见 A12）。"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "figure_reference",
+      "label": "结果图 winkler_hetenyi_comparison（挠度径向分布 + 网格收敛）",
+      "in_report_section": "## 4. 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1343,
+        "end_char": 1390,
+        "start_line": 66,
+        "end_line": 66,
+        "quote": "见附图：左图为挠度径向分布对比（FEM 点 vs Hetényi 曲线），右图为网格收敛曲线。",
+        "unique": true
+      },
+      "locator_points_to": "record.figures",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "GET /tensor/reports/13325/figures/winkler_hetenyi_comparison",
+        "result": "resolved"
+      },
+      "note": "正文只做“见附图”引用，不内嵌图；载荷在报告的 record.figures 里，本工序用 HTTP 探针确认可解析性并钉住字节哈希（见 payload_locator / figure_probe）。",
+      "payload_locator": {
+        "record_field": "figures[0]",
+        "endpoint": "/tensor/reports/13325/figures/winkler_hetenyi_comparison",
+        "http_status": 200,
+        "content_type": "image/png",
+        "bytes": 135557,
+        "sha256": "sha256:661befa77481654e959ef0be760503a0abd81dc7a25911485d39160df973cf83"
+      }
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "literature_reference",
+      "label": "Kelvin kei 函数（Hetényi 解所用特殊函数）",
+      "in_report_section": "## 5. 注意点",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1633,
+        "end_char": 1717,
+        "start_line": 73,
+        "end_line": 73,
+        "quote": "4. **Kelvin 函数**：Hetényi 解使用 Kelvin kei 函数，在 r ≈ 3.8l 处出现抬升环（挠度变号），FEM 解也捕捉到了这一物理现象。",
+        "unique": true
+      },
+      "locator_points_to": "mention",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "bibliographic locator present (author/year/DOI/formula number)",
+        "result": "unresolved"
+      },
+      "note": "仅函数名与定性行为（r≈3.8l 抬升环），无文献出处、无公式号，无法解析到具体参考条目。"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "raw_data_and_scripts",
+      "label": "原始数据/脚本/提交（复算所需的过程资产）",
+      "in_report_section": "document",
+      "locator": {
+        "method": "document",
+        "start_char": 2021,
+        "end_char": 2077,
+        "start_line": 85,
+        "end_line": 85,
+        "quote": "**结论**：GAP-FEM-WINKLER 验收标准（弹性地基板 vs Hetényi <5%）**通过**。",
+        "unique": true,
+        "document_char_start": 0,
+        "document_char_end": 2077
+      },
+      "locator_points_to": "payload",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "regex scan of markdown for repo paths / commit shas / data-file extensions",
+        "result": "absent"
+      },
+      "note": "全文扫描未发现任何代码路径、commit、.py/.csv/.dat/.json/.npz 等数据文件引用，故复算所需的原始输出在报告内声明性缺失（absent），非本工序遗漏。"
+    }
+  ],
+  "claims": [],
+  "claims_policy": "空数组是契约允许的完整结果（objective.classify_report_type=false，notes: 不做抽取）。未做任何断言生成，未对任何结论授予“已核验”状态；claims=[] 即本工序的完整结论面。",
+  "figure_probe": {
+    "winkler_hetenyi_comparison": {
+      "name": "winkler_hetenyi_comparison",
+      "caption": "左：挠度径向分布对比（FEM vs Hetényi）；右：网格收敛曲线。中心挠度误差 2.29%。",
+      "endpoint": "/tensor/reports/13325/figures/winkler_hetenyi_comparison",
+      "method": "GET",
+      "http_status": 200,
+      "content_type": "image/png",
+      "bytes": 135557,
+      "sha256": "sha256:661befa77481654e959ef0be760503a0abd81dc7a25911485d39160df973cf83",
+      "resolvable": true
+    }
+  },
+  "integrity": {
+    "quote_uniqueness": {
+      "all_slices_match": true,
+      "all_unique": true,
+      "per_asset": {
+        "A01": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A02": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A03": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A04": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A05": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A06": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A07": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A08": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A09": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A10": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A11": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        },
+        "A12": {
+          "occurs": 1,
+          "slice_matches": true,
+          "unique": true
+        }
+      }
+    },
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "recomputed_hash": "sha256:f7a7270b3721cd37011bb6ab66ebba8a0cb6e031b7e971c9a900b4c22acb1fe9",
+    "contract_hash": "sha256:f7a7270b3721cd37011bb6ab66ebba8a0cb6e031b7e971c9a900b4c22acb1fe9"
+  },
+  "integrity_findings": [
+    {
+      "id": "F1",
+      "kind": "encoding_damage",
+      "where": "A03 / ## 1. 案例介绍",
+      "observed": {
+        "control_codepoints": [
+          9,
+          12
+        ],
+        "control_sequence": [
+          12,
+          9,
+          9,
+          9
+        ],
+        "control_tokens": [
+          {
+            "codepoint": 12,
+            "name": "FORM_FEED",
+            "offset_in_quote": 14,
+            "following_chars": "rac{P",
+            "reconstructed_token": "\\frac{P"
+          },
+          {
+            "codepoint": 9,
+            "name": "TAB",
+            "offset_in_quote": 46,
+            "following_chars": "imes ",
+            "reconstructed_token": "\\times "
+          },
+          {
+            "codepoint": 9,
+            "name": "TAB",
+            "offset_in_quote": 60,
+            "following_chars": "ext{ ",
+            "reconstructed_token": "\\text{ "
+          },
+          {
+            "codepoint": 9,
+            "name": "TAB",
+            "offset_in_quote": 77,
+            "following_chars": "ext{ ",
+            "reconstructed_token": "\\text{ "
+          }
+        ],
+        "intact_latex_tokens": [
+          "\\sqrt",
+          "{",
+          "}",
+          "^"
+        ],
+        "stray_digit_runs": [
+          "2239218",
+          "2239218"
+        ],
+        "line_repr": "2239218w(0) = \\frac{P}{8\\sqrt{D k_f}} = 1.2187 \\times 10^{-2} \\text{ m} = 12.19 \\text{ mm}2239218"
+      },
+      "mechanism_hypothesis": "\\t/\\f 被当作转义序列展开（TAB=0x09, FF=0x0C），与 TSV/printf 类写入路径一致；本行 4 个控制字符 = 1×FF + 3×TAB，恰对应 \\frac(1) + \\times(1) + \\text(2)。",
+      "consequence": "闭式解 LaTeX 不可直接渲染/复用；若下游要抽取公式必须回到作者侧原文，本工序不修复、不做等价改写。",
+      "severity": "non_blocking_for_registration / blocking_for_formula_extraction"
+    },
+    {
+      "id": "F2",
+      "kind": "internal_inconsistency",
+      "where": "A05 vs ## 5. 注意点 第 1 条",
+      "observed_quotes": [
+        "- 板尺寸：10l × 10l（≈ 101m × 101m），确保边界效应可忽略",
+        "1. **板尺寸选择**：有限板必须足够大（≥ 8l）才能近似无限板。8l 板在 nx=12 时误差 2.3%，满足 <5% 验收线。"
+      ],
+      "detail": {
+        "main_section_plate_size": "10l × 10l",
+        "notes_section_plate_size": "8l"
+      },
+      "status": "unresolved",
+      "unresolved_reason": "报告未说明 8l 与 10l 分别对应哪次运行（是否同一 w(0)=11.908 mm 算例）；无运行清单/输入卡片可裁决。",
+      "severity": "non_blocking_for_registration / needs_author_clarification"
+    },
+    {
+      "id": "F3",
+      "kind": "arithmetic_crosscheck_of_registered_parameters",
+      "scope_warning": "只核对报告参数表内部的量纲/代数自洽性；**不**构成对 FEM 精度结论的验证。",
+      "reported_vs_recomputed": {
+        "D_Nm": {
+          "reported": 105200000.0,
+          "recomputed": 105207047.469,
+          "rel_dev": 7e-05
+        },
+        "l_m": {
+          "reported": 10.13,
+          "recomputed": 10.1277,
+          "rel_dev": 0.00023
+        },
+        "w0_m": {
+          "reported": 0.012187,
+          "recomputed": 0.0121867,
+          "rel_dev": 2e-05
+        }
+      },
+      "formulas": [
+        "D = E t^3 / (12 (1-ν^2))",
+        "l = (D/k_f)^(1/4)",
+        "w(0) = P / (8 sqrt(D k_f))"
+      ],
+      "status": "consistent_within_reporting_rounding"
+    },
+    {
+      "id": "F4",
+      "kind": "arithmetic_crosscheck_of_result_columns",
+      "scope_warning": "重算只针对报告自报数字之间的一致性；不重跑 FEM。",
+      "baseline_used_mm": 12.187,
+      "error_column": [
+        {
+          "row": "FEM (nx=16)",
+          "reported_pct": 2.29,
+          "recomputed_pct": 2.289,
+          "abs_diff_pp": 0.001
+        },
+        {
+          "row": "FEM (nx=12)",
+          "reported_pct": 2.31,
+          "recomputed_pct": 2.314,
+          "abs_diff_pp": 0.004
+        },
+        {
+          "row": "FEM (nx=8)",
+          "reported_pct": 5.39,
+          "recomputed_pct": 5.391,
+          "abs_diff_pp": 0.001
+        }
+      ],
+      "max_abs_diff_pp": 0.004,
+      "mesh_monotonic_increasing": true,
+      "mesh_series": [
+        [
+          4,
+          10.52
+        ],
+        [
+          6,
+          11.07
+        ],
+        [
+          8,
+          11.53
+        ],
+        [
+          12,
+          11.91
+        ],
+        [
+          16,
+          11.91
+        ]
+      ],
+      "status": "consistent_within_reporting_rounding"
+    },
+    {
+      "id": "F5",
+      "kind": "figure_caption_vs_body",
+      "checked": {
+        "caption_mentions_error_2_29pct": true,
+        "body_table_reports_2_29pct": true,
+        "caption_text": "左：挠度径向分布对比（FEM vs Hetényi）；右：网格收敛曲线。中心挠度误差 2.29%。"
+      },
+      "status": "caption_error_matches_body_table"
+    }
+  ]
+}
