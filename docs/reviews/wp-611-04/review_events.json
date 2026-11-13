@@ -1,0 +1,45 @@
+[
+  {
+    "id": "tkr:wp-611-04:request-changes-1",
+    "object_ref": "wp-611-01",
+    "object_version": "report:611",
+    "decision": "request-changes",
+    "reviewer": {
+      "id": "agent/m15798",
+      "reviewer_type": "agent",
+      "role": "red-team-reviewer"
+    },
+    "reviewed_at": "2026-11-12T02:40:00Z",
+    "policy_version": "ke-review-v0.1",
+    "findings": [
+      {
+        "severity": "blocking",
+        "finding": "[F1] 3-D GM = -0.115 (unstable) is refuted by an exact identity and by recomputation"
+      },
+      {
+        "severity": "blocking",
+        "finding": "[F2] the buoyancy verification is circular: 2.19e-16 is machine epsilon, so the check cannot detect model error"
+      },
+      {
+        "severity": "major",
+        "finding": "[F3] the Morison / wet-coupling half of the model carries no number, coefficient or environment in the text"
+      },
+      {
+        "severity": "minor",
+        "finding": "[F4] wave parameters lambda=10 m and T=2.5 s are mutually inconsistent in deep water (2.4-2.7 %)"
+      },
+      {
+        "severity": "minor",
+        "finding": "[F5] 2-D heave stiffness is a per-unit-length (N/m²) quantity but is tabulated as N/m"
+      },
+      {
+        "severity": "minor",
+        "finding": "[F6] two rows of the error-assessment table are not error statements"
+      },
+      {
+        "severity": "minor",
+        "finding": "[F7] no code, commit or run identity anywhere -> the numerical claims are orphaned"
+      }
+    ]
+  }
+]
