@@ -1,0 +1,472 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-12445-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12445",
+  "source": {
+    "uri": "tensor://reports/12445",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "f86e8247d5dff43152a883b11207b09d96d5dd70892d7f62cab187746f85f23f",
+    "chars": 3554,
+    "bytes_utf8": 5388,
+    "title": "P269W2-N07 EEXI/CII 端到端不确定度传播：六因子蒙特卡洛 · 合规概率 · Sobol 分解",
+    "platform_title": "P269W2-N07 EEXI/CII 端到端不确定度传播：六因子蒙特卡洛 · 合规概率 · Sobol 分解",
+    "title_matches_contract": true,
+    "scenario_key": "green_navigation",
+    "platform_scenario_key": "green_navigation",
+    "platform_figures": [
+      {
+        "name": "fig1_eexi_pdf.png",
+        "caption": "EEXI_attained 概率密度与累积分布：MC 直方图（N=20000）+ 对数正态拟合（σ_ln=0.0378）+ 要求值线（标定后与名义值重合）；CDF 在要求值处的高度即合规概率"
+      },
+      {
+        "name": "fig2_cii_pdf.png",
+        "caption": "CII_attained 概率密度与累积分布：分布显著更宽（CV=17.1%），因气象服务增阻与营运航速剖面全部进入"
+      },
+      {
+        "name": "fig3_sobol.png",
+        "caption": "Sobol 方差分解：EEXI 由主机（0.759）与阻力（0.185）主导、几何 <1%；CII 由操作航速剖面（0.599）与气象（0.224）主导；绿柱为一阶 delta 法解析份额"
+      },
+      {
+        "name": "fig4_convergence_negative_control.png",
+        "caption": "左：A5 收敛性（均值 ±1SE 收敛到 N=2e5 参考）；右：A6 负控（CV 随 σ 线性归零，σ=0 时 PDF 为 δ 函数）"
+      },
+      {
+        "name": "fig5_surrogate_verification.png",
+        "caption": "归约链自证：随机样本上归约链 vs 全 Holtrop+二分的相对偏差（EEXI 6.3e-5、CII 2.5e-4，判据 1e-3）"
+      }
+    ],
+    "platform_tags": [
+      "EEXI",
+      "CII",
+      "不确定度传播",
+      "蒙特卡洛",
+      "合规概率",
+      "Sobol",
+      "P269W2-N07",
+      "green-shipping"
+    ]
+  },
+  "counts": {
+    "assets": 14,
+    "by_class": {
+      "figure": 5,
+      "artifact_bundle": 1,
+      "source_module": 1,
+      "api_router": 1,
+      "test_module": 1,
+      "repro_script": 1,
+      "documentation": 1,
+      "provenance_pointer": 1,
+      "code_pointer": 1,
+      "withheld_dependency": 1
+    },
+    "by_resolution": {
+      "referenced_unresolved": 12,
+      "resolved_in_source": 1,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 1,
+    "referenced_unresolved": 12,
+    "declared_absent": 1,
+    "anchors": 10
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "figure",
+      "label": "fig1_eexi_pdf.png",
+      "in_report_section": "产物（§3/§4 之后，第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform record figures[] entry name=='fig1_eexi_pdf.png' present with caption; PNG bytes not embedded in markdown",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3485,
+        "end_char": 3519,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "artifacts/P269W2_N07/`（JSON + 5 图）",
+        "unique": true
+      },
+      "note": "EEXI PDF/CDF 图。身份与图注由平台 record（figures[]）给出；逐图字节不可从 markdown 取得，本工序不做图内容核验（属下游抽取/审计工序）。"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "figure",
+      "label": "fig2_cii_pdf.png",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform record figures[] entry name=='fig2_cii_pdf.png' match; PNG bytes not in markdown",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3485,
+        "end_char": 3519,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "artifacts/P269W2_N07/`（JSON + 5 图）",
+        "unique": true
+      },
+      "note": "CII PDF/CDF 图；同为 record 级身份，字节未随 markdown。"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "figure",
+      "label": "fig3_sobol.png",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform record figures[] entry name=='fig3_sobol.png' match; PNG bytes not in markdown",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3485,
+        "end_char": 3519,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "artifacts/P269W2_N07/`（JSON + 5 图）",
+        "unique": true
+      },
+      "note": "Sobol 方差分解图；与正文 Sobol 表存在对应关系，但对应关系核验不属本工序。"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "figure",
+      "label": "fig4_convergence_negative_control.png",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform record figures[] entry name=='fig4_convergence_negative_control.png' match; PNG bytes not in markdown",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3485,
+        "end_char": 3519,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "artifacts/P269W2_N07/`（JSON + 5 图）",
+        "unique": true
+      },
+      "note": "A5 收敛 + A6 负控图；record 级身份。"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "figure",
+      "label": "fig5_surrogate_verification.png",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "platform record figures[] entry name=='fig5_surrogate_verification.png' match; PNG bytes not in markdown",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3485,
+        "end_char": 3519,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "artifacts/P269W2_N07/`（JSON + 5 图）",
+        "unique": true
+      },
+      "note": "归约链自证图；record 级身份。图数合计 5，与正文“5 图”声明一致。"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "artifact_bundle",
+      "label": "artifacts/P269W2_N07/ (JSON + 5 图)",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('artifacts/P269W2_N07') in this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3484,
+        "end_char": 3519,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "`artifacts/P269W2_N07/`（JSON + 5 图）",
+        "unique": true
+      },
+      "note": "产物目录：JSON 数值工件 + 5 图。本工作树（TensorKnowledge）只持有报告登记物，该目录属源仓 ship-performance-platform；未跨仓拉取，不冒充已核验。"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "source_module",
+      "label": "backend/services/green_uncertainty.py",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('backend/services/green_uncertainty.py') in this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3259,
+        "end_char": 3298,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "`backend/services/green_uncertainty.py`",
+        "unique": true
+      },
+      "note": "六因子 MC / Sobol / 归约链实现。路径相对源仓根；本工作树无 backend/ 目录。"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "api_router",
+      "label": "backend/api/green_uncertainty.py",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('backend/api/green_uncertainty.py') in this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3299,
+        "end_char": 3333,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "`backend/api/green_uncertainty.py`",
+        "unique": true
+      },
+      "note": "绿色航行不确定度 API 路由。"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "test_module",
+      "label": "backend/tests/test_green_uncertainty.py",
+      "in_report_section": "产物（第 43 行）；§3 判据 A7",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('backend/tests/test_green_uncertainty.py') in this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3334,
+        "end_char": 3375,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "`backend/tests/test_green_uncertainty.py`",
+        "unique": true
+      },
+      "note": "37 例 pytest 的载体（A7 判据）；本工序未执行该测试（跨仓），不得视为已复现。"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "repro_script",
+      "label": "scripts/run_green_uncertainty_p269w2_n07.py",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('scripts/run_green_uncertainty_p269w2_n07.py') in this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3376,
+        "end_char": 3421,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "`scripts/run_green_uncertainty_p269w2_n07.py`",
+        "unique": true
+      },
+      "note": "一键复现脚本（重计算入口）。"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "documentation",
+      "label": "docs/green_navigation/P269W2_N07_uncertainty_propagation.md",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('docs/green_navigation/P269W2_N07_uncertainty_propagation.md') in this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3422,
+        "end_char": 3483,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "`docs/green_navigation/P269W2_N07_uncertainty_propagation.md`",
+        "unique": true
+      },
+      "note": "长文报告（本 markdown 为其摘要版）。"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "provenance_pointer",
+      "label": "branch agent/m10831 @ commit 98efbb418",
+      "in_report_section": "产物（第 43 行）",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pointer string present verbatim and unique in markdown (commit object itself is in the source repo, not resolvable here)",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3520,
+        "end_char": 3552,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "分支 agent/m10831，commit 98efbb418",
+        "unique": true
+      },
+      "note": "仅登记指针文本本身可解（逐字定位命中）。commit 对象未在本仓拉取，故其内容与 40 位全哈希不在本工序核验范围（报告只给 9 位短哈希）。"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "code_pointer",
+      "label": "api/green_shipping._gn_attained_index",
+      "in_report_section": "§4 顺带修掉的真缺陷",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.exists('backend/api/green_shipping.py') in this worktree",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 2112,
+        "end_char": 2151,
+        "start_line": 28,
+        "end_line": 28,
+        "quote": "`api/green_shipping._gn_attained_index`",
+        "unique": true
+      },
+      "note": "被点名的分母量纲缺陷函数（报告称已改为 kn 口径并加回归守卫）。本工序不评判该修复，只登记指针与定位。"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "withheld_dependency",
+      "label": "规则要求值层（EEXI_required / CII_required 的规则依据）",
+      "in_report_section": "§5 注意点 / 局限（末句）",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "report text declares the requirement-value layer WITHHELD; no rule document/coefficient table is attached in markdown",
+        "result": "absent"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 2769,
+        "end_char": 2809,
+        "start_line": 31,
+        "end_line": 31,
+        "quote": "**要求值层与合规概率按 WITHHELD 处理**（规则系数离线转录不可复核）",
+        "unique": true
+      },
+      "note": "报告自陈：规则系数离线转录不可复核。按 preserve_uncertainty 如实登记为缺失依赖，不补齐、不推断。"
+    }
+  ],
+  "anchors": [
+    {
+      "anchor_id": "report_title",
+      "field": "报告标题",
+      "quote": "P269W2-N07 EEXI/CII 端到端不确定度传播成熟化",
+      "start_char": 3,
+      "end_char": 35,
+      "start_line": 1,
+      "unique": true
+    },
+    {
+      "anchor_id": "design_point",
+      "field": "算例几何/参数",
+      "quote": "Lpp×B×T = 180×32×11.5 m，Cb=0.82，Capacity=35000 DWT",
+      "start_char": 103,
+      "end_char": 153,
+      "start_line": 4,
+      "unique": true
+    },
+    {
+      "anchor_id": "eexi_required",
+      "field": "EEXI 要求值",
+      "quote": "EEXI_required = 5.2318 gCO2/(t·nm)",
+      "start_char": 217,
+      "end_char": 251,
+      "start_line": 6,
+      "unique": true
+    },
+    {
+      "anchor_id": "cii_required",
+      "field": "CII 要求值(2025)",
+      "quote": "CII_required(2025) = 6.4397 gCO2/(t·nm)",
+      "start_char": 252,
+      "end_char": 291,
+      "start_line": 6,
+      "unique": true
+    },
+    {
+      "anchor_id": "mc_settings",
+      "field": "MC 规模与种子",
+      "quote": "MC N=20000（seed=20261110）",
+      "start_char": 1019,
+      "end_char": 1044,
+      "start_line": 13,
+      "unique": true
+    },
+    {
+      "anchor_id": "reduction_chain",
+      "field": "归约链自证口径",
+      "quote": "归约误差对**全 Holtrop+二分**逐样本复算实测",
+      "start_char": 980,
+      "end_char": 1008,
+      "start_line": 12,
+      "unique": true
+    },
+    {
+      "anchor_id": "figure_count",
+      "field": "图数声明",
+      "quote": "（JSON + 5 图）",
+      "start_char": 3507,
+      "end_char": 3519,
+      "start_line": 43,
+      "unique": true
+    },
+    {
+      "anchor_id": "deliverable_list",
+      "field": "产物清单起始",
+      "quote": "产物：`backend/services/green_uncertainty.py`",
+      "start_char": 3256,
+      "end_char": 3298,
+      "start_line": 43,
+      "unique": true
+    },
+    {
+      "anchor_id": "withheld_scope",
+      "field": "WITHHELD 范围",
+      "quote": "**要求值层与合规概率按 WITHHELD 处理**",
+      "start_char": 2769,
+      "end_char": 2795,
+      "start_line": 31,
+      "unique": true
+    },
+    {
+      "anchor_id": "provenance",
+      "field": "来源分支/commit",
+      "quote": "分支 agent/m10831，commit 98efbb418",
+      "start_char": 3520,
+      "end_char": 3552,
+      "start_line": 43,
+      "unique": true
+    }
+  ],
+  "claims": [],
+  "claims_note": "任务类型 01 只登记资产，不做抽取与分类（objective.classify_report_type=false）；按 no_forced_claim_generation，claims=[] 为合法完整结果。",
+  "integrity": {
+    "quote_uniqueness": true,
+    "hash_recomputed_locally": "f86e8247d5dff43152a883b11207b09d96d5dd70892d7f62cab187746f85f23f",
+    "hash_matches_contract": true,
+    "locator_method": "char_span over utf-8 decoded markdown; uniqueness = exact match count == 1",
+    "no_cross_report_access": true
+  }
+}
