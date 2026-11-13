@@ -1,0 +1,59 @@
+{
+  "package_id": "wp-9656-01",
+  "report_id": "9656",
+  "checked_at": "2026-11-12T01:44:55.650072+00:00",
+  "verifier": "scripts/kf/wp9656_01_register.py verify",
+  "independence_limitation": "self-check by the producing script: it re-fetches the source and re-derives every comparison, but shares code with build(); platform gate recomputation remains the authoritative check",
+  "all_ok": true,
+  "acceptance": {
+    "valid_json": {
+      "ok": true,
+      "detail": "both asset_manifest.json and kf_result.json parse"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": "asset_manifest vs schemas/asset_manifest.v1.wp9656-01.schema.json; kf_result vs schemas/kf_result.v1.schema.json"
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": "live=sha256:04416e71c0f6dcef356dc57cd48a267661ac42aa46418879e4a4f7ed32918619 contract=sha256:04416e71c0f6dcef356dc57cd48a267661ac42aa46418879e4a4f7ed32918619 chars=12470 (contract 12470)"
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": "42 locators re-checked against live markdown (27 assets, 8 tables, 7 sections)",
+      "failures": []
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": "27 asset ids, duplicates=none"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": "0 claims (empty by contract: objective.register_assets only, no extraction); unbacked=none"
+    }
+  },
+  "accounting": {
+    "locators_checked": 42,
+    "locators_resolved": 42,
+    "quotes_unique": 6,
+    "quotes_not_unique": 21,
+    "distinct_quotes": 20,
+    "assets_total": 27,
+    "assets_resolved": 1,
+    "assets_metadata_only": 4,
+    "assets_unresolved": 22
+  },
+  "internal_consistency": {
+    "ok": true,
+    "detail": {
+      "integrity_locators_checked_matches": true,
+      "integrity_locators_resolved_matches": true,
+      "integrity_quote_uniqueness_matches": true,
+      "integrity_duplicate_ids_matches": true,
+      "envelope_digest_matches_manifest_file": true,
+      "envelope_embeds_manifest_file": true
+    },
+    "expected_manifest_sha256": "sha256:3507a6e3b5db5980e36de7ef751843557b293db6ea48f9b3a1d8bddc5674df86",
+    "actual_manifest_sha256": "sha256:3507a6e3b5db5980e36de7ef751843557b293db6ea48f9b3a1d8bddc5674df86"
+  }
+}

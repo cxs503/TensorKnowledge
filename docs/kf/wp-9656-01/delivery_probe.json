@@ -1,0 +1,25 @@
+{
+  "package_id": "wp-9656-01",
+  "emitted_report_id": 14755,
+  "scope": "read-back of this package's own result report only (report 9656 untouched)",
+  "measured": {
+    "markdown_chars": 45974,
+    "json_fences_in_markdown": 1,
+    "json_block_equals_committed_envelope": true,
+    "source_hash_in_block": "sha256:04416e71c0f6dcef356dc57cd48a267661ac42aa46418879e4a4f7ed32918619",
+    "tags_include_kf_wp": true,
+    "figures_submitted": 1,
+    "figure_png_base64_chars_submitted": 287864,
+    "figures_persisted": 1,
+    "figure_keys_persisted": [
+      "caption",
+      "name"
+    ],
+    "figure_png_bytes_persisted": 0
+  },
+  "finding": "the platform persists figures[] as metadata only (name+caption); the png_base64 payload submitted with the report is dropped",
+  "implication": "report 9656's figures[] being metadata_only is a platform storage property, not a defect of the upstream producer or of this package; image bytes must be fetched from the producing repository, not the API",
+  "limitations": [
+    "single observation on this platform build; not a general guarantee"
+  ]
+}
