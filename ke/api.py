@@ -432,3 +432,13 @@ def search(
     if axis and not status_value:
         raise HTTPException(422, "axis requires status")
     return get_store().search(q, kind=kind, domain=domain, axis=axis, status=status_value, limit=limit)
+
+# ---------------------------------------------------------------- KO Schema v1 写入面
+# 锚点 KBM-RCI-S2-SCHEMA：/ko/v1/* 端点把 Schema v1 校验、证据三闸解析与 L3 票据晋级
+# 接到同一个服务进程里（实现见 ke/ko_v1_api.py → ke/ko_ingest.py）。导入失败不拖垮既有面。
+try:  # pragma: no cover - 可选依赖
+    from .ko_v1_api import router as _ko_v1_router
+
+    app.include_router(_ko_v1_router)
+except Exception as _ko_v1_exc:  # pragma: no cover
+    _KO_V1_ROUTER_ERROR = _ko_v1_exc
