@@ -1,0 +1,45 @@
+{
+  "package_id": "wp-8288-01",
+  "report_id": "8288",
+  "checked_at": "2026-11-12T01:31:38.820239+00:00",
+  "manifest": "docs/kf/wp-8288-01/asset_manifest.json",
+  "manifest_sha256": "33a63e88c64f9c8213d295217e68bf9c7f040d67e5a270539396d27e691c838c",
+  "acceptance_items": {
+    "valid_json": {
+      "pass": true,
+      "detail": "json.loads OK"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": "jsonschema draft2020-12 validate against projected schema docs/kf/wp-8288-01/asset_manifest.schema.json (consts retargeted to wp-8288-01/8288)"
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "detail": "checked 40 locators by re-slicing the live markdown; failures=[]"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": "recomputed=2c35fbe3fa027f083b82f15238f3db797f087df0c435a1c536b176280e053f19 manifest=2c35fbe3fa027f083b82f15238f3db797f087df0c435a1c536b176280e053f19 contract=2c35fbe3fa027f083b82f15238f3db797f087df0c435a1c536b176280e053f19 chars=9660/9660"
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "detail": "assets=40 unique=40 pattern_ok=True sorted=True"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "detail": "claims=0 violating=0 (empty array satisfies the item vacuously; reason recorded in claims_empty_reason)"
+    }
+  },
+  "extra_checks": {
+    "no_claims_marked_verified": {
+      "pass": true,
+      "detail": "no claim carries a verified status; verification is left to the platform gate"
+    },
+    "counts_consistent_with_assets": {
+      "pass": true,
+      "detail": "counts.assets=40 len(assets)=40 by_resolution sum=40"
+    }
+  },
+  "all_acceptance_pass": true,
+  "gate_scope_note": "Self-check only: the platform gate independently recomputes the source hash and substring-tests every quote; this file is evidence of the author's own run, not a verification mark."
+}
