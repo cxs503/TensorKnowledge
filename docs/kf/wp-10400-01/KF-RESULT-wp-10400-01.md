@@ -1,0 +1,1005 @@
+# KF-RESULT wp-10400-01
+
+*工作包 wp-10400-01 · task_type=01-asset-registration · report_id=10400 · scenario_key=P70-N03_segregation_dynamics · lane=C · 状态 draft（verification 由平台门计算，本包不断言任何 claim 为真）*
+
+## 0. 案例背景（源报告，逐字注入）
+
+源报告 `tensor://reports/10400`（field=`markdown`，6118 字符 / 9613 UTF-8 字节，sha256=`7a5ad01426079811a40edd7d8a95f7f09e1119e8a78ecfc44782d3b85920ab54`）的标题为 「TensorDEM 二元颗粒床尺寸偏析验证（真实运行数据）」。它是一份 TensorDEM 二元颗粒床尺寸偏析验证报告：6 条机器判据中 3 条通过，整体 all_pass=False（honest verdict）。
+
+源报告的案例参数表（A04，逐字切片，未做换算或复核）：
+
+```text
+| 参数 | 取值 |
+|---|---|
+| 颗粒数/例 | 1200 |
+| 粒径比 $d_l/d_s$ | 1, 1.5, 2, 3, 4 |
+| 驱动 $\Gamma=A\omega^2/g$ | 0.5, 1, 1.5, 2, 2.5, 3 |
+| 频率 (Hz) | 60 |
+| 大颗粒体积分数 | 0.3 |
+| 接触模型 | 线性弹簧-阻尼 + 库仑摩擦 + 滚动阻力（$k_n$=1.2e4 N/m, ζ=0.3, μ=0.4） |
+| 时间步 (s) | 1.5e-05 |
+| 重力 (m/s²) | 9.81 |
+| 记录目录 | `.scratch/pilot_out` |
+```
+
+## ① 本工序做了什么
+
+只做一件事：把 report_id=10400 的源资产**登记并定位**，不做抽取、不做分类、不给 claim 结论。具体地：
+
+1. 活取源 markdown 并做**硬哈希闸门**：本地重算 sha256 与契约常量逐字节比对，不等则脚本 `SystemExit`（不存在「哈希不对但仍出清单」的分支）。实测 `sha256:7a5ad01426079811…` 与 `source_hash` 契约一致：`True`。
+2. 登记 **27 个资产**：resolved_in_source=16、referenced_unresolved=11、declared_absent=0。
+3. 每个资产给出字符级 locator（start_char/end_char/start_line/end_line + 逐字 quote），quote 必须**在源中恰好出现一次**，否则构建脚本直接失败。
+4. `claims` 为空数组（契约 objective.classify_report_type=false，不允许为凑指标造知识）；源报告的 honest-FAIL 表述原样保留，不改标 verified。
+
+## ② 怎么做的（步骤/工具/关键设置）
+
+1. **取源**：`POST $TENSOR_API_BASE/auth/login` 用环境变量凭据取 token → `GET $TENSOR_API_BASE/tensor/reports/10400` 取 `markdown` 原文（本地 `psql -d tensorplatform` 直连被拒：`permission denied for table tensor_reports`，故 API 是唯一取源通道，如实记录）。
+2. **哈希闸门**：`hashlib.sha256(markdown.encode('utf-8'))` 对比契约 `sha256:7a5ad01426079811a40edd7d8a95f7f09e1119e8a78ecfc44782d3b85920ab54`，并校验 chars=6118、title、scenario_key 三项与契约一致。
+3. **定位**：每个资产用「唯一锚点子串 + 行偏移区间」求字符区间；quote 取该区间的原文行拼接，再回写 `markdown[start:end] == quote` 自证；`md.count(quote)==1` 保证唯一性。
+4. **外部引用判定**：对代码/数据/图三类外部工件，只做**机器探测**、不联网猜地址——`os.path.exists` 探本工作树内声明路径（工作树=TensorKnowledge，跨仓路径必然 unresolved），图另与平台 `figures` 字段交叉核对（名称命中且 caption 逐字出现在 markdown 中）。
+5. **自检**：`scripts/kf/validate_wp10400_01.py` 重新活取源（不接受陈旧快照），逐条重算 acceptance；结果信封对 `schemas/kf_result.v1.schema.json` **原样**校验，清单对 `schemas/asset_manifest.v1.schema.json` 校验（后者的 package_id/report_id/uri 三处 const 为其自身实例写死，校验时在内存中替换为本实例并如实标注，其余约束不动）。
+
+## ③ 产出物清单（输出文件名 → 要点）
+
+| 文件 | 要点 |
+|---|---|
+| `artifacts/wp-10400-01/asset_manifest.json` | 资产清单主体：27 资产 / 8 字段/条；sha256=`7f928fbe5273c273eeb1cb627a1f46b83b56b218807c0f9a4c6ca8cd2160efd5` |
+| `docs/kf/wp-10400-01/asset_manifest.json` | 上件的**逐字节镜像**（push gate 丢弃 `artifacts/**`/`runs/**`，故入库副本放 docs/）；镜像一致=True |
+| `runs/wp-10400-01/kf_result.wp-10400-01.json` | kf_result.v1 结果信封（package_id/task_type/report_id/provenance/outputs），与本页 json 块同源 |
+| `runs/wp-10400-01/report_10400.md`、`report_10400.json` | 源报告本地快照（markdown 原文与 API 原始 payload：title/scenario_key/figures/tags/status） |
+| `runs/wp-10400-01/selfcheck.json` | 逐条 acceptance 自检结果（11 项检查 + 详情） |
+| `scripts/kf/build_asset_manifest_wp10400_01.py` | 清单构建器（哈希闸门 + 唯一锚点定位 + 外部工件探测） |
+| `scripts/kf/validate_wp10400_01.py` | 独立自检器（活取源重算全部 acceptance） |
+| `scripts/kf/render_and_publish_wp10400_01.py` | 本页渲染器（数字全部从上述 JSON 注入） |
+
+## ④ 结果数字（程序化注入，非手抄）
+
+### 4.1 登记口径
+
+| 指标 | 值 |
+|---|---|
+| 资产总数 | 27 |
+| resolved_in_source | 16 |
+| referenced_unresolved | 11 |
+| declared_absent | 0 |
+| 资产类别数 | 12 |
+| quote 唯一性 | every asset quote confirmed as exactly one occurrence in the source markdown (build_locator raises otherwise) |
+| 平台 figures 与源内图引用一致 | True （源内 4 个 / 平台 4 个） |
+| 平台 caption 逐字出现在源 markdown | True |
+
+### 4.2 按类别 × 解析状态
+
+| asset_class | 数量 | resolved_in_source | referenced_unresolved |
+|---|---|---|---|
+| code_reference | 5 | 0 | 5 |
+| table | 5 | 5 | 0 |
+| figure | 4 | 0 | 4 |
+| finding_statement | 3 | 3 | 0 |
+| dataset_reference | 2 | 0 | 2 |
+| numeric_anchor | 2 | 2 | 0 |
+| document | 1 | 1 | 0 |
+| heading | 1 | 1 | 0 |
+| limitation_set | 1 | 1 | 0 |
+| provenance_statement | 1 | 1 | 0 |
+| repro_script | 1 | 1 | 0 |
+| verdict | 1 | 1 | 0 |
+
+### 4.3 未解析资产（全部为跨仓/运行时工件，探测结果逐条记录）
+
+| asset_id | 标签 | 探测 check | 结果 |
+|---|---|---|---|
+| A05 | 源码 src/tensordem/segregation/campaign.py（RSA 布床 + 振动底板驱动） | worktree_path_probe | unresolved |
+| A06 | 源码 metrics.py（分层组分 / S_bn / v_up / 质量与一阶矩审计） | worktree_path_probe | unresolved |
+| A07 | 源码 analysis.py::evaluate_criteria（6 条验收判据机器判定） | worktree_path_probe | unresolved |
+| A08 | 源码 transfer.py（二维切片 → 三维舱段 → ΔVCG/ΔTCG/ΔGM 闭式映射） | worktree_path_probe | unresolved |
+| A09 | 运行载体 scripts/run_segregation_campaign.py（进程池，一案例一进程） | worktree_path_probe | unresolved |
+| A10 | 逐案例运行记录目录 .scratch/pilot_out（13 个 JSON 记录） | worktree_path_probe | unresolved |
+| A11 | 重建用算例规格 runs/segregation/pilot_specs.json | worktree_path_probe | unresolved |
+| A17 | 图 segregation_vs_ratio.png（S_bn vs d_l/d_s + 等径负对照 ±0.02 带） | platform_figures_field+worktree_path_probe | present |
+| A18 | 图 rise_velocity_scaling.png（上升速度 vs 粒径比超额 + 幂律拟合 + 文献斜率 p=1） | platform_figures_field+worktree_path_probe | present |
+| A19 | 图 segregation_vs_gamma.png（S_bn vs 驱动 Γ + 拟合 Γ_c + 文献锚 Γ_c=1.2） | platform_figures_field+worktree_path_probe | present |
+| A20 | 图 stability_impact.png（货重矩 → 稳性闭式映射，ΔVCG/ΔTCG/两个 ΔGM 界） | platform_figures_field+worktree_path_probe | present |
+
+### 4.4 图
+
+![asset_registry_composition](asset_registry_composition.png)
+
+*本工序无物理场量：01 工序只登记资产、不做计算，故无云图/无解析解对比曲线。此处给出的是**登记台账自身的构成图**（按资产类别分组的解析状态堆叠条形图），数据源=asset_manifest.json 的 counts，matplotlib 由脚本生成，零手抄。*
+
+## ⑤ 证据定位表（asset → 源原文，逐字）
+
+| asset_id | 源章节 | 解析 | 源原文（前 160 字符，逐字） |
+|---|---|---|---|
+| A01 | # TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据） | resolved_in_source | # TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据） |
+| A02 | # TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据） | resolved_in_source | # TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据） |
+| A03 | # TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据） | resolved_in_source | > 本文件由 `segregation_validation_report.py` 从 `.scratch/pilot_out` 中的 13 个逐案例 JSON 记录**程序化生成**，报告中的每个数字都可回溯到记录文件；脚本内不存在合成数据分支。 |
+| A04 | ## 1. 案例介绍（物理背景与参数） | resolved_in_source | \| 参数 \| 取值 \| / \|---\|---\| / \| 颗粒数/例 \| 1200 \| / \| 粒径比 $d_l/d_s$ \| 1, 1.5, 2, 3, 4 \| / \| 驱动 $\Gamma=A\omega^2/g$ \| 0.5, 1, 1.5, 2, 2.5, 3 \| / \| 频率 (Hz) \| 60 \| / \| 大颗粒体积分数 \| 0.3… |
+| A05 | ## 2. 方法 | referenced_unresolved | 1. `src/tensordem/segregation/campaign.py` 以随机顺序吸附（RSA）生成二元松散床，重力沉积后用运动学振动底板驱动（`vibration_base_z/vel`）。 |
+| A06 | ## 2. 方法 | referenced_unresolved | 2. `metrics.py` 从粒子位置直接计算分层组分与偏析指数 $S_{bn}=(\phi_{top}-\phi_{nominal})/\phi_{nominal}$、大颗粒上升速度 $v_{up}$（对平均高度的线性拟合斜率），并做质量/一阶矩审计。 |
+| A07 | ## 2. 方法 | referenced_unresolved | 3. `analysis.py::evaluate_criteria` 对记录集合机器判定 6 条验收判据（a 等径负对照、b 单调性+上升速度标度指数、c 质量守恒、d 驱动阈值$\Gamma_c$、e 传递映射与分片之和一致性、f 三种子重复性）。b 判据在**同一驱动位形**下比较（记录字段 `drive_gam… |
+| A08 | ## 2. 方法 | referenced_unresolved | 4. `transfer.py` 把二维切片分布挤成三维舱段分布，闭式映射到 $\Delta$VCG/$\Delta$TCG/$\Delta$GM（含颗粒休止角衰减的自由液面项）。 |
+| A09 | ## 2. 方法 | referenced_unresolved | 5. 运行载体：`scripts/run_segregation_campaign.py`（进程池，一案例一进程），集群 loong64 节点执行；本报告脚本只读取其 JSON 产物。 |
+| A10 | ## 1. 案例介绍（物理背景与参数） | referenced_unresolved | \| 记录目录 \| `.scratch/pilot_out` \| |
+| A11 | ## 附：可复现命令 | referenced_unresolved |     --spec runs/segregation/pilot_specs.json \ |
+| A12 | ## 3. 计算结果 | resolved_in_source | \| $d_l/d_s$ \| mean $S_{bn}$ \| mean $v_{up}$ (m/s) \| cases \| / \|---\|---\|---\|---\| / \| 1.5 \| 0.04875 \| -0.002126 \| 1 \| / \| 2 \| -0.1016 \| -0.001092 \| 2 \| / \| 3 \| -0.101 \| -… |
+| A13 | ## 3. 计算结果 | resolved_in_source | \| 判据 \| 实测 \| 限值 \| 结论 \| / \|---\|---\|---\|---\| / \| (a) 等径负对照 max$\|S_{bn}\|$ \| 0.06165 \| ≤ 0.02 \| FAIL \| / \| (b) 单调性 + 指数 $p$ \| False, p=-0.288 \| p=1.0 ±30% \| FAIL \| / \| (c) 质… |
+| A14 | ## 3. 计算结果 | resolved_in_source | **方向性发现**：驱动扫描内 $S_{bn}$ 全为负（大颗粒在上层贫化），且粒径族内大颗粒平均高度单调下降（v_up = -0.00213, -0.00109, -0.00112, -0.00123 m/s），即本批位形落在**反向巴西坚果（reverse Brazil-nut）**区间，而不是验收判据 (b)/(… |
+| A15 | ## 3. 计算结果 | resolved_in_source | 传递映射（最偏析案例 `demo_ratio_R4.0_s0`）：ΔVCG = 1.76e-05 m，ΔTCG = 0 m，ΔGM（液面界）= -5.54e-11 m，ΔGM（休止角界）= -5.54e-11 m。 |
+| A16 | ## 3. 计算结果 | resolved_in_source | 底面载荷和审计（全部振动案例的最大相对误差）= 0.678：该量是 DEM 底板法向载荷与挤成三维舱段后重力的对比，属于**未收敛项**（见第 6 节），不参与判据 (e) 的通过条件。 |
+| A17 | ## 4. 结果图 | referenced_unresolved | ![segregation_vs_ratio](artifacts/segregation_figures/segregation_vs_ratio.png) /  / *Measured S_bn vs d_l/d_s at the common drive level, with the equal-size negati… |
+| A18 | ## 4. 结果图 | referenced_unresolved | ![rise_velocity_scaling](artifacts/segregation_figures/rise_velocity_scaling.png) /  / *Measured Brazil-nut rise velocity vs diameter-ratio excess with the fitted p… |
+| A19 | ## 4. 结果图 | referenced_unresolved | ![segregation_vs_gamma](artifacts/segregation_figures/segregation_vs_gamma.png) /  / *Measured S_bn vs drive Γ with the fitted onset Γ_c and the literature anchor Γ… |
+| A20 | ## 4. 结果图 | referenced_unresolved | ![stability_impact](artifacts/segregation_figures/stability_impact.png) /  / *Closed-form cargo-moment → stability mapping for the most segregated measured case (de… |
+| A21 | ### 4b. 颗粒数 / 时间窗敏感性（真实运行，独立于主表） | resolved_in_source | \| 集合 \| 案例 \| N \| run_time (s) \| $S_{bn}$ \| $S_{fine}$ \| $v_{up}$ (m/s) \| / \|---\|---\|---\|---\|---\|---\|---\| / \| tw_out \| tw_R1.0_s0 \| 600 \| 0.6 \| 0.07963 \| -0.03413 \| -… |
+| A22 | ### 4b. 颗粒数 / 时间窗敏感性（真实运行，独立于主表） | resolved_in_source | 敏感性说明：同一驱动位形下改变颗粒数与时间窗，$S_{bn}$ 的符号并不稳定，大颗粒平均高度漂移的拟合 $R^2$ 普遍很低 —— 即在当前二维切片位形下，偏析信号的可分辨性受统计噪声主导，任何“指数/阈值”结论都不可靠。 |
+| A23 | ## 5. 注意点（局限与适用范围） | resolved_in_source | - **二维切片**：床体是准二维圆盘（`bed2d.py`），壁面摩擦强于三维，绝对偏析指数会系统性偏移；本报告的标度指数与阈值只在该二维位形内成立。 / - **时间尺度**：驱动时长 0.1 s（物理时间），远短于文献稳态实验，$S_{bn}$ 是**未饱和**的早期值，只能作为趋势与标度验证，不能作为饱和偏析率引用… |
+| A24 | ## 6. 误差判定（对基准逐项） | resolved_in_source | \| 关键量 \| 实测 \| 基准 \| 相对偏差 \| 是否 < 3% \| / \|---\|---\|---\|---\|---\| / \| 上升速度标度指数 $p$ \| -0.2882 \| 1.0（Savage & Lun 1988; Fan & Hill 2011 首阶） \| 1.29 \| 否 \| / \| 驱动阈值 $\Gamma_c$ \| … |
+| A25 | ## 6. 误差判定（对基准逐项） | resolved_in_source | **总判定**：6 条判据中 3 条通过；整体 all_pass = **False**（honest verdict，未通过项如实列出）。 |
+| A26 | ## 附：可复现命令 | resolved_in_source | ```bash / PYTHONPATH=src python scripts/run_segregation_campaign.py \ /     --spec runs/segregation/pilot_specs.json \ /     --out .scratch/pilot_out --jobs 13 /  / # 敏感性… |
+| A27 | ## 6. 误差判定（对基准逐项） | resolved_in_source | **结论**：质量守恒与传递映射是闭式/审计量，误差在机器精度（<3%）；但两个物理标度量（$p$、$\Gamma_c$）的偏差**超出 3%**，本报告不宣称它们达到 3% 精度，只按验收判据的 ±30% 带宽判定。物理原因：二维位形 + 短时窗 + 有限案例数，不足以复现三维长时实验的指数与阈值。 |
+
+数值锚点逐字复核（A15 / A16，未做任何换算）：
+
+```text
+传递映射（最偏析案例 `demo_ratio_R4.0_s0`）：ΔVCG = 1.76e-05 m，ΔTCG = 0 m，ΔGM（液面界）= -5.54e-11 m，ΔGM（休止角界）= -5.54e-11 m。
+底面载荷和审计（全部振动案例的最大相对误差）= 0.678：该量是 DEM 底板法向载荷与挤成三维舱段后重力的对比，属于**未收敛项**（见第 6 节），不参与判据 (e) 的通过条件。
+```
+
+源报告主结果表与判据表（A12 / A13 逐字切片，仅登记不复核）：
+
+```text
+| $d_l/d_s$ | mean $S_{bn}$ | mean $v_{up}$ (m/s) | cases |
+|---|---|---|---|
+| 1.5 | 0.04875 | -0.002126 | 1 |
+| 2 | -0.1016 | -0.001092 | 2 |
+| 3 | -0.101 | -0.001121 | 1 |
+| 4 | -0.3411 | -0.001227 | 1 |
+
+| 判据 | 实测 | 限值 | 结论 |
+|---|---|---|---|
+| (a) 等径负对照 max$|S_{bn}|$ | 0.06165 | ≤ 0.02 | FAIL |
+| (b) 单调性 + 指数 $p$ | False, p=-0.288 | p=1.0 ±30% | FAIL |
+| (c) 质量守恒 max rel | 1.68e-13 | ≤ 1e-9 | PASS |
+| (d) 驱动阈值 $\Gamma_c$ | n/a（拟合不可辨识） | 1.2 ±30% | FAIL |
+| (d) 饱和值 $S_{sat}$ | n/a（拟合不可辨识） | — | — |
+| (e) 分片一致性 max rel | 1.27e-16 | ≤ 1e-6 | PASS |
+| (f) 种子变异系数 max CV | 0 | ≤ 0.15 | PASS |
+```
+
+## ⑥ 注意点与局限
+
+1. **跨仓不可解析**：11 个资产是 TensorDEM 仓或运行时目录（`.scratch/pilot_out`、`runs/segregation/pilot_specs.json`、5 个源码文件、4 张 PNG），本工作树（TensorKnowledge）内不存在。登记为 `referenced_unresolved` 并保留探测结果，**没有**伪造路径/URL/DOI。
+2. **图的身份已核，二进制未核**：4 张图的名字在平台 `figures` 字段命中、caption 逐字出现在 markdown 中（`caption_in_source=True`），但 PNG 字节不在本工作树，故`binary_in_worktree=False`——登记的是「引用可定位」，不是「图件已审阅」。
+3. **上游未收敛项原样保留**：底面载荷和 0.678 是报告自述的未收敛量；本包不改写、不重算，也不把它当通过项。
+4. **本包不评价数值正确性**：S_bn、p=-0.288、Γ_c、ΔVCG 等数字的物理可信度属下游复核工序；本包只保证「每个数字能在原文逐字定位」。
+5. **时点性声明**：源报告第 5 节提到「扩样作业仍在排队」。这是生成时点的状态，随时会过期；登记为快照事实，不当作现状。
+6. **psql 通道不可用**：本机 `psql -d tensorplatform` 对该表 `permission denied`，唯一取源通道是平台 API（已在 selfcheck 中记录 `source_read_via`）。
+
+## ⑦ 误差判定（对基准逐项）
+
+本工序是**登记工序**，不含数值计算，因此不存在「本工序结果 vs 基准」的误差项：**没有可比基准，故不声明 <3%**（如实说明原因，不含糊）。可机器判定的只有登记一致性，逐项为：
+
+| 判据 | 实测 | 基准/契约 | 偏差 | <3%? |
+|---|---|---|---|---|
+| markdown sha256 | `7a5ad01426079811…` | 契约 `source_hash` | 0（逐字节相等） | 是（精确相等） |
+| handoff 字符数 | 6118 | 契约 chars=6118 | 0 | 是（精确相等） |
+| 未解析资产被误标为 resolved | 0 | 0 | 0 | 是 |
+| 重复 asset_id | 0 | 0 | 0 | 是 |
+| 非唯一 quote | [] | [] | — | 是 |
+
+源报告自身的误差判定（上游结论，逐字引用 A24，本包不复核）：
+
+```text
+| 关键量 | 实测 | 基准 | 相对偏差 | 是否 < 3% |
+|---|---|---|---|---|
+| 上升速度标度指数 $p$ | -0.2882 | 1.0（Savage & Lun 1988; Fan & Hill 2011 首阶） | 1.29 | 否 |
+| 驱动阈值 $\Gamma_c$ | n/a（拟合不可辨识） | 1.2（振动流化起始，文献散布 1.0–1.5） | n/a（不可辨识） | 否（拟合不可辨识，不能判 3%） |
+| 等径负对照 max$|S_{fine}|$ | 0.0617 | 0（解析：无尺寸差异则无偏析） | 0.0617 | 否（判据带宽 ≤0.02，统计噪声随 $N$ 下降） |
+| 质量守恒 | 1.68e-13 | 0 | 1.68e-13 | 是（机器精度级） |
+| 传递映射分片和 | 1.27e-16 | 0 | 1.27e-16 | 是（≤1e-6） |
+| 底面载荷和 | 0.678 | 0 | 0.678 | 否 |
+```
+
+源报告的总体判据结论（A25，逐字）：
+
+```text
+**总判定**：6 条判据中 3 条通过；整体 all_pass = **False**（honest verdict，未通过项如实列出）。
+```
+
+## ⑧ 自检：逐条对照 acceptance
+
+| acceptance 项 | 结果 | 依据（selfcheck.json） |
+|---|---|---|
+| valid_json | ✅ pass | "kf_result.wp-10400-01.json and asset_manifest.json both parse via json.loads" |
+| schema_pass | ✅ pass | {"envelope": true, "envelope_error": null, "manifest": true, "manifest_error": null, "envelope_schema": "schemas/kf_result.v1.schema.json (used unmodified)", "manifest_schema": "sc |
+| source_locator_resolvable | ✅ pass | {"assets_checked": 27, "failures": [], "resolved_in_source": 16, "referenced_unresolved": 11, "method": "every quote must occur exactly once in the live source markdown; char spans |
+| source_hash_matches | ✅ pass | {"live_sha256": "sha256:7a5ad01426079811a40edd7d8a95f7f09e1119e8a78ecfc44782d3b85920ab54", "contract": "sha256:7a5ad01426079811a40edd7d8a95f7f09e1119e8a78ecfc44782d3b85920ab54", "e |
+| no_duplicate_ids | ✅ pass | {"asset_ids": 27, "unique_asset_ids": 27, "claim_ids": 0} |
+| all_claims_have_evidence_or_explicit_unresolved_status | ✅ pass | {"claims": 0, "violations": [], "mode": "claims=[] is a legal complete result for this package (objective.classify_report_type=false; no extraction); the empty array is declared in |
+
+附：契约约束与附加检查（同一脚本）：`do_not_mark_claims_as_verified`=✅；`no_forced_claim_generation`=✅；`do_not_invent_missing_information`=✅；`preserve_uncertainty`=✅；`durable_mirror_identical`=✅；`delivered_body_single_json_block_matches_envelope`=✅。
+
+`all_checks_pass` = **True**。
+
+## repro_cmd（一键复跑）
+
+```bash
+# 在仓库根（TensorKnowledge worktree）执行；凭据只从环境变量读，不落盘
+python3 scripts/kf/build_asset_manifest_wp10400_01.py \
+ && python3 scripts/kf/validate_wp10400_01.py \
+ && python3 scripts/kf/render_and_publish_wp10400_01.py --no-publish
+
+# 单行等价（含活取源 + 哈希闸门 + 全部 acceptance 重算）
+python3 scripts/kf/build_asset_manifest_wp10400_01.py && python3 scripts/kf/validate_wp10400_01.py
+
+# 离线复核（用 runs/ 快照，哈希闸门仍然生效）
+python3 scripts/kf/build_asset_manifest_wp10400_01.py --offline \
+ && python3 scripts/kf/validate_wp10400_01.py --offline
+```
+
+## 结果信封（kf_result.v1）
+
+```json
+{
+  "package_id": "wp-10400-01",
+  "task_type": "01-asset-registration",
+  "report_id": "10400",
+  "provenance": {
+    "source_uri": "tensor://reports/10400",
+    "source_field": "markdown",
+    "source_hash": "sha256:7a5ad01426079811a40edd7d8a95f7f09e1119e8a78ecfc44782d3b85920ab54",
+    "source_chars": 6118,
+    "source_bytes_utf8": 9613,
+    "source_title": "TensorDEM 二元颗粒床尺寸偏析验证（真实运行数据）",
+    "scenario_key": "P70-N03_segregation_dynamics",
+    "contract_version": "1.0",
+    "lane": "C",
+    "work_package": "wp-10400-01",
+    "generator": "scripts/kf/build_asset_manifest_wp10400_01.py",
+    "verifier": "scripts/kf/validate_wp10400_01.py",
+    "verification_status": "not_verified",
+    "verification_note": "verification is computed by the platform gate; this package asserts nothing about claim truth",
+    "artifact_sha256": "7f928fbe5273c273eeb1cb627a1f46b83b56b218807c0f9a4c6ca8cd2160efd5"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-10400-01",
+      "task_type": "01-asset-registration",
+      "report_id": "10400",
+      "source": {
+        "uri": "tensor://reports/10400",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "7a5ad01426079811a40edd7d8a95f7f09e1119e8a78ecfc44782d3b85920ab54",
+        "chars": 6118,
+        "bytes_utf8": 9613,
+        "title": "TensorDEM 二元颗粒床尺寸偏析验证（真实运行数据）",
+        "scenario_key": "P70-N03_segregation_dynamics",
+        "platform_id": 10400,
+        "platform_mission_id": 8807,
+        "platform_status": "published",
+        "platform_figures": [
+          {
+            "name": "segregation_vs_ratio",
+            "caption": "Measured S_bn vs d_l/d_s at the common drive level, with the equal-size negative control and its ±0.02 band."
+          },
+          {
+            "name": "rise_velocity_scaling",
+            "caption": "Measured Brazil-nut rise velocity vs diameter-ratio excess with the fitted power law and the literature slope p=1."
+          },
+          {
+            "name": "segregation_vs_gamma",
+            "caption": "Measured S_bn vs drive Γ with the fitted onset Γ_c and the literature anchor Γ_c = 1.2."
+          },
+          {
+            "name": "stability_impact",
+            "caption": "Closed-form cargo-moment → stability mapping for the most segregated measured case (demo_ratio_R4.0_s0, S_bn=-0.341): ΔVCG, ΔTCG and both ΔGM bounds (liquid / repose-limited)."
+          }
+        ],
+        "platform_tags": [
+          "DEM",
+          "segregation",
+          "granular",
+          "validation",
+          "stability",
+          "real-data"
+        ],
+        "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/10400",
+        "local_copy": "runs/wp-10400-01/report_10400.md"
+      },
+      "counts": {
+        "assets": 27,
+        "by_class": {
+          "document": 1,
+          "heading": 1,
+          "provenance_statement": 1,
+          "table": 5,
+          "code_reference": 5,
+          "dataset_reference": 2,
+          "finding_statement": 3,
+          "numeric_anchor": 2,
+          "figure": 4,
+          "limitation_set": 1,
+          "verdict": 1,
+          "repro_script": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 16,
+          "referenced_unresolved": 11
+        },
+        "resolved_in_source": 16,
+        "referenced_unresolved": 11,
+        "declared_absent": 0
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "document",
+          "label": "报告正文（markdown 全文，6118 字符）",
+          "in_report_section": "# TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据）",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 6118,
+            "start_line": 0,
+            "end_line": 137,
+            "quote": "# TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据）",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "整篇 markdown 即源资产本体；sha256/字符数见 source 段。段落定位以本资产的字符域为界。"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "heading",
+          "label": "报告标题行",
+          "in_report_section": "# TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 0,
+            "end_char": 33,
+            "start_line": 0,
+            "end_line": 0,
+            "quote": "# TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据）",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "标题行原文；与平台 title 字段一致（由 provenance 脚本逐字比对，非人工转录）。"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "provenance_statement",
+          "label": "程序化生成声明（13 个逐案例 JSON 记录 → 本报告）",
+          "in_report_section": "# TensorDEM 二元颗粒床尺寸偏析验证报告（真实运行数据）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 35,
+            "end_char": 159,
+            "start_line": 2,
+            "end_line": 2,
+            "quote": "> 本文件由 `segregation_validation_report.py` 从 `.scratch/pilot_out` 中的 13 个逐案例 JSON 记录**程序化生成**，报告中的每个数字都可回溯到记录文件；脚本内不存在合成数据分支。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "报告自述零合成数据分支、每个数字可回溯到记录文件；本工序只登记声明，不复核生成链（不越界）。"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "table",
+          "label": "案例参数表（颗粒数/粒径比/驱动/接触模型等 9 行）",
+          "in_report_section": "## 1. 案例介绍（物理背景与参数）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 313,
+            "end_char": 614,
+            "start_line": 8,
+            "end_line": 18,
+            "quote": "| 参数 | 取值 |\n|---|---|\n| 颗粒数/例 | 1200 |\n| 粒径比 $d_l/d_s$ | 1, 1.5, 2, 3, 4 |\n| 驱动 $\\Gamma=A\\omega^2/g$ | 0.5, 1, 1.5, 2, 2.5, 3 |\n| 频率 (Hz) | 60 |\n| 大颗粒体积分数 | 0.3 |\n| 接触模型 | 线性弹簧-阻尼 + 库仑摩擦 + 滚动阻力（$k_n$=1.2e4 N/m, ζ=0.3, μ=0.4） |\n| 时间步 (s) | 1.5e-05 |\n| 重力 (m/s²) | 9.81 |\n| 记录目录 | `.scratch/pilot_out` |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "表头+分隔行+9 行数据；数值仅登记不换算、不复核。"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "code_reference",
+          "label": "源码 src/tensordem/segregation/campaign.py（RSA 布床 + 振动底板驱动）",
+          "in_report_section": "## 2. 方法",
+          "locator": {
+            "method": "char_span",
+            "start_char": 626,
+            "end_char": 729,
+            "start_line": 22,
+            "end_line": 22,
+            "quote": "1. `src/tensordem/segregation/campaign.py` 以随机顺序吸附（RSA）生成二元松散床，重力沉积后用运动学振动底板驱动（`vibration_base_z/vel`）。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_probe",
+            "result": "unresolved",
+            "candidate_paths": [
+              "src/tensordem/segregation/campaign.py",
+              "tensordem/segregation/campaign.py"
+            ],
+            "addresses_found": [],
+            "detail": "probe = os.path.exists on the declared relative paths inside this worktree only (no network, no cross-repo guess)"
+          },
+          "note": "TensorDEM 仓路径；本工作树是 TensorKnowledge，无法解析，属跨仓引用。"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "code_reference",
+          "label": "源码 metrics.py（分层组分 / S_bn / v_up / 质量与一阶矩审计）",
+          "in_report_section": "## 2. 方法",
+          "locator": {
+            "method": "char_span",
+            "start_char": 730,
+            "end_char": 859,
+            "start_line": 23,
+            "end_line": 23,
+            "quote": "2. `metrics.py` 从粒子位置直接计算分层组分与偏析指数 $S_{bn}=(\\phi_{top}-\\phi_{nominal})/\\phi_{nominal}$、大颗粒上升速度 $v_{up}$（对平均高度的线性拟合斜率），并做质量/一阶矩审计。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_probe",
+            "result": "unresolved",
+            "candidate_paths": [
+              "src/tensordem/segregation/metrics.py",
+              "tensordem/segregation/metrics.py"
+            ],
+            "addresses_found": [],
+            "detail": "probe = os.path.exists on the declared relative paths inside this worktree only (no network, no cross-repo guess)"
+          },
+          "note": "TensorDEM 仓路径（报告仅给文件名，未给完整路径），本工作树内不可解析。"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "code_reference",
+          "label": "源码 analysis.py::evaluate_criteria（6 条验收判据机器判定）",
+          "in_report_section": "## 2. 方法",
+          "locator": {
+            "method": "char_span",
+            "start_char": 860,
+            "end_char": 1039,
+            "start_line": 24,
+            "end_line": 24,
+            "quote": "3. `analysis.py::evaluate_criteria` 对记录集合机器判定 6 条验收判据（a 等径负对照、b 单调性+上升速度标度指数、c 质量守恒、d 驱动阈值$\\Gamma_c$、e 传递映射与分片之和一致性、f 三种子重复性）。b 判据在**同一驱动位形**下比较（记录字段 `drive_gamma`），避免把驱动扫描点混入粒径族。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_probe",
+            "result": "unresolved",
+            "candidate_paths": [
+              "src/tensordem/segregation/analysis.py",
+              "tensordem/segregation/analysis.py"
+            ],
+            "addresses_found": [],
+            "detail": "probe = os.path.exists on the declared relative paths inside this worktree only (no network, no cross-repo guess)"
+          },
+          "note": "判据实现体；本工序只登记引用，不评判判据口径（判据正确性属下游复核工序）。"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "code_reference",
+          "label": "源码 transfer.py（二维切片 → 三维舱段 → ΔVCG/ΔTCG/ΔGM 闭式映射）",
+          "in_report_section": "## 2. 方法",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1040,
+            "end_char": 1130,
+            "start_line": 25,
+            "end_line": 25,
+            "quote": "4. `transfer.py` 把二维切片分布挤成三维舱段分布，闭式映射到 $\\Delta$VCG/$\\Delta$TCG/$\\Delta$GM（含颗粒休止角衰减的自由液面项）。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_probe",
+            "result": "unresolved",
+            "candidate_paths": [
+              "src/tensordem/segregation/transfer.py",
+              "tensordem/segregation/transfer.py"
+            ],
+            "addresses_found": [],
+            "detail": "probe = os.path.exists on the declared relative paths inside this worktree only (no network, no cross-repo guess)"
+          },
+          "note": "稳性传递映射实现；本工作树内不可解析。"
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "code_reference",
+          "label": "运行载体 scripts/run_segregation_campaign.py（进程池，一案例一进程）",
+          "in_report_section": "## 2. 方法",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1131,
+            "end_char": 1223,
+            "start_line": 26,
+            "end_line": 26,
+            "quote": "5. 运行载体：`scripts/run_segregation_campaign.py`（进程池，一案例一进程），集群 loong64 节点执行；本报告脚本只读取其 JSON 产物。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_probe",
+            "result": "unresolved",
+            "candidate_paths": [
+              "scripts/run_segregation_campaign.py"
+            ],
+            "addresses_found": [],
+            "detail": "probe = os.path.exists on the declared relative paths inside this worktree only (no network, no cross-repo guess)"
+          },
+          "note": "TensorDEM 仓运行入口；本工序不执行它（登记不等于复跑）。"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "dataset_reference",
+          "label": "逐案例运行记录目录 .scratch/pilot_out（13 个 JSON 记录）",
+          "in_report_section": "## 1. 案例介绍（物理背景与参数）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 583,
+            "end_char": 614,
+            "start_line": 18,
+            "end_line": 18,
+            "quote": "| 记录目录 | `.scratch/pilot_out` |",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_probe",
+            "result": "unresolved",
+            "candidate_paths": [
+              ".scratch/pilot_out"
+            ],
+            "addresses_found": [],
+            "detail": "probe = os.path.exists on the declared relative paths inside this worktree only (no network, no cross-repo guess)"
+          },
+          "note": "运行时目录，报告第「附」节明示不随仓提交；本工作树内不存在，故全部数值的原始记录在本侧不可解析（保留为未解析，不臆造内容）。"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "dataset_reference",
+          "label": "重建用算例规格 runs/segregation/pilot_specs.json",
+          "in_report_section": "## 附：可复现命令",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5202,
+            "end_char": 5248,
+            "start_line": 114,
+            "end_line": 114,
+            "quote": "    --spec runs/segregation/pilot_specs.json \\",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "worktree_path_probe",
+            "result": "unresolved",
+            "candidate_paths": [
+              "runs/segregation/pilot_specs.json"
+            ],
+            "addresses_found": [],
+            "detail": "probe = os.path.exists on the declared relative paths inside this worktree only (no network, no cross-repo guess)"
+          },
+          "note": "报告称规格文件随仓提交并可据此重建全部数字；本工作树（TensorKnowledge）内无此路径，跨仓不可解析。"
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "table",
+          "label": "主结果表：粒径比 → mean S_bn / mean v_up / cases（4 行）",
+          "in_report_section": "## 3. 计算结果",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1237,
+            "end_char": 1443,
+            "start_line": 30,
+            "end_line": 35,
+            "quote": "| $d_l/d_s$ | mean $S_{bn}$ | mean $v_{up}$ (m/s) | cases |\n|---|---|---|---|\n| 1.5 | 0.04875 | -0.002126 | 1 |\n| 2 | -0.1016 | -0.001092 | 2 |\n| 3 | -0.101 | -0.001121 | 1 |\n| 4 | -0.3411 | -0.001227 | 1 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "表头+分隔行+4 行数据；数字逐字登记，本工序不做算术复核，也不重算 S_bn。"
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "table",
+          "label": "6 条验收判据判定表（a–f，7 行，含 sat 行）",
+          "in_report_section": "## 3. 计算结果",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1445,
+            "end_char": 1836,
+            "start_line": 37,
+            "end_line": 45,
+            "quote": "| 判据 | 实测 | 限值 | 结论 |\n|---|---|---|---|\n| (a) 等径负对照 max$|S_{bn}|$ | 0.06165 | ≤ 0.02 | FAIL |\n| (b) 单调性 + 指数 $p$ | False, p=-0.288 | p=1.0 ±30% | FAIL |\n| (c) 质量守恒 max rel | 1.68e-13 | ≤ 1e-9 | PASS |\n| (d) 驱动阈值 $\\Gamma_c$ | n/a（拟合不可辨识） | 1.2 ±30% | FAIL |\n| (d) 饱和值 $S_{sat}$ | n/a（拟合不可辨识） | — | — |\n| (e) 分片一致性 max rel | 1.27e-16 | ≤ 1e-6 | PASS |\n| (f) 种子变异系数 max CV | 0 | ≤ 0.15 | PASS |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "7 行中 3 PASS / 3 FAIL / 1 无判定（—）；上游 honest-FAIL，本工序原样登记不改写。"
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "finding_statement",
+          "label": "方向性发现：反向巴西坚果（reverse Brazil-nut）区间",
+          "in_report_section": "## 3. 计算结果",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1838,
+            "end_char": 2078,
+            "start_line": 47,
+            "end_line": 47,
+            "quote": "**方向性发现**：驱动扫描内 $S_{bn}$ 全为负（大颗粒在上层贫化），且粒径族内大颗粒平均高度单调下降（v_up = -0.00213, -0.00109, -0.00112, -0.00123 m/s），即本批位形落在**反向巴西坚果（reverse Brazil-nut）**区间，而不是验收判据 (b)/(d) 假定的“大颗粒上浮”区间。因此判据 (b) 的指数 $p$（对 $|v_up|$ 拟合）与 (d) 的阈值都失去物理意义，本报告不把它们当作标度验证结论。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "报告据此声明判据 (b)/(d) 失去物理意义；属上游解释性结论，本工序不改标 verified。"
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "numeric_anchor",
+          "label": "传递映射数值（ΔVCG / ΔTCG / 两个 ΔGM，最偏析案例 demo_ratio_R4.0_s0）",
+          "in_report_section": "## 3. 计算结果",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2080,
+            "end_char": 2187,
+            "start_line": 49,
+            "end_line": 49,
+            "quote": "传递映射（最偏析案例 `demo_ratio_R4.0_s0`）：ΔVCG = 1.76e-05 m，ΔTCG = 0 m，ΔGM（液面界）= -5.54e-11 m，ΔGM（休止角界）= -5.54e-11 m。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "单行数值锚点：ΔVCG=1.76e-05 m、ΔTCG=0、ΔGM=-5.54e-11 m（两个界），逐字登记。"
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "numeric_anchor",
+          "label": "底面载荷和审计最大相对误差 0.678（未收敛项）",
+          "in_report_section": "## 3. 计算结果",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2189,
+            "end_char": 2282,
+            "start_line": 51,
+            "end_line": 51,
+            "quote": "底面载荷和审计（全部振动案例的最大相对误差）= 0.678：该量是 DEM 底板法向载荷与挤成三维舱段后重力的对比，属于**未收敛项**（见第 6 节），不参与判据 (e) 的通过条件。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "报告自承未收敛、不参与判据 (e)；登记为「已知缺陷量」而非通过项。"
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "figure",
+          "label": "图 segregation_vs_ratio.png（S_bn vs d_l/d_s + 等径负对照 ±0.02 带）",
+          "in_report_section": "## 4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2295,
+            "end_char": 2486,
+            "start_line": 55,
+            "end_line": 57,
+            "quote": "![segregation_vs_ratio](artifacts/segregation_figures/segregation_vs_ratio.png)\n\n*Measured S_bn vs d_l/d_s at the common drive level, with the equal-size negative control and its ±0.02 band.*",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform_figures_field+worktree_path_probe",
+            "result": "present",
+            "platform_figure_name": "segregation_vs_ratio",
+            "platform_caption": "Measured S_bn vs d_l/d_s at the common drive level, with the equal-size negative control and its ±0.02 band.",
+            "caption_in_source": true,
+            "binary_in_worktree": false,
+            "candidate_paths": [
+              "artifacts/segregation_figures/segregation_vs_ratio.png"
+            ],
+            "detail": "figure identity resolved via platform figures metadata and the verbatim caption present in the markdown; the PNG binary itself lives in the TensorDEM repo and is absent from this worktree"
+          },
+          "note": "图引用+英文图注在源内可定位；PNG 二进制属 TensorDEM 仓 artifacts/，本工作树内不存在。平台 figures 字段含同名条目（见 resolution_check）。"
+        },
+        {
+          "asset_id": "A18",
+          "asset_class": "figure",
+          "label": "图 rise_velocity_scaling.png（上升速度 vs 粒径比超额 + 幂律拟合 + 文献斜率 p=1）",
+          "in_report_section": "## 4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2488,
+            "end_char": 2687,
+            "start_line": 59,
+            "end_line": 61,
+            "quote": "![rise_velocity_scaling](artifacts/segregation_figures/rise_velocity_scaling.png)\n\n*Measured Brazil-nut rise velocity vs diameter-ratio excess with the fitted power law and the literature slope p=1.*",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform_figures_field+worktree_path_probe",
+            "result": "present",
+            "platform_figure_name": "rise_velocity_scaling",
+            "platform_caption": "Measured Brazil-nut rise velocity vs diameter-ratio excess with the fitted power law and the literature slope p=1.",
+            "caption_in_source": true,
+            "binary_in_worktree": false,
+            "candidate_paths": [
+              "artifacts/segregation_figures/rise_velocity_scaling.png"
+            ],
+            "detail": "figure identity resolved via platform figures metadata and the verbatim caption present in the markdown; the PNG binary itself lives in the TensorDEM repo and is absent from this worktree"
+          },
+          "note": "图引用+图注在源内可定位；PNG 二进制本工作树内不存在。"
+        },
+        {
+          "asset_id": "A19",
+          "asset_class": "figure",
+          "label": "图 segregation_vs_gamma.png（S_bn vs 驱动 Γ + 拟合 Γ_c + 文献锚 Γ_c=1.2）",
+          "in_report_section": "## 4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2689,
+            "end_char": 2859,
+            "start_line": 63,
+            "end_line": 65,
+            "quote": "![segregation_vs_gamma](artifacts/segregation_figures/segregation_vs_gamma.png)\n\n*Measured S_bn vs drive Γ with the fitted onset Γ_c and the literature anchor Γ_c = 1.2.*",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform_figures_field+worktree_path_probe",
+            "result": "present",
+            "platform_figure_name": "segregation_vs_gamma",
+            "platform_caption": "Measured S_bn vs drive Γ with the fitted onset Γ_c and the literature anchor Γ_c = 1.2.",
+            "caption_in_source": true,
+            "binary_in_worktree": false,
+            "candidate_paths": [
+              "artifacts/segregation_figures/segregation_vs_gamma.png"
+            ],
+            "detail": "figure identity resolved via platform figures metadata and the verbatim caption present in the markdown; the PNG binary itself lives in the TensorDEM repo and is absent from this worktree"
+          },
+          "note": "图引用+图注在源内可定位；PNG 二进制本工作树内不存在（报告判据 (d) 自述拟合不可辨识，图内拟合线不构成阈值证据）。"
+        },
+        {
+          "asset_id": "A20",
+          "asset_class": "figure",
+          "label": "图 stability_impact.png（货重矩 → 稳性闭式映射，ΔVCG/ΔTCG/两个 ΔGM 界）",
+          "in_report_section": "## 4. 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2861,
+            "end_char": 3111,
+            "start_line": 67,
+            "end_line": 69,
+            "quote": "![stability_impact](artifacts/segregation_figures/stability_impact.png)\n\n*Closed-form cargo-moment → stability mapping for the most segregated measured case (demo_ratio_R4.0_s0, S_bn=-0.341): ΔVCG, ΔTCG and both ΔGM bounds (liquid / repose-limited).*",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform_figures_field+worktree_path_probe",
+            "result": "present",
+            "platform_figure_name": "stability_impact",
+            "platform_caption": "Closed-form cargo-moment → stability mapping for the most segregated measured case (demo_ratio_R4.0_s0, S_bn=-0.341): ΔVCG, ΔTCG and both ΔGM bounds (liquid / repose-limited).",
+            "caption_in_source": true,
+            "binary_in_worktree": false,
+            "candidate_paths": [
+              "artifacts/segregation_figures/stability_impact.png"
+            ],
+            "detail": "figure identity resolved via platform figures metadata and the verbatim caption present in the markdown; the PNG binary itself lives in the TensorDEM repo and is absent from this worktree"
+          },
+          "note": "图引用+图注在源内可定位；PNG 二进制本工作树内不存在。"
+        },
+        {
+          "asset_id": "A21",
+          "asset_class": "table",
+          "label": "敏感性表 4b：颗粒数/时间窗（N=600, 0.6 s）四案（4 行）",
+          "in_report_section": "### 4b. 颗粒数 / 时间窗敏感性（真实运行，独立于主表）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3147,
+            "end_char": 3561,
+            "start_line": 73,
+            "end_line": 78,
+            "quote": "| 集合 | 案例 | N | run_time (s) | $S_{bn}$ | $S_{fine}$ | $v_{up}$ (m/s) |\n|---|---|---|---|---|---|---|\n| tw_out | tw_R1.0_s0 | 600 | 0.6 | 0.07963 | -0.03413 | -0.000164 (R²=0.074) |\n| tw_out | tw_R1.5_s0 | 600 | 0.6 | -0.109 | 0.0467 | -6.21e-05 (R²=0.0097) |\n| tw_out | tw_R2.0_s0 | 600 | 0.6 | 0.1162 | -0.04976 | 0.000183 (R²=0.07) |\n| tw_out | tw_R3.0_s0 | 600 | 0.6 | -0.8652 | 0.3669 | 1.3e-05 (R²=0.00035) |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "表头+分隔行+4 行数据；该集合独立于主表（报告原文如此声明），登记时保持两个数据集分离。"
+        },
+        {
+          "asset_id": "A22",
+          "asset_class": "finding_statement",
+          "label": "敏感性结论：S_bn 符号不稳定、R² 极低（信号受统计噪声主导）",
+          "in_report_section": "### 4b. 颗粒数 / 时间窗敏感性（真实运行，独立于主表）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3563,
+            "end_char": 3675,
+            "start_line": 80,
+            "end_line": 80,
+            "quote": "敏感性说明：同一驱动位形下改变颗粒数与时间窗，$S_{bn}$ 的符号并不稳定，大颗粒平均高度漂移的拟合 $R^2$ 普遍很低 —— 即在当前二维切片位形下，偏析信号的可分辨性受统计噪声主导，任何“指数/阈值”结论都不可靠。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "报告据此声明指数/阈值结论不可靠；属上游自限性声明。"
+        },
+        {
+          "asset_id": "A23",
+          "asset_class": "limitation_set",
+          "label": "局限与适用范围 8 条（二维切片/短时窗/案例数/尺度/自由液面/架构/扩样/报告卫生）",
+          "in_report_section": "## 5. 注意点（局限与适用范围）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3697,
+            "end_char": 4358,
+            "start_line": 84,
+            "end_line": 91,
+            "quote": "- **二维切片**：床体是准二维圆盘（`bed2d.py`），壁面摩擦强于三维，绝对偏析指数会系统性偏移；本报告的标度指数与阈值只在该二维位形内成立。\n- **时间尺度**：驱动时长 0.1 s（物理时间），远短于文献稳态实验，$S_{bn}$ 是**未饱和**的早期值，只能作为趋势与标度验证，不能作为饱和偏析率引用。\n- **案例数与种子数**：本次运行 13 例，种子重复仅覆盖等径对照与部分点，判据 (f) 的 CV 只对存在多例的粒径族有意义。\n- **传递映射的尺度**：DEM 切片是实验室尺度（总货重约 kg 级），映射到 2 万吨级舱段后按质量比缩放，$\\Delta$VCG 只有微米量级；该量应读作「映射算术与单位一致性」的验证，不能当作工程稳性裕度引用。\n- **自由液面项相消**：`gm_mapping` 的 before/after 使用同一空隙率，$\\Delta$FSC 在该算例中恒为 0，因此 $\\Delta$GM 只含 $\\Delta$KG 项；按状态解析空隙率尚未实现（已知局限，不影响判据 (e) 的分片一致性结论）。\n- **集群架构**：本地 loong64 节点执行；数值结果与 x86 的差异未做交叉验证。\n- **规模与时长正在扩样**：本报告的数字来自本节点直接完成的短窗运行；更大颗粒数与更长时窗的同位形运行已递交集群作业队列（仍在排队），结果到位后用同一条命令重生成即可，判据口径不变。\n- **报告卫生**：本文件与图、JSON 均由脚本重新生成；禁止手改数字。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "8 条局限原文；其中「扩样作业仍在排队」是时点性状态，后续报告可能过期，登记为快照事实。"
+        },
+        {
+          "asset_id": "A24",
+          "asset_class": "table",
+          "label": "误差判定表 §6：关键量 vs 基准（6 行）",
+          "in_report_section": "## 6. 误差判定（对基准逐项）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4379,
+            "end_char": 4830,
+            "start_line": 95,
+            "end_line": 102,
+            "quote": "| 关键量 | 实测 | 基准 | 相对偏差 | 是否 < 3% |\n|---|---|---|---|---|\n| 上升速度标度指数 $p$ | -0.2882 | 1.0（Savage & Lun 1988; Fan & Hill 2011 首阶） | 1.29 | 否 |\n| 驱动阈值 $\\Gamma_c$ | n/a（拟合不可辨识） | 1.2（振动流化起始，文献散布 1.0–1.5） | n/a（不可辨识） | 否（拟合不可辨识，不能判 3%） |\n| 等径负对照 max$|S_{fine}|$ | 0.0617 | 0（解析：无尺寸差异则无偏析） | 0.0617 | 否（判据带宽 ≤0.02，统计噪声随 $N$ 下降） |\n| 质量守恒 | 1.68e-13 | 0 | 1.68e-13 | 是（机器精度级） |\n| 传递映射分片和 | 1.27e-16 | 0 | 1.27e-16 | 是（≤1e-6） |\n| 底面载荷和 | 0.678 | 0 | 0.678 | 否 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "表头+分隔行+6 行数据；上游对 p、Γ_c、底面载荷均给出「否」，本工序原样登记。"
+        },
+        {
+          "asset_id": "A25",
+          "asset_class": "verdict",
+          "label": "总判定：6 条判据 3 条通过，all_pass=False",
+          "in_report_section": "## 6. 误差判定（对基准逐项）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4985,
+            "end_char": 5055,
+            "start_line": 106,
+            "end_line": 106,
+            "quote": "**总判定**：6 条判据中 3 条通过；整体 all_pass = **False**（honest verdict，未通过项如实列出）。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "honest-FAIL 结论原文；本工序不得改标 verified（verification 由平台门计算）。"
+        },
+        {
+          "asset_id": "A26",
+          "asset_class": "repro_script",
+          "label": "附：可复现命令块（bash：主算例 + 敏感性探测 + 报告重生成）",
+          "in_report_section": "## 附：可复现命令",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5134,
+            "end_char": 6117,
+            "start_line": 112,
+            "end_line": 136,
+            "quote": "```bash\nPYTHONPATH=src python scripts/run_segregation_campaign.py \\\n    --spec runs/segregation/pilot_specs.json \\\n    --out .scratch/pilot_out --jobs 13\n\n# 敏感性探测（N=600，0.6 s 时间窗，Γ=3）\npython - <<'EOF'\nimport json\nbase = dict(drive=\"vib\", large_fraction=0.3, frequency=60.0, gamma=3.0,\n            n_particles=600, width=0.4, height=0.18,\n            settle_time=0.10, run_time=0.60, sample_every=100)\nspecs = [dict(base, name=f\"tw_R{r}_s0\", ratio=r, seed=0)\n         for r in (1.0, 1.5, 2.0, 3.0, 4.0)]\njson.dump(specs, open(\".scratch/probe_specs.json\", \"w\"), indent=1)\nEOF\nPYTHONPATH=src python scripts/run_segregation_campaign.py \\\n    --spec .scratch/probe_specs.json --out .scratch/probe_out --jobs 5\n\nPYTHONPATH=src python segregation_validation_report.py \\\n    --runs .scratch/pilot_out \\\n    --figures artifacts/segregation_figures \\\n    --markdown SEGREATION_VALIDATION_SUMMARY.md \\\n    --json runs/segregation/validation_report.json \\\n    --probe-runs .scratch/probe_out\n```",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "三段命令原文（含内嵌 python 生成 probe_specs）；本工序不执行（不压控制面、不改上游产物）。"
+        },
+        {
+          "asset_id": "A27",
+          "asset_class": "finding_statement",
+          "label": "误差结论段：闭式量 <3% 达成、两个物理标度量超 3% 不宣称达标",
+          "in_report_section": "## 6. 误差判定（对基准逐项）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4832,
+            "end_char": 4983,
+            "start_line": 104,
+            "end_line": 104,
+            "quote": "**结论**：质量守恒与传递映射是闭式/审计量，误差在机器精度（<3%）；但两个物理标度量（$p$、$\\Gamma_c$）的偏差**超出 3%**，本报告不宣称它们达到 3% 精度，只按验收判据的 ±30% 带宽判定。物理原因：二维位形 + 短时窗 + 有限案例数，不足以复现三维长时实验的指数与阈值。",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "char_span_in_source_markdown",
+            "result": "resolved"
+          },
+          "note": "报告显式回答「是否<3%」并给出 否 的项；属上游误差判定，不重复计算。"
+        }
+      ],
+      "claims": [],
+      "claims_note": "objective.classify_report_type=false 且 notes 允许 claims 为空数组：本工序只登记资产定位，不做 claim 抽取；claim 抽取与复核由下游工作包负责。零条=合法完整结果，不为填指标而造知识。",
+      "integrity": {
+        "quote_uniqueness": "every asset quote confirmed as exactly one occurrence in the source markdown (build_locator raises otherwise)",
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "contract_source_hash": "sha256:7a5ad01426079811a40edd7d8a95f7f09e1119e8a78ecfc44782d3b85920ab54",
+        "chars_matches_contract": true,
+        "title_matches_contract": true,
+        "scenario_matches_contract": true,
+        "figure_refs_in_markdown": [
+          "segregation_vs_ratio",
+          "rise_velocity_scaling",
+          "segregation_vs_gamma",
+          "stability_impact"
+        ],
+        "figure_names_in_platform": [
+          "segregation_vs_ratio",
+          "rise_velocity_scaling",
+          "segregation_vs_gamma",
+          "stability_impact"
+        ],
+        "figure_refs_consistent": true,
+        "platform_captions_verbatim_in_markdown": true,
+        "duplicate_asset_ids": false,
+        "claims_status": "claims=[] by contract; no claim is marked verified by this package (verification is computed by the platform gate)"
+      }
+    }
+  }
+}
+```
