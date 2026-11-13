@@ -1,0 +1,113 @@
+{
+  "package_id": "wp-14478-01",
+  "report_id": "14478",
+  "mode": "online (platform re-fetch)",
+  "verified_at": "2026-11-12T02:37:44+00:00",
+  "source": {
+    "uri": "tensor://reports/14478",
+    "field": "markdown",
+    "sha256": "8fbd643e2e79a0fece5f9ae2fbe87a0045f268d61da54927711e260c14b206b0",
+    "chars": 6156,
+    "bytes_utf8": 9430
+  },
+  "checks": [
+    {
+      "acceptance_item": "source_hash_matches",
+      "result": "PASS",
+      "detail": {
+        "sha256": "8fbd643e2e79a0fece5f9ae2fbe87a0045f268d61da54927711e260c14b206b0",
+        "contract": "8fbd643e2e79a0fece5f9ae2fbe87a0045f268d61da54927711e260c14b206b0",
+        "provenance": "sha256:8fbd643e2e79a0fece5f9ae2fbe87a0045f268d61da54927711e260c14b206b0",
+        "note": "recomputed from live platform re-fetch"
+      }
+    },
+    {
+      "acceptance_item": "chars_match_contract",
+      "result": "PASS",
+      "detail": {
+        "chars": 6156,
+        "bytes_utf8": 9430,
+        "contract_chars": 6156
+      }
+    },
+    {
+      "acceptance_item": "valid_json",
+      "result": "PASS",
+      "detail": {
+        "files": [
+          "asset_manifest.json",
+          "kf_result.wp-14478-01.json"
+        ],
+        "parse": "ok"
+      }
+    },
+    {
+      "acceptance_item": "schema_pass",
+      "result": "PASS",
+      "detail": {
+        "errors": [],
+        "documents": 2,
+        "schemas": [
+          "kf_result.v1.schema.json (worktree canonical)",
+          "asset_manifest.v1.schema.json (pinned by this package)"
+        ]
+      }
+    },
+    {
+      "acceptance_item": "source_locator_resolvable",
+      "result": "PASS",
+      "detail": {
+        "assets_checked": 20,
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "no_duplicate_ids",
+      "result": "PASS",
+      "detail": {
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "PASS",
+      "detail": {
+        "claims": 0,
+        "asset_payload_statuses": {
+          "in_report_record": 1,
+          "external_url_declared": 1,
+          "external_repo_path_declared": 12,
+          "declared_payload_missing": 5,
+          "declared_in_source_only": 1
+        },
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "boundaries_and_no_self_verified",
+      "result": "PASS",
+      "detail": {
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "record_metadata_verbatim",
+      "result": "PASS",
+      "detail": {
+        "source": "live platform record",
+        "errors": []
+      }
+    },
+    {
+      "acceptance_item": "platform_figure_payload_status_current",
+      "result": "PASS",
+      "detail": {
+        "platform_figures": 0,
+        "note": "the platform record carries no figure entries, so no figure payload can be missing; vacuous pass recorded explicitly rather than omitted"
+      }
+    }
+  ],
+  "acceptance_all_pass": true,
+  "verified_label_written": false,
+  "note": "对账=结构/哈希/定位/唯一性/边界；不评判报告结论真伪，也不把任何结论标为 verified（verification 由平台门计算）。"
+}
