@@ -1,0 +1,58 @@
+{
+ "repo": "TensorKnowledge",
+ "scope": "m15896 KBM-RCI-F1-ABC",
+ "mission_id": 15923,
+ "level": 2,
+ "verdict_by": "board-audit",
+ "referee_rows": 0,
+ "pass_fail": [
+  5,
+  9,
+  2
+ ],
+ "reasons": [
+  "L1 通过：23 测试全绿；Wilson 半宽独立复算 0.0774 vs 工件 0.0774（Δ0.0000）",
+  "L2 通过：4 个真实仪器（corpus/verify/settle/power）输入→计算→输出，干净检出重跑工件 sha256 不变、逐叶差异 0",
+  "L3 阻断：scripts/ 与 tests/ 之外无调用者（repo=0, ci=0, platform=0）",
+  "L4 阻断：注册基准行 0 条；三臂不齐（A=0 篇、C=0 篇、B identity_match=False）→ 五指标无臂间数据"
+ ],
+ "findings_material": [
+  "F-2",
+  "F-3",
+  "F-4",
+  "F-7"
+ ],
+ "audited_commit": "6a4037bdfc96d9374e7bd842302820acf264fa92",
+ "audited_branch": "agent/m15896",
+ "ancestor_of_main": false,
+ "db": {
+  "verdict_id": 409,
+  "level": 2,
+  "evidence": {
+   "impl_files": [
+    "scripts/rci_f1_corpus.py (freeze 60 docs under VCS + sha256 verify)",
+    "scripts/rci_f1_verify.py (independent locator/sha re-read, 307 lines)",
+    "scripts/rci_f1_settle.py (arm-identity audit + 5-metric settlement)",
+    "scripts/rci_f1_power.py (NI power / min demonstrable margin / kappa, MC cross-check)",
+    "scripts/rci_f1_metrics.py:82-160 (MO2 fix: tokens=None -> M1 WITHHELD)"
+   ],
+   "entry": "python scripts/rci_f1_{corpus verify,verify --lane B,settle,power}",
+   "run_artifacts": [
+    "docs/rci-f1-abc/round2/settlement.json",
+    "docs/rci-f1-abc/round2/power.json",
+    "docs/rci-f1-abc/round2/runs/B/rci-f1-B-B01..B07.json (7 receipts)",
+    "docs/rci-f1-abc/round2/figures/fig1..fig4.png",
+    "docs/rci-f1-abc/frozen/{prereg,batch60,tk_work_packages}.json + 60 snapshots"
+   ],
+   "tests": "tests/test_rci_f1_abc.py (9) + tests/test_rci_f1_round2.py (14) = 23 passed in clean git-archive of 6a4037b; parent 3d43e3c = 5 failed/4 passed (headline claim re-measured)",
+   "integration_callers": "none: repo callers outside scripts/tests=0, CI workflows referencing rci=0, platform files referencing rci=0",
+   "benchmark": "tensor_benchmark_cases anchor_slug='KBM-RCI-F1-ABC' -> 0 rows (table total 25); ref = prereg thresholds (docs/rci-f1-abc/frozen/prereg.json): NI margin 3pp, kappa>=0.6, M4=lsr*coverage; got: Wilson half-width 0.0774 vs 0.030 (2.58x gate), power@n=60 0.0789, min demonstrable margin 0.1534, lanes A=0 docs / B=19 of 60 / C=0 docs, identity_match(B)=False",
+   "repro_cmd": "git archive 6a4037bdfc96d9374e7bd842302820acf264fa92 | tar -x -C /tmp/x && cd /tmp/x && python -m pytest tests/test_rci_f1_abc.py tests/test_rci_f1_round2.py -q && python scripts/rci_f1_corpus.py verify && python scripts/rci_f1_verify.py --lane B && python scripts/rci_f1_settle.py && python scripts/rci_f1_power.py",
+   "external_anchor": "prereg v1 (docs/rci-f1-abc/frozen/prereg.json, prereg_id 9e4e0bf5…; same digest in parent PREREG.md); statistics refs Blackwelder 1982, Farrington & Manning 1990, FDA 2016 NI guidance, Cohen 1960 / Fleiss 1981 / Donner & Eliasziw 1992, Kish 1965",
+   "audit_artifacts": [
+    "docs/board_audit_m15896/M15896_BOARD_AUDIT.md",
+    "docs/board_audit_m15896/verdict.json"
+   ]
+  }
+ }
+}

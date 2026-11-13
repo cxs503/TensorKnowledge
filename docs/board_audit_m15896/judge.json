@@ -1,0 +1,145 @@
+{
+ "rows": [
+  {
+   "criterion": "语料完整性 60 篇 sha256",
+   "ref": "60/60（prereg batch n=60）",
+   "got": "60/60 rate=1.00",
+   "verdict": "PASS",
+   "note": "干净检出内复跑"
+  },
+  {
+   "criterion": "证据门 locator 可反查率",
+   "ref": "100%",
+   "got": "130/130=1.000",
+   "verdict": "PASS（仅 B 臂）",
+   "note": ""
+  },
+  {
+   "criterion": "自报偏差 selfreport_inflation",
+   "ref": "0",
+   "got": "0",
+   "verdict": "PASS（仅 B 臂）",
+   "note": ""
+  },
+  {
+   "criterion": "臂 B 完成度",
+   "ref": "60/60",
+   "got": "19/60 = 31.7%",
+   "verdict": "FAIL",
+   "note": ""
+  },
+  {
+   "criterion": "臂 B 产物齐备度",
+   "ref": "每篇 4 件",
+   "got": "18/19",
+   "verdict": "FAIL",
+   "note": ""
+  },
+  {
+   "criterion": "臂 B 身份（agent_count=20 普通 Agent）",
+   "ref": "20 / 非 degraded",
+   "got": "[1] / ['degraded-single-agent'] / identity_match=False",
+   "verdict": "FAIL",
+   "note": "回执 llm_used=false；抽取值由 rule-based 抽取器产出"
+  },
+  {
+   "criterion": "臂 A 产物",
+   "ref": "60/60",
+   "got": "0 篇",
+   "verdict": "FAIL（未启动）",
+   "note": ""
+  },
+  {
+   "criterion": "臂 C 产物",
+   "ref": "60/60",
+   "got": "0 篇",
+   "verdict": "FAIL（未启动）",
+   "note": ""
+  },
+  {
+   "criterion": "M3 抽取准确率 κ≥0.6 且人工≥30",
+   "ref": "κ≥0.6 且人工≥30 条",
+   "got": "WITHHELD:None",
+   "verdict": "WITHHELD",
+   "note": "无盲审回执"
+  },
+  {
+   "criterion": "M5 首周复用 T+7d",
+   "ref": "T+7d 窗口内复用率>0",
+   "got": "PENDING:None",
+   "verdict": "PENDING",
+   "note": "窗口未到（禁填 0）"
+  },
+  {
+   "criterion": "3pp 非劣效门可判定性（半宽≤3pp）",
+   "ref": "≤0.030",
+   "got": "0.0774（7.7pp）",
+   "verdict": "FAIL",
+   "note": "半宽/门宽=2.58×"
+  },
+  {
+   "criterion": "n=60 把握度（真实差 0）",
+   "ref": "≥0.80",
+   "got": "0.0789",
+   "verdict": "FAIL",
+   "note": ""
+  },
+  {
+   "criterion": "n=60 最小可证明界",
+   "ref": "≤0.03",
+   "got": "0.1534",
+   "verdict": "FAIL",
+   "note": ""
+  },
+  {
+   "criterion": "3pp 门所需 n/臂（差 0 / −2pp）",
+   "ref": "≤60",
+   "got": "1570 / 15353",
+   "verdict": "FAIL",
+   "note": ""
+  },
+  {
+   "criterion": "κ 人工 30 条半宽",
+   "ref": "≤0.10",
+   "got": "0.2584",
+   "verdict": "FAIL",
+   "note": ""
+  },
+  {
+   "criterion": "注册基准行 tensor_benchmark_cases(anchor)",
+   "ref": "≥1 行机器可裁",
+   "got": "0 行",
+   "verdict": "FAIL",
+   "note": "台账缺口：裁判缺席"
+  },
+  {
+   "criterion": "报告六段齐全",
+   "ref": "6/6",
+   "got": "6/6",
+   "verdict": "PASS",
+   "note": ""
+  },
+  {
+   "criterion": "可复现（干净检出重跑）",
+   "ref": "全绿 + 工件逐叶一致",
+   "got": "23 passed；差异叶=0/324",
+   "verdict": "PASS",
+   "note": ""
+  }
+ ],
+ "level": 2,
+ "l1_checks_pass": true,
+ "l2_checks_pass": true,
+ "l3_integrated": false,
+ "experiment_complete": false,
+ "l4_ready": false,
+ "reasons": [
+  "L1 通过：23 测试全绿；Wilson 半宽独立复算 0.0774 vs 工件 0.0774（Δ0.0000）",
+  "L2 通过：4 个真实仪器（corpus/verify/settle/power）输入→计算→输出，干净检出重跑工件 sha256 不变、逐叶差异 0",
+  "L3 阻断：scripts/ 与 tests/ 之外无调用者（repo=0, ci=0, platform=0）",
+  "L4 阻断：注册基准行 0 条；三臂不齐（A=0 篇、C=0 篇、B identity_match=False）→ 五指标无臂间数据"
+ ],
+ "pass_count": 5,
+ "fail_count": 9,
+ "withheld_count": 2
+}
