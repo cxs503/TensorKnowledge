@@ -1,0 +1,12 @@
+{
+  "_comment": "C11 正控：新判据登记了真会咬的 killer test（RO-PNG-MAGIC 的杀手）。",
+  "new_criteria": [
+    {
+      "cid": "RO-PNG-MAGIC",
+      "gate": "REPORT-OWNERSHIP",
+      "statement": "配图必须是 PNG（八字节魔数）",
+      "source": "backend/services/report_ownership.py:validate_png_payload",
+      "killer_tests": ["tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[RO-PNG-MAGIC]"]
+    }
+  ]
+}

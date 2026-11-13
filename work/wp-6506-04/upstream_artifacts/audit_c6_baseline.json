@@ -1,0 +1,2295 @@
+{
+  "module": "/data/test002/jobs/c1794056344_686/repo/tools/paper_gate/traceability_gate.py",
+  "tests": [
+    "/data/test002/jobs/c1794056344_686/repo/backend/tests/test_paper_traceability_gate.py"
+  ],
+  "baseline_green": true,
+  "total": 186,
+  "killed": 92,
+  "survived": 94,
+  "kill_rate": 0.4946,
+  "by_operator": {
+    "append_drop": {
+      "total": 11,
+      "killed": 8,
+      "kill_rate": 0.7273
+    },
+    "binop_swap": {
+      "total": 45,
+      "killed": 17,
+      "kill_rate": 0.3778
+    },
+    "boolop_swap": {
+      "total": 21,
+      "killed": 9,
+      "kill_rate": 0.4286
+    },
+    "cmp_swap": {
+      "total": 42,
+      "killed": 30,
+      "kill_rate": 0.7143
+    },
+    "const_scale": {
+      "total": 24,
+      "killed": 7,
+      "kill_rate": 0.2917
+    },
+    "not_removal": {
+      "total": 17,
+      "killed": 12,
+      "kill_rate": 0.7059
+    },
+    "return_empty": {
+      "total": 9,
+      "killed": 6,
+      "kill_rate": 0.6667
+    },
+    "severity_flip": {
+      "total": 17,
+      "killed": 3,
+      "kill_rate": 0.1765
+    }
+  },
+  "survivors": [
+    {
+      "name": "const_scale[0]",
+      "line": 114,
+      "snippet": "1e-6",
+      "patch": "1e-06  =>  9.999999999999999e-06"
+    },
+    {
+      "name": "cmp_swap[1]",
+      "line": 115,
+      "snippet": "abs(c - claim) <= 1e-12 + rtol * abs(claim)",
+      "patch": "abs(c - claim) <= 1e-12 + rtol * abs(claim)  =>  abs(c - claim) < 1e-12 + rtol * abs(claim)"
+    },
+    {
+      "name": "binop_swap[0]",
+      "line": 115,
+      "snippet": "c - claim",
+      "patch": "c - claim  =>  c + claim"
+    },
+    {
+      "name": "binop_swap[1]",
+      "line": 115,
+      "snippet": "1e-12 + rtol * abs(claim)",
+      "patch": "1e-12 + rtol * abs(claim)  =>  1e-12 - rtol * abs(claim)"
+    },
+    {
+      "name": "const_scale[1]",
+      "line": 115,
+      "snippet": "1e-12",
+      "patch": "1e-12  =>  1e-11"
+    },
+    {
+      "name": "binop_swap[3]",
+      "line": 122,
+      "snippet": "tol_pp + tol_rel * abs(computed)",
+      "patch": "tol_pp + tol_rel * abs(computed)  =>  tol_pp - tol_rel * abs(computed)"
+    },
+    {
+      "name": "binop_swap[4]",
+      "line": 122,
+      "snippet": "tol_rel * abs(computed)",
+      "patch": "tol_rel * abs(computed)  =>  tol_rel / abs(computed)"
+    },
+    {
+      "name": "cmp_swap[2]",
+      "line": 123,
+      "snippet": "min(abs(stated - computed), abs(stated - abs(computed)),\n               abs(abs(stated) - abs(computed))) <= band",
+      "patch": "min(abs(stated - computed), abs(stated - abs(computed)), abs(abs(stated) - abs(c  =>  min(abs(stated - computed), abs(stated - abs(computed)), abs(abs(stated) - abs(c"
+    },
+    {
+      "name": "binop_swap[5]",
+      "line": 123,
+      "snippet": "stated - computed",
+      "patch": "stated - computed  =>  stated + computed"
+    },
+    {
+      "name": "binop_swap[6]",
+      "line": 123,
+      "snippet": "stated - abs(computed)",
+      "patch": "stated - abs(computed)  =>  stated + abs(computed)"
+    },
+    {
+      "name": "binop_swap[7]",
+      "line": 124,
+      "snippet": "abs(stated) - abs(computed)",
+      "patch": "abs(stated) - abs(computed)  =>  abs(stated) + abs(computed)"
+    },
+    {
+      "name": "cmp_swap[4]",
+      "line": 135,
+      "snippet": "i + 1 < len(lines)",
+      "patch": "i + 1 < len(lines)  =>  i + 1 <= len(lines)"
+    },
+    {
+      "name": "binop_swap[8]",
+      "line": 135,
+      "snippet": "i + 1",
+      "patch": "i + 1  =>  i - 1"
+    },
+    {
+      "name": "binop_swap[11]",
+      "line": 142,
+      "snippet": "i + 1",
+      "patch": "i + 1  =>  i - 1"
+    },
+    {
+      "name": "return_empty[0]",
+      "line": 169,
+      "snippet": "return findings, checked",
+      "patch": "return (findings, checked)  =>  return ([], checked)"
+    },
+    {
+      "name": "boolop_swap[3]",
+      "line": 173,
+      "snippet": "i not in err_idx and i not in ref_idx",
+      "patch": "i not in err_idx and i not in ref_idx  =>  i not in err_idx or i not in ref_idx"
+    },
+    {
+      "name": "boolop_swap[4]",
+      "line": 174,
+      "snippet": "not ref_idx or not val_idx",
+      "patch": "not ref_idx or not val_idx  =>  not ref_idx and (not val_idx)"
+    },
+    {
+      "name": "return_empty[1]",
+      "line": 175,
+      "snippet": "return findings, checked",
+      "patch": "return (findings, checked)  =>  return ([], checked)"
+    },
+    {
+      "name": "boolop_swap[5]",
+      "line": 177,
+      "snippet": "\"%\" in header[err_i] or \"％\" in header[err_i]\n              or bool(re.search(r\"(?i)(相对|relative|百分比)\", header[err_i]))",
+      "patch": "'%' in header[err_i] or '％' in header[err_i] or bool(re.search('(?i)(相对|relative  =>  '%' in header[err_i] and '％' in header[err_i] and bool(re.search('(?i)(相对|relati"
+    },
+    {
+      "name": "cmp_swap[9]",
+      "line": 177,
+      "snippet": "\"%\" in header[err_i]",
+      "patch": "'%' in header[err_i]  =>  '%' not in header[err_i]"
+    },
+    {
+      "name": "cmp_swap[10]",
+      "line": 177,
+      "snippet": "\"％\" in header[err_i]",
+      "patch": "'％' in header[err_i]  =>  '％' not in header[err_i]"
+    },
+    {
+      "name": "cmp_swap[11]",
+      "line": 180,
+      "snippet": "max(err_i, ref_i, val_i) >= len(row)",
+      "patch": "max(err_i, ref_i, val_i) >= len(row)  =>  max(err_i, ref_i, val_i) > len(row)"
+    },
+    {
+      "name": "boolop_swap[6]",
+      "line": 184,
+      "snippet": "stated is None or val is None or ref is None or ref == 0",
+      "patch": "stated is None or val is None or ref is None or (ref == 0)  =>  stated is None and val is None and (ref is None) and (ref == 0)"
+    },
+    {
+      "name": "boolop_swap[7]",
+      "line": 189,
+      "snippet": "not ok and not as_pct",
+      "patch": "not ok and (not as_pct)  =>  not ok or not as_pct"
+    },
+    {
+      "name": "not_removal[5]",
+      "line": 189,
+      "snippet": "not ok",
+      "patch": "not ok  =>  ok"
+    },
+    {
+      "name": "not_removal[6]",
+      "line": 189,
+      "snippet": "not as_pct",
+      "patch": "not as_pct  =>  as_pct"
+    },
+    {
+      "name": "binop_swap[15]",
+      "line": 190,
+      "snippet": "pct / 100.0",
+      "patch": "pct / 100.0  =>  pct * 100.0"
+    },
+    {
+      "name": "const_scale[4]",
+      "line": 190,
+      "snippet": "100.0",
+      "patch": "100.0  =>  1000.0"
+    },
+    {
+      "name": "severity_flip[0]",
+      "line": 193,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    },
+    {
+      "name": "binop_swap[16]",
+      "line": 194,
+      "snippet": "line_no + r_off + 1",
+      "patch": "line_no + r_off + 1  =>  line_no + r_off - 1"
+    },
+    {
+      "name": "binop_swap[17]",
+      "line": 194,
+      "snippet": "line_no + r_off",
+      "patch": "line_no + r_off  =>  line_no - r_off"
+    },
+    {
+      "name": "binop_swap[18]",
+      "line": 197,
+      "snippet": "tol_rel*100",
+      "patch": "tol_rel * 100  =>  tol_rel / 100"
+    },
+    {
+      "name": "const_scale[5]",
+      "line": 197,
+      "snippet": "100",
+      "patch": "100  =>  1000"
+    },
+    {
+      "name": "boolop_swap[8]",
+      "line": 215,
+      "snippet": "None in (a, b, stated) or b == 0",
+      "patch": "None in (a, b, stated) or b == 0  =>  None in (a, b, stated) and b == 0"
+    },
+    {
+      "name": "boolop_swap[9]",
+      "line": 221,
+      "snippet": "not ok and not is_pct",
+      "patch": "not ok and (not is_pct)  =>  not ok or not is_pct"
+    },
+    {
+      "name": "not_removal[8]",
+      "line": 221,
+      "snippet": "not ok",
+      "patch": "not ok  =>  ok"
+    },
+    {
+      "name": "not_removal[9]",
+      "line": 221,
+      "snippet": "not is_pct",
+      "patch": "not is_pct  =>  is_pct"
+    },
+    {
+      "name": "binop_swap[22]",
+      "line": 222,
+      "snippet": "pct / 100.0",
+      "patch": "pct / 100.0  =>  pct * 100.0"
+    },
+    {
+      "name": "const_scale[10]",
+      "line": 222,
+      "snippet": "100.0",
+      "patch": "100.0  =>  1000.0"
+    },
+    {
+      "name": "binop_swap[23]",
+      "line": 224,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1"
+    },
+    {
+      "name": "severity_flip[1]",
+      "line": 226,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    },
+    {
+      "name": "const_scale[11]",
+      "line": 227,
+      "snippet": "80",
+      "patch": "80  =>  800"
+    },
+    {
+      "name": "severity_flip[2]",
+      "line": 266,
+      "snippet": "\"WARN\"",
+      "patch": "'WARN'  =>  'FAIL'"
+    },
+    {
+      "name": "binop_swap[27]",
+      "line": 267,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1"
+    },
+    {
+      "name": "append_drop[2]",
+      "line": 266,
+      "snippet": "findings.append({\"code\": \"PG1_command_script\", \"severity\": \"WARN\",\n                             \"line\": md[:m.start()].count(\"\\n\") + 1,\n                        ",
+      "patch": "findings.append({'code': 'PG1_command_script', 'severity': 'WARN', 'line': md[:m  =>  pass"
+    },
+    {
+      "name": "boolop_swap[11]",
+      "line": 270,
+      "snippet": "\"/\" not in tok or tok.startswith((\"http://\", \"https://\"))",
+      "patch": "'/' not in tok or tok.startswith(('http://', 'https://'))  =>  '/' not in tok and tok.startswith(('http://', 'https://'))"
+    },
+    {
+      "name": "severity_flip[3]",
+      "line": 279,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    },
+    {
+      "name": "binop_swap[28]",
+      "line": 280,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1"
+    },
+    {
+      "name": "severity_flip[4]",
+      "line": 297,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    },
+    {
+      "name": "binop_swap[29]",
+      "line": 298,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1"
+    },
+    {
+      "name": "severity_flip[5]",
+      "line": 319,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    },
+    {
+      "name": "binop_swap[33]",
+      "line": 320,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1"
+    },
+    {
+      "name": "boolop_swap[13]",
+      "line": 328,
+      "snippet": "f.stem in md or (stem_key and\n                                         f\"fig{stem_key.group(1)}\" in md.lower())",
+      "patch": "f.stem in md or (stem_key and f'fig{stem_key.group(1)}' in md.lower())  =>  f.stem in md and (stem_key and f'fig{stem_key.group(1)}' in md.lower())"
+    },
+    {
+      "name": "severity_flip[6]",
+      "line": 332,
+      "snippet": "\"WARN\"",
+      "patch": "'WARN'  =>  'FAIL'"
+    },
+    {
+      "name": "binop_swap[35]",
+      "line": 354,
+      "snippet": "m.end() + 160",
+      "patch": "m.end() + 160  =>  m.end() - 160"
+    },
+    {
+      "name": "const_scale[13]",
+      "line": 354,
+      "snippet": "160",
+      "patch": "160  =>  1600"
+    },
+    {
+      "name": "severity_flip[7]",
+      "line": 361,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    },
+    {
+      "name": "binop_swap[36]",
+      "line": 362,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1"
+    },
+    {
+      "name": "append_drop[7]",
+      "line": 360,
+      "snippet": "findings.append({\n                    \"code\": \"PG6_anchor_mismatch\", \"severity\": \"FAIL\",\n                    \"line\": md[:m.start()].count(\"\\n\") + 1,\n           ",
+      "patch": "findings.append({'code': 'PG6_anchor_mismatch', 'severity': 'FAIL', 'line': md[:  =>  pass"
+    },
+    {
+      "name": "boolop_swap[15]",
+      "line": 366,
+      "snippet": "isinstance(value, (int, float)) and stated is not None",
+      "patch": "isinstance(value, (int, float)) and stated is not None  =>  isinstance(value, (int, float)) or stated is not None"
+    },
+    {
+      "name": "cmp_swap[28]",
+      "line": 366,
+      "snippet": "stated is not None",
+      "patch": "stated is not None  =>  stated is None"
+    },
+    {
+      "name": "severity_flip[8]",
+      "line": 371,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    },
+    {
+      "name": "binop_swap[37]",
+      "line": 372,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1"
+    },
+    {
+      "name": "append_drop[8]",
+      "line": 370,
+      "snippet": "findings.append({\n                        \"code\": \"PG6_anchor_mismatch\", \"severity\": \"FAIL\",\n                        \"line\": md[:m.start()].count(\"\\n\") + 1,\n   ",
+      "patch": "findings.append({'code': 'PG6_anchor_mismatch', 'severity': 'FAIL', 'line': md[:  =>  pass"
+    },
+    {
+      "name": "return_empty[7]",
+      "line": 377,
+      "snippet": "return findings, total, resolved",
+      "patch": "return (findings, total, resolved)  =>  return ([], total, resolved)"
+    },
+    {
+      "name": "boolop_swap[16]",
+      "line": 389,
+      "snippet": "isinstance(node, dict) and part in node",
+      "patch": "isinstance(node, dict) and part in node  =>  isinstance(node, dict) or part in node"
+    },
+    {
+      "name": "cmp_swap[30]",
+      "line": 416,
+      "snippet": "i >= len(row)",
+      "patch": "i >= len(row)  =>  i > len(row)"
+    },
+    {
+      "name": "boolop_swap[17]",
+      "line": 429,
+      "snippet": "missing_src or not corpus",
+      "patch": "missing_src or not corpus  =>  missing_src and (not corpus)"
+    },
+    {
+      "name": "binop_swap[38]",
+      "line": 432,
+      "snippet": "line_no + r_off + 1",
+      "patch": "line_no + r_off + 1  =>  line_no + r_off - 1"
+    },
+    {
+      "name": "binop_swap[39]",
+      "line": 432,
+      "snippet": "line_no + r_off",
+      "patch": "line_no + r_off  =>  line_no - r_off"
+    },
+    {
+      "name": "const_scale[14]",
+      "line": 444,
+      "snippet": "1e-6",
+      "patch": "1e-06  =>  9.999999999999999e-06"
+    },
+    {
+      "name": "severity_flip[10]",
+      "line": 448,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    },
+    {
+      "name": "binop_swap[40]",
+      "line": 449,
+      "snippet": "line_no + r_off + 1",
+      "patch": "line_no + r_off + 1  =>  line_no + r_off - 1"
+    },
+    {
+      "name": "binop_swap[41]",
+      "line": 449,
+      "snippet": "line_no + r_off",
+      "patch": "line_no + r_off  =>  line_no - r_off"
+    },
+    {
+      "name": "cmp_swap[33]",
+      "line": 465,
+      "snippet": "parse_number(c) is not None",
+      "patch": "parse_number(c) is not None  =>  parse_number(c) is None"
+    },
+    {
+      "name": "binop_swap[42]",
+      "line": 468,
+      "snippet": "stats[\"paths\"][\"total\"] + stats[\"anchors\"][\"total\"]",
+      "patch": "stats['paths']['total'] + stats['anchors']['total']  =>  stats['paths']['total'] - stats['anchors']['total']"
+    },
+    {
+      "name": "severity_flip[11]",
+      "line": 471,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    },
+    {
+      "name": "const_scale[15]",
+      "line": 483,
+      "snippet": "0.05",
+      "patch": "0.05  =>  0.5"
+    },
+    {
+      "name": "const_scale[16]",
+      "line": 483,
+      "snippet": "0.005",
+      "patch": "0.005  =>  0.05"
+    },
+    {
+      "name": "cmp_swap[36]",
+      "line": 525,
+      "snippet": "\"total\" in v",
+      "patch": "'total' in v  =>  'total' not in v"
+    },
+    {
+      "name": "cmp_swap[39]",
+      "line": 529,
+      "snippet": "x[\"severity\"] == \"WARN\"",
+      "patch": "x['severity'] == 'WARN'  =>  x['severity'] != 'WARN'"
+    },
+    {
+      "name": "severity_flip[13]",
+      "line": 529,
+      "snippet": "\"WARN\"",
+      "patch": "'WARN'  =>  'FAIL'"
+    },
+    {
+      "name": "binop_swap[43]",
+      "line": 532,
+      "snippet": "by_code.get(x[\"code\"], 0) + 1",
+      "patch": "by_code.get(x['code'], 0) + 1  =>  by_code.get(x['code'], 0) - 1"
+    },
+    {
+      "name": "severity_flip[15]",
+      "line": 535,
+      "snippet": "\"WARN\"",
+      "patch": "'WARN'  =>  'FAIL'"
+    },
+    {
+      "name": "const_scale[17]",
+      "line": 540,
+      "snippet": "4",
+      "patch": "4  =>  40"
+    },
+    {
+      "name": "const_scale[18]",
+      "line": 556,
+      "snippet": "0.05",
+      "patch": "0.05  =>  0.5"
+    },
+    {
+      "name": "const_scale[19]",
+      "line": 557,
+      "snippet": "0.005",
+      "patch": "0.005  =>  0.05"
+    },
+    {
+      "name": "not_removal[16]",
+      "line": 564,
+      "snippet": "not mp.is_file()",
+      "patch": "not mp.is_file()  =>  mp.is_file()"
+    },
+    {
+      "name": "const_scale[20]",
+      "line": 566,
+      "snippet": "2",
+      "patch": "2  =>  20"
+    },
+    {
+      "name": "const_scale[21]",
+      "line": 587,
+      "snippet": "2",
+      "patch": "2  =>  20"
+    },
+    {
+      "name": "const_scale[22]",
+      "line": 590,
+      "snippet": "2",
+      "patch": "2  =>  20"
+    },
+    {
+      "name": "const_scale[23]",
+      "line": 591,
+      "snippet": "40",
+      "patch": "40  =>  400"
+    },
+    {
+      "name": "cmp_swap[40]",
+      "line": 593,
+      "snippet": "out[\"verdict\"] != \"FAIL\"",
+      "patch": "out['verdict'] != 'FAIL'  =>  out['verdict'] == 'FAIL'"
+    },
+    {
+      "name": "severity_flip[16]",
+      "line": 593,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "cmp_swap[0]",
+      "op": "cmp_swap",
+      "line": 76,
+      "killed": true,
+      "snippet": "text is None",
+      "patch": "text is None  =>  text is not None",
+      "detail": ""
+    },
+    {
+      "name": "not_removal[0]",
+      "op": "not_removal",
+      "line": 88,
+      "killed": true,
+      "snippet": "not m",
+      "patch": "not m  =>  m",
+      "detail": ""
+    },
+    {
+      "name": "const_scale[0]",
+      "op": "const_scale",
+      "line": 114,
+      "killed": false,
+      "snippet": "1e-6",
+      "patch": "1e-06  =>  9.999999999999999e-06",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[1]",
+      "op": "cmp_swap",
+      "line": 115,
+      "killed": false,
+      "snippet": "abs(c - claim) <= 1e-12 + rtol * abs(claim)",
+      "patch": "abs(c - claim) <= 1e-12 + rtol * abs(claim)  =>  abs(c - claim) < 1e-12 + rtol * abs(claim)",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "binop_swap[0]",
+      "op": "binop_swap",
+      "line": 115,
+      "killed": false,
+      "snippet": "c - claim",
+      "patch": "c - claim  =>  c + claim",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[1]",
+      "op": "binop_swap",
+      "line": 115,
+      "killed": false,
+      "snippet": "1e-12 + rtol * abs(claim)",
+      "patch": "1e-12 + rtol * abs(claim)  =>  1e-12 - rtol * abs(claim)",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "const_scale[1]",
+      "op": "const_scale",
+      "line": 115,
+      "killed": false,
+      "snippet": "1e-12",
+      "patch": "1e-12  =>  1e-11",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "binop_swap[2]",
+      "op": "binop_swap",
+      "line": 115,
+      "killed": true,
+      "snippet": "rtol * abs(claim)",
+      "patch": "rtol * abs(claim)  =>  rtol / abs(claim)",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[3]",
+      "op": "binop_swap",
+      "line": 122,
+      "killed": false,
+      "snippet": "tol_pp + tol_rel * abs(computed)",
+      "patch": "tol_pp + tol_rel * abs(computed)  =>  tol_pp - tol_rel * abs(computed)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[4]",
+      "op": "binop_swap",
+      "line": 122,
+      "killed": false,
+      "snippet": "tol_rel * abs(computed)",
+      "patch": "tol_rel * abs(computed)  =>  tol_rel / abs(computed)",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "cmp_swap[2]",
+      "op": "cmp_swap",
+      "line": 123,
+      "killed": false,
+      "snippet": "min(abs(stated - computed), abs(stated - abs(computed)),\n               abs(abs(stated) - abs(computed))) <= band",
+      "patch": "min(abs(stated - computed), abs(stated - abs(computed)), abs(abs(stated) - abs(c  =>  min(abs(stated - computed), abs(stated - abs(computed)), abs(abs(stated) - abs(c",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[5]",
+      "op": "binop_swap",
+      "line": 123,
+      "killed": false,
+      "snippet": "stated - computed",
+      "patch": "stated - computed  =>  stated + computed",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[6]",
+      "op": "binop_swap",
+      "line": 123,
+      "killed": false,
+      "snippet": "stated - abs(computed)",
+      "patch": "stated - abs(computed)  =>  stated + abs(computed)",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "binop_swap[7]",
+      "op": "binop_swap",
+      "line": 124,
+      "killed": false,
+      "snippet": "abs(stated) - abs(computed)",
+      "patch": "abs(stated) - abs(computed)  =>  abs(stated) + abs(computed)",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "cmp_swap[3]",
+      "op": "cmp_swap",
+      "line": 134,
+      "killed": true,
+      "snippet": "i < len(lines)",
+      "patch": "i < len(lines)  =>  i <= len(lines)",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[0]",
+      "op": "boolop_swap",
+      "line": 135,
+      "killed": true,
+      "snippet": "lines[i].lstrip().startswith(\"|\") and i + 1 < len(lines) \\\n                and re.match(r\"^\\s*\\|[\\s:|-]+\\|\\s*$\", lines[i + 1])",
+      "patch": "lines[i].lstrip().startswith('|') and i + 1 < len(lines) and re.match('^\\\\s*\\\\|[  =>  lines[i].lstrip().startswith('|') or i + 1 < len(lines) or re.match('^\\\\s*\\\\|[\\\\",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[4]",
+      "op": "cmp_swap",
+      "line": 135,
+      "killed": false,
+      "snippet": "i + 1 < len(lines)",
+      "patch": "i + 1 < len(lines)  =>  i + 1 <= len(lines)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[8]",
+      "op": "binop_swap",
+      "line": 135,
+      "killed": false,
+      "snippet": "i + 1",
+      "patch": "i + 1  =>  i - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[9]",
+      "op": "binop_swap",
+      "line": 136,
+      "killed": true,
+      "snippet": "i + 1",
+      "patch": "i + 1  =>  i - 1",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[10]",
+      "op": "binop_swap",
+      "line": 138,
+      "killed": true,
+      "snippet": "i + 2",
+      "patch": "i + 2  =>  i - 2",
+      "detail": "timeout"
+    },
+    {
+      "name": "const_scale[2]",
+      "op": "const_scale",
+      "line": 138,
+      "killed": true,
+      "snippet": "2",
+      "patch": "2  =>  20",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[1]",
+      "op": "boolop_swap",
+      "line": 139,
+      "killed": true,
+      "snippet": "j < len(lines) and lines[j].lstrip().startswith(\"|\")",
+      "patch": "j < len(lines) and lines[j].lstrip().startswith('|')  =>  j < len(lines) or lines[j].lstrip().startswith('|')",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[5]",
+      "op": "cmp_swap",
+      "line": 139,
+      "killed": true,
+      "snippet": "j < len(lines)",
+      "patch": "j < len(lines)  =>  j <= len(lines)",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[11]",
+      "op": "binop_swap",
+      "line": 142,
+      "killed": false,
+      "snippet": "i + 1",
+      "patch": "i + 1  =>  i - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "boolop_swap[2]",
+      "op": "boolop_swap",
+      "line": 167,
+      "killed": true,
+      "snippet": "_ERR_HDR.search(h) and not _ERR_THRESHOLD.search(h)",
+      "patch": "_ERR_HDR.search(h) and (not _ERR_THRESHOLD.search(h))  =>  _ERR_HDR.search(h) or not _ERR_THRESHOLD.search(h)",
+      "detail": ""
+    },
+    {
+      "name": "not_removal[1]",
+      "op": "not_removal",
+      "line": 167,
+      "killed": true,
+      "snippet": "not _ERR_THRESHOLD.search(h)",
+      "patch": "not _ERR_THRESHOLD.search(h)  =>  _ERR_THRESHOLD.search(h)",
+      "detail": ""
+    },
+    {
+      "name": "not_removal[2]",
+      "op": "not_removal",
+      "line": 168,
+      "killed": true,
+      "snippet": "not err_idx",
+      "patch": "not err_idx  =>  err_idx",
+      "detail": ""
+    },
+    {
+      "name": "return_empty[0]",
+      "op": "return_empty",
+      "line": 169,
+      "killed": false,
+      "snippet": "return findings, checked",
+      "patch": "return (findings, checked)  =>  return ([], checked)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[6]",
+      "op": "cmp_swap",
+      "line": 172,
+      "killed": true,
+      "snippet": "i not in err_idx",
+      "patch": "i not in err_idx  =>  i in err_idx",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[3]",
+      "op": "boolop_swap",
+      "line": 173,
+      "killed": false,
+      "snippet": "i not in err_idx and i not in ref_idx",
+      "patch": "i not in err_idx and i not in ref_idx  =>  i not in err_idx or i not in ref_idx",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[7]",
+      "op": "cmp_swap",
+      "line": 173,
+      "killed": true,
+      "snippet": "i not in err_idx",
+      "patch": "i not in err_idx  =>  i in err_idx",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[8]",
+      "op": "cmp_swap",
+      "line": 173,
+      "killed": true,
+      "snippet": "i not in ref_idx",
+      "patch": "i not in ref_idx  =>  i in ref_idx",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[4]",
+      "op": "boolop_swap",
+      "line": 174,
+      "killed": false,
+      "snippet": "not ref_idx or not val_idx",
+      "patch": "not ref_idx or not val_idx  =>  not ref_idx and (not val_idx)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "not_removal[3]",
+      "op": "not_removal",
+      "line": 174,
+      "killed": true,
+      "snippet": "not ref_idx",
+      "patch": "not ref_idx  =>  ref_idx",
+      "detail": ""
+    },
+    {
+      "name": "not_removal[4]",
+      "op": "not_removal",
+      "line": 174,
+      "killed": true,
+      "snippet": "not val_idx",
+      "patch": "not val_idx  =>  val_idx",
+      "detail": ""
+    },
+    {
+      "name": "return_empty[1]",
+      "op": "return_empty",
+      "line": 175,
+      "killed": false,
+      "snippet": "return findings, checked",
+      "patch": "return (findings, checked)  =>  return ([], checked)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "boolop_swap[5]",
+      "op": "boolop_swap",
+      "line": 177,
+      "killed": false,
+      "snippet": "\"%\" in header[err_i] or \"％\" in header[err_i]\n              or bool(re.search(r\"(?i)(相对|relative|百分比)\", header[err_i]))",
+      "patch": "'%' in header[err_i] or '％' in header[err_i] or bool(re.search('(?i)(相对|relative  =>  '%' in header[err_i] and '％' in header[err_i] and bool(re.search('(?i)(相对|relati",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[9]",
+      "op": "cmp_swap",
+      "line": 177,
+      "killed": false,
+      "snippet": "\"%\" in header[err_i]",
+      "patch": "'%' in header[err_i]  =>  '%' not in header[err_i]",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "cmp_swap[10]",
+      "op": "cmp_swap",
+      "line": 177,
+      "killed": false,
+      "snippet": "\"％\" in header[err_i]",
+      "patch": "'％' in header[err_i]  =>  '％' not in header[err_i]",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "cmp_swap[11]",
+      "op": "cmp_swap",
+      "line": 180,
+      "killed": false,
+      "snippet": "max(err_i, ref_i, val_i) >= len(row)",
+      "patch": "max(err_i, ref_i, val_i) >= len(row)  =>  max(err_i, ref_i, val_i) > len(row)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "boolop_swap[6]",
+      "op": "boolop_swap",
+      "line": 184,
+      "killed": false,
+      "snippet": "stated is None or val is None or ref is None or ref == 0",
+      "patch": "stated is None or val is None or ref is None or (ref == 0)  =>  stated is None and val is None and (ref is None) and (ref == 0)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[12]",
+      "op": "cmp_swap",
+      "line": 184,
+      "killed": true,
+      "snippet": "stated is None",
+      "patch": "stated is None  =>  stated is not None",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[13]",
+      "op": "cmp_swap",
+      "line": 184,
+      "killed": true,
+      "snippet": "val is None",
+      "patch": "val is None  =>  val is not None",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[14]",
+      "op": "cmp_swap",
+      "line": 184,
+      "killed": true,
+      "snippet": "ref is None",
+      "patch": "ref is None  =>  ref is not None",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[15]",
+      "op": "cmp_swap",
+      "line": 184,
+      "killed": true,
+      "snippet": "ref == 0",
+      "patch": "ref == 0  =>  ref != 0",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[12]",
+      "op": "binop_swap",
+      "line": 187,
+      "killed": true,
+      "snippet": "(val - ref) / ref * 100.0",
+      "patch": "(val - ref) / ref * 100.0  =>  (val - ref) / ref / 100.0",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[13]",
+      "op": "binop_swap",
+      "line": 187,
+      "killed": true,
+      "snippet": "(val - ref) / ref",
+      "patch": "(val - ref) / ref  =>  (val - ref) * ref",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[14]",
+      "op": "binop_swap",
+      "line": 187,
+      "killed": true,
+      "snippet": "val - ref",
+      "patch": "val - ref  =>  val + ref",
+      "detail": ""
+    },
+    {
+      "name": "const_scale[3]",
+      "op": "const_scale",
+      "line": 187,
+      "killed": true,
+      "snippet": "100.0",
+      "patch": "100.0  =>  1000.0",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[7]",
+      "op": "boolop_swap",
+      "line": 189,
+      "killed": false,
+      "snippet": "not ok and not as_pct",
+      "patch": "not ok and (not as_pct)  =>  not ok or not as_pct",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "not_removal[5]",
+      "op": "not_removal",
+      "line": 189,
+      "killed": false,
+      "snippet": "not ok",
+      "patch": "not ok  =>  ok",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "not_removal[6]",
+      "op": "not_removal",
+      "line": 189,
+      "killed": false,
+      "snippet": "not as_pct",
+      "patch": "not as_pct  =>  as_pct",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "binop_swap[15]",
+      "op": "binop_swap",
+      "line": 190,
+      "killed": false,
+      "snippet": "pct / 100.0",
+      "patch": "pct / 100.0  =>  pct * 100.0",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "const_scale[4]",
+      "op": "const_scale",
+      "line": 190,
+      "killed": false,
+      "snippet": "100.0",
+      "patch": "100.0  =>  1000.0",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "not_removal[7]",
+      "op": "not_removal",
+      "line": 191,
+      "killed": true,
+      "snippet": "not ok",
+      "patch": "not ok  =>  ok",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[0]",
+      "op": "severity_flip",
+      "line": 193,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[16]",
+      "op": "binop_swap",
+      "line": 194,
+      "killed": false,
+      "snippet": "line_no + r_off + 1",
+      "patch": "line_no + r_off + 1  =>  line_no + r_off - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[17]",
+      "op": "binop_swap",
+      "line": 194,
+      "killed": false,
+      "snippet": "line_no + r_off",
+      "patch": "line_no + r_off  =>  line_no - r_off",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[18]",
+      "op": "binop_swap",
+      "line": 197,
+      "killed": false,
+      "snippet": "tol_rel*100",
+      "patch": "tol_rel * 100  =>  tol_rel / 100",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "const_scale[5]",
+      "op": "const_scale",
+      "line": 197,
+      "killed": false,
+      "snippet": "100",
+      "patch": "100  =>  1000",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "append_drop[0]",
+      "op": "append_drop",
+      "line": 192,
+      "killed": true,
+      "snippet": "findings.append({\n                \"code\": \"PG4_table_arithmetic\", \"severity\": \"FAIL\",\n                \"line\": line_no + r_off + 1,\n                \"detail\": (f\"",
+      "patch": "findings.append({'code': 'PG4_table_arithmetic', 'severity': 'FAIL', 'line': lin  =>  pass",
+      "detail": ""
+    },
+    {
+      "name": "return_empty[2]",
+      "op": "return_empty",
+      "line": 199,
+      "killed": true,
+      "snippet": "return findings, checked",
+      "patch": "return (findings, checked)  =>  return ([], checked)",
+      "detail": ""
+    },
+    {
+      "name": "const_scale[6]",
+      "op": "const_scale",
+      "line": 213,
+      "killed": true,
+      "snippet": "2",
+      "patch": "2  =>  20",
+      "detail": ""
+    },
+    {
+      "name": "const_scale[7]",
+      "op": "const_scale",
+      "line": 214,
+      "killed": true,
+      "snippet": "3",
+      "patch": "3  =>  30",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[8]",
+      "op": "boolop_swap",
+      "line": 215,
+      "killed": false,
+      "snippet": "None in (a, b, stated) or b == 0",
+      "patch": "None in (a, b, stated) or b == 0  =>  None in (a, b, stated) and b == 0",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[16]",
+      "op": "cmp_swap",
+      "line": 215,
+      "killed": true,
+      "snippet": "None in (a, b, stated)",
+      "patch": "None in (a, b, stated)  =>  None not in (a, b, stated)",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[17]",
+      "op": "cmp_swap",
+      "line": 215,
+      "killed": true,
+      "snippet": "b == 0",
+      "patch": "b == 0  =>  b != 0",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[19]",
+      "op": "binop_swap",
+      "line": 218,
+      "killed": true,
+      "snippet": "(a - b) / b * 100.0",
+      "patch": "(a - b) / b * 100.0  =>  (a - b) / b / 100.0",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[20]",
+      "op": "binop_swap",
+      "line": 218,
+      "killed": true,
+      "snippet": "(a - b) / b",
+      "patch": "(a - b) / b  =>  (a - b) * b",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[21]",
+      "op": "binop_swap",
+      "line": 218,
+      "killed": true,
+      "snippet": "a - b",
+      "patch": "a - b  =>  a + b",
+      "detail": ""
+    },
+    {
+      "name": "const_scale[8]",
+      "op": "const_scale",
+      "line": 218,
+      "killed": true,
+      "snippet": "100.0",
+      "patch": "100.0  =>  1000.0",
+      "detail": ""
+    },
+    {
+      "name": "const_scale[9]",
+      "op": "const_scale",
+      "line": 219,
+      "killed": true,
+      "snippet": "4",
+      "patch": "4  =>  40",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[9]",
+      "op": "boolop_swap",
+      "line": 221,
+      "killed": false,
+      "snippet": "not ok and not is_pct",
+      "patch": "not ok and (not is_pct)  =>  not ok or not is_pct",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "not_removal[8]",
+      "op": "not_removal",
+      "line": 221,
+      "killed": false,
+      "snippet": "not ok",
+      "patch": "not ok  =>  ok",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "not_removal[9]",
+      "op": "not_removal",
+      "line": 221,
+      "killed": false,
+      "snippet": "not is_pct",
+      "patch": "not is_pct  =>  is_pct",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[22]",
+      "op": "binop_swap",
+      "line": 222,
+      "killed": false,
+      "snippet": "pct / 100.0",
+      "patch": "pct / 100.0  =>  pct * 100.0",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "const_scale[10]",
+      "op": "const_scale",
+      "line": 222,
+      "killed": false,
+      "snippet": "100.0",
+      "patch": "100.0  =>  1000.0",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "not_removal[10]",
+      "op": "not_removal",
+      "line": 223,
+      "killed": true,
+      "snippet": "not ok",
+      "patch": "not ok  =>  ok",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[23]",
+      "op": "binop_swap",
+      "line": 224,
+      "killed": false,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "severity_flip[1]",
+      "op": "severity_flip",
+      "line": 226,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "const_scale[11]",
+      "op": "const_scale",
+      "line": 227,
+      "killed": false,
+      "snippet": "80",
+      "patch": "80  =>  800",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "append_drop[1]",
+      "op": "append_drop",
+      "line": 225,
+      "killed": true,
+      "snippet": "findings.append({\n                \"code\": \"PG5_inline_error\", \"severity\": \"FAIL\", \"line\": line,\n                \"detail\": (f\"«{m.group(0)[:80]}» 声明误差 {stated:g}",
+      "patch": "findings.append({'code': 'PG5_inline_error', 'severity': 'FAIL', 'line': line, '  =>  pass",
+      "detail": ""
+    },
+    {
+      "name": "return_empty[3]",
+      "op": "return_empty",
+      "line": 230,
+      "killed": true,
+      "snippet": "return findings, checked",
+      "patch": "return (findings, checked)  =>  return ([], checked)",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[24]",
+      "op": "binop_swap",
+      "line": 244,
+      "killed": true,
+      "snippet": "[r / token for r in roots] + [r.parent / token for r in roots]",
+      "patch": "[r / token for r in roots] + [r.parent / token for r in roots]  =>  [r / token for r in roots] - [r.parent / token for r in roots]",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[25]",
+      "op": "binop_swap",
+      "line": 244,
+      "killed": true,
+      "snippet": "r / token",
+      "patch": "r / token  =>  r * token",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[26]",
+      "op": "binop_swap",
+      "line": 244,
+      "killed": true,
+      "snippet": "r.parent / token",
+      "patch": "r.parent / token  =>  r.parent * token",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[10]",
+      "op": "boolop_swap",
+      "line": 265,
+      "killed": true,
+      "snippet": "is_cmd and \"/\" in tok and not _resolve_path(tok, roots)",
+      "patch": "is_cmd and '/' in tok and (not _resolve_path(tok, roots))  =>  is_cmd or '/' in tok or (not _resolve_path(tok, roots))",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[18]",
+      "op": "cmp_swap",
+      "line": 265,
+      "killed": true,
+      "snippet": "\"/\" in tok",
+      "patch": "'/' in tok  =>  '/' not in tok",
+      "detail": ""
+    },
+    {
+      "name": "not_removal[11]",
+      "op": "not_removal",
+      "line": 265,
+      "killed": true,
+      "snippet": "not _resolve_path(tok, roots)",
+      "patch": "not _resolve_path(tok, roots)  =>  _resolve_path(tok, roots)",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[2]",
+      "op": "severity_flip",
+      "line": 266,
+      "killed": false,
+      "snippet": "\"WARN\"",
+      "patch": "'WARN'  =>  'FAIL'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[27]",
+      "op": "binop_swap",
+      "line": 267,
+      "killed": false,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "append_drop[2]",
+      "op": "append_drop",
+      "line": 266,
+      "killed": false,
+      "snippet": "findings.append({\"code\": \"PG1_command_script\", \"severity\": \"WARN\",\n                             \"line\": md[:m.start()].count(\"\\n\") + 1,\n                        ",
+      "patch": "findings.append({'code': 'PG1_command_script', 'severity': 'WARN', 'line': md[:m  =>  pass",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "boolop_swap[11]",
+      "op": "boolop_swap",
+      "line": 270,
+      "killed": false,
+      "snippet": "\"/\" not in tok or tok.startswith((\"http://\", \"https://\"))",
+      "patch": "'/' not in tok or tok.startswith(('http://', 'https://'))  =>  '/' not in tok and tok.startswith(('http://', 'https://'))",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[19]",
+      "op": "cmp_swap",
+      "line": 270,
+      "killed": true,
+      "snippet": "\"/\" not in tok",
+      "patch": "'/' not in tok  =>  '/' in tok",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[12]",
+      "op": "boolop_swap",
+      "line": 272,
+      "killed": true,
+      "snippet": "Path(tok).suffix.lower() not in PATH_SUFFIX and \"*\" not in tok",
+      "patch": "Path(tok).suffix.lower() not in PATH_SUFFIX and '*' not in tok  =>  Path(tok).suffix.lower() not in PATH_SUFFIX or '*' not in tok",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[20]",
+      "op": "cmp_swap",
+      "line": 272,
+      "killed": true,
+      "snippet": "Path(tok).suffix.lower() not in PATH_SUFFIX",
+      "patch": "Path(tok).suffix.lower() not in PATH_SUFFIX  =>  Path(tok).suffix.lower() in PATH_SUFFIX",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[21]",
+      "op": "cmp_swap",
+      "line": 272,
+      "killed": true,
+      "snippet": "\"*\" not in tok",
+      "patch": "'*' not in tok  =>  '*' in tok",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[3]",
+      "op": "severity_flip",
+      "line": 279,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "binop_swap[28]",
+      "op": "binop_swap",
+      "line": 280,
+      "killed": false,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "append_drop[3]",
+      "op": "append_drop",
+      "line": 278,
+      "killed": true,
+      "snippet": "findings.append({\n                \"code\": \"PG1_phantom_path\", \"severity\": \"FAIL\",\n                \"line\": md[:m.start()].count(\"\\n\") + 1,\n                \"detai",
+      "patch": "findings.append({'code': 'PG1_phantom_path', 'severity': 'FAIL', 'line': md[:m.s  =>  pass",
+      "detail": ""
+    },
+    {
+      "name": "return_empty[4]",
+      "op": "return_empty",
+      "line": 283,
+      "killed": true,
+      "snippet": "return findings, total, resolved",
+      "patch": "return (findings, total, resolved)  =>  return ([], total, resolved)",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[22]",
+      "op": "cmp_swap",
+      "line": 293,
+      "killed": true,
+      "snippet": "rid in known",
+      "patch": "rid in known  =>  rid not in known",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[4]",
+      "op": "severity_flip",
+      "line": 297,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[29]",
+      "op": "binop_swap",
+      "line": 298,
+      "killed": false,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "append_drop[4]",
+      "op": "append_drop",
+      "line": 296,
+      "killed": true,
+      "snippet": "findings.append({\n                \"code\": \"PG2_phantom_report\", \"severity\": \"FAIL\",\n                \"line\": md[:m.start()].count(\"\\n\") + 1,\n                \"det",
+      "patch": "findings.append({'code': 'PG2_phantom_report', 'severity': 'FAIL', 'line': md[:m  =>  pass",
+      "detail": ""
+    },
+    {
+      "name": "return_empty[5]",
+      "op": "return_empty",
+      "line": 301,
+      "killed": true,
+      "snippet": "return findings, total, resolved",
+      "patch": "return (findings, total, resolved)  =>  return ([], total, resolved)",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[30]",
+      "op": "binop_swap",
+      "line": 311,
+      "killed": true,
+      "snippet": "bundle / ref",
+      "patch": "bundle / ref  =>  bundle * ref",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[31]",
+      "op": "binop_swap",
+      "line": 312,
+      "killed": true,
+      "snippet": "Path(str(r)) / ref",
+      "patch": "Path(str(r)) / ref  =>  Path(str(r)) * ref",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[32]",
+      "op": "binop_swap",
+      "line": 313,
+      "killed": true,
+      "snippet": "Path(str(r)) / ref.split(\"/\", 1)[-1]",
+      "patch": "Path(str(r)) / ref.split('/', 1)[-1]  =>  Path(str(r)) * ref.split('/', 1)[-1]",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[5]",
+      "op": "severity_flip",
+      "line": 319,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[33]",
+      "op": "binop_swap",
+      "line": 320,
+      "killed": false,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "append_drop[5]",
+      "op": "append_drop",
+      "line": 318,
+      "killed": true,
+      "snippet": "findings.append({\n                \"code\": \"PG3_phantom_figure\", \"severity\": \"FAIL\",\n                \"line\": md[:m.start()].count(\"\\n\") + 1,\n                \"det",
+      "patch": "findings.append({'code': 'PG3_phantom_figure', 'severity': 'FAIL', 'line': md[:m  =>  pass",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[34]",
+      "op": "binop_swap",
+      "line": 324,
+      "killed": true,
+      "snippet": "bundle / \"figures\"",
+      "patch": "bundle / 'figures'  =>  bundle * 'figures'",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[13]",
+      "op": "boolop_swap",
+      "line": 328,
+      "killed": false,
+      "snippet": "f.stem in md or (stem_key and\n                                         f\"fig{stem_key.group(1)}\" in md.lower())",
+      "patch": "f.stem in md or (stem_key and f'fig{stem_key.group(1)}' in md.lower())  =>  f.stem in md and (stem_key and f'fig{stem_key.group(1)}' in md.lower())",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[23]",
+      "op": "cmp_swap",
+      "line": 328,
+      "killed": true,
+      "snippet": "f.stem in md",
+      "patch": "f.stem in md  =>  f.stem not in md",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[14]",
+      "op": "boolop_swap",
+      "line": 328,
+      "killed": true,
+      "snippet": "stem_key and\n                                         f\"fig{stem_key.group(1)}\" in md.lower()",
+      "patch": "stem_key and f'fig{stem_key.group(1)}' in md.lower()  =>  stem_key or f'fig{stem_key.group(1)}' in md.lower()",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[24]",
+      "op": "cmp_swap",
+      "line": 329,
+      "killed": true,
+      "snippet": "f\"fig{stem_key.group(1)}\" in md.lower()",
+      "patch": "f'fig{stem_key.group(1)}' in md.lower()  =>  f'fig{stem_key.group(1)}' not in md.lower()",
+      "detail": ""
+    },
+    {
+      "name": "not_removal[12]",
+      "op": "not_removal",
+      "line": 330,
+      "killed": true,
+      "snippet": "not cited",
+      "patch": "not cited  =>  cited",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[6]",
+      "op": "severity_flip",
+      "line": 332,
+      "killed": false,
+      "snippet": "\"WARN\"",
+      "patch": "'WARN'  =>  'FAIL'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "append_drop[6]",
+      "op": "append_drop",
+      "line": 331,
+      "killed": true,
+      "snippet": "findings.append({\n                        \"code\": \"PG3_zero_citation_figure\", \"severity\": \"WARN\",\n                        \"line\": None,\n                        ",
+      "patch": "findings.append({'code': 'PG3_zero_citation_figure', 'severity': 'WARN', 'line':  =>  pass",
+      "detail": ""
+    },
+    {
+      "name": "return_empty[6]",
+      "op": "return_empty",
+      "line": 336,
+      "killed": true,
+      "snippet": "return findings, total, resolved",
+      "patch": "return (findings, total, resolved)  =>  return ([], total, resolved)",
+      "detail": ""
+    },
+    {
+      "name": "const_scale[12]",
+      "op": "const_scale",
+      "line": 344,
+      "killed": true,
+      "snippet": "2",
+      "patch": "2  =>  20",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[25]",
+      "op": "cmp_swap",
+      "line": 348,
+      "killed": true,
+      "snippet": "path is None",
+      "patch": "path is None  =>  path is not None",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[26]",
+      "op": "cmp_swap",
+      "line": 350,
+      "killed": true,
+      "snippet": "path.suffix.lower() not in (\".json\",)",
+      "patch": "path.suffix.lower() not in ('.json',)  =>  path.suffix.lower() in ('.json',)",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[35]",
+      "op": "binop_swap",
+      "line": 354,
+      "killed": false,
+      "snippet": "m.end() + 160",
+      "patch": "m.end() + 160  =>  m.end() - 160",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "const_scale[13]",
+      "op": "const_scale",
+      "line": 354,
+      "killed": false,
+      "snippet": "160",
+      "patch": "160  =>  1600",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "cmp_swap[27]",
+      "op": "cmp_swap",
+      "line": 359,
+      "killed": true,
+      "snippet": "value is None",
+      "patch": "value is None  =>  value is not None",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[7]",
+      "op": "severity_flip",
+      "line": 361,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.09s"
+    },
+    {
+      "name": "binop_swap[36]",
+      "op": "binop_swap",
+      "line": 362,
+      "killed": false,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "append_drop[7]",
+      "op": "append_drop",
+      "line": 360,
+      "killed": false,
+      "snippet": "findings.append({\n                    \"code\": \"PG6_anchor_mismatch\", \"severity\": \"FAIL\",\n                    \"line\": md[:m.start()].count(\"\\n\") + 1,\n           ",
+      "patch": "findings.append({'code': 'PG6_anchor_mismatch', 'severity': 'FAIL', 'line': md[:  =>  pass",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "boolop_swap[15]",
+      "op": "boolop_swap",
+      "line": 366,
+      "killed": false,
+      "snippet": "isinstance(value, (int, float)) and stated is not None",
+      "patch": "isinstance(value, (int, float)) and stated is not None  =>  isinstance(value, (int, float)) or stated is not None",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[28]",
+      "op": "cmp_swap",
+      "line": 366,
+      "killed": false,
+      "snippet": "stated is not None",
+      "patch": "stated is not None  =>  stated is None",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "severity_flip[8]",
+      "op": "severity_flip",
+      "line": 371,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "binop_swap[37]",
+      "op": "binop_swap",
+      "line": 372,
+      "killed": false,
+      "snippet": "md[:m.start()].count(\"\\n\") + 1",
+      "patch": "md[:m.start()].count('\\n') + 1  =>  md[:m.start()].count('\\n') - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "append_drop[8]",
+      "op": "append_drop",
+      "line": 370,
+      "killed": false,
+      "snippet": "findings.append({\n                        \"code\": \"PG6_anchor_mismatch\", \"severity\": \"FAIL\",\n                        \"line\": md[:m.start()].count(\"\\n\") + 1,\n   ",
+      "patch": "findings.append({'code': 'PG6_anchor_mismatch', 'severity': 'FAIL', 'line': md[:  =>  pass",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "return_empty[7]",
+      "op": "return_empty",
+      "line": 377,
+      "killed": false,
+      "snippet": "return findings, total, resolved",
+      "patch": "return (findings, total, resolved)  =>  return ([], total, resolved)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "boolop_swap[16]",
+      "op": "boolop_swap",
+      "line": 389,
+      "killed": false,
+      "snippet": "isinstance(node, dict) and part in node",
+      "patch": "isinstance(node, dict) and part in node  =>  isinstance(node, dict) or part in node",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "cmp_swap[29]",
+      "op": "cmp_swap",
+      "line": 389,
+      "killed": true,
+      "snippet": "part in node",
+      "patch": "part in node  =>  part not in node",
+      "detail": ""
+    },
+    {
+      "name": "not_removal[13]",
+      "op": "not_removal",
+      "line": 411,
+      "killed": true,
+      "snippet": "not src_cols",
+      "patch": "not src_cols  =>  src_cols",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[30]",
+      "op": "cmp_swap",
+      "line": 416,
+      "killed": false,
+      "snippet": "i >= len(row)",
+      "patch": "i >= len(row)  =>  i > len(row)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "not_removal[14]",
+      "op": "not_removal",
+      "line": 420,
+      "killed": true,
+      "snippet": "not cited",
+      "patch": "not cited  =>  cited",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[31]",
+      "op": "cmp_swap",
+      "line": 425,
+      "killed": true,
+      "snippet": "rid not in report_texts",
+      "patch": "rid not in report_texts  =>  rid in report_texts",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[17]",
+      "op": "boolop_swap",
+      "line": 429,
+      "killed": false,
+      "snippet": "missing_src or not corpus",
+      "patch": "missing_src or not corpus  =>  missing_src and (not corpus)",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "not_removal[15]",
+      "op": "not_removal",
+      "line": 429,
+      "killed": true,
+      "snippet": "not corpus",
+      "patch": "not corpus  =>  corpus",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[9]",
+      "op": "severity_flip",
+      "line": 431,
+      "killed": true,
+      "snippet": "\"WARN\"",
+      "patch": "'WARN'  =>  'FAIL'",
+      "detail": ""
+    },
+    {
+      "name": "binop_swap[38]",
+      "op": "binop_swap",
+      "line": 432,
+      "killed": false,
+      "snippet": "line_no + r_off + 1",
+      "patch": "line_no + r_off + 1  =>  line_no + r_off - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[39]",
+      "op": "binop_swap",
+      "line": 432,
+      "killed": false,
+      "snippet": "line_no + r_off",
+      "patch": "line_no + r_off  =>  line_no - r_off",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "append_drop[9]",
+      "op": "append_drop",
+      "line": 430,
+      "killed": true,
+      "snippet": "findings.append({\n                    \"code\": \"PG8_source_unavailable\", \"severity\": \"WARN\",\n                    \"line\": line_no + r_off + 1,\n                   ",
+      "patch": "findings.append({'code': 'PG8_source_unavailable', 'severity': 'WARN', 'line': l  =>  pass",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[32]",
+      "op": "cmp_swap",
+      "line": 437,
+      "killed": true,
+      "snippet": "i in src_cols",
+      "patch": "i in src_cols  =>  i not in src_cols",
+      "detail": ""
+    },
+    {
+      "name": "const_scale[14]",
+      "op": "const_scale",
+      "line": 444,
+      "killed": false,
+      "snippet": "1e-6",
+      "patch": "1e-06  =>  9.999999999999999e-06",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "severity_flip[10]",
+      "op": "severity_flip",
+      "line": 448,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[40]",
+      "op": "binop_swap",
+      "line": 449,
+      "killed": false,
+      "snippet": "line_no + r_off + 1",
+      "patch": "line_no + r_off + 1  =>  line_no + r_off - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[41]",
+      "op": "binop_swap",
+      "line": 449,
+      "killed": false,
+      "snippet": "line_no + r_off",
+      "patch": "line_no + r_off  =>  line_no - r_off",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "append_drop[10]",
+      "op": "append_drop",
+      "line": 447,
+      "killed": true,
+      "snippet": "findings.append({\n                            \"code\": \"PG8_value_not_in_source\", \"severity\": \"FAIL\",\n                            \"line\": line_no + r_off + 1,\n  ",
+      "patch": "findings.append({'code': 'PG8_value_not_in_source', 'severity': 'FAIL', 'line':   =>  pass",
+      "detail": ""
+    },
+    {
+      "name": "return_empty[8]",
+      "op": "return_empty",
+      "line": 453,
+      "killed": true,
+      "snippet": "return findings, total, resolved",
+      "patch": "return (findings, total, resolved)  =>  return ([], total, resolved)",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[33]",
+      "op": "cmp_swap",
+      "line": 465,
+      "killed": false,
+      "snippet": "parse_number(c) is not None",
+      "patch": "parse_number(c) is not None  =>  parse_number(c) is None",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[42]",
+      "op": "binop_swap",
+      "line": 468,
+      "killed": false,
+      "snippet": "stats[\"paths\"][\"total\"] + stats[\"anchors\"][\"total\"]",
+      "patch": "stats['paths']['total'] + stats['anchors']['total']  =>  stats['paths']['total'] - stats['anchors']['total']",
+      "detail": "21 passed in 0.10s"
+    },
+    {
+      "name": "boolop_swap[18]",
+      "op": "boolop_swap",
+      "line": 469,
+      "killed": true,
+      "snippet": "table_numbers and artifact_anchors == 0",
+      "patch": "table_numbers and artifact_anchors == 0  =>  table_numbers or artifact_anchors == 0",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[34]",
+      "op": "cmp_swap",
+      "line": 469,
+      "killed": true,
+      "snippet": "artifact_anchors == 0",
+      "patch": "artifact_anchors == 0  =>  artifact_anchors != 0",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[11]",
+      "op": "severity_flip",
+      "line": 471,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "const_scale[15]",
+      "op": "const_scale",
+      "line": 483,
+      "killed": false,
+      "snippet": "0.05",
+      "patch": "0.05  =>  0.5",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "const_scale[16]",
+      "op": "const_scale",
+      "line": 483,
+      "killed": false,
+      "snippet": "0.005",
+      "patch": "0.005  =>  0.05",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[35]",
+      "op": "cmp_swap",
+      "line": 517,
+      "killed": true,
+      "snippet": "report_texts is not None",
+      "patch": "report_texts is not None  =>  report_texts is None",
+      "detail": ""
+    },
+    {
+      "name": "boolop_swap[19]",
+      "op": "boolop_swap",
+      "line": 525,
+      "killed": true,
+      "snippet": "isinstance(v, dict) and \"total\" in v",
+      "patch": "isinstance(v, dict) and 'total' in v  =>  isinstance(v, dict) or 'total' in v",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[36]",
+      "op": "cmp_swap",
+      "line": 525,
+      "killed": false,
+      "snippet": "\"total\" in v",
+      "patch": "'total' in v  =>  'total' not in v",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "boolop_swap[20]",
+      "op": "boolop_swap",
+      "line": 527,
+      "killed": true,
+      "snippet": "isinstance(v, dict) and \"resolved\" in v",
+      "patch": "isinstance(v, dict) and 'resolved' in v  =>  isinstance(v, dict) or 'resolved' in v",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[37]",
+      "op": "cmp_swap",
+      "line": 527,
+      "killed": true,
+      "snippet": "\"resolved\" in v",
+      "patch": "'resolved' in v  =>  'resolved' not in v",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[38]",
+      "op": "cmp_swap",
+      "line": 528,
+      "killed": true,
+      "snippet": "x[\"severity\"] == \"FAIL\"",
+      "patch": "x['severity'] == 'FAIL'  =>  x['severity'] != 'FAIL'",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[12]",
+      "op": "severity_flip",
+      "line": 528,
+      "killed": true,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": ""
+    },
+    {
+      "name": "cmp_swap[39]",
+      "op": "cmp_swap",
+      "line": 529,
+      "killed": false,
+      "snippet": "x[\"severity\"] == \"WARN\"",
+      "patch": "x['severity'] == 'WARN'  =>  x['severity'] != 'WARN'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "severity_flip[13]",
+      "op": "severity_flip",
+      "line": 529,
+      "killed": false,
+      "snippet": "\"WARN\"",
+      "patch": "'WARN'  =>  'FAIL'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[43]",
+      "op": "binop_swap",
+      "line": 532,
+      "killed": false,
+      "snippet": "by_code.get(x[\"code\"], 0) + 1",
+      "patch": "by_code.get(x['code'], 0) + 1  =>  by_code.get(x['code'], 0) - 1",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "severity_flip[14]",
+      "op": "severity_flip",
+      "line": 535,
+      "killed": true,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": ""
+    },
+    {
+      "name": "severity_flip[15]",
+      "op": "severity_flip",
+      "line": 535,
+      "killed": false,
+      "snippet": "\"WARN\"",
+      "patch": "'WARN'  =>  'FAIL'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "binop_swap[44]",
+      "op": "binop_swap",
+      "line": 540,
+      "killed": true,
+      "snippet": "n_res / n_total",
+      "patch": "n_res / n_total  =>  n_res * n_total",
+      "detail": ""
+    },
+    {
+      "name": "const_scale[17]",
+      "op": "const_scale",
+      "line": 540,
+      "killed": false,
+      "snippet": "4",
+      "patch": "4  =>  40",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "const_scale[18]",
+      "op": "const_scale",
+      "line": 556,
+      "killed": false,
+      "snippet": "0.05",
+      "patch": "0.05  =>  0.5",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "const_scale[19]",
+      "op": "const_scale",
+      "line": 557,
+      "killed": false,
+      "snippet": "0.005",
+      "patch": "0.005  =>  0.05",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "not_removal[16]",
+      "op": "not_removal",
+      "line": 564,
+      "killed": false,
+      "snippet": "not mp.is_file()",
+      "patch": "not mp.is_file()  =>  mp.is_file()",
+      "detail": "21 passed in 0.08s"
+    },
+    {
+      "name": "const_scale[20]",
+      "op": "const_scale",
+      "line": 566,
+      "killed": false,
+      "snippet": "2",
+      "patch": "2  =>  20",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "const_scale[21]",
+      "op": "const_scale",
+      "line": 587,
+      "killed": false,
+      "snippet": "2",
+      "patch": "2  =>  20",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "const_scale[22]",
+      "op": "const_scale",
+      "line": 590,
+      "killed": false,
+      "snippet": "2",
+      "patch": "2  =>  20",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "const_scale[23]",
+      "op": "const_scale",
+      "line": 591,
+      "killed": false,
+      "snippet": "40",
+      "patch": "40  =>  400",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "cmp_swap[40]",
+      "op": "cmp_swap",
+      "line": 593,
+      "killed": false,
+      "snippet": "out[\"verdict\"] != \"FAIL\"",
+      "patch": "out['verdict'] != 'FAIL'  =>  out['verdict'] == 'FAIL'",
+      "detail": "21 passed in 0.07s"
+    },
+    {
+      "name": "severity_flip[16]",
+      "op": "severity_flip",
+      "line": 593,
+      "killed": false,
+      "snippet": "\"FAIL\"",
+      "patch": "'FAIL'  =>  'WARN'",
+      "detail": "21 passed in 0.06s"
+    },
+    {
+      "name": "cmp_swap[41]",
+      "op": "cmp_swap",
+      "line": 596,
+      "killed": true,
+      "snippet": "__name__ == \"__main__\"",
+      "patch": "__name__ == '__main__'  =>  __name__ != '__main__'",
+      "detail": ""
+    }
+  ]
+}
