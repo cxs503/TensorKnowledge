@@ -1,0 +1,618 @@
+{
+  "package_id": "wp-12565-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12565",
+  "provenance": {
+    "source_hash": "sha256:a5a04a43beed973865029e9ade6c0de33a88e17a795bea13b55ef4c083571d20",
+    "source_field": "markdown",
+    "producer": "agent/m15749",
+    "emitted_at": "2026-11-12T02:30:41+00:00",
+    "notes": "sha256 recomputed with hashlib over the UTF-8 bytes of the markdown field fetched from GET /api/v1/tensor/reports/12565; identical to the contract source_hash. Identity check only - no claim is marked verified."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-12565-01",
+      "task_type": "01-asset-registration",
+      "report_id": "12565",
+      "lane": "C",
+      "contract_version": "1.0",
+      "generated_at": "2026-11-12T02:30:41+00:00",
+      "producer": "agent/m15749",
+      "source": {
+        "uri": "tensor://reports/12565",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "a5a04a43beed973865029e9ade6c0de33a88e17a795bea13b55ef4c083571d20",
+        "hash_with_prefix": "sha256:a5a04a43beed973865029e9ade6c0de33a88e17a795bea13b55ef4c083571d20",
+        "contract_hash": "sha256:a5a04a43beed973865029e9ade6c0de33a88e17a795bea13b55ef4c083571d20",
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "chars": 648,
+        "contract_chars": 648,
+        "chars_match_contract": true,
+        "bytes_utf8": 1086,
+        "lines": 12,
+        "title": "P156W2-N03 报告勘误：球阻归一化口径（nu_formula vs nu_eff）",
+        "scenario_key": "lbm_d3q27_poiseuille_stokes",
+        "contract_title": "P156W2-N03 报告勘误：球阻归一化口径（nu_formula vs nu_eff）",
+        "contract_scenario_key": "lbm_d3q27_poiseuille_stokes",
+        "title_matches_contract": true,
+        "scenario_matches_contract": true,
+        "platform_figures": [],
+        "platform_tags": [
+          "D3Q27",
+          "corrigendum",
+          "TensorLBM"
+        ],
+        "platform_mission_id": 10870,
+        "platform_status": "published",
+        "platform_created_at": "2026-11-10T21:44:49.735945+00:00",
+        "summary_field_len_chars": 102,
+        "line_counting": "1-based over markdown.rstrip('\\n').split('\\n'); char spans are python str offsets over the same unicode string"
+      },
+      "counts": {
+        "assets": 8,
+        "by_class": {
+          "source_document": 1,
+          "upstream_report_reference": 1,
+          "data_artifact_reference": 1,
+          "data_field_reference": 3,
+          "inline_markdown_table": 1,
+          "analytic_reference": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 4,
+          "referenced_unresolved": 4
+        },
+        "resolved_in_source": 4,
+        "referenced_unresolved": 4,
+        "declared_absent": 0,
+        "literal_anchors": 18
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "source_document",
+          "label": "report 12565 markdown (whole document)",
+          "in_report_section": "whole document",
+          "uri": "tensor://reports/12565",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 0,
+            "end_char": 37,
+            "start_line": 1,
+            "end_line": 1,
+            "quote": "# P156W2-N03 报告勘误（对应 report id 12563）",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "sha256 over the UTF-8 bytes of record.markdown == contract source_hash",
+            "result": "resolved"
+          },
+          "note": "bytes fetched via GET /api/v1/tensor/reports/12565, hashed locally; the document is the registration target itself, so it resolves to itself",
+          "document_scope": {
+            "start_char": 0,
+            "end_char": 648,
+            "start_line": 1,
+            "end_line": 12,
+            "chars": 648,
+            "bytes_utf8": 1086
+          }
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "upstream_report_reference",
+          "label": "upstream report 12563 (the report this errata corrects)",
+          "in_report_section": "H1 title",
+          "uri": "tensor://reports/12563",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 17,
+            "end_char": 37,
+            "start_line": 1,
+            "end_line": 1,
+            "quote": "（对应 report id 12563）",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "record fetch of report 12563 deliberately not performed (package scope boundary)",
+            "result": "unresolved"
+          },
+          "note": "the id is quoted verbatim, but this package is restricted to report_id=12565 and must not read other report_ids, so its body/artifacts stay unverified here"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "data_artifact_reference",
+          "label": "artifacts/sphere_resolution.json (declared artifact holding both K values)",
+          "in_report_section": "corrigendum table",
+          "uri": "artifacts/sphere_resolution.json",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 273,
+            "end_char": 305,
+            "start_line": 7,
+            "end_line": 7,
+            "quote": "artifacts/sphere_resolution.json",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "artifact endpoints probed for report 12565; no payload served (see artifact_probe)",
+            "result": "unresolved"
+          },
+          "note": "path is quoted verbatim; the file is an artifact of the upstream report, not part of this record, and no reachable endpoint serves it"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "data_field_reference",
+          "label": "declared JSON fields k_measured / k_measured_effective_nu inside A03",
+          "in_report_section": "corrigendum table",
+          "uri": "artifacts/sphere_resolution.json#k_measured,k_measured_effective_nu",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 305,
+            "end_char": 343,
+            "start_line": 7,
+            "end_line": 7,
+            "quote": "（k_measured / k_measured_effective_nu）",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "field names are quoted verbatim; the enclosing artifact A03 does not resolve",
+            "result": "unresolved"
+          },
+          "note": "the two normalisation variants the errata distinguishes live in these two fields; field names are registered, values are not extracted"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "inline_markdown_table",
+          "label": "the two-row corrigendum table (量 / 摘要行写的 / 正文·工件 / 差异原因)",
+          "in_report_section": "corrigendum table",
+          "uri": "tensor://reports/12565#table-1",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 90,
+            "end_char": 121,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "| 量 | 摘要行写的 | 正文/工件（准） | 差异原因 |",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table structure parsed from the markdown (header cells + contiguous pipe rows)",
+            "result": "resolved"
+          },
+          "note": "structure registered only (header_cells / data_rows); cell values are not extracted",
+          "structure": {
+            "header_cells": 4,
+            "data_rows": 2,
+            "table_end_line": 8
+          }
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "data_field_reference",
+          "label": "formula-viscosity normalisation (tau-1/2)/3",
+          "in_report_section": "corrigendum table",
+          "uri": "tensor://reports/12565#nu_formula",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 200,
+            "end_char": 211,
+            "start_line": 7,
+            "end_line": 7,
+            "quote": "(tau-1/2)/3",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "normalisation expression quoted verbatim",
+            "result": "resolved"
+          },
+          "note": "the errata names this normalisation as the source of the 8.32 % variant; the expression is registered as written, its definition(s) are not re-derived here"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "data_field_reference",
+          "label": "lattice-BGK effective-viscosity normalisation (nu_eff)",
+          "in_report_section": "corrigendum table",
+          "uri": "tensor://reports/12565#nu_eff",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 228,
+            "end_char": 249,
+            "start_line": 7,
+            "end_line": 7,
+            "quote": "格子 BGK 有效黏性 nu_eff 归一",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "normalisation phrase quoted verbatim",
+            "result": "resolved"
+          },
+          "note": "the body-preferred normalisation; registered as a named quantity, not recomputed here"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "analytic_reference",
+          "label": "Hasimoto drag correlation (benchmark reference curve)",
+          "in_report_section": "corrigendum table",
+          "uri": "tensor://reports/12565#hasimoto",
+          "locator": {
+            "method": "char_span",
+            "source_field": "markdown",
+            "start_char": 142,
+            "end_char": 162,
+            "start_line": 7,
+            "end_line": 7,
+            "quote": "球阻 vs Hasimoto（D=12）",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "bibliographic identifier (DOI/edition/year) present in the registered markdown",
+            "result": "unresolved"
+          },
+          "note": "the reference is cited by name only - no year, edition or DOI appears in the markdown, so the exact correlation cannot be resolved to a source"
+        }
+      ],
+      "literal_anchors": [
+        {
+          "locator_id": "L01",
+          "kind": "number_literal",
+          "quote": "8.3 %",
+          "meaning_as_written": "summary-line value, D=12 (as reported in the abstract line)",
+          "source_field": "markdown",
+          "start_char": 165,
+          "end_char": 170,
+          "start_line": 7,
+          "end_line": 7,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L02",
+          "kind": "number_literal",
+          "quote": "7.59 %",
+          "meaning_as_written": "body/artifact value, D=12 (preferred normalisation)",
+          "source_field": "markdown",
+          "start_char": 175,
+          "end_char": 181,
+          "start_line": 7,
+          "end_line": 7,
+          "occurrences": 2,
+          "unique": false,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L03",
+          "kind": "number_literal",
+          "quote": "8.32 %",
+          "meaning_as_written": "D=12 error recomputed with the formula viscosity",
+          "source_field": "markdown",
+          "start_char": 186,
+          "end_char": 192,
+          "start_line": 7,
+          "end_line": 7,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L04",
+          "kind": "number_literal",
+          "quote": "K=1.6775",
+          "meaning_as_written": "K with formula viscosity (tau-1/2)/3",
+          "source_field": "markdown",
+          "start_char": 216,
+          "end_char": 224,
+          "start_line": 7,
+          "end_line": 7,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L05",
+          "kind": "number_literal",
+          "quote": "K=1.6909",
+          "meaning_as_written": "K with lattice-BGK effective viscosity",
+          "source_field": "markdown",
+          "start_char": 250,
+          "end_char": 258,
+          "start_line": 7,
+          "end_line": 7,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L06",
+          "kind": "number_literal",
+          "quote": "10.2 %",
+          "meaning_as_written": "summary-line value, D=8 (as reported in the abstract line)",
+          "source_field": "markdown",
+          "start_char": 360,
+          "end_char": 366,
+          "start_line": 8,
+          "end_line": 8,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L07",
+          "kind": "number_literal",
+          "quote": "10.22 %",
+          "meaning_as_written": "body value, D=8",
+          "source_field": "markdown",
+          "start_char": 369,
+          "end_char": 376,
+          "start_line": 8,
+          "end_line": 8,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L08",
+          "kind": "number_literal",
+          "quote": "2.33 %",
+          "meaning_as_written": "1/D -> 0 intercept of a two-point linear extrapolation",
+          "source_field": "markdown",
+          "start_char": 431,
+          "end_char": 437,
+          "start_line": 10,
+          "end_line": 10,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L09",
+          "kind": "number_literal",
+          "quote": "0.8628",
+          "meaning_as_written": "measured K ratio for the two blockage ratios a/L=1/6 and 1/8",
+          "source_field": "markdown",
+          "start_char": 525,
+          "end_char": 531,
+          "start_line": 10,
+          "end_line": 10,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L10",
+          "kind": "number_literal",
+          "quote": "0.8363",
+          "meaning_as_written": "Hasimoto K ratio for the same two blockage ratios",
+          "source_field": "markdown",
+          "start_char": 544,
+          "end_char": 550,
+          "start_line": 10,
+          "end_line": 10,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L11",
+          "kind": "number_literal",
+          "quote": "a/L=1/6",
+          "meaning_as_written": "first blockage ratio",
+          "source_field": "markdown",
+          "start_char": 503,
+          "end_char": 510,
+          "start_line": 10,
+          "end_line": 10,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L12",
+          "kind": "number_literal",
+          "quote": "1.112 %",
+          "meaning_as_written": "Poiseuille error, first entry",
+          "source_field": "markdown",
+          "start_char": 577,
+          "end_char": 584,
+          "start_line": 12,
+          "end_line": 12,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L13",
+          "kind": "number_literal",
+          "quote": "0.278 %",
+          "meaning_as_written": "Poiseuille error, second entry",
+          "source_field": "markdown",
+          "start_char": 585,
+          "end_char": 592,
+          "start_line": 12,
+          "end_line": 12,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L14",
+          "kind": "number_literal",
+          "quote": "0.070 %",
+          "meaning_as_written": "Poiseuille error, third entry",
+          "source_field": "markdown",
+          "start_char": 593,
+          "end_char": 600,
+          "start_line": 12,
+          "end_line": 12,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L15",
+          "kind": "number_literal",
+          "quote": "阶 2.00",
+          "meaning_as_written": "observed Poiseuille convergence order",
+          "source_field": "markdown",
+          "start_char": 601,
+          "end_char": 607,
+          "start_line": 12,
+          "end_line": 12,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L16",
+          "kind": "number_literal",
+          "quote": "4e-9",
+          "meaning_as_written": "wall force balance residual",
+          "source_field": "markdown",
+          "start_char": 615,
+          "end_char": 619,
+          "start_line": 12,
+          "end_line": 12,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L17",
+          "kind": "number_literal",
+          "quote": "1e5 步",
+          "meaning_as_written": "stability run length in steps",
+          "source_field": "markdown",
+          "start_char": 624,
+          "end_char": 629,
+          "start_line": 12,
+          "end_line": 12,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        },
+        {
+          "locator_id": "L18",
+          "kind": "number_literal",
+          "quote": "3e-16",
+          "meaning_as_written": "third-moment residual",
+          "source_field": "markdown",
+          "start_char": 634,
+          "end_char": 639,
+          "start_line": 12,
+          "end_line": 12,
+          "occurrences": 1,
+          "unique": true,
+          "resolvable": true,
+          "is_claim": false
+        }
+      ],
+      "artifact_probe": {
+        "probes": [
+          {
+            "url": "http://127.0.0.1:8010/api/v1/openapi.json",
+            "http_status": 404
+          },
+          {
+            "url": "http://127.0.0.1:8010/api/v1/tensor/reports/12565/artifacts",
+            "http_status": 404
+          },
+          {
+            "url": "http://127.0.0.1:8010/api/v1/tensor/reports/12565/figures",
+            "http_status": 404
+          },
+          {
+            "url": "http://127.0.0.1:8010/api/v1/tensor/artifacts?report_id=12565",
+            "http_status": 404
+          }
+        ],
+        "conclusion": "no reachable endpoint serves payloads for this record; declared artifact paths therefore stop at locator level (referenced_unresolved), never at content level"
+      },
+      "identity_observations": [
+        {
+          "observation": "the contract title mentions nu_formula, the markdown body never does",
+          "check": "\"nu_formula\" in markdown",
+          "result": false,
+          "in_record_title": true,
+          "note": "the body names the formula-viscosity normalisation by its expression (tau-1/2)/3, so the title's token cannot be located as markdown text; it is registered via source.title only"
+        },
+        {
+          "observation": "the markdown H1 states the corrected report id, not the errata's title",
+          "check": "markdown.split(chr(10))[0]",
+          "result": "# P156W2-N03 报告勘误（对应 report id 12563）",
+          "note": "locator anchor for A01; the record title lives in the title field, not in H1"
+        },
+        {
+          "observation": "figure list is empty for this record",
+          "check": "len(record.figures)",
+          "result": 0,
+          "note": "the record declares no figures, so no attachment metadata can be registered"
+        }
+      ],
+      "claims": [],
+      "claims_empty_reason": "objective.register_assets=true / classify_report_type=false and constraint no_forced_claim_generation=true: this工序 registers asset identity and locators only. Extraction and claim formation belong to downstream工序, so an empty claims array is the complete result, not an omission. Nothing here is marked verified; verification is computed by the platform gate.",
+      "integrity": {
+        "quote_uniqueness": {
+          "assets_quoted": 8,
+          "anchors_quoted": 18,
+          "non_unique_quotes": [],
+          "all_unique": true
+        },
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "duplicate_asset_ids": [],
+        "ids_unique": true
+      },
+      "limitations": [
+        "single-report scope: only report_id=12565 is read; report 12563 (named in the markdown) and its artifacts are outside this package's boundary and stay unresolved",
+        "no extraction: no number is interpreted, compared or promoted to a claim; literal anchors record positions only",
+        "hash equality is a mechanical identity check, not an endorsement of the errata's numbers; verification stays with the platform gate",
+        "the corrected values (e.g. the 7.59 % variant) live in the upstream artifact JSON, which this package cannot read, so no value-level cross-check is made here",
+        "Hasimoto is cited by name only; no year/edition/DOI appears in the markdown"
+      ]
+    }
+  },
+  "claims": []
+}
