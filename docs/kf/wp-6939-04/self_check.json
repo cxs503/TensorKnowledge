@@ -1,0 +1,119 @@
+{
+  "package_id": "wp-6939-04",
+  "acceptance": {
+    "valid_json": {
+      "status": "pass",
+      "detail": "review_report.json and kf_result.json both parse"
+    },
+    "schema_pass": {
+      "status": "pass",
+      "detail": "kf_result.json validates against schemas/kf_result.v1.schema.json"
+    },
+    "reviewer_independent": {
+      "status": "pass",
+      "detail": "context = hash-pinned markdown + upstream machine artifacts + public code surface; producer narrative and publication note excluded; no producer explanation consulted"
+    },
+    "upstream_packages_completed": {
+      "status": "pass",
+      "detail": "docs/kf/wp-6939-01/verification.json verdict=pass 10/10, kf_result.json present"
+    }
+  },
+  "evidence_checks": [
+    {
+      "check": "source_hash_recomputed",
+      "contract_value": "sha256:8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246",
+      "recomputed_value": "sha256:8260a0ff15985b2312763ed966258248665fe2b53a3ebda8133d406c4bce4246",
+      "chars": 2002,
+      "result": "match"
+    },
+    {
+      "check": "all_quotes_verbatim",
+      "quotes_checked": 30,
+      "not_found": [],
+      "result": "pass"
+    },
+    {
+      "check": "result_row_inventory",
+      "table_rows_excluding_header": 22,
+      "rows_with_numeric_result": 16,
+      "rows_result_only_qualitative": 6,
+      "claimed_total_string": "**总计: 25/25 通过**",
+      "claimed_n": 25,
+      "delta_claimed_vs_rows": 3,
+      "reconciliation": "reachable only if the single row 'C4 自洽性 (4组)' is counted as 4 tests (22 + 3 = 25); no test inventory is stated in the report"
+    },
+    {
+      "check": "code_suite_threshold_probe",
+      "path": "/root/tensor-ecosystem/TensorLBM/tests/test_cht_validation.py",
+      "expected_sha256": "3bc980ceaed3c5f6f6b39eac4b6ac6d1e3543f5e15f8d96b2307cf19ec030adc",
+      "commit": "7ed01fc8",
+      "available_on_this_host": true,
+      "sha256": "3bc980ceaed3c5f6f6b39eac4b6ac6d1e3543f5e15f8d96b2307cf19ec030adc",
+      "result": "probed",
+      "probe": {
+        "docstring_header": {
+          "line": 1,
+          "text": "Pytest suite for CHT validation – IN31-L02 campaign."
+        },
+        "C1": {
+          "line": 4,
+          "text": "C1: 1D composite wall steady-state T profile vs series thermal resistance <5%"
+        },
+        "C2": {
+          "line": 5,
+          "text": "C2: erf heat penetration transient T profile vs analytical <10%"
+        },
+        "C3": {
+          "line": 6,
+          "text": "C3: Graetz Nu vs Shah-London <20%"
+        },
+        "C4": {
+          "line": 7,
+          "text": "C4: Churchill-Chu Nu vs correlation <50%"
+        },
+        "C5": {
+          "line": 8,
+          "text": "C5: Interface heat flux closure <20%"
+        },
+        "C6": {
+          "line": 9,
+          "text": "C6: Negative control (k_s → ∞ isothermal wall limit)"
+        },
+        "c4_assert": {
+          "line": 150,
+          "text": "assert 10 < Nu < 30  # expected range for Ra=1e6, Pr=0.71"
+        },
+        "c5_assert": {
+          "line": 190,
+          "text": "assert T_jump_after < 0.2, f\"Interface jump after coupling: {T_jump_after}\""
+        },
+        "c3_assert": {
+          "line": 133,
+          "text": "assert Nu_fd == pytest.approx(4.364, abs=0.1)"
+        },
+        "rms_metric": null
+      },
+      "cht_module_fo_bound": {
+        "line": 21,
+        "text": "stable for",
+        "sha256": "2e6a312e31d10ef627d2c0547e81cb18be927500ba1d33b647187648e36a1811"
+      }
+    },
+    {
+      "check": "figure_payload_probe",
+      "source": "docs/kf/wp-6939-01/artifact_probe.json",
+      "figure_status": {
+        "composite_wall": "http_404",
+        "erf_penetration": "http_404",
+        "graetz_nusselt": "http_404",
+        "churchill_chu": "http_404",
+        "interface_continuity": "http_404"
+      },
+      "any_payload_bytes": false,
+      "figures_with_png_base64": 0,
+      "result": "no_figure_payload"
+    }
+  ],
+  "verdict": "needs-fix",
+  "figure": "docs/kf/wp-6939-04/figures/criteria_threshold_gap.png"
+}
