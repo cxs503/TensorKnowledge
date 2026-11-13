@@ -1,0 +1,33 @@
+{
+  "package_id": "wp-9645-01",
+  "report_id": "9645",
+  "checked_at": "2026-11-12T01:46:04.001205+00:00",
+  "source_copy": "docs/kf/wp-9645-01/source.md",
+  "source_sha256": "a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00",
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_locator_resolvable": true,
+    "source_hash_matches": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true,
+    "reference_coverage": true,
+    "manifest_integrity_flags": true,
+    "no_verification_marks": true,
+    "contract_metadata_matches": true
+  },
+  "detail": {
+    "valid_json": "asset_manifest.json + kf_result.json 均解析成功（strict JSON，无尾逗号/注释）",
+    "schema_pass": "envelope vs schemas/kf_result.v1.schema.json (sha256 170dba8b0b5d5401...); manifest vs docs/kf/wp-9645-01/asset_manifest.schema.json (sha256 ea9c9d39c391befc...)",
+    "source_locator_resolvable": "逐个重解析 46 个 locator（char_span 用 md[start:end]==quote 且全文字符串计数=1；document 用 hash+长度+首行前缀），不可解析=[]",
+    "source_hash_matches": "本地重算 sha256=a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00；契约=a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00；信封=sha256:a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00；字符数=11824",
+    "no_duplicate_ids": "46 个 asset_id，重复=[]，outputs 键=['asset_manifest.json']",
+    "all_claims_have_evidence_or_explicit_unresolved_status": "claims=0（task_type 01 的空数组是完整结果）；缺证据/缺状态的条数=0",
+    "reference_coverage": "未归类 inline code token=[]；未登记 markdown 图片=[]",
+    "manifest_integrity_flags": "{\"quote_uniqueness\": true, \"hash_recomputed_locally\": true, \"hash_matches_contract\": true, \"locator_span_equality\": true, \"asset_ids_unique\": true}",
+    "no_verification_marks": "claims 为空；结果内无 claim 级 verification 标记（verification 由平台门计算）",
+    "contract_metadata_matches": "title 与契约一致=True；scenario_key 与契约一致=True"
+  },
+  "all_pass": true,
+  "scope_note": "本文件是工序自检记录，不是平台门结论；platform gate 独立重算哈希与子串后以其判定为准。"
+}
