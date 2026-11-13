@@ -1,0 +1,78 @@
+{
+ "package_id": "wp-1561-04",
+ "object": "wp-1561-01",
+ "policy_version": "ke-review-v0.1",
+ "producer_ids": [
+  "agent/m15529 (TensorKnowledge) · package wp-1561-01"
+ ],
+ "system_transitions": [
+  {
+   "id": "kf1561-04:submit",
+   "from": "draft",
+   "to": "in-review",
+   "policy_version": "ke-review-v0.1",
+   "by": "platform-task-completion",
+   "at": "2026-11-12T02:47:00Z",
+   "note": "task completion moves the package into review (ke_state_machine.submit); it is deliberately NOT a review decision, so it is kept out of `events`"
+  }
+ ],
+ "events": [
+  {
+   "id": "kf1561-04:review-1",
+   "decision": "approve",
+   "policy_version": "ke-review-v0.1",
+   "reviewer": {
+    "id": "agent/m15823 (TensorKnowledge) · package wp-1561-04 · red-team-reviewer",
+    "reviewer_type": "agent"
+   },
+   "reviewed_at": "2026-11-12T02:50:00Z",
+   "findings": [
+    {
+     "id": "F-01",
+     "severity": "low",
+     "blocking": false,
+     "title": "record title != markdown H1, and the drift is not registered as an observation"
+    },
+    {
+     "id": "F-02",
+     "severity": "low",
+     "blocking": false,
+     "title": "'eta_R = 1.0 is conservative' points the optimistic way for power adequacy"
+    },
+    {
+     "id": "F-03",
+     "severity": "info",
+     "blocking": false,
+     "title": "two denominators in one geometry bullet (registered as 1561-o000) — arithmetic reproduced"
+    },
+    {
+     "id": "F-04",
+     "severity": "medium",
+     "blocking": false,
+     "title": "five declared figures have no retrievable payload -> figure-borne statements are unverifiable"
+    },
+    {
+     "id": "F-05",
+     "severity": "info",
+     "blocking": false,
+     "title": "subject-report arithmetic is self-consistent for 5/5 ships; residual differences trace to integer rpm"
+    },
+    {
+     "id": "F-06",
+     "severity": "low",
+     "blocking": false,
+     "title": "two non-resolved assets carry a status but no reason"
+    },
+    {
+     "id": "F-07",
+     "severity": "low",
+     "blocking": false,
+     "title": "declared line count 163 vs 162 actual lines"
+    }
+   ],
+   "review_report": "docs/kf/wp-1561-04/review_report.json",
+   "disposition": "approve-with-notes",
+   "note": "approve with non-blocking findings; no claim is marked verified by this event"
+  }
+ ]
+}
