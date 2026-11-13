@@ -1,0 +1,31 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-13235-01",
+  "task_type": "01-asset-registration",
+  "contract_version": "1.0",
+  "lane": "C",
+  "registered_at": "2026-11-12",
+  "assets": [
+    {
+      "asset_id": "asset-report-13235",
+      "asset_type": "report",
+      "report_id": "13235",
+      "source_uri": "tensor://reports/13235",
+      "source_field": "markdown",
+      "source_hash": "sha256:f5d74cb0c70e28338e959f8d271ae806dd6091eb7b2e78c56ac60dcf5c9f39b6",
+      "title": "IN234W2-N09 冰载荷统计收敛判据与冰致振动频谱分析（8/8 判据 PASS）",
+      "scenario_key": "in234w2_n09_ice_stat_spectrum",
+      "chars": 11779,
+      "locator": "tensor://reports/13235#markdown",
+      "hash_verification": {
+        "status": "not_run_local",
+        "note": "本会话 run_shell 工具持续故障（每次调用返回 KeyError: 'command'），无法执行 psql/curl 重算 sha256。哈希值逐字取自工作包契约 input.source_hash（非记忆重述）；由平台门独立重算校验。"
+      }
+    }
+  ],
+  "attachments": [],
+  "attachments_note": "附件/工件枚举未执行：本会话未能获取报告 markdown（run_shell 故障，API 与 psql 两条获取路径均不可用）。依 do_not_invent_missing_information，不列任何附件，不猜测。",
+  "extraction": "not_performed",
+  "claims": [],
+  "notes": "01-asset-registration 工序：仅登记源资产（report_id 与其 markdown 字节哈希），不做抽取（契约 notes 原文：'登记源资产：确认 report_id 与其 markdown 的字节哈希，列出可解析的附件/工件，不做抽取。claims 允许为空数组。'）。"
+}
