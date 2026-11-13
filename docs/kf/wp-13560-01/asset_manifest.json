@@ -1,0 +1,571 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-13560-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13560",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-12T02:28:18.861875+00:00",
+  "source": {
+    "uri": "tensor://reports/13560",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "b578c093ddeff7571dcdc5b98383da2b564f608fa77b5b3ea1a10f05b0722279",
+    "chars": 2887,
+    "bytes_utf8": 4942,
+    "title": "TensorData 质量审计（A+B）m14503：35 步真跑 + 独立 oracle 对照 + 11 条成熟度判级",
+    "scenario_key": "quality-audit-tensordata",
+    "platform_figures": [
+      "fig1_scenario_matrix.png",
+      "fig2_engine_vs_oracle.png",
+      "fig3_scale_probe.png",
+      "fig4_upload_race.png",
+      "fig5_loc_inventory.png"
+    ],
+    "platform_tags": [
+      "AUDIT-ASSET-12REPO",
+      "TensorData",
+      "maturity-verdict",
+      "runtime-verified",
+      "integrity-gap",
+      "concurrency",
+      "honest-fail"
+    ],
+    "platform_status": "published",
+    "platform_created_at": "2026-11-11T07:33:41.511019+00:00"
+  },
+  "counts": {
+    "assets": 18,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 5,
+      "source_code_reference": 4,
+      "document_reference": 1,
+      "report_table": 2,
+      "vcs_reference": 2,
+      "api_endpoint": 1,
+      "config_parameter": 1,
+      "db_table": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 8,
+      "referenced_unresolved": 10
+    },
+    "resolved_in_source": 8,
+    "referenced_unresolved": 10,
+    "declared_absent": 0,
+    "distinct_referenced_paths": 5
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "source markdown of report 13560",
+      "in_report_section": "(whole document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2887,
+        "start_line": 1,
+        "end_line": 51,
+        "quote": "# TensorData 质量审计（A+B）— m14503：真跑出来的 L0–L3 账本\n\n## ① 案例介绍（审计对象与判据）\n对象 `cxs503/TensorData` @ `fe09270`（2026-11-10），4,667 行受跟踪文件、119 次提交、**16 个 `/api/v1` 端点**、6 张表、29 个测试。这是本生态的数据资产治理服务：资产/工件注册（内容寻址）、质量规则引擎、数据集不可变清单+准入闸门、溯源与血缘。审计判据不是\"有没有代码/有没有 PR\"，而是\"**换个实现主体去跑，数字是否还对**\"：我以独立 CSV 实现为正解（oracle）、以 hashlib 为哈希正解、以独立复算为清单正解，并构造负例与竞态。\n\n## ② 怎么做的（方法与工具链）\n1. **静态盘点**：`git ls-files`+逐文件精读 → 11 类资产分类与行数（图 5）；stub 扫描零命中。\n2. **真跑 35 步**（`artifacts/audit_runtime_m14503.py`）：起真实 FastAPI 应用（临时 SQLite+临时工件库），覆盖鉴权/上传/质量检查/闸门 5 条路径/事后篡改/溯源 6 条路径/血缘/分页/大小上限。\n3. **库级探针**（`audit_engine_probe_m14503.py`）：8.65 MB 分块哈希 vs hashlib、崩溃规则隔离、warning 语义、未知 profile、20 万行规模与内存。\n4. **竞态复现**（`repro_upload_race.py`）：15 轮×12 线程同内容并发上传。\n5. **SDK 对真服务**（`audit_sdk_live_m14503.py`）：仓内测试只有 MockTransport，我起 uvicorn 补真证据。\n6. **迁移零漂移**：`alembic upgrade head`+`alembic check`+ORM↔DB 列集合比对。\n\n## ③ 计算结果（程序化注入，无手抄）\n\n| 审计项 | 实测值 | 正解/对照 | 结论 |\n|---|---|---|---|\n| 干净 CSV 统计（行/列/空单元/重复/错列） | 3/3/0/0/0 | 独立 oracle 同值 | 全等 |\n| 脏 CSV 统计 | 行 4，空单元 1，重复 1，错列 1 | 独立 oracle 同值 | 全等（3 条 finding 计数一致） |\n| 8.65 MB 分块 SHA-256 | True | hashlib | 一致 |\n| 20 万行重复检测 | 199000（真值 199000） | 199000 | 精确；52579 行/s；峰值 RSS 增量 0.0 MB |\n| 清单 canonical SHA-256 | `7d2e9f24d404d285…` | 审计方独立复算 | `digest_reproducible=True` |\n| 闸门 4 条拒绝路径 | 缺报告/错 profile/报告失败/prohibited | 422/422/422/422 | 全部拦下 |\n| **事后篡改后准入** | **201（准入）** | 应为 422 | **缺陷复现** |\n| **篡改后下载** | 下发篡改字节=True，X-Content-SHA256 与内容不符=true | 应一致 | **缺陷复现** |\n| 并发同内容上传 | 201×169 / **500×11** | 应全 200/201 | **缺陷复现**（数据未损坏） |\n| 迁移漂移 | `alembic check` = No new upgrade operations | ORM metadata | 零漂移 |\n| 测试套件 | 29 passed / ruff clean | — | 绿 |\n\n## ④ 结果图\n图 1 场景矩阵、图 2 引擎 vs 独立 oracle、图 3 规模探针、图 4 并发竞态、图 5 资产分类行数（均内嵌）。\n\n## ⑤ 注意点（坑与边界）\n- **平台级教训**：闸门比对的是\"数据库里的 sha256\"，不是磁盘字节——所以传完再改文件，报告与字节可以长期不一致而无人知晓；下载响应的 `ETag`/`X-Content-SHA256` 会**主动声明**错误摘要，比不声明更危险。\n- 权利闸门只拦 `prohibited`；`review_required`/`unknown` 资产照样入 dataset version（实测 201，manifest 里快照 `quarantine`）。`dataset version ≠ 权利已清`。\n- 仓内 SDK 测试全是 `MockTransport` 假服务——这类\"测试绿\"不能证明 SDK 与真服务契约一致，必须补真服务用例（本单已跑）。\n- 本机 PG 路径不可验证（psycopg3 在 loong64 解析服务器版本即 TypeError），非本仓缺陷但 roadmap 的 `PostgreSQL URL support [x]` 只到\"部分已验证\"。\n- 无 docker、无真实科研载荷：领域有效性本次不做结论。\n\n## ⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）\n| 关键量 | 基准 | 误差 | <3%? |\n|---|---|---|---|\n| tabular 5 项统计量（干净+脏，共 9 个数字） | 审计方独立 CSV 实现 | 0（精确相等） | 是 |\n| 分块 SHA-256（8.65 MB） | hashlib | 0（完全一致） | 是 |\n| 20 万行重复计数 | 构造真值 199,000 | 0 | 是 |\n| 清单 canonical digest | 审计方独立序列化复算 | 0 | 是 |\n| 迁移 schema | ORM metadata | 0 差异 | 是 |\n| 事后篡改检测 | 应有检测（期望 422） | **未检测（201 准入）→ 100% 漏检** | **否（诚实 FAIL）** |\n| 并发上传成功率 | 100% 应成功 | 169/180 = 93.9%（11 次 500） | **否** |\n\nL 分布：**L3=6 · L2=2 · L1=1 · L0=2 · L4/L5=0**；11 条 verdict 已落 `tensor_maturity_verdicts`（verdict_by=`audit2-ab`）。未发现硬编码假数据/空壳模块；`docs/quality/scientific-profiles.md`（133 行、19 条规则清单）为零实现设计文档，运行时 `profile=timeseries` 直接 422——若曾被计为\"科学数据质量能力\"即为膨胀。\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "GET /tensor/reports/13560 markdown field + sha256 over utf-8 bytes",
+        "result": "resolved",
+        "detail": "chars=2887 bytes_utf8=4942 sha256=b578c093ddeff7571dcdc5b98383da2b564f608fa77b5b3ea1a10f05b0722279"
+      },
+      "source_uri": "tensor://reports/13560",
+      "note": "the source asset itself; its byte hash is the provenance anchor of this work package.",
+      "kind": "report_markdown"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "fig1_scenario_matrix.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2887,
+        "start_line": 1,
+        "end_line": 51,
+        "quote": "# TensorData 质量审计（A+B）— m14503：真跑出来的 L0–L3 账本\n\n## ① 案例介绍（审计对象与判据）\n对象 `cxs503/TensorData` @ `fe09270`（2026-11-10），4,667 行受跟踪文件、119 次提交、**16 个 `/api/v1` 端点**、6 张表、29 个测试。这是本生态的数据资产治理服务：资产/工件注册（内容寻址）、质量规则引擎、数据集不可变清单+准入闸门、溯源与血缘。审计判据不是\"有没有代码/有没有 PR\"，而是\"**换个实现主体去跑，数字是否还对**\"：我以独立 CSV 实现为正解（oracle）、以 hashlib 为哈希正解、以独立复算为清单正解，并构造负例与竞态。\n\n## ② 怎么做的（方法与工具链）\n1. **静态盘点**：`git ls-files`+逐文件精读 → 11 类资产分类与行数（图 5）；stub 扫描零命中。\n2. **真跑 35 步**（`artifacts/audit_runtime_m14503.py`）：起真实 FastAPI 应用（临时 SQLite+临时工件库），覆盖鉴权/上传/质量检查/闸门 5 条路径/事后篡改/溯源 6 条路径/血缘/分页/大小上限。\n3. **库级探针**（`audit_engine_probe_m14503.py`）：8.65 MB 分块哈希 vs hashlib、崩溃规则隔离、warning 语义、未知 profile、20 万行规模与内存。\n4. **竞态复现**（`repro_upload_race.py`）：15 轮×12 线程同内容并发上传。\n5. **SDK 对真服务**（`audit_sdk_live_m14503.py`）：仓内测试只有 MockTransport，我起 uvicorn 补真证据。\n6. **迁移零漂移**：`alembic upgrade head`+`alembic check`+ORM↔DB 列集合比对。\n\n## ③ 计算结果（程序化注入，无手抄）\n\n| 审计项 | 实测值 | 正解/对照 | 结论 |\n|---|---|---|---|\n| 干净 CSV 统计（行/列/空单元/重复/错列） | 3/3/0/0/0 | 独立 oracle 同值 | 全等 |\n| 脏 CSV 统计 | 行 4，空单元 1，重复 1，错列 1 | 独立 oracle 同值 | 全等（3 条 finding 计数一致） |\n| 8.65 MB 分块 SHA-256 | True | hashlib | 一致 |\n| 20 万行重复检测 | 199000（真值 199000） | 199000 | 精确；52579 行/s；峰值 RSS 增量 0.0 MB |\n| 清单 canonical SHA-256 | `7d2e9f24d404d285…` | 审计方独立复算 | `digest_reproducible=True` |\n| 闸门 4 条拒绝路径 | 缺报告/错 profile/报告失败/prohibited | 422/422/422/422 | 全部拦下 |\n| **事后篡改后准入** | **201（准入）** | 应为 422 | **缺陷复现** |\n| **篡改后下载** | 下发篡改字节=True，X-Content-SHA256 与内容不符=true | 应一致 | **缺陷复现** |\n| 并发同内容上传 | 201×169 / **500×11** | 应全 200/201 | **缺陷复现**（数据未损坏） |\n| 迁移漂移 | `alembic check` = No new upgrade operations | ORM metadata | 零漂移 |\n| 测试套件 | 29 passed / ruff clean | — | 绿 |\n\n## ④ 结果图\n图 1 场景矩阵、图 2 引擎 vs 独立 oracle、图 3 规模探针、图 4 并发竞态、图 5 资产分类行数（均内嵌）。\n\n## ⑤ 注意点（坑与边界）\n- **平台级教训**：闸门比对的是\"数据库里的 sha256\"，不是磁盘字节——所以传完再改文件，报告与字节可以长期不一致而无人知晓；下载响应的 `ETag`/`X-Content-SHA256` 会**主动声明**错误摘要，比不声明更危险。\n- 权利闸门只拦 `prohibited`；`review_required`/`unknown` 资产照样入 dataset version（实测 201，manifest 里快照 `quarantine`）。`dataset version ≠ 权利已清`。\n- 仓内 SDK 测试全是 `MockTransport` 假服务——这类\"测试绿\"不能证明 SDK 与真服务契约一致，必须补真服务用例（本单已跑）。\n- 本机 PG 路径不可验证（psycopg3 在 loong64 解析服务器版本即 TypeError），非本仓缺陷但 roadmap 的 `PostgreSQL URL support [x]` 只到\"部分已验证\"。\n- 无 docker、无真实科研载荷：领域有效性本次不做结论。\n\n## ⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）\n| 关键量 | 基准 | 误差 | <3%? |\n|---|---|---|---|\n| tabular 5 项统计量（干净+脏，共 9 个数字） | 审计方独立 CSV 实现 | 0（精确相等） | 是 |\n| 分块 SHA-256（8.65 MB） | hashlib | 0（完全一致） | 是 |\n| 20 万行重复计数 | 构造真值 199,000 | 0 | 是 |\n| 清单 canonical digest | 审计方独立序列化复算 | 0 | 是 |\n| 迁移 schema | ORM metadata | 0 差异 | 是 |\n| 事后篡改检测 | 应有检测（期望 422） | **未检测（201 准入）→ 100% 漏检** | **否（诚实 FAIL）** |\n| 并发上传成功率 | 100% 应成功 | 169/180 = 93.9%（11 次 500） | **否** |\n\nL 分布：**L3=6 · L2=2 · L1=1 · L0=2 · L4/L5=0**；11 条 verdict 已落 `tensor_maturity_verdicts`（verdict_by=`audit2-ab`）。未发现硬编码假数据/空壳模块；`docs/quality/scientific-profiles.md`（133 行、19 条规则清单）为零实现设计文档，运行时 `profile=timeseries` 直接 422——若曾被计为\"科学数据质量能力\"即为膨胀。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/13560#figures[0]",
+      "caption": "18 个实跑场景的约定状态码 vs 实测状态码；唯一红项 = dataset 门在 payload 被事后篡改后仍准入(201)。",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed; the filename does not occur verbatim in the markdown body, so the authoritative locator is the record field figure_uri and the body locator degrades to document scope (nothing is inferred about which body sentence refers to it)",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure",
+      "label": "fig2_engine_vs_oracle.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2887,
+        "start_line": 1,
+        "end_line": 51,
+        "quote": "# TensorData 质量审计（A+B）— m14503：真跑出来的 L0–L3 账本\n\n## ① 案例介绍（审计对象与判据）\n对象 `cxs503/TensorData` @ `fe09270`（2026-11-10），4,667 行受跟踪文件、119 次提交、**16 个 `/api/v1` 端点**、6 张表、29 个测试。这是本生态的数据资产治理服务：资产/工件注册（内容寻址）、质量规则引擎、数据集不可变清单+准入闸门、溯源与血缘。审计判据不是\"有没有代码/有没有 PR\"，而是\"**换个实现主体去跑，数字是否还对**\"：我以独立 CSV 实现为正解（oracle）、以 hashlib 为哈希正解、以独立复算为清单正解，并构造负例与竞态。\n\n## ② 怎么做的（方法与工具链）\n1. **静态盘点**：`git ls-files`+逐文件精读 → 11 类资产分类与行数（图 5）；stub 扫描零命中。\n2. **真跑 35 步**（`artifacts/audit_runtime_m14503.py`）：起真实 FastAPI 应用（临时 SQLite+临时工件库），覆盖鉴权/上传/质量检查/闸门 5 条路径/事后篡改/溯源 6 条路径/血缘/分页/大小上限。\n3. **库级探针**（`audit_engine_probe_m14503.py`）：8.65 MB 分块哈希 vs hashlib、崩溃规则隔离、warning 语义、未知 profile、20 万行规模与内存。\n4. **竞态复现**（`repro_upload_race.py`）：15 轮×12 线程同内容并发上传。\n5. **SDK 对真服务**（`audit_sdk_live_m14503.py`）：仓内测试只有 MockTransport，我起 uvicorn 补真证据。\n6. **迁移零漂移**：`alembic upgrade head`+`alembic check`+ORM↔DB 列集合比对。\n\n## ③ 计算结果（程序化注入，无手抄）\n\n| 审计项 | 实测值 | 正解/对照 | 结论 |\n|---|---|---|---|\n| 干净 CSV 统计（行/列/空单元/重复/错列） | 3/3/0/0/0 | 独立 oracle 同值 | 全等 |\n| 脏 CSV 统计 | 行 4，空单元 1，重复 1，错列 1 | 独立 oracle 同值 | 全等（3 条 finding 计数一致） |\n| 8.65 MB 分块 SHA-256 | True | hashlib | 一致 |\n| 20 万行重复检测 | 199000（真值 199000） | 199000 | 精确；52579 行/s；峰值 RSS 增量 0.0 MB |\n| 清单 canonical SHA-256 | `7d2e9f24d404d285…` | 审计方独立复算 | `digest_reproducible=True` |\n| 闸门 4 条拒绝路径 | 缺报告/错 profile/报告失败/prohibited | 422/422/422/422 | 全部拦下 |\n| **事后篡改后准入** | **201（准入）** | 应为 422 | **缺陷复现** |\n| **篡改后下载** | 下发篡改字节=True，X-Content-SHA256 与内容不符=true | 应一致 | **缺陷复现** |\n| 并发同内容上传 | 201×169 / **500×11** | 应全 200/201 | **缺陷复现**（数据未损坏） |\n| 迁移漂移 | `alembic check` = No new upgrade operations | ORM metadata | 零漂移 |\n| 测试套件 | 29 passed / ruff clean | — | 绿 |\n\n## ④ 结果图\n图 1 场景矩阵、图 2 引擎 vs 独立 oracle、图 3 规模探针、图 4 并发竞态、图 5 资产分类行数（均内嵌）。\n\n## ⑤ 注意点（坑与边界）\n- **平台级教训**：闸门比对的是\"数据库里的 sha256\"，不是磁盘字节——所以传完再改文件，报告与字节可以长期不一致而无人知晓；下载响应的 `ETag`/`X-Content-SHA256` 会**主动声明**错误摘要，比不声明更危险。\n- 权利闸门只拦 `prohibited`；`review_required`/`unknown` 资产照样入 dataset version（实测 201，manifest 里快照 `quarantine`）。`dataset version ≠ 权利已清`。\n- 仓内 SDK 测试全是 `MockTransport` 假服务——这类\"测试绿\"不能证明 SDK 与真服务契约一致，必须补真服务用例（本单已跑）。\n- 本机 PG 路径不可验证（psycopg3 在 loong64 解析服务器版本即 TypeError），非本仓缺陷但 roadmap 的 `PostgreSQL URL support [x]` 只到\"部分已验证\"。\n- 无 docker、无真实科研载荷：领域有效性本次不做结论。\n\n## ⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）\n| 关键量 | 基准 | 误差 | <3%? |\n|---|---|---|---|\n| tabular 5 项统计量（干净+脏，共 9 个数字） | 审计方独立 CSV 实现 | 0（精确相等） | 是 |\n| 分块 SHA-256（8.65 MB） | hashlib | 0（完全一致） | 是 |\n| 20 万行重复计数 | 构造真值 199,000 | 0 | 是 |\n| 清单 canonical digest | 审计方独立序列化复算 | 0 | 是 |\n| 迁移 schema | ORM metadata | 0 差异 | 是 |\n| 事后篡改检测 | 应有检测（期望 422） | **未检测（201 准入）→ 100% 漏检** | **否（诚实 FAIL）** |\n| 并发上传成功率 | 100% 应成功 | 169/180 = 93.9%（11 次 500） | **否** |\n\nL 分布：**L3=6 · L2=2 · L1=1 · L0=2 · L4/L5=0**；11 条 verdict 已落 `tensor_maturity_verdicts`（verdict_by=`audit2-ab`）。未发现硬编码假数据/空壳模块；`docs/quality/scientific-profiles.md`（133 行、19 条规则清单）为零实现设计文档，运行时 `profile=timeseries` 直接 422——若曾被计为\"科学数据质量能力\"即为膨胀。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/13560#figures[1]",
+      "caption": "tabular profile 输出的 4 个统计量与审计方独立 CSV 实现的对照：干净/脏样本逐项相等（0 差异）。",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed; the filename does not occur verbatim in the markdown body, so the authoritative locator is the record field figure_uri and the body locator degrades to document scope (nothing is inferred about which body sentence refers to it)",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "embedded_figure",
+      "label": "fig3_scale_probe.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2887,
+        "start_line": 1,
+        "end_line": 51,
+        "quote": "# TensorData 质量审计（A+B）— m14503：真跑出来的 L0–L3 账本\n\n## ① 案例介绍（审计对象与判据）\n对象 `cxs503/TensorData` @ `fe09270`（2026-11-10），4,667 行受跟踪文件、119 次提交、**16 个 `/api/v1` 端点**、6 张表、29 个测试。这是本生态的数据资产治理服务：资产/工件注册（内容寻址）、质量规则引擎、数据集不可变清单+准入闸门、溯源与血缘。审计判据不是\"有没有代码/有没有 PR\"，而是\"**换个实现主体去跑，数字是否还对**\"：我以独立 CSV 实现为正解（oracle）、以 hashlib 为哈希正解、以独立复算为清单正解，并构造负例与竞态。\n\n## ② 怎么做的（方法与工具链）\n1. **静态盘点**：`git ls-files`+逐文件精读 → 11 类资产分类与行数（图 5）；stub 扫描零命中。\n2. **真跑 35 步**（`artifacts/audit_runtime_m14503.py`）：起真实 FastAPI 应用（临时 SQLite+临时工件库），覆盖鉴权/上传/质量检查/闸门 5 条路径/事后篡改/溯源 6 条路径/血缘/分页/大小上限。\n3. **库级探针**（`audit_engine_probe_m14503.py`）：8.65 MB 分块哈希 vs hashlib、崩溃规则隔离、warning 语义、未知 profile、20 万行规模与内存。\n4. **竞态复现**（`repro_upload_race.py`）：15 轮×12 线程同内容并发上传。\n5. **SDK 对真服务**（`audit_sdk_live_m14503.py`）：仓内测试只有 MockTransport，我起 uvicorn 补真证据。\n6. **迁移零漂移**：`alembic upgrade head`+`alembic check`+ORM↔DB 列集合比对。\n\n## ③ 计算结果（程序化注入，无手抄）\n\n| 审计项 | 实测值 | 正解/对照 | 结论 |\n|---|---|---|---|\n| 干净 CSV 统计（行/列/空单元/重复/错列） | 3/3/0/0/0 | 独立 oracle 同值 | 全等 |\n| 脏 CSV 统计 | 行 4，空单元 1，重复 1，错列 1 | 独立 oracle 同值 | 全等（3 条 finding 计数一致） |\n| 8.65 MB 分块 SHA-256 | True | hashlib | 一致 |\n| 20 万行重复检测 | 199000（真值 199000） | 199000 | 精确；52579 行/s；峰值 RSS 增量 0.0 MB |\n| 清单 canonical SHA-256 | `7d2e9f24d404d285…` | 审计方独立复算 | `digest_reproducible=True` |\n| 闸门 4 条拒绝路径 | 缺报告/错 profile/报告失败/prohibited | 422/422/422/422 | 全部拦下 |\n| **事后篡改后准入** | **201（准入）** | 应为 422 | **缺陷复现** |\n| **篡改后下载** | 下发篡改字节=True，X-Content-SHA256 与内容不符=true | 应一致 | **缺陷复现** |\n| 并发同内容上传 | 201×169 / **500×11** | 应全 200/201 | **缺陷复现**（数据未损坏） |\n| 迁移漂移 | `alembic check` = No new upgrade operations | ORM metadata | 零漂移 |\n| 测试套件 | 29 passed / ruff clean | — | 绿 |\n\n## ④ 结果图\n图 1 场景矩阵、图 2 引擎 vs 独立 oracle、图 3 规模探针、图 4 并发竞态、图 5 资产分类行数（均内嵌）。\n\n## ⑤ 注意点（坑与边界）\n- **平台级教训**：闸门比对的是\"数据库里的 sha256\"，不是磁盘字节——所以传完再改文件，报告与字节可以长期不一致而无人知晓；下载响应的 `ETag`/`X-Content-SHA256` 会**主动声明**错误摘要，比不声明更危险。\n- 权利闸门只拦 `prohibited`；`review_required`/`unknown` 资产照样入 dataset version（实测 201，manifest 里快照 `quarantine`）。`dataset version ≠ 权利已清`。\n- 仓内 SDK 测试全是 `MockTransport` 假服务——这类\"测试绿\"不能证明 SDK 与真服务契约一致，必须补真服务用例（本单已跑）。\n- 本机 PG 路径不可验证（psycopg3 在 loong64 解析服务器版本即 TypeError），非本仓缺陷但 roadmap 的 `PostgreSQL URL support [x]` 只到\"部分已验证\"。\n- 无 docker、无真实科研载荷：领域有效性本次不做结论。\n\n## ⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）\n| 关键量 | 基准 | 误差 | <3%? |\n|---|---|---|---|\n| tabular 5 项统计量（干净+脏，共 9 个数字） | 审计方独立 CSV 实现 | 0（精确相等） | 是 |\n| 分块 SHA-256（8.65 MB） | hashlib | 0（完全一致） | 是 |\n| 20 万行重复计数 | 构造真值 199,000 | 0 | 是 |\n| 清单 canonical digest | 审计方独立序列化复算 | 0 | 是 |\n| 迁移 schema | ORM metadata | 0 差异 | 是 |\n| 事后篡改检测 | 应有检测（期望 422） | **未检测（201 准入）→ 100% 漏检** | **否（诚实 FAIL）** |\n| 并发上传成功率 | 100% 应成功 | 169/180 = 93.9%（11 次 500） | **否** |\n\nL 分布：**L3=6 · L2=2 · L1=1 · L0=2 · L4/L5=0**；11 条 verdict 已落 `tensor_maturity_verdicts`（verdict_by=`audit2-ab`）。未发现硬编码假数据/空壳模块；`docs/quality/scientific-profiles.md`（133 行、19 条规则清单）为零实现设计文档，运行时 `profile=timeseries` 直接 422——若曾被计为\"科学数据质量能力\"即为膨胀。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/13560#figures[2]",
+      "caption": "20 万行重复检测：报数 199000=真值；吞吐 ~5.3 万行/s；峰值 RSS 增量 0 MB（哈希摘要集有界）。",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed; the filename does not occur verbatim in the markdown body, so the authoritative locator is the record field figure_uri and the body locator degrades to document scope (nothing is inferred about which body sentence refers to it)",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "embedded_figure",
+      "label": "fig4_upload_race.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2887,
+        "start_line": 1,
+        "end_line": 51,
+        "quote": "# TensorData 质量审计（A+B）— m14503：真跑出来的 L0–L3 账本\n\n## ① 案例介绍（审计对象与判据）\n对象 `cxs503/TensorData` @ `fe09270`（2026-11-10），4,667 行受跟踪文件、119 次提交、**16 个 `/api/v1` 端点**、6 张表、29 个测试。这是本生态的数据资产治理服务：资产/工件注册（内容寻址）、质量规则引擎、数据集不可变清单+准入闸门、溯源与血缘。审计判据不是\"有没有代码/有没有 PR\"，而是\"**换个实现主体去跑，数字是否还对**\"：我以独立 CSV 实现为正解（oracle）、以 hashlib 为哈希正解、以独立复算为清单正解，并构造负例与竞态。\n\n## ② 怎么做的（方法与工具链）\n1. **静态盘点**：`git ls-files`+逐文件精读 → 11 类资产分类与行数（图 5）；stub 扫描零命中。\n2. **真跑 35 步**（`artifacts/audit_runtime_m14503.py`）：起真实 FastAPI 应用（临时 SQLite+临时工件库），覆盖鉴权/上传/质量检查/闸门 5 条路径/事后篡改/溯源 6 条路径/血缘/分页/大小上限。\n3. **库级探针**（`audit_engine_probe_m14503.py`）：8.65 MB 分块哈希 vs hashlib、崩溃规则隔离、warning 语义、未知 profile、20 万行规模与内存。\n4. **竞态复现**（`repro_upload_race.py`）：15 轮×12 线程同内容并发上传。\n5. **SDK 对真服务**（`audit_sdk_live_m14503.py`）：仓内测试只有 MockTransport，我起 uvicorn 补真证据。\n6. **迁移零漂移**：`alembic upgrade head`+`alembic check`+ORM↔DB 列集合比对。\n\n## ③ 计算结果（程序化注入，无手抄）\n\n| 审计项 | 实测值 | 正解/对照 | 结论 |\n|---|---|---|---|\n| 干净 CSV 统计（行/列/空单元/重复/错列） | 3/3/0/0/0 | 独立 oracle 同值 | 全等 |\n| 脏 CSV 统计 | 行 4，空单元 1，重复 1，错列 1 | 独立 oracle 同值 | 全等（3 条 finding 计数一致） |\n| 8.65 MB 分块 SHA-256 | True | hashlib | 一致 |\n| 20 万行重复检测 | 199000（真值 199000） | 199000 | 精确；52579 行/s；峰值 RSS 增量 0.0 MB |\n| 清单 canonical SHA-256 | `7d2e9f24d404d285…` | 审计方独立复算 | `digest_reproducible=True` |\n| 闸门 4 条拒绝路径 | 缺报告/错 profile/报告失败/prohibited | 422/422/422/422 | 全部拦下 |\n| **事后篡改后准入** | **201（准入）** | 应为 422 | **缺陷复现** |\n| **篡改后下载** | 下发篡改字节=True，X-Content-SHA256 与内容不符=true | 应一致 | **缺陷复现** |\n| 并发同内容上传 | 201×169 / **500×11** | 应全 200/201 | **缺陷复现**（数据未损坏） |\n| 迁移漂移 | `alembic check` = No new upgrade operations | ORM metadata | 零漂移 |\n| 测试套件 | 29 passed / ruff clean | — | 绿 |\n\n## ④ 结果图\n图 1 场景矩阵、图 2 引擎 vs 独立 oracle、图 3 规模探针、图 4 并发竞态、图 5 资产分类行数（均内嵌）。\n\n## ⑤ 注意点（坑与边界）\n- **平台级教训**：闸门比对的是\"数据库里的 sha256\"，不是磁盘字节——所以传完再改文件，报告与字节可以长期不一致而无人知晓；下载响应的 `ETag`/`X-Content-SHA256` 会**主动声明**错误摘要，比不声明更危险。\n- 权利闸门只拦 `prohibited`；`review_required`/`unknown` 资产照样入 dataset version（实测 201，manifest 里快照 `quarantine`）。`dataset version ≠ 权利已清`。\n- 仓内 SDK 测试全是 `MockTransport` 假服务——这类\"测试绿\"不能证明 SDK 与真服务契约一致，必须补真服务用例（本单已跑）。\n- 本机 PG 路径不可验证（psycopg3 在 loong64 解析服务器版本即 TypeError），非本仓缺陷但 roadmap 的 `PostgreSQL URL support [x]` 只到\"部分已验证\"。\n- 无 docker、无真实科研载荷：领域有效性本次不做结论。\n\n## ⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）\n| 关键量 | 基准 | 误差 | <3%? |\n|---|---|---|---|\n| tabular 5 项统计量（干净+脏，共 9 个数字） | 审计方独立 CSV 实现 | 0（精确相等） | 是 |\n| 分块 SHA-256（8.65 MB） | hashlib | 0（完全一致） | 是 |\n| 20 万行重复计数 | 构造真值 199,000 | 0 | 是 |\n| 清单 canonical digest | 审计方独立序列化复算 | 0 | 是 |\n| 迁移 schema | ORM metadata | 0 差异 | 是 |\n| 事后篡改检测 | 应有检测（期望 422） | **未检测（201 准入）→ 100% 漏检** | **否（诚实 FAIL）** |\n| 并发上传成功率 | 100% 应成功 | 169/180 = 93.9%（11 次 500） | **否** |\n\nL 分布：**L3=6 · L2=2 · L1=1 · L0=2 · L4/L5=0**；11 条 verdict 已落 `tensor_maturity_verdicts`（verdict_by=`audit2-ab`）。未发现硬编码假数据/空壳模块；`docs/quality/scientific-profiles.md`（133 行、19 条规则清单）为零实现设计文档，运行时 `profile=timeseries` 直接 422——若曾被计为\"科学数据质量能力\"即为膨胀。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[3] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/13560#figures[3]",
+      "caption": "并发同内容上传：15 轮×12 线程中共 11 次请求返回 500（UNIQUE(asset_id,sha256) 冲突未处理；数据未损坏，末轮资产仍只有 1 行工件）。",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[3] lists name+caption only: png_base64 is empty, so no byte hash can be computed; the filename does not occur verbatim in the markdown body, so the authoritative locator is the record field figure_uri and the body locator degrades to document scope (nothing is inferred about which body sentence refers to it)",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "embedded_figure",
+      "label": "fig5_loc_inventory.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2887,
+        "start_line": 1,
+        "end_line": 51,
+        "quote": "# TensorData 质量审计（A+B）— m14503：真跑出来的 L0–L3 账本\n\n## ① 案例介绍（审计对象与判据）\n对象 `cxs503/TensorData` @ `fe09270`（2026-11-10），4,667 行受跟踪文件、119 次提交、**16 个 `/api/v1` 端点**、6 张表、29 个测试。这是本生态的数据资产治理服务：资产/工件注册（内容寻址）、质量规则引擎、数据集不可变清单+准入闸门、溯源与血缘。审计判据不是\"有没有代码/有没有 PR\"，而是\"**换个实现主体去跑，数字是否还对**\"：我以独立 CSV 实现为正解（oracle）、以 hashlib 为哈希正解、以独立复算为清单正解，并构造负例与竞态。\n\n## ② 怎么做的（方法与工具链）\n1. **静态盘点**：`git ls-files`+逐文件精读 → 11 类资产分类与行数（图 5）；stub 扫描零命中。\n2. **真跑 35 步**（`artifacts/audit_runtime_m14503.py`）：起真实 FastAPI 应用（临时 SQLite+临时工件库），覆盖鉴权/上传/质量检查/闸门 5 条路径/事后篡改/溯源 6 条路径/血缘/分页/大小上限。\n3. **库级探针**（`audit_engine_probe_m14503.py`）：8.65 MB 分块哈希 vs hashlib、崩溃规则隔离、warning 语义、未知 profile、20 万行规模与内存。\n4. **竞态复现**（`repro_upload_race.py`）：15 轮×12 线程同内容并发上传。\n5. **SDK 对真服务**（`audit_sdk_live_m14503.py`）：仓内测试只有 MockTransport，我起 uvicorn 补真证据。\n6. **迁移零漂移**：`alembic upgrade head`+`alembic check`+ORM↔DB 列集合比对。\n\n## ③ 计算结果（程序化注入，无手抄）\n\n| 审计项 | 实测值 | 正解/对照 | 结论 |\n|---|---|---|---|\n| 干净 CSV 统计（行/列/空单元/重复/错列） | 3/3/0/0/0 | 独立 oracle 同值 | 全等 |\n| 脏 CSV 统计 | 行 4，空单元 1，重复 1，错列 1 | 独立 oracle 同值 | 全等（3 条 finding 计数一致） |\n| 8.65 MB 分块 SHA-256 | True | hashlib | 一致 |\n| 20 万行重复检测 | 199000（真值 199000） | 199000 | 精确；52579 行/s；峰值 RSS 增量 0.0 MB |\n| 清单 canonical SHA-256 | `7d2e9f24d404d285…` | 审计方独立复算 | `digest_reproducible=True` |\n| 闸门 4 条拒绝路径 | 缺报告/错 profile/报告失败/prohibited | 422/422/422/422 | 全部拦下 |\n| **事后篡改后准入** | **201（准入）** | 应为 422 | **缺陷复现** |\n| **篡改后下载** | 下发篡改字节=True，X-Content-SHA256 与内容不符=true | 应一致 | **缺陷复现** |\n| 并发同内容上传 | 201×169 / **500×11** | 应全 200/201 | **缺陷复现**（数据未损坏） |\n| 迁移漂移 | `alembic check` = No new upgrade operations | ORM metadata | 零漂移 |\n| 测试套件 | 29 passed / ruff clean | — | 绿 |\n\n## ④ 结果图\n图 1 场景矩阵、图 2 引擎 vs 独立 oracle、图 3 规模探针、图 4 并发竞态、图 5 资产分类行数（均内嵌）。\n\n## ⑤ 注意点（坑与边界）\n- **平台级教训**：闸门比对的是\"数据库里的 sha256\"，不是磁盘字节——所以传完再改文件，报告与字节可以长期不一致而无人知晓；下载响应的 `ETag`/`X-Content-SHA256` 会**主动声明**错误摘要，比不声明更危险。\n- 权利闸门只拦 `prohibited`；`review_required`/`unknown` 资产照样入 dataset version（实测 201，manifest 里快照 `quarantine`）。`dataset version ≠ 权利已清`。\n- 仓内 SDK 测试全是 `MockTransport` 假服务——这类\"测试绿\"不能证明 SDK 与真服务契约一致，必须补真服务用例（本单已跑）。\n- 本机 PG 路径不可验证（psycopg3 在 loong64 解析服务器版本即 TypeError），非本仓缺陷但 roadmap 的 `PostgreSQL URL support [x]` 只到\"部分已验证\"。\n- 无 docker、无真实科研载荷：领域有效性本次不做结论。\n\n## ⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）\n| 关键量 | 基准 | 误差 | <3%? |\n|---|---|---|---|\n| tabular 5 项统计量（干净+脏，共 9 个数字） | 审计方独立 CSV 实现 | 0（精确相等） | 是 |\n| 分块 SHA-256（8.65 MB） | hashlib | 0（完全一致） | 是 |\n| 20 万行重复计数 | 构造真值 199,000 | 0 | 是 |\n| 清单 canonical digest | 审计方独立序列化复算 | 0 | 是 |\n| 迁移 schema | ORM metadata | 0 差异 | 是 |\n| 事后篡改检测 | 应有检测（期望 422） | **未检测（201 准入）→ 100% 漏检** | **否（诚实 FAIL）** |\n| 并发上传成功率 | 100% 应成功 | 169/180 = 93.9%（11 次 500） | **否** |\n\nL 分布：**L3=6 · L2=2 · L1=1 · L0=2 · L4/L5=0**；11 条 verdict 已落 `tensor_maturity_verdicts`（verdict_by=`audit2-ab`）。未发现硬编码假数据/空壳模块；`docs/quality/scientific-profiles.md`（133 行、19 条规则清单）为零实现设计文档，运行时 `profile=timeseries` 直接 422——若曾被计为\"科学数据质量能力\"即为膨胀。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[4] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/13560#figures[4]",
+      "caption": "仓库内容分类行数：文档 1069 行为最大单类，可执行质量规则库 706 行，测试 844 行。",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[4] lists name+caption only: png_base64 is empty, so no byte hash can be computed; the filename does not occur verbatim in the markdown body, so the authoritative locator is the record field figure_uri and the body locator degrades to document scope (nothing is inferred about which body sentence refers to it)",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "source_code_reference",
+      "label": "artifacts/audit_runtime_m14503.py (markdown line 8)",
+      "in_report_section": "② 怎么做的（方法与工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 412,
+        "end_char": 543,
+        "start_line": 8,
+        "end_line": 8,
+        "quote": "2. **真跑 35 步**（`artifacts/audit_runtime_m14503.py`）：起真实 FastAPI 应用（临时 SQLite+临时工件库），覆盖鉴权/上传/质量检查/闸门 5 条路径/事后篡改/溯源 6 条路径/血缘/分页/大小上限。",
+        "unique": true,
+        "token": "artifacts/audit_runtime_m14503.py",
+        "token_span": [
+          428,
+          461
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "artifacts/audit_runtime_m14503.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "audit_engine_probe_m14503.py (markdown line 9)",
+      "in_report_section": "② 怎么做的（方法与工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 544,
+        "end_char": 652,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "3. **库级探针**（`audit_engine_probe_m14503.py`）：8.65 MB 分块哈希 vs hashlib、崩溃规则隔离、warning 语义、未知 profile、20 万行规模与内存。",
+        "unique": true,
+        "token": "audit_engine_probe_m14503.py",
+        "token_span": [
+          557,
+          585
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "audit_engine_probe_m14503.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "source_code_reference",
+      "label": "repro_upload_race.py (markdown line 10)",
+      "in_report_section": "② 怎么做的（方法与工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 653,
+        "end_char": 707,
+        "start_line": 10,
+        "end_line": 10,
+        "quote": "4. **竞态复现**（`repro_upload_race.py`）：15 轮×12 线程同内容并发上传。",
+        "unique": true,
+        "token": "repro_upload_race.py",
+        "token_span": [
+          666,
+          686
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "repro_upload_race.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "source_code_reference",
+      "label": "audit_sdk_live_m14503.py (markdown line 11)",
+      "in_report_section": "② 怎么做的（方法与工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 708,
+        "end_char": 789,
+        "start_line": 11,
+        "end_line": 11,
+        "quote": "5. **SDK 对真服务**（`audit_sdk_live_m14503.py`）：仓内测试只有 MockTransport，我起 uvicorn 补真证据。",
+        "unique": true,
+        "token": "audit_sdk_live_m14503.py",
+        "token_span": [
+          725,
+          749
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "audit_sdk_live_m14503.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "document_reference",
+      "label": "docs/quality/scientific-profiles.md (markdown line 51)",
+      "in_report_section": "⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2644,
+        "end_char": 2886,
+        "start_line": 51,
+        "end_line": 51,
+        "quote": "L 分布：**L3=6 · L2=2 · L1=1 · L0=2 · L4/L5=0**；11 条 verdict 已落 `tensor_maturity_verdicts`（verdict_by=`audit2-ab`）。未发现硬编码假数据/空壳模块；`docs/quality/scientific-profiles.md`（133 行、19 条规则清单）为零实现设计文档，运行时 `profile=timeseries` 直接 422——若曾被计为\"科学数据质量能力\"即为膨胀。",
+        "unique": true,
+        "token": "docs/quality/scientific-profiles.md",
+        "token_span": [
+          2772,
+          2807
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "docs/quality/scientific-profiles.md",
+      "origin": "inline_code",
+      "note": "document_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "document_reference"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "report_table",
+      "label": "table 1 @ lines 16-28",
+      "in_report_section": "③ 计算结果（程序化注入，无手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 879,
+        "end_char": 1642,
+        "start_line": 16,
+        "end_line": 28,
+        "quote": "| 审计项 | 实测值 | 正解/对照 | 结论 |\n|---|---|---|---|\n| 干净 CSV 统计（行/列/空单元/重复/错列） | 3/3/0/0/0 | 独立 oracle 同值 | 全等 |\n| 脏 CSV 统计 | 行 4，空单元 1，重复 1，错列 1 | 独立 oracle 同值 | 全等（3 条 finding 计数一致） |\n| 8.65 MB 分块 SHA-256 | True | hashlib | 一致 |\n| 20 万行重复检测 | 199000（真值 199000） | 199000 | 精确；52579 行/s；峰值 RSS 增量 0.0 MB |\n| 清单 canonical SHA-256 | `7d2e9f24d404d285…` | 审计方独立复算 | `digest_reproducible=True` |\n| 闸门 4 条拒绝路径 | 缺报告/错 profile/报告失败/prohibited | 422/422/422/422 | 全部拦下 |\n| **事后篡改后准入** | **201（准入）** | 应为 422 | **缺陷复现** |\n| **篡改后下载** | 下发篡改字节=True，X-Content-SHA256 与内容不符=true | 应一致 | **缺陷复现** |\n| 并发同内容上传 | 201×169 / **500×11** | 应全 200/201 | **缺陷复现**（数据未损坏） |\n| 迁移漂移 | `alembic check` = No new upgrade operations | ORM metadata | 零漂移 |\n| 测试套件 | 29 passed / ruff clean | — | 绿 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "13 rows x 4 columns"
+      },
+      "rows": 13,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "report_table",
+      "label": "table 2 @ lines 41-49",
+      "in_report_section": "⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2239,
+        "end_char": 2642,
+        "start_line": 41,
+        "end_line": 49,
+        "quote": "| 关键量 | 基准 | 误差 | <3%? |\n|---|---|---|---|\n| tabular 5 项统计量（干净+脏，共 9 个数字） | 审计方独立 CSV 实现 | 0（精确相等） | 是 |\n| 分块 SHA-256（8.65 MB） | hashlib | 0（完全一致） | 是 |\n| 20 万行重复计数 | 构造真值 199,000 | 0 | 是 |\n| 清单 canonical digest | 审计方独立序列化复算 | 0 | 是 |\n| 迁移 schema | ORM metadata | 0 差异 | 是 |\n| 事后篡改检测 | 应有检测（期望 422） | **未检测（201 准入）→ 100% 漏检** | **否（诚实 FAIL）** |\n| 并发上传成功率 | 100% 应成功 | 169/180 = 93.9%（11 次 500） | **否** |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "9 rows x 4 columns"
+      },
+      "rows": 9,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "vcs_reference",
+      "label": "cxs503/TensorData",
+      "in_report_section": "① 案例介绍（审计对象与判据）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 70,
+        "end_char": 87,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "cxs503/TensorData",
+        "unique": true,
+        "context_line": "对象 `cxs503/TensorData` @ `fe09270`（2026-11-10），4,667 行受跟踪文件、119 次提交、**16 个 `/api/v1` 端点**、6 张表、29 个测试。这是本生态的数据资产治理服务：资产/工件注册（内容寻址）、质量规则引擎、数据集不可变清单+准入闸门、溯源与血缘。审计判据不是\"有没有代码/有没有 PR\"，而是\"**换个实现主体去跑，数字是否还对**\"：我以独立 CSV 实现为正解（oracle）、以 hashlib 为哈希正解、以独立复算为清单正解，并构造负例与竞态。"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (exact inline-code span)",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 4"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "vcs_reference"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "vcs_reference",
+      "label": "fe09270",
+      "in_report_section": "① 案例介绍（审计对象与判据）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 92,
+        "end_char": 99,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "fe09270",
+        "unique": true,
+        "context_line": "对象 `cxs503/TensorData` @ `fe09270`（2026-11-10），4,667 行受跟踪文件、119 次提交、**16 个 `/api/v1` 端点**、6 张表、29 个测试。这是本生态的数据资产治理服务：资产/工件注册（内容寻址）、质量规则引擎、数据集不可变清单+准入闸门、溯源与血缘。审计判据不是\"有没有代码/有没有 PR\"，而是\"**换个实现主体去跑，数字是否还对**\"：我以独立 CSV 实现为正解（oracle）、以 hashlib 为哈希正解、以独立复算为清单正解，并构造负例与竞态。"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (exact inline-code span)",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 4"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "vcs_reference"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "api_endpoint",
+      "label": "/api/v1",
+      "in_report_section": "① 案例介绍（审计对象与判据）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 142,
+        "end_char": 149,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "/api/v1",
+        "unique": true,
+        "context_line": "对象 `cxs503/TensorData` @ `fe09270`（2026-11-10），4,667 行受跟踪文件、119 次提交、**16 个 `/api/v1` 端点**、6 张表、29 个测试。这是本生态的数据资产治理服务：资产/工件注册（内容寻址）、质量规则引擎、数据集不可变清单+准入闸门、溯源与血缘。审计判据不是\"有没有代码/有没有 PR\"，而是\"**换个实现主体去跑，数字是否还对**\"：我以独立 CSV 实现为正解（oracle）、以 hashlib 为哈希正解、以独立复算为清单正解，并构造负例与竞态。"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (exact inline-code span)",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 4"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "api_endpoint"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "config_parameter",
+      "label": "profile=timeseries",
+      "in_report_section": "⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2838,
+        "end_char": 2856,
+        "start_line": 51,
+        "end_line": 51,
+        "quote": "profile=timeseries",
+        "unique": true,
+        "context_line": "L 分布：**L3=6 · L2=2 · L1=1 · L0=2 · L4/L5=0**；11 条 verdict 已落 `tensor_maturity_verdicts`（verdict_by=`audit2-ab`）。未发现硬编码假数据/空壳模块；`docs/quality/scientific-profiles.md`（133 行、19 条规则清单）为零实现设计文档，运行时 `profile=timeseries` 直接 422——若曾被计为\"科学数据质量能力\"即为膨胀。"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (exact inline-code span)",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 51"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "config_parameter"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "db_table",
+      "label": "tensor_maturity_verdicts",
+      "in_report_section": "⑥ 误差判定（逐项 vs 基准，显式回答是否 <3%）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2706,
+        "end_char": 2730,
+        "start_line": 51,
+        "end_line": 51,
+        "quote": "tensor_maturity_verdicts",
+        "unique": true,
+        "context_line": "L 分布：**L3=6 · L2=2 · L1=1 · L0=2 · L4/L5=0**；11 条 verdict 已落 `tensor_maturity_verdicts`（verdict_by=`audit2-ab`）。未发现硬编码假数据/空壳模块；`docs/quality/scientific-profiles.md`（133 行、19 条规则清单）为零实现设计文档，运行时 `profile=timeseries` 直接 422——若曾被计为\"科学数据质量能力\"即为膨胀。"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (exact inline-code span)",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 51"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "db_table"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": {
+      "total_quotes": 18,
+      "quotes_unique_in_source": 18,
+      "repeated_quotes": [],
+      "note": "repeated short quotes are structural (identical table rows); each asset still carries its own char span."
+    },
+    "hash_recomputed_locally": "b578c093ddeff7571dcdc5b98383da2b564f608fa77b5b3ea1a10f05b0722279",
+    "hash_matches_contract": true,
+    "hash_alg": "sha256 over markdown encoded as utf-8",
+    "locator_scheme": "absolute character span in markdown, 1-based inclusive line numbers"
+  },
+  "identity_granularity": "File references are occurrence-level: identity is (path, markdown line), so a file cited twice yields two assets carrying their own quotes; counts.distinct_referenced_paths is the deduplicated view.",
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no `verified` marks (verification is platform-gated).",
+    "Referenced source paths belong to the producing repository; they are resolved strictly inside the TensorKnowledge delivery worktree, so cross-repository references stay referenced_unresolved by design.",
+    "Figures are inventoried from record.figures[] as-is; when png_base64 is empty the asset is metadata_only and no byte hash is claimed.",
+    "Table and code-fence assets record geometry (rows/columns/language) only; their content is not restated as knowledge.",
+    "Only path-like references, fenced/inline code paths, tables, figures and explicitly configured interface tokens are registered. Bare prose symbols (e.g. a rule table named in the text that lives in the producing repository) are deliberately NOT inferred - registering them would require assuming information the report does not pin to a file.",
+    "Outputs live under docs/kf/<package>/ because the push gate drops artifacts/** (see docs/ops), so registered artifacts are not silently filtered."
+  ],
+  "producer": {
+    "generator": "scripts/kf/kf01_register.py",
+    "contract_version": "1.0",
+    "fetched_via": "GET /api/v1/tensor/reports/13560"
+  }
+}

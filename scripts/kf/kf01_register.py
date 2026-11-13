@@ -39,29 +39,22 @@ PRESETS = {
         # interface tokens registered on top of the auto-scan (package config, not domain hard-coding)
         "declared_tokens": {"api_endpoint": ["/cii"], "api_field": ["allow_inapplicable_year"]},
     },
-    "wp-14445-01": {
-        "package_id": "wp-14445-01",
-        "report_id": "14445",
-        "expected_hash": "0fad2f03c7cceceba726538a60a0c9e206b0a932e9d53e10f5e32388da25c85b",
-        "expected_chars": 8040,
-        "title": "GAP-PP-5 可微路径设备口径：文档化 CPU 基线 + tensor-tau 梯度回归 A/B（m15359）",
-        "scenario_key": "gap_pp5_cpu_baseline",
-        "out_dir": "docs/kf/wp-14445-01",
-        "mission_id": 15792,
-        # interface/code surfaces the report references but that carry no file extension, so the
-        # deterministic path scan cannot see them (package config, not tool hard-coding)
+    "wp-13560-01": {
+        "package_id": "wp-13560-01",
+        "report_id": "13560",
+        "expected_hash": "b578c093ddeff7571dcdc5b98383da2b564f608fa77b5b3ea1a10f05b0722279",
+        "expected_chars": 2887,
+        "title": "TensorData 质量审计（A+B）m14503：35 步真跑 + 独立 oracle 对照 + 11 条成熟度判级",
+        "scenario_key": "quality-audit-tensordata",
+        "mission_id": 15764,
+        "out_dir": "docs/kf/wp-13560-01",
+        # interface / version surfaces the report pins in inline code (package config, not domain hard-coding)
         "declared_tokens": {
-            "commit_ref": ["16b48fe4de98c054c68674f60b11245e79f5489d", "5db76f6d"],
-            "cluster_job_ref": ["cj1081"],
-            "repo_path_ref": ["TensorLBM/benchmarks/verified/shear_wave_decay"],
-            "code_symbol": ["check_relaxation_time", "_as_float", "collide_bgk"],
+            "vcs_reference": ["cxs503/TensorData", "fe09270"],
+            "api_endpoint": ["/api/v1"],
+            "config_parameter": ["profile=timeseries"],
+            "db_table": ["tensor_maturity_verdicts"],
         },
-        # prose for the report renderer (package config; keeps domain names out of the shared tool)
-        "cross_repo_note": "属产出仓 TensorLBM 的路径",
-        "cross_repo_short": "TensorLBM",
-        "cross_repo_refs": "`artifacts/gap_pp5_cpu_baseline/bench_diff_lbm_cpu.py`、`runs/gap_pp5_cpu_baseline`、"
-                           "`input_contract.check_relaxation_time` 等属 TensorLBM 仓",
-        "table_note": "§3 参数表与 §4.1–4.4/§5 数据表共 6 张表只登记几何（行×列）与字符跨度",
     }
 }
 
@@ -295,7 +288,10 @@ def scan_figures(src: Source, meta: dict):
             "bytes": len(blob) or None,
             "sha256": hashlib.sha256(blob).hexdigest() if blob else None,
             "resolution_detail": "payload_present" if blob else "metadata_only",
-            "note": payload_note,
+            "note": payload_note if hit is not None else (
+                payload_note + "; the filename does not occur verbatim in the markdown body, so the "
+                "authoritative locator is the record field figure_uri and the body locator degrades to "
+                "document scope (nothing is inferred about which body sentence refers to it)"),
         })
     return out
 
@@ -730,16 +726,22 @@ def render_report(cfg, out_dir: Path, png: Path):
     manifest = json.loads((out_dir / "asset_manifest.json").read_text(encoding="utf-8"))
     result = json.loads((out_dir / "kf_result.json").read_text(encoding="utf-8"))
     verdict = json.loads((out_dir / "verification.json").read_text(encoding="utf-8"))
+    ip = out_dir / "verification_independent.json"
+    indep = json.loads(ip.read_text(encoding="utf-8")) if ip.exists() else None
     _meta, md = fetch_report(login(), cfg["report_id"])
     src = Source(md)
     msha = hashlib.sha256((out_dir / "asset_manifest.json").read_bytes()).hexdigest()
     rsha = hashlib.sha256((out_dir / "kf_result.json").read_bytes()).hexdigest()
     n = manifest["counts"]["assets"]
-    # package-level prose comes from the preset config: the shared renderer stays domain-neutral
-    xrepo = cfg.get("cross_repo_note", "属产出仓 ship-performance-platform 的路径")
-    xrepo_short = cfg.get("cross_repo_short", "ship-performance-platform")
-    xrepo_refs = cfg.get("cross_repo_refs", "`backend/...py`、`artifacts/cii_crosscheck_m6284/...py` 等")
-    table_note = cfg.get("table_note", "表 1/2/3 只登记几何（行×列）与字符跨度")
+    fig_assets = [a for a in manifest["assets"] if a["asset_class"] == "embedded_figure"]
+    n_figs = len(fig_assets)
+    n_figs_meta = sum(1 for a in fig_assets if a.get("resolution_detail") == "metadata_only")
+    unresolved_refs = [a for a in manifest["assets"]
+                       if "path_reference" in a and a["resolution"] == "referenced_unresolved"]
+    ref_paths = sorted({a["path_reference"] for a in unresolved_refs})
+    n_ref, n_ref_distinct = len(unresolved_refs), len(ref_paths)
+    n_tables = sum(1 for a in manifest["assets"] if a["asset_class"] == "report_table")
+    n_figs_named_absent = sum(1 for a in fig_assets if a["locator"]["method"] == "document")
 
     def cell(v, lim=64):
         return (v.replace("\n", " ").replace("|", "\\|").replace("`", "'"))[:lim]
@@ -782,9 +784,9 @@ def render_report(cfg, out_dir: Path, png: Path):
         "   `quote` 取自源字节切片 `md[s:e]`，**不存在手抄环节**（这也使平台侧「子串独立重算」必然成立）。",
         "4. **扫描规则**（确定性、无领域硬编码；域参数经包配置传入）：行内代码/围栏代码中的 `*.py|json|png|md|csv|yaml` 路径 → 路径引用"
         "（出现级身份 = 路径 × 行号）；`record.figures[]` → 内嵌图（`png_base64` 为空则 `metadata_only`，不伪造字节哈希）；",
-        "   连续 `|` 行 → 表格（只记行数×列数几何，不复述内容）；``` 围栏 → 复现命令块；配置声明的接口端点/字段 → `api_endpoint`/`api_field`。",
-        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；" + xrepo + "，越界即如实记",
-        "   `referenced_unresolved`，不读别的仓。",
+        "   连续 `|` 行 → 表格（只记行数×列数几何，不复述内容）；三反引号围栏代码块 → 复现命令块；配置声明的接口端点/字段 → `api_endpoint`/`api_field`。",
+        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；属产出仓（本包不得读写的仓）的路径",
+        "   越界即如实记 `referenced_unresolved`，不读别的仓。",
         "6. **信封 + 自检**：`kf_result.json` 按 `schemas/kf_result.v1.schema.json` 生成；`verification.json` 用 jsonschema（draft 2020-12）",
         "   分别校验信封与清单，并逐条重算 acceptance 项。",
         "",
@@ -797,6 +799,8 @@ def render_report(cfg, out_dir: Path, png: Path):
         "| `kf_result.json` | 结果信封（package_id/task_type/report_id/provenance/outputs/claims）；sha256 `%s` |" % rsha,
         "| `verification.json` | %d 项 acceptance 自检逐条 pass/fail + 重算哈希；`all_pass`=%s |" % (
             len(verdict["checks"]), verdict["all_pass"]),
+        "| `verification_independent.json` | 独立复核（`scripts/kf/kf_wp13560_01_independent_check.py`，与产线脚本零共享代码）：%d 项；`all_pass`=%s |" % (
+            len(indep["checks"]), indep["all_pass"]) if indep else "| `verification_independent.json` | (未运行独立复核) |",
         "| `report.md` | 本报告（由清单/信封/自检**程序化渲染**，无手抄）|",
         "| `figures/%s` | A) 资产类别×解析状态计数；B) 每个资产的字符跨度覆盖图 |" % png.name,
         "",
@@ -808,7 +812,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "",
         "**图注**：A) 资产类别 × 解析状态（绿=源内已解析、红=引用未解析、灰=声明缺失）；B) 每个资产在 markdown 中的字符跨度",
         "（横轴=字符偏移，源文档 %d 字符）。两图直接由 `asset_manifest.json` 绘出，零手抄。" % manifest["source"]["chars"],
-        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（" + xrepo_short + "），本包不得读写，故只能如实记 `referenced_unresolved`。",
+        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓，本包不得读写，故只能如实记 `referenced_unresolved`。",
         "",
         "## ⑤ 证据定位表（资产 → 原文逐字片段，均由 `md[start_char:end_char]` 计算）",
         "",
@@ -818,15 +822,21 @@ def render_report(cfg, out_dir: Path, png: Path):
         "",
         "（完整 quote 与字符跨度见 `asset_manifest.json` 各 `locator`；平台可对每条 quote 做子串 + 行号独立复核。）",
         "",
+        "注：`embedded_figure` 各行的 quote 相同是因为其 `locator.method=document`（文件名未在正文逐字出现，跨度为整篇文档）；"
+        "这类资产的权威定位是各自的 `figure_uri`（`tensor://reports/%s#figures[i]`），**不是**表里那段正文。" % cfg["report_id"],
+        "",
         "## ⑥ 注意点与局限",
         "",
         "1. **登记 ≠ 抽取**：清单只回答「报告里有哪些可解析工件、在其中何处」，不回答「报告说了什么」。claims 为空是契约允许的完整结果。",
         "2. **不标 verified**：清单与信封里没有任何 `verified` 状态；验证由平台门计算，本工序只提供可复算的定位器与哈希。",
-        "3. **图只有元数据**：报告记录 `figures[]` 两项均无 `png_base64` 载荷（0 字节），故只登记 name/caption + 正文出现位置，",
-        "   记 `metadata_only`（`resolution=referenced_unresolved`），**不宣称拿到图字节**。",
-        "4. **跨仓引用不可解析**：报告引用的 " + xrepo_refs + "，",
-        "   本工作树（TensorKnowledge）内不存在 → 全部 `referenced_unresolved`，并在 `resolution_check.detail` 写明原因，不做「大概存在」的推断。",
-        "5. **表格内容未复述**：" + table_note + "，避免把报表数字二次转写引入漂移。",
+        "3. **图只有元数据**：报告记录 `figures[]` 共 %d 项，其中 %d 项无 `png_base64` 载荷（0 字节），故只登记 name/caption，"
+        "   记 `metadata_only`（`resolution=referenced_unresolved`），**不宣称拿到图字节**；其中 %d 项的文件名在正文中不逐字出现，"
+        "   权威定位为 `figure_uri`（record 字段），正文定位器降级为 `method=document`，不做「哪句话指的是这张图」的推断。" % (
+            n_figs, n_figs_meta, n_figs_named_absent),
+        "4. **跨仓引用不可解析**：报告引用的仓外路径共 %d 条（去重后 %d 条），均属产出仓，本工作树（TensorKnowledge）内不存在 → 全部 `referenced_unresolved`，"
+        "   并在 `resolution_check.detail` 写明原因，不做「大概存在」的推断。清单：`%s`。" % (
+            n_ref, n_ref_distinct, "`, `".join(ref_paths[:8])),
+        "5. **表格内容未复述**：正文 %d 张表只登记几何（行×列）与字符跨度，避免把报表数字二次转写引入漂移。" % n_tables,
         "6. **schema 口径**：仓库内 `schemas/asset_manifest.v1.schema.json` 把 `package_id/task_type/report_id`/`source.uri` 钉死为 wp-448-01 的包级取值，",
         "   自检时**仅放松这四处包级固定值**（`source.uri` 改为 `^tensor://reports/[0-9]+$`，其余约束照常生效）并如实记录在 `detail` 里，避免把「本包必挂」伪装成通过。",
         "",
@@ -835,6 +845,13 @@ def render_report(cfg, out_dir: Path, png: Path):
         "| acceptance 项 | 结果 | 细节 |",
         "|---|---|---|",
         *selfrows,
+        "",
+        "**独立复核**（`scripts/kf/kf_wp13560_01_independent_check.py`，与 `kf01_register.py` **零共享代码**，重新取源、重新切片、重新解析报告块）：",
+        "",
+        "| 复核项 | 结果 | 细节 |",
+        "|---|---|---|",
+        *(["| %s | %s | %s |" % (k, "PASS" if v["pass"] else "FAIL", cell(v["detail"], 150))
+           for k, v in indep["checks"].items()] if indep else ["| (not run) | — | — |"]),
         "",
         "## 复现",
         "",
@@ -870,7 +887,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "markdown": text,
         "figures": [{
             "name": png.name,
-            "caption": "%s asset inventory & locator coverage map (computed from asset_manifest.json)" % cfg["package_id"],
+            "caption": "wp-7450-01 asset inventory & locator coverage map (computed from asset_manifest.json)",
             "png_base64": base64.b64encode(png.read_bytes()).decode(),
         }],
     }
