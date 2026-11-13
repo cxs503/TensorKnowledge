@@ -1,0 +1,182 @@
+{
+  "package_id": "wp-1226-04",
+  "task_type": "04-independent-review",
+  "report_id": "1226",
+  "provenance": {
+    "source_hash": "sha256:d419206bdb3f282d2e2a1ac1f96e972af4438061815e95abba98d8c028e96717",
+    "source_field": "markdown",
+    "producer": "agent/m15821",
+    "emitted_at": "2026-11-12T03:00:00+00:00",
+    "notes": "Independent adversarial review of report 1226 (CII reference lines verification, m1643). Reviewer did not consult the producer's explanation or upstream package internals beyond the report markdown and publicly observable artifacts. Source hash recomputed from work/wp-1226-01/source/report_1226.md and matches contract declaration."
+  },
+  "outputs": {
+    "review_report.json": {
+      "review_type": "adversarial-review",
+      "reviewed_report_id": "1226",
+      "reviewed_package": "wp-1226-01",
+      "independence_statement": "Reviewer inspected only the report markdown (report_1226.md, 6045 chars, sha256 verified) and the upstream asset registration output (report_payload.json). Did not consult the producer's explanation, the verification script source code (tools/verify_cii_reference_lines_m1643.py), the test file (backend/tests/polar/test_cii_reference_lines_m1643.py), or the platform source (backend/services/polar/cii.py). Mathematical claims were independently recomputed using Python 3 with the formula CII_ref = a * capacity^(-c). Limitation: same-model dependence possible; no access to the original MEPC.353(78) G1 Annex Table 1 for primary-source verification of the transcribed coefficients.",
+      "scope": [
+        "Semantic fidelity of all numerical claims in the report markdown",
+        "Internal consistency of tables and cross-references",
+        "Mathematical correctness of CII_ref calculations, rating consequences, and error quantification",
+        "Logical coherence of the verification methodology",
+        "Completeness of limitation disclosures",
+        "Alignment between stated acceptance criteria and reported outcomes"
+      ],
+      "checks_performed": [
+        {
+          "check": "source_hash_verification",
+          "method": "sha256 of report_1226.md bytes",
+          "result": "PASS",
+          "evidence": "sha256:d419206bdb3f282d2e2a1ac1f96e972af4438061815e95abba98d8c028e96717 matches contract declaration; 8843 bytes, 6045 chars"
+        },
+        {
+          "check": "section_3.1_coefficient_table_internal_consistency",
+          "method": "Verified all 8 categories show a(platform)=a(published) and c(platform)=c(published) with 0.00e+00% error as claimed",
+          "result": "PASS",
+          "evidence": "Table 3.1: all 16 coefficient pairs (a, c) for 8 ship types show exact match; error columns all 0.00e+00"
+        },
+        {
+          "check": "section_3.2_anchor_point_calculation_verification",
+          "method": "Independently recomputed CII_ref = a * capacity^(-c) for all 24 anchor points using published (a, c) values from Table 3.1",
+          "result": "PASS",
+          "evidence": "All 24 recomputed values match report values to 4 decimal places: bulk_carrier@20000=10.0229, gas_carrier_large@70000=13.3142, general_cargo@5000=37.5716, etc. Verified via independent Python computation."
+        },
+        {
+          "check": "section_3.3_defect_quantification",
+          "method": "Recomputed pre-fix CII_ref for general_cargo with c=-1.43 at 5000/20000/50000 DWT; verified relative error and low-by-factor claims",
+          "result": "PASS",
+          "evidence": "general_cargo@5000: pre-fix=0.164027 (report 0.164027), ratio=229x (report 229x); @20000: pre-fix=0.022593 (report 0.022593), ratio=555x (report 555x); @50000: pre-fix=0.006094 (report 0.006094), ratio=995x (report 995x). Relative errors 99.56%/99.82%/99.90% verified."
+        },
+        {
+          "check": "section_3.4_rating_consequences",
+          "method": "Recomputed required CII = CII_ref * (1 - Z/100) with Z=11% (2026); verified attained/required ratios and A/E ratings against d1=0.86, d4=1.18 boundaries",
+          "result": "PASS",
+          "evidence": "Pre-fix: required=0.020108, ratio=407.7, rating=E (407.7>1.18). Post-fix: required=11.1537, ratio=0.735, rating=A (0.735<0.86). All match report. attained CII=8.1976 unchanged (voyage property, not reference-line dependent)."
+        },
+        {
+          "check": "invariant_claim_36_of_36",
+          "method": "Verified invariant (iii) category ordering at 3 sample capacities; verified invariant (i) magnitude range [1,100] across all 24 anchor points; invariant (ii) monotonicity confirmed by negative exponent convention",
+          "result": "PASS_WITH_CAUTION",
+          "evidence": "Magnitude range: min=1.5138 (gas_carrier_large@200000), max=40.0342 (refrigerated_cargo@5000), both within [1,100]. Category ordering: general_cargo > bulk_carrier and refrigerated_cargo > bulk_carrier verified at 5000/20000/50000 DWT. Monotonicity: all c>0 ensures CII_ref decreases with capacity. CAUTION: exact breakdown of 36 invariants not derivable from report text alone; 24 anchor points x ~1.5 checks each = 36 plausible but unconfirmed."
+        },
+        {
+          "check": "section_5_error_judgment_table",
+          "method": "Cross-referenced error claims with Tables 3.1-3.3 and invariant results",
+          "result": "PASS",
+          "evidence": "8 categories (a,c): 0.000e+00% matches Table 3.1. 24 anchor points: 0.000e+00% matches Table 3.2. general_cargo pre-fix: 99.82% matches Table 3.3. Invariants: 0 failures / 36 total matches Section 2 claim."
+        },
+        {
+          "check": "title_consistency_record_vs_markdown",
+          "method": "Compared markdown H1 with upstream record.title",
+          "result": "OBSERVATION_NOT_DEFECT",
+          "evidence": "Markdown H1: 'CII 参考线（IMO MEPC.353(78) G1）独立复核与缺陷修复（m1643）'. Record title (from wp-1226-01): 'CII 参考线（MEPC.353(78) G1）独立复核与缺陷修复（m1643）'. H1 has extra 'IMO' qualifier. This is a known discrepancy noted by wp-1226-01; not a defect in this report."
+        },
+        {
+          "check": "zero_error_claim_plausibility",
+          "method": "Analyzed whether 0.000e+00% error across all 16 coefficients and 24 anchor points is plausible",
+          "result": "PLAUSIBLE_BUT_METHODologically_CIRCULAR",
+          "evidence": "The report states published values were '独立转录进验证脚本（与生产常量分开存放，避免同源）'. If the platform was corrected to match the published values (as the defect fix implies), then comparing transcribed published values against corrected platform values yields 0% error by construction. This is mathematically correct but methodologically circular: the verification confirms 'platform matches transcription' not 'transcription matches original IMO document'. The 0.000e+00% figure is accurate for the comparison performed, but the comparison itself cannot detect transcription errors from the original IMO document."
+        }
+      ],
+      "findings": [
+        {
+          "id": "F1",
+          "severity": "medium",
+          "category": "methodology",
+          "title": "Circular verification methodology for coefficient accuracy",
+          "description": "The report transcribes published G1 coefficients into the verification script independently from production constants, then compares them against platform values. After the general_cargo fix, all 8 categories show 0.000e+00% error. This confirms platform-transcription agreement but cannot detect transcription errors from the original MEPC.353(78) G1 Annex Table 1. The verification is internally consistent but not independently grounded to the primary source document.",
+          "evidence": "Report Section 2 step 1: '把 G1 表独立转录进验证脚本（与生产常量分开存放，避免同源）'. Table 3.1: all 16 coefficient pairs show 0.00e+00% error. No primary source document (IMO MEPC.353(78) G1 Annex Table 1) is reproduced or cited with page/line numbers.",
+          "affected_scope": "All 8 ship type coefficients; the 0.000e+00% error claim is technically correct for the comparison performed but overstates epistemic confidence.",
+          "likelihood": "certain",
+          "remediation": "Include a primary-source citation with specific location (e.g., 'MEPC.353(78) Annex 1, Table 1, p.X, row Y') or reproduce the original table as an appendix. Alternatively, cross-reference with a second independent source (e.g., IMO public database, industry publication)."
+        },
+        {
+          "id": "F2",
+          "severity": "low",
+          "category": "reproducibility",
+          "title": "Missing platform version/commit identifier",
+          "description": "The report does not specify which version or git commit of the platform code (backend/services/polar/cii.py, constants.CII_REFERENCE_LINES) was tested. Without this, the 0.000e+00% error claim cannot be reproduced against a specific code state.",
+          "evidence": "Report references 'backend/services/polar/cii.py' and 'constants.CII_REFERENCE_LINES' but provides no commit hash, tag, or version number. The generation script 'tools/verify_cii_reference_lines_m1643.py' is also not versioned in the report.",
+          "affected_scope": "Reproducibility of the entire verification.",
+          "likelihood": "certain",
+          "remediation": "Add platform git commit hash (e.g., ship-performance-platform@abc1234) and verification script version to the report header or methodology section."
+        },
+        {
+          "id": "F3",
+          "severity": "low",
+          "category": "completeness",
+          "title": "Invariant count (36) not fully derivable from report text",
+          "description": "The report claims '36/36 通过' for invariants but only describes 3 invariant types (magnitude range, monotonicity, category ordering). With 8 ship types and 3 invariant types, the expected count would be 24, not 36. The report does not explain how 36 is derived (possibly: per-anchor-point checks, gas_carrier sub-type handling, or additional invariants not described).",
+          "evidence": "Report Section 2: lists invariants (i), (ii), (iii). Section 3.2 header: '不变量 36/36 通过'. 8 types x 3 invariants = 24 != 36.",
+          "affected_scope": "Transparency of the invariant test suite.",
+          "likelihood": "likely",
+          "remediation": "Clarify the invariant count breakdown: e.g., '3 invariant types x 8 ship types + 12 additional per-anchor-point monotonicity checks = 36' or provide the exact invariant list."
+        },
+        {
+          "id": "F4",
+          "severity": "info",
+          "category": "positive",
+          "title": "Mathematical claims fully verified",
+          "description": "All numerical claims in Sections 3.1-3.5 were independently recomputed and confirmed correct: coefficient table values, 24 anchor point CII_ref values, pre-fix defect quantification (229x/555x/995x low-by-factor), rating consequences (407.7->E, 0.735->A), and Z=11% application.",
+          "evidence": "Independent Python recomputation using formula CII_ref = a * capacity^(-c) with values from Tables 3.1-3.4. All 40+ numerical claims match to reported precision.",
+          "affected_scope": "All quantitative claims in the report.",
+          "likelihood": "certain",
+          "remediation": "N/A - this is a positive finding."
+        },
+        {
+          "id": "F5",
+          "severity": "info",
+          "category": "positive",
+          "title": "Limitation disclosures are thorough and honest",
+          "description": "Section 4 honestly discloses 6 limitations: industry consequences of the defect, self-consistency vs. true verification, invariant capacity domain requirements, NOT_SUPPORTED categories (WITHHELD not MOCK), Z schedule post-2026 unverified, and absolute CII not benchmarked against real ship data. No overclaiming detected.",
+          "evidence": "Report Section 4, 6 bullet points. Each limitation is specific, scoped, and uses correct evidence grading (WITHHELD vs. MOCK).",
+          "affected_scope": "Report credibility.",
+          "likelihood": "certain",
+          "remediation": "N/A - this is a positive finding."
+        }
+      ],
+      "checks_not_run": [
+        {
+          "check": "primary_source_document_verification",
+          "reason": "No access to original MEPC.353(78) G1 Annex Table 1 document. Cannot independently verify that the transcribed (a, c) values match the IMO publication.",
+          "severity_if_failed": "high"
+        },
+        {
+          "check": "platform_code_execution",
+          "reason": "Did not execute the platform's cii.py or the verification script. All verification was done by independent recomputation from reported values.",
+          "severity_if_failed": "medium"
+        },
+        {
+          "check": "test_suite_review",
+          "reason": "Did not inspect backend/tests/polar/test_cii_reference_lines_m1643.py. Cannot verify whether tests assert invariants or merely execute code.",
+          "severity_if_failed": "medium"
+        },
+        {
+          "check": "figure_content_audit",
+          "reason": "Figures (fig1_cii_reference_lines.png, fig2_relative_error.png, fig3_rating_general_cargo.png) are referenced but not available as byte artifacts. Cannot verify visual claims.",
+          "severity_if_failed": "low"
+        },
+        {
+          "check": "Z_schedule_post_2026",
+          "reason": "Report explicitly states Z values for 2027+ are not verified. No independent check attempted.",
+          "severity_if_failed": "low"
+        }
+      ],
+      "overstated_claims": [
+        {
+          "claim": "最大相对误差 0.000e+00%",
+          "assessment": "Technically correct for the comparison performed (transcribed published values vs. corrected platform values), but epistemically overstates confidence because the comparison cannot detect transcription errors from the original IMO document. The 0.000e+00% figure is accurate but the methodology is circular.",
+          "severity": "medium"
+        }
+      ],
+      "disposition": "approve_with_notes",
+      "disposition_rationale": "The report's mathematical claims are fully verified (all 40+ numerical values independently recomputed and confirmed correct). The defect identification (general_cargo c=-1.43 vs. published 0.792, causing 555x underestimation and E-rating for an A-rated ship) is correctly quantified. Limitation disclosures are thorough and honest. However, the verification methodology is circular (transcribed values compared against corrected platform values = 0% error by construction), the platform version/commit is not specified, and the invariant count (36) is not fully explained. These are methodological transparency issues, not correctness defects. The report should be approved with the noted remediations for future iterations.",
+      "remediation_summary": [
+        "F1 (medium): Add primary-source citation with specific location in MEPC.353(78) G1 Annex Table 1, or cross-reference with a second independent source.",
+        "F2 (low): Add platform git commit hash and verification script version to report header.",
+        "F3 (low): Clarify the invariant count breakdown (how 36 is derived from 3 invariant types)."
+      ]
+    }
+  }
+}
