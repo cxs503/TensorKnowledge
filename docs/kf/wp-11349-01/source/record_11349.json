@@ -1,0 +1,23 @@
+{
+  "id": 11349,
+  "title": "P266W1-N10 补记：能力台账 API 接线缺陷修复（capability_audit 路由 404）",
+  "summary": "发现并修复：api/capability_audit.py 在仓内存在但 main.py 从未 include → 线上 /api/v1/tensor/capabilities/audit 带 token 探针实测 404（无 token 得 401 会掩盖该缺陷）。已接线并加源码级接线回归测试；同时说明修复需合并重启后在线上生效。",
+  "scenario_key": "platform_governance_capability_ledger_semantics",
+  "mission_id": 9561,
+  "stage": null,
+  "tags": [
+    "API接线",
+    "能力台账",
+    "缺陷修复",
+    "探针方法学"
+  ],
+  "figures": [
+    {
+      "name": "fig2_tier_coverage_and_misuse.png",
+      "caption": "图（沿用主报告）：误用治理修复前后对照"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-10T13:05:50.625915+00:00"
+}
