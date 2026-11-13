@@ -1,0 +1,406 @@
+{
+  "package_id": "wp-11349-01",
+  "task_type": "01-asset-registration",
+  "report_id": "11349",
+  "provenance": {
+    "source_hash": "sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80",
+    "source_field": "markdown",
+    "source_uri": "tensor://reports/11349",
+    "producer": "agent/m15696 (TensorKnowledge) · package wp-11349-01",
+    "emitted_at": "2026-11-12T01:50:38+00:00",
+    "notes": "01-asset-registration: hash-pinned inventory of report 11349; claims intentionally empty; no extraction, no report_type classification, no verification stamp"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "manifest_version": "1.0",
+      "package_id": "wp-11349-01",
+      "task_type": "01-asset-registration",
+      "report_id": "11349",
+      "objective": {
+        "register_assets": true,
+        "classify_report_type": false
+      },
+      "generated_at": "2026-11-12T01:50:38+00:00",
+      "source": {
+        "uri": "tensor://reports/11349",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80",
+        "chars": 1029,
+        "bytes_utf8": 1657,
+        "lines": 32,
+        "title": "P266W1-N10 补记：能力台账 API 接线缺陷修复（capability_audit 路由 404）",
+        "record_title": "P266W1-N10 补记：能力台账 API 接线缺陷修复（capability_audit 路由 404）",
+        "scenario_key": "platform_governance_capability_ledger_semantics",
+        "record_scenario_key": "platform_governance_capability_ledger_semantics",
+        "record_status": "published",
+        "record_mission_id": 9561,
+        "record_created_at": "2026-11-10T13:05:50.625915+00:00",
+        "record_tags": [
+          "API接线",
+          "能力台账",
+          "缺陷修复",
+          "探针方法学"
+        ],
+        "platform_figures": [
+          {
+            "name": "fig2_tier_coverage_and_misuse.png",
+            "caption": "图（沿用主报告）：误用治理修复前后对照"
+          }
+        ],
+        "fetched_via": "byte snapshot (docs/kf/wp-11349-01/source/report_11349.md)"
+      },
+      "provenance": {
+        "source_uri": "tensor://reports/11349",
+        "source_field": "markdown",
+        "source_hash": "sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80",
+        "contract_source_hash": "sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80",
+        "source_hash_matches_contract": true,
+        "contract_chars": 1029,
+        "contract_title": "P266W1-N10 补记：能力台账 API 接线缺陷修复（capability_audit 路由 404）",
+        "title_matches_contract": true,
+        "hashed_bytes": "markdown encoded as utf-8",
+        "worktree_repo": "TensorKnowledge",
+        "worktree_head": "a7fdcb80233a5ec32def8c02027c1702c81342a4",
+        "worktree_branch": "agent/m15696",
+        "generator": "scripts/kf/wp11349_01_register.py",
+        "contract_version": "1.0"
+      },
+      "resolution_vocabulary": {
+        "resolved_in_source": "字节/引文在报告 markdown 内逐字定位（本包唯一可自证的一类）",
+        "referenced_unresolved": "报告引用的目标在本包作用域外（他仓文件/线上端点/跨报告），只登记定位，不解引用、不判真伪",
+        "declared_absent": "报告声明存在的产物在源内不存在（本报告无此情形，故计数为 0）"
+      },
+      "locator_convention": {
+        "char_span": "start_char/end_char 为 UTF-8 解码后 markdown 字符串的字符下标，md[start_char:end_char] == quote 逐字成立",
+        "document": "method=document 的条目（仅 A00 本体）跨越整篇 [0, len)；其 quote 取首行标题，字节完整性由 sha256 而非切片保证",
+        "widening": "若锚点字符串在源内多次出现，则向左右扩窗直到 quote 唯一；因此 quote 可能含有锚点之外的上下文语境，只作定位用，不构成抽取",
+        "line_numbers": "start_line/end_line 为 1 基行号，由字符下标重算"
+      },
+      "structure_index": {
+        "note": "仅标题行与字符偏移，作为下游工序的定位脚手架；不抽取任何内容",
+        "headings": [
+          {
+            "level": 1,
+            "text": "P266W1-N10 补记：能力台账路由接线缺陷修复",
+            "line_no": 1
+          },
+          {
+            "level": 2,
+            "text": "发现的缺陷（可复现）",
+            "line_no": 3
+          },
+          {
+            "level": 2,
+            "text": "修复",
+            "line_no": 20
+          },
+          {
+            "level": 2,
+            "text": "局限",
+            "line_no": 29
+          }
+        ]
+      },
+      "counts": {
+        "assets": 11,
+        "by_class": {
+          "report_document": 1,
+          "source_file": 2,
+          "source_symbol": 2,
+          "api_endpoint": 3,
+          "test_case": 1,
+          "cross_report_reference": 1,
+          "evidence_table": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 2,
+          "referenced_unresolved": 9
+        },
+        "resolved_in_source": 2,
+        "referenced_unresolved": 9,
+        "declared_absent": 0,
+        "claims": 0
+      },
+      "assets": [
+        {
+          "asset_id": "A00",
+          "asset_class": "report_document",
+          "kind": "report_document",
+          "label": "报告正文 markdown（11349，来源资产本体）",
+          "in_report_section": "P266W1-N10 补记：能力台账路由接线缺陷修复",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 1029,
+            "start_line": 1,
+            "end_line": 32,
+            "quote": "# P266W1-N10 补记：能力台账路由接线缺陷修复",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "sha256(utf-8 bytes) == contract source_hash",
+            "result": "resolved"
+          },
+          "note": "字节哈希已钉扎；本条为本工序的被登记对象本体。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A01",
+          "asset_class": "source_file",
+          "kind": "source_file_under_review",
+          "label": "backend/api/capability_audit.py（缺陷所在的 21 能力证据等级矩阵端点模块）",
+          "in_report_section": "发现的缺陷（可复现）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 46,
+            "end_char": 77,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "backend/api/capability_audit.py",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=6, exists=False)",
+            "result": "unresolved"
+          },
+          "note": "属 TensorPlatform 仓，不在本工作树（TensorKnowledge）内 → 本包只登记引用与定位，不解引用、不复制代码。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "source_file",
+          "kind": "source_file_under_review",
+          "label": "backend/main.py（未 include router 的装配点）",
+          "in_report_section": "发现的缺陷（可复现）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 155,
+            "end_char": 196,
+            "start_line": 6,
+            "end_line": 6,
+            "quote": "`backend/main.py` **从未 include 该 router**",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=0, exists=False)",
+            "result": "unresolved"
+          },
+          "note": "同上。quote 因唯一性扩窗而带上了报告对它的缺陷陈述（未 include）；该陈述属报告结论，本包只登记位置，不重算、不判真伪。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "source_symbol",
+          "kind": "router_symbol",
+          "label": "api.capability_audit.router（待挂载的 APIRouter 对象）",
+          "in_report_section": "修复",
+          "locator": {
+            "method": "char_span",
+            "start_char": 661,
+            "end_char": 688,
+            "start_line": 23,
+            "end_line": 23,
+            "quote": "api.capability_audit.router",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=0, exists=False)",
+            "result": "unresolved"
+          },
+          "note": "符号级引用；所在模块在 TensorPlatform 仓。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "source_symbol",
+          "kind": "router_symbol",
+          "label": "api.capability_semantics.router（本次并列新建的 router）",
+          "in_report_section": "修复",
+          "locator": {
+            "method": "char_span",
+            "start_char": 698,
+            "end_char": 729,
+            "start_line": 23,
+            "end_line": 23,
+            "quote": "api.capability_semantics.router",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=0, exists=False)",
+            "result": "unresolved"
+          },
+          "note": "符号级引用；所在模块在 TensorPlatform 仓。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "api_endpoint",
+          "kind": "http_endpoint",
+          "label": "GET /tensor/capabilities/audit（21 能力证据矩阵端点，缺陷路径）",
+          "in_report_section": "发现的缺陷（可复现）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 93,
+            "end_char": 125,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "`GET /tensor/capabilities/audit`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=4, exists=False)",
+            "result": "unresolved"
+          },
+          "note": "线上 :8010 的服务端点，非本仓文件资产；本工序不做执行/重放探针。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "api_endpoint",
+          "kind": "http_endpoint",
+          "label": "/audit/summary（同一 router 的汇总子路径）",
+          "in_report_section": "发现的缺陷（可复现）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 129,
+            "end_char": 143,
+            "start_line": 6,
+            "end_line": 6,
+            "quote": "/audit/summary",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=4, exists=False)",
+            "result": "unresolved"
+          },
+          "note": "与 A05 同 router 的另一端点；仅引用登记。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "api_endpoint",
+          "kind": "http_endpoint",
+          "label": "GET /api/v1/tensor/capabilities/semantics（新端点，分支未部署）",
+          "in_report_section": "发现的缺陷（可复现）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 420,
+            "end_char": 457,
+            "start_line": 15,
+            "end_line": 15,
+            "quote": "/api/v1/tensor/capabilities/semantics",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=4, exists=False)",
+            "result": "unresolved"
+          },
+          "note": "报告记录其带 token 探针结果为 404；本包不重放。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "test_case",
+          "kind": "regression_test",
+          "label": "backend/tests/test_capability_semantics_api.py::test_routers_wired_in_main_and_route_shapes（源码级接线回归）",
+          "in_report_section": "修复",
+          "locator": {
+            "method": "char_span",
+            "start_char": 805,
+            "end_char": 882,
+            "start_line": 26,
+            "end_line": 26,
+            "quote": "test_capability_semantics_api.py::test_routers_wired_in_main_and_route_shapes",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=4, exists=False)",
+            "result": "unresolved"
+          },
+          "note": "测试文件在 TensorPlatform 仓；本仓无法执行该测试，故只登记不判绿。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "cross_report_reference",
+          "kind": "report_cross_reference",
+          "label": "主报告 id=11344（本补记不改变其判据数字）",
+          "in_report_section": "局限",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1011,
+            "end_char": 1019,
+            "start_line": 32,
+            "end_line": 32,
+            "quote": "id=11344",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=0, exists=False)",
+            "result": "unresolved"
+          },
+          "note": "跨报告引用。按产线边界（只碰 report_id=11349）本包**不解引用** 11344，故其存在性与内容状态为未解，不可判 verified。",
+          "quote_verbatim_in_markdown": true
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "evidence_table",
+          "kind": "in_report_probe_table",
+          "label": "复现探针表（带 JWT 打 :8010，2026-11-10，三行请求/结果）",
+          "in_report_section": "发现的缺陷（可复现）",
+          "locator": {
+            "method": "char_span",
+            "start_char": 245,
+            "end_char": 491,
+            "start_line": 11,
+            "end_line": 15,
+            "quote": "| 请求 | 结果 |\n|---|---|\n| `GET /api/v1/tensor/capabilities/audit`（无 token） | 401（auth 中间件先于路由） |\n| `GET /api/v1/tensor/capabilities/audit`（带 token） | **404 Not Found** |\n| `GET /api/v1/tensor/capabilities/semantics`（带 token） | 404（新端点，分支未部署，符合预期） |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "os.path.exists(worktree/rel) + grep -rIl rel in TensorKnowledge@a7fdcb80 (grep hits=0, exists=False)",
+            "result": "present"
+          },
+          "note": "表格在报告 markdown 内逐字可解析；作为下游工序的定位脚手架登记，不复制数字结论。",
+          "quote_verbatim_in_markdown": true
+        }
+      ],
+      "claims": [],
+      "integrity": {
+        "quote_uniqueness": "每条 locator.quote 在源 markdown 中出现恰好 1 次（A00 为标题行）",
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "verification_stamp": null,
+        "verified": false
+      },
+      "scope_statement": {
+        "did": [
+          "读取 report 11349 的 markdown 并重算 sha256",
+          "枚举报告引用的文件/符号/端点/测试/跨报告引用/证据表并给出 verbatim locator",
+          "输出 asset_manifest.json + kf_result.v1 信封"
+        ],
+        "did_not": [
+          "抽取知识对象（claims 为空数组）",
+          "做报告类型分类（objective.classify_report_type=false）",
+          "重放线上探针 / 执行他仓测试",
+          "解引用 report 11344（产线边界：只碰 11349）",
+          "打 verified 戳（verification 由平台门计算）"
+        ]
+      }
+    }
+  },
+  "claims": []
+}

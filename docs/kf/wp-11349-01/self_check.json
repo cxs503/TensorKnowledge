@@ -1,0 +1,77 @@
+{
+  "package_id": "wp-11349-01",
+  "report_id": "11349",
+  "checked_at_utc": "2026-11-12T01:52:26+00:00",
+  "accepted": true,
+  "summary": "10/10 项通过",
+  "contract_acceptance_items": {
+    "valid_json": "pass",
+    "schema_pass": "pass",
+    "source_locator_resolvable": "pass",
+    "source_hash_matches": "pass",
+    "no_duplicate_ids": "pass",
+    "all_claims_have_evidence_or_explicit_unresolved_status": "pass"
+  },
+  "not_run": [
+    "线上探针未重放（工序 01 只登记，不执行；报告内 2026-11-10 的 401/404 结果保持为报告所载，本包不判真伪）",
+    "他仓测试未执行（backend/tests/* 属 TensorPlatform，本工作树无该文件）",
+    "report 11344 未解引用（产线边界：只碰 report_id=11349）"
+  ],
+  "artifact_sha256": {
+    "asset_manifest.json": "0663bcdcc8460ef216096cb11a3f6a67ef9122c51883a909fa1b116e79e01c42",
+    "kf_result.json": "21155502045b04b1a8fa0fd3b0427183c700e4ece1fe60fd8b86eb35a20854e6",
+    "source/report_11349.md": "e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80"
+  },
+  "results": [
+    {
+      "item": "valid_json",
+      "result": "pass",
+      "detail": "asset_manifest.json + kf_result.json 均被 json 解析成功"
+    },
+    {
+      "item": "source_hash_matches",
+      "result": "pass",
+      "detail": "recomputed(utf-8)=e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80 · snapshot_file=e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80 · kf_result=e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80 · manifest=e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80 · contract=e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80"
+    },
+    {
+      "item": "schema_pass",
+      "result": "pass",
+      "detail": "kf_result 通过 schemas/kf_result.v1.schema.json | manifest 通过 package-pinned asset_manifest.v1 (wp-11349-01)"
+    },
+    {
+      "item": "source_locator_resolvable",
+      "result": "pass",
+      "detail": "11 条 locator 全部重切片校验"
+    },
+    {
+      "item": "no_duplicate_ids",
+      "result": "pass",
+      "detail": "11 条 asset_id 唯一（A00..A10），counts.assets=11"
+    },
+    {
+      "item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": "claims=0 条（契约允许为空数组；本包 objective.classify_report_type=false，故为 0 条，本条为空真通过）"
+    },
+    {
+      "item": "envelope_matches_on_disk_manifest",
+      "result": "pass",
+      "detail": "kf_result.outputs['asset_manifest.json'] 与磁盘 asset_manifest.json 逐字段相同"
+    },
+    {
+      "item": "report_identity_matches_contract",
+      "result": "pass",
+      "detail": "report_id=11349 package_id=wp-11349-01 task_type=01-asset-registration"
+    },
+    {
+      "item": "no_verified_stamp",
+      "result": "pass",
+      "detail": "全树扫描 verified=true / verification_stamp：无命中（integrity.verified=false，verification 交平台门计算）"
+    },
+    {
+      "item": "contract_chars_match",
+      "result": "pass",
+      "detail": "chars=1029 vs 契约 1029"
+    }
+  ]
+}
