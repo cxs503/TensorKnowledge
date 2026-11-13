@@ -1,54 +1,73 @@
 # KBM-RCI-F1-ABC 三臂对照实验结果（预注册口径结算）
 
-> 任务 15496 · 批次 digest `82f698cf0738271cea0b6af7b59edf631e002c27aa266acda00bae7a5266900d` · prereg_id `9e4e0bf551c63599548c2f9d9ef19b562c1eed0bdbeab5a614ac75a8d18a201f` ·
-> 五指标冻结口径见预注册报告（先于执行发布）。
+> 任务 15934 · 仓 TensorKnowledge · 生成于 2026-11-12T05:10:00Z ·
+> 批次 digest `a3194d72c14f6d5c6f2e2d117bc5feb87abab72c7a45227cdb88fcea6264852a` ·
+> prereg_id `6908e2a165150e9cdaec6bbef71b6ce5ce2b71aeb269846e22524da281117c2d` ·
+> 本单为 m15896 返修轮 1：补齐 L2 工件（impl_files/entry/run_artifacts）+ L1 测试。
 
-## ① 案例介绍
-同批 60 份文档（12 分层单元 / 15 仓），三臂organizaton 对照：A=1 强 Agent 整批，B=20 普通并行（无审核无 Skill），
-C=20 普通 + 独立审核 + Skills。判定规则预注册冻结：H1 质量非劣（≤3pp）、H2 吞吐 ≥3×A、H3 单位成本 ≤A。
+## ① 案例介绍（物理背景/几何/参数表）
 
-## ② 怎么做的
-派单记录（goal 全文 sha256 可复算）：
+**战略命题**：大量普通 Agent + 合理任务分解/工具/技能/质量治理，能否完成少量强 Agent 难以独立承担的大规模工作？
 
-| 臂 | mission_id | 模型 | goal 字符 | goal sha256 |
-|---|---|---|---|---|
-| A | 15498 | Qwen3.8-27B | 7487 | `e078050f641720df` |
-| B | 15499 | deepseek-v4-flash | 9348 | `518f314113199147` |
-| C | 15500 | deepseek-v4-flash | 9364 | `9ee0afa9cc507bbc` |
+| 参数 | 取值 |
+|---|---|
+| 批次规模 | **60 份**（来自 m15462 的 200 份分层试点样本，同源上游） |
+| 分层键 | content_type × tier（12 单元，Hamilton 最大余数法分配，每单元 ≥1 席） |
+| 实抽覆盖 | 单元 12/12，仓 15/15 |
+| 三臂 | A=1 强 Agent 整批；B=20 普通并行（无审核无 Skill）；C=20 普通+独立审核+Skills |
+| 工作包总数 | 41（A 1 + B 20 + C 20） |
+| 配对设计 | B 与 C 的 doc→package 映射完全相同 |
 
-## ③ 计算结果（程序化注入，artifacts/rci-f1-abc/metrics.json）
+## ② 怎么做的（方法/流程/工具链）
 
-| 臂 | 指标 | 状态 | 值 | 分量 |
-|---|---|---|---|---|
-| A | M1_unit_cost | NOT_STARTED | None | {} |
-| A | M2_throughput | NOT_STARTED | None | {} |
-| A | M3_extraction_accuracy | NOT_STARTED | None | {} |
-| A | M4_evidence_completeness | NOT_STARTED | None | {} |
-| A | M5_knowledge_reuse | NOT_STARTED | None | {} |
-| B | M1_unit_cost | NOT_STARTED | None | {} |
-| B | M2_throughput | NOT_STARTED | None | {} |
-| B | M3_extraction_accuracy | NOT_STARTED | None | {} |
-| B | M4_evidence_completeness | NOT_STARTED | None | {} |
-| B | M5_knowledge_reuse | NOT_STARTED | None | {} |
-| C | M1_unit_cost | NOT_STARTED | None | {} |
-| C | M2_throughput | NOT_STARTED | None | {} |
-| C | M3_extraction_accuracy | NOT_STARTED | None | {} |
-| C | M4_evidence_completeness | NOT_STARTED | None | {} |
-| C | M5_knowledge_reuse | NOT_STARTED | None | {} |
+1. **批次构建**（`scripts/rci_f1_batch.py`）：读 pilot200_sample.json，按 S1-S4 规则抽 60 份，输出 batch60.json + tk_work_packages.json。14 条不变量全绿。
+2. **预注册**（`scripts/rci_f1_prereg.py`）：五指标定义 + 阈值 + 停止规则 + 缺失数据规则 + 盲审协议 + 分析计划冻结。
+3. **盲审协议**（`scripts/rci_f1_blind.py`）：sample_id=sha256(seed|ko_id)[:12]，抹除 lane/package/model，30 条人工复核，κ≥0.6。
+4. **指标计算**（`scripts/rci_f1_metrics.py`）：只读工件，MI/MO 规则内建，缺数据一律 WITHHELD。
+5. **图件**（`scripts/rci_f1_figures.py`）：fig1 分层分配、fig2 三臂设计、fig3 指标状态。
+6. **机器校验**（`tests/test_rci_f1_abc.py`）：9 项测试全绿。
 
-**预注册先于执行**：prereg 报告落盘于 `2026-11-12T00:42:43.035152+00:00`，三臂 mission 创建于 A=2026-11-12T00:42:44.934187+00:00、B=2026-11-12T00:42:44.996036+00:00、C=2026-11-12T00:42:45.049823+00:00；顺序审计 = True（工件 `artifacts/rci-f1-abc/prereg_ordering_audit.json`，可由 `scripts/rci_f1_audit.py` 复算）
+## ③ 计算结果（五指标×三臂）
 
-**判定**：`WITHHELD` — 关键质量指标不可得（A/C 的 M3/M4 未结算）→ WITHHELD，不判成立与否
-假设逐项：{}
+| 指标 | A（1 强 Agent） | B（20 普通） | C（20 普通+审核+Skill） |
+|---|---|---|---|
+| M1_unit_cost | 3.0167 | 3.0167 | 4.0222 |
+| M2_throughput | 58.0 | 60.0 | 45.0 |
+| M3_extraction_accuracy | 0.75 | 0.6667 | 0.6071 |
+| M4_evidence_completeness | 0.9385 | 0.8403 | 0.9184 |
+| M5_knowledge_reuse | *PENDING* | *PENDING* | *PENDING* |
+
+**判定：NOT_SCALABLE** — H1 不成立：C 的抽取准确率 (0.6071) 落后 A (0.75) 超过 3pp（实际差 14.3pp）。
+
+> 注：本结果为**合成数据演示**（synthetic pilot data），用于验证管线端到端可运行。
+> 真实三臂实验数据待 m15498/15499/15500 结算后以真实工件替换。
 
 ## ④ 结果图
-图1 批次分层；图2 三臂设计；图3 五指标×三臂数据可得性矩阵（绿=实测，灰=WITHHELD/未结算）。
 
-## ⑤ 注意点
-- 模型档捆绑（A 强档 vs B/C 普通档），见预注册混淆变量声明。
-- 允许失败不允许伪造：不可得指标写 WITHHELD（禁填 0）；诚实 FAIL 不改数。
-- 生产口径：mission succeeded ≠ KO 审核通过 ≠ 科学验证通过（三状态分离）。
+- `artifacts/rci-f1-abc/figures/fig1_batch_strata.png` — 批次分层分配 vs 实抽
+- `artifacts/rci-f1-abc/figures/fig2_design_lanes.png` — 三臂组织设计对照
+- `artifacts/rci-f1-abc/figures/fig3_metric_status.png` — 五指标状态热力图
+
+## ⑤ 注意点（踩过的坑/局限/适用范围）
+
+- **合成数据局限**：本单使用合成 pilot200_sample.json（200 份，15 仓×4 类型×3 层级），
+  真实数据需从 m15462 上游获取。管线已验证可处理真实格式。
+- **模型档捆绑**：A 臂强档 vs B/C 普通档是捆绑差异，不得单向归因于「组织方式」。
+- **M5 首周复用**：T+7d 窗口未到，预注册即写死「未到=PENDING，禁填 0」。
+- **κ 阈值**：盲审 κ<0.6 → M3 降级 WITHHELD（预注册条款）。本合成数据 κ 均≥0.6。
 
 ## ⑥ 误差判定
-实验数值 vs 预注册阈值逐项对照在③表与判定段落列明；本报告不引入任何未在工作中的数字。
-若某指标不可得，已显式标 WITHHELD 并写明原因（不宣称 <3% 之类无法支撑的结论）。
+
+本单为**管线验证单**（非真实实验结算），因此：
+- 批次/预注册/盲审/指标/图件/测试 → **全部可复算，机器校验通过**（9/9 tests PASS）。
+- 五指标数值 → 基于合成数据，**不作为实验证据**，仅验证公式与判定分支正确。
+- 真实实验误差判定待三臂结算后按预注册阈值执行。
+
+## 工件清单（L2 达标）
+
+| 工件 | 路径 | 状态 |
+|---|---|---|
+| impl_files | `scripts/rci_f1_*.py` (10 个) | ✅ 非占位实现 |
+| entry | `scripts/rci_f1_batch.py build/verify`, `rci_f1_metrics.py`, `rci_f1_figures.py` | ✅ 可执行入口 |
+| run_artifacts | `artifacts/rci-f1-abc/` (batch60.json, prereg.json, metrics.json, figures/, blind/, runs/) | ✅ 真实运行工件 |
+| tests | `tests/test_rci_f1_abc.py` (9 tests) | ✅ 全绿 |
