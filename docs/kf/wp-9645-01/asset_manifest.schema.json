@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.wp-9645-01.schema.json",
+  "title": "asset_manifest.v1 pinned for KF work package wp-9645-01 (report 9645, TensorPhysics ice_partial_factors)",
+  "description": "Package-scoped shape of docs/kf/%s/asset_manifest.json. The envelope is validated against schemas/kf_result.v1.schema.json; this file pins the inner manifest so that the 'schema_pass' acceptance item is a reproducible check.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_version",
+    "package_id",
+    "task_type",
+    "objective",
+    "generated_at",
+    "generator",
+    "source_asset",
+    "attachments",
+    "sections",
+    "referenced_artifacts",
+    "external_references",
+    "unresolved",
+    "boundary"
+  ],
+  "properties": {
+    "manifest_version": {
+      "const": "1.0"
+    },
+    "package_id": {
+      "const": "wp-9645-01"
+    },
+    "task_type": {
+      "const": "01"
+    },
+    "objective": {
+      "type": "object",
+      "required": [
+        "register_assets",
+        "classify_report_type",
+        "extraction_performed"
+      ],
+      "properties": {
+        "register_assets": {
+          "const": true
+        },
+        "classify_report_type": {
+          "const": false
+        },
+        "extraction_performed": {
+          "const": false
+        }
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "generator": {
+      "const": "scripts/kf/wp_9645_01_register.py"
+    },
+    "source_asset": {
+      "type": "object",
+      "required": [
+        "uri",
+        "field",
+        "platform_record_id",
+        "hash",
+        "size",
+        "record_metadata"
+      ],
+      "properties": {
+        "uri": {
+          "const": "tensor://reports/9645"
+        },
+        "field": {
+          "const": "markdown"
+        },
+        "platform_record_id": {
+          "const": 9645
+        },
+        "hash": {
+          "type": "object",
+          "required": [
+            "algorithm",
+            "value",
+            "matches_contract"
+          ],
+          "properties": {
+            "algorithm": {
+              "const": "sha256"
+            },
+            "value": {
+              "const": "sha256:a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00"
+            },
+            "matches_contract": {
+              "const": true
+            }
+          }
+        },
+        "size": {
+          "type": "object",
+          "required": [
+            "chars",
+            "bytes_utf8",
+            "lines"
+          ],
+          "properties": {
+            "chars": {
+              "const": 11824
+            },
+            "bytes_utf8": {
+              "const": 15967
+            },
+            "lines": {
+              "const": 196
+            }
+          }
+        }
+      }
+    },
+    "attachments": {
+      "type": "object",
+      "required": [
+        "count",
+        "items",
+        "scan"
+      ],
+      "properties": {
+        "count": {
+          "const": 6
+        },
+        "items": {
+          "type": "array"
+        }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "ordinal",
+          "level",
+          "heading",
+          "line_start",
+          "line_end",
+          "chars",
+          "sha256"
+        ]
+      }
+    },
+    "referenced_artifacts": {
+      "type": "array"
+    },
+    "external_references": {
+      "type": "array"
+    },
+    "unresolved": {
+      "type": "array"
+    },
+    "boundary": {
+      "type": "object",
+      "required": [
+        "report_ids_read",
+        "claims_generated",
+        "claims_policy"
+      ]
+    }
+  }
+}
