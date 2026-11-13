@@ -1,0 +1,81 @@
+{
+  "package_id": "wp-9632-01",
+  "report_id": "9632",
+  "generated_at": "2026-11-12T01:42:45.410337+00:00",
+  "producer": "kf-worker/m15662",
+  "checks": [
+    {
+      "check_id": "valid_json",
+      "description": "every emitted artefact parses as JSON",
+      "result": "pass",
+      "evidence": {
+        "files": [
+          "docs/kf/wp-9632-01/asset_manifest.json",
+          "docs/kf/wp-9632-01/kf_result.json"
+        ],
+        "parsed": 2
+      }
+    },
+    {
+      "check_id": "schema_pass",
+      "description": "asset_manifest validates against the pinned schema; the result envelope validates against schemas/kf_result.v1.schema.json",
+      "result": "pass",
+      "evidence": {
+        "manifest_schema": "schemas/asset_manifest.v1.wp9632-01.schema.json",
+        "manifest_errors": [],
+        "envelope_schema": "schemas/kf_result.v1.schema.json",
+        "envelope_errors": []
+      }
+    },
+    {
+      "check_id": "source_locator_resolvable",
+      "description": "every asset locator re-resolves on the live markdown: md[start:end] == quote and the declared line numbers match",
+      "result": "pass",
+      "evidence": {
+        "assets_checked": 23,
+        "failures": [],
+        "method": "re-fetch /tensor/reports/9632 and slice md[start_char:end_char]"
+      }
+    },
+    {
+      "check_id": "source_hash_matches",
+      "description": "sha256 of the live markdown UTF-8 bytes equals the contract source_hash",
+      "result": "pass",
+      "evidence": {
+        "recomputed": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+        "contract": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+        "chars": 10749,
+        "contract_chars": 10749,
+        "chars_match": true,
+        "envelope_hash": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+        "local_copy_matches_live": true
+      }
+    },
+    {
+      "check_id": "no_duplicate_ids",
+      "description": "asset_id values (and asset labels) are unique",
+      "result": "pass",
+      "evidence": {
+        "assets": 23,
+        "unique_ids": 23,
+        "duplicate_ids": [],
+        "duplicate_labels": []
+      }
+    },
+    {
+      "check_id": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "description": "each claim carries an evidence locator or an explicit status; an empty claims array is a complete result for a registration package",
+      "result": "pass",
+      "evidence": {
+        "claims": 0,
+        "offenders": [],
+        "note": "claims=[] by contract (classify_report_type=false)"
+      }
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "total": 6,
+  "assets_registered": 23,
+  "verification_authority": "platform gate (this file is a worker self-check only, no claim is marked verified)"
+}
