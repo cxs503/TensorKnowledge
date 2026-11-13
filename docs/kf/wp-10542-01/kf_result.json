@@ -1,0 +1,552 @@
+{
+  "package_id": "wp-10542-01",
+  "task_type": "01-asset-registration",
+  "report_id": "10542",
+  "provenance": {
+    "source_uri": "tensor://reports/10542",
+    "source_field": "markdown",
+    "source_hash": "sha256:87ad4490786462c1c9b276ab29a0566caa363a5b211d01f4969fb816f60ce43c",
+    "producer": "kf-worker/m15685",
+    "emitted_at": "2026-11-12T01:47:52.272835+00:00",
+    "notes": "asset-registration only; claims intentionally empty per contract (objective.classify_report_type=false, no_forced_claim_generation=true). No claim is marked verified: verification is computed by the platform gate."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "manifest_version": "1.0",
+      "package_id": "wp-10542-01",
+      "task_type": "01-asset-registration",
+      "report_id": "10542",
+      "lane": "C",
+      "generated_at": "2026-11-12T01:47:51.856027+00:00",
+      "producer": "kf-worker/m15685",
+      "source": {
+        "report_id": "10542",
+        "source_uri": "tensor://reports/10542",
+        "source_field": "markdown",
+        "source_hash": "sha256:87ad4490786462c1c9b276ab29a0566caa363a5b211d01f4969fb816f60ce43c",
+        "hash_algo": "sha256",
+        "contract_source_hash": "sha256:87ad4490786462c1c9b276ab29a0566caa363a5b211d01f4969fb816f60ce43c",
+        "hash_match": true,
+        "chars": 12118,
+        "contract_chars": 12118,
+        "chars_match_contract": true,
+        "bytes_utf8": 18310,
+        "lines": 263,
+        "has_crlf": false,
+        "has_trailing_newline": true,
+        "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based",
+        "fetched_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/10542",
+        "local_copy": "runs/wp-10542-01/source_10542.md",
+        "record_fields": {
+          "title": "P142W3-N06 动力定位(DP)系统能力评估：推力分配QP×环境力平衡×操作包线×失效模式",
+          "scenario_key": "ship_dp_capability",
+          "mission_id": 9022,
+          "status": "published",
+          "stage": null,
+          "created_at": "2026-11-10T07:06:24.897880+00:00",
+          "tags": [
+            "DP",
+            "thrust-allocation",
+            "QP",
+            "capability-plot",
+            "DNV-ST-0111",
+            "PSV",
+            "P142W3-N06",
+            "environmental-loads",
+            "failure-mode",
+            "dual-newton"
+          ],
+          "figures": [
+            {
+              "name": "fig_dp_capability_plot.png",
+              "caption": "DP capability plot：极坐标，半径=可保持最大风速[m/s]，角度=环境来向（0°=顶）；实线=完好5推力器配置，虚线=最坏单故障配置"
+            },
+            {
+              "name": "fig_thrust_allocation.png",
+              "caption": "推力分配矢量图（风15 m/s@45°+流0.75 m/s@45°+Hs4.5 m@45°）：红=全回转，蓝=隧道侧推，箭头长度∝推力；相对残差4.4e-11，QP 3 次迭代"
+            }
+          ],
+          "contract_title": "P142W3-N06 动力定位(DP)系统能力评估：推力分配QP×环境力平衡×操作包线×失效模式",
+          "title_matches_contract": true,
+          "scenario_matches_contract": true
+        },
+        "hash_scope": "UTF-8 bytes of the markdown string returned by the platform API (no newline normalisation)"
+      },
+      "counts": {
+        "assets": 11,
+        "by_class": {
+          "data_artifact_reference": 1,
+          "figure_reference": 4,
+          "source_code_reference": 5,
+          "source_document": 1
+        },
+        "by_resolution": {
+          "referenced_unresolved": 8,
+          "resolved_in_source": 3
+        },
+        "resolved_in_source": 3,
+        "metadata_only": 0,
+        "referenced_unresolved": 8,
+        "declared_absent": 0,
+        "figures_declared_in_record": 2,
+        "distinct_referenced_paths": 8,
+        "claims": 0
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "source_document",
+          "label": "report 10542 markdown (markdown)",
+          "in_report_section": "document (H1 title line)",
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET /api/v1/tensor/reports/10542 -> markdown field; sha256 recomputed locally",
+            "result": "resolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 0,
+            "end_char": 69,
+            "start_line": 1,
+            "end_line": 1,
+            "quote": "# m9022 / P142W3-N06 — 动力定位（DP）系统能力评估：推力分配 QP × 环境力平衡 × 操作包线 × 单推力器失效",
+            "quote_sha256": "0e9a12fb3a1fe2098ad31190afba23e4c0371c49c7d051d176f7260434ba07cd",
+            "occurrences": 1,
+            "occurrence_index": 0,
+            "unique": true
+          },
+          "evidence_source_field": "markdown",
+          "identity": {
+            "sha256": "sha256:87ad4490786462c1c9b276ab29a0566caa363a5b211d01f4969fb816f60ce43c",
+            "chars": 12118,
+            "bytes_utf8": 18310,
+            "lines": 263,
+            "title": "P142W3-N06 动力定位(DP)系统能力评估：推力分配QP×环境力平衡×操作包线×失效模式",
+            "scenario_key": "ship_dp_capability"
+          },
+          "note": "本报告 markdown 本体即本工序登记的源资产；哈希/字数与契约逐项比对见 source 块。"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "figure_reference",
+          "label": "figure: fig_dp_capability_plot.png",
+          "in_report_section": "H2 0. 结论速览（判据逐条） (body line 16)",
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "record.figures name+caption + GET /tensor/reports/10542/figures/fig_dp_capability_plot.png returns PNG bytes whose sha256 is recorded here; negative-control probe on an absent name guards against a catch-all endpoint",
+            "result": "resolved",
+            "bytes_available": true,
+            "endpoint_probes": {
+              "/tensor/reports/10542/figures": {
+                "http_status": 404,
+                "bytes": 22,
+                "png_magic": false
+              },
+              "/tensor/reports/10542/artifacts": {
+                "http_status": 404,
+                "bytes": 22,
+                "png_magic": false
+              },
+              "/tensor/reports/10542/figures/fig_dp_capability_plot.png": {
+                "http_status": 200,
+                "bytes": 220382,
+                "png_magic": true
+              },
+              "/tensor/reports/10542/artifacts/fig_dp_capability_plot.png": {
+                "http_status": 404,
+                "bytes": 22,
+                "png_magic": false
+              }
+            }
+          },
+          "figure_bytes": {
+            "byte_path": "/tensor/reports/10542/figures/fig_dp_capability_plot.png",
+            "bytes": 220382,
+            "sha256": "f89585e695d72d94709363cce3d35f75fbbdb64cf113dd092b6d1cabc1d93a47",
+            "png_size_px": {
+              "width": 1051,
+              "height": 1089
+            },
+            "local_copy": "runs/wp-10542-01/source_figures/fig_dp_capability_plot.png",
+            "control_probe": {
+              "name": "nonexistent_control_0a6ad1e7.png",
+              "http_status": 404,
+              "bytes": 29,
+              "is_png": false,
+              "verdict": "endpoint_is_not_a_catchall (absent name -> 404, no image bytes)"
+            }
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 933,
+            "end_char": 959,
+            "start_line": 16,
+            "end_line": 16,
+            "quote": "fig_dp_capability_plot.png",
+            "quote_sha256": "eeec6fd6963b7ad3eb35e8fea9c3bb3af38b7ac54b0eebd088c143d6342681a2",
+            "occurrences": 3,
+            "occurrence_index": 0,
+            "unique": false
+          },
+          "evidence_source_field": "markdown",
+          "record_metadata": {
+            "name": "fig_dp_capability_plot.png",
+            "caption": "DP capability plot：极坐标，半径=可保持最大风速[m/s]，角度=环境来向（0°=顶）；实线=完好5推力器配置，虚线=最坏单故障配置"
+          },
+          "note": "图名+图注由记录层声明，图字节由平台 /tensor/reports/10542/figures/<name> 提供并已落盘（220382字节, sha256 f89585e695d72d94）；报告正文 §4 另以 `artifacts/dp_capability_m9022/...` 上游相对路径引用，该相对路径在本交付工作树内不可解析（见对应 referenced_unresolved 项）。"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "figure_reference",
+          "label": "figure: fig_thrust_allocation.png",
+          "in_report_section": "H2 0. 结论速览（判据逐条） (body line 16)",
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "record.figures name+caption + GET /tensor/reports/10542/figures/fig_thrust_allocation.png returns PNG bytes whose sha256 is recorded here; negative-control probe on an absent name guards against a catch-all endpoint",
+            "result": "resolved",
+            "bytes_available": true,
+            "endpoint_probes": {
+              "/tensor/reports/10542/figures": {
+                "http_status": 404,
+                "bytes": 22,
+                "png_magic": false
+              },
+              "/tensor/reports/10542/artifacts": {
+                "http_status": 404,
+                "bytes": 22,
+                "png_magic": false
+              },
+              "/tensor/reports/10542/figures/fig_thrust_allocation.png": {
+                "http_status": 200,
+                "bytes": 91297,
+                "png_magic": true
+              },
+              "/tensor/reports/10542/artifacts/fig_thrust_allocation.png": {
+                "http_status": 404,
+                "bytes": 22,
+                "png_magic": false
+              }
+            }
+          },
+          "figure_bytes": {
+            "byte_path": "/tensor/reports/10542/figures/fig_thrust_allocation.png",
+            "bytes": 91297,
+            "sha256": "d64bb58d63ac726be2c74d1f71e4b6e5b198adb95f0fce1dcd0028132aa96ae9",
+            "png_size_px": {
+              "width": 1209,
+              "height": 672
+            },
+            "local_copy": "runs/wp-10542-01/source_figures/fig_thrust_allocation.png",
+            "control_probe": {
+              "name": "nonexistent_control_0a6ad1e7.png",
+              "http_status": 404,
+              "bytes": 29,
+              "is_png": false,
+              "verdict": "endpoint_is_not_a_catchall (absent name -> 404, no image bytes)"
+            }
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 962,
+            "end_char": 987,
+            "start_line": 16,
+            "end_line": 16,
+            "quote": "fig_thrust_allocation.png",
+            "quote_sha256": "92d1a39c4641d2621a59c5faac15e8a50d3454dd62859d69b067b4d89e494e6b",
+            "occurrences": 3,
+            "occurrence_index": 0,
+            "unique": false
+          },
+          "evidence_source_field": "markdown",
+          "record_metadata": {
+            "name": "fig_thrust_allocation.png",
+            "caption": "推力分配矢量图（风15 m/s@45°+流0.75 m/s@45°+Hs4.5 m@45°）：红=全回转，蓝=隧道侧推，箭头长度∝推力；相对残差4.4e-11，QP 3 次迭代"
+          },
+          "note": "图名+图注由记录层声明，图字节由平台 /tensor/reports/10542/figures/<name> 提供并已落盘（91297字节, sha256 d64bb58d63ac726b）；报告正文 §4 另以 `artifacts/dp_capability_m9022/...` 上游相对路径引用，该相对路径在本交付工作树内不可解析（见对应 referenced_unresolved 项）。"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "source_code_reference",
+          "label": "backend/physics/dp_capability/run_m9022.py",
+          "in_report_section": "H1 m9022 / P142W3-N06 — 动力定位（DP）系统能力评估：推力分... (body line 4)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path referenced in report body; existence probed in delivery worktree (TensorKnowledge) and in platform record",
+            "result": "unresolved",
+            "exists_in_worktree": false,
+            "probe_path": "/root/tp-agent/work/m15685"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 152,
+            "end_char": 194,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "backend/physics/dp_capability/run_m9022.py",
+            "quote_sha256": "d0d7859d74df408e64557c393714398654147de0eac7463ff83953d22960928d",
+            "occurrences": 3,
+            "occurrence_index": 0,
+            "unique": false
+          },
+          "evidence_source_field": "markdown",
+          "occurrences": 3,
+          "first_body_line": 4,
+          "same_named_figure_asset": null,
+          "note": "报告声明的上游工件路径（仓 ship-performance-platform）；本交付工作树内不存在，按 referenced_unresolved 登记，存在性由报告断言而非本工序验证。"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "data_artifact_reference",
+          "label": "artifacts/dp_capability_m9022/numbers.json",
+          "in_report_section": "H1 m9022 / P142W3-N06 — 动力定位（DP）系统能力评估：推力分... (body line 4)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path referenced in report body; existence probed in delivery worktree (TensorKnowledge) and in platform record",
+            "result": "unresolved",
+            "exists_in_worktree": false,
+            "probe_path": "/root/tp-agent/work/m15685"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 204,
+            "end_char": 246,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "artifacts/dp_capability_m9022/numbers.json",
+            "quote_sha256": "4c88d3a0900ee2fea772bb08efc47f29a1c709bde24fa3c2f1482a401a19aa29",
+            "occurrences": 2,
+            "occurrence_index": 0,
+            "unique": false
+          },
+          "evidence_source_field": "markdown",
+          "occurrences": 2,
+          "first_body_line": 4,
+          "same_named_figure_asset": null,
+          "note": "报告声明的上游工件路径（仓 ship-performance-platform）；本交付工作树内不存在，按 referenced_unresolved 登记，存在性由报告断言而非本工序验证。"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "source_code_reference",
+          "label": "backend/physics/dp_capability/make_doc.py",
+          "in_report_section": "H1 m9022 / P142W3-N06 — 动力定位（DP）系统能力评估：推力分... (body line 4)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path referenced in report body; existence probed in delivery worktree (TensorKnowledge) and in platform record",
+            "result": "unresolved",
+            "exists_in_worktree": false,
+            "probe_path": "/root/tp-agent/work/m15685"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 259,
+            "end_char": 300,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "backend/physics/dp_capability/make_doc.py",
+            "quote_sha256": "78d1084d9c381dbf63075ce3f56127bb17fa3014ddd404e58d3f64ac6716b3f0",
+            "occurrences": 3,
+            "occurrence_index": 0,
+            "unique": false
+          },
+          "evidence_source_field": "markdown",
+          "occurrences": 3,
+          "first_body_line": 4,
+          "same_named_figure_asset": null,
+          "note": "报告声明的上游工件路径（仓 ship-performance-platform）；本交付工作树内不存在，按 referenced_unresolved 登记，存在性由报告断言而非本工序验证。"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "source_code_reference",
+          "label": "backend/tests/test_dp_capability_m9022.py",
+          "in_report_section": "H2 0. 结论速览（判据逐条） (body line 15)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path referenced in report body; existence probed in delivery worktree (TensorKnowledge) and in platform record",
+            "result": "unresolved",
+            "exists_in_worktree": false,
+            "probe_path": "/root/tp-agent/work/m15685"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 859,
+            "end_char": 900,
+            "start_line": 15,
+            "end_line": 15,
+            "quote": "backend/tests/test_dp_capability_m9022.py",
+            "quote_sha256": "3d4c72c2f35db98e3f159d589ec297a10abe6dabbf368eb03d2142b886adb4ff",
+            "occurrences": 3,
+            "occurrence_index": 0,
+            "unique": false
+          },
+          "evidence_source_field": "markdown",
+          "occurrences": 3,
+          "first_body_line": 15,
+          "same_named_figure_asset": null,
+          "note": "报告声明的上游工件路径（仓 ship-performance-platform）；本交付工作树内不存在，按 referenced_unresolved 登记，存在性由报告断言而非本工序验证。"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "source_code_reference",
+          "label": "backend/physics/wave_spectrum_core.py",
+          "in_report_section": "H3 2.2 环境力：三模型 + 逐项证据等级 (body line 76)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path referenced in report body; existence probed in delivery worktree (TensorKnowledge) and in platform record",
+            "result": "unresolved",
+            "exists_in_worktree": false,
+            "probe_path": "/root/tp-agent/work/m15685"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 3368,
+            "end_char": 3405,
+            "start_line": 76,
+            "end_line": 76,
+            "quote": "backend/physics/wave_spectrum_core.py",
+            "quote_sha256": "017aaa8f12e52496b5229fe4e560bcc4c3e18ec4006364c058ad0cc947f7086e",
+            "occurrences": 1,
+            "occurrence_index": 0,
+            "unique": true
+          },
+          "evidence_source_field": "markdown",
+          "occurrences": 1,
+          "first_body_line": 76,
+          "same_named_figure_asset": null,
+          "note": "报告声明的上游工件路径（仓 ship-performance-platform）；本交付工作树内不存在，按 referenced_unresolved 登记，存在性由报告断言而非本工序验证。"
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "source_code_reference",
+          "label": "backend/physics/dp_capability/{thruster,allocation,environment,capability}.py",
+          "in_report_section": "H3 2.4 工具链 (body line 89)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path referenced in report body; existence probed in delivery worktree (TensorKnowledge) and in platform record",
+            "result": "unresolved",
+            "exists_in_worktree": false,
+            "probe_path": "/root/tp-agent/work/m15685"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 3737,
+            "end_char": 3814,
+            "start_line": 89,
+            "end_line": 89,
+            "quote": "backend/physics/dp_capability/{thruster,allocation,environment,capability}.py",
+            "quote_sha256": "4e381e05919c377fffb54c89f9bcb64ab3fa2a168eb21683a31d4c42642bb23b",
+            "occurrences": 2,
+            "occurrence_index": 0,
+            "unique": false
+          },
+          "evidence_source_field": "markdown",
+          "occurrences": 1,
+          "first_body_line": 89,
+          "same_named_figure_asset": null,
+          "note": "报告声明的上游工件路径（仓 ship-performance-platform）；本交付工作树内不存在，按 referenced_unresolved 登记，存在性由报告断言而非本工序验证。"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "figure_reference",
+          "label": "artifacts/dp_capability_m9022/fig_dp_capability_plot.png",
+          "in_report_section": "H2 4. 图 (body line 220)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path referenced in report body; existence probed in delivery worktree (TensorKnowledge) and in platform record",
+            "result": "unresolved",
+            "exists_in_worktree": false,
+            "probe_path": "/root/tp-agent/work/m15685"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 9107,
+            "end_char": 9163,
+            "start_line": 220,
+            "end_line": 220,
+            "quote": "artifacts/dp_capability_m9022/fig_dp_capability_plot.png",
+            "quote_sha256": "2cba0317b4b0353113d824f4a5e3411d034bb00da60002f5f58c0819bd75ebc6",
+            "occurrences": 2,
+            "occurrence_index": 0,
+            "unique": false
+          },
+          "evidence_source_field": "markdown",
+          "occurrences": 2,
+          "first_body_line": 220,
+          "same_named_figure_asset": null,
+          "note": "报告声明的上游工件路径（仓 ship-performance-platform）；本交付工作树内不存在，按 referenced_unresolved 登记，存在性由报告断言而非本工序验证。"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "figure_reference",
+          "label": "artifacts/dp_capability_m9022/fig_thrust_allocation.png",
+          "in_report_section": "H2 4. 图 (body line 222)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path referenced in report body; existence probed in delivery worktree (TensorKnowledge) and in platform record",
+            "result": "unresolved",
+            "exists_in_worktree": false,
+            "probe_path": "/root/tp-agent/work/m15685"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 9292,
+            "end_char": 9347,
+            "start_line": 222,
+            "end_line": 222,
+            "quote": "artifacts/dp_capability_m9022/fig_thrust_allocation.png",
+            "quote_sha256": "49e4ea83a714af43c3486e07982a30e61e3f2338c3e52b70839f8a7e3fa0f93a",
+            "occurrences": 2,
+            "occurrence_index": 0,
+            "unique": false
+          },
+          "evidence_source_field": "markdown",
+          "occurrences": 2,
+          "first_body_line": 222,
+          "same_named_figure_asset": null,
+          "note": "报告声明的上游工件路径（仓 ship-performance-platform）；本交付工作树内不存在，按 referenced_unresolved 登记，存在性由报告断言而非本工序验证。"
+        }
+      ],
+      "reference_recall": {
+        "extension_bearing_tokens_in_markdown": 11,
+        "distinct_paths_registered": 8,
+        "fragments_explained_as_substrings_of_registered_tokens": [
+          "capability}.py",
+          "fig_dp_capability_plot.png",
+          "fig_thrust_allocation.png",
+          "numbers.json"
+        ],
+        "unexplained_tokens": [],
+        "recall_complete": true
+      },
+      "claims": [],
+      "claims_empty_reason": "契约 wp-10542-01 的 objective 为 register_assets=true / classify_report_type=false，notes 明示 “claims 允许为空数组”，constraints 含 no_forced_claim_generation=true。本工序只登记资产身份（report_id、markdown 字节哈希、报告声明的附件/工件），抽取属下游工序；故空 claims 是完整结果而非遗漏。",
+      "integrity": {
+        "quote_uniqueness": {
+          "quotes_total": 11,
+          "quotes_unique": 2,
+          "quotes_multi_occurrence": 9,
+          "all_resolvable_by_occurrence_index": true
+        },
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "chars_matches_contract": true,
+        "title_matches_contract": true,
+        "scenario_matches_contract": true,
+        "id_duplicates": []
+      },
+      "observations": [
+        "报告 markdown 完整自洽：首行为 H1 标题，§0–§7 齐备（263 行 / 12118 字符）。",
+        "记录层声明 2 张图（name+caption）；正文 §4 以 artifacts/dp_capability_m9022/*.png 路径引用，平台图字节端点未返回内容，故登记为 metadata_only（不声明图哈希）。",
+        "正文声明的其余路径全部指向上游仓 ship-performance-platform 的 code/data 工件；本交付工作树（TensorKnowledge）内不存在，按 referenced_unresolved 登记，存在性由报告断言、不由本工序验证。"
+      ],
+      "limitations": [
+        "只做登记：不抽取知识（claims 空）、不做报告类型分类、不写任何 verified 标记（verification 由平台门独立计算）。",
+        "source_hash 作用域 = 平台 API 返回 markdown 字符串的 UTF-8 字节；上游任何改动（含空白）都会使哈希失效。",
+        "direct psql 读 tensor_reports 被拒（permission denied for table tensor_reports），本工序只经 API 取数，无第二信道可交叉。",
+        "路径解析范围限于本交付工作树；此处缺失只报 unresolved，不推断上游工件已损坏。",
+        "report_id 作用域 10542：脚本硬编码该 id，不读写其它报告。"
+      ]
+    }
+  },
+  "claims": []
+}
