@@ -1,0 +1,603 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-5577-01",
+  "task_type": "01-asset-registration",
+  "generated_by": "scripts/wp5577_register_assets.py",
+  "scope": {
+    "report_id": "5577",
+    "reports_touched": [
+      "5577"
+    ],
+    "registers_assets_only": true,
+    "extracts_claims": false,
+    "classifies_report_type": false,
+    "writes_outside_worktree": false
+  },
+  "source": {
+    "report_id": "5577",
+    "source_uri": "tensor://reports/5577",
+    "source_field": "markdown",
+    "title": "BP 示范工程报告：Agent 科研生产闭环端到端实证（IN12-P8 / m4936）",
+    "title_matches_contract": true,
+    "scenario_key": "campaign/bp-demo-in12p8",
+    "scenario_key_matches_contract": true,
+    "mission_id": 4936,
+    "status": "published",
+    "tags": [
+      "BP示范工程",
+      "科研闭环",
+      "阻力",
+      "Holtrop-Mennen",
+      "report_gate",
+      "honest-fail"
+    ],
+    "chars": 3702,
+    "byte_length_utf8": 5707,
+    "sha256": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+    "hash_check": {
+      "expected": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+      "recomputed": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+      "match": true
+    },
+    "chars_check": {
+      "expected": 3702,
+      "observed": 3702,
+      "match": true
+    },
+    "figures_entries": 3
+  },
+  "asset_counts": {
+    "total": 21,
+    "resolved": 2,
+    "unresolved": 19,
+    "by_status": {
+      "resolved": 2,
+      "unresolved": 19
+    }
+  },
+  "claims_policy": {
+    "claims": [],
+    "reason": "contract objective is register_assets only (classify_report_type=false); constraints forbid forced claim generation, so claims is an empty array by design — no knowledge objects are minted in this work package"
+  },
+  "assets": [
+    {
+      "asset_id": "ast-5577-01",
+      "kind": "source_document",
+      "role": "primary_source",
+      "name": "report_5577_markdown",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 0,
+          "char_end": 9,
+          "quote": "## ① 案例介绍",
+          "note": "first line (no H1 in this report); whole-document span in content_ref"
+        }
+      ],
+      "content_ref": {
+        "source_uri": "tensor://reports/5577",
+        "source_field": "markdown",
+        "chars": 3702,
+        "byte_length_utf8": 5707,
+        "sha256": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8"
+      },
+      "resolvable": true,
+      "resolution": "fetched_via_tensor_api",
+      "status": "resolved"
+    },
+    {
+      "asset_id": "ast-5577-02",
+      "kind": "record_metadata",
+      "role": "identification",
+      "name": "report_5577_record",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "record",
+          "field": "id",
+          "value": 5577
+        },
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "record",
+          "field": "title",
+          "value": "BP 示范工程报告：Agent 科研生产闭环端到端实证（IN12-P8 / m4936）"
+        },
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "record",
+          "field": "scenario_key",
+          "value": "campaign/bp-demo-in12p8"
+        },
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "record",
+          "field": "mission_id",
+          "value": 4936
+        },
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "record",
+          "field": "status",
+          "value": "published"
+        },
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "record",
+          "field": "tags",
+          "value": [
+            "BP示范工程",
+            "科研闭环",
+            "阻力",
+            "Holtrop-Mennen",
+            "report_gate",
+            "honest-fail"
+          ]
+        }
+      ],
+      "resolvable": true,
+      "resolution": "fetched_via_tensor_api",
+      "status": "resolved"
+    },
+    {
+      "asset_id": "ast-5577-03",
+      "kind": "figure",
+      "role": "declared_figure",
+      "name": "fig1_resistance_spectrum.png",
+      "declared_metadata": {
+        "caption": "图 1 KCS 总阻力—航速谱：引擎实测 vs Holtrop-Mennen 主链同参数复算 vs 仓内 m2082 基准点"
+      },
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "record",
+          "field": "figures[0].name",
+          "value": "fig1_resistance_spectrum.png"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "record.figures carries name+caption only (no png_base64); no byte payload in the report record, so the image content cannot be audited from this source"
+    },
+    {
+      "asset_id": "ast-5577-04",
+      "kind": "figure",
+      "role": "declared_figure",
+      "name": "fig2_deviation_spectrum.png",
+      "declared_metadata": {
+        "caption": "图 2 偏差谱：逐航速点相对偏差与四项验证判据偏差，绿带为 ±3%"
+      },
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "record",
+          "field": "figures[1].name",
+          "value": "fig2_deviation_spectrum.png"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "record.figures carries name+caption only (no png_base64); no byte payload in the report record, so the image content cannot be audited from this source"
+    },
+    {
+      "asset_id": "ast-5577-05",
+      "kind": "figure",
+      "role": "declared_figure",
+      "name": "fig3_evidence_chain.png",
+      "declared_metadata": {
+        "caption": "图 3 证据链：任务组织→引擎调用→算力管理→独立验证 四阶段机读状态与耗时"
+      },
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "record",
+          "field": "figures[2].name",
+          "value": "fig3_evidence_chain.png"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "record.figures carries name+caption only (no png_base64); no byte payload in the report record, so the image content cannot be audited from this source"
+    },
+    {
+      "asset_id": "ast-5577-06",
+      "kind": "declared_artifact",
+      "role": "repro_command",
+      "name": "python -m bp_demo.run",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 528,
+          "char_end": 549,
+          "quote": "python -m bp_demo.run",
+          "note": "one-command four-stage closed-loop rerun"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-07",
+      "kind": "declared_artifact",
+      "role": "engine_endpoint",
+      "name": "/api/v1/calculations/resistance",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 673,
+          "char_end": 704,
+          "quote": "/api/v1/calculations/resistance",
+          "note": "engine endpoint called 8 times (5 speeds + 2 negative controls + 1 deterministic re-call)"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-08",
+      "kind": "declared_artifact",
+      "role": "cluster_probe_command",
+      "name": "cluster_exec.py nodes",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 773,
+          "char_end": 794,
+          "quote": "cluster_exec.py nodes",
+          "note": "702 dual-node loong64 liveness probe"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-09",
+      "kind": "declared_artifact",
+      "role": "physics_module",
+      "name": "physics/holtrop",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 1015,
+          "char_end": 1030,
+          "quote": "physics/holtrop",
+          "note": "single physics source for residual wave-making resistance"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-10",
+      "kind": "declared_artifact",
+      "role": "test_file",
+      "name": "tests/test_resistance_ittc78.py",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 2524,
+          "char_end": 2555,
+          "quote": "tests/test_resistance_ittc78.py",
+          "note": "legacy test file; collection fixed this round (41 passed / 3 skipped)"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-11",
+      "kind": "declared_artifact",
+      "role": "artifact_index",
+      "name": "artifacts/bp_demo/sha256_index.json",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 2271,
+          "char_end": 2306,
+          "quote": "artifacts/bp_demo/sha256_index.json",
+          "note": "sha256 index of the 3 PNGs"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-12",
+      "kind": "declared_artifact",
+      "role": "legacy_endpoint",
+      "name": "/calculations/resistance",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 680,
+          "char_end": 704,
+          "quote": "/calculations/resistance",
+          "note": "legacy mock endpoint (pre-fix)"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-13",
+      "kind": "declared_artifact",
+      "role": "mainchain_endpoint",
+      "name": "/resistance/predict",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 2370,
+          "char_end": 2389,
+          "quote": "/resistance/predict",
+          "note": "Holtrop main-chain endpoint"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-14",
+      "kind": "declared_artifact",
+      "role": "deployed_instance",
+      "name": "http://127.0.0.1:8002",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 1891,
+          "char_end": 1912,
+          "quote": "http://127.0.0.1:8002",
+          "note": "resident old-build instance (deployment drift)"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-15",
+      "kind": "standard_reference",
+      "role": "friction_standard",
+      "name": "ITTC-57",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 838,
+          "char_end": 845,
+          "quote": "ITTC-57",
+          "note": "friction coefficient closed-form standard"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-16",
+      "kind": "standard_reference",
+      "role": "roughness_standard",
+      "name": "ITTC-1978",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 1973,
+          "char_end": 1982,
+          "quote": "ITTC-1978",
+          "note": "roughness allowance standard"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-17",
+      "kind": "literature_reference",
+      "role": "wave_making_regression",
+      "name": "Holtrop & Mennen (1982)",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 107,
+          "char_end": 130,
+          "quote": "Holtrop & Mennen (1982)",
+          "note": "wave-making resistance regression source"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-18",
+      "kind": "literature_reference",
+      "role": "wave_making_regression",
+      "name": "Holtrop (1984)",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 133,
+          "char_end": 147,
+          "quote": "Holtrop (1984)",
+          "note": "wave-making resistance regression source"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-19",
+      "kind": "benchmark_reference",
+      "role": "benchmark_ship",
+      "name": "KVLCC2",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 865,
+          "char_end": 871,
+          "quote": "KVLCC2",
+          "note": "full-scale literature anchor (HONEST-FAIL item V4)"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-20",
+      "kind": "mission_reference",
+      "role": "upstream_mission",
+      "name": "m2082",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 2408,
+          "char_end": 2413,
+          "quote": "m2082",
+          "note": "mission that merged the two resistance chains"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    },
+    {
+      "asset_id": "ast-5577-21",
+      "kind": "gate_reference",
+      "role": "report_gate",
+      "name": "report_gate",
+      "locators": [
+        {
+          "source_uri": "tensor://reports/5577",
+          "source_field": "markdown",
+          "char_start": 910,
+          "char_end": 921,
+          "quote": "report_gate",
+          "note": "six-element report gate (8/8)"
+        }
+      ],
+      "payload": {
+        "present": false,
+        "bytes": null,
+        "sha256": null
+      },
+      "resolvable": false,
+      "status": "unresolved",
+      "unresolved_reason": "referenced by name in the report markdown; the referenced object lives in the producing repo (ship-performance-platform) or on the platform, not in this report record"
+    }
+  ]
+}

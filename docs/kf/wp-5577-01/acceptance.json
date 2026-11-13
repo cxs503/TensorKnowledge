@@ -1,0 +1,72 @@
+{
+  "checks": {
+    "valid_json": {
+      "ok": true,
+      "files": [
+        "asset_manifest.json",
+        "kf_result.json"
+      ]
+    },
+    "schema_pass": {
+      "ok": true,
+      "schema": "schemas/kf_result.v1.schema.json",
+      "errors": []
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "contract_declared": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+      "provenance": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+      "recomputed_from_markdown_bytes": "sha256:60575cfe91ed23757639b1060ce931c746236989cb3ba8734a4a8280582b7de8",
+      "chars_expected": 3702,
+      "chars_observed": 3702,
+      "chars_match": true
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "locators_checked": 17,
+      "locators_resolved": 17,
+      "failures": []
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "asset_id_count": 21,
+      "duplicate_asset_ids": []
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "claim_count": 0,
+      "vacuous": true,
+      "claims_policy_reason_present": true,
+      "failures": []
+    },
+    "unresolved_assets_have_reason": {
+      "ok": true,
+      "missing": []
+    },
+    "reports_touched_single": {
+      "ok": true,
+      "scope": {
+        "report_id": "5577",
+        "reports_touched": [
+          "5577"
+        ],
+        "registers_assets_only": true,
+        "extracts_claims": false,
+        "classifies_report_type": false,
+        "writes_outside_worktree": false
+      }
+    }
+  },
+  "ok": true,
+  "summary": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_hash_matches": true,
+    "source_locator_resolvable": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true,
+    "unresolved_assets_have_reason": true,
+    "reports_touched_single": true
+  },
+  "fetch_mode": "offline"
+}
