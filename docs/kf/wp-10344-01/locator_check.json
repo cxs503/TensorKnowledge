@@ -1,0 +1,230 @@
+{
+  "report_id": "10344",
+  "source_hash": "sha256:a125a5396015600c7865e9357d613ab245c0499a45ba5fbf51f9fdddc59fc900",
+  "source_hash_matches": true,
+  "quotes_checked": 22,
+  "quotes_resolvable": 22,
+  "unresolved": [],
+  "checks": [
+    {
+      "locator_id": "q01",
+      "meaning": "report title heading",
+      "quote": "# Point-particle (unresolved) two-way CFD-DEM coupling — Verification Report",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 0,
+      "start_line": 1,
+      "end_line": 1
+    },
+    {
+      "locator_id": "q02",
+      "meaning": "physical regime declared (unresolved / point-particle)",
+      "quote": "Point (unresolved) particles are smaller than a fluid cell",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 103,
+      "start_line": 5,
+      "end_line": 5
+    },
+    {
+      "locator_id": "q03",
+      "meaning": "parameter block of the case",
+      "quote": "**Parameters:** ρ_p/ρ_f = 2, μ = 0.5, g = 0.5, C_A = 0.5 (sphere)",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 685,
+      "start_line": 12,
+      "end_line": 12
+    },
+    {
+      "locator_id": "q04",
+      "meaning": "source module 1 (closures)",
+      "quote": "`closures.py`: pure functions for all coefficients (Stokes drag, Schiller-Naumann, RZ exponent, added-mass)",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 768,
+      "start_line": 16,
+      "end_line": 16
+    },
+    {
+      "locator_id": "q05",
+      "meaning": "source module 2 (fluid)",
+      "quote": "`fluid.py`: triply periodic pseudo-spectral solver with exact viscous integrating factor, Leray projection, adjoint trilinear particle-grid transfer",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 878,
+      "start_line": 17,
+      "end_line": 17
+    },
+    {
+      "locator_id": "q06",
+      "meaning": "source module 3 (particles)",
+      "quote": "`particles.py`: vectorised Lagrangian particles with implicit added-mass integration `(m_p + C_A m_a) a = F`",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1029,
+      "start_line": 18,
+      "end_line": 18
+    },
+    {
+      "locator_id": "q07",
+      "meaning": "source module 4 (coupling)",
+      "quote": "`coupling.py`: two-way loop with self-response correction, container-frame Galilean shift, momentum budget tracking",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1140,
+      "start_line": 19,
+      "end_line": 19
+    },
+    {
+      "locator_id": "q08",
+      "meaning": "source module 5 (verification)",
+      "quote": "`verification.py`: five closed-form verification faces",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1258,
+      "start_line": 20,
+      "end_line": 20
+    },
+    {
+      "locator_id": "q09",
+      "meaning": "gate table row 1 (Stokes terminal velocity)",
+      "quote": "| Stokes terminal velocity | |U - v_t|/v_t ≤ 2% | 1.984% | 2% | **PASS** |",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1405,
+      "start_line": 26,
+      "end_line": 26
+    },
+    {
+      "locator_id": "q10",
+      "meaning": "gate table row 3 (momentum exchange)",
+      "quote": "| Momentum exchange | |Δp_p + Δp_f|/max ≤ 1e-6 | 1.95e-14 | 1e-6 | **PASS** |",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1559,
+      "start_line": 28,
+      "end_line": 28
+    },
+    {
+      "locator_id": "q11",
+      "meaning": "figure inventory sentence in section 4",
+      "quote": "Five figures generated: stokes_terminal_velocity.png, added_mass_oscillation.png, momentum_exchange.png, richardson_zaki.png, pressure_gradient.png.",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1818,
+      "start_line": 34,
+      "end_line": 34
+    },
+    {
+      "locator_id": "q12",
+      "meaning": "declared artifact name 1 (figure)",
+      "quote": "stokes_terminal_velocity.png",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1842,
+      "start_line": 34,
+      "end_line": 34
+    },
+    {
+      "locator_id": "q13",
+      "meaning": "declared artifact name 2 (figure)",
+      "quote": "added_mass_oscillation.png",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1872,
+      "start_line": 34,
+      "end_line": 34
+    },
+    {
+      "locator_id": "q14",
+      "meaning": "declared artifact name 3 (figure)",
+      "quote": "momentum_exchange.png",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1900,
+      "start_line": 34,
+      "end_line": 34
+    },
+    {
+      "locator_id": "q15",
+      "meaning": "declared artifact name 4 (figure)",
+      "quote": "richardson_zaki.png",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1923,
+      "start_line": 34,
+      "end_line": 34
+    },
+    {
+      "locator_id": "q16",
+      "meaning": "declared artifact name 5 (figure)",
+      "quote": "pressure_gradient.png",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1944,
+      "start_line": 34,
+      "end_line": 34
+    },
+    {
+      "locator_id": "q17",
+      "meaning": "test file + stated pass count",
+      "quote": "PYTHONPATH=src pytest tests/test_point_cfd_dem.py -v   # 19 tests pass",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 2750,
+      "start_line": 57,
+      "end_line": 57
+    },
+    {
+      "locator_id": "q18",
+      "meaning": "benchmark entry point (repro command 2)",
+      "quote": "PYTHONPATH=src python benchmarks/point_particle_cfd_dem/run.py",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 2821,
+      "start_line": 58,
+      "end_line": 58
+    },
+    {
+      "locator_id": "q19",
+      "meaning": "error-assessment row that exceeds 3% (uncertainty preserved)",
+      "quote": "| Hindered settling | Richardson-Zaki | 8.681% | NO (within 10% gate) |",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 2591,
+      "start_line": 51,
+      "end_line": 51
+    },
+    {
+      "locator_id": "q20",
+      "meaning": "declared limitation 1",
+      "quote": "1. Periodic box ≠ unbounded fluid; self-response correction needed (19% error without it)",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 1987,
+      "start_line": 38,
+      "end_line": 38
+    },
+    {
+      "locator_id": "q21",
+      "meaning": "declared limitation 5 (scope boundary)",
+      "quote": "5. No walls — wall-bounded coupling out of scope",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 2296,
+      "start_line": 42,
+      "end_line": 42
+    },
+    {
+      "locator_id": "q22",
+      "meaning": "error-assessment row 1",
+      "quote": "| Terminal velocity | Stokes v_t | 1.984% | YES |",
+      "resolvable": true,
+      "occurrences": 1,
+      "char_offset": 2429,
+      "start_line": 48,
+      "end_line": 48
+    }
+  ]
+}

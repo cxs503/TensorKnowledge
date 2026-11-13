@@ -1,0 +1,498 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-10344-01",
+  "task_type": "01-asset-registration",
+  "report_id": "10344",
+  "source_uri": "tensor://reports/10344",
+  "source_field": "markdown",
+  "source_hash": "sha256:a125a5396015600c7865e9357d613ab245c0499a45ba5fbf51f9fdddc59fc900",
+  "source_hash_expected": "sha256:a125a5396015600c7865e9357d613ab245c0499a45ba5fbf51f9fdddc59fc900",
+  "source_hash_matches": true,
+  "hash_algorithm": "sha256 over UTF-8 bytes of the markdown field",
+  "title": "Point-particle two-way CFD-DEM coupling: Stokes/Added-mass/Momentum/RZ/PG verification",
+  "title_matches_contract": true,
+  "scenario_key": "p158w1-n03-cfd-dem",
+  "scenario_key_expected": "p158w1-n03-cfd-dem",
+  "scenario_key_matches_contract": true,
+  "source_mission_id": 8040,
+  "source_status": "published",
+  "source_created_at": "2026-11-10T02:54:30.170372+00:00",
+  "source_tags": [
+    "CFD-DEM",
+    "point-particle",
+    "two-way-coupling",
+    "verification",
+    "TensorDEM"
+  ],
+  "chars": 2888,
+  "chars_expected": 2888,
+  "chars_match_contract": true,
+  "bytes_utf8": 2940,
+  "heading_count": 8,
+  "headings": [
+    "# Point-particle (unresolved) two-way CFD-DEM coupling — Verification Report",
+    "## 1. Case Introduction",
+    "## 2. Method",
+    "## 3. Results",
+    "## 4. Figures",
+    "## 5. Limitations",
+    "## 6. Error Assessment",
+    "## 7. Reproduction"
+  ],
+  "attachments": [
+    {
+      "name": "stokes_terminal_velocity",
+      "caption": "Figure: stokes_terminal_velocity",
+      "origin": "record.figures",
+      "markdown_token": "stokes_terminal_velocity.png",
+      "markdown_token_resolvable": true
+    },
+    {
+      "name": "added_mass_oscillation",
+      "caption": "Figure: added_mass_oscillation",
+      "origin": "record.figures",
+      "markdown_token": "added_mass_oscillation.png",
+      "markdown_token_resolvable": true
+    },
+    {
+      "name": "momentum_exchange",
+      "caption": "Figure: momentum_exchange",
+      "origin": "record.figures",
+      "markdown_token": "momentum_exchange.png",
+      "markdown_token_resolvable": true
+    },
+    {
+      "name": "richardson_zaki",
+      "caption": "Figure: richardson_zaki",
+      "origin": "record.figures",
+      "markdown_token": "richardson_zaki.png",
+      "markdown_token_resolvable": true
+    },
+    {
+      "name": "pressure_gradient",
+      "caption": "Figure: pressure_gradient",
+      "origin": "record.figures",
+      "markdown_token": "pressure_gradient.png",
+      "markdown_token_resolvable": true
+    }
+  ],
+  "attachments_note": "figure name/caption metadata taken from record.figures; PNG payloads are neither downloaded nor checked in by this package",
+  "external_reference_scan": {
+    "pattern": "https?://|doi\\.org|\\bDOI\\b|\\.csv\\b|\\.npy\\b|\\.h5\\b|\\.zip\\b|zenodo|osf\\.io",
+    "hits": 0,
+    "distinct": []
+  },
+  "counts": {
+    "assets": 17,
+    "by_class": {
+      "figure": 5,
+      "source_module": 5,
+      "test_file": 1,
+      "benchmark_entrypoint": 1,
+      "result_table": 2,
+      "repro_command": 1,
+      "scope_declaration": 1,
+      "dataset": 1
+    },
+    "by_resolution": {
+      "referenced_unresolved": 12,
+      "resolved_in_source": 4,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 4,
+    "referenced_unresolved": 12,
+    "declared_absent": 1
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "figure",
+      "label": "stokes_terminal_velocity.png",
+      "in_report_section": "## 4. Figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1842,
+        "end_char": 1870,
+        "start_line": 34,
+        "end_line": 34,
+        "quote": "stokes_terminal_velocity.png",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1); attachment metadata cross-checked against record.figures",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "figure named in the report; record.figures carries name+caption metadata only, the PNG bytes are not in the platform record",
+      "attachment_metadata_present": true
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "figure",
+      "label": "added_mass_oscillation.png",
+      "in_report_section": "## 4. Figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1872,
+        "end_char": 1898,
+        "start_line": 34,
+        "end_line": 34,
+        "quote": "added_mass_oscillation.png",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1); attachment metadata cross-checked against record.figures",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "figure named in the report; record.figures metadata only, no PNG bytes in the record",
+      "attachment_metadata_present": true
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "figure",
+      "label": "momentum_exchange.png",
+      "in_report_section": "## 4. Figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1900,
+        "end_char": 1921,
+        "start_line": 34,
+        "end_line": 34,
+        "quote": "momentum_exchange.png",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1); attachment metadata cross-checked against record.figures",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "figure named in the report; record.figures metadata only, no PNG bytes in the record",
+      "attachment_metadata_present": true
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "figure",
+      "label": "richardson_zaki.png",
+      "in_report_section": "## 4. Figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1923,
+        "end_char": 1942,
+        "start_line": 34,
+        "end_line": 34,
+        "quote": "richardson_zaki.png",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1); attachment metadata cross-checked against record.figures",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "figure named in the report; record.figures metadata only, no PNG bytes in the record",
+      "attachment_metadata_present": true
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "figure",
+      "label": "pressure_gradient.png",
+      "in_report_section": "## 4. Figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1944,
+        "end_char": 1965,
+        "start_line": 34,
+        "end_line": 34,
+        "quote": "pressure_gradient.png",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1); attachment metadata cross-checked against record.figures",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "figure named in the report; record.figures metadata only, no PNG bytes in the record",
+      "attachment_metadata_present": true
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "source_module",
+      "label": "closures.py",
+      "in_report_section": "## 2. Method",
+      "locator": {
+        "method": "char_span",
+        "start_char": 768,
+        "end_char": 875,
+        "start_line": 16,
+        "end_line": 16,
+        "quote": "`closures.py`: pure functions for all coefficients (Stokes drag, Schiller-Naumann, RZ exponent, added-mass)",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "module cited by bare filename (no directory); producing repo is not part of this worktree, so the file is not resolvable from the platform record"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "source_module",
+      "label": "fluid.py",
+      "in_report_section": "## 2. Method",
+      "locator": {
+        "method": "char_span",
+        "start_char": 878,
+        "end_char": 1026,
+        "start_line": 17,
+        "end_line": 17,
+        "quote": "`fluid.py`: triply periodic pseudo-spectral solver with exact viscous integrating factor, Leray projection, adjoint trilinear particle-grid transfer",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "module cited by bare filename; not resolvable from the platform record"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_module",
+      "label": "particles.py",
+      "in_report_section": "## 2. Method",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1029,
+        "end_char": 1137,
+        "start_line": 18,
+        "end_line": 18,
+        "quote": "`particles.py`: vectorised Lagrangian particles with implicit added-mass integration `(m_p + C_A m_a) a = F`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "module cited by bare filename; not resolvable from the platform record"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "source_module",
+      "label": "coupling.py",
+      "in_report_section": "## 2. Method",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1140,
+        "end_char": 1255,
+        "start_line": 19,
+        "end_line": 19,
+        "quote": "`coupling.py`: two-way loop with self-response correction, container-frame Galilean shift, momentum budget tracking",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "module cited by bare filename; not resolvable from the platform record"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "source_module",
+      "label": "verification.py",
+      "in_report_section": "## 2. Method",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1258,
+        "end_char": 1312,
+        "start_line": 20,
+        "end_line": 20,
+        "quote": "`verification.py`: five closed-form verification faces",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "module cited by bare filename; not resolvable from the platform record"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "test_file",
+      "label": "tests/test_point_cfd_dem.py",
+      "in_report_section": "## 7. Reproduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2750,
+        "end_char": 2820,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "PYTHONPATH=src pytest tests/test_point_cfd_dem.py -v   # 19 tests pass",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "test path quoted verbatim; the stated 19 passing cases are a claim of the source report, NOT re-executed in this package"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "benchmark_entrypoint",
+      "label": "benchmarks/point_particle_cfd_dem/run.py",
+      "in_report_section": "## 7. Reproduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2821,
+        "end_char": 2883,
+        "start_line": 58,
+        "end_line": 58,
+        "quote": "PYTHONPATH=src python benchmarks/point_particle_cfd_dem/run.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "unresolved"
+      },
+      "note": "benchmark entry point quoted verbatim; not executed in this package"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "result_table",
+      "label": "verification gate table (5 gates, measured vs threshold)",
+      "in_report_section": "## 3. Results",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1405,
+        "end_char": 1479,
+        "start_line": 26,
+        "end_line": 26,
+        "quote": "| Stokes terminal velocity | |U - v_t|/v_t ≤ 2% | 1.984% | 2% | **PASS** |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "resolved"
+      },
+      "note": "table body present inline in the markdown; rows are verbatim-resolvable"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "result_table",
+      "label": "error assessment table (5 quantities, error, <3%? verdict)",
+      "in_report_section": "## 6. Error Assessment",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2429,
+        "end_char": 2478,
+        "start_line": 48,
+        "end_line": 48,
+        "quote": "| Terminal velocity | Stokes v_t | 1.984% | YES |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "resolved"
+      },
+      "note": "table body present inline; row A15-cited 8.681% row is the only non-<3% entry"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "repro_command",
+      "label": "PYTHONPATH=src pytest tests/test_point_cfd_dem.py -v",
+      "in_report_section": "## 7. Reproduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2750,
+        "end_char": 2820,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "PYTHONPATH=src pytest tests/test_point_cfd_dem.py -v   # 19 tests pass",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "resolved"
+      },
+      "note": "command text resolved inline; execution NOT performed here (unit_cmd out of this package's scope)"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "scope_declaration",
+      "label": "no walls / no particle-particle contacts / periodic box (out-of-scope list)",
+      "in_report_section": "## 5. Limitations",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2296,
+        "end_char": 2344,
+        "start_line": 42,
+        "end_line": 42,
+        "quote": "5. No walls — wall-bounded coupling out of scope",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim substring of markdown (occurrence count >= 1)",
+        "occurrences": 1,
+        "result": "resolved"
+      },
+      "note": "limitation list is the asset-level applicability boundary of every other asset"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "dataset",
+      "label": "none declared",
+      "in_report_section": "(whole document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2888,
+        "start_line": 1,
+        "end_line": 59,
+        "quote": "# Point-particle (unresolved) two-way CFD-DEM coupling — Verification Report",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "regex scan https?://|doi\\.org|\\bDOI\\b|\\.csv\\b|\\.npy\\b|\\.h5\\b|\\.zip\\b|zenodo|osf\\.io over the whole markdown",
+        "hits": 0,
+        "result": "absent"
+      },
+      "note": "the report references no external data file, DOI or repository URL; inputs are analytic"
+    }
+  ],
+  "claims": [],
+  "claims_note": "claims intentionally empty: objective.register_assets=true and classify_report_type=false for this package; no extraction, no invented claims",
+  "integrity": {
+    "quote_uniqueness": {
+      "quotes": 22,
+      "unique_quotes": 22,
+      "all_resolvable": true
+    },
+    "hash_recomputed_locally": "sha256:a125a5396015600c7865e9357d613ab245c0499a45ba5fbf51f9fdddc59fc900",
+    "hash_matches_contract": true
+  }
+}
