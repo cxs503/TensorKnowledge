@@ -1,0 +1,37 @@
+{
+  "endpoint": "POST /ko/v1/ingest → GET /ko/v1/{id}/traceability → POST /ko/v1/{id}/promote",
+  "router_mounted": true,
+  "calls": [
+    {
+      "call": "POST /ko/v1/ingest",
+      "tag": "ingest",
+      "status": 201,
+      "body": "{\"knowledge_id\":\"ko:tensorkbm:ke-api-b68f01\",\"inserted\":true,\"schema\":\"ko_v1\",\"storage_level\":\"L1\",\"verification_status\":\"report_claimed\",\"content_sha256\":\"536413e7be95f56670966d5b83b418572176fac9149c6798a7589618244f4e92\",\"evidence_rows\":1,\"traceability\":{\"evidence_total\":1,\"report_resolved_n\":1,\"section_resolved_n\":1,\"artifact_resolved_n\":1,\"fully_traceable_n\":1,\"r1_report_resolvable\":1.0,\"r2_section_resolvable\":1.0,\"r3_artifact_resolvable\":1.0,\"e_tr\":1.0,\"denominator\":1}}"
+    },
+    {
+      "call": "GET /ko/v1/ko:tensorkbm:ke-api-b68f01/traceability",
+      "tag": "traceability",
+      "status": 500,
+      "body": "Internal Server Error"
+    },
+    {
+      "call": "POST /ko/v1/ko:tensorkbm:ke-api-b68f01/promote",
+      "tag": "promote",
+      "status": 200,
+      "body": "{\"knowledge_id\":\"ko:tensorkbm:ke-api-b68f01\",\"from\":\"report_claimed\",\"to\":\"platform_verified\",\"storage_level\":\"L3\"}"
+    },
+    {
+      "call": "POST /ko/v1/ingest",
+      "tag": "ingest_without_token",
+      "status": 401,
+      "body": "{\"detail\":\"invalid token\"}"
+    },
+    {
+      "call": "POST /ko/v1/ingest",
+      "tag": "ingest_invalid_doc",
+      "status": 422,
+      "body": "{\"detail\":\"KOError: schema: <root>: 'schema_version' is a required property; schema: <root>: 'type' is a required property; schema: <root>: 'domain' is a required property; schema: <root>: 'subject' is a required property; schema: <root>: 'claim' is a required property; schema: <root>: 'conditions' is a required property; schema: <root>: 'evidence' is a required property; schema: <root>: 'confidence' is a required pr\"}"
+    }
+  ],
+  "caller_module": "ke/api.py + ke/ko_v1_api.py → ke/ko_ingest.py"
+}

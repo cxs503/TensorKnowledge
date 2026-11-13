@@ -1,0 +1,283 @@
+{
+  "benchmark_id": "ko_v1_conformance",
+  "anchor": "KBM-RCI-S2-SCHEMA",
+  "mission_id": 15858,
+  "generated_by": "benchmarks/ko_v1_conformance/run_benchmark.py",
+  "repro_cmd": "python3 scripts/ko_v1.py bench",
+  "spec_ref": "docs/rci/schema-v1.md + schemas/knowledge-object-v1.schema.json",
+  "criteria": {
+    "C1_doc_conformance_accuracy": {
+      "ref": 1.0,
+      "got": 1.0,
+      "limit": 1.0,
+      "pass": true
+    },
+    "C2_transition_accuracy": {
+      "ref": 1.0,
+      "got": 1.0,
+      "limit": 1.0,
+      "pass": true
+    },
+    "C3_etr_abs_error_max": {
+      "ref": 0.0,
+      "got": 0.0,
+      "limit": 0.0001,
+      "pass": true
+    },
+    "C4_throughput_per_s": {
+      "ref": null,
+      "got": 594.9,
+      "limit": null,
+      "pass": true
+    }
+  },
+  "doc_cases": [
+    {
+      "case_id": "doc.valid.report_claimed",
+      "rule": "schema-v1 §2 必填 13 键",
+      "ref_accept": true,
+      "got_accept": true,
+      "expect_error_contains": null,
+      "match": true,
+      "got_errors": []
+    },
+    {
+      "case_id": "doc.missing.claim",
+      "rule": "schema-v1 §2 claim required",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "claim",
+      "match": true,
+      "got_errors": [
+        "schema: <root>: 'claim' is a required property"
+      ]
+    },
+    {
+      "case_id": "doc.bad.knowledge_id",
+      "rule": "schema-v1 §2 knowledge_id pattern",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "knowledge_id",
+      "match": true,
+      "got_errors": [
+        "schema: knowledge_id: 'KBM-D2Q9' does not match '^ko:[a-z0-9][a-z0-9._-]*:[a-z0-9][a-z0-9._-]*$'"
+      ]
+    },
+    {
+      "case_id": "doc.bad.type",
+      "rule": "schema-v1 §2 type 词表",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "type",
+      "match": true,
+      "got_errors": [
+        "schema: type: 'blog_post' is not one of ['method_card', 'parameter_card', 'failure_card', 'benchmark_card', 'code_pointer_card', 'capability_claim', 'negative_result', 'measurement', 'definition', 'procedure', 'reference']"
+      ]
+    },
+    {
+      "case_id": "doc.bad.verification_status",
+      "rule": "schema-v1 §3 三态",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "verification_status",
+      "match": true,
+      "got_errors": [
+        "schema: verification_status: 'verified' is not one of ['unverified', 'report_claimed', 'platform_verified']"
+      ]
+    },
+    {
+      "case_id": "doc.bad.artifact_kind",
+      "rule": "schema-v1 §4 工件地址类型",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "artifact_ref",
+      "match": true,
+      "got_errors": [
+        "schema: evidence/0/artifact_ref/kind: 's3_bucket' is not one of ['tensor_data_artifact', 'repo_path', 'report_figure', 'report_section', 'url', 'none']"
+      ]
+    },
+    {
+      "case_id": "doc.l2_without_relations",
+      "rule": "schema-v1 §3 L2 需关联边",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "relations",
+      "match": true,
+      "got_errors": [
+        "schema: relations: [] should be non-empty"
+      ]
+    },
+    {
+      "case_id": "doc.confidence_no_level",
+      "rule": "schema-v1 §2 confidence.level",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "confidence",
+      "match": true,
+      "got_errors": [
+        "schema: confidence: 'level' is a required property"
+      ]
+    },
+    {
+      "case_id": "doc.conditions_no_description",
+      "rule": "schema-v1 §2 conditions.description",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "conditions",
+      "match": true,
+      "got_errors": [
+        "schema: conditions: 'description' is a required property"
+      ]
+    },
+    {
+      "case_id": "doc.l3_without_ticket",
+      "rule": "schema-v1 §3 L3 唯一通道=平台验证单",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "verification",
+      "match": true,
+      "got_errors": [
+        "schema: <root>: 'verification' is a required property"
+      ]
+    },
+    {
+      "case_id": "doc.card.payload_invalid",
+      "rule": "schema-v1 §2 五类卡 payload 过专属 schema",
+      "ref_accept": false,
+      "got_accept": false,
+      "expect_error_contains": "payload",
+      "match": true,
+      "got_errors": [
+        "payload(method-card.schema.json): schema: card_type: 'method' was expected"
+      ]
+    }
+  ],
+  "transition_cases": [
+    {
+      "case_id": "trans.agent.report_claimed",
+      "rule": "schema-v1 §3 agent 可把 unverified 升到 report_claimed",
+      "ref_accept": true,
+      "got_accept": true,
+      "match": true,
+      "got_errors": []
+    },
+    {
+      "case_id": "trans.agent.to_l3_refused",
+      "rule": "schema-v1 §3 Agent 不得自宣布 L3（owner 铁则）",
+      "ref_accept": false,
+      "got_accept": false,
+      "match": true,
+      "got_errors": [
+        "L3 promotion is platform-only: agents cannot self-declare platform_verified"
+      ]
+    },
+    {
+      "case_id": "trans.platform.to_l3_ok",
+      "rule": "schema-v1 §3 平台验证单+confirmed 才可 L3",
+      "ref_accept": true,
+      "got_accept": true,
+      "match": true,
+      "got_errors": []
+    },
+    {
+      "case_id": "trans.skip_to_l3_refused",
+      "rule": "schema-v1 §3 禁止 unverified→platform_verified 越级",
+      "ref_accept": false,
+      "got_accept": false,
+      "match": true,
+      "got_errors": [
+        "illegal transition unverified -> platform_verified"
+      ]
+    },
+    {
+      "case_id": "trans.reopen_ok",
+      "rule": "schema-v1 §3 reopen 反向一格",
+      "ref_accept": true,
+      "got_accept": true,
+      "match": true,
+      "got_errors": []
+    },
+    {
+      "case_id": "trans.back_to_unverified_refused",
+      "rule": "schema-v1 §3 只能反向一格",
+      "ref_accept": false,
+      "got_accept": false,
+      "match": true,
+      "got_errors": [
+        "illegal transition platform_verified -> unverified"
+      ]
+    }
+  ],
+  "etr_cases": [
+    {
+      "case_id": "etr.all_green",
+      "rule": "三闸全绿 → E-TR=1",
+      "ref": {
+        "e_tr": 1.0,
+        "r1": 1.0,
+        "r2": 1.0,
+        "r3": 1.0
+      },
+      "got": {
+        "e_tr": 1.0,
+        "r1": 1.0,
+        "r2": 1.0,
+        "r3": 1.0
+      },
+      "abs_err": {
+        "e_tr": 0.0,
+        "r1": 0.0,
+        "r2": 0.0,
+        "r3": 0.0
+      },
+      "match": true
+    },
+    {
+      "case_id": "etr.mixed_1of3",
+      "rule": "报告闸缺→整条不可追溯；工件缺→整条不可追溯",
+      "ref": {
+        "e_tr": 0.3333,
+        "r1": 0.6667,
+        "r2": 0.6667,
+        "r3": 0.3333
+      },
+      "got": {
+        "e_tr": 0.3333,
+        "r1": 0.6667,
+        "r2": 0.6667,
+        "r3": 0.3333
+      },
+      "abs_err": {
+        "e_tr": 0.0,
+        "r1": 0.0,
+        "r2": 0.0,
+        "r3": 0.0
+      },
+      "match": true
+    },
+    {
+      "case_id": "etr.doc_only_none_artifact",
+      "rule": "artifact_kind=none 时以小节锚点+切片 sha 代址，视为通过",
+      "ref": {
+        "e_tr": 1.0,
+        "r1": 1.0,
+        "r2": 1.0,
+        "r3": 1.0
+      },
+      "got": {
+        "e_tr": 1.0,
+        "r1": 1.0,
+        "r2": 1.0,
+        "r3": 1.0
+      },
+      "abs_err": {
+        "e_tr": 0.0,
+        "r1": 0.0,
+        "r2": 0.0,
+        "r3": 0.0
+      },
+      "match": true
+    }
+  ],
+  "verdict": "PASS"
+}

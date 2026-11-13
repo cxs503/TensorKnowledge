@@ -1,0 +1,61 @@
+{
+  "anchor": "KBM-RCI-S2-SCHEMA",
+  "mission_id": 15858,
+  "repo": "TensorKnowledge",
+  "level_declared": 4,
+  "impl_files": [
+    "ke/ko_ingest.py",
+    "ke/ko_v1_api.py",
+    "scripts/validate_ko_v1.py",
+    "scripts/ko_v1.py",
+    "schemas/knowledge-object-v1.schema.json",
+    "schemas/sql/knowledge_object_v1.sql",
+    "benchmarks/ko_v1_conformance/cases.py",
+    "benchmarks/ko_v1_conformance/run_benchmark.py"
+  ],
+  "entry": "scripts/ko_v1.py",
+  "run_artifacts": [
+    "docs/rci/m15858/bench.json",
+    "docs/rci/m15858/ingest_run.json",
+    "docs/rci/m15858/etr_live.json",
+    "docs/rci/m15858/ke_api_live_call.json",
+    "docs/rci/m15858/pytest_junit.xml"
+  ],
+  "tests": [
+    "tests/test_ko_v1_schema.py",
+    "tests/test_ko_v1_ingest.py"
+  ],
+  "integration_callers": [
+    "ke/api.py:app.include_router(ke.ko_v1_api.router) → POST /ko/v1/ingest → ke.ko_ingest.ingest",
+    "scripts/ko_v1.py: ingest/promote/etr CLI 入口调用 ke.ko_ingest"
+  ],
+  "benchmark": {
+    "file": "docs/rci/m15858/bench.json",
+    "ref_vs_got": {
+      "C1_doc_conformance_accuracy": {
+        "ref": 1.0,
+        "got": 1.0
+      },
+      "C2_transition_accuracy": {
+        "ref": 1.0,
+        "got": 1.0
+      },
+      "C3_etr_abs_error_max": {
+        "ref": 0.0,
+        "got": 0.0
+      },
+      "C4_throughput_per_s": {
+        "ref": null,
+        "got": 594.9
+      }
+    },
+    "verdict": "PASS",
+    "n_cases": {
+      "doc": 11,
+      "transition": 6,
+      "etr": 3
+    }
+  },
+  "repro_cmd": "python3 -m pytest tests/test_ko_v1_schema.py tests/test_ko_v1_ingest.py -q && python3 scripts/ko_v1.py bench && python3 scripts/ko_v1_evidence_run.py",
+  "notes": "L3 晋级不经 Agent 自宣布：ko_verification 票据 gate_level>=2 + 三闸全绿由 DDL 触发器复核；L0 原件仍归 TensorData（本库只存引用）。"
+}
