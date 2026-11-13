@@ -1,0 +1,42 @@
+[
+ {
+  "id": "tkr:wp-7545-01:m15854",
+  "object_ref": "wp-7545-01",
+  "object_version": "sha256:82bb6145f8a9f5ffd7acc0cbc1c45faecf118eafd8a8b45f4e7463d3cb350f4a",
+  "decision": "request-changes",
+  "reviewer": {
+   "id": "m15854",
+   "reviewer_type": "agent",
+   "role": "red-team-reviewer"
+  },
+  "reviewed_at": "2026-11-12T02:00:00Z",
+  "policy_version": "ke-review-v0.1",
+  "rationale": "登记内容可复现（源哈希字节相等、18/18 引文在原文唯一可定位、路径型 token 无遗漏、计数自洽、4 张图缺字节的 declared_absent 双向确认），未发现伪造摘要或漏登记；但 A01 声明跨度≠引文、asset_manifest schema 不能在仓内复跑，两处需修后再入 04 结论。",
+  "findings": [
+   {
+    "severity": "minor",
+    "finding": "F1 A01(method=document) start_char=0/end_char=3583 与 44 字符 quote 不符"
+   },
+   {
+    "severity": "minor",
+    "finding": "F2 schemas/asset_manifest.v1.schema.json 被 const 钉在 wp-448-01，本包 schema_pass 不可复跑"
+   },
+   {
+    "severity": "minor",
+    "finding": "F3 自检文件用 verified_at/all_pass 命名，与 V 阶梯词汇冲突"
+   },
+   {
+    "severity": "informational",
+    "finding": "F4 fig[i]<->图N 只有位置证据，图注措辞两处不一致"
+   },
+   {
+    "severity": "informational",
+    "finding": "F5 计数为出现级：18 条 != 18 个不同文件"
+   }
+  ],
+  "conditions": [
+   "F1 修好后在同一 sha256 的源上复跑 scripts/kf_review_wp7545_01.py，V2_locators 必须转绿",
+   "F2 交付 report-agnostic schema 或随包 rebound schema 及其 sha256 后，V9 转绿"
+  ]
+ }
+]
