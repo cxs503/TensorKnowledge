@@ -1,0 +1,446 @@
+{
+  "version": "1.0.0",
+  "anchor": "KBM-TKC-GOV-SCALE",
+  "policy_version": "ke-review-v0.1",
+  "description": "Configuration for KBM knowledge governance W1: entity alias registry (Entity Resolution v1), quantity extraction vocabulary, review-agent pool, and predeclared thresholds. Data, not code: changing governance behaviour = editing this file, never the module.",
+  "extraction": {
+    "max_line_chars": 400,
+    "value_pattern": "-?\\d+(?:\\.\\d+)?(?:[eE][-+]?\\d+)?",
+    "known_units": [
+      "%",
+      "-",
+      "kg",
+      "g",
+      "m",
+      "cm",
+      "mm",
+      "km",
+      "s",
+      "ms",
+      "K",
+      "Pa",
+      "kPa",
+      "MPa",
+      "N",
+      "kN",
+      "W",
+      "kW",
+      "Hz",
+      "m/s",
+      "m/s2",
+      "kg/m3",
+      "deg",
+      "rad",
+      "Nm",
+      "J",
+      "°"
+    ],
+    "needle_tolerance": 1e-09,
+    "context_keywords": {
+      "geometry": {
+        "cylinder": [
+          "cylinder",
+          "圆柱",
+          "cylinder flow"
+        ],
+        "sphere": [
+          "sphere",
+          "球体",
+          "球"
+        ],
+        "airfoil": [
+          "airfoil",
+          "翼型",
+          "naca"
+        ],
+        "plate": [
+          "flat plate",
+          "平板",
+          "plate"
+        ],
+        "channel": [
+          "channel",
+          "槽道",
+          "poiseuille"
+        ],
+        "ship-hull": [
+          "ship",
+          "船体",
+          "hull",
+          "kcs",
+          "kvlcc"
+        ],
+        "cavity": [
+          "cavity",
+          "方腔"
+        ],
+        "pipe": [
+          "pipe",
+          "管道",
+          "管流"
+        ]
+      }
+    },
+    "condition_lookback_lines": 3,
+    "condition_lookback_policy": "same line first; otherwise the nearest preceding lines up to condition_lookback_lines inside the same section, merged with heading geometry"
+  },
+  "entities": [
+    {
+      "id": "ent:re",
+      "canonical": "Re",
+      "kind": "condition",
+      "aliases": [
+        "Reynolds number",
+        "Reynolds",
+        "雷诺数",
+        "Re"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:fr",
+      "canonical": "Fr",
+      "kind": "condition",
+      "aliases": [
+        "Froude number",
+        "Froude",
+        "弗劳德数",
+        "Fr"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:ma",
+      "canonical": "Ma",
+      "kind": "condition",
+      "aliases": [
+        "Mach number",
+        "Mach",
+        "马赫数",
+        "Ma"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:pr",
+      "canonical": "Pr",
+      "kind": "condition",
+      "aliases": [
+        "Prandtl number",
+        "Prandtl",
+        "普朗特数",
+        "Pr"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:ra",
+      "canonical": "Ra",
+      "kind": "condition",
+      "aliases": [
+        "Rayleigh number",
+        "Rayleigh",
+        "瑞利数",
+        "Ra"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:cb",
+      "canonical": "Cb",
+      "kind": "condition",
+      "aliases": [
+        "block coefficient",
+        "方形系数",
+        "CB",
+        "Cb",
+        "C_B"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:alpha",
+      "canonical": "alpha",
+      "kind": "condition",
+      "aliases": [
+        "angle of attack",
+        "攻角",
+        "alpha",
+        "Alpha",
+        "α"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:lambda",
+      "canonical": "lambda",
+      "kind": "condition",
+      "aliases": [
+        "wave length ratio",
+        "波长船长比",
+        "lambda",
+        "Lambda",
+        "λ"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:cd",
+      "canonical": "Cd",
+      "kind": "result",
+      "aliases": [
+        "drag coefficient",
+        "阻力系数",
+        "CD",
+        "C_D",
+        "Cd"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:cl",
+      "canonical": "Cl",
+      "kind": "result",
+      "aliases": [
+        "lift coefficient",
+        "升力系数",
+        "CL",
+        "C_L",
+        "Cl"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:ct",
+      "canonical": "Ct",
+      "kind": "result",
+      "aliases": [
+        "thrust coefficient",
+        "推力减额系数",
+        "推力系数",
+        "C_T",
+        "CT",
+        "Ct"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:cf",
+      "canonical": "Cf",
+      "kind": "result",
+      "aliases": [
+        "friction coefficient",
+        "skin friction coefficient",
+        "摩擦阻力系数",
+        "C_f",
+        "CF",
+        "Cf"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:cw",
+      "canonical": "Cw",
+      "kind": "result",
+      "aliases": [
+        "wave resistance coefficient",
+        "兴波阻力系数",
+        "C_W",
+        "CW",
+        "Cw"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:ld",
+      "canonical": "L/D",
+      "kind": "result",
+      "aliases": [
+        "lift-to-drag ratio",
+        "升阻比",
+        "L/D",
+        "L_D"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:nu",
+      "canonical": "Nu",
+      "kind": "result",
+      "aliases": [
+        "Nusselt number",
+        "Nusselt",
+        "努塞尔数",
+        "Nu"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:st",
+      "canonical": "St",
+      "kind": "result",
+      "aliases": [
+        "Strouhal number",
+        "Strouhal",
+        "斯特劳哈尔数",
+        "St"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:rt",
+      "canonical": "R_t",
+      "kind": "result",
+      "aliases": [
+        "total resistance",
+        "总阻力",
+        "Rt",
+        "R_t"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:rf",
+      "canonical": "R_f",
+      "kind": "result",
+      "aliases": [
+        "friction resistance",
+        "摩擦阻力",
+        "Rf",
+        "R_f"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:rw",
+      "canonical": "R_w",
+      "kind": "result",
+      "aliases": [
+        "wave resistance",
+        "兴波阻力",
+        "Rw",
+        "R_w"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:zeta",
+      "canonical": "zeta",
+      "kind": "result",
+      "aliases": [
+        "damping ratio",
+        "阻尼比",
+        "zeta",
+        "ζ"
+      ],
+      "comparison": "cross_report"
+    },
+    {
+      "id": "ent:error",
+      "canonical": "err",
+      "kind": "result",
+      "aliases": [
+        "relative error",
+        "相对误差",
+        "error",
+        "err",
+        "误差"
+      ],
+      "comparison": "document_local"
+    }
+  ],
+  "qualifier_stop": [
+    "e",
+    "E"
+  ],
+  "thresholds": {
+    "agree_rel": 0.05,
+    "contradict_rel": 0.15,
+    "near_dup_hamming": 6,
+    "min_entity_confidence": 1.0,
+    "value_significant_digits": 6,
+    "near_dup_jaccard": 0.5
+  },
+  "review_pool": {
+    "policy": "dual-blind-quorum-v1",
+    "quorum": {
+      "pass": "all_pass",
+      "fail": "any_fail",
+      "needs_fix": "any_needs_fix"
+    },
+    "reviewers": [
+      {
+        "id": "agent/gov-review-provenance-1",
+        "reviewer_type": "agent",
+        "lanes": [
+          "provenance"
+        ],
+        "capacity": 5000,
+        "model": "rule-gate-v1"
+      },
+      {
+        "id": "agent/gov-review-provenance-2",
+        "reviewer_type": "agent",
+        "lanes": [
+          "provenance"
+        ],
+        "capacity": 5000,
+        "model": "rule-gate-v1"
+      },
+      {
+        "id": "agent/gov-review-units-1",
+        "reviewer_type": "agent",
+        "lanes": [
+          "units"
+        ],
+        "capacity": 5000,
+        "model": "rule-gate-v1"
+      },
+      {
+        "id": "agent/gov-review-units-2",
+        "reviewer_type": "agent",
+        "lanes": [
+          "units"
+        ],
+        "capacity": 5000,
+        "model": "rule-gate-v1"
+      },
+      {
+        "id": "agent/gov-review-entity-1",
+        "reviewer_type": "agent",
+        "lanes": [
+          "entity"
+        ],
+        "capacity": 5000,
+        "model": "rule-gate-v1"
+      },
+      {
+        "id": "agent/gov-review-entity-2",
+        "reviewer_type": "agent",
+        "lanes": [
+          "entity"
+        ],
+        "capacity": 5000,
+        "model": "rule-gate-v1"
+      },
+      {
+        "id": "agent/gov-review-consistency-1",
+        "reviewer_type": "agent",
+        "lanes": [
+          "consistency"
+        ],
+        "capacity": 5000,
+        "model": "rule-gate-v1"
+      },
+      {
+        "id": "agent/gov-review-consistency-2",
+        "reviewer_type": "agent",
+        "lanes": [
+          "consistency"
+        ],
+        "capacity": 5000,
+        "model": "rule-gate-v1"
+      }
+    ]
+  }
+}
