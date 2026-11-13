@@ -1,0 +1,543 @@
+{
+  "schema": "asset_manifest.v1",
+  "manifest_version": "1.0",
+  "package_id": "wp-7808-01",
+  "task_type": "01-asset-registration",
+  "report_id": "7808",
+  "lane": "C",
+  "generated_at": "2026-11-12T01:30:28.634027+00:00",
+  "producer": "kf-worker/m15601",
+  "source": {
+    "report_id": "7808",
+    "source_uri": "tensor://reports/7808",
+    "source_field": "markdown",
+    "source_hash": "sha256:ffc30cee99ff03d89aff6a284c91acc4fa94497cbcf63c03cb10b3ecc0f4df7e",
+    "contract_source_hash": "sha256:ffc30cee99ff03d89aff6a284c91acc4fa94497cbcf63c03cb10b3ecc0f4df7e",
+    "hash_alg": "sha256",
+    "hash_scope": "utf-8 bytes of record.markdown (exact stored string, no normalisation)",
+    "hash_match": true,
+    "chars": 3389,
+    "contract_chars": 3389,
+    "chars_match_contract": true,
+    "bytes_utf8": 5210,
+    "lines": 160,
+    "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based",
+    "fetched_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/7808",
+    "record_fields": {
+      "title": "DDES/SAS 混合湍流模块单元测试验证（G21 缺口填补）",
+      "contract_title": "DDES/SAS 混合湍流模块单元测试验证（G21 缺口填补）",
+      "title_matches_contract": true,
+      "scenario_key": "ddes_unit_verification",
+      "contract_scenario_key": "ddes_unit_verification",
+      "scenario_matches_contract": true,
+      "mission_id": 6583,
+      "status": "published",
+      "stage": null,
+      "created_at": "2026-11-08T06:21:17.124925+00:00",
+      "tags": [
+        "G21",
+        "DDES",
+        "unit_test",
+        "verification",
+        "TensorLBM"
+      ],
+      "figures": []
+    },
+    "platform_attachment_probes": {
+      "GET /tensor/reports/7808/figures": {
+        "http_status": 404,
+        "bytes": 22
+      },
+      "GET /tensor/reports/7808/artifacts": {
+        "http_status": 404,
+        "bytes": 22
+      }
+    }
+  },
+  "counts": {
+    "assets": 11,
+    "by_class": {
+      "report_markdown": 1,
+      "source_code_reference": 1,
+      "test_reference": 1,
+      "orphan_module_reference": 6,
+      "figure_set": 1,
+      "embedded_run_log": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 2,
+      "referenced_unresolved": 8,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 2,
+    "referenced_unresolved": 8,
+    "declared_absent": 1,
+    "figures_declared_in_record": 0,
+    "claims": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "tensor://reports/7808 markdown (H1 title line as document anchor)",
+      "in_report_section": "whole document (H1 at line 1)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(utf-8 markdown bytes) recomputed and compared with contract.input.source_hash",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 31,
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "# DDES/SAS 混合湍流模块验证报告（G21 缺口填补）",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:400211c8e7f1d52b9e38a7d405bece36c357584bb22f86f7b8289b3af67c82e3",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "Document-scope asset. The identity of this asset is the whole-markdown byte hash; the quote locates the H1 anchor only. Verified separately in integrity.hash_* and in the source block."
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "source_code_reference",
+      "label": "src/tensorlbm/ddes.py",
+      "in_report_section": "header block (仓/文件 lines) and §1 模块功能",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "existence probe in delivery worktree TensorKnowledge (candidate paths below)",
+        "result": "unresolved",
+        "searched": [
+          "src/tensorlbm/ddes.py",
+          "tensorlbm/ddes.py"
+        ],
+        "found_at": null
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 135,
+        "end_char": 174,
+        "start_line": 6,
+        "end_line": 6,
+        "quote": "`src/tensorlbm/ddes.py`（370 行，G21 孤儿模块）",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:97340d19383dfa8c63cb47896c67d0720f493e3d8e9053ae2e4e2d324135febe",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "Module under test lives in the TensorLBM repo (report header: 仓: TensorLBM); it is not part of the TensorKnowledge delivery worktree, so the reference cannot be resolved here. Line count 370 is asserted by the report only and was NOT re-checked."
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "test_reference",
+      "label": "tests/test_ddes_unit.py",
+      "in_report_section": "header block (测试 line)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "existence probe in delivery worktree TensorKnowledge (candidate paths below)",
+        "result": "unresolved",
+        "searched": [
+          "tests/test_ddes_unit.py",
+          "test_ddes_unit.py"
+        ],
+        "found_at": null
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 185,
+        "end_char": 221,
+        "start_line": 7,
+        "end_line": 7,
+        "quote": "`tests/test_ddes_unit.py`（22 项，全部通过）",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:a4d6ee417bf7a932784b3ba04d14062708db639b6e41a031190609f0731aa68b",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "Test module of the TensorLBM repo; absent from this worktree. The '22 项' count is a report assertion registered as a reference, not re-executed (out of scope for registration)."
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "orphan_module_reference",
+      "label": "ddes.py (G21 orphan module table row)",
+      "in_report_section": "§7 G21 缺口状态更新 (table)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "existence probe in delivery worktree TensorKnowledge (candidate paths below)",
+        "result": "unresolved",
+        "searched": [
+          "src/tensorlbm/ddes.py",
+          "tensorlbm/ddes.py",
+          "ddes.py"
+        ],
+        "found_at": null,
+        "table_cell_quote": "本任务完成"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3057,
+        "end_char": 3068,
+        "start_line": 150,
+        "end_line": 150,
+        "quote": "| ddes.py |",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:22475dae045b14c55bb77207e3cb86d03e738ae57cdd87c44ec7190ecd158646",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "The row under validation by this very report (§7). Registered as a reference only; no verification claim is made here."
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "orphan_module_reference",
+      "label": "des_turbulence.py (G21 orphan module table row)",
+      "in_report_section": "§7 G21 缺口状态更新 (table)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "existence probe in delivery worktree TensorKnowledge (candidate paths below)",
+        "result": "unresolved",
+        "searched": [
+          "src/tensorlbm/turbulence/des_turbulence.py",
+          "src/tensorlbm/des_turbulence.py",
+          "tensorlbm/des_turbulence.py",
+          "des_turbulence.py"
+        ],
+        "found_at": null,
+        "table_cell_quote": "重定向到 turbulence/des_turbulence.py"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3092,
+        "end_char": 3113,
+        "start_line": 151,
+        "end_line": 151,
+        "quote": "| des_turbulence.py |",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:27a12320682d1cb5cac6b04065875b6fcb4478a75051ae1f517a9b6ec2bfe9d6",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "Report says the module is redirected to turbulence/des_turbulence.py; target path also absent here. Registered as a reference only; no verification claim is made here."
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "orphan_module_reference",
+      "label": "rans_wall_bc.py (G21 orphan module table row)",
+      "in_report_section": "§7 G21 缺口状态更新 (table)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "existence probe in delivery worktree TensorKnowledge (candidate paths below)",
+        "result": "unresolved",
+        "searched": [
+          "src/tensorlbm/rans_wall_bc.py",
+          "tensorlbm/rans_wall_bc.py",
+          "rans_wall_bc.py"
+        ],
+        "found_at": null,
+        "table_cell_quote": "壁函数边界条件"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3158,
+        "end_char": 3177,
+        "start_line": 152,
+        "end_line": 152,
+        "quote": "| rans_wall_bc.py |",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:beda7f4bb10d1805ef21929ddbd0fdf35792c42c9ab8da9517ea911c623aa421",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "Listed as 待验证 (not verified). Registered as a reference only; no verification claim is made here."
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "orphan_module_reference",
+      "label": "d3q27_collide.py (G21 orphan module table row)",
+      "in_report_section": "§7 G21 缺口状态更新 (table)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "existence probe in delivery worktree TensorKnowledge (candidate paths below)",
+        "result": "unresolved",
+        "searched": [
+          "src/tensorlbm/d3q27_collide.py",
+          "tensorlbm/d3q27_collide.py",
+          "d3q27_collide.py"
+        ],
+        "found_at": null,
+        "table_cell_quote": "D3Q27 碰撞"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3196,
+        "end_char": 3216,
+        "start_line": 153,
+        "end_line": 153,
+        "quote": "| d3q27_collide.py |",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:08d0ca4e4f710f1d40038ea396572d07b89f7407acaa2988da000d14987d693b",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "Listed as 待验证 (not verified). Registered as a reference only; no verification claim is made here."
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "orphan_module_reference",
+      "label": "hybrid_solver.py (G21 orphan module table row)",
+      "in_report_section": "§7 G21 缺口状态更新 (table)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "existence probe in delivery worktree TensorKnowledge (candidate paths below)",
+        "result": "unresolved",
+        "searched": [
+          "src/tensorlbm/hybrid_solver.py",
+          "tensorlbm/hybrid_solver.py",
+          "hybrid_solver.py"
+        ],
+        "found_at": null,
+        "table_cell_quote": "混合求解器"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3236,
+        "end_char": 3256,
+        "start_line": 154,
+        "end_line": 154,
+        "quote": "| hybrid_solver.py |",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:d50aafcbbe705cf36bd5267d21b1c5fa2276583e98029c383868f238cc7ef827",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "Listed as 待验证 (not verified). Registered as a reference only; no verification claim is made here."
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "orphan_module_reference",
+      "label": "prism_solver.py (G21 orphan module table row)",
+      "in_report_section": "§7 G21 缺口状态更新 (table)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "existence probe in delivery worktree TensorKnowledge (candidate paths below)",
+        "result": "unresolved",
+        "searched": [
+          "src/tensorlbm/prism_solver.py",
+          "tensorlbm/prism_solver.py",
+          "prism_solver.py"
+        ],
+        "found_at": null,
+        "table_cell_quote": "棱柱求解器"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 3273,
+        "end_char": 3292,
+        "start_line": 155,
+        "end_line": 155,
+        "quote": "| prism_solver.py |",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:1cbec1a181af4fc4a0d275f68c8f515d04ad5e69a18fb5c78984665cba43a383",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "Listed as 待验证 (not verified). Registered as a reference only; no verification claim is made here."
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "figure_set",
+      "label": "figures of report 7808 (empty set)",
+      "in_report_section": "§4 结果图 and platform record field figures",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "platform record figures == [] AND GET reports/7808/{figures,artifacts} probed",
+        "result": "absent"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 2259,
+        "end_char": 2289,
+        "start_line": 103,
+        "end_line": 103,
+        "quote": "本任务为纯单元测试验证，无数值模拟场量，故无云图/曲线生成。",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:a3e4037cda25539e14bce735b221e9a787dde5ee5fc9e23b65ff2bcebe18c513",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "The report declares no figures and the platform serves none: record.figures is an empty list, /tensor/reports/7808/figures -> HTTP 404, /tensor/reports/7808/artifacts -> HTTP 404. Nothing is claimed about figure bytes."
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "embedded_run_log",
+      "label": "pytest run summary block (22 passed, 1 warning in 6.30s)",
+      "in_report_section": "§3 计算结果 (fenced block)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "verbatim substring present and unique in markdown",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1772,
+        "end_char": 1801,
+        "start_line": 81,
+        "end_line": 81,
+        "quote": "22 passed, 1 warning in 6.30s",
+        "unique": true,
+        "end_char_exclusive": false,
+        "quote_sha256": "sha256:25a6ac2e91e11f1a2e759eec1c10defc4359ac435d42175885320c463a64a211",
+        "occurrences_in_source": 1,
+        "char_span_roundtrip_ok": true
+      },
+      "note": "In-report artefact (a pasted terminal line). It is registered as-is: the worker did not re-run the TensorLBM test suite, so the 22-pass figure stays an upstream assertion."
+    }
+  ],
+  "claims": [],
+  "claims_empty_reason": "Contract objective is register_assets=true / classify_report_type=false and notes state 'claims 允许为空数组'; constraint no_forced_claim_generation=true forbids inventing knowledge to fill the field. Extraction is a downstream work package, so an empty claims array is the complete result for wp-7808-01.",
+  "id_integrity": {
+    "ids_checked": 11,
+    "duplicates": [],
+    "pattern_ok": true,
+    "unique": true
+  },
+  "coverage": {
+    "path_token_regex": "[A-Za-z0-9_./-]+\\.(?:py|png|csv|json|md|txt|h5|dat|pdf|log|ipynb)",
+    "distinct_tokens": 9,
+    "tokens": [
+      "d3q27_collide.py",
+      "ddes.py",
+      "des_turbulence.py",
+      "hybrid_solver.py",
+      "prism_solver.py",
+      "rans_wall_bc.py",
+      "src/tensorlbm/ddes.py",
+      "tests/test_ddes_unit.py",
+      "turbulence/des_turbulence.py"
+    ],
+    "token_to_asset_ids": {
+      "d3q27_collide.py": [
+        "A07"
+      ],
+      "ddes.py": [
+        "A02",
+        "A04"
+      ],
+      "des_turbulence.py": [
+        "A05"
+      ],
+      "hybrid_solver.py": [
+        "A08"
+      ],
+      "prism_solver.py": [
+        "A09"
+      ],
+      "rans_wall_bc.py": [
+        "A06"
+      ],
+      "src/tensorlbm/ddes.py": [
+        "A02",
+        "A04"
+      ],
+      "tests/test_ddes_unit.py": [
+        "A03"
+      ],
+      "turbulence/des_turbulence.py": [
+        "A05"
+      ]
+    },
+    "unmapped_tokens": [],
+    "full_coverage": true
+  },
+  "integrity": {
+    "quote_uniqueness": "every asset quote verified verbatim in markdown; duplicates flagged",
+    "quote_occurrences": {
+      "A01": 1,
+      "A02": 1,
+      "A03": 1,
+      "A04": 1,
+      "A05": 1,
+      "A06": 1,
+      "A07": 1,
+      "A08": 1,
+      "A09": 1,
+      "A10": 1,
+      "A11": 1
+    },
+    "quotes_not_found": [],
+    "quotes_not_unique": [],
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "chars_match_contract": true,
+    "valid_json": true
+  },
+  "unresolved": [
+    {
+      "asset_id": "A02",
+      "name": "src/tensorlbm/ddes.py",
+      "reason": "path not present in delivery worktree TensorKnowledge; lives in the TensorLBM repo named in the report header"
+    },
+    {
+      "asset_id": "A03",
+      "name": "tests/test_ddes_unit.py",
+      "reason": "path not present in delivery worktree TensorKnowledge; lives in the TensorLBM repo named in the report header"
+    },
+    {
+      "asset_id": "A04",
+      "name": "ddes.py (G21 orphan module table row)",
+      "reason": "path not present in delivery worktree TensorKnowledge; lives in the TensorLBM repo named in the report header"
+    },
+    {
+      "asset_id": "A05",
+      "name": "des_turbulence.py (G21 orphan module table row)",
+      "reason": "path not present in delivery worktree TensorKnowledge; lives in the TensorLBM repo named in the report header"
+    },
+    {
+      "asset_id": "A06",
+      "name": "rans_wall_bc.py (G21 orphan module table row)",
+      "reason": "path not present in delivery worktree TensorKnowledge; lives in the TensorLBM repo named in the report header"
+    },
+    {
+      "asset_id": "A07",
+      "name": "d3q27_collide.py (G21 orphan module table row)",
+      "reason": "path not present in delivery worktree TensorKnowledge; lives in the TensorLBM repo named in the report header"
+    },
+    {
+      "asset_id": "A08",
+      "name": "hybrid_solver.py (G21 orphan module table row)",
+      "reason": "path not present in delivery worktree TensorKnowledge; lives in the TensorLBM repo named in the report header"
+    },
+    {
+      "asset_id": "A09",
+      "name": "prism_solver.py (G21 orphan module table row)",
+      "reason": "path not present in delivery worktree TensorKnowledge; lives in the TensorLBM repo named in the report header"
+    }
+  ],
+  "observations": [
+    "Markdown is 3389 chars / 5210 bytes, 160 lines; H1 title and §1-§7 all present; hash and char count match the contract exactly.",
+    "The report declares no figures (record.figures == []) and states in §4 that no field plots were produced; figure bytes are therefore not claimed at all.",
+    "Nine of eleven registered assets are code/module references that live in TensorLBM, not in this delivery worktree; they are registered as unresolved references, not as broken upstream artefacts.",
+    "Six public function names (ddes_shielding_function, ddes_length_scale, ddes_eddy_viscosity, sas_source_term, apply_ddes_collision, run_ddes_diagnostics) appear in §1 模块功能; they are code symbols inside the referenced module, not standalone artefacts, so they are recorded here as an observation rather than padded into the asset list.",
+    "Body path-token coverage is complete: every distinct file-like token in the markdown maps to at least one registered asset (see counts/coverage); no attachment, URL or figure reference was left unregistered.",
+    "The pytest summary line '22 passed, 1 warning in 6.30s' is registered as an embedded run-log artefact; it was not re-executed by this work package."
+  ],
+  "limitations": [
+    "Registration only: no claim extraction, no report-type classification, no verified marks (verification is computed by the platform gate).",
+    "source_hash scope = UTF-8 bytes of the exact markdown string stored for report 7808; any edit (even whitespace) invalidates it.",
+    "Reference resolution is limited to the TensorKnowledge delivery worktree; a missing path here means 'not resolvable in this repo', never 'absent upstream'.",
+    "The report's own counts (370 lines of ddes.py, 22 passing tests) are upstream assertions and were not re-measured.",
+    "A byte-exact copy of the source markdown is committed under docs/kf/wp-7808-01/ (hash-pinned) only to make the acceptance checks re-runnable offline: artifacts/ is gitignored and is dropped by the mission push gate, so keeping the fixture there would silently break the tests in the pushed repo."
+  ]
+}
