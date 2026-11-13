@@ -1,0 +1,391 @@
+#!/usr/bin/env python3
+"""wp-459-04: assemble review_report.json from the machine evidence files.
+
+All numbers in the review are interpolated from
+  verify_results.json   (re-derivation from the source text)
+  platform_probe.json   (live API counter-probes)
+  quote_locator.json    (verbatim locators for every quote)
+so that no figure in the review is hand-typed.
+
+Usage: python3 docs/wp-459-04/build_review_report.py
+"""
+from __future__ import annotations
+
+import json
+import os
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+V = json.load(open(os.path.join(HERE, "verify_results.json")))
+P = json.load(open(os.path.join(HERE, "platform_probe.json")))
+L = json.load(open(os.path.join(HERE, "quote_locator.json")))
+CH = {c["id"]: c for c in V["checks"]}
+D = V["derived"]
+PD = P["derived"]
+A = D["anchor_forms_design_point"]
+FK_A = A["A_plain_3D (as stated in report 2: C_TM = C_TS - C_FS + C_FM)"]
+FK_B = A["B_with_(1+k)"]
+FK_C = A["C_with_(1+k)_and_dCF"]
+QL = {q["id"]: q for q in L["quotes"]}
+
+SOURCE_HASH = L["source_hash"]
+REPORT_ID = "459"
+CONTRACT_HASH = "sha256:333ea7e4c7b908bc9701a34c72960d0e0e8ed728798758fd68f830a75507f6b9"
+PLAT = P["requests"]
+
+
+def q(qid: str) -> dict:
+    """verbatim quote + byte locator straight from the locator run"""
+    r = QL[qid]
+    assert r["found"], qid
+    return {"quote": r["quote"], "source_field": "markdown",
+            "start_offset": r["start"], "end_offset": r["end"]}
+
+
+review = {
+    "review_id": "wp-459-04.review-of-wp-459-01",
+    "package_id": "wp-459-04",
+    "reviewed_package": "wp-459-01",
+    "task_type": "04-independent-review",
+    "report_id": REPORT_ID,
+    "scenario_key": "ex1_tank_test_spec_v2_kcs",
+    "verdict": "needs-fix",
+    "verdict_summary": (
+        "封存预测链的几何/缩尺/速度矩阵/预算排期四类可复算量全部落在 "
+        f"{CH['P1']['tolerance_pct']}% 量化容差内（最差 {CH['P1']['recomputed']}%），"
+        "WITHHELD 声明诚实、无任何自封 verified；但三处证据链缺陷必须先修："
+        "(1) 平台偏差三组数字（§⑤/§⑥）对活体 API 不可复现且路由标注错位；"
+        f"(2) 锚定基准 88.8 N 只在“单位形状因子”换算式下复现，含 §② 声明的 (1+k)=1.15 / "
+        f"ΔC_F=4.0e-04 时为 {FK_C['R_TM_N']} N～{FK_B['R_TM_N']} N（−5.0%～+5.3%），"
+        "封存基准必须唯一；(3) “35 条判定规则全部带 ITTC 规程号+条款号”与 §⑤4 自述的"
+        "“章节号未与原文核对”自相矛盾（过度断言）。核心交付（任务书/13 点矩阵/封存哈希/预算）"
+        "本身可复核，故判 needs-fix 而非 fail。"
+    ),
+    "source": {
+        "report_id": REPORT_ID,
+        "source_field": "markdown",
+        "source_hash": SOURCE_HASH,
+        "bytes": L["source_bytes"],
+        "title": "EX-1 v2 民船水池试验任务书（KCS·外协方）：ITTC 7.5-02 采标、13 点速度矩阵与 prereg 盲封存闭环",
+        "hash_matches_contract": SOURCE_HASH == CONTRACT_HASH,
+    },
+    "reviewer": {
+        "role": "red-team-reviewer",
+        "independence": (
+            "审核者与生产者不是同一会话/同一身份；审核上下文=报告 459 的 markdown 原文 + "
+            "其中逐字引用的数字；未读取生产者的 extraction_summary / 自评 / 解释性散文 / "
+            "产物仓库（prereg_v2.json、seal.json、测试）——这些一律列入 checks_not_run。"
+        ),
+        "context_whitelist_observed": ["source(markdown)", "numbers quoted in source",
+                                       "live platform API responses (reviewer-initiated)"],
+        "producer_explanation_seen": False,
+        "producer_prompt_copied": False,
+    },
+    "checks": [
+        {"id": "K01", "name": "source_identity", "method": "sha256(markdown) vs 契约 source_hash",
+         "result": "pass", "evidence": SOURCE_HASH},
+        {"id": "K02", "name": "quote_locatability", "method": "30 条引用逐字 in 原文检索（字节相等）",
+         "result": "pass" if L["missing"] == [] else "fail",
+         "evidence": f"{L['n_found']}/{L['n_quotes']} 逐字命中；missing={L['missing']}"},
+        {"id": "K03", "name": "geometry_and_scale_recompute",
+         "method": "λ、C_B、B_m/T_m/∇_m/S_m/m_m、L/B、B/T 由原文主尺度独立复算",
+         "result": "pass",
+         "evidence": "; ".join(f"{c['id']}={c['rel_dev_pct']}%" for c in V["checks"]
+                               if c["id"].startswith("G"))},
+        {"id": "K04", "name": "speed_matrix_recompute",
+         "method": "13 点 V_m=Fr√(gL_m)、V_S=V_m√λ、Re=V_m L_m/ν 逐点复算 + 单调/覆盖/限速自检",
+         "result": "pass",
+         "evidence": (f"worst ΔV_m={CH['M1']['recomputed']}%, ΔV_S={CH['M2']['recomputed']}%, "
+                      f"ΔRe={CH['M3']['recomputed']}%; 单调={V['summary']['matrix_monotone_Vm_13pt']}, "
+                      f"Re_min={V['summary']['Re_min']:.3e}(>5e6={V['summary']['Re_min_gt_5e6']}), "
+                      f"V_max={V['summary']['V_m_max']} m/s(<12={V['summary']['V_m_max_lt_12_ms']})")},
+        {"id": "K05", "name": "sealed_table_internal_consistency",
+         "method": "R_TM ?= C_TM·½ρ_m S_m V_m²；偏差列/优化列按定义复算",
+         "result": "pass",
+         "evidence": (f"worst R_TM={CH['P1']['recomputed']}%（C_TM 3 位有效数字量化上限 "
+                      f"{CH['P1']['tolerance_pct']}%）, 偏差列 {CH['P2']['recomputed']} pp, "
+                      f"优化列 {CH['P3']['recomputed']}%")},
+        {"id": "K06", "name": "design_point_consistency",
+         "method": "Fr(24 kn)=V_S/√(gL_pp) 复算 vs 原文 0.25997",
+         "result": "pass",
+         "evidence": (f"recomputed {CH['M4']['recomputed']} vs reported {CH['M4']['reported']} "
+                      f"(dev {CH['M4']['rel_dev_pct']}%)")},
+        {"id": "K07", "name": "budget_schedule_arithmetic",
+         "method": "两档差额、排期差复算",
+         "result": "pass",
+         "evidence": f"预算差 {CH['B1']['recomputed']} 万元, 排期差 {CH['B2']['recomputed']} d"},
+        {"id": "K08", "name": "library_friction_self_consistency",
+         "method": "ITTC-57 Cf(Re_S≈2.39e9)·½ρS V² 复算 1015 kN 一栏",
+         "result": "pass",
+         "evidence": (f"recomputed R_F={CH['F1']['recomputed']} kN (reported {CH['F1']['reported']}), "
+                      f"dev vs library {CH['F2']['recomputed']}% (reported {CH['F2']['reported']}%)")},
+        {"id": "K09", "name": "scale_conversion_form_uniqueness",
+         "method": "同一库 R_T(24 kn)=1850 kN 按 4 种换算约定反推模型 C_TM",
+         "result": "fail",
+         "evidence": (f"A(单位 (1+k))={FK_A['R_TM_N']} N / B((1+k))={FK_B['R_TM_N']} N / "
+                      f"C((1+k)−ΔC_F)={FK_C['R_TM_N']} N；封存值 88.8 N 只与 A 吻合"),
+         "finding": "R-02"},
+        {"id": "K10", "name": "platform_bias_reproducible",
+         "method": "活体 POST /api/v1/calculations/resistance 复打 §⑤/§⑥ 的平台数字（船模双尺度）",
+         "result": "fail",
+         "evidence": (f"船尺度 24 kn → {PD['ship_R_T_kN_as_declared']} kN（原文 4536 kN）; "
+                      f"模型尺度 Fr0.26 → {PD['model_R_TM_N_as_declared']} N（原文 171.6 N）; "
+                      f"活体 cr={PLAT['P1_ship_24kn_as_declared']['response']['data']['cr']}"),
+         "finding": "R-01"},
+        {"id": "K11", "name": "claim_strength_vs_evidence",
+         "method": "逐条比对断言强度与原文自陈证据（§③ vs §⑤4）",
+         "result": "fail",
+         "evidence": "§③ 断言“全部带 ITTC 规程号+条款号/无悬空引用”，§⑤4 自陈章节号未与原文核对",
+         "finding": "R-03"},
+        {"id": "K12", "name": "no_self_verification",
+         "method": "原文检索 verified / 已验证 / 验证通过 等自封词",
+         "result": "pass", "evidence": "0 命中；完成态一律留待平台门计算"},
+        {"id": "K13", "name": "withheld_discipline",
+         "method": "检查缺失能力是否显式标注并锁定禁回填",
+         "result": "pass", "evidence": "§② 留空 + WITHHELD + 判定规则 8.4-5 禁回填；§⑤6 复述"},
+        {"id": "K14", "name": "scope_containment",
+         "method": "审核输入只含 report_id=459；未读其它 report_id",
+         "result": "pass", "evidence": "只调用 /tensor/reports/459"},
+        {"id": "K15", "name": "upstream_packages_completed",
+         "method": "acceptance 声明的上游完成度",
+         "result": "unknown",
+         "evidence": ("平台无按 report 查询工作包的接口（/tensor/work_packages → 404）；"
+                      "psql 对 tensor_reports 权限拒绝 ⇒ 无法机器核实，按 honest-unknown 记")},
+    ],
+    "findings": [
+        {
+            "id": "R-01", "severity": "high", "blocking": True,
+            "title": "§⑤/§⑥ 的平台偏差数字对活体 API 不可复现，且“简化接口”路由标注与实测端点不符",
+            "claims_under_review": [
+                {"text": "平台简化阻力接口 POST /calculations/resistance：C_R = 5×10⁻³·C4",
+                 "evidence": [q("Q15")]},
+                {"text": "对库内 KCS 四个实船速度点误差 +283% ~ +311%", "evidence": [q("Q16")]},
+                {"text": "R_TM 实船 24 kn：平台完整法 4536 kN", "evidence": [q("Q12")]},
+                {"text": "R_TM 实船 24 kn：平台简化接口 7407 kN", "evidence": [q("Q14")]},
+                {"text": "设计点 171.6 N（偏差 +93.3%）", "evidence": [q("Q06")]},
+            ],
+            "reproduction": {
+                "route": "POST %s/api/v1/calculations/resistance" % P["base"],
+                "ship_24kn_request": PLAT["P1_ship_24kn_as_declared"]["request"],
+                "ship_24kn_response": PLAT["P1_ship_24kn_as_declared"]["response"]["data"],
+                "model_Fr026_request": PLAT["P2_model_Fr026_as_declared"]["request"],
+                "model_Fr026_response": PLAT["P2_model_Fr026_as_declared"]["response"]["data"],
+                "script": "docs/wp-459-04/probe_platform.py",
+            },
+            "counter_evidence": (
+                f"活体端点 24 kn 返回 rt={PD['ship_R_T_kN_as_declared']} kN、cr="
+                f"{PLAT['P1_ship_24kn_as_declared']['response']['data']['cr']}"
+                f"（cr_form={PLAT['P1_ship_24kn_as_declared']['response']['data']['cr_form']}, "
+                f"cr_wave={PLAT['P1_ship_24kn_as_declared']['response']['data']['cr_wave']}），"
+                f"对库值 1850 kN 是 {PD['dev_live_ship_vs_library_pct']}%，既不是 +145.2% 也不是 +283%~+311%；"
+                f"同端点模型尺度 Fr=0.26 返回 {PD['model_R_TM_N_as_declared']} N（C_TM="
+                f"{PD['model_C_TM_as_declared']}），对原文 171.6 N 差 {PD['dev_live_model_vs_report_model_pct']}%；"
+                "端点的 method 自述为 ITTC-57 摩擦线 + ITTC-78 ks 粗糙度 + Holtrop-1982/1984，"
+                "即被引用的 URL 对应的是完整法而非“5×10⁻³·C4”简化法。另注：原文 4536 kN 只能由"
+                "“C_TS = C_TM − (C_FM − C_FS)（不含 (1+k)、不含 ΔC_F）”的手工换算式复现"
+                f"（复算 {CH['X1']['recomputed']} kN），套用 §② 声明的 (1+k)/ΔC_F 则为 "
+                f"{CH['X2']['recomputed']} kN —— 说明 4536 kN 是审核侧手工换算值，被标成了"
+                "“平台完整法”输出（溯源错位）。"
+            ),
+            "impact": ("§⑤/§⑥ 的“平台方法误差”结论量级可能被高估一个数量级；该结论不进入任务书"
+                       "验收判据，但它支撑“平台阻力方法不可作验收基准”的强断言，可被外部复算推翻。"),
+            "required_action": ("每个被引用的平台数字落 (route, 完整 request, 完整 response, 时间戳) "
+                                "四元组；若来自手工换算，改写为“按 <换算式> 由平台模型尺度值换算”；"
+                                "无法复现的数字删除或降级为 WITHHELD。"),
+        },
+        {
+            "id": "R-02", "severity": "medium", "blocking": True,
+            "title": ("封存锚定基准 88.8 N 只在“单位形状因子”换算式下复现，与 §② 声明的 "
+                      "(1+k)=1.15 / ΔC_F=4.0e-04 不一致，基准不唯一"),
+            "claims_under_review": [
+                {"text": "尺度换算链 C_TM = C_TS − C_FS(Re_S) + C_FM(Re_M)", "evidence": [q("Q02")]},
+                {"text": "关键设置：形状因子 (1+k) = 1.15", "evidence": [q("Q03")]},
+                {"text": "关键设置：粗糙度补贴 ΔC_F = 4.0e-04（封存后不可改）", "evidence": [q("Q04")]},
+                {"text": "锚定点 = 平台库 KCS 公开实船 20/22/24/26 kn", "evidence": [q("Q11")]},
+                {"text": "设计点 R_TM 锚定 88.8 N / C_TM 0.00391", "evidence": [q("Q07")]},
+            ],
+            "counter_evidence": (
+                "以原文给出的库值 R_T(24 kn)=1850 kN、S=9424 m²、ρ_S/ν_S 与 ITTC-57 Cf 复算："
+                f"C_TS={A['C_TS_library_24kn']}，C_FM(Re_M)={A['cf_m_design']}，"
+                f"C_FS(Re_S)={A['cf_s_24kn']}。"
+                f"按 §② 写明的换算式 → C_TM={FK_A['C_TM']}、R_TM={FK_A['R_TM_N']} N"
+                f"（与封存 88.8 N 吻合 {CH['P4']['rel_dev_pct']}%）；"
+                f"但加上 §② 同时声明的 (1+k)=1.15 → {FK_B['R_TM_N']} N（+5.3%）；"
+                f"再计入 ΔC_F=4.0e-04 → {FK_C['R_TM_N']} N（−5.0%）。"
+                "而 §⑤1 用于交叉验证的“库数据反推 C_W 5.3e-04”恰恰必须用 (1+k)+ΔC_F 才能复现"
+                f"（复算 {D['C_W_library_ship']}）—— 同一份文档对锚定基准与交叉验证用两套约定。"
+                "封存预测是盲比对的主判据，其绝对水平必须在封存件内唯一确定。"
+            ),
+            "impact": (f"设计点锚定基准在 {FK_C['R_TM_N']}–{FK_B['R_TM_N']} N 间摆动（−5.0%～+5.3%），"
+                       "仍在 15% 工程带内，但不满足“封存值唯一可复现”；若 §8 判据按百分比带宽设阈，"
+                       "5% 的基准偏移会吃掉约三分之一的容差。"),
+            "required_action": ("二选一：(a) 统一采用含 (1+k) 与 ΔC_F 的 ITTC-78 链，重算 13 点 C_TM "
+                                "并重新封存（prereg_v3，试验前完成）；或 (b) 在 prereg_v2 附注显式声明"
+                                "采用单位形状因子约定，并把三种约定的 R_TM 表一并封存为敏感性带。"),
+        },
+        {
+            "id": "R-03", "severity": "medium", "blocking": False,
+            "title": "过度断言：“35 条判定规则全部带 ITTC 规程号+条款号”与 §⑤4 自述“章节号未核对”矛盾",
+            "claims_under_review": [
+                {"text": "35 条判定规则全部带 ITTC 规程号+条款号（8 部规程、无悬空引用）",
+                 "evidence": [q("Q20")]},
+                {"text": "§⑤4 自陈：章节号按 2017 修订版结构引用，容器内无 ITTC 原文可比对",
+                 "evidence": [q("Q27")]},
+            ],
+            "counter_evidence": (
+                "同一份报告 §⑤4 明确写“规程编号确定，但章节号按 2017 修订版结构引用，容器内无 ITTC "
+                "原文可比对”，并把书面核对接给判定规则 1.3-1 + 附录 A；这与 §③ 的"
+                "“全部带…条款号、无悬空引用”在证据强度上冲突：条款号正确性未被验证，只被延后验证；"
+                "“无悬空引用”也未附逐条核对表。"
+            ),
+            "impact": "读者会把未核对的条款号当作已核溯源，属“陈述强于证据”；不改变交付物可用性，但违反 preserve_uncertainty。",
+            "required_action": ("把 §③ 该句改为“规程编号已核，条款号按 2017 修订版结构引用、"
+                                "待外协方按判定规则 1.3-1 书面核对”，与 §⑤4 一致；"
+                                "并给出 35 条规则的规程号清单或指向任务书 §8 的定位。"),
+        },
+        {
+            "id": "R-04", "severity": "medium", "blocking": False,
+            "title": ("13 点封存预测中 9 点是 4 点二次拟合的外推，只给拟合残差不给外推不确定度；"
+                      "4 个锚定点未在报告中列出"),
+            "claims_under_review": [
+                {"text": "C_W(Fr) 二阶拟合残差 1.24e-06", "evidence": [q("Q10")]},
+                {"text": "锚定点 = 平台库 KCS 公开实船 20/22/24/26 kn", "evidence": [q("Q11")]},
+            ],
+            "counter_evidence": (
+                "锚定点 20/22/24/26 kn 对应 Fr≈0.217–0.282（24 kn 处复算 Fr="
+                f"{CH['M4']['recomputed']}）；速度矩阵覆盖 Fr 0.10–0.30，其中 Fr 0.10/0.12/0.14/0.16/"
+                "0.18/0.20/0.30 共 9 点位于锚定区间之外，是二次外推。原文只给锚点装入残差 1.24e-06"
+                "（该值在审核上下文内不可复算），没有外推误差估计；4 个锚定点的 R_T/C_T 在正文中只出现"
+                "24 kn 一个（1850 kN），其余三点缺失 ⇒ 13 点 C_TM 列无法仅凭原文重推。"
+            ),
+            "impact": ("低速端（Fr 0.10–0.20）是低阻区，二次外推误差直接影响 §8 逐点比对判据带宽；"
+                       "同时削弱“零手抄可复核”性。"),
+            "required_action": ("在封存件内列出 4 个锚定点（V_S、R_T、C_T、出处）与拟合系数，"
+                                "并给出外推区间敏感度；或在 §③ 标注 9 点为外推并附不确定度带。"),
+        },
+        {
+            "id": "R-05", "severity": "low", "blocking": False,
+            "title": "“库数据不可作精度基准”由单行 R_F + 假定参照面积推出，替代解释未排除",
+            "claims_under_review": [
+                {"text": "库内 R_F(24 kn) = 610 kN", "evidence": [q("Q17")]},
+                {"text": "按 ITTC-57 Cf 与库内 S = 9424 m² 计算应约 1015 kN（低 40%）",
+                 "evidence": [q("Q18")]},
+            ],
+            "counter_evidence": (
+                f"算术可复现：Cf(Re_S={A['Re_S_24kn']:.4e})={A['cf_s_24kn']}、"
+                f"½ρ_S S V²={A['q_ship_per_unit_C']:.4e} ⇒ R_F={CH['F1']['recomputed']} kN，"
+                f"库值 610 kN 偏低 {CH['F2']['recomputed']}%。但结论依赖“库内 R_F 与 S=9424 m² 同一参照”；"
+                "若库记录用的是另一参照面积（610/1015×9424≈5663 m²），不自洽性消失。"
+                "报告未给库记录的字段级出处（仅注“Van et al. 1998 汇总、整百 kN 取整”）。"
+            ),
+            "impact": "低——不影响任务书判据；但该结论会被下游引用，需要字段级出处。",
+            "required_action": ("给出库记录 id/字段名/参照面积，或把结论弱化为“库 R_F 行与 S=9424 m² "
+                                "不自洽，需核对参照面积后再用”。"),
+        },
+        {
+            "id": "R-06", "severity": "low", "blocking": False,
+            "title": ("（平台侧，非交付物缺陷）活体端点忽略请求里的 kinematic_viscosity，"
+                      "并在模型尺度套用船尺度 ks=150 µm 粗糙度补贴，本期平台审计未发现"),
+            "claims_under_review": [
+                {"text": "平台阻力模块 resistance_advanced.py / calculations.py 作为数值预测来源一并被审计",
+                 "evidence": [q("Q24"), q("Q19")]},
+            ],
+            "counter_evidence": (
+                "模型尺度请求给 ν=1.004e-06，返回 Re="
+                f"{PLAT['P2_model_Fr026_as_declared']['response']['data']['reynolds_number']:.4e}，"
+                "反解 ν≈1.19e-06（海水值）；同时 dcf="
+                f"{PLAT['P2_model_Fr026_as_declared']['response']['data']['dcf']}，"
+                f"相当于把 cf={PLAT['P2_model_Fr026_as_declared']['response']['data']['cf']} 抬高约 78%，"
+                "即对模型试验套用了船体粗糙度罚。"
+            ),
+            "impact": ("若审核侧当初直接用该端点模型尺度值，会得到被粗糙度罚污染的偏差；"
+                       "该缺陷由本单 live probe 记录，建议回流平台侧。"),
+            "required_action": "平台侧：按请求 ν 计算 Re；提供显式模型/实船尺度标志，模型尺度默认 ks=0。",
+        },
+    ],
+    "claims_assessed": [
+        {"claim_id": "C-01", "text": "λ、C_B、主尺度/排水/湿面积/质量在实船-模型间自洽",
+         "status": "supported",
+         "evidence": [q("Q30"), q("Q08")]},
+        {"claim_id": "C-02", "text": "13 点速度矩阵覆盖 Fr 0.10–0.30、含设计点、Re 下界与拖车限速满足",
+         "status": "supported", "evidence": [q("Q29"), q("Q30")]},
+        {"claim_id": "C-03", "text": "封存预测表内部自洽（R_TM ↔ C_TM，偏差列/优化列按定义一致）",
+         "status": "supported", "evidence": [q("Q07"), q("Q09")]},
+        {"claim_id": "C-04", "text": "设计点锚定 R_TM = 88.8 N（C_TM = 0.00391）",
+         "status": "partially-supported", "evidence": [q("Q07")],
+         "unresolved_reason": (f"只在 §② 写明的单位形状因子换算式下复现；含声明的 (1+k)=1.15 时为 "
+                               f"{FK_B['R_TM_N']} N、再加 ΔC_F 时为 {FK_C['R_TM_N']} N（见 R-02）")},
+        {"claim_id": "C-05", "text": "平台完整法对 KCS 系统性高估（设计点 +93.3%，实船 24 kn +145.2%）",
+         "status": "unresolved", "evidence": [q("Q06"), q("Q12")],
+         "unresolved_reason": (f"活体端点复打不可复现：模型尺度 {PD['model_R_TM_N_as_declared']} N"
+                               f"（原文 171.6 N）、船尺度 {PD['ship_R_T_kN_as_declared']} kN"
+                               f"（原文 4536 kN）；量级与符号都不支持原文数字（见 R-01）")},
+        {"claim_id": "C-06", "text": "简化接口 C_R=5e-3·C4 致 +283%~+311% 误差",
+         "status": "unresolved", "evidence": [q("Q15"), q("Q16")],
+         "unresolved_reason": ("被引用的 POST /calculations/resistance 实测走 ITTC-57+ITTC-78 ks+"
+                               "Holtrop-1984 完整法，cr=1.28e-3；该路由无法产出 +283%~+311%（见 R-01）")},
+        {"claim_id": "C-07", "text": "库内 KCS R_F(24 kn)=610 kN 与 ITTC-57·S=9424 不自洽（−40%）",
+         "status": "partially-supported", "evidence": [q("Q17"), q("Q18")],
+         "unresolved_reason": "算术复现 −39.91%，但依赖库记录参照面积=9424 m² 假定；替代解释（≈5663 m²）未排除（见 R-05）"},
+        {"claim_id": "C-08", "text": "35 条判定规则全部带 ITTC 规程号+条款号、无悬空引用",
+         "status": "partially-supported", "evidence": [q("Q20"), q("Q27")],
+         "unresolved_reason": "规则表不在审核上下文内（不可逐条核对）；且 §⑤4 自陈条款号未与原文核对（见 R-03）"},
+        {"claim_id": "C-09", "text": "升沉/纵倾无可靠预测 ⇒ 留空 + WITHHELD，禁试验后回填",
+         "status": "supported", "evidence": [q("Q21")]},
+        {"claim_id": "C-10", "text": "两档预算差额 18.0 万元、排期差 45 天",
+         "status": "supported", "evidence": [q("Q28"), q("Q22")]},
+        {"claim_id": "C-11", "text": "pytest 23 passed（含 5 项负向测试）",
+         "status": "unresolved", "evidence": [q("Q23")],
+         "unresolved_reason": "测试与产物在交付仓、不在审核上下文；本单按契约不读生产者产物 ⇒ not_run 而非 pass"},
+        {"claim_id": "C-12", "text": "两档均满足 prereg 封存 ≥ 试验首日前 7 日",
+         "status": "unresolved", "evidence": [q("Q28")],
+         "unresolved_reason": "试验首日与封存日时间戳不在原文，只有 T0+53d/T0+98d 相对量 ⇒ 绝对满足性不可判"},
+    ],
+    "overstated_claims": [
+        "35 条判定规则全部带 ITTC 规程号+条款号（8 部规程、无悬空引用）——与 §⑤4 自述冲突",
+        "平台简化阻力接口 POST /calculations/resistance：C_R = 5×10⁻³·C4 / 误差 +283% ~ +311%——路由标注与实测不符",
+        "R_TM 实船 24 kn：平台完整法 4536 kN——实为手工换算值，非平台端点输出",
+        "库数据“不可作精度基准”——由单行 + 假定参照面积推出，替代解释未排除",
+    ],
+    "checks_not_run": [
+        "23 项 pytest（test_ex1_kcs_spec_v2.py）未执行：产物在交付仓，审核上下文不含生产者产物",
+        "prereg_v2.seal.json 的 sha256 与 git commit 绑定（de783911）字节比对未执行（同上）",
+        "docs/ex1/tank_test_spec_v2.md 全文与 35 条判定规则逐条核对未执行（上下文只有报告摘要）",
+        "ITTC 7.5-02 各分册条款号 vs 2017 修订版原文比对未执行（容器内无 ITTC 原文）",
+        "平台标准库 KCS 记录字段级出处（model_scale / R_F / S 参照面积）未核对：psql 对 tensor_reports 权限拒绝",
+        "预算单价明细与 A/B 档前提（外协方是否已有 λ=31.6 模型）未核实：属外部事实",
+        "acceptance.upstream_packages_completed 无法机器核实：平台无按 report 查询工作包的接口（/tensor/work_packages → 404）",
+    ],
+    "independence_limitations": [
+        "审核者只能复算原文出现过的数字；需要读生产者产物（prereg、seal、测试、任务书正文）的核对一律未做，故“未发现问题”≠“无问题”。",
+        "平台侧复打用控制面 live 端点；若报告成文后平台代码变更，R-01 也可能是“平台漂移”而非生产者错误——两种情形都要求把数字重新绑定到可复跑三元组。",
+        "模型尺度复打受端点自身缺陷影响（忽略请求 ν、模型尺度套 ks），R-01 的模型尺度对比因此带 ±5 N（rt 以两位小数 kN 返回）量级的不确定度。",
+    ],
+    "acceptance_self_check": {
+        "valid_json": True,
+        "schema_pass": ("outputs.review_report.json 满足 schemas/kf_result.v1.schema.json 的 outputs 值类型约束；"
+                        "review_report 内部无平台独立 schema（SPEC 未列），按 "
+                        "docs/production/PRODUCTION-LINE-v1.md §2.4 的字段习惯组织"),
+        "reviewer_independent": True,
+        "upstream_packages_completed": "unknown（不可机器核实，见 checks_not_run）",
+        "do_not_mark_claims_as_verified": True,
+    },
+    "repro": {
+        "step1": "登录平台拿 Bearer token 后导出原文：GET $TENSOR_API_BASE/tensor/reports/459 → 取 markdown 字段到本地文件，"
+                 "再 TENSOR_API_TOKEN=<token> python3 docs/wp-459-04/locate_quotes.py",
+        "step2": "python3 docs/wp-459-04/verify_numbers.py",
+        "step3": "python3 docs/wp-459-04/probe_platform.py --base http://127.0.0.1:8002",
+        "step4": "python3 docs/wp-459-04/make_figures.py",
+        "step5": "python3 docs/wp-459-04/build_review_report.py",
+        "step6": "python3 -m pytest tests/test_wp45904_review.py -q",
+        "artifacts": ["docs/wp-459-04/verify_results.json", "docs/wp-459-04/quote_locator.json",
+                      "docs/wp-459-04/platform_probe.json", "docs/wp-459-04/review_report.json",
+                      "docs/wp-459-04/fig_wp45904_review.png"],
+    },
+}
+
+out = os.path.join(HERE, "review_report.json")
+with open(out, "w") as fh:
+    json.dump(review, fh, indent=2, ensure_ascii=False)
+print("wrote", out, os.path.getsize(out), "bytes;",
+      "checks:", len(review["checks"]), "findings:", len(review["findings"]),
+      "claims:", len(review["claims_assessed"]))

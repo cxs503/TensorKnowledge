@@ -1,0 +1,399 @@
+{
+  "checks": [
+    {
+      "id": "G1",
+      "claim": "lambda = L_pp/L_m (recomputed vs quoted)",
+      "reported": 31.5995,
+      "recomputed": 31.5995,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.01,
+      "pass": true,
+      "unit": "-",
+      "note": ""
+    },
+    {
+      "id": "G2",
+      "claim": "C_B = grad/(L*B*T) ship",
+      "reported": 0.6505,
+      "recomputed": 0.6505,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.1,
+      "pass": true,
+      "unit": "-",
+      "note": ""
+    },
+    {
+      "id": "G3",
+      "claim": "B_m = B/lambda",
+      "reported": 1.019,
+      "recomputed": 1.019,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.01,
+      "pass": true,
+      "unit": "m",
+      "note": ""
+    },
+    {
+      "id": "G4",
+      "claim": "T_m = T/lambda",
+      "reported": 0.3418,
+      "recomputed": 0.3418,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.01,
+      "pass": true,
+      "unit": "m",
+      "note": ""
+    },
+    {
+      "id": "G5",
+      "claim": "grad_m = grad/lambda^3",
+      "reported": 1.6489,
+      "recomputed": 1.6489,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.01,
+      "pass": true,
+      "unit": "m3",
+      "note": ""
+    },
+    {
+      "id": "G6",
+      "claim": "S_m = S/lambda^2",
+      "reported": 9.4376,
+      "recomputed": 9.4376,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.01,
+      "pass": true,
+      "unit": "m2",
+      "note": ""
+    },
+    {
+      "id": "G7",
+      "claim": "m_m = rho_m*grad_m",
+      "reported": 1645.9,
+      "recomputed": 1645.9,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.05,
+      "pass": true,
+      "unit": "kg",
+      "note": ""
+    },
+    {
+      "id": "G8",
+      "claim": "L/B model",
+      "reported": 7.143,
+      "recomputed": 7.1429,
+      "rel_dev_pct": 0.0014,
+      "tolerance_pct": 0.01,
+      "pass": true,
+      "unit": "-",
+      "note": ""
+    },
+    {
+      "id": "G9",
+      "claim": "B/T model",
+      "reported": 2.9815,
+      "recomputed": 2.9815,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.01,
+      "pass": true,
+      "unit": "-",
+      "note": ""
+    },
+    {
+      "id": "M1",
+      "claim": "worst |dV_m| over 13 points (V_m = Fr sqrt(g L_m)) [%]",
+      "reported": 0.05,
+      "recomputed": 0.0193,
+      "rel_dev_pct": null,
+      "tolerance_pct": 0.05,
+      "pass": true,
+      "unit": "%",
+      "note": "4-decimal rounding of V_m alone gives <=0.012%; report quotes residual 4.76e-05 m/s",
+      "mode": "bound"
+    },
+    {
+      "id": "M2",
+      "claim": "worst |dV_S| (V_S = V_m sqrt(lambda)) [%]",
+      "reported": 0.3,
+      "recomputed": 0.05188,
+      "rel_dev_pct": null,
+      "tolerance_pct": 0.3,
+      "pass": true,
+      "unit": "%",
+      "note": "2-decimal rounding of knot column gives <=0.05%",
+      "mode": "bound"
+    },
+    {
+      "id": "M3",
+      "claim": "worst |dRe_M| (Re = V_m L_m/nu_m) [%]",
+      "reported": 1.0,
+      "recomputed": 0.0582,
+      "rel_dev_pct": null,
+      "tolerance_pct": 1.0,
+      "pass": true,
+      "unit": "%",
+      "note": "4-sig-fig rounding of Re column gives <=0.05%",
+      "mode": "bound"
+    },
+    {
+      "id": "M4",
+      "claim": "Fr at 24 kn full scale",
+      "reported": 0.25997,
+      "recomputed": 0.25993,
+      "rel_dev_pct": 0.0154,
+      "tolerance_pct": 0.05,
+      "pass": true,
+      "unit": "-",
+      "note": ""
+    },
+    {
+      "id": "P1",
+      "claim": "worst |R_TM - C_TM*0.5*rho_m*S_m*V_m^2| over 13 points [%]",
+      "reported": 0.5,
+      "recomputed": 0.38129,
+      "rel_dev_pct": null,
+      "tolerance_pct": 0.5,
+      "pass": true,
+      "unit": "%",
+      "note": "C_TM given to 3 s.f. -> <=0.5% quantisation",
+      "mode": "bound"
+    },
+    {
+      "id": "P2",
+      "claim": "worst |dev - (R_platform/R_anchor-1)| over 13 points [pp]",
+      "reported": 0.6,
+      "recomputed": 0.50746,
+      "rel_dev_pct": null,
+      "tolerance_pct": 0.6,
+      "pass": true,
+      "unit": "pp",
+      "note": "0.1 N rounding of R_TM moves the ratio by <=0.4 pp",
+      "mode": "bound"
+    },
+    {
+      "id": "P3",
+      "claim": "worst |R_opt - 0.97*R_anchor| (declared 3% saving) [%]",
+      "reported": 0.5,
+      "recomputed": 0.46214,
+      "rel_dev_pct": null,
+      "tolerance_pct": 0.5,
+      "pass": true,
+      "unit": "%",
+      "note": "0.1 N rounding",
+      "mode": "bound"
+    },
+    {
+      "id": "P4",
+      "claim": "sealed C_TM(0.26)=0.00391 vs form A (plain 3-D)",
+      "reported": 0.00391,
+      "recomputed": 0.003904,
+      "rel_dev_pct": 0.1537,
+      "tolerance_pct": 0.5,
+      "pass": true,
+      "unit": "-",
+      "note": "PASS => the sealed anchor is reproducible only with the unit-form-factor form"
+    },
+    {
+      "id": "X1",
+      "claim": "platform ship 24 kn = 4536 kN reproducible as C_TS = C_TM-(C_FM-C_FS)",
+      "reported": 4536.0,
+      "recomputed": 4536.8,
+      "rel_dev_pct": -0.0176,
+      "tolerance_pct": 1.0,
+      "pass": true,
+      "unit": "kN",
+      "note": "no (1+k), no dC_F"
+    },
+    {
+      "id": "X2",
+      "claim": "same number with declared (1+k)=1.15 & dC_F=4e-4",
+      "reported": 4536.0,
+      "recomputed": 6450.3,
+      "rel_dev_pct": -29.6777,
+      "tolerance_pct": 1.0,
+      "pass": false,
+      "unit": "kN",
+      "note": "would change the quoted +145.2%"
+    },
+    {
+      "id": "X3",
+      "claim": "platform/6 dev vs library: +145.2%",
+      "reported": 145.2,
+      "recomputed": 145.19,
+      "rel_dev_pct": 0.0069,
+      "tolerance_pct": 0.1,
+      "pass": true,
+      "unit": "%",
+      "note": ""
+    },
+    {
+      "id": "X4",
+      "claim": "simplified/6 dev vs library: +300.4%",
+      "reported": 300.4,
+      "recomputed": 300.38,
+      "rel_dev_pct": 0.0067,
+      "tolerance_pct": 0.1,
+      "pass": true,
+      "unit": "%",
+      "note": ""
+    },
+    {
+      "id": "F1",
+      "claim": "R_F(24 kn) by ITTC-57 with S=9424 m2",
+      "reported": 1015.0,
+      "recomputed": 1015.2,
+      "rel_dev_pct": -0.0197,
+      "tolerance_pct": 1.0,
+      "pass": true,
+      "unit": "kN",
+      "note": ""
+    },
+    {
+      "id": "F2",
+      "claim": "library R_F vs ITTC-57: -39.9%",
+      "reported": -39.9,
+      "recomputed": -39.91,
+      "rel_dev_pct": -0.0251,
+      "tolerance_pct": 1.0,
+      "pass": true,
+      "unit": "%",
+      "note": ""
+    },
+    {
+      "id": "W1",
+      "claim": "platform C_R(0.26) ~ 4.1e-03 (report 5)",
+      "reported": 0.0041,
+      "recomputed": 0.003963,
+      "rel_dev_pct": 3.457,
+      "tolerance_pct": 6.0,
+      "pass": true,
+      "unit": "-",
+      "note": "with declared (1+k), dC_F"
+    },
+    {
+      "id": "W2",
+      "claim": "library-derived C_W ~ 5.3e-04 (report 5)",
+      "reported": 0.00053,
+      "recomputed": 0.000526,
+      "rel_dev_pct": 0.7605,
+      "tolerance_pct": 3.0,
+      "pass": true,
+      "unit": "-",
+      "note": ""
+    },
+    {
+      "id": "B1",
+      "claim": "budget gap B-A = 18.0 wan",
+      "reported": 18.0,
+      "recomputed": 18.0,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.1,
+      "pass": true,
+      "unit": "wan",
+      "note": ""
+    },
+    {
+      "id": "B2",
+      "claim": "schedule gap B-A = 45 d (baseline model manufacture)",
+      "reported": 45,
+      "recomputed": 45,
+      "rel_dev_pct": 0.0,
+      "tolerance_pct": 0.0,
+      "pass": true,
+      "unit": "d",
+      "note": ""
+    }
+  ],
+  "derived": {
+    "L_m": 7.2785,
+    "B_m": 1.019,
+    "T_m": 0.3418,
+    "vol_m": 1.6489,
+    "S_m": 9.4376,
+    "mass_m_kg": 1645.9,
+    "cb_ship": 0.6505,
+    "anchor_forms_design_point": {
+      "cf_m_design": 0.002771,
+      "cf_s_24kn": 0.001378,
+      "Re_S_24kn": 2389745058.0,
+      "q_ship_per_unit_C": 736902412.0,
+      "C_TS_library_24kn": 0.002511,
+      "A_plain_3D (as stated in report 2: C_TM = C_TS - C_FS + C_FM)": {
+        "C_TM": 0.003904,
+        "R_TM_N": 88.74
+      },
+      "B_with_(1+k)": {
+        "C_TM": 0.004113,
+        "R_TM_N": 93.49
+      },
+      "C_with_(1+k)_and_dCF": {
+        "C_TM": 0.003713,
+        "R_TM_N": 84.4
+      },
+      "D_naive_Froude (C_TM = C_TS)": {
+        "C_TM": 0.002511,
+        "R_TM_N": 57.06
+      },
+      "C_TM_platform_design": 0.00755,
+      "R_ship_platform_plain_kN": 4536.8,
+      "R_ship_platform_k": 6450.3
+    },
+    "platform_full_scale_reconstruction": {
+      "cf_m_design": 0.002771,
+      "cf_s_24kn": 0.001378,
+      "Re_S_24kn": 2389745058.0,
+      "q_ship_per_unit_C": 736902412.0,
+      "C_TS_library_24kn": 0.002511,
+      "A_plain_3D (as stated in report 2: C_TM = C_TS - C_FS + C_FM)": {
+        "C_TM": 0.003904,
+        "R_TM_N": 88.74
+      },
+      "B_with_(1+k)": {
+        "C_TM": 0.004113,
+        "R_TM_N": 93.49
+      },
+      "C_with_(1+k)_and_dCF": {
+        "C_TM": 0.003713,
+        "R_TM_N": 84.4
+      },
+      "D_naive_Froude (C_TM = C_TS)": {
+        "C_TM": 0.002511,
+        "R_TM_N": 57.06
+      },
+      "C_TM_platform_design": 0.00755,
+      "R_ship_platform_plain_kN": 4536.8,
+      "R_ship_platform_k": 6450.3
+    },
+    "C_R_platform_design": {
+      "with_dCF": 0.003963,
+      "without_dCF": 0.004363
+    },
+    "C_W_library_ship": 0.000526
+  },
+  "summary": {
+    "matrix_monotone_Vm_13pt": true,
+    "Re_min": 6125000.0,
+    "Re_min_gt_5e6": true,
+    "V_m_max": 2.5346,
+    "V_m_max_lt_12_ms": true,
+    "n_points": 13,
+    "has_design_point_0p26": true,
+    "anchor_R_TM_spread_N": {
+      "A_plain_3D (as stated in report 2: C_TM = C_TS - C_FS + C_FM)": 88.74,
+      "B_with_(1+k)": 93.49,
+      "C_with_(1+k)_and_dCF": 84.4,
+      "D_naive_Froude (C_TM = C_TS)": 57.06
+    },
+    "anchor_spread_pct_of_sealed": [
+      -35.74,
+      5.28
+    ],
+    "n_checks": 27,
+    "n_pass": 26,
+    "n_fail": 1,
+    "n_not_computable": 0,
+    "failed_ids": [
+      "X2"
+    ]
+  }
+}
