@@ -1,0 +1,804 @@
+{
+  "package_id": "wp-11608-01",
+  "task_type": "01-asset-registration",
+  "report_id": "11608",
+  "provenance": {
+    "source_hash": "sha256:8a9602aca712ab3ac8656d7382e0fef762ba0f30657cf8b631b36ba514e8db62",
+    "source_field": "markdown",
+    "producer": "agent/m15726",
+    "emitted_at": "2026-11-12T02:22:30+00:00",
+    "notes": "hash recomputed locally over the markdown bytes served by GET /tensor/reports/11608; matches contract source_hash. Byte identity only -- no claim is marked verified."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-11608-01",
+      "task_type": "01-asset-registration",
+      "report_id": "11608",
+      "source": {
+        "uri": "tensor://reports/11608",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "8a9602aca712ab3ac8656d7382e0fef762ba0f30657cf8b631b36ba514e8db62",
+        "chars": 7342,
+        "bytes_utf8": 10392,
+        "title": "TensorFVM 数值黏性/色散算子验证面：修正方程 ν_num=cΔx(1-C)/2 波包衰减实测 + 离散放大因子 G(θ) 全域比对",
+        "scenario_key": "p73w3-n04-fvm-numerical-viscosity",
+        "platform_figures": [
+          {
+            "name": "fig1_geometry.png",
+            "caption": "船型/剖面/3D 湿表面面元"
+          },
+          {
+            "name": "fig2_added_mass.png",
+            "caption": "a33(x) 与条带/3D 广义附加质量"
+          },
+          {
+            "name": "fig3_wet_modes.png",
+            "caption": "干湿频率与条带 vs 3D BEM 偏差"
+          },
+          {
+            "name": "fig4_springing.png",
+            "caption": "springing 共振扫频与应力模型带"
+          },
+          {
+            "name": "fig5_whipping.png",
+            "caption": "鞭振应力时程与衰减包络"
+          },
+          {
+            "name": "fig6_fatigue.png",
+            "caption": "三分量疲劳损伤与寿命"
+          }
+        ],
+        "platform_tags": [
+          "FVM",
+          "numerical-viscosity",
+          "dispersion",
+          "von-Neumann",
+          "modified-equation",
+          "verification"
+        ],
+        "platform_mission_id": 9775,
+        "contract_title_matches": true,
+        "contract_scenario_matches": true
+      },
+      "counts": {
+        "assets": 25,
+        "by_class": {
+          "report_source": 1,
+          "figure": 3,
+          "data_artifact": 2,
+          "code_file": 1,
+          "test_file": 2,
+          "script": 1,
+          "doc": 2,
+          "vcs_ref": 1,
+          "command": 1,
+          "code_package": 1,
+          "figure_metadata": 6,
+          "inline_formula_block": 1,
+          "inline_markdown_table": 3
+        },
+        "by_resolution": {
+          "resolved_in_source": 5,
+          "referenced_unresolved": 14,
+          "declared_absent": 6
+        },
+        "resolved_in_source": 5,
+        "referenced_unresolved": 14,
+        "declared_absent": 6,
+        "off_topic": 10
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "report_source",
+          "label": "report 11608 markdown (the registered object; not an attachment)",
+          "in_report_section": "document",
+          "target": "tensor://reports/11608#markdown",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 24,
+            "start_line": 1,
+            "end_line": 1,
+            "quote": "# TensorFVM 数值黏性/色散算子验证面",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "quote is a verbatim substring of the markdown (unique=True)",
+            "result": "resolved"
+          },
+          "off_topic": false,
+          "note": "method=document: whole-field locator; markdown sha256 pinned in integrity"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "figure",
+          "label": "fig1_von_neumann.png",
+          "in_report_section": "§4.1",
+          "target": "docs/numerical-viscosity/fig1_von_neumann.png",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4259,
+            "end_char": 4316,
+            "start_line": 175,
+            "end_line": 175,
+            "quote": "![Von Neumann Amplification Factor](fig1_von_neumann.png)",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": "also listed in the §7 产物清单 table (same asset, single registration)"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "figure",
+          "label": "fig2_nu_comparison.png",
+          "in_report_section": "§4.2",
+          "target": "docs/numerical-viscosity/fig2_nu_comparison.png",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4472,
+            "end_char": 4529,
+            "start_line": 184,
+            "end_line": 184,
+            "quote": "![Numerical Viscosity Comparison](fig2_nu_comparison.png)",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": "also listed in the §7 产物清单 table (same asset, single registration)"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "figure",
+          "label": "fig3_grid_convergence.png",
+          "in_report_section": "§4.3",
+          "target": "docs/numerical-viscosity/fig3_grid_convergence.png",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4652,
+            "end_char": 4698,
+            "start_line": 192,
+            "end_line": 192,
+            "quote": "![Grid Convergence](fig3_grid_convergence.png)",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": "also listed in the §7 产物清单 table (same asset, single registration)"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "data_artifact",
+          "label": "artifacts/fvm_modified_equation.json (declared 227 KB)",
+          "in_report_section": "§3.6",
+          "target": "artifacts/fvm_modified_equation.json",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4018,
+            "end_char": 4075,
+            "start_line": 160,
+            "end_line": 160,
+            "quote": "**产物路径**: `artifacts/fvm_modified_equation.json` (227 KB)",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": "also listed in §7 table; §3.6 content list (36 sweep_results / von_neumann_curves / grid_convergence) is a declaration, not re-checked here"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "code_file",
+          "label": "src/tensorfvm/verification/numerical_viscosity.py (核心验证模块, 18.6 KB)",
+          "in_report_section": "§7",
+          "target": "src/tensorfvm/verification/numerical_viscosity.py",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5996,
+            "end_char": 6070,
+            "start_line": 261,
+            "end_line": 261,
+            "quote": "| `src/tensorfvm/verification/numerical_viscosity.py` | 核心验证模块 | 18.6 KB |",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": ""
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "test_file",
+          "label": "tests/test_numerical_viscosity.py (57 用例, 9.5 KB)",
+          "in_report_section": "§7",
+          "target": "tests/test_numerical_viscosity.py",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6071,
+            "end_char": 6140,
+            "start_line": 262,
+            "end_line": 262,
+            "quote": "| `tests/test_numerical_viscosity.py` | pytest 测试套件（57 用例） | 9.5 KB |",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": "case count 57 is the author's declaration; the suite was not re-run in this package"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "script",
+          "label": "scripts/generate_numerical_viscosity_artifacts.py (5.3 KB)",
+          "in_report_section": "§7",
+          "target": "scripts/generate_numerical_viscosity_artifacts.py",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6474,
+            "end_char": 6547,
+            "start_line": 268,
+            "end_line": 268,
+            "quote": "| `scripts/generate_numerical_viscosity_artifacts.py` | 产物生成脚本 | 5.3 KB |",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": ""
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "doc",
+          "label": "docs/numerical-viscosity/REPORT.md (本报告)",
+          "in_report_section": "§7",
+          "target": "docs/numerical-viscosity/REPORT.md",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6203,
+            "end_char": 6253,
+            "start_line": 264,
+            "end_line": 264,
+            "quote": "| `docs/numerical-viscosity/REPORT.md` | 本报告 | - |",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": "self-reference: the report names its own published location inside TensorFVM"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "vcs_ref",
+          "label": "branch agent/m9775 (commit pending)",
+          "in_report_section": "§8",
+          "target": null,
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6565,
+            "end_char": 6608,
+            "start_line": 274,
+            "end_line": 274,
+            "quote": "- **代码提交**: 分支 `agent/m9775`，commit 待平台自动推送",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): no filesystem target",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": "branch existence not probed (no TensorFVM checkout in probe scope); commit hash is explicitly absent from the report"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "command",
+          "label": "pytest tests/test_numerical_viscosity.py -v (57 passed)",
+          "in_report_section": "§8",
+          "target": null,
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 6609,
+            "end_char": 6676,
+            "start_line": 275,
+            "end_line": 275,
+            "quote": "- **测试执行**: `pytest tests/test_numerical_viscosity.py -v`，57 passed",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): no filesystem target",
+            "result": "unresolved"
+          },
+          "off_topic": false,
+          "note": "reproduction command declared by the author; '57 passed' not reproduced here (honest not_run)"
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "data_artifact",
+          "label": "artifacts/hydroelasticity/case_report.json",
+          "in_report_section": "tail paragraph (*报告工件路径*)",
+          "target": "artifacts/hydroelasticity/case_report.json",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7182,
+            "end_char": 7226,
+            "start_line": 305,
+            "end_line": 305,
+            "quote": "`artifacts/hydroelasticity/case_report.json`",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": true,
+          "note": "hydroelasticity artifact; subject of the body is FVM numerical viscosity -> registered but flagged off_topic, not silently dropped"
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "doc",
+          "label": "docs/HULL_HYDROELASTICITY.md",
+          "in_report_section": "tail paragraph (*报告工件路径*)",
+          "target": "docs/HULL_HYDROELASTICITY.md",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7227,
+            "end_char": 7257,
+            "start_line": 305,
+            "end_line": 305,
+            "quote": "`docs/HULL_HYDROELASTICITY.md`",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": true,
+          "note": "hydroelasticity artifact; subject of the body is FVM numerical viscosity -> registered but flagged off_topic, not silently dropped"
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "test_file",
+          "label": "tests/test_hull_hydroelasticity.py (26 例)",
+          "in_report_section": "tail paragraph (*报告工件路径*)",
+          "target": "tests/test_hull_hydroelasticity.py",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7258,
+            "end_char": 7300,
+            "start_line": 305,
+            "end_line": 305,
+            "quote": "`tests/test_hull_hydroelasticity.py`（26 例）",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": true,
+          "note": "hydroelasticity artifact; subject of the body is FVM numerical viscosity -> registered but flagged off_topic, not silently dropped"
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "code_package",
+          "label": "backend/physics/hull_hydroelasticity/",
+          "in_report_section": "tail paragraph (*报告工件路径*)",
+          "target": "backend/physics/hull_hydroelasticity/",
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 7301,
+            "end_char": 7340,
+            "start_line": 305,
+            "end_line": 305,
+            "quote": "`backend/physics/hull_hydroelasticity/`",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path existence probe (existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726)): not found under /root/tp-agent/work/m15726",
+            "result": "unresolved"
+          },
+          "off_topic": true,
+          "note": "hydroelasticity artifact; subject of the body is FVM numerical viscosity -> registered but flagged off_topic, not silently dropped"
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "figure_metadata",
+          "label": "fig1_geometry.png",
+          "record_name": "fig1_geometry.png",
+          "record_caption": "船型/剖面/3D 湿表面面元",
+          "in_report_section": "record.figures (platform metadata, no body reference)",
+          "target": "docs/numerical-viscosity/fig1_geometry.png",
+          "locator_source": "record",
+          "locator_semantics": "anchor_where_expected",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4222,
+            "end_char": 4231,
+            "start_line": 171,
+            "end_line": 171,
+            "quote": "## 4. 结果图",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "record.figures[].name='fig1_geometry.png' verbatim substring of markdown -> absent; locator anchors the 结果图 section where a body figure would be referenced",
+            "result": "absent"
+          },
+          "off_topic": true,
+          "note": "figure declared in the platform figures array but never referenced by the body; caption '船型/剖面/3D 湿表面面元' belongs to a hydroelasticity/added-mass subject, not to FVM numerical viscosity ; shared anchor by design: a record-level figure has no individual body position"
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "figure_metadata",
+          "label": "fig2_added_mass.png",
+          "record_name": "fig2_added_mass.png",
+          "record_caption": "a33(x) 与条带/3D 广义附加质量",
+          "in_report_section": "record.figures (platform metadata, no body reference)",
+          "target": "docs/numerical-viscosity/fig2_added_mass.png",
+          "locator_source": "record",
+          "locator_semantics": "anchor_where_expected",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4222,
+            "end_char": 4231,
+            "start_line": 171,
+            "end_line": 171,
+            "quote": "## 4. 结果图",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "record.figures[].name='fig2_added_mass.png' verbatim substring of markdown -> absent; locator anchors the 结果图 section where a body figure would be referenced",
+            "result": "absent"
+          },
+          "off_topic": true,
+          "note": "figure declared in the platform figures array but never referenced by the body; caption 'a33(x) 与条带/3D 广义附加质量' belongs to a hydroelasticity/added-mass subject, not to FVM numerical viscosity ; shared anchor by design: a record-level figure has no individual body position"
+        },
+        {
+          "asset_id": "A18",
+          "asset_class": "figure_metadata",
+          "label": "fig3_wet_modes.png",
+          "record_name": "fig3_wet_modes.png",
+          "record_caption": "干湿频率与条带 vs 3D BEM 偏差",
+          "in_report_section": "record.figures (platform metadata, no body reference)",
+          "target": "docs/numerical-viscosity/fig3_wet_modes.png",
+          "locator_source": "record",
+          "locator_semantics": "anchor_where_expected",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4222,
+            "end_char": 4231,
+            "start_line": 171,
+            "end_line": 171,
+            "quote": "## 4. 结果图",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "record.figures[].name='fig3_wet_modes.png' verbatim substring of markdown -> absent; locator anchors the 结果图 section where a body figure would be referenced",
+            "result": "absent"
+          },
+          "off_topic": true,
+          "note": "figure declared in the platform figures array but never referenced by the body; caption '干湿频率与条带 vs 3D BEM 偏差' belongs to a hydroelasticity/added-mass subject, not to FVM numerical viscosity ; shared anchor by design: a record-level figure has no individual body position"
+        },
+        {
+          "asset_id": "A19",
+          "asset_class": "figure_metadata",
+          "label": "fig4_springing.png",
+          "record_name": "fig4_springing.png",
+          "record_caption": "springing 共振扫频与应力模型带",
+          "in_report_section": "record.figures (platform metadata, no body reference)",
+          "target": "docs/numerical-viscosity/fig4_springing.png",
+          "locator_source": "record",
+          "locator_semantics": "anchor_where_expected",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4222,
+            "end_char": 4231,
+            "start_line": 171,
+            "end_line": 171,
+            "quote": "## 4. 结果图",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "record.figures[].name='fig4_springing.png' verbatim substring of markdown -> absent; locator anchors the 结果图 section where a body figure would be referenced",
+            "result": "absent"
+          },
+          "off_topic": true,
+          "note": "figure declared in the platform figures array but never referenced by the body; caption 'springing 共振扫频与应力模型带' belongs to a hydroelasticity/added-mass subject, not to FVM numerical viscosity ; shared anchor by design: a record-level figure has no individual body position"
+        },
+        {
+          "asset_id": "A20",
+          "asset_class": "figure_metadata",
+          "label": "fig5_whipping.png",
+          "record_name": "fig5_whipping.png",
+          "record_caption": "鞭振应力时程与衰减包络",
+          "in_report_section": "record.figures (platform metadata, no body reference)",
+          "target": "docs/numerical-viscosity/fig5_whipping.png",
+          "locator_source": "record",
+          "locator_semantics": "anchor_where_expected",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4222,
+            "end_char": 4231,
+            "start_line": 171,
+            "end_line": 171,
+            "quote": "## 4. 结果图",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "record.figures[].name='fig5_whipping.png' verbatim substring of markdown -> absent; locator anchors the 结果图 section where a body figure would be referenced",
+            "result": "absent"
+          },
+          "off_topic": true,
+          "note": "figure declared in the platform figures array but never referenced by the body; caption '鞭振应力时程与衰减包络' belongs to a hydroelasticity/added-mass subject, not to FVM numerical viscosity ; shared anchor by design: a record-level figure has no individual body position"
+        },
+        {
+          "asset_id": "A21",
+          "asset_class": "figure_metadata",
+          "label": "fig6_fatigue.png",
+          "record_name": "fig6_fatigue.png",
+          "record_caption": "三分量疲劳损伤与寿命",
+          "in_report_section": "record.figures (platform metadata, no body reference)",
+          "target": "docs/numerical-viscosity/fig6_fatigue.png",
+          "locator_source": "record",
+          "locator_semantics": "anchor_where_expected",
+          "locator": {
+            "method": "char_span",
+            "start_char": 4222,
+            "end_char": 4231,
+            "start_line": 171,
+            "end_line": 171,
+            "quote": "## 4. 结果图",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "record.figures[].name='fig6_fatigue.png' verbatim substring of markdown -> absent; locator anchors the 结果图 section where a body figure would be referenced",
+            "result": "absent"
+          },
+          "off_topic": true,
+          "note": "figure declared in the platform figures array but never referenced by the body; caption '三分量疲劳损伤与寿命' belongs to a hydroelasticity/added-mass subject, not to FVM numerical viscosity ; shared anchor by design: a record-level figure has no individual body position"
+        },
+        {
+          "asset_id": "A22",
+          "asset_class": "inline_formula_block",
+          "label": "§2.2 modified-equation + von Neumann formula block (fenced plain text)",
+          "in_report_section": "§2.2",
+          "target": null,
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 919,
+            "end_char": 948,
+            "start_line": 53,
+            "end_line": 53,
+            "quote": "- Upwind: `ν_th = cΔx(1-C)/2`",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "quote is a verbatim substring of the markdown (unique=True)",
+            "result": "resolved"
+          },
+          "off_topic": false,
+          "note": "registered as structure only; no symbolic checking performed in this package"
+        },
+        {
+          "asset_id": "A23",
+          "asset_class": "inline_markdown_table",
+          "label": "§3.1 criterion (a) Upwind viscosity table (9 rows: C × kΔx)",
+          "in_report_section": "§3.1",
+          "target": null,
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1650,
+            "end_char": 1689,
+            "start_line": 88,
+            "end_line": 88,
+            "quote": "| C   | kΔx   | ν_meas | ν_th  | 相对误差 |",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "quote is a verbatim substring of the markdown (unique=True)",
+            "result": "resolved"
+          },
+          "off_topic": false,
+          "note": ""
+        },
+        {
+          "asset_id": "A24",
+          "asset_class": "inline_markdown_table",
+          "label": "§6.1 误差判定 table (判据/基准/实测/误差/是否 < 3%)",
+          "in_report_section": "§6.1",
+          "target": null,
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5470,
+            "end_char": 5501,
+            "start_line": 239,
+            "end_line": 239,
+            "quote": "| 判据 | 基准 | 实测 | 误差 | 是否 < 3% |",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "quote is a verbatim substring of the markdown (unique=True)",
+            "result": "resolved"
+          },
+          "off_topic": false,
+          "note": "contains the report's own '是否 < 3%' column, which is an author declaration"
+        },
+        {
+          "asset_id": "A25",
+          "asset_class": "inline_markdown_table",
+          "label": "§7 产物清单 table (8 rows: path / description / size)",
+          "in_report_section": "§7",
+          "target": null,
+          "locator_source": "markdown",
+          "locator_semantics": "verbatim_asset_reference",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5956,
+            "end_char": 5972,
+            "start_line": 259,
+            "end_line": 259,
+            "quote": "| 路径 | 描述 | 大小 |",
+            "unique": true,
+            "occurrences": 1
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "quote is a verbatim substring of the markdown (unique=True)",
+            "result": "resolved"
+          },
+          "off_topic": false,
+          "note": "registry of the path assets A05-A09 above"
+        }
+      ],
+      "claims": [],
+      "claims_note": "claims=[] by contract: objective.register_assets=true, objective.classify_report_type=false, constraints.no_forced_claim_generation=true -> no knowledge object is asserted in this package",
+      "declared_verification_status": {
+        "quote": "**验证状态**: ✅ 全部验收判据通过",
+        "locator": {
+          "method": "char_span",
+          "start_char": 113,
+          "end_char": 133,
+          "start_line": 6,
+          "end_line": 6,
+          "quote": "**验证状态**: ✅ 全部验收判据通过",
+          "unique": true,
+          "occurrences": 1
+        },
+        "treated_as": "author_declaration_not_a_platform_verdict",
+        "note": "constraints.do_not_mark_claims_as_verified: this sentence is quoted, never promoted to a status"
+      },
+      "integrity": {
+        "quote_uniqueness": true,
+        "non_unique_markdown_quotes": [],
+        "locator_quote_is_markdown_substring_for_all_assets": true,
+        "hash_recomputed_locally": "8a9602aca712ab3ac8656d7382e0fef762ba0f30657cf8b631b36ba514e8db62",
+        "hash_matches_contract": true,
+        "chars_matches_contract": true,
+        "duplicate_ids": false,
+        "probe_scope": "existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726); no TensorFVM checkout in the probe scope, so 'unresolved' means 'not confirmable here', not 'absent'",
+        "record_figures_names_absent_from_body": [
+          "fig1_geometry.png",
+          "fig2_added_mass.png",
+          "fig3_wet_modes.png",
+          "fig4_springing.png",
+          "fig5_whipping.png",
+          "fig6_fatigue.png"
+        ]
+      },
+      "limitations": [
+        "No extraction/classification by contract: no number in the body was re-derived in this package.",
+        "existence probe limited to the TensorKnowledge worktree (/root/tp-agent/work/m15726); no TensorFVM checkout in the probe scope, so 'unresolved' means 'not confirmable here', not 'absent'",
+        "The body's §8 test claim ('57 passed') and §3 numeric tables were not reproduced; reproducing them belongs to a downstream verification package.",
+        "6 of the 6 platform record.figures entries are unreferenced by the body and off-subject (added mass / springing / whipping / fatigue).",
+        "The trailing *报告工件路径* line points at hydroelasticity artifacts (A12-A15) that contradict the FVM subject of the body.",
+        "A16-A21 are record.figures entries absent from the body: their locator is a verbatim markdown anchor ('## 4. 结果图', locator_semantics=anchor_where_expected) plus record_name -- no quote is fabricated for an absent figure."
+      ],
+      "emitted_at": "2026-11-12T02:22:30+00:00",
+      "producer": "agent/m15726"
+    }
+  },
+  "claims": []
+}
