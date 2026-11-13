@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.v1.wp-9763-01.schema.json",
+  "title": "asset_manifest.v1 pinned for work package wp-9763-01 (report 9763)",
+  "description": "Shape actually emitted by scripts/kf_register_9763.py. Same family as the wp-448-01 pinned schema, but pinned to package_id/report_id 9763 so the schema_pass acceptance item is reproducible rather than asserted. If the platform-side schema differs, the platform gate wins and this artifact must be revised.",
+  "type": "object",
+  "required": ["schema", "package_id", "task_type", "report_id", "source", "counts", "assets", "claims", "integrity"],
+  "properties": {
+    "schema": {"const": "asset_manifest.v1"},
+    "package_id": {"const": "wp-9763-01"},
+    "task_type": {"const": "01-asset-registration"},
+    "report_id": {"const": "9763"},
+    "source": {
+      "type": "object",
+      "required": ["uri", "field", "hash_alg", "hash", "chars", "bytes_utf8", "title", "scenario_key"],
+      "properties": {
+        "uri": {"const": "tensor://reports/9763"},
+        "field": {"const": "markdown"},
+        "hash_alg": {"const": "sha256"},
+        "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "chars": {"type": "integer", "minimum": 1},
+        "bytes_utf8": {"type": "integer", "minimum": 1},
+        "title": {"type": "string", "minLength": 1},
+        "scenario_key": {"type": "string", "minLength": 1},
+        "platform_id": {"type": ["integer", "string"]},
+        "platform_mission_id": {"type": ["integer", "string", "null"]},
+        "platform_status": {"type": ["string", "null"]},
+        "platform_tags": {"type": "array"},
+        "platform_figures": {"type": "array"},
+        "contract_hash_match": {"type": "boolean"},
+        "contract_chars_match": {"type": "boolean"},
+        "retrieved_via": {"type": "string"},
+        "local_copy": {"type": "string"}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["assets", "by_class", "by_resolution", "resolved_in_source", "referenced_unresolved", "declared_absent"],
+      "properties": {
+        "assets": {"type": "integer", "minimum": 1},
+        "by_class": {"type": "object"},
+        "by_resolution": {"type": "object"},
+        "resolved_in_source": {"type": "integer", "minimum": 0},
+        "referenced_unresolved": {"type": "integer", "minimum": 0},
+        "declared_absent": {"type": "integer", "minimum": 0}
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["asset_id", "asset_class", "label", "in_report_section", "locator", "resolution", "resolution_check", "note"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^A[0-9]{2}$"},
+          "asset_class": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "in_report_section": {"type": "string", "minLength": 1},
+          "resolution": {"enum": ["resolved_in_source", "referenced_unresolved", "declared_absent"]},
+          "resolution_check": {
+            "type": "object",
+            "required": ["check", "result"],
+            "properties": {
+              "check": {"type": "string", "minLength": 1},
+              "result": {"enum": ["resolved", "unresolved", "absent", "present"]}
+            }
+          },
+          "locator": {
+            "type": "object",
+            "required": ["method", "start_char", "end_char", "start_line", "end_line", "quote", "unique"],
+            "properties": {
+              "method": {"enum": ["char_span", "document"]},
+              "start_char": {"type": "integer", "minimum": 0},
+              "end_char": {"type": "integer", "minimum": 1},
+              "start_line": {"type": "integer", "minimum": 0},
+              "end_line": {"type": "integer", "minimum": 0},
+              "quote": {"type": "string", "minLength": 1},
+              "unique": {"const": true}
+            }
+          },
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "cross_checks": {
+      "type": "array",
+      "description": "Programmatic source-level cross checks. result=unresolved marks evidence handed to a downstream package, not a conclusion of this one.",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "what", "result"],
+        "properties": {
+          "check_id": {"type": "string", "minLength": 3},
+          "what": {"type": "string", "minLength": 3},
+          "result": {"enum": ["consistent", "inconsistent", "unresolved", "not_adjudicated"]},
+          "evidence": {"type": "array"},
+          "detail": {"type": "object"}
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "Empty is a legitimate, complete result for this package (objective.classify_report_type=false, no extraction).",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "text"],
+        "anyOf": [{"required": ["evidence"]}, {"required": ["status"]}]
+      }
+    },
+    "claims_note": {"type": "string"},
+    "integrity": {
+      "type": "object",
+      "required": ["quote_uniqueness", "hash_recomputed_locally", "hash_matches_contract"],
+      "properties": {
+        "quote_uniqueness": {"type": "string"},
+        "hash_recomputed_locally": {"const": true},
+        "hash_matches_contract": {"const": true},
+        "nothing_marked_verified": {"type": "string"},
+        "no_hand_transcription": {"type": "string"}
+      }
+    },
+    "scope_boundary": {
+      "type": "object",
+      "properties": {
+        "report_ids_touched": {"type": "array", "items": {"type": "string"}},
+        "upstream_artifacts_modified": {"const": false},
+        "verification_performed_by": {"type": "string"}
+      }
+    }
+  }
+}
