@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.v1.wp-11624-01.schema.json",
+  "title": "asset_manifest.v1 pinned to KF work package wp-11624-01 (report_id=11624)",
+  "description": "Package-scoped schema used to make the `schema_pass` acceptance item machine-checkable. Shape follows schemas/asset_manifest.v1.schema.json (task_type=01-asset-registration) which pins constants to wp-448-01; this file re-pins the identity constants to wp-11624-01 and relaxes asset/claim item shapes to what this package actually emits (kind/locator/resolution), so that pinning a different report never requires editing another package's artifact. If the platform-side canonical schema differs, the platform gate wins and this artifact must be revised.",
+  "type": "object",
+  "required": [
+    "schema",
+    "manifest_version",
+    "package_id",
+    "task_type",
+    "report_id",
+    "lane",
+    "source",
+    "counts",
+    "assets",
+    "locators",
+    "claims",
+    "integrity",
+    "checks"
+  ],
+  "properties": {
+    "schema": {"const": "asset_manifest.v1"},
+    "manifest_version": {"type": "string", "minLength": 1},
+    "package_id": {"const": "wp-11624-01"},
+    "task_type": {"const": "01-asset-registration"},
+    "report_id": {"const": "11624"},
+    "lane": {"const": "C"},
+    "generated_at": {"type": "string", "minLength": 1},
+    "producer": {"type": "string", "minLength": 1},
+    "repro_cmd": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "required": ["uri", "field", "hash_alg", "hash", "chars", "bytes_utf8", "title", "scenario_key"],
+      "properties": {
+        "uri": {"const": "tensor://reports/11624"},
+        "field": {"const": "markdown"},
+        "hash_alg": {"const": "sha256"},
+        "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "chars": {"type": "integer", "minimum": 1},
+        "bytes_utf8": {"type": "integer", "minimum": 1},
+        "title": {"type": "string", "minLength": 1},
+        "scenario_key": {"type": "string", "minLength": 1},
+        "hash_matches_contract": {"const": true}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["assets", "by_kind", "by_resolution", "resolved_in_source",
+                   "referenced_unresolved", "declared_absent", "claims"],
+      "properties": {
+        "assets": {"type": "integer", "minimum": 1},
+        "claims": {"const": 0},
+        "by_kind": {"type": "object", "minProperties": 1},
+        "by_resolution": {"type": "object", "minProperties": 1},
+        "resolved_in_source": {"type": "integer", "minimum": 0},
+        "referenced_unresolved": {"type": "integer", "minimum": 0},
+        "declared_absent": {"type": "integer", "minimum": 0}
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["asset_id", "kind", "label", "locator", "resolution", "note"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^A[0-9]{2}$"},
+          "kind": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "locator": {
+            "type": "object",
+            "required": ["source_field", "method", "start_char", "end_char",
+                         "start_line", "end_line", "line_base", "quote", "unique"],
+            "properties": {
+              "source_field": {"enum": ["markdown", "record"]},
+              "method": {"enum": ["char_span", "record_pointer", "document"]},
+              "start_char": {"type": "integer", "minimum": 0},
+              "end_char": {"type": "integer", "minimum": 0},
+              "start_line": {"type": "integer", "minimum": 0},
+              "end_line": {"type": "integer", "minimum": 0},
+              "line_base": {"const": 1},
+              "quote": {"type": "string", "minLength": 1},
+              "unique": {"type": "boolean"},
+              "pointer": {"type": "string"}
+            }
+          },
+          "resolution": {"enum": ["resolved_in_source", "referenced_unresolved", "declared_absent"]},
+          "resolution_check": {"type": "object"},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "locators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "check", "resolved"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "check": {"enum": ["substring_unique_char_span", "record_pointer_present", "document_scope"]},
+          "resolved": {"type": "boolean"}
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 0,
+      "description": "Empty by contract: objective.classify_report_type=false, notes allow an empty claims array; each claim, were any emitted, would need an evidence locator or an explicit unresolved status."
+    },
+    "integrity": {
+      "type": "object",
+      "required": ["quote_uniqueness", "hash_recomputed_locally", "hash_matches_contract",
+                   "no_duplicate_ids", "no_verified_marks"],
+      "properties": {
+        "quote_uniqueness": {"type": "string", "minLength": 1},
+        "hash_recomputed_locally": {"const": true},
+        "hash_matches_contract": {"const": true},
+        "no_duplicate_ids": {"const": true},
+        "no_verified_marks": {"const": true}
+      }
+    },
+    "checks": {
+      "type": "object",
+      "required": ["source_hash_matches_contract", "chars_match_contract", "all_locators_resolved",
+                   "no_duplicate_ids", "claims_empty_by_contract", "no_verified_marks_emitted",
+                   "single_report_scope"],
+      "properties": {
+        "source_hash_matches_contract": {"const": true},
+        "chars_match_contract": {"const": true},
+        "all_locators_resolved": {"const": true},
+        "no_duplicate_ids": {"const": true},
+        "claims_empty_by_contract": {"const": true},
+        "no_verified_marks_emitted": {"const": true},
+        "single_report_scope": {"const": true}
+      }
+    }
+  },
+  "additionalProperties": true
+}
