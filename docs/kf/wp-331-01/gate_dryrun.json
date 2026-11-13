@@ -1,0 +1,72 @@
+{
+  "status": "ok",
+  "run_at": "2026-11-12T00:52:51+00:00",
+  "kf_ops": "/root/tp-agent/work/m15495/ops",
+  "gate_code_sha256": "f0206f6399318b01ed09cdfbfd20c14367f7281c595c7f0d0970f9568f6e76b0",
+  "schema_sha256": "170dba8b0b5d54012490aaadc0b68647a9520ecb869e9d03f873afb99b74c076",
+  "package": {
+    "package_id": "wp-331-01",
+    "task_type": "01-asset-registration",
+    "lane": "C"
+  },
+  "contract_hash_matches_source": true,
+  "extract_payload_error": null,
+  "payload_equals_envelope_file": true,
+  "gates": [
+    {
+      "gate": "g1_valid_json",
+      "ok": true
+    },
+    {
+      "gate": "g2_schema_pass",
+      "ok": true
+    },
+    {
+      "gate": "g3_identity",
+      "ok": true,
+      "mismatched": []
+    },
+    {
+      "gate": "g4_source_hash_matches",
+      "ok": true,
+      "claimed": "sha256:d67069723d0d",
+      "actual": "sha256:d67069723d0d"
+    },
+    {
+      "gate": "g4b_source_field",
+      "ok": true
+    },
+    {
+      "gate": "g5_source_locator_resolvable",
+      "ok": true,
+      "checked": 0,
+      "resolved": 0,
+      "unresolved": [],
+      "too_short": []
+    },
+    {
+      "gate": "g5b_all_claims_located_or_unresolved",
+      "ok": true,
+      "offenders": []
+    },
+    {
+      "gate": "g6_no_duplicate_ids",
+      "ok": true,
+      "intra": [],
+      "cross": [],
+      "n_claims": 0
+    },
+    {
+      "gate": "g7_claim_namespace",
+      "ok": true,
+      "foreign": []
+    }
+  ],
+  "gates_ok": true,
+  "stats": {
+    "n_claims": 0,
+    "locators_checked": 0,
+    "locators_resolved": 0,
+    "locator_rate": null
+  }
+}

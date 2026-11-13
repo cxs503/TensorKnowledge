@@ -1,0 +1,178 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-331-01",
+  "task_type": "01-asset-registration",
+  "lane": "C",
+  "generated_at": "2026-11-12T00:52:50+00:00",
+  "source": {
+    "report_id": "331",
+    "source_uri": "tensor://reports/331",
+    "source_field": "markdown",
+    "source_hash": "sha256:d67069723d0db8be79d7bb84232f2f25e2f927c8473935797fa907e0c6fbf717",
+    "expected_source_hash": "sha256:d67069723d0db8be79d7bb84232f2f25e2f927c8473935797fa907e0c6fbf717",
+    "hash_matches": true,
+    "chars": 1371,
+    "bytes_utf8": 1412,
+    "title_record": "M404: DEM-FEM Coupling Interface Schema + Hertz/Beam Benchmarks (CPU)",
+    "title_markdown_h1": "M404: DEM-FEM Coupling Interface + Hertz/Beam Benchmarks",
+    "title_fields_consistent": false,
+    "scenario_key": "dem_fem_coupling_hertz_cpu"
+  },
+  "assets": [
+    {
+      "asset_id": "asset-331-report-markdown",
+      "kind": "report_markdown",
+      "uri": "tensor://reports/331#markdown",
+      "status": "resolved",
+      "retrieval": {
+        "endpoint": "GET /api/v1/tensor/reports/331",
+        "field": "markdown",
+        "http_status": 200
+      },
+      "sha256": "sha256:d67069723d0db8be79d7bb84232f2f25e2f927c8473935797fa907e0c6fbf717",
+      "chars": 1371,
+      "bytes_utf8": 1412,
+      "locator": {
+        "source_field": "markdown",
+        "quote": "# M404: DEM-FEM Coupling Interface + Hertz/Beam Benchmarks",
+        "note": "markdown 首行 H1"
+      },
+      "notes": "本工序唯一权威源；字节哈希由生产者独立重算并与契约 source_hash 对齐。"
+    },
+    {
+      "asset_id": "asset-331-report-record",
+      "kind": "report_record_metadata",
+      "uri": "tensor://reports/331#record",
+      "status": "resolved",
+      "retrieval": {
+        "endpoint": "GET /api/v1/tensor/reports/331",
+        "field": "record",
+        "http_status": 200
+      },
+      "fields": {
+        "id": 331,
+        "title": "M404: DEM-FEM Coupling Interface Schema + Hertz/Beam Benchmarks (CPU)",
+        "scenario_key": "dem_fem_coupling_hertz_cpu",
+        "status": "published",
+        "mission_id": 404,
+        "created_at": "2026-10-30T08:24:18.053739+00:00",
+        "tags": [
+          "DEM-FEM",
+          "coupling",
+          "Hertz",
+          "benchmark",
+          "CPU",
+          "honest-FAIL"
+        ]
+      },
+      "locator": {
+        "source_field": "record",
+        "quote": null,
+        "note": "元数据字段取自记录，markdown 正文无对应字样"
+      },
+      "notes": "记录 title 与 markdown H1 不一致（记录='M404: DEM-FEM Coupling Interface Schema + Hertz/Beam Benchmarks (CPU)'；H1='M404: DEM-FEM Coupling Interface + Hertz/Beam Benchmarks'）：两者分别登记，不做改写、不做归并。"
+    },
+    {
+      "asset_id": "asset-331-figure-hertz_beam_comparison",
+      "kind": "figure",
+      "uri": "tensor://reports/331/figures/hertz_beam_comparison",
+      "status": "declared_unresolvable",
+      "retrieval": {
+        "endpoint": "GET /api/v1/tensor/reports/331/figures/hertz_beam_comparison",
+        "http_status": 404,
+        "error_body": "{\"detail\":\"figure not found\"}",
+        "figure_dir_probe": {
+          "root": "/root/tensor-ecosystem/TensorPlatform/backend/uploads/tensor_reports",
+          "exists": true,
+          "report_subdir_present": false,
+          "sibling_report_dirs": 2703
+        }
+      },
+      "sha256": null,
+      "bytes": 0,
+      "caption": "Left: Hertz contact force-displacement (DEM3D vs fit vs analytical). Right: Beam deflection (FD vs analytical) showing convergence.",
+      "locator": {
+        "source_field": "markdown",
+        "quote": "See attached: Hertz F-δ curve + beam deflection comparison",
+        "note": "图件在 markdown ④ Figures 段被引用"
+      },
+      "unresolved_reason": "记录声明了图件 hertz_beam_comparison，但检索端点返回 HTTP 404（figure not found），且服务端图件目录下无 report 331 子目录（同级报告目录 2703 个）——字节不可得；不伪造、不重绘、不代上游补图。"
+    },
+    {
+      "asset_id": "asset-331-schema-dem_fem_coupling_v1",
+      "kind": "schema_artifact",
+      "uri": "tensor://reports/331#artifact:dem_fem_coupling_v1.json",
+      "status": "unresolved_candidate_found",
+      "retrieval": {
+        "endpoint": null,
+        "http_status": null,
+        "candidate_scan": {
+          "scan_root": "/root/tensor-ecosystem",
+          "pattern": "*/schemas/dem_fem_coupling_v1.json",
+          "hits": [
+            {
+              "path": "/root/tensor-ecosystem/TensorDEM/schemas/dem_fem_coupling_v1.json",
+              "bytes": 4729,
+              "sha256": "9a5fa0f663584f436c00ff78804e966ac8558ae2e46f8afac88df12205e2fbdd"
+            }
+          ]
+        }
+      },
+      "locator": {
+        "source_field": "record",
+        "quote": null,
+        "note": "工件文件名只在记录 summary 出现；markdown 正文只剩「Schema  validates against jsonschema」（文件名被剥离）"
+      },
+      "unresolved_reason": "平台无「报告→附件」绑定端点，markdown 正文无文件名/URI，字节不可经 API 取得；只读扫描在 /root/tensor-ecosystem/TensorDEM/schemas/dem_fem_coupling_v1.json 找到同名候选（sha256 9a5fa0f663584f43…），但与报告 331 的版本绑定只是间接证据，不据此认定同一工件。 本工序不反推工件内容，保留未解析。"
+    }
+  ],
+  "unresolved": [
+    {
+      "asset_id": "asset-331-figure-hertz_beam_comparison",
+      "status": "declared_unresolvable",
+      "reason": "记录声明了图件 hertz_beam_comparison，但检索端点返回 HTTP 404（figure not found），且服务端图件目录下无 report 331 子目录（同级报告目录 2703 个）——字节不可得；不伪造、不重绘、不代上游补图。"
+    },
+    {
+      "asset_id": "asset-331-schema-dem_fem_coupling_v1",
+      "status": "unresolved_candidate_found",
+      "reason": "平台无「报告→附件」绑定端点，markdown 正文无文件名/URI，字节不可经 API 取得；只读扫描在 /root/tensor-ecosystem/TensorDEM/schemas/dem_fem_coupling_v1.json 找到同名候选（sha256 9a5fa0f663584f43…），但与报告 331 的版本绑定只是间接证据，不据此认定同一工件。 本工序不反推工件内容，保留未解析。"
+    }
+  ],
+  "asset_status_counts": {
+    "resolved": 2,
+    "declared_unresolvable": 1,
+    "unresolved_candidate_found": 1
+  },
+  "locator_checks": {
+    "honest_fail": {
+      "quote": "- **Honest-FAIL**: TensorFEM unavailable; DEM lattice ≠ continuum half-space",
+      "resolvable_in_markdown": true,
+      "offset_bytes": 335
+    },
+    "parameters": {
+      "quote": "- **Parameters**: k_bond=1e5 N/m, tool_speed=5 m/s, max_indent=0.05m",
+      "resolvable_in_markdown": true,
+      "offset_bytes": 266
+    },
+    "metrics_exponent_row": {
+      "quote": "| Exponent | 1.4108 | 1.5±0.05 | — |",
+      "resolvable_in_markdown": true,
+      "offset_bytes": 810
+    },
+    "schema_mention": {
+      "quote": "- Schema  validates against jsonschema",
+      "resolvable_in_markdown": true,
+      "offset_bytes": 1188
+    },
+    "figure_mention": {
+      "quote": "See attached: Hertz F-δ curve + beam deflection comparison",
+      "resolvable_in_markdown": true,
+      "offset_bytes": 991
+    }
+  },
+  "scope": {
+    "extraction_performed": false,
+    "claims_emitted": 0,
+    "note": "工序 01 只登记资产与指纹；不抽取知识、不判定 verified、不重跑上游算例。"
+  }
+}
