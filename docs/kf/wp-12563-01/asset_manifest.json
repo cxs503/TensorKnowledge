@@ -1,0 +1,626 @@
+{
+  "manifest_version": "1.0",
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-12563-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12563",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-12T02:56:24+00:00",
+  "generator": "scripts/kf_wp12563_01_register.py",
+  "provenance": {
+    "source_uri": "tensor://reports/12563",
+    "source_field": "markdown",
+    "fetched_via": "GET /api/v1/tensor/reports/12563 (Bearer)",
+    "hash_algo": "sha256",
+    "hashed_bytes": "markdown field encoded as utf-8",
+    "source_hash": "sha256:e6097b4c6c824f48a253303de23e66a9a1c16f0fdcbcf163683158e3bd5cd816",
+    "source_hash_expected": "sha256:e6097b4c6c824f48a253303de23e66a9a1c16f0fdcbcf163683158e3bd5cd816",
+    "source_hash_matches": true,
+    "source_chars": 15874,
+    "source_bytes_utf8": 16033,
+    "chars_expected": 15874,
+    "chars_matches": true,
+    "chars_semantics": "contract `chars` = python str length (code points); utf-8 byte length differs (CJK title/tags)",
+    "record_identity": {
+      "id": 12563,
+      "title": "P156W2-N03 · D3Q27 高阶格子恢复：死枚举审计 + 三维 Poiseuille 解析锚 + Stokes 球体阻力",
+      "scenario_key": "lbm_d3q27_poiseuille_stokes",
+      "mission_id": 10870,
+      "status": "published",
+      "created_at": "2026-11-10T21:44:08.971264+00:00",
+      "created_by": 1,
+      "tags": [
+        "D3Q27",
+        "poiseuille",
+        "stokes",
+        "drag",
+        "lbm",
+        "verification",
+        "TensorLBM"
+      ],
+      "figure_records": 3
+    },
+    "title_matches_contract": true,
+    "scenario_key_matches_contract": true
+  },
+  "identity_granularity": "asset-level: one id per distinct reference named in the report markdown (figure path, code path, data path, inline table, fenced block); the source markdown itself is one document-level asset.",
+  "resolution_status_vocabulary": {
+    "resolved_in_source": "asset bytes are the registered markdown itself (A01 only)",
+    "referenced_unresolved": "path/quote resolved verbatim in the registered markdown; the file itself is not part of the report record and no artifact endpoint serves it"
+  },
+  "counts": {
+    "assets": 25,
+    "by_class": {
+      "source_text": 1,
+      "figure": 3,
+      "code": 4,
+      "data": 2,
+      "code_pointer": 1,
+      "block": 2,
+      "table": 12
+    },
+    "by_resolution": {
+      "resolved_in_source": 1,
+      "referenced_unresolved": 24
+    }
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "source_text",
+      "label": "report markdown (whole record)",
+      "in_report_section": "whole document",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 15874,
+        "start_line": 1,
+        "end_line": 300,
+        "quote": "# P156W2-N03 · D3Q27 high-order lattice recovery: dead-enumeration audit,\n# 3-D Poiseuille analytic anchor and Stokes sp ... [whole document, 15874 chars]",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "whole markdown field of the platform record, hashed",
+        "result": "resolved"
+      },
+      "note": "The registered source asset itself; bytes = markdown field of the platform record, hashed in this package."
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "figure",
+      "label": "figures/p156w2_n03_poiseuille.png",
+      "in_report_section": "section 4 Figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11504,
+        "end_char": 11580,
+        "start_line": 233,
+        "end_line": 233,
+        "quote": "`figures/p156w2_n03_poiseuille.png` — (left) steady velocity profiles vs the",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "PNG bytes are not part of the report record (figures carry name+caption only); declared in markdown section 4 and in the platform figures[0] record."
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "figure",
+      "label": "figures/p156w2_n03_stokes_sphere.png",
+      "in_report_section": "section 4 Figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11713,
+        "end_char": 11785,
+        "start_line": 237,
+        "end_line": 237,
+        "quote": "`figures/p156w2_n03_stokes_sphere.png` — (left) `K` vs `a/L` against the",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "PNG bytes not in the report record; declared in markdown section 4 and platform figures[1] record."
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "figure",
+      "label": "figures/p156w2_n03_sphere_resolution.png",
+      "in_report_section": "section 4 Figures",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11880,
+        "end_char": 11945,
+        "start_line": 241,
+        "end_line": 241,
+        "quote": "`figures/p156w2_n03_sphere_resolution.png` — drag error vs sphere",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "PNG bytes not in the report record; declared in markdown section 4 and platform figures[2] record."
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "code",
+      "label": "src/tensorlbm/d3q27_recovery.py",
+      "in_report_section": "section 2 What was done",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3413,
+        "end_char": 3458,
+        "start_line": 73,
+        "end_line": 73,
+        "quote": "New module `src/tensorlbm/d3q27_recovery.py`:",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "New TensorLBM module (moment audits, D3Q27Stepper, Poiseuille/Stokes runners, viscosity gate). File lives in the TensorLBM repo, not in the report record; no artifact endpoint serves it."
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "code",
+      "label": "benchmarks/frontier/p156w2_n03_d3q27_recovery/run.py",
+      "in_report_section": "section 2 Reproduce",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4333,
+        "end_char": 4387,
+        "start_line": 90,
+        "end_line": 90,
+        "quote": "R=benchmarks/frontier/p156w2_n03_d3q27_recovery/run.py",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Benchmark driver with subcommands audit/viscosity/poiseuille/sphere/stability/merge/plot; per-subcommand output file names are not individually named in the report (only the --out directory)."
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "code",
+      "label": "benchmarks/frontier/p156w2_n03_d3q27_recovery/make_report.py",
+      "in_report_section": "section 2 Reproduce",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5060,
+        "end_char": 5127,
+        "start_line": 100,
+        "end_line": 100,
+        "quote": "python benchmarks/frontier/p156w2_n03_d3q27_recovery/make_report.py",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Report generator; also named in the report header line 4."
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "data",
+      "label": "artifacts/p156w2_n03_d3q27_recovery/report_data.json",
+      "in_report_section": "report header (line 4)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 131,
+        "end_char": 268,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "*Generated from `artifacts/p156w2_n03_d3q27_recovery/report_data.json` by `benchmarks/frontier/p156w2_n03_d3q27_recovery/make_report.py`*",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Merged result data the report is generated from; not part of the report record, no artifact endpoint serves it."
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "data",
+      "label": "viscosity_gate.json",
+      "in_report_section": "section 1.1 viscosity gate",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3310,
+        "end_char": 3362,
+        "start_line": 69,
+        "end_line": 69,
+        "quote": "the table above is emitted as `viscosity_gate.json`.",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Emitted artifact of the viscosity-gate run; directory implied by the Reproduce block (--out artifacts/p156w2_n03_d3q27_recovery)."
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "code",
+      "label": "unit test pinning the wall position (file not named)",
+      "in_report_section": "section 2 implementation detail 1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5599,
+        "end_char": 5634,
+        "start_line": 110,
+        "end_line": 110,
+        "quote": "a unit test pins the wall position.",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Report states a unit test exists but does not name the file; registered as declared-only with the statement as locator."
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "code_pointer",
+      "label": "TensorLBM @ 7efbcfc0808b (branch agent/m10870)",
+      "in_report_section": "report header (line 6)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 270,
+        "end_char": 401,
+        "start_line": 6,
+        "end_line": 6,
+        "quote": "*Repo `TensorLBM` @ `7efbcfc0808b` (branch `agent/m10870`), torch 2.7.1 · loongarch64 · 128 cores · generated 2026-11-10T21:43:08Z*",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Repo identity of all code assets above; short commit prefix as printed in the report (full 40-hex sha not stated in the report)."
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "block",
+      "label": "Reproduce command block (fenced, 10 commands)",
+      "in_report_section": "section 2 Reproduce",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4333,
+        "end_char": 4387,
+        "start_line": 90,
+        "end_line": 90,
+        "quote": "R=benchmarks/frontier/p156w2_n03_d3q27_recovery/run.py",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "First line of the fenced reproduce block; the block also ends with the make_report.py invocation (asset A07)."
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "block",
+      "label": "Poiseuille analytic profile formula (fenced)",
+      "in_report_section": "section 1 Anchor 2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1310,
+        "end_char": 1371,
+        "start_line": 27,
+        "end_line": 27,
+        "quote": "u(y) = F / (2 rho nu) · y (H − y),      nu = (tau − 1/2) c_s²",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Fenced formula block; the exact anchor the channel runs are compared to."
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "table",
+      "label": "section 1 parameter table",
+      "in_report_section": "section 1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1785,
+        "end_char": 1806,
+        "start_line": 37,
+        "end_line": 37,
+        "quote": "| Parameter | Value |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Case parameter table (lattice, collision, walls, precision, gaps, taus, resolutions, box factors, Reynolds targets)."
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "table",
+      "label": "section 1.1 viscosity-gate table",
+      "in_report_section": "section 1.1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2690,
+        "end_char": 2762,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "| tau | nu (formula) | max deviation of `nu_eff` over the boxes tested |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "tau vs formula nu vs max nu_eff deviation (4.268 % / 12.252 % / 83.362 %)."
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "table",
+      "label": "section 2 component table of d3q27_recovery.py",
+      "in_report_section": "section 2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3460,
+        "end_char": 3483,
+        "start_line": 75,
+        "end_line": 75,
+        "quote": "| Component | Purpose |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Nine components of the new module (moment_audit ... run_long_stability)."
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "table",
+      "label": "section 3.1 lattice-algebra table",
+      "in_report_section": "section 3.1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5903,
+        "end_char": 5935,
+        "start_line": 119,
+        "end_line": 119,
+        "quote": "| Quantity | Value | Criterion |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Exact lattice-algebra residuals (rank-1..rank-6) with criteria."
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "table",
+      "label": "section 3.2 third-moment table",
+      "in_report_section": "section 3.2",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7074,
+        "end_char": 7093,
+        "start_line": 145,
+        "end_line": 145,
+        "quote": "| Form | Residual |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Third-moment residuals vs truncated and full Maxwellian."
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "table",
+      "label": "section 3.3 Poiseuille anchor table",
+      "in_report_section": "section 3.3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7709,
+        "end_char": 7806,
+        "start_line": 159,
+        "end_line": 159,
+        "quote": "| H | tau | nu | u_max (LBM) | u_max (exact) | rel. L2 | rel. Linf | wall-force balance | steps |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Five channel runs incl. the tau=3.0 viscosity-gate cross-check row."
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "table",
+      "label": "section 3.3 nu_eff normalisation table",
+      "in_report_section": "section 3.3",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8897,
+        "end_char": 8968,
+        "start_line": 178,
+        "end_line": 178,
+        "quote": "| H | tau | nu_eff/nu − 1 | rel. L2 vs formula-nu | rel. L2 vs nu_eff |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Shows error vs formula-nu grows with tau while error vs nu_eff stays small."
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "table",
+      "label": "section 3.4 resolution-study table",
+      "in_report_section": "section 3.4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 9393,
+        "end_char": 9504,
+        "start_line": 191,
+        "end_line": 191,
+        "quote": "| D | box | a/L | Re | K (measured) | K_Hasimoto | err vs Hasimoto | err vs Stokes | momentum balance | steps |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Staircase-sphere resolution study (D = 8, 12; L/D = 3; Re ~ 0.1)."
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "table",
+      "label": "section 3.4 box (confinement) study table",
+      "in_report_section": "section 3.4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10370,
+        "end_char": 10411,
+        "start_line": 208,
+        "end_line": 208,
+        "quote": "| a/L | K measured | K_Hasimoto | ratio |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Two blockages; measured confinement ratio 0.8628 vs Hasimoto 0.8363."
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "table",
+      "label": "section 3.4 Reynolds-sweep table",
+      "in_report_section": "section 3.4",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10905,
+        "end_char": 11033,
+        "start_line": 221,
+        "end_line": 221,
+        "quote": "| Re (achieved) | C_D | 24/Re (Stokes) | C_D Re/24 | Oseen `1+3Re/16` | err vs Stokes | err vs Oseen | err vs Schiller–Naumann |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Single achieved point Re = 1.294; report marks it trend evidence only."
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "table",
+      "label": "section 6 error-judgement table",
+      "in_report_section": "section 6",
+      "locator": {
+        "method": "char_span",
+        "start_char": 13571,
+        "end_char": 13612,
+        "start_line": 271,
+        "end_line": 271,
+        "quote": "| Quantity | Reference | Error | < 3 %? |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Per-quantity error judgement with explicit <3% answers (one NO row: sphere drag vs Hasimoto 7.592 %)."
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "table",
+      "label": "section 6.1 honest-FAIL / not-attained table",
+      "in_report_section": "section 6.1",
+      "locator": {
+        "method": "char_span",
+        "start_char": 14190,
+        "end_char": 14232,
+        "start_line": 282,
+        "end_line": 282,
+        "quote": "| Campaign criterion | Status | Evidence |",
+        "unique": true,
+        "occurrences": 1
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote is a verbatim substring of the fetched markdown; span/line computed from that fetch",
+        "result": "unresolved"
+      },
+      "note": "Campaign-criterion status table incl. the two NOT MET / NOT PHYSICALLY ATTAINABLE rows."
+    }
+  ],
+  "claims": [],
+  "claims_note": "claims intentionally empty: task_type 01-asset-registration registers source assets only (objective.classify_report_type=false, no extraction). Nothing is marked verified; verification is computed by the platform gate.",
+  "integrity": {
+    "quote_uniqueness": "each non-document quote's occurrence count recorded in locator.occurrences; no quote is a substring of another registered quote's span except A12/A07 sharing the reproduce block (distinct spans)",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true
+  }
+}
