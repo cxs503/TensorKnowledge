@@ -1,0 +1,39 @@
+{
+  "package_id": "wp-15045-01",
+  "task_type": "01-asset-registration",
+  "version": "1.0.0",
+  "input": {
+    "report_id": "15045",
+    "source_uri": "tensor://reports/15045",
+    "source_hash": "sha256:60e03f194ca853f8d58a3c6075ad1e74c57b15c788adc111d3abfdb29d86c2cd",
+    "source_field": "markdown"
+  },
+  "objective": {
+    "register_assets": true
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true
+  },
+  "output": {
+    "asset_manifest.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true
+  },
+  "review": {
+    "required": true,
+    "independent_reviewer": true,
+    "reviewer_role": "document-analyst",
+    "sample_rate": 1.0
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "draft"
+  },
+  "mission_id": "15913"
+}
