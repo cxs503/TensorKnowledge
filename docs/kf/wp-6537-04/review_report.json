@@ -1,0 +1,1776 @@
+{
+  "package_id": "wp-6537-04",
+  "task_type": "04-independent-review",
+  "report_id": "6537",
+  "reviewed_package": "wp-6537-01",
+  "reviewed_task_type": "01-asset-registration",
+  "reviewer": {
+    "id": "agent/m15847",
+    "reviewer_type": "agent",
+    "role": "red-team-reviewer"
+  },
+  "reviewed_at": "2026-11-12T03:40:00Z",
+  "policy_version": "ke-review-v0.1",
+  "provenance": {
+    "source_uri": "tensor://reports/6537",
+    "source_field": "markdown",
+    "source_hash": "sha256:aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71",
+    "source_chars": 10530,
+    "reviewer_context": [
+      "源报告 markdown（独立抓取）",
+      "平台 figures 元数据（caption）",
+      "上游 wp-6537-01 的 kf_result.json + asset_manifest.json"
+    ],
+    "reviewer_context_excluded": [
+      "生产者的 verification.json（未读、未引用）",
+      "生产者的 extraction_summary / self_assessment / producer_rationale（本工序不存在）"
+    ],
+    "reviewed_artifacts": {
+      "kf_result.json": "sha256:546f3b32c2d864e1f235efafd020d065518cb91be96ef4a89012219b17f12429",
+      "asset_manifest.json": "sha256:5afa3314a56cda0010c8de63fea5f5218d8009f8a6388220ead0f5cf668468a2"
+    },
+    "audit_tool": "runs/wp-6537-04/audit_wp6537_01.py",
+    "audit_output": "runs/wp-6537-04/audit.json",
+    "figure": {
+      "path": "docs/kf/wp-6537-04/fig_review_6537_04.png",
+      "sha256": "466e250d98a9bd0fd02606fa5012741571024e095c7e850a858644159408ff0a"
+    },
+    "producer": "agent/m15847",
+    "emitted_at": "2026-11-12T03:40:00Z"
+  },
+  "verdict": "needs-fix",
+  "disposition": "request-changes",
+  "verdict_scope": "判定对象是 wp-6537-01 的登记忠实性。逐条独立重算：源哈希/字符数逐位一致；37 条 locator 在各自声明字段（markdown 32 条 / figures caption 5 条）内全部逐字可定位且唯一；counts 与原文实测表/代码块/图计数一致；零 claim 合法；无自封验证字段；包内不夹带其它 report_id。唯一需修的是 manifest 里一句 integrity 断言与 offset 语义（见 FIX-1/FN-6537-04-07）。FN-6537-04-01/02/03/04/06/10 是**源报告内容**缺陷，属 wp-6537-03 的 carry-forward 约束，不构成本登记包被拒的理由。",
+  "checks_performed": [
+    {
+      "id": "C01",
+      "axis": "identity",
+      "check": "sha256(markdown) == 契约 source_hash",
+      "result": "PASS",
+      "detail": {
+        "recomputed": "sha256:aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71",
+        "contract": "sha256:aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71",
+        "upstream_provenance": "sha256:aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71"
+      }
+    },
+    {
+      "id": "C02",
+      "axis": "identity",
+      "check": "chars/bytes == 契约 chars=10530",
+      "result": "PASS",
+      "detail": {
+        "chars": 10530,
+        "contract": 10530,
+        "bytes_utf8": 15951
+      }
+    },
+    {
+      "id": "C03",
+      "axis": "identity",
+      "check": "上游 source 快照字节 == 我的独立抓取",
+      "result": "PASS",
+      "detail": {
+        "snapshot": "sha256:aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71",
+        "independent_fetch": "sha256:aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71"
+      }
+    },
+    {
+      "id": "C04",
+      "axis": "identity",
+      "check": "上游包只针对 report_id=6537",
+      "result": "PASS",
+      "detail": {
+        "report_id": "6537"
+      }
+    },
+    {
+      "id": "C05",
+      "axis": "structural",
+      "check": "kf_result.json 过 kf_result.v1 schema",
+      "result": "PASS",
+      "detail": {
+        "errors": []
+      }
+    },
+    {
+      "id": "C06b",
+      "axis": "structural",
+      "check": "manifest 顶层形状（派生自契约 output 声明 + 仓内 schema 的字段名）",
+      "result": "PASS",
+      "detail": {
+        "missing_top": [],
+        "pinned_schema_scope": {
+          "package_id_const": "wp-448-01",
+          "report_id_const": "448"
+        }
+      }
+    },
+    {
+      "id": "C07",
+      "axis": "structural",
+      "check": "上游产物在 S9 扫描面（claims/evidence/provenance/summary）无自封验证字段",
+      "result": "PASS",
+      "detail": {
+        "locator_level_reserved_word": [
+          "verified"
+        ],
+        "note": "locator.verified 是字节比对标志，不在 S9 扫描面；仅为用词提示（见 FN-6537-04-09）"
+      }
+    },
+    {
+      "id": "C08",
+      "axis": "structural",
+      "check": "asset_id 唯一且非空",
+      "result": "PASS",
+      "detail": {
+        "n": 37,
+        "unique": 37
+      }
+    },
+    {
+      "id": "C09",
+      "axis": "structural",
+      "check": "counts 与真实条数/分布一致",
+      "result": "PASS",
+      "detail": {
+        "declared": {
+          "assets": 37,
+          "by_class": {
+            "report_markdown": 1,
+            "figure_platform_metadata": 5,
+            "figure_body_reference": 5,
+            "markdown_table": 8,
+            "code_block": 4,
+            "path_reference": 11,
+            "external_regulatory_reference": 3
+          },
+          "by_resolution": {
+            "resolved": 13,
+            "metadata_only": 5,
+            "unresolved": 16,
+            "declared_unavailable": 3
+          },
+          "tables": 8,
+          "code_blocks": 4,
+          "platform_figures": 5,
+          "body_figure_references": 5,
+          "distinct_referenced_paths": 11
+        },
+        "actual_by_class": {
+          "report_markdown": 1,
+          "figure_platform_metadata": 5,
+          "figure_body_reference": 5,
+          "markdown_table": 8,
+          "code_block": 4,
+          "path_reference": 11,
+          "external_regulatory_reference": 3
+        },
+        "actual_by_resolution": {
+          "resolved": 13,
+          "metadata_only": 5,
+          "unresolved": 16,
+          "declared_unavailable": 3
+        }
+      }
+    },
+    {
+      "id": "C10",
+      "axis": "structural",
+      "check": "零 claim 合法（01 工序只登记；kf_result.claims 省略/为空、manifest.claims 为空）",
+      "result": "PASS",
+      "detail": {
+        "kf_result_claims_key": "absent",
+        "manifest_claims": [],
+        "note": "kf_result.v1 schema 中 claims 为可选；01 工序不产 claim，省略合法"
+      }
+    },
+    {
+      "id": "C11",
+      "axis": "structural",
+      "check": "kf_result.outputs 键 == 契约声明的 asset_manifest.json",
+      "result": "PASS",
+      "detail": {
+        "declared": [
+          "asset_manifest.json"
+        ]
+      }
+    },
+    {
+      "id": "C12",
+      "axis": "evidence",
+      "check": "37 条 locator 在各自声明的字段内逐字可定位（markdown / figures[i]）",
+      "result": "PASS",
+      "detail": {
+        "n": 37,
+        "unresolvable": [],
+        "fields": [
+          "figures",
+          "markdown"
+        ]
+      }
+    },
+    {
+      "id": "C13",
+      "axis": "evidence",
+      "check": "quote 在其字段内唯一出现（unique 标记可核实）",
+      "result": "PASS",
+      "detail": {
+        "non_unique": []
+      }
+    },
+    {
+      "id": "C14",
+      "axis": "evidence",
+      "check": "quote 起始于 start_char（locator 起点可用）",
+      "result": "PASS",
+      "detail": {
+        "violations": []
+      }
+    },
+    {
+      "id": "C15",
+      "axis": "evidence",
+      "check": "严格 E4 语义：declared_field[start_char:end_char] == quote",
+      "result": "FAIL",
+      "detail": {
+        "violations": [
+          "A01"
+        ],
+        "note": "不成立者是“对象跨度 + 片段 quote”混用；见 FN-6537-04-07"
+      }
+    },
+    {
+      "id": "C16",
+      "axis": "evidence",
+      "check": "span 长度 == quote 长度（offset 语义自洽）",
+      "result": "FAIL",
+      "detail": {
+        "assets_with_wide_span": [
+          "A01",
+          "A02",
+          "A03",
+          "A04",
+          "A05",
+          "A06"
+        ],
+        "count": 6
+      }
+    },
+    {
+      "id": "C17",
+      "axis": "evidence",
+      "check": "locator 带 content_hash（E5 可校验面）——缺失按“不可执行”记录而非判错",
+      "result": "PASS",
+      "detail": {
+        "without_content_hash": 37,
+        "of": 37,
+        "note": "01 契约不要求 content_hash；E5 无对象可验，只降低可校验强度"
+      }
+    },
+    {
+      "id": "C18",
+      "axis": "evidence",
+      "check": "status=resolved 的资产其 quote 在原文逐字存在",
+      "result": "PASS",
+      "detail": {
+        "resolved": 13
+      }
+    },
+    {
+      "id": "C19",
+      "axis": "evidence",
+      "check": "declared_unavailable 的对象在正文确有“不可得”声明（WITHHELD）",
+      "result": "PASS",
+      "detail": {
+        "n": 3,
+        "assets": [
+          [
+            "A501",
+            "EUR-Lex 原文（FuelEU Maritime 法规全文/附件 II）"
+          ],
+          [
+            "A502",
+            "附件 II 默认 WtT 锚（12 条燃料）"
+          ],
+          [
+            "A503",
+            "MEPC.364(79) 同族默认 CF"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "C20",
+      "axis": "identity",
+      "check": "包内不夹带其它 report_id（互不覆盖）",
+      "result": "PASS",
+      "detail": {
+        "other_report_ids": []
+      }
+    },
+    {
+      "id": "C21",
+      "axis": "evidence",
+      "check": "上游包不含自批/自证材料（review_report / verification_ticket / review_events 均不存在）",
+      "result": "PASS",
+      "detail": {
+        "dir": [
+          "asset_manifest.json",
+          "fig_asset_inventory.png",
+          "kf_result.json",
+          "report_wp-6537-01.md",
+          "source_6537.md",
+          "verification.json"
+        ]
+      }
+    },
+    {
+      "id": "C23",
+      "axis": "structural",
+      "check": "manifest 自报 tables/code_blocks/figures 计数 == 原文实测",
+      "result": "PASS",
+      "detail": {
+        "declared": {
+          "tables": 8,
+          "code_blocks": 4,
+          "platform_figures": 5,
+          "body_figure_references": 5,
+          "distinct_referenced_paths": 11
+        },
+        "actual": {
+          "tables": 8,
+          "code_blocks": 4,
+          "platform_figures": 5,
+          "body_figure_references": 5,
+          "distinct_referenced_paths": 21
+        }
+      }
+    },
+    {
+      "id": "C22",
+      "axis": "numeric",
+      "check": "燃料路径表解析出 12 行",
+      "result": "PASS",
+      "detail": {
+        "n": 12
+      }
+    }
+  ],
+  "numeric_recomputation": [
+    {
+      "id": "N01",
+      "quantity": "TtW 由 LHV/CF/slip/N2O 独立复算 vs 报告表（12 条，2 位显示舍入）",
+      "result": "MISMATCH",
+      "tolerance": "|残差| ≤ 0.005 g/MJ（两位显示）",
+      "detail": {
+        "abs_residual_g_per_MJ": {
+          "hfo": 0.0027,
+          "vlsfo": -0.0025,
+          "mgo": -0.0042,
+          "lng_otto": 0.0013,
+          "lng_diesel": -0.0029,
+          "fame": -0.0509,
+          "hvo": -0.0517,
+          "meoh_green": -0.0807,
+          "meoh_grey": -0.0807,
+          "nh3_green": 0.005,
+          "nh3_grey": 0.005,
+          "h2_green": 0.0
+        },
+        "rows_matching_at_printed_precision": 1,
+        "of": 12,
+        "worst_row": [
+          "meoh_green",
+          -0.0807
+        ]
+      }
+    },
+    {
+      "id": "N02",
+      "quantity": "WtW = WtT + TtW 加和（12 条）",
+      "result": "PASS",
+      "tolerance": "≤0.011 g/MJ（WtT/TtW 均两位显示，和值最多偏 0.01）",
+      "detail": {
+        "residual_g_per_MJ": {
+          "hfo": 0.0,
+          "vlsfo": 0.0,
+          "mgo": 0.0,
+          "lng_otto": 0.0,
+          "lng_diesel": 0.0,
+          "fame": -0.01,
+          "hvo": 0.0,
+          "meoh_green": 0.0,
+          "meoh_grey": 0.0,
+          "nh3_green": -0.01,
+          "nh3_grey": 0.0,
+          "h2_green": 0.0
+        }
+      }
+    },
+    {
+      "id": "N03",
+      "quantity": "上游逸散 CH4 由 GWP20 列反解（lng_otto / lng_diesel 应一致）",
+      "result": "PASS",
+      "tolerance": "≤0.005 g/MJ",
+      "detail": {
+        "implied_gCH4_per_MJ": {
+          "lng_otto": 0.11,
+          "lng_diesel": 0.11
+        }
+      }
+    },
+    {
+      "id": "N04",
+      "quantity": "逃逸敏感性表 9 行（CH4、WtW@100、WtW@20、超额 tCO2e/PJ=1000·g/MJ）独立复算",
+      "result": "PASS",
+      "tolerance": "≤显示位（0.01 gCO2e/MJ；1 t/PJ）",
+      "detail": {
+        "worst_row": {
+          "slip_pct": 0.1,
+          "d_ch4": 3e-05,
+          "d_wtw100": 0.006,
+          "d_wtw20": -0.002,
+          "d_excess_t_per_PJ": -0.2
+        },
+        "rows": 9
+      }
+    },
+    {
+      "id": "N05",
+      "quantity": "逃逸斜率与 Otto/VLSFO 交叉逃逸率（解析）",
+      "result": "PASS",
+      "tolerance": "6.208 / 2.7550 / 2.30%",
+      "detail": {
+        "slope100_gCO2e_per_MJ_per_slipPct": 6.2083,
+        "slope20": 17.1042,
+        "ratio": 2.755,
+        "crossover_slip_pct": 2.301
+      }
+    },
+    {
+      "id": "N06",
+      "quantity": "罚金表 6 船×6 年：按 P_k = 2400/3.73756e6·E·(GI−L_k) 联合最小二乘反解 (GI, E) 并回代",
+      "result": "PASS",
+      "tolerance": "残差 ≤ GI 两位显示引入的界限 0.005/ΔGI",
+      "detail": {
+        "worst_residual_over_display_rounding_bound": 0.001,
+        "max_abs_rel_residual_pct": 0.0011,
+        "rows": [
+          {
+            "row": "BC-82k / HFO",
+            "gi_printed": 90.55,
+            "gi_fitted": 90.5527,
+            "gi_display_residual": 0.0027,
+            "printed_eur": [
+              113388.0,
+              453432.0,
+              1176028.0,
+              2578712.0,
+              5214059.0,
+              6744261.0
+            ],
+            "recomputed_eur": [
+              113387.7,
+              453432.5,
+              1176027.6,
+              2578712.3,
+              5214059.3,
+              6744260.7
+            ],
+            "rel_residual_pct": [
+              -0.0003,
+              0.0001,
+              -0.0,
+              0.0,
+              0.0,
+              -0.0
+            ],
+            "annual_energy_TJ_fitted": 145.227
+          },
+          {
+            "row": "BC-82k / VLSFO",
+            "gi_printed": 90.22,
+            "gi_fitted": 90.2175,
+            "gi_display_residual": -0.0025,
+            "printed_eur": [
+              82126.0,
+              422171.0,
+              1144766.0,
+              2547450.0,
+              5182797.0,
+              6712999.0
+            ],
+            "recomputed_eur": [
+              82126.0,
+              422170.8,
+              1144765.9,
+              2547450.5,
+              5182797.3,
+              6712998.7
+            ],
+            "rel_residual_pct": [
+              0.0,
+              -0.0001,
+              -0.0,
+              0.0,
+              0.0,
+              -0.0
+            ],
+            "annual_energy_TJ_fitted": 145.227
+          },
+          {
+            "row": "BC-82k / MGO",
+            "gi_printed": 89.65,
+            "gi_fitted": 89.6458,
+            "gi_display_residual": -0.0042,
+            "printed_eur": [
+              28813.0,
+              368857.0,
+              1091453.0,
+              2494137.0,
+              5129484.0,
+              6659686.0
+            ],
+            "recomputed_eur": [
+              28812.7,
+              368857.5,
+              1091452.6,
+              2494137.3,
+              5129484.3,
+              6659685.7
+            ],
+            "rel_residual_pct": [
+              -0.0011,
+              0.0001,
+              -0.0,
+              0.0,
+              0.0,
+              -0.0
+            ],
+            "annual_energy_TJ_fitted": 145.227
+          },
+          {
+            "row": "LNGC-174k / LNG-Otto",
+            "gi_printed": 95.18,
+            "gi_fitted": 95.1793,
+            "gi_display_residual": -0.0007,
+            "printed_eur": [
+              544842.0,
+              884887.0,
+              1607482.0,
+              3010167.0,
+              5645514.0,
+              7175715.0
+            ],
+            "recomputed_eur": [
+              544842.2,
+              884886.9,
+              1607482.1,
+              3010166.8,
+              5645513.8,
+              7175715.2
+            ],
+            "rel_residual_pct": [
+              0.0,
+              -0.0,
+              0.0,
+              -0.0,
+              -0.0,
+              0.0
+            ],
+            "annual_energy_TJ_fitted": 145.227
+          },
+          {
+            "row": "LNGC-174k / LNG-Diesel",
+            "gi_printed": 77.18,
+            "gi_fitted": 77.1751,
+            "gi_display_residual": -0.0049,
+            "printed_eur": [
+              0.0,
+              0.0,
+              0.0,
+              1331189.0,
+              3966536.0,
+              5496738.0
+            ],
+            "recomputed_eur": [
+              0.0,
+              0.0,
+              0.0,
+              1331188.9,
+              3966536.2,
+              5496737.9
+            ],
+            "rel_residual_pct": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0,
+              0.0,
+              -0.0
+            ],
+            "annual_energy_TJ_fitted": 145.227
+          },
+          {
+            "row": "BC-82k / FAME(B20)",
+            "gi_printed": 43.22,
+            "gi_fitted": 43.2184,
+            "gi_display_residual": -0.0016,
+            "printed_eur": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              839899.0,
+              2446610.0
+            ],
+            "recomputed_eur": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              839899.0,
+              2446610.0
+            ],
+            "rel_residual_pct": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "annual_energy_TJ_fitted": 152.489
+          }
+        ],
+        "limits_gCO2e_per_MJ": [
+          89.3368,
+          85.6904,
+          77.9418,
+          62.9004,
+          34.6408,
+          18.232
+        ]
+      }
+    },
+    {
+      "id": "N07",
+      "quantity": "六船罚金表是否用各自船型的年度能量：非 FAME 五行的拟合能量是否落在同一值上",
+      "result": "PASS",
+      "tolerance": "非 FAME 五行 ≤0.5%（超出即说明各船有各自能量）",
+      "detail": {
+        "fitted_energy_TJ": {
+          "BC-82k / HFO": 145.227,
+          "BC-82k / VLSFO": 145.227,
+          "BC-82k / MGO": 145.227,
+          "LNGC-174k / LNG-Otto": 145.227,
+          "LNGC-174k / LNG-Diesel": 145.227,
+          "BC-82k / FAME(B20)": 152.489
+        },
+        "non_fame_spread_pct": 0.0,
+        "fitted_gi": {
+          "BC-82k / HFO": 90.5527,
+          "BC-82k / VLSFO": 90.2175,
+          "BC-82k / MGO": 89.6458,
+          "LNGC-174k / LNG-Otto": 95.1793,
+          "LNGC-174k / LNG-Diesel": 77.1751,
+          "BC-82k / FAME(B20)": 43.2184
+        },
+        "note": "观察成立即为 FN-6537-04-01 的依据：LNGC-174k 两行与 BC-82k 三行同能量"
+      }
+    },
+    {
+      "id": "N08",
+      "quantity": "联营基线（各船独立履约罚金之和，2035）== 表 3.3 的 2035 列之和",
+      "result": "MISMATCH",
+      "tolerance": "≤1 EUR",
+      "detail": {
+        "pooling_baseline_eur": 4830794.0,
+        "table_3_3_2035_sum_eur": 5019729.0,
+        "gap_eur": -188935.0,
+        "gap_pct": -3.764
+      }
+    },
+    {
+      "id": "N09",
+      "quantity": "纯联营（不改燃料）罚金 = max(0, Σ E_i·(GI_i − 限值)) / 3.73756e6 × 2400",
+      "result": "MISMATCH",
+      "tolerance": "≤1 EUR",
+      "detail": {
+        "pool_terms_GI_minus_limit": {
+          "BC-82k / HFO": 12.6109,
+          "BC-82k / VLSFO": 12.2757,
+          "BC-82k / MGO": 11.704,
+          "LNGC-174k / LNG-Otto": 17.2375,
+          "LNGC-174k / LNG-Diesel": -0.7667,
+          "BC-82k / FAME(B20)": -34.7234
+        },
+        "recomputed_eur": 1548183.1,
+        "declared_eur": 535433.0,
+        "ratio_declared_over_recomputed": 0.346
+      }
+    },
+    {
+      "id": "N10",
+      "quantity": "表 3.5“能量等价切换”自证：12 条燃料的年度能量应相同（能量等价）",
+      "result": "MISMATCH",
+      "tolerance": "≤1%",
+      "detail": {
+        "min_TJ": 72.03,
+        "max_TJ": 430.3,
+        "spread_pct": 83.26,
+        "mass_times_LHV_minus_printed_TJ": {
+          "hfo": -0.0,
+          "vlsfo": 0.0,
+          "mgo": -0.0,
+          "lng_otto": 0.0,
+          "lng_diesel": 0.0,
+          "fame": 0.01,
+          "hvo": -0.0,
+          "meoh_green": -0.0,
+          "meoh_grey": -0.0,
+          "nh3_green": 0.0,
+          "nh3_grey": 0.0,
+          "h2_green": 0.01
+        },
+        "note": "各行 质量×LHV 与印出的年能量一致（≤0.05 TJ），说明表内自洽；不自洽的是“能量等价”这个标题性断言"
+      }
+    },
+    {
+      "id": "N11",
+      "quantity": "甲醇行若真按能量等价，年燃油应 ≈7298 t，实际印 3657.6 t",
+      "result": "MISMATCH",
+      "tolerance": "≤5%",
+      "detail": {
+        "printed_t": 3657.6,
+        "energy_equivalent_t": 7298.0,
+        "printed_TJ": 72.79,
+        "hfo_TJ": 145.23
+      }
+    },
+    {
+      "id": "N12",
+      "quantity": "六级限值台阶内部一致（91.16×(1−r)，r=2/6/14.5/31/62/80%）",
+      "result": "PASS",
+      "tolerance": null,
+      "detail": {
+        "limits_gCO2e_per_MJ": [
+          89.3368,
+          85.6904,
+          77.9418,
+          62.9004,
+          34.6408,
+          18.232
+        ],
+        "note": "台阶百分比与 91.16/2400 均为转录值，报告自述 WITHHELD；此处只验内部自洽"
+      }
+    },
+    {
+      "id": "N14",
+      "quantity": "正文图引用=5、平台 figures=5、探测状态与 manifest 记录一致",
+      "result": "PASS",
+      "tolerance": null,
+      "detail": {
+        "body_refs": 5,
+        "probes": 5,
+        "probe_statuses": [
+          404,
+          404,
+          404,
+          404,
+          404
+        ],
+        "paths": [
+          "../../artifacts/fueleu_in39n04/fig_intensity_stack.png",
+          "../../artifacts/fueleu_in39n04/fig_slip_sensitivity.png",
+          "../../artifacts/fueleu_in39n04/fig_compliance_margin.png",
+          "../../artifacts/fueleu_in39n04/fig_pooling.png",
+          "../../artifacts/fueleu_in39n04/fig_energy_chain.png"
+        ]
+      }
+    }
+  ],
+  "checks_not_run": [
+    {
+      "id": "C06",
+      "item": "asset_manifest.json 未按仓内 asset_manifest.v1 schema 判 pass/fail",
+      "why": "仓内该 schema 的 package_id/report_id 被 const 钉死为 wp-448-01/448（单报告夹具），对 report 6537 不适格；本包改用派生形状检查（C06b）+ 契约验收项逐条重算"
+    },
+    {
+      "id": "C17b",
+      "item": "E5 quote_hash_consistent",
+      "why": "本包 locator 未提供 content_hash，E5 无对象可验"
+    },
+    {
+      "id": "N00",
+      "item": "报告引用的代码与 case_report.json（backend/modules/fueleu、artifacts/…）",
+      "why": "这些路径在船舶平台仓，不在本工作树；本次审核不能读代码，只能对报告自印数字做独立复算"
+    },
+    {
+      "id": "N00b",
+      "item": "法规原文（EUR-Lex 附件 II / 91.16 / 2400 EUR/t）外部核对",
+      "why": "离线环境不可达；报告自述 external_verification=WITHHELD，本审核不升级任何证据等级"
+    },
+    {
+      "id": "N00c",
+      "item": "上游 wp-6537-01 的平台门禁结论（gate-report.json）",
+      "why": "上游目录未包含 gate-report.json；本审核以独立重算代替，不引用生产自检"
+    }
+  ],
+  "locator_diagnostics": {
+    "n_locators": 37,
+    "fields": [
+      "figures",
+      "markdown"
+    ],
+    "all_resolvable_in_declared_field": true,
+    "quote_unique_in_field": true,
+    "start_char_is_quote_start": true,
+    "strict_span_equals_quote_violations": [
+      "A01"
+    ],
+    "wide_span_assets": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06"
+    ],
+    "detail": [
+      {
+        "asset_id": "A01",
+        "asset_class": "report_markdown",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 40,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 0,
+        "end_char": 10530,
+        "span_len": 10530,
+        "strict_span_equals_quote": false,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A02",
+        "asset_class": "figure_platform_metadata",
+        "field": "figures",
+        "index": 0,
+        "quote_len": 26,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": false,
+        "start_char": 0,
+        "end_char": 10530,
+        "span_len": 10530,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A03",
+        "asset_class": "figure_platform_metadata",
+        "field": "figures",
+        "index": 1,
+        "quote_len": 46,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": false,
+        "start_char": 0,
+        "end_char": 10530,
+        "span_len": 10530,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A04",
+        "asset_class": "figure_platform_metadata",
+        "field": "figures",
+        "index": 2,
+        "quote_len": 61,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": false,
+        "start_char": 0,
+        "end_char": 10530,
+        "span_len": 10530,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A05",
+        "asset_class": "figure_platform_metadata",
+        "field": "figures",
+        "index": 3,
+        "quote_len": 27,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": false,
+        "start_char": 0,
+        "end_char": 10530,
+        "span_len": 10530,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A06",
+        "asset_class": "figure_platform_metadata",
+        "field": "figures",
+        "index": 4,
+        "quote_len": 61,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": false,
+        "start_char": 0,
+        "end_char": 10530,
+        "span_len": 10530,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A101",
+        "asset_class": "figure_body_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 82,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 7326,
+        "end_char": 7408,
+        "span_len": 82,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A102",
+        "asset_class": "figure_body_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 84,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 7548,
+        "end_char": 7632,
+        "span_len": 84,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A103",
+        "asset_class": "figure_body_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 86,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 7725,
+        "end_char": 7811,
+        "span_len": 86,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A104",
+        "asset_class": "figure_body_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 66,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 7857,
+        "end_char": 7923,
+        "span_len": 66,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A105",
+        "asset_class": "figure_body_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 76,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 7982,
+        "end_char": 8058,
+        "span_len": 76,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A201",
+        "asset_class": "markdown_table",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 298,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 1239,
+        "end_char": 1537,
+        "span_len": 298,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A202",
+        "asset_class": "markdown_table",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 1042,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 1587,
+        "end_char": 2629,
+        "span_len": 1042,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A203",
+        "asset_class": "markdown_table",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 529,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 4042,
+        "end_char": 4571,
+        "span_len": 529,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A204",
+        "asset_class": "markdown_table",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 484,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 4697,
+        "end_char": 5181,
+        "span_len": 484,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A205",
+        "asset_class": "markdown_table",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 625,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 5423,
+        "end_char": 6048,
+        "span_len": 625,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A206",
+        "asset_class": "markdown_table",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 245,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 6150,
+        "end_char": 6395,
+        "span_len": 245,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A207",
+        "asset_class": "markdown_table",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 703,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 6611,
+        "end_char": 7314,
+        "span_len": 703,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A208",
+        "asset_class": "markdown_table",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 410,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 9288,
+        "end_char": 9698,
+        "span_len": 410,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A301",
+        "asset_class": "code_block",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 96,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 907,
+        "end_char": 1003,
+        "span_len": 96,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A302",
+        "asset_class": "code_block",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 285,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 2687,
+        "end_char": 2972,
+        "span_len": 285,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A303",
+        "asset_class": "code_block",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 155,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 3354,
+        "end_char": 3509,
+        "span_len": 155,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A304",
+        "asset_class": "code_block",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 201,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 10115,
+        "end_char": 10316,
+        "span_len": 201,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A401",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 117,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 42,
+        "end_char": 159,
+        "span_len": 117,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A402",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 207,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 10322,
+        "end_char": 10529,
+        "span_len": 207,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A403",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 101,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 3912,
+        "end_char": 4013,
+        "span_len": 101,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A404",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 101,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 3912,
+        "end_char": 4013,
+        "span_len": 101,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A405",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 207,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 10322,
+        "end_char": 10529,
+        "span_len": 207,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A406",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 48,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 3300,
+        "end_char": 3348,
+        "span_len": 48,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A407",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 36,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 3067,
+        "end_char": 3103,
+        "span_len": 36,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A408",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 30,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 2651,
+        "end_char": 2681,
+        "span_len": 30,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A409",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 26,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 3515,
+        "end_char": 3541,
+        "span_len": 26,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A410",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 48,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 3300,
+        "end_char": 3348,
+        "span_len": 48,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A411",
+        "asset_class": "path_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 207,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 10322,
+        "end_char": 10529,
+        "span_len": 207,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A501",
+        "asset_class": "external_regulatory_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 216,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 619,
+        "end_char": 835,
+        "span_len": 216,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A502",
+        "asset_class": "external_regulatory_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 257,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 8148,
+        "end_char": 8405,
+        "span_len": 257,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      },
+      {
+        "asset_id": "A503",
+        "asset_class": "external_regulatory_reference",
+        "field": "markdown",
+        "index": null,
+        "quote_len": 65,
+        "resolvable_in_declared_field": true,
+        "occurrences_in_field": 1,
+        "quote_also_in_markdown": true,
+        "start_char": 9385,
+        "end_char": 9450,
+        "span_len": 65,
+        "strict_span_equals_quote": true,
+        "quote_at_start_char": true
+      }
+    ]
+  },
+  "findings": [
+    {
+      "finding_id": "FN-6537-04-01",
+      "severity": "major",
+      "title": "表 3.3 的六船罚金共用同一套年度能量：五条非 FAME 船拟合出同一值 145.23 TJ（LNGC-174k 与 BC-82k 无差别），FAME 行 152.49 TJ = 1.05×（sfoc_scale）",
+      "evidence": {
+        "fitted_annual_energy_TJ": {
+          "BC-82k / HFO": 145.227,
+          "BC-82k / VLSFO": 145.227,
+          "BC-82k / MGO": 145.227,
+          "LNGC-174k / LNG-Otto": 145.227,
+          "LNGC-174k / LNG-Diesel": 145.227,
+          "BC-82k / FAME(B20)": 152.489
+        },
+        "fitted_gi": {
+          "BC-82k / HFO": 90.5527,
+          "BC-82k / VLSFO": 90.2175,
+          "BC-82k / MGO": 89.6458,
+          "LNGC-174k / LNG-Otto": 95.1793,
+          "LNGC-174k / LNG-Diesel": 77.1751,
+          "BC-82k / FAME(B20)": 43.2184
+        },
+        "quote": "| LNGC-174k / LNG-Otto | 95.18 | 544,842 |",
+        "method": "N06：按 P_k=c·E·(GI−L_k) 对六行罚金联合最小二乘，六行残差 ≤ 显示舍入界限"
+      },
+      "impact": "174k m³ LNG 运输船的年度能耗量级显著大于 82k DWT 散货船；表列 LNGC 罚金因此是“同能量、不同 GI”的构造值，不是该船型的合规罚金。报告 §5 未声明这条简化。",
+      "scope": "source-report",
+      "blocking": false
+    },
+    {
+      "finding_id": "FN-6537-04-02",
+      "severity": "major",
+      "title": "同一年（2035）同一限值下，联营基线罚金与表 3.3 独立罚金之和不一致（差 -3.76%）",
+      "evidence": {
+        "pooling_declared_eur": 4830794.0,
+        "table_3_3_2035_sum_eur": 5019729.0,
+        "gap_eur": -188935.0,
+        "quotes": [
+          "| 各船独立履约罚金之和 | 4,830,794 EUR |",
+          "| BC-82k / HFO | 90.55 | 113,388 | 453,432 | 1,176,028 |"
+        ]
+      },
+      "impact": "联营“纯节省 4,295,361”以该基线为减数，3.76% 的基线差直接传导到节省额；两处至少一处用了未印出的船集/能量假设。",
+      "scope": "source-report",
+      "blocking": false
+    },
+    {
+      "finding_id": "FN-6537-04-03",
+      "severity": "major",
+      "title": "纯联营罚金无法由报告自印的 (GI, 年度能量) 复算：声明值为复算值的 34.6%",
+      "evidence": {
+        "recomputed_eur": 1548183.1,
+        "declared_eur": 535433.0,
+        "quote": "| 全部入池（不改燃料）罚金 | 535,433 EUR |",
+        "assumption": "池内船集/能量取表 3.3 六行（2035 限值 77.94）"
+      },
+      "impact": "“纯联营罚金节省 4,295,361”与后续全部节省额都以它为前提；在船集与能量未印出的情况下，这组数字不可独立复算。",
+      "scope": "source-report",
+      "blocking": false
+    },
+    {
+      "finding_id": "FN-6537-04-10",
+      "severity": "minor",
+      "title": "联营 MILP 的燃料单价矩阵未印出（只有总成本与最优组合），最优性不可独立复算",
+      "evidence": {
+        "quote": "每船一组离散燃料选项（GI + 单位能量价格，能量需求给定）",
+        "printed": "MILP 最优总成本（燃料+罚金） | 11,436,662 EUR",
+        "recomputed_note": "GI 可由燃料表复算；单位能量价格是未印出的声明输入"
+      },
+      "impact": "“六船全部切 lng_diesel”这一退化最优解对单价假设极敏感，外部复核无法判断它是物理结论还是价格假设的产物。",
+      "scope": "source-report",
+      "blocking": false
+    },
+    {
+      "finding_id": "FN-6537-04-04",
+      "severity": "major",
+      "title": "表 3.5 标题为“能量等价切换”，实测 12 行年度能量 72.03–430.3 TJ（跨 6 倍），甲醇/氨约减半",
+      "evidence": {
+        "energy_range_TJ": [
+          72.03,
+          430.3
+        ],
+        "meoh_green_row": {
+          "t": 3657.6,
+          "tj": 72.79,
+          "co2": 5029.2,
+          "ghg": 5047.1
+        },
+        "nh3_green_row": {
+          "t": 3872.7,
+          "tj": 72.03,
+          "co2": 0.0,
+          "ghg": 98.3
+        },
+        "quote": "| `meoh_green` | 3,657.6 | 72.79 | 5,029.2 | 5,047.1 |",
+        "energy_equivalent_mass_t": 7298.0,
+        "recomputed": "质量×LHV 与印出 TJ 一致 → 表内算术自洽，标题断言不成立"
+      },
+      "impact": "该表的“年 TtW CO2 / GHG 吨数”不能跨燃料横向比较（强度 GI 可比，总量不可比）；摘要与 §3.5 未加此限定，下游极易摘成“换绿色甲醇减排 50%”。",
+      "scope": "source-report",
+      "blocking": false
+    },
+    {
+      "finding_id": "FN-6537-04-05",
+      "severity": "minor",
+      "title": "判据①“附件 II 默认 WtT 复现”严格说是内部一致性闸，措辞易被摘成外部复现",
+      "evidence": {
+        "quote": "| ① | 附件 II 默认 WtT 复现 | 12/12 条通过，最大相对偏差 0.260% |",
+        "disclosure_quote": "**因此判据①是内部一致性闸**（引擎的分项分解 vs 仓库内锚），不是外部合规验证。"
+      },
+      "impact": "§5.1 已如实披露，不构成过度声称；风险在 03 抽取时丢掉披露定语。",
+      "scope": "source-report",
+      "blocking": false
+    },
+    {
+      "finding_id": "FN-6537-04-06",
+      "severity": "minor",
+      "title": "3 行 TtW 用印出的 LHV/CF/N2O(0.0006) 复算残差 -0.08–-0.05 gCO2e/MJ（≤0.12%）",
+      "evidence": {
+        "abs_residual_g_per_MJ": {
+          "fame": -0.0509,
+          "hvo": -0.0517,
+          "meoh_green": -0.0807,
+          "meoh_grey": -0.0807
+        },
+        "methanol": {
+          "printed_cf": 1.375,
+          "recomputed": 69.2593,
+          "printed": 69.34
+        }
+      },
+      "impact": "量级 0.07–0.12%，远小于 3% 判据；但“TtW 完全建立在化学计量与含碳因子上”的强表述要求把每位常数印全，或说明这三行另有未印出的项。",
+      "scope": "source-report",
+      "blocking": false
+    },
+    {
+      "finding_id": "FN-6537-04-07",
+      "severity": "major",
+      "title": "上游 locator 把“对象跨度”写进 start_char/end_char，6/37 条严格 field[start:end]==quote 不成立",
+      "evidence": {
+        "assets": [
+          {
+            "asset_id": "A01",
+            "field": "markdown",
+            "span": [
+              0,
+              10530
+            ],
+            "quote_len": 40
+          },
+          {
+            "asset_id": "A02",
+            "field": "figures",
+            "span": [
+              0,
+              10530
+            ],
+            "quote_len": 26
+          },
+          {
+            "asset_id": "A03",
+            "field": "figures",
+            "span": [
+              0,
+              10530
+            ],
+            "quote_len": 46
+          },
+          {
+            "asset_id": "A04",
+            "field": "figures",
+            "span": [
+              0,
+              10530
+            ],
+            "quote_len": 61
+          },
+          {
+            "asset_id": "A05",
+            "field": "figures",
+            "span": [
+              0,
+              10530
+            ],
+            "quote_len": 27
+          },
+          {
+            "asset_id": "A06",
+            "field": "figures",
+            "span": [
+              0,
+              10530
+            ],
+            "quote_len": 61
+          }
+        ],
+        "quote_property": "全部 quote 在各自字段内逐字可定位且唯一（C12/C13 绿）"
+      },
+      "impact": "本次登记不判失败（01 只登记，G2 面向 03 的 claim locator）；但 03 若沿用该字段语义，E4 会判 QUOTE_NOT_AT_LOCATOR。建议 03 用 start_char..start_char+len(quote) 表示 quote 偏移。",
+      "scope": "source-report",
+      "blocking": false
+    },
+    {
+      "finding_id": "FN-6537-04-09",
+      "severity": "informational",
+      "title": "locator 使用保留词 verified:true 表示字节比对通过（不在 S9 扫描面，无契约违反）",
+      "evidence": {
+        "markers": [
+          "verified"
+        ],
+        "scanned_surface": "claims/evidence/provenance/summary"
+      },
+      "impact": "三轴分离律下“verified”属验证轴的保留词；建议改 checked/byte_match 以免下游误读。",
+      "scope": "source-report",
+      "blocking": false
+    },
+    {
+      "finding_id": "FN-6537-04-08",
+      "severity": "minor",
+      "title": "5 张图的字节在本平台不可达（探测全 404）：登记为 metadata_only 是诚实的，但图像内容不可复核",
+      "evidence": {
+        "probe_statuses": [
+          404,
+          404,
+          404,
+          404,
+          404
+        ],
+        "paths": [
+          "../../artifacts/fueleu_in39n04/fig_intensity_stack.png",
+          "../../artifacts/fueleu_in39n04/fig_slip_sensitivity.png",
+          "../../artifacts/fueleu_in39n04/fig_compliance_margin.png",
+          "../../artifacts/fueleu_in39n04/fig_pooling.png",
+          "../../artifacts/fueleu_in39n04/fig_energy_chain.png"
+        ],
+        "captions_registered": 5
+      },
+      "impact": "图像承载“LNG-Otto 高于化石油品”“MILP/枚举对账”等视觉论断；本次只能靠表内数字复核。",
+      "scope": "source-report",
+      "blocking": false
+    }
+  ],
+  "required_fixes": [
+    {
+      "fix_id": "FIX-1",
+      "owner_package": "wp-6537-01",
+      "severity": "major",
+      "item": "manifest.integrity.quote_uniqueness 现写“all locators verified md[start:end]==quote”；实测 6/37 条 locator 的 start_char/end_char 是对象跨度（A01 为全文 0..10530；A02–A06 为 figures 元数据上沿用的 0..10530），不等于 quote 边界。",
+      "acceptance": "二选一并留痕：(a) 改述为“md[start_char:start_char+len(quote)]==quote 且 quote 唯一”，或 (b) 把 markdown 字段 locator 的 end_char 改成 quote 末端，figures 字段去掉与之无关的字符偏移、只留 field+index+quote。",
+      "reopen_condition": "改述/改编码后 quote 可定位性不得回退（C12/C13 必须仍全绿）。"
+    }
+  ],
+  "carry_forward_constraints": [
+    {
+      "for_package": "wp-6537-03",
+      "finding": "FN-6537-04-04",
+      "constraint": "不得把表 3.5 摘成“能量等价切换”：12 行年度能量 72.03–430.3 TJ（跨 6 倍），甲醇 3657.6 t 若真能量等价应为 7298.0 t。跨燃料只可比较强度 GI，不可比较年排放吨数。"
+    },
+    {
+      "for_package": "wp-6537-03",
+      "finding": "FN-6537-04-01",
+      "constraint": "表 3.3 六船罚金共用同一年度能量：五条非 FAME 船联合拟合 E=145.2 TJ（范围 145.2–145.2），FAME 行 152.5 TJ；不得摘成“LNGC-174k 罚金 = 某船型真实罚金”。"
+    },
+    {
+      "for_package": "wp-6537-03",
+      "finding": "FN-6537-04-02/FN-6537-04-03",
+      "constraint": "联营基线与纯联营罚金互不自洽且不可由自印数字复算（基线差 -188,935 EUR；纯联营罚金声明 535,433 vs 复算 1,548,183），抽取时必须保留“不可复算/声明输入”限定，或等生产方补印船集与单价。"
+    },
+    {
+      "for_package": "wp-6537-03",
+      "finding": "FN-6537-04-05",
+      "constraint": "判据①“附件 II 默认 WtT 复现”须连同 §5.1 的披露句一起抽取（内部一致性闸，external_verification=WITHHELD），不得单独摘成“复现法规默认值”。"
+    },
+    {
+      "for_package": "wp-6537-03",
+      "finding": "FN-6537-04-06",
+      "constraint": "TtW 三行（fame/hvo/meoh）用印出常数复算残差 -0.08–-0.00 gCO2e/MJ（≤0.12%），须标注“口径/常数未印全”，不得摘成“TtW 完全可复算”。"
+    },
+    {
+      "for_package": "wp-6537-03",
+      "finding": "FN-6537-04-10",
+      "constraint": "联营 MILP 结论依赖未印出的单位能量价格矩阵，最优组合（六船全切 lng_diesel）不得摘成与价格无关的物理结论。"
+    }
+  ],
+  "decisions_not_made": [
+    "未把任何断言标成 verified / platform-confirmed——验证轴由平台门与验证单计算（V1–V5），本审核不写。",
+    "未修改上游产物、未改写源报告、未读/写其它 report_id。",
+    "未对法规原文（EUR-Lex）做外部核对：离线不可达，证据等级维持 WITHHELD（N00b）。",
+    "未运行报告引用的代码与 case_report.json：路径不在本工作树（N00）。"
+  ],
+  "upstream_packages_completed": {
+    "wp-6537-01": {
+      "present": true,
+      "claims": 0,
+      "zero_claim_legal": true,
+      "source_hash_matches": true,
+      "artifact_hashes": {
+        "kf_result.json": "sha256:546f3b32c2d864e1f235efafd020d065518cb91be96ef4a89012219b17f12429",
+        "asset_manifest.json": "sha256:5afa3314a56cda0010c8de63fea5f5218d8009f8a6388220ead0f5cf668468a2"
+      },
+      "independent_recompute": "37/37 locator 可定位且唯一；counts 一致；无自封验证字段",
+      "platform_gate_report": "not_available（上游目录无 gate-report.json，N00c）"
+    }
+  },
+  "summary": {
+    "checks_run": 23,
+    "checks_failed": 2,
+    "numeric_checks": 13,
+    "numeric_mismatch": 5,
+    "checks_not_run": 5,
+    "findings": 10,
+    "findings_by_severity": {
+      "blocking": 0,
+      "major": 5,
+      "minor": 4,
+      "informational": 1
+    },
+    "blocking": 0
+  },
+  "review_event_id": "tkr:wp-6537-04:request-changes",
+  "review_events": [
+    {
+      "id": "tkr:wp-6537-04:request-changes",
+      "object_ref": "wp-6537-01",
+      "object_version": "sha256:5afa3314a56cda0010c8de63fea5f5218d8009f8a6388220ead0f5cf668468a2",
+      "decision": "request-changes",
+      "reviewer": {
+        "id": "agent/m15847",
+        "reviewer_type": "agent",
+        "role": "red-team-reviewer"
+      },
+      "reviewed_at": "2026-11-12T03:40:00Z",
+      "policy_version": "ke-review-v0.1",
+      "rationale": "登记主体合格（37/37 资产在各自声明字段内逐字可定位、源哈希逐位一致、零 claim 合法、无自封验证字段），但 manifest 的 integrity.quote_uniqueness 断言与 6/37 条 locator 的 start_char/end_char 语义不符（对象跨度 vs quote 偏移），需改述或改编码；另 7 条源报告数字缺陷须作为 wp-6537-03 的 carry-forward 约束（见 review_report.json）。",
+      "findings": [
+        {
+          "severity": "major",
+          "finding": "FN-6537-04-01 表 3.3 的六船罚金共用同一套年度能量：五条非 FAME 船拟合出同一值 145.23 TJ（LNGC-174k 与 BC-82k 无差别），FAME 行 152.49 TJ = 1.05×（sfoc_scale）"
+        },
+        {
+          "severity": "major",
+          "finding": "FN-6537-04-02 同一年（2035）同一限值下，联营基线罚金与表 3.3 独立罚金之和不一致（差 -3.76%）"
+        },
+        {
+          "severity": "major",
+          "finding": "FN-6537-04-03 纯联营罚金无法由报告自印的 (GI, 年度能量) 复算：声明值为复算值的 34.6%"
+        },
+        {
+          "severity": "minor",
+          "finding": "FN-6537-04-10 联营 MILP 的燃料单价矩阵未印出（只有总成本与最优组合），最优性不可独立复算"
+        },
+        {
+          "severity": "major",
+          "finding": "FN-6537-04-04 表 3.5 标题为“能量等价切换”，实测 12 行年度能量 72.03–430.3 TJ（跨 6 倍），甲醇/氨约减半"
+        },
+        {
+          "severity": "minor",
+          "finding": "FN-6537-04-05 判据①“附件 II 默认 WtT 复现”严格说是内部一致性闸，措辞易被摘成外部复现"
+        },
+        {
+          "severity": "minor",
+          "finding": "FN-6537-04-06 3 行 TtW 用印出的 LHV/CF/N2O(0.0006) 复算残差 -0.08–-0.05 gCO2e/MJ（≤0.12%）"
+        },
+        {
+          "severity": "major",
+          "finding": "FN-6537-04-07 上游 locator 把“对象跨度”写进 start_char/end_char，6/37 条严格 field[start:end]==quote 不成立"
+        },
+        {
+          "severity": "informational",
+          "finding": "FN-6537-04-09 locator 使用保留词 verified:true 表示字节比对通过（不在 S9 扫描面，无契约违反）"
+        },
+        {
+          "severity": "minor",
+          "finding": "FN-6537-04-08 5 张图的字节在本平台不可达（探测全 404）：登记为 metadata_only 是诚实的，但图像内容不可复核"
+        }
+      ]
+    }
+  ]
+}
