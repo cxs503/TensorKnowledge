@@ -1,0 +1,755 @@
+{
+  "package_id": "wp-9777-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9777",
+  "provenance": {
+    "source_hash": "sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15671",
+    "emitted_at": "2026-11-12T01:43:30.272996+00:00",
+    "notes": "sha256 recomputed from GET /tensor/reports/9777 markdown UTF-8 bytes (4341 chars); equals contract source_hash sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "manifest_version": "1.0",
+      "package_id": "wp-9777-01",
+      "task_type": "01-asset-registration",
+      "report_id": "9777",
+      "lane": "A",
+      "generated_at": "2026-11-12T01:43:29.768857+00:00",
+      "producer": "kf-worker/m15671",
+      "source": {
+        "uri": "tensor://reports/9777",
+        "report_id": "9777",
+        "source_uri": "tensor://reports/9777",
+        "field": "markdown",
+        "source_field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7",
+        "source_hash": "sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7",
+        "contract_source_hash": "sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7",
+        "hash_match": true,
+        "chars": 4341,
+        "contract_chars": 4341,
+        "chars_match_contract": true,
+        "bytes_utf8": 6651,
+        "lines": 70,
+        "has_crlf": false,
+        "has_trailing_newline": true,
+        "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based",
+        "fetched_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9777",
+        "title": "精确 DSM Timoshenko 梁模态验收审计：7/7 判据 PASS、dsbeam 三处缺陷修复、m6117 6.28% 归因闭环",
+        "scenario_key": "structural-dynamics/dsm-beam-modal",
+        "contract_title": "精确 DSM Timoshenko 梁模态验收审计：7/7 判据 PASS、dsbeam 三处缺陷修复、m6117 6.28% 归因闭环",
+        "contract_scenario_key": "structural-dynamics/dsm-beam-modal",
+        "title_matches_contract": true,
+        "scenario_matches_contract": true,
+        "h1_title_in_markdown": "# 自由-自由 Timoshenko 梁精确 DSM 验收审计（节点 p423w2-n09）",
+        "h1_equals_record_title": false,
+        "mission_id": 8404,
+        "status": "published",
+        "created_at": "2026-11-09T08:30:05.170174+00:00",
+        "platform_tags": [
+          "DSM",
+          "Timoshenko",
+          "Wittrick-Williams",
+          "modal",
+          "TensorFEM",
+          "m6117",
+          "acceptance-audit"
+        ],
+        "platform_figures": [
+          {
+            "name": "fig1_spectrum.png",
+            "caption": "图1 精确 DSM 两极限：(左) 细长梁 (βL)² 与 EB 常数重合；(右) 深梁剪切+转动惯量致频率下降"
+          },
+          {
+            "name": "fig2_mode_shapes.png",
+            "caption": "图2 自由-自由 1–3 阶两场精确振型 w / ψ / 曲率（whipping 应力恢复用）"
+          },
+          {
+            "name": "fig3_wittrick_williams.png",
+            "caption": "图3 J(ω) 阶梯 vs 独立根普查零点；红点线为元素极点（J 在极点不跳）"
+          },
+          {
+            "name": "fig4_m6117_attribution.png",
+            "caption": "图4 m6117 归因：左 1–4 阶对比，右 偏差分解 +0.027 % / −5.89 % / 6.28 %"
+          },
+          {
+            "name": "fig5_random_sweep.png",
+            "caption": "图5 100 组随机样本：闭式相对差 vs 细长度；频率随 L 单调下降"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "source_document",
+          "label": "report 9777 markdown",
+          "in_report_section": "document",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 4341,
+            "start_line": 1,
+            "end_line": 70,
+            "quote": "# 自由-自由 Timoshenko 梁精确 DSM 验收审计（节点 p423w2-n09）",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET /tensor/reports/9777 markdown bytes -> sha256 recomputed locally",
+            "result": "resolved"
+          },
+          "note": "Whole-document asset: 4341 chars / 6651 UTF-8 bytes / 70 lines; sha256 sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7 matches the contract source_hash=True. Quote above = H1 line (locator spans the document, quote anchors its identity).",
+          "name": "report_9777.md",
+          "bytes_utf8": 6651,
+          "sha256": "sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "figure_reference",
+          "label": "图1 (fig1_spectrum.png)",
+          "in_report_section": "④ 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2948,
+            "end_char": 2966,
+            "start_line": 46,
+            "end_line": 46,
+            "quote": "图1 两个极限下的精确 DSM 频谱",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?",
+            "result": "unresolved"
+          },
+          "note": "Declared in the platform record metadata as name+caption and referenced in body prose by the label 图1. name_in_markdown=False, caption_in_markdown=False; the three candidate byte endpoints all return 404, so no figure bytes exist to hash -- registered as referenced_unresolved (no hash claimed).",
+          "name": "fig1_spectrum.png",
+          "caption_source": "record.figures[0].caption",
+          "figures_endpoint_probe": {
+            "/tensor/reports/9777/figures": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/artifacts": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/attachments": {
+              "http_status": 404,
+              "bytes": 22
+            }
+          }
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "figure_reference",
+          "label": "图2 (fig2_mode_shapes.png)",
+          "in_report_section": "④ 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2967,
+            "end_char": 2995,
+            "start_line": 46,
+            "end_line": 46,
+            "quote": "图2 自由-自由 1–3 阶两场精确振型（w/ψ/曲率）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?",
+            "result": "unresolved"
+          },
+          "note": "Declared in the platform record metadata as name+caption and referenced in body prose by the label 图2. name_in_markdown=False, caption_in_markdown=False; the three candidate byte endpoints all return 404, so no figure bytes exist to hash -- registered as referenced_unresolved (no hash claimed).",
+          "name": "fig2_mode_shapes.png",
+          "caption_source": "record.figures[1].caption",
+          "figures_endpoint_probe": {
+            "/tensor/reports/9777/figures": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/artifacts": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/attachments": {
+              "http_status": 404,
+              "bytes": 22
+            }
+          }
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "figure_reference",
+          "label": "图3 (fig3_wittrick_williams.png)",
+          "in_report_section": "④ 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2996,
+            "end_char": 3024,
+            "start_line": 46,
+            "end_line": 46,
+            "quote": "图3 J(ω) 阶梯 vs 独立根普查（极点处阶梯不跳）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?",
+            "result": "unresolved"
+          },
+          "note": "Declared in the platform record metadata as name+caption and referenced in body prose by the label 图3. name_in_markdown=False, caption_in_markdown=False; the three candidate byte endpoints all return 404, so no figure bytes exist to hash -- registered as referenced_unresolved (no hash claimed).",
+          "name": "fig3_wittrick_williams.png",
+          "caption_source": "record.figures[2].caption",
+          "figures_endpoint_probe": {
+            "/tensor/reports/9777/figures": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/artifacts": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/attachments": {
+              "http_status": 404,
+              "bytes": 22
+            }
+          }
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "figure_reference",
+          "label": "图4 (fig4_m6117_attribution.png)",
+          "in_report_section": "④ 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3025,
+            "end_char": 3036,
+            "start_line": 46,
+            "end_line": 46,
+            "quote": "图4 m6117 归因",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?",
+            "result": "unresolved"
+          },
+          "note": "Declared in the platform record metadata as name+caption and referenced in body prose by the label 图4. name_in_markdown=False, caption_in_markdown=False; the three candidate byte endpoints all return 404, so no figure bytes exist to hash -- registered as referenced_unresolved (no hash claimed).",
+          "name": "fig4_m6117_attribution.png",
+          "caption_source": "record.figures[3].caption",
+          "figures_endpoint_probe": {
+            "/tensor/reports/9777/figures": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/artifacts": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/attachments": {
+              "http_status": 404,
+              "bytes": 22
+            }
+          }
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "figure_reference",
+          "label": "图5 (fig5_random_sweep.png)",
+          "in_report_section": "④ 结果图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3037,
+            "end_char": 3052,
+            "start_line": 46,
+            "end_line": 46,
+            "quote": "图5 100 组随机样本鲁棒性",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?",
+            "result": "unresolved"
+          },
+          "note": "Declared in the platform record metadata as name+caption and referenced in body prose by the label 图5. name_in_markdown=False, caption_in_markdown=False; the three candidate byte endpoints all return 404, so no figure bytes exist to hash -- registered as referenced_unresolved (no hash claimed).",
+          "name": "fig5_random_sweep.png",
+          "caption_source": "record.figures[4].caption",
+          "figures_endpoint_probe": {
+            "/tensor/reports/9777/figures": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/artifacts": {
+              "http_status": 404,
+              "bytes": 22
+            },
+            "/tensor/reports/9777/attachments": {
+              "http_status": 404,
+              "bytes": 22
+            }
+          }
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "source_code_reference",
+          "label": "dsbeam.py",
+          "in_report_section": "② 怎么做的 / ③ 计算结果",
+          "locator": {
+            "method": "char_span",
+            "start_char": 847,
+            "end_char": 872,
+            "start_line": 19,
+            "end_line": 19,
+            "quote": "- **本单在 dsbeam.py 修三处缺陷**",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path exists in the TensorKnowledge delivery worktree at 'dsbeam.py'?",
+            "result": "unresolved"
+          },
+          "note": "Declared by the report as the artefact behind its numbers; the path belongs to the upstream TensorFEM/audit worktree and does not exist in this delivery checkout (exists_here=False). Registered as a declared reference, never as a broken upstream artefact.",
+          "name": "dsbeam.py",
+          "exists_in_delivery_worktree": false
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "source_code_reference",
+          "label": "artifacts/m8404_dsm/audit_acceptance.py",
+          "in_report_section": "② 怎么做的 / ③ 计算结果",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1121,
+            "end_char": 1162,
+            "start_line": 20,
+            "end_line": 20,
+            "quote": "`artifacts/m8404_dsm/audit_acceptance.py`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path exists in the TensorKnowledge delivery worktree at 'artifacts/m8404_dsm/audit_acceptance.py'?",
+            "result": "unresolved"
+          },
+          "note": "Declared by the report as the artefact behind its numbers; the path belongs to the upstream TensorFEM/audit worktree and does not exist in this delivery checkout (exists_here=False). Registered as a declared reference, never as a broken upstream artefact.",
+          "name": "artifacts/m8404_dsm/audit_acceptance.py",
+          "exists_in_delivery_worktree": false
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "data_artifact_reference",
+          "label": "results.json",
+          "in_report_section": "② 怎么做的 / ③ 计算结果",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1220,
+            "end_char": 1237,
+            "start_line": 22,
+            "end_line": 22,
+            "quote": "全部来自 results.json",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "path exists in the TensorKnowledge delivery worktree at 'results.json'?",
+            "result": "unresolved"
+          },
+          "note": "Declared by the report as the artefact behind its numbers; the path belongs to the upstream TensorFEM/audit worktree and does not exist in this delivery checkout (exists_here=False). Registered as a declared reference, never as a broken upstream artefact.",
+          "name": "results.json",
+          "exists_in_delivery_worktree": false
+        }
+      ],
+      "symbol_references": [
+        {
+          "symbol": "mode_shape_full",
+          "kind": "function",
+          "locator": {
+            "source_field": "markdown",
+            "line": 19
+          },
+          "quote": "`mode_shape_full`",
+          "quote_sha256": "sha256:1015e5ecc1d92725ef09c6d4a3777ff74de43cbb3897a992cb20569b4ae976a0",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "anchor_occurrences_in_source": 1
+        },
+        {
+          "symbol": "scipy.optimize.brentq",
+          "kind": "third_party_call",
+          "locator": {
+            "source_field": "markdown",
+            "line": 19
+          },
+          "quote": "`scipy.optimize.brentq`",
+          "quote_sha256": "sha256:c7aa1b817d46814ddb2602c8889929ecada2ab423495ab9387d3f4d300ae8966",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "anchor_occurrences_in_source": 1
+        },
+        {
+          "symbol": "eigvalsh",
+          "kind": "third_party_call",
+          "locator": {
+            "source_field": "markdown",
+            "line": 19
+          },
+          "quote": "惯性容差由 1e-12‖K‖ 改为 eigvalsh 向后误差界 + J≥0 钳位",
+          "quote_sha256": "sha256:b519e8b42b1660e71618a9de21cdd1dd3e33cad330f1ea3ff4e630652d20aed1",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "anchor_occurrences_in_source": 2
+        },
+        {
+          "symbol": "K(ω)=H⁻ᵀQH⁻¹",
+          "kind": "formula",
+          "locator": {
+            "source_field": "markdown",
+            "line": 16
+          },
+          "quote": "`K(ω)=H⁻ᵀQH⁻¹`",
+          "quote_sha256": "sha256:e053e28dfd295e187be0d64b18083385c802542c5c7fe952cb2a1d52216da8df",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "anchor_occurrences_in_source": 1
+        },
+        {
+          "symbol": "J(ω)=n·J₀+s{K}−刚体数−谱阈值伪零",
+          "kind": "formula",
+          "locator": {
+            "source_field": "markdown",
+            "line": 17
+          },
+          "quote": "`J(ω)=n·J₀+s{K}−刚体数−谱阈值伪零`",
+          "quote_sha256": "sha256:c562f215521e73da7153cabef676523c4361362e091993372398e3cd0b09c136",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "anchor_occurrences_in_source": 1
+        }
+      ],
+      "locators": [
+        {
+          "asset_id": "A01",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1
+          },
+          "quote": "# 自由-自由 Timoshenko 梁精确 DSM 验收审计（节点 p423w2-n09）",
+          "quote_sha256": "sha256:35a3f1a0f3edd8fa260ea9c81f2fd9da7fc7cba3e223379fc5798c2b78fc0031",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1,
+          "unique": true,
+          "resolved": true
+        },
+        {
+          "asset_id": "A02",
+          "locator": {
+            "source_field": "markdown",
+            "line": 46
+          },
+          "quote": "图1 两个极限下的精确 DSM 频谱",
+          "quote_sha256": "sha256:84e7e2f901849ca71d868c0007165582a7c8d7fbb64caa28f45513df2d6c8e61",
+          "quote_in_source": true,
+          "quote_on_declared_line": false,
+          "occurrences_in_source": 1,
+          "unique": true,
+          "resolved": true
+        },
+        {
+          "asset_id": "A03",
+          "locator": {
+            "source_field": "markdown",
+            "line": 46
+          },
+          "quote": "图2 自由-自由 1–3 阶两场精确振型（w/ψ/曲率）",
+          "quote_sha256": "sha256:13269d1dfae553de11b3208321af01767d0ae62ec330434d36719a1b8360bf41",
+          "quote_in_source": true,
+          "quote_on_declared_line": false,
+          "occurrences_in_source": 1,
+          "unique": true,
+          "resolved": true
+        },
+        {
+          "asset_id": "A04",
+          "locator": {
+            "source_field": "markdown",
+            "line": 46
+          },
+          "quote": "图3 J(ω) 阶梯 vs 独立根普查（极点处阶梯不跳）",
+          "quote_sha256": "sha256:4426b62e20bba4cd7d9abfa1bd347efdf821442cec21388740d8c799e19c5be7",
+          "quote_in_source": true,
+          "quote_on_declared_line": false,
+          "occurrences_in_source": 1,
+          "unique": true,
+          "resolved": true
+        },
+        {
+          "asset_id": "A05",
+          "locator": {
+            "source_field": "markdown",
+            "line": 46
+          },
+          "quote": "图4 m6117 归因",
+          "quote_sha256": "sha256:f97f9d61312560b81407b05a1cb067412d00cdbbb692c5c18516ea1ddca11a15",
+          "quote_in_source": true,
+          "quote_on_declared_line": false,
+          "occurrences_in_source": 1,
+          "unique": true,
+          "resolved": true
+        },
+        {
+          "asset_id": "A06",
+          "locator": {
+            "source_field": "markdown",
+            "line": 46
+          },
+          "quote": "图5 100 组随机样本鲁棒性",
+          "quote_sha256": "sha256:50cadbd4822d7943989322f6c792790e02f295fc5924b9ed0a5123dc5cc29b79",
+          "quote_in_source": true,
+          "quote_on_declared_line": false,
+          "occurrences_in_source": 1,
+          "unique": true,
+          "resolved": true
+        },
+        {
+          "asset_id": "A07",
+          "locator": {
+            "source_field": "markdown",
+            "line": 19
+          },
+          "quote": "- **本单在 dsbeam.py 修三处缺陷**",
+          "quote_sha256": "sha256:04a0388deba446ef23323646ee5e3bc451b99b934865fb96f05e0317d3062f41",
+          "quote_in_source": true,
+          "quote_on_declared_line": false,
+          "occurrences_in_source": 1,
+          "unique": true,
+          "resolved": true
+        },
+        {
+          "asset_id": "A08",
+          "locator": {
+            "source_field": "markdown",
+            "line": 20
+          },
+          "quote": "`artifacts/m8404_dsm/audit_acceptance.py`",
+          "quote_sha256": "sha256:dffee517b6da5e89ecee035091d323fe594cc45d950cbc3c29fc5bfaef8dc479",
+          "quote_in_source": true,
+          "quote_on_declared_line": false,
+          "occurrences_in_source": 1,
+          "unique": true,
+          "resolved": true
+        },
+        {
+          "asset_id": "A09",
+          "locator": {
+            "source_field": "markdown",
+            "line": 22
+          },
+          "quote": "全部来自 results.json",
+          "quote_sha256": "sha256:43ace7db9479eb147fb8d1f328444cc8f8c7f0f656b393d810d527eb10bd21de",
+          "quote_in_source": true,
+          "quote_on_declared_line": false,
+          "occurrences_in_source": 1,
+          "unique": true,
+          "resolved": true
+        }
+      ],
+      "identity_facts": [
+        {
+          "fact_id": "h1-title-line",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1
+          },
+          "quote": "# 自由-自由 Timoshenko 梁精确 DSM 验收审计（节点 p423w2-n09）",
+          "quote_sha256": "sha256:35a3f1a0f3edd8fa260ea9c81f2fd9da7fc7cba3e223379fc5798c2b78fc0031",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "sec1-header",
+          "locator": {
+            "source_field": "markdown",
+            "line": 3
+          },
+          "quote": "## ① 案例介绍",
+          "quote_sha256": "sha256:7ddf89857913efd224be5a41d7506c1c08107704d42df47f1f87b8bcc6872f42",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "sec2-header",
+          "locator": {
+            "source_field": "markdown",
+            "line": 14
+          },
+          "quote": "## ② 怎么做的",
+          "quote_sha256": "sha256:d96e990d7dece6286c641545798575f31ab24a71d4c7eebdfaf3187fb28c82c1",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "sec3-header",
+          "locator": {
+            "source_field": "markdown",
+            "line": 22
+          },
+          "quote": "## ③ 计算结果（全部来自 results.json）",
+          "quote_sha256": "sha256:e3300ceec1f338b3bb93a08bdb7afb47ea8d6769ca936d3f2a3a6e16df8a809d",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "sec4-header",
+          "locator": {
+            "source_field": "markdown",
+            "line": 44
+          },
+          "quote": "## ④ 结果图",
+          "quote_sha256": "sha256:f96f5db082d6af7df301ed61dff480e611035eab736db49814b2ba4ba6067766",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "sec5-header",
+          "locator": {
+            "source_field": "markdown",
+            "line": 48
+          },
+          "quote": "## ⑤ 注意点",
+          "quote_sha256": "sha256:fbb3949cac3b38cde89d385845282fc7fed0e116e6fbcc9f09d8fd55a7f4bd0d",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "sec6-header",
+          "locator": {
+            "source_field": "markdown",
+            "line": 57
+          },
+          "quote": "## ⑥ 误差判定（是否 <3%）",
+          "quote_sha256": "sha256:042c5af5c3ef53c29f2e47abf95ec10fd6b4d4773bc17c73977206b343040856",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        },
+        {
+          "fact_id": "last-line",
+          "locator": {
+            "source_field": "markdown",
+            "line": 70
+          },
+          "quote": "结论：DSM 自身对三个独立基准的误差 1e-13…1e-5 量级，全部 ≪3 %；m6117 的闭式锚点偏低 5.5–5.9 %，超过 3 %，且 6.28 % 恰为“FEM(+0.03 %) − 锚点(−5.89 %)”之差——债务归属明确落在闭式近似，而非有限元或网格。",
+          "quote_sha256": "sha256:7cbeedd6f07d21501a9148d99177631c3ec60681058257725d39a1eaed21d265",
+          "quote_in_source": true,
+          "quote_on_declared_line": true,
+          "occurrences_in_source": 1
+        }
+      ],
+      "claims": [],
+      "claims_empty_reason": "Contract objective is register_assets=true / classify_report_type=false; notes say 'claims 允许为空数组' and constraints include no_forced_claim_generation=true, do_not_mark_claims_as_verified=true. This工序 registers asset identity only (report_id, markdown byte hash, declared attachments/artifacts); extraction is a downstream工序, so an empty claims array is the complete result, not an omission.",
+      "counts": {
+        "assets": 9,
+        "by_class": {
+          "data_artifact_reference": 1,
+          "figure_reference": 5,
+          "source_code_reference": 2,
+          "source_document": 1
+        },
+        "by_resolution": {
+          "referenced_unresolved": 8,
+          "resolved_in_source": 1
+        },
+        "resolved_in_source": 1,
+        "referenced_unresolved": 8,
+        "declared_absent": 0,
+        "body_references": 3,
+        "figures_declared_in_record": 5,
+        "figures_with_bytes": 0,
+        "locators": 9,
+        "locators_resolved": 9,
+        "symbol_references": 5,
+        "claims": 0
+      },
+      "id_integrity": {
+        "ids_checked": 9,
+        "duplicates": [],
+        "unique": true
+      },
+      "integrity": {
+        "quote_uniqueness": {
+          "checked": 9,
+          "all_unique": true
+        },
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true
+      },
+      "unresolved": [
+        {
+          "asset_id": "A02",
+          "name": "fig1_spectrum.png",
+          "reason": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?"
+        },
+        {
+          "asset_id": "A03",
+          "name": "fig2_mode_shapes.png",
+          "reason": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?"
+        },
+        {
+          "asset_id": "A04",
+          "name": "fig3_wittrick_williams.png",
+          "reason": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?"
+        },
+        {
+          "asset_id": "A05",
+          "name": "fig4_m6117_attribution.png",
+          "reason": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?"
+        },
+        {
+          "asset_id": "A06",
+          "name": "fig5_random_sweep.png",
+          "reason": "(1) record figure name verbatim in markdown? (2) record caption verbatim in markdown? (3) figure bytes servable at /tensor/reports/9777/{figures,artifacts,attachments}?"
+        },
+        {
+          "asset_id": "A07",
+          "name": "dsbeam.py",
+          "reason": "path exists in the TensorKnowledge delivery worktree at 'dsbeam.py'?"
+        },
+        {
+          "asset_id": "A08",
+          "name": "artifacts/m8404_dsm/audit_acceptance.py",
+          "reason": "path exists in the TensorKnowledge delivery worktree at 'artifacts/m8404_dsm/audit_acceptance.py'?"
+        },
+        {
+          "asset_id": "A09",
+          "name": "results.json",
+          "reason": "path exists in the TensorKnowledge delivery worktree at 'results.json'?"
+        }
+      ],
+      "observations": [
+        "Markdown is complete and self-consistent: H1 title, sections ①-⑥ all present, 70 lines, no CRLF, trailing newline.",
+        "Contract identity triple matches: sha256 sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7, chars 4341, scenario_key structural-dynamics/dsm-beam-modal.",
+        "Record title and the markdown H1 title are DIFFERENT strings (record='精确 DSM Timoshenko 梁模态验收审计：7/7 判据 PASS、dsbeam 三处缺陷修复、m6117 6.28% 归因闭环', H1='# 自由-自由 Timoshenko 梁精确 DSM 验收审计（节点 p423w2-n09）'): the record carries the long campaign title, the body carries the node-scoped title. Both are registered verbatim; neither is rewritten.",
+        "All 5 figures exist only as record metadata (name+caption); the body ④ section paraphrases them by label 图1..图5, so body clause != metadata caption. Figure identity is therefore name-based, and no figure bytes are servable (3/3 endpoints 404).",
+        "The 3 body path references point into the upstream TensorFEM/audit worktree (artifacts/m8404_dsm/, dsbeam.py, results.json); none exists in this TensorKnowledge delivery checkout, so they stay referenced_unresolved -- reported as scope of this checkout, not as a defect upstream.",
+        "source_hash scope = UTF-8 bytes of the markdown string returned by the platform API; any change to the stored markdown (even whitespace) invalidates it.",
+        "Direct psql read of tensor_reports was denied (permission denied for table tensor_reports), so the API is the only source channel used."
+      ]
+    }
+  },
+  "claims": []
+}
