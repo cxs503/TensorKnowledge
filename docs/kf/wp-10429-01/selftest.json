@@ -1,0 +1,77 @@
+{
+  "package_id": "wp-10429-01",
+  "report_id": "10429",
+  "invocation": "python3 scripts/kf_wp10429_01_selftest.py",
+  "n_cases": 7,
+  "all_ok": true,
+  "cases": {
+    "baseline": {
+      "expect_pass": true,
+      "all_pass": true,
+      "exit": 0,
+      "failed": []
+    },
+    "tampered_quote": {
+      "expect_fail": "source_locator_resolvable",
+      "targeted_check_failed": true,
+      "all_pass": false,
+      "exit": 1,
+      "failed": [
+        "source_locator_resolvable"
+      ],
+      "ok": true
+    },
+    "duplicate_asset_id": {
+      "expect_fail": "no_duplicate_ids",
+      "targeted_check_failed": true,
+      "all_pass": false,
+      "exit": 1,
+      "failed": [
+        "no_duplicate_ids"
+      ],
+      "ok": true
+    },
+    "missing_required_key": {
+      "expect_fail": "schema_pass",
+      "targeted_check_failed": true,
+      "all_pass": false,
+      "exit": 1,
+      "failed": [
+        "schema_pass"
+      ],
+      "ok": true
+    },
+    "claim_without_evidence": {
+      "expect_fail": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "targeted_check_failed": true,
+      "all_pass": false,
+      "exit": 1,
+      "failed": [
+        "schema_pass",
+        "all_claims_have_evidence_or_explicit_unresolved_status"
+      ],
+      "ok": true
+    },
+    "wrong_source_hash": {
+      "expect_fail": "envelope_links",
+      "targeted_check_failed": true,
+      "all_pass": false,
+      "exit": 1,
+      "failed": [
+        "envelope_links"
+      ],
+      "ok": true
+    },
+    "manuscript_mismatch": {
+      "expect_fail": "source_hash_matches",
+      "targeted_check_failed": true,
+      "all_pass": false,
+      "exit": 1,
+      "failed": [
+        "source_hash_matches",
+        "source_locator_resolvable"
+      ],
+      "ok": true
+    }
+  }
+}
