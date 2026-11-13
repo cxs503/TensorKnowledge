@@ -1,0 +1,189 @@
+{
+  "package_id": "wp-9706-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9706",
+  "contract_version": "1.0",
+  "generated_by": "scripts/kf_verify_9706.py",
+  "from_api": false,
+  "source": {
+    "uri": "tensor://reports/9706",
+    "field": "markdown",
+    "sha256": "7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+    "chars": 12546,
+    "bytes_utf8": 20505
+  },
+  "acceptance_items": {
+    "valid_json": "pass",
+    "schema_pass": "pass",
+    "source_hash_matches": "pass",
+    "no_duplicate_ids": "pass",
+    "source_locator_resolvable": "pass",
+    "all_claims_have_evidence_or_explicit_unresolved_status": "pass",
+    "resolution_status_consistent_with_check": "pass",
+    "counts_consistent": "pass",
+    "only_report_9706_referenced": "pass",
+    "not_self_marked_verified": "pass",
+    "envelope_outputs_match_manifest": "pass",
+    "gate_style_extract_decodes_and_equals_envelope": "pass"
+  },
+  "all_pass": true,
+  "checks": [
+    {
+      "item": "valid_json",
+      "status": "pass",
+      "detail": {
+        "files": [
+          "runs/wp-9706-01/kf_result.wp-9706-01.json",
+          "artifacts/wp-9706-01/asset_manifest.json",
+          "docs/wp-9706-01/kf_result.wp-9706-01.json",
+          "docs/wp-9706-01/asset_manifest.json"
+        ]
+      }
+    },
+    {
+      "item": "schema_pass",
+      "status": "pass",
+      "detail": {
+        "envelope": "valid vs schemas/kf_result.v1.schema.json",
+        "manifest": "valid vs schemas/asset_manifest.wp-9706-01.schema.json"
+      }
+    },
+    {
+      "item": "source_hash_matches",
+      "status": "pass",
+      "detail": {
+        "local_sha256": "7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+        "contract_sha256": "7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+        "provenance_source_hash": "sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+        "chars": 12546,
+        "chars_expected": 12546,
+        "manifest_hash": "7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+        "manifest_chars": 12546
+      }
+    },
+    {
+      "item": "no_duplicate_ids",
+      "status": "pass",
+      "detail": {
+        "env_package": "wp-9706-01",
+        "man_package": "wp-9706-01",
+        "env_task": "01-asset-registration",
+        "man_task": "01-asset-registration",
+        "env_report": "9706",
+        "man_report": "9706",
+        "assets": 40,
+        "unique_assets": 40,
+        "envelope_outputs_keys": [
+          "asset_manifest.json"
+        ]
+      }
+    },
+    {
+      "item": "source_locator_resolvable",
+      "status": "pass",
+      "detail": {
+        "assets_checked": 40,
+        "failing": []
+      }
+    },
+    {
+      "item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "status": "pass",
+      "detail": {
+        "claims": 0,
+        "problems": [],
+        "note": "claims=[] by contract (objective.classify_report_type=false, no extraction); the item is therefore satisfied without generating any claim"
+      }
+    },
+    {
+      "item": "resolution_status_consistent_with_check",
+      "status": "pass",
+      "detail": {
+        "mismatching": []
+      }
+    },
+    {
+      "item": "counts_consistent",
+      "status": "pass",
+      "detail": {
+        "declared": {
+          "assets": 40,
+          "by_class": {
+            "document": 1,
+            "heading": 1,
+            "provenance_header": 1,
+            "section": 1,
+            "table": 12,
+            "statement": 2,
+            "figure_diagram": 1,
+            "method_spec": 1,
+            "provenance_marker": 1,
+            "figure_block": 1,
+            "figure_artifact": 4,
+            "json_artifact": 3,
+            "command_block": 1,
+            "trap_record": 2,
+            "limitation": 4,
+            "scope_declaration": 1,
+            "capability_absence": 1,
+            "code_pointer": 2
+          },
+          "by_resolution": {
+            "resolved_in_source": 36,
+            "referenced_unresolved": 3,
+            "declared_absent": 1
+          },
+          "resolved_in_source": 36,
+          "referenced_unresolved": 3,
+          "declared_absent": 1
+        },
+        "recomputed_by_resolution": {
+          "resolved_in_source": 36,
+          "referenced_unresolved": 3,
+          "declared_absent": 1
+        }
+      }
+    },
+    {
+      "item": "only_report_9706_referenced",
+      "status": "pass",
+      "detail": {
+        "report_refs": [
+          "9706"
+        ]
+      }
+    },
+    {
+      "item": "not_self_marked_verified",
+      "status": "pass",
+      "detail": {
+        "provenance_verification_status": "not_verified",
+        "manifest_verification_status": "not_verified"
+      }
+    },
+    {
+      "item": "envelope_outputs_match_manifest",
+      "status": "pass",
+      "detail": {
+        "envelope_output_equals_file": true
+      }
+    },
+    {
+      "item": "gate_style_extract_decodes_and_equals_envelope",
+      "status": "pass",
+      "detail": {
+        "report": "docs/wp-9706-01/KF-RESULT-wp-9706-01.md",
+        "json_blocks": 1,
+        "decoded_equals_envelope": true,
+        "backticks_left_in_block": 0,
+        "source_hash_matches_source_markdown": true,
+        "identity": {
+          "package_id": "wp-9706-01",
+          "report_id": "9706",
+          "task_type_stage": "01"
+        }
+      }
+    }
+  ],
+  "note": "Acceptance items required by the contract are the first six entries; the remaining ones are extra invariants added by this work package. status=pass means the local check ran and held; it is NOT a platform verification stamp (verification is computed by the platform gate)."
+}
