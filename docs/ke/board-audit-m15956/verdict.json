@@ -1,0 +1,43 @@
+{
+  "schema": "board-audit-verdict/1",
+  "repo": "TensorKnowledge",
+  "scope": "m15956 KBM-TKC-DOC-SYNC",
+  "mission_id": 15963,
+  "level": 2,
+  "verdict_by": "board-audit",
+  "evidence": {
+    "impl_files": [
+      "/root/tp-agent/work/m15956/scripts/tk_doc_sync.py",
+      "/root/tp-agent/work/m15956/scripts/tk_stats.py",
+      "/root/tp-agent/work/m15956/scripts/tk_boundary_audit.py"
+    ],
+    "entry": "/root/tp-agent/work/m15956/scripts/tk_boundary_audit.py",
+    "entry_note": "--check exit 1 (FAIL, 61 violations) 为设计内诚实失败；--help 与无参运行均为 CLI 入口",
+    "run_artifacts": [
+      "/root/tp-agent/work/m15956/docs/ke/doc-sync-report.json",
+      "/root/tp-agent/work/m15956/docs/ke/doc-sync-report.md",
+      "/root/tp-agent/work/m15956/docs/ke/stats.json",
+      "/root/tp-agent/work/m15956/docs/ke/stats.md",
+      "/root/tp-agent/work/m15956/docs/ke/boundary-audit.json",
+      "/root/tp-agent/work/m15956/docs/ke/boundary-audit.md",
+      "/root/tp-agent/work/m15956/docs/ke/figures/doc-sync-stats.png",
+      "/root/tp-agent/work/m15963/docs/ke/board-audit-m15956/audit_summary.json",
+      "/root/tp-agent/work/m15963/docs/ke/board-audit-m15956/audit_run.log"
+    ],
+    "tests": [
+      "/root/tp-agent/work/m15956/tests/test_ke_proto.py",
+      "/root/tp-agent/work/m15956/tests/test_ke_api.py"
+    ],
+    "tests_note": "55 passed 为既有 KE 测试套件（复跑实测）；本单新增的 3 个脚本无单元测试（tests/ 下无 tk_* 测试）",
+    "integration_callers": "none: grep -rn 'tk_doc_sync|tk_stats|tk_boundary_audit' /root/tensor-ecosystem/TensorKnowledge --include=*.py/*.yml/*.sh 仅命中 scripts/ 自身与生成报告；ROADMAP.md:23 '接入 CI 门禁' 仍未勾选 -> L3 不成立",
+    "benchmark": "0 rows: tensor_benchmark_cases WHERE anchor_slug='KBM-TKC-DOC-SYNC' 查询 2026-11-12 返回 0 行，无 ref/got 数值对照；本单可复核数字仅文档级：doc-sync 9/9、stats digest f444d1f1d376846775d6cda274d78aec42315d87f0b5ce54c54fb5d3d9d1beef、boundary 61 违规/224 文件 -> L4 不成立",
+    "repro_cmd": "cd /root/tp-agent/work/m15956 && python3 scripts/tk_doc_sync.py --check && python3 scripts/tk_stats.py --check; python3 scripts/tk_boundary_audit.py --check; python3 -m pytest tests/test_ke_proto.py tests/test_ke_api.py -q",
+    "external_anchor": "none: 交付物未提交（tensor_dev_missions.result.evidence.head_commit=null；git status 全部为 ?? 未跟踪），无 PR/commit 身份；文档一致性任务无文献锚",
+    "audit_summary": "/root/tp-agent/work/m15963/docs/ke/board-audit-m15956/audit_summary.json",
+    "defect_tautological_predicates": "doc-sync 9 条声明中 4 条自指（谓词只查声明自身的文档/产物是否存在：proto.md<-backends.md、m8802-acceptance.md<-自身、boundary-audit.md<-自身、stats.md<-stats.json），不构成文档-实现一致性证据；9/9 PASS 不可据此宣称漂移门有效",
+    "defect_hardcoded_governed_ko": "tk_stats.py::_scope_counts 中 governed_ko 恒为 0、pending_ko=len(claims)，均非由 review-event 计算；本次 knowledge/ 下确无 review-event（仅 2 个 README/MISSION_COMPLETION 提及 review_status），数值碰巧为真，但口径是常量非实测（MOCK 风险）",
+    "defect_headline_overclaim": "headline 'A级6处' 与工件不符：boundary-audit.json 中 critical 文件 4 个（contract/export/ingest_client/migrate），词命中 8 次",
+    "honest_fail_registered": "tests/test_ke_migrate.py 复跑 4 failed/6 passed，与交付方登记的 4 项 pin 过期一致（未修，如实登记）"
+  },
+  "disposition": "approve with notes — L2 confirmed (real, reproducible scripts + artifacts)；L3/L4 均无证据（integration_callers 0、benchmark 0 行），自指谓词与硬编码 governed_ko 为必修项"
+}
