@@ -1,0 +1,52 @@
+{
+  "package_id": "wp-14539-01",
+  "report_id": "14539",
+  "verified_at": "2026-11-12T02:39:00.065711+00:00",
+  "manifest": "docs/kf/wp-14539-01/asset_manifest.json",
+  "manifest_sha256": "debf7529e81661be4c38c7bc55a7531e58eead3cd5297db6e9ef277a9374177c",
+  "envelope_sha256": "57fc4cd0138cbec43ce99f2a7de525e8be50a8bd5a97a848eb8f58ff9e79d91e",
+  "checks": {
+    "valid_json": {
+      "pass": true,
+      "detail": "manifest + envelope parse via json.loads; stored source markdown byte copy present=True"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": "kf_result.v1 (draft 2020-12): 0 error(s) [] | asset_manifest.v1 (package pins retargeted, structure untouched): 0 error(s) []"
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "detail": "re-resolved 46 locators against the stored markdown bytes (char span + verbatim quote + 1-based line map); failures=[]"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": "recomputed=d2dfc774d825389350411f5562f457cd13f44b17e3d8cf5b3c8470c80677b82b manifest=d2dfc774d825389350411f5562f457cd13f44b17e3d8cf5b3c8470c80677b82b envelope=sha256:d2dfc774d825389350411f5562f457cd13f44b17e3d8cf5b3c8470c80677b82b contract=d2dfc774d825389350411f5562f457cd13f44b17e3d8cf5b3c8470c80677b82b"
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "detail": "assets=46; unique asset_id=46, unique (class,label)=46, unique (start,end) span=46 (the same path cited on different lines is a distinct occurrence, disambiguated by line + offset)"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "detail": "claims=0 violating=0 (empty array: satisfied vacuously, as the package notes allow)"
+    },
+    "do_not_mark_claims_as_verified": {
+      "pass": true,
+      "detail": "claims=0, none carries status='verified'; no manifest field claims verification"
+    },
+    "report_id_scoped": {
+      "pass": true,
+      "detail": "single report_id=14539; the builder rejects any other id returned by the API"
+    },
+    "outputs_match_file": {
+      "pass": true,
+      "detail": "envelope outputs['asset_manifest.json'] equals the committed manifest object (file sha256 debf7529e81661be4c38c7bc55a7531e58eead3cd5297db6e9ef277a9374177c)"
+    },
+    "duplicate_quotes_disambiguated_by_offset": {
+      "pass": true,
+      "detail": "21/46 quotes occur exactly once; the 25 repeated quotes (short tokens / recurring paths) are each pinned to a distinct char offset, so every locator resolves to exactly one position"
+    }
+  },
+  "all_pass": true,
+  "scope_note": "self-check by the producing agent; the authoritative verification is the platform gate."
+}
