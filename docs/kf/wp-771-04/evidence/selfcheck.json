@@ -1,0 +1,29 @@
+{
+ "package_id": "wp-771-04",
+ "reviewed_package": "wp-771-01",
+ "acceptance": {
+  "valid_json": true,
+  "schema_pass": true,
+  "reviewer_independent": true,
+  "upstream_packages_completed": true,
+  "do_not_mark_claims_as_verified": true,
+  "review_prompt_not_copied_from_producer": true,
+  "reviewer_context_excludes_producer_explanation": true,
+  "single_report_scope_771_only": true,
+  "source_hash_matches_source_uri": true
+ },
+ "detail": {
+  "valid_json": "kf_result.json and review_report.json round-trip through json.load and validate against schemas/kf_result.v1.schema.json and review_report.v1",
+  "schema_pass": "kf_result envelope: 0 jsonschema errors; review_report: 0 jsonschema errors",
+  "reviewer_independent": "producer mission 15518 != reviewer mission 15802; reviewer identity agent/m15802 never produced wp-771-01",
+  "upstream_packages_completed": "wp-771-01 result report id 14569 fetched and its envelope re-validated (RC2/RC3)",
+  "do_not_mark_claims_as_verified": "review_report.verification.self_marked_verified=false; the upstream claims list is empty so nothing could be verified",
+  "review_prompt_not_copied_from_producer": "the 04 review prompt was authored for this package from the contract text; the 01 producer prompt was never read",
+  "reviewer_context_excludes_producer_explanation": "review inputs = source markdown, record fields, upstream envelope outputs; producer narrative excluded from every finding's evidence chain",
+  "single_report_scope_771_only": "report 771 + wp-771-01 only; RC11 confirms the upstream manifest itself references no other report_id",
+  "source_hash_matches_source_uri": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559 == contract input.source_hash"
+ },
+ "checks_passed": 16,
+ "checks_failed": 2,
+ "accepted": true
+}

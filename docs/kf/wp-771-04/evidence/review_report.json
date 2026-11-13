@@ -1,0 +1,545 @@
+{
+ "schema": "review_report.v1",
+ "package_id": "wp-771-04",
+ "task_type": "04-independent-review",
+ "report_id": "771",
+ "reviewed_package": "wp-771-01",
+ "reviewed_package_id": "wp-771-01",
+ "reviewed_artifacts": {
+  "source_hash": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+  "source_chars": 2143,
+  "upstream_result_report_id": 14569,
+  "upstream_envelope_sha256": "2086d4d70dd25cddc73cfe3259478f8e01239eb428b5f74e903835aff9d0f7dc",
+  "upstream_result_markdown_sha256": "f824b7a859777cb6b0fc15f6f34d7b170ab09fd690adecb393be5508ddb8f846",
+  "upstream_output_key": "asset_manifest.json"
+ },
+ "reviewer": {
+  "role": "red-team-reviewer",
+  "identity": "agent/m15802",
+  "mission_id": 15802,
+  "independence": {
+   "producer_mission_id": 15518,
+   "reviewer_mission_id": 15802,
+   "independent": true
+  },
+  "context_policy": "source markdown + report record + upstream envelope outputs only; the producer's narrative explanation is not used as evidence, and every upstream assertion is re-derived from raw bytes/fields by scripts/kf_wp771_04_review.py",
+  "review_prompt_origin": "written for this work package from the 04 contract (not copied from the 01 producer prompt)"
+ },
+ "semantic_fidelity": {
+  "applicable_scope": "task_type=01 carries no claims (env.claims=[]), so no claim-level semantic fidelity exists to judge; the applicable semantic question is whether the manifest faithfully registers what report 771 actually contains - asset set complete, resolvable/unresolved verdicts truthful, no invented assets.",
+  "judgement": "faithful",
+  "basis": [
+   "all 6 markdown locators re-slice exactly at the declared offsets and each quote is unique in the source (RC7)",
+   "all 6 record locators re-read equal to the live record fields (RC8)",
+   "asset counts recomputed exactly: 10 total / 2 resolvable / 8 unresolved (RC9)",
+   "every unresolved asset carries a non-empty unresolved_reason; none is dressed up as resolvable (RC13)",
+   "no asset is invented: every file-like token in the source is registered, and the three record figures are all declared (RC14)",
+   "the unresolved verdict on the three figures is independently reproduced by re-probing the figure bytes (RC15)"
+  ]
+ },
+ "checks": [
+  {
+   "id": "RC1",
+   "name": "contract_source_identity",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": null,
+   "detail": "recomputed sha256:c9ba197538ee chars=2143 bytes=3623 vs contract sha256:c9ba197538ee chars=2143",
+   "evidence": {
+    "observed_hash": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+    "observed_chars": 2143,
+    "observed_bytes_utf8": 3623,
+    "contract_hash": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+    "contract_chars": 2143
+   }
+  },
+  {
+   "id": "RC2",
+   "name": "upstream_single_json_block",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": "valid_json",
+   "detail": "upstream markdown carries exactly 1 json block, parsed as envelope with keys ['package_id', 'task_type', 'report_id', 'provenance', 'outputs', 'claims']",
+   "evidence": {
+    "block_count": 1,
+    "envelope_keys": [
+     "package_id",
+     "task_type",
+     "report_id",
+     "provenance",
+     "outputs",
+     "claims"
+    ]
+   }
+  },
+  {
+   "id": "RC3",
+   "name": "envelope_schema_pass",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": "schema_pass",
+   "detail": "schemas/kf_result.v1.schema.json validation: 0 error(s)",
+   "evidence": {
+    "schema": "schemas/kf_result.v1.schema.json",
+    "errors": []
+   }
+  },
+  {
+   "id": "RC4",
+   "name": "envelope_identity",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": null,
+   "detail": "package_id='wp-771-01' report_id='771' task_type='01-asset-registration'",
+   "evidence": {
+    "package_id": "wp-771-01",
+    "report_id": "771",
+    "task_type": "01-asset-registration"
+   }
+  },
+  {
+   "id": "RC5",
+   "name": "provenance_hash_matches_recomputed",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": "source_hash_matches",
+   "detail": "claimed sha256:c9ba197538ee vs recomputed sha256:c9ba197538ee, field='markdown'",
+   "evidence": {
+    "claimed": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+    "recomputed": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+    "source_field": "markdown"
+   }
+  },
+  {
+   "id": "RC6",
+   "name": "manifest_source_block_vs_recomputed",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": null,
+   "detail": "hash=True chars=2143==2143 bytes=3623==3623 title_match=True scenario_match=True",
+   "evidence": {
+    "declared": {
+     "sha256": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+     "chars": 2143,
+     "byte_length_utf8": 3623,
+     "title": "TensorDEM：料仓卸料 Beverloo 标度复现 + 休止角（honest 部分失败）",
+     "scenario_key": "dem_granular_hopper_beverloo"
+    },
+    "recomputed": {
+     "sha256": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+     "chars": 2143,
+     "byte_length_utf8": 3623,
+     "title": "TensorDEM：料仓卸料 Beverloo 标度复现 + 休止角（honest 部分失败）",
+     "scenario_key": "dem_granular_hopper_beverloo"
+    }
+   }
+  },
+  {
+   "id": "RC7",
+   "name": "markdown_locators_resolve",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": "source_locator_resolvable",
+   "detail": "6 markdown locators re-resolved against source bytes: exact-slice + unique-offset failures = 0",
+   "evidence": {
+    "checked": 6,
+    "failures": []
+   }
+  },
+  {
+   "id": "RC8",
+   "name": "record_locators_resolve",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": "source_locator_resolvable",
+   "detail": "6 record locators re-read from the live record fields: mismatches = 0",
+   "evidence": {
+    "checked": 6,
+    "failures": []
+   }
+  },
+  {
+   "id": "RC9",
+   "name": "counts_recomputed",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": null,
+   "detail": "declared total/resolvable/unresolved=10/2/8 vs recomputed 10/2/8; by_kind equal=True",
+   "evidence": {
+    "declared": {
+     "total": 10,
+     "resolvable": 2,
+     "unresolved": 8,
+     "by_kind": {
+      "source_document": 1,
+      "record_metadata": 1,
+      "figure": 3,
+      "source_code": 1,
+      "example_script": 1,
+      "report_generator": 1,
+      "data_artifact_glob": 1,
+      "case_markdown": 1
+     },
+     "duplicate_asset_ids": []
+    },
+    "recomputed": {
+     "total": 10,
+     "resolvable": 2,
+     "unresolved": 8,
+     "by_kind": {
+      "source_document": 1,
+      "record_metadata": 1,
+      "figure": 3,
+      "source_code": 1,
+      "example_script": 1,
+      "report_generator": 1,
+      "data_artifact_glob": 1,
+      "case_markdown": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "RC10",
+   "name": "no_duplicate_asset_ids",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": "no_duplicate_ids",
+   "detail": "10 asset ids, duplicates=[], declared duplicate_asset_ids=[]",
+   "evidence": {
+    "ids": [
+     "ast-771-01",
+     "ast-771-02",
+     "ast-771-10",
+     "ast-771-11",
+     "ast-771-12",
+     "ast-771-20",
+     "ast-771-21",
+     "ast-771-22",
+     "ast-771-23",
+     "ast-771-24"
+    ],
+    "duplicates": []
+   }
+  },
+  {
+   "id": "RC11",
+   "name": "single_report_scope",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": null,
+   "detail": "source_uri report ids referenced = ['771']; scope.reports_touched=['771']",
+   "evidence": {
+    "report_ids_referenced": [
+     "771"
+    ],
+    "reports_touched": [
+     "771"
+    ]
+   }
+  },
+  {
+   "id": "RC12",
+   "name": "constraints_zero_claim_zero_self_verification",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": "all_claims_have_evidence_or_explicit_unresolved_status",
+   "detail": "env.claims=[], claims_registered=0, extraction.performed=False, verification.performed=False",
+   "evidence": {
+    "claims": [],
+    "claims_registered": 0,
+    "extraction": {
+     "performed": false,
+     "reason": "contract objective is register_assets only (classify_report_type false); extraction belongs to a separate work package"
+    },
+    "verification": {
+     "performed": false,
+     "reason": "verification status is computed by the platform gate, never self-assigned"
+    }
+   }
+  },
+  {
+   "id": "RC13",
+   "name": "unresolved_assets_carry_reason",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": null,
+   "detail": "8 unresolved assets, 0 without a non-empty unresolved_reason",
+   "evidence": {
+    "offenders": []
+   }
+  },
+  {
+   "id": "RC14",
+   "name": "asset_coverage_of_source_references",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": null,
+   "detail": "5 file-like tokens found in source, unregistered=[]; record figures ['fig1_beverloo_qbc.png', 'fig2_beverloo_linearity.png', 'fig3_rate_series.png'] all declared=True",
+   "evidence": {
+    "tokens_in_source": [
+     "CASE.md",
+     "examples/hopper_beverloo_case.py",
+     "hopper_beverloo_report.py",
+     "outputs/*.json",
+     "src/tensordem/granular_dem.py"
+    ],
+    "unregistered": [],
+    "record_figures": [
+     "fig1_beverloo_qbc.png",
+     "fig2_beverloo_linearity.png",
+     "fig3_rate_series.png"
+    ]
+   }
+  },
+  {
+   "id": "RC15",
+   "name": "figure_bytes_unreachable_independently_reprobed",
+   "result": "pass",
+   "blocking": true,
+   "maps_to_upstream_acceptance": null,
+   "detail": "re-probed GET /tensor/reports/771/figures/<name> -> {'fig1_beverloo_qbc.png': 404, 'fig2_beverloo_linearity.png': 404, 'fig3_rate_series.png': 404}; supports 'unresolved' for all 3 figures = True",
+   "evidence": {
+    "probe": {
+     "list_route_status": 404,
+     "list_route_in_openapi": false,
+     "binary_status": {
+      "fig1_beverloo_qbc.png": 404,
+      "fig2_beverloo_linearity.png": 404,
+      "fig3_rate_series.png": 404
+     }
+    }
+   }
+  },
+  {
+   "id": "RC16",
+   "name": "asset_record_shape_uniform",
+   "result": "fail",
+   "blocking": false,
+   "maps_to_upstream_acceptance": null,
+   "detail": "core keys ['asset_id', 'kind', 'role', 'name', 'resolvable', 'resolution', 'locators'] present on all 10 assets? missing={}; partially covered keys (present on some assets only) = {'status': 8, 'unresolved_reason': 8}; full presence counts = {'asset_id': 10, 'kind': 10, 'role': 10, 'name': 10, 'resolvable': 10, 'resolution': 10, 'locators': 10, 'status': 8, 'unresolved_reason': 8, 'caption': 3, 'caption_equals_name': 3, 'values': 1, 'content_ref': 1, 'byte_length_utf8': 1}",
+   "evidence": {
+    "core_keys": [
+     "asset_id",
+     "kind",
+     "role",
+     "name",
+     "resolvable",
+     "resolution",
+     "locators"
+    ],
+    "presence_counts": {
+     "asset_id": 10,
+     "kind": 10,
+     "role": 10,
+     "name": 10,
+     "resolvable": 10,
+     "resolution": 10,
+     "locators": 10,
+     "status": 8,
+     "unresolved_reason": 8,
+     "caption": 3,
+     "caption_equals_name": 3,
+     "values": 1,
+     "content_ref": 1,
+     "byte_length_utf8": 1
+    },
+    "missing_core": {},
+    "partial": {
+     "status": 8,
+     "unresolved_reason": 8
+    }
+   }
+  },
+  {
+   "id": "RC17",
+   "name": "shortest_locator_quote_vs_min_quote_chars",
+   "result": "fail",
+   "blocking": false,
+   "maps_to_upstream_acceptance": null,
+   "detail": "shortest markdown quote = {'asset_id': 'ast-771-24', 'quote': 'CASE.md', 'chars': 7}; quotes below platform min_quote_chars=12: [('ast-771-24', 7)] (that threshold governs claim evidence, not asset locators - recorded as robustness risk, not a gate breach)",
+   "evidence": {
+    "quotes": [
+     {
+      "asset_id": "ast-771-01",
+      "quote": "# 料仓卸料(Beverloo)+休止角双案例 —— TensorDEM 跨方法吸收线",
+      "chars": 43
+     },
+     {
+      "asset_id": "ast-771-20",
+      "quote": "`src/tensordem/granular_dem.py`",
+      "chars": 31
+     },
+     {
+      "asset_id": "ast-771-21",
+      "quote": "`examples/hopper_beverloo_case.py`",
+      "chars": 34
+     },
+     {
+      "asset_id": "ast-771-22",
+      "quote": "`hopper_beverloo_report.py`",
+      "chars": 27
+     },
+     {
+      "asset_id": "ast-771-23",
+      "quote": "outputs/*.json",
+      "chars": 14
+     },
+     {
+      "asset_id": "ast-771-24",
+      "quote": "CASE.md",
+      "chars": 7
+     }
+    ],
+    "min_quote_chars": 12
+   }
+  },
+  {
+   "id": "RC18",
+   "name": "figure_list_route_existence",
+   "result": "pass",
+   "blocking": false,
+   "maps_to_upstream_acceptance": null,
+   "detail": "upstream recorded list route GET /tensor/reports/771/figures -> HTTP 404; that list route present in platform OpenAPI = False (only /figures/{name} exists) -> list-route 404 is route-absence, per-figure 404 is the real evidence",
+   "evidence": {
+    "probe": {
+     "list_route_status": 404,
+     "list_route_in_openapi": false,
+     "binary_status": {
+      "fig1_beverloo_qbc.png": 404,
+      "fig2_beverloo_linearity.png": 404,
+      "fig3_rate_series.png": 404
+     }
+    }
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "low",
+   "blocking": false,
+   "scope": "asset_manifest.json: 10 asset records",
+   "statement": "asset records are not shape-uniform: status (8/10), unresolved_reason (8/10). The two resolvable assets carry no status/unresolved_reason while the eight unresolved ones do, so a downstream consumer that reads status on every asset breaks on exactly the two it most needs; the core keys themselves are complete.",
+   "evidence": "per-key presence counts over 10 assets = {'asset_id': 10, 'kind': 10, 'role': 10, 'name': 10, 'resolvable': 10, 'resolution': 10, 'locators': 10, 'status': 8, 'unresolved_reason': 8, 'caption': 3, 'caption_equals_name': 3, 'values': 1, 'content_ref': 1, 'byte_length_utf8': 1}; core keys = ['asset_id', 'kind', 'role', 'name', 'resolvable', 'resolution', 'locators']",
+   "remediation": "normalise every asset record to one key set (resolvable ones also carry status='resolved' plus a resolution text) before 02/03 consume the manifest."
+  },
+  {
+   "id": "F2",
+   "severity": "low",
+   "blocking": false,
+   "scope": "asset ast-771-24 locator",
+   "statement": "shortest markdown locator is 7 chars (quote 'CASE.md'), below the platform min_quote_chars=12; it resolves here only because the token is unique in this 2143-char report. Reused as claim evidence at 03 it would be rejected by g5_source_locator_resolvable.",
+   "evidence": "quotes ascending by length: [('ast-771-24', 7), ('ast-771-23', 14), ('ast-771-22', 27), ('ast-771-20', 31), ('ast-771-21', 34), ('ast-771-01', 43)]",
+   "remediation": "for short file names quote a longer span (the surrounding clause) so the locator stays above the platform threshold."
+  },
+  {
+   "id": "F3",
+   "severity": "info",
+   "blocking": false,
+   "scope": "asset ast-771-01 (source_document)",
+   "statement": "the source-document asset is anchored on a 43-char prefix (2.0% of the document); its 'resolvable: true' cannot be derived from the asset locator alone - document identity is carried by the manifest.source block instead.",
+   "evidence": "locator quote = '# 料仓卸料(Beverloo)+休止角双案例 —— TensorDEM 跨方法吸收线' at chars 0..43, document chars = 2143",
+   "remediation": "declare source-document assets with a whole-document locator (0..chars) and keep a short anchor only for display."
+  },
+  {
+   "id": "F4",
+   "severity": "info",
+   "blocking": false,
+   "scope": "figure_probe in upstream manifest",
+   "statement": "upstream bundles a figures-list route 404 with the per-figure 404s; that list route does not exist in the platform OpenAPI, so the two are not the same kind of evidence (route absence vs missing bytes). The 'unresolved' verdict still stands on the per-figure probes.",
+   "evidence": "list route status=404, route in OpenAPI=False, per-figure status={'fig1_beverloo_qbc.png': 404, 'fig2_beverloo_linearity.png': 404, 'fig3_rate_series.png': 404}",
+   "remediation": "label route-absence probes as such or drop them from the evidence bundle."
+  },
+  {
+   "id": "F5",
+   "severity": "info",
+   "blocking": false,
+   "scope": "platform gate coverage of task_type=01 (not an upstream defect)",
+   "statement": "the platform evidence gate resolves locators only inside `claims`; with claims=[] it reports g5 checked=0, so the asset locators are never resolved by the gate. This review is the only evidence-grade check of the 01 output.",
+   "evidence": "store row for wp-771-01: g5_source_locator_resolvable ok=true with checked=0; this review re-resolved 12 locators (RC7/RC8).",
+   "remediation": "extend g5 to walk asset locators when claims are empty, or make the 04 review a required gate for 01 on lane C."
+  },
+  {
+   "id": "F6",
+   "severity": "info",
+   "blocking": false,
+   "scope": "repository schema coverage for 01 outputs",
+   "statement": "there is no general schema for the asset_manifest.json body; the only asset-manifest schema in the repo pins package_id const 'wp-448-01', so it cannot validate this package. Upstream 'schema_pass' is provable only at envelope level (RC3).",
+   "evidence": "schemas/asset_manifest.v1.schema.json properties.package_id.const = 'wp-448-01'; schemas/ has no asset_manifest schema parameterised by report/package.",
+   "remediation": "generalise the asset_manifest schema (package/report as pattern instead of const) so 01 outputs are machine-checkable across reports."
+  }
+ ],
+ "verdict": "pass",
+ "disposition": "pass",
+ "verification": {
+  "self_marked_verified": false,
+  "note": "this review reports a disposition only; the verification level is computed by the platform gate. Nothing here marks any upstream claim as verified."
+ },
+ "checks_not_run": [
+  {
+   "check": "existence of the referenced external artifacts in the producing repo",
+   "reason": "out of scope for a report-scoped review and no repo/network access in this worktree; 01 only claims registration inside the report store, which was probed directly"
+  },
+  {
+   "check": "re-execution of the TensorDEM hopper/Beverloo case itself",
+   "reason": "wp-771-01 is a registration task and asserts no numeric result, so there is nothing to re-run at this stage (numeric review belongs to a later work package)"
+  },
+  {
+   "check": "platform gate re-run (g1..g7) end to end",
+   "reason": "the gate is the platform's own computation over the submitted envelope; this review re-derives every gate input independently instead of invoking the gate"
+  }
+ ],
+ "limitations": [
+  "the producer's narrative report text was read for orientation only; no finding rests on it, and every quote/number here is re-derived from source bytes or record fields",
+  "single-document scope: only report 771 and wp-771-01 were touched; no other report_id was read or written, so cross-package consistency claims are out of scope",
+  "asset resolvability is judged within the report store (attachment/byte reachability); a file that exists only in the producing repo is correctly registered as unresolved here, which does not mean the file does not exist"
+ ],
+ "summary": {
+  "checks_total": 18,
+  "checks_pass": 16,
+  "checks_fail": 2,
+  "findings_total": 6,
+  "findings_blocking": 0,
+  "checks_failed_blocking": 0,
+  "upstream_acceptance_recomputed": {
+   "valid_json": {
+    "checks": [
+     "RC2"
+    ],
+    "result": "pass"
+   },
+   "schema_pass": {
+    "checks": [
+     "RC3"
+    ],
+    "result": "pass"
+   },
+   "source_hash_matches": {
+    "checks": [
+     "RC5"
+    ],
+    "result": "pass"
+   },
+   "source_locator_resolvable": {
+    "checks": [
+     "RC7",
+     "RC8"
+    ],
+    "result": "pass"
+   },
+   "no_duplicate_ids": {
+    "checks": [
+     "RC10"
+    ],
+    "result": "pass"
+   },
+   "all_claims_have_evidence_or_explicit_unresolved_status": {
+    "checks": [
+     "RC12"
+    ],
+    "result": "pass"
+   }
+  }
+ }
+}
