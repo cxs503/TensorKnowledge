@@ -1,0 +1,191 @@
+{
+  "checks": {
+    "all_born_in_review": true,
+    "batch_witness_stable": true,
+    "clean_before_edit": true,
+    "drift_detected": true,
+    "idempotent_second_run": true,
+    "registered_first_run": true,
+    "three_refusals": true
+  },
+  "first_run": {
+    "batch_sha256": "261927691c3bfa3a8b874fbafb078d9904af3fcffb14996a1bb6e77c2a30f85f",
+    "counts": {
+      "deliverables": 2,
+      "registered": 2,
+      "skipped_idempotent": 0
+    },
+    "created_by": "mkf-agent",
+    "entries": [
+      {
+        "evidence_grade": "REAL",
+        "ko_id": "mission.demo9447.result",
+        "path": "docs/result.md",
+        "sha256": "4ac0f76de091c7f45c56523de04ab05f553222635d16a35fae7b2d9e077a4652",
+        "status": "registered",
+        "version_id": "mission.demo9447.result:v1.0.0"
+      },
+      {
+        "evidence_grade": "REAL",
+        "ko_id": "mission.demo9447.comparison",
+        "path": "artifacts/comparison.csv",
+        "sha256": "649a0f739e0d169ca5317ec33e3777b9ab3158a30a8a2fca176d58aae8011075",
+        "status": "registered",
+        "version_id": "mission.demo9447.comparison:v1.0.0"
+      }
+    ],
+    "generated_at": "2026-11-13T14:10:57Z",
+    "mission_id": "demo9447",
+    "registered": [
+      "mission.demo9447.result:v1.0.0",
+      "mission.demo9447.comparison:v1.0.0"
+    ],
+    "schema": "mission-assets-report.v1",
+    "skipped_idempotent": [],
+    "state": "in_review",
+    "version": "1.0.0"
+  },
+  "ko_versions_in_store": 2,
+  "mission_id": "demo9447",
+  "mission_index": {
+    "count": 2,
+    "deliverables": [
+      {
+        "evidence_grade": "REAL",
+        "ko_id": "mission.demo9447.comparison",
+        "path": "artifacts/comparison.csv",
+        "sha256": "649a0f739e0d169ca5317ec33e3777b9ab3158a30a8a2fca176d58aae8011075",
+        "state": "in_review",
+        "version": "1.0.0",
+        "version_id": "mission.demo9447.comparison:v1.0.0"
+      },
+      {
+        "evidence_grade": "REAL",
+        "ko_id": "mission.demo9447.result",
+        "path": "docs/result.md",
+        "sha256": "4ac0f76de091c7f45c56523de04ab05f553222635d16a35fae7b2d9e077a4652",
+        "state": "in_review",
+        "version": "1.0.0",
+        "version_id": "mission.demo9447.result:v1.0.0"
+      }
+    ],
+    "mission_id": "demo9447",
+    "schema": "mission-assets-index.v1",
+    "states": {
+      "in_review": 2
+    }
+  },
+  "refusals": [
+    {
+      "attempt": "evidence_grade=MOCK",
+      "error_class": "DeliverableError",
+      "reasons": [
+        "result.evidence_grade: MOCK is not a matured grade (matured = ['REAL']); deliverable stays out of the registry until its evidence is REAL"
+      ]
+    },
+    {
+      "attempt": "path=__pycache__/*.pyc",
+      "error_class": "DeliverableError",
+      "reasons": [
+        "pyc.path: 'ke/__pycache__/store.cpython-311.pyc' is build artefact (bytecode), not a deliverable"
+      ]
+    },
+    {
+      "attempt": "state=published",
+      "error_class": "ValueError",
+      "reasons": [
+        "state: 'published' not allowed; a mission deliverable is born ['draft', 'in_review'] — publishing requires a review decision (ke.assets.record_review)"
+      ]
+    }
+  ],
+  "schema": "wp-9447-01-evidence.v1",
+  "second_run": {
+    "batch_sha256": "261927691c3bfa3a8b874fbafb078d9904af3fcffb14996a1bb6e77c2a30f85f",
+    "counts": {
+      "deliverables": 2,
+      "registered": 0,
+      "skipped_idempotent": 2
+    },
+    "created_by": "mkf-agent",
+    "entries": [
+      {
+        "evidence_grade": "REAL",
+        "ko_id": "mission.demo9447.result",
+        "path": "docs/result.md",
+        "sha256": "4ac0f76de091c7f45c56523de04ab05f553222635d16a35fae7b2d9e077a4652",
+        "status": "skipped_idempotent",
+        "version_id": "mission.demo9447.result:v1.0.0"
+      },
+      {
+        "evidence_grade": "REAL",
+        "ko_id": "mission.demo9447.comparison",
+        "path": "artifacts/comparison.csv",
+        "sha256": "649a0f739e0d169ca5317ec33e3777b9ab3158a30a8a2fca176d58aae8011075",
+        "status": "skipped_idempotent",
+        "version_id": "mission.demo9447.comparison:v1.0.0"
+      }
+    ],
+    "generated_at": "2026-11-13T14:10:57Z",
+    "mission_id": "demo9447",
+    "registered": [],
+    "schema": "mission-assets-report.v1",
+    "skipped_idempotent": [
+      "mission.demo9447.result:v1.0.0",
+      "mission.demo9447.comparison:v1.0.0"
+    ],
+    "state": "in_review",
+    "version": "1.0.0"
+  },
+  "verify_after_edit": {
+    "counts": {
+      "drift": 1,
+      "missing": 0,
+      "ok": 1
+    },
+    "entries": [
+      {
+        "current_sha256": "649a0f739e0d169ca5317ec33e3777b9ab3158a30a8a2fca176d58aae8011075",
+        "ko_id": "mission.demo9447.comparison",
+        "path": "artifacts/comparison.csv",
+        "registered_sha256": "649a0f739e0d169ca5317ec33e3777b9ab3158a30a8a2fca176d58aae8011075",
+        "status": "ok"
+      },
+      {
+        "current_sha256": "28374be46548b31ef2b2fd9c4e0b73fea7d6ffa9abce99efa648bc0de7c55b00",
+        "ko_id": "mission.demo9447.result",
+        "path": "docs/result.md",
+        "registered_sha256": "4ac0f76de091c7f45c56523de04ab05f553222635d16a35fae7b2d9e077a4652",
+        "status": "drift"
+      }
+    ],
+    "mission_id": "demo9447",
+    "ok": false,
+    "schema": "mission-assets-verify.v1"
+  },
+  "verify_clean": {
+    "counts": {
+      "drift": 0,
+      "missing": 0,
+      "ok": 2
+    },
+    "entries": [
+      {
+        "current_sha256": "649a0f739e0d169ca5317ec33e3777b9ab3158a30a8a2fca176d58aae8011075",
+        "ko_id": "mission.demo9447.comparison",
+        "path": "artifacts/comparison.csv",
+        "registered_sha256": "649a0f739e0d169ca5317ec33e3777b9ab3158a30a8a2fca176d58aae8011075",
+        "status": "ok"
+      },
+      {
+        "current_sha256": "4ac0f76de091c7f45c56523de04ab05f553222635d16a35fae7b2d9e077a4652",
+        "ko_id": "mission.demo9447.result",
+        "path": "docs/result.md",
+        "registered_sha256": "4ac0f76de091c7f45c56523de04ab05f553222635d16a35fae7b2d9e077a4652",
+        "status": "ok"
+      }
+    ],
+    "mission_id": "demo9447",
+    "ok": true,
+    "schema": "mission-assets-verify.v1"
+  }
+}
