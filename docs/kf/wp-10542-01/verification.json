@@ -1,0 +1,39 @@
+{
+  "package_id": "wp-10542-01",
+  "verified_at": "2026-11-12T01:47:52.274746+00:00",
+  "acceptance": {
+    "valid_json": {
+      "ok": true,
+      "detail": "asset_manifest.json + kf_result.json parsed"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": "kf_result.v1: 0 errors; asset_manifest.registration.v1: 0 errors"
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": "11/11 locators re-resolved (verbatim + char span + occurrence_index + line + quote_sha256; 2 unique quotes, 9 multi-occurrence quotes pinned by occurrence_index)",
+      "failures": []
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": "live=sha256:87ad4490786462c1c9b276ab29a0566caa363a5b211d01f4969fb816f60ce43c manifest=sha256:87ad4490786462c1c9b276ab29a0566caa363a5b211d01f4969fb816f60ce43c envelope=sha256:87ad4490786462c1c9b276ab29a0566caa363a5b211d01f4969fb816f60ce43c contract=sha256:87ad4490786462c1c9b276ab29a0566caa363a5b211d01f4969fb816f60ce43c",
+      "chars": {
+        "live": 12118,
+        "manifest": 12118,
+        "contract": 12118
+      }
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": "11 ids, duplicates=[]"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": "0 claims; empty-claims reason stated: True; offenders=[]"
+    }
+  },
+  "all_ok": true,
+  "note": "Self-check only. No claim is marked verified here; the platform gate independently recomputes sha256 and substrings.",
+  "repro_cmd": "python3 scripts/kf_wp10542_01_register.py all   # build+envelope+verify+figure+report"
+}
