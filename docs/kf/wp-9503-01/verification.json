@@ -1,0 +1,74 @@
+{
+  "package_id": "wp-9503-01",
+  "report_id": "9503",
+  "verified_at": "2026-11-12T01:39:30Z",
+  "checks": {
+    "valid_json": {
+      "acceptance_item": "valid_json",
+      "pass": true,
+      "detail": "asset_manifest.json and kf_result.json both parse"
+    },
+    "schema_pass": {
+      "acceptance_item": "schema_pass",
+      "pass": true,
+      "detail": "envelope vs schemas/kf_result.v1.schema.json + manifest vs schemas/asset_manifest.v2.schema.json; errors=0 []"
+    },
+    "source_locator_resolvable": {
+      "acceptance_item": "source_locator_resolvable",
+      "pass": true,
+      "detail": "22 locators re-checked (char-span round-trip + unique substring + line numbers agree); failures=[]"
+    },
+    "source_hash_matches": {
+      "acceptance_item": "source_hash_matches",
+      "pass": true,
+      "detail": "live=sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c contract=sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c envelope=sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c manifest=sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c chars_live=8176 chars_contract=8176"
+    },
+    "no_duplicate_ids": {
+      "acceptance_item": "no_duplicate_ids",
+      "pass": true,
+      "detail": "asset ids=22 claims=0 duplicates=[]"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "acceptance_item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "pass": true,
+      "detail": "claims=0 (empty is the contract's complete result); violations=[]"
+    },
+    "no_verified_marks": {
+      "acceptance_item": "constraint:do_not_mark_claims_as_verified",
+      "pass": true,
+      "detail": "no 'verified' status/word appears in the manifest; resolution describes locator resolvability only"
+    },
+    "record_identity_matches_contract": {
+      "acceptance_item": "contract:input",
+      "pass": true,
+      "detail": "title_matches_contract=True scenario_matches_contract=True status=published mission_id=8233"
+    },
+    "single_report_scope": {
+      "acceptance_item": "constraint:single_report_scope",
+      "pass": true,
+      "detail": "package reads/writes report_id=9503 only; all output paths are built from REPORT_ID"
+    }
+  },
+  "acceptance_summary": {
+    "valid_json": {
+      "pass": true
+    },
+    "schema_pass": {
+      "pass": true
+    },
+    "source_locator_resolvable": {
+      "pass": true
+    },
+    "source_hash_matches": {
+      "pass": true
+    },
+    "no_duplicate_ids": {
+      "pass": true
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true
+    }
+  },
+  "all_acceptance_pass": true,
+  "notes": "Local pre-checks only: the platform gate independently recomputes the source hash and substring resolvability and is authoritative. Passing here is not a claim of platform verification."
+}
