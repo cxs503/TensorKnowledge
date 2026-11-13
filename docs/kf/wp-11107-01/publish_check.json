@@ -1,0 +1,51 @@
+{
+  "package_id": "wp-11107-01",
+  "result_report_id": "14784",
+  "checks": [
+    {
+      "id": "result_markdown_roundtrip",
+      "pass": true,
+      "evidence": "GET /tensor/reports/14784 -> HTTP 200, stored chars 29736 vs local 29736, sha256 stored f5a7ce788f933352 local f5a7ce788f933352"
+    },
+    {
+      "id": "worktree_copy_is_published_snapshot",
+      "pass": true,
+      "evidence": "docs/kf_result_wp-11107-01.md sha256 f5a7ce788f933352d5bc036544224333e376d137834e01cb60cbab4c5da175fb vs published.json f5a7ce788f933352d5bc036544224333e376d137834e01cb60cbab4c5da175fb (regenerate? then re-publish)"
+    },
+    {
+      "id": "json_block_equals_envelope",
+      "pass": true,
+      "evidence": "single ```json block (count=1) parses equal to docs/kf/wp-11107-01/kf_result.json"
+    },
+    {
+      "id": "figures_roundtrip",
+      "pass": true,
+      "evidence": "GET /tensor/reports/14784/figures/<name> sha256 vs local: {'fig_asset_locator_map.png': True, 'fig_identity_census.png': True}"
+    },
+    {
+      "id": "source_unchanged",
+      "pass": true,
+      "evidence": "GET /tensor/reports/11107 -> sha256:799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982 (contract sha256:799d7ffedf0f95500aca8aa289c2778f4e9d15795c29cd32a412c41aae57c982)"
+    }
+  ],
+  "all_pass": true,
+  "figures": [
+    {
+      "name": "fig_asset_locator_map.png",
+      "http_status": 200,
+      "bytes": 157638,
+      "sha256_local": "70865e2cca824b504996de3eb80c062c8cd73646c90d07cddbffd6f06aeb72a8",
+      "sha256_remote": "70865e2cca824b504996de3eb80c062c8cd73646c90d07cddbffd6f06aeb72a8",
+      "match": true
+    },
+    {
+      "name": "fig_identity_census.png",
+      "http_status": 200,
+      "bytes": 52339,
+      "sha256_local": "3913d753b9a5ea1f4e3e8508a3c4b45d6e4ec0846ab5f9c310ea53a0a9296096",
+      "sha256_remote": "3913d753b9a5ea1f4e3e8508a3c4b45d6e4ec0846ab5f9c310ea53a0a9296096",
+      "match": true
+    }
+  ],
+  "note": "round-trip evidence for the publication step; not a verification verdict"
+}
