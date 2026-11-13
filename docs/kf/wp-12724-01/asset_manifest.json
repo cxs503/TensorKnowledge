@@ -1,0 +1,880 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-12724-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12724",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-12T02:38:33.251382+00:00",
+  "source": {
+    "uri": "tensor://reports/12724",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "c8c552fa8e470d9b7180aada951c667ad6c6c76ac3ade5a7b123d687a6339f5e",
+    "chars": 7373,
+    "bytes_utf8": 12248,
+    "title": "IL70-N08 冰区航线气象导航优化成熟化：Lindqvist 冰阻力场 × 预报冰情 × Dijkstra/A* 图搜索（5/5 判据通过）",
+    "scenario_key": "ice_route_optimization",
+    "platform_figures": [
+      "fig1_uniform_field.png",
+      "fig2_ridge_detour.png",
+      "fig3_speed_profile.png",
+      "fig4_cost_comparison.png"
+    ],
+    "platform_tags": [
+      "ice-navigation",
+      "route-optimization",
+      "lindqvist",
+      "dijkstra",
+      "astar",
+      "weather-routing",
+      "b-spline",
+      "ship-performance-platform",
+      "IL70-N08"
+    ],
+    "platform_status": "published",
+    "platform_created_at": "2026-11-10T22:41:37.074725+00:00"
+  },
+  "counts": {
+    "assets": 28,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 4,
+      "source_code_reference": 9,
+      "data_artifact_reference": 3,
+      "report_table": 10,
+      "api_endpoint": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 12,
+      "referenced_unresolved": 16
+    },
+    "resolved_in_source": 12,
+    "referenced_unresolved": 16,
+    "declared_absent": 0,
+    "distinct_referenced_paths": 8
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "source markdown of report 12724",
+      "in_report_section": "(whole document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 7373,
+        "start_line": 1,
+        "end_line": 166,
+        "quote": "# IL70-N08 冰区航线气象导航优化（Lindqvist 冰阻力场 × 气象冰情预报 × Dijkstra/A* 图搜索）\n\n> 仓：`ship-performance-platform`　分支：`agent/m11529`　节点：`IL70-N08`（战役 DAG，成熟化）\n> 模块：`backend/api/ice/route_optimization.py`（核心 1180 行）、`backend/api/ice/route_scenarios.py`（参数化用例）\n> 测试：`backend/tests/ice/test_route_optimization.py`（32 条，全绿）；工件：`artifacts/ice_route/`\n> 证据等级：**REAL**（全部为可复算的物理/图论算法，无 MOCK/STUB；原 `/ice-navigation/route` 占位接口已被真实实现替换）\n\n## ① 案例介绍\n\n**物理背景**：冰区（北极东北航道/喀拉海扇形航段）船舶的航速受海冰厚度支配，冰阻力与敞水阻力对航速的依赖不同，\n因此“燃油最省”与“时间最短”是两条不同的航线——这正是气象/冰情导航的商业价值所在。本节点把\n**冰情场（预报时效可插值）→ Lindqvist 冰阻力场 → 图搜索 → 平滑 → 复核** 全链条做成可复算的确定性模块，\n并以三条可机器裁决的算例给出精度证据。\n\n**船型参数（参考 PC6 级中型冰区加强船，几何先验校验通过）**\n\n| 参数 | 值 | 说明 |\n|---|---|---|\n| Lpp / Lwl / B / T | 120.0 / 126.0 / 24.0 / 8.5 m | 冰区加强船主尺度 |\n| Cb / 排水体积 | 0.72 / 17625.6 m³ | 几何自洽：Cb 校验通过 (偏差=0.00%) |\n| 敞水设计点 | 16.0 kn @ 850.0 kN | 敞水阻力二次律 R_ow = R_design·(v/v_open)² |\n| 冰区限速上限 h_max | 1.5 m | v_max(h)=v_open(1-h/h_max)；h≥h_max 视为不可航 |\n| 首部半角 / 柱角 | 22° / 28° | Lindqvist 弯曲/清除项 |\n\n**算例（冰况为参数化情景，非实测数据）**\n\n| 算例 | 网格 | 冰情 | 用途 |\n|---|---|---|---|\n| (a) 均匀冰场 | 0.1°×0.1°，51×311 | h = 0.5 m 常数 | 最优路径 = 大圆（解析基准） |\n| (b) 冰脊屏障 | 0.1°×0.1°，51×311 | 背景 0.4 m + 近南北冰脊带（峰 2.2 m ≥ h_max） | 绕避不可航冰脊核 |\n| (c) 油/时权衡 | 0.1°×0.1°，41×201 | 背景 0.3 m + 平顶厚冰平台（峰 1.4 m） | 两目标航线差异 |\n| (e) 效率基准 | 0.1°×0.1°，100×100 | h = 0.6 m 常数 | Dijkstra < 1 s |\n\n## ② 怎么做的（方法 / 流程 / 关键设置）\n\n1. **海域网格化**：`GeoGrid(lat_min, lon_min, lat_max, lon_max, dlat, dlon)`，缺省 Δ=0.1°；\n   中纬 0.1° 纬向 = 11.11 km，经向随纬收缩（70°N 处 ≈ 3.8 km）——**单元各向异性**是后续必须处理的数值事实。\n2. **冰情场**：`IceField` 支持多预报时效切片（`lead_hours`），空间双线性 + 时间线性插值；\n   特征构造器 `RidgeBand`（有限长冰脊带，垂直向 Gaussian）、`IcePatch`（超高斯 h=peak·exp(-(r/R)^power)，power≥4 近平顶）。\n3. **冰阻力场**：逐网格调用 Lindqvist(1989)（复用 `api.ice.formulas.calc_lindqvist` 的校准系数，向量化镜像）；\n   单点标量实现与向量化实现逐项对账（相对差 < 1e-6，见测试 `test_vectorized_lindqvist_matches_scalar`）。\n4. **航速限制**：`v_max(h) = v_open·(1 - h/h_max)`，h ≥ h_max 的单元标记为不可航（图里直接删除该节点）。\n5. **图搜索**：节点 = 网格点；边 = 8 邻域（可选 16）；边权 = 燃油 `Σ R̄·d`（MJ=kN·km）或 时间 `Σ d/v`（h）；\n   `Dijkstra`（heapq + 纯 Python 邻接表）与 `A*`（可采纳启发式：大圆余距 × 图内最小单位代价，实测与 Dijkstra 同代价）。\n6. **任意角拉直（any-angle / string-pulling）**：网格解受 8 邻域方向量化影响（本算例 +15.34%），\n   逐段用“大圆段可行且代价不增”作替换，把航线拉紧到连续平面最优附近（代价单调不增，见 `test_tauten_is_monotone_and_preserves_endpoints`）。\n7. **平滑**：**球面**三次 clamped B 样条（在单位向量上做 de Boor，再归一化）——保端点插值、C² 连续，\n   且**控制点共大圆时曲线严格落在大圆上**（否则平滑会破坏“均匀冰场=大圆”这一物理结论）。\n   双守卫：全程 h < h_max，且燃油/时间代价相对原航线劣化 ≤ 1%；全部候选失败则回退原航线（不静默放行）。\n8. **复核与出图**：逐点核 v ≤ v_max(h)、冰厚、不可航点、航向变化；`matplotlib` 出 4 张图。\n\n## ③ 计算结果（全部数字由 `backend/tests/make_ice_route_artifacts.py` 程序化写入 `artifacts/ice_route/metrics.json`）\n\n### 判据 (a) 均匀冰场：最优路径 = 大圆\n\n| 目标 | 航线长 [km] | 大圆 [km] | 超额 [%] | 最大横向偏距 [km] | 网格解超额 [%] |\n|---|---|---|---|---|---|\n| 燃油最省 | 1006.4398 | 1006.4398 | -0.0000 | 0.0000 | 15.3421 |\n| 时间最短 | 1006.4398 | 1006.4398 | -0.0000 | 0.0000 | 15.3421 |\n\n平滑后航线长 1006.4398 km（超额 0.0000%），平滑最大偏距 0（曲线与大圆重合）。\n**网格解**（未经拉直）超额 15.34% —— 这是经纬网格 8 邻域的方向量化误差，诚实地单列披露；\n拉直把代价再降 13.30%。\n\n### 判据 (b) 冰脊屏障：绕避高阻力区\n\n| 指标 | 燃油最省 | 时间最短 |\n|---|---|---|\n| 不可航冰脊核单元数 | 54 | 54 |\n| 航线穿越冰脊核节点数 | 0 | 0 |\n| 航线最大冰厚 [m] | 0.400 | 0.400 |\n| 平滑后最大冰厚 [m] | 0.888 | 0.888 |\n| 绕行后航线长 [km]（大圆 755.857） | 794.340（+5.09%） | 794.340（+5.09%） |\n| 最大航向偏角（航线 / 平滑） [°] | 33.74 / 44.24 | 33.74 / 44.24 |\n\n### 判据 (c) 燃油最省 vs 时间最短\n\n| 航线 | 距离 [km] | 燃油指标 [MJ] | 航时 [h] | 最小航速 [kn] |\n|---|---|---|---|---|\n| 燃油最省（穿厚冰平台） | 623.046 | 422,622.2 | 56.80 | 1.07 |\n| 时间最短（绕薄冰） | 642.489 | 425,213.5 | 27.19 | 11.86 |\n| 差异 | Hausdorff 275.6 km | 时间最优多耗 0.61% | 燃油最优多耗时 108.92% | — |\n\n物理机制：厚冰中 `v_max(h)` 骤降（1.4 m 冰中 1.07 kn），而 `R(h)` 在低速区随 h 增长远慢于 `1/v`，\n故 **燃油指标对冰厚相对不敏感（+0.61%）、时间指标极敏感（+108.92%）**，\n两目标必然给出不同航线。\n\n### 判据 (d) 航速约束（6 条航线的逐点核查）\n\n| 航线 | max(v−v_max) [m/s] | 端点腿速法越界 [m/s]（粗采样风险） | 局部限速指派后越界 [m/s] |\n|---|---|---|---|\n| uniform-fuel | 0.000000 | 0.0000 | 0.000000 |\n| uniform-time | 0.000000 | 0.0000 | 0.000000 |\n| ridge-fuel | 0.000000 | 2.6758 | 0.000000 |\n| ridge-time | 0.000000 | 2.6758 | 0.000000 |\n| patch-fuel | 0.000000 | 6.0361 | 0.000000 |\n| patch-time | 0.000000 | 0.4838 | 0.000000 |\n\n最坏越界 = 0.000000 m/s → **0 违反**。\n\n### 判据 (e) 计算效率\n\n| 网格 | 邻域 | 边数 | 单次 Dijkstra 耗时（3 次） [s] | 节点数 | 判据 (<1 s) |\n|---|---|---|---|---|---|\n| 100×100 | 8 | 80000 | 0.1680, 0.2096, 0.1038 | 100 | PASS |\n\n### 判据总表\n\n| 判据 | 指标 | 阈值 | 实测 | 结论 |\n|---|---|---|---|---|\n| (a) 均匀冰场 = 大圆 | 长度超额 | ≤1% | -0.0000% | PASS |\n| (b) 冰脊绕避 | 冰脊核穿越节点 / 航向偏角 | 0 节点 / ≤45° | 0 / 33.74°（平滑 44.24°） | PASS |\n| (c) 油/时双目标 | 成本差 | >5% | 108.92% | PASS |\n| (d) 航速约束 | max(v−v_max) | ≤0 | 0.000000 m/s | PASS |\n| (e) 效率 | 100×100 Dijkstra | <1 s | 0.2096 s | PASS |\n| (f) 测试 | pytest 条数 | ≥10 条全绿 | 32 条全绿 | PASS |\n\n## ④ 结果图（PNG sha256 入 provenance，见 `metrics.json._figures`）\n\n| 图 | 内容 | sha256 前 16 位 |\n|---|---|---|\n| `artifacts/ice_route/fig1_uniform_field.png` | (a) 均匀冰场 + 大圆 + 网格解 + 最终航线 | `b88a98e83395a20e` |\n| `artifacts/ice_route/fig2_ridge_detour.png` | (b) 冰脊场 + 不可航核 + 绕行航线 + 平滑曲线 | `83997c8eaff2fe3b` |\n| `artifacts/ice_route/fig3_speed_profile.png` | (c) 两条航线的航速分布与 v_max(h) 包络 | `a1238b910d71c88c` |\n| `artifacts/ice_route/fig4_cost_comparison.png` | (d) 燃油/航时双目标成本对比 | `30db05ea3884ffc4` |\n\n## ⑤ 注意点（坑 / 局限 / 适用范围）\n\n1. **经纬网格各向异性是头号数值坑**：0.1° 单元在 74°N 处纬向 11.11 km、经向仅 3.06 km，\n   8 邻域在**地面距离空间**里只剩下 0°/75°/90° 三个可用方向 → 纯网格最优路径比大圆长 15.34%。\n   这不是“搜索不对”，而是方向量化；本模块用 any-angle 拉直消除（1.75e-06%），并在报告中把两个数字都列出，不隐瞒。\n2. **`_shift` 方向语义必须“取目标邻点”**：初版写成 `out[i+di]=a[i]`，边权把反向格点的阻力读进来，同质场看不出来、异质场会系统偏移（已修，见提交说明）。\n3. **长航段不能只取端点采样**：拉直后的航段可达数百 km，若只用端点冰厚估航速，会把穿厚冰的航段算成 12.8 kn（真值 1.07 kn）。\n   本模块 `_polyline_costs/_segment_metrics` 一律按 4 km 步长沿大圆密集采样；`smooth_path` 入口先把折线加密到 ≥100 点。\n4. **平滑会切角**：B 样条在冰脊尖端切内角可把最大冰厚从 0.4 m 抬到 0.89 m（偏距 16.3 km）。\n   因此设“可航性 + 冰情裕度 + 代价不劣化 ≤1%”三守卫，失败则回退原航线并置 `fallback_to_raw=True`。\n   本算例平滑后越界量 0.000000 m/s（满足判据）。\n5. **拉直是贪心**（几何递减探测 + 只接受不增代价的替换）：代价单调不增但不保证全局最优，极端窄通道场景可能停在次优解。\n6. **v_max(h) 的线性形式是任务书给定关系**（工程近似，源自冰级冰中航速能力），不是从破冰力学推导；h≥h_max 直接判不可航也是保守工程约定。\n7. **风只按 R_AW = ½ρ_a·C_AA·A_F·V_RW²·cosθ（ISO 15016 形式）计入附加阻力**；**未含波浪增阻**（冰区通常被冰覆盖抑制，但敞水段应叠加 STAWAVE/ISO 波浪增阻），这是本版明确的局限。\n8. **冰况为参数化情景**（Gaussian 冰脊 / 超高斯厚冰平台），不是实测/预报数据产品；接口已支持直接注入二维冰厚矩阵与多时效预报切片，但真实数据的接入与标定不在本节点范围。\n9. 阻力模型沿用本仓 `api.ice.formulas` 的**校准版 Lindqvist**（其系数已按 ITTC 基准样本标定），本节点只做向量化复用与单点对账，未改其系数。\n\n## ⑥ 误差判定（逐项回答“是否 <3%”）\n\n| 关键量 | 基准 | 误差 | 是否 <3% |\n|---|---|---|---|\n| (a) 最优航线长 | 大圆解析长度 1006.4398 km | 0.000000% | **是** |\n| (a) 平滑后航线长 | 同上 | 0.000000% | **是** |\n| 向量化 Lindqvist vs 标量 `calc_lindqvist` | 标量实现（3 位小数） | < 1e-6 相对 | **是** |\n| A* vs Dijkstra 总代价 | Dijkstra（同图） | < 1e-9 相对 | **是** |\n| (b) 航线最大航向偏角 | 判据上限 45° | 44.24°（余量 0.76°） | **是（对 45° 判据；非“误差 vs 解析解”）** |\n| (c) 油/时成本差 | 判据下界 5% | 108.92% | **是** |\n| (d) 航速越界 | 0 | 0.000000 m/s | **是** |\n| (e) Dijkstra 耗时 | 判据上限 1 s | 0.2096 s | **是** |\n| **网格解 vs 大圆（未拉直）** | 大圆 | **15.34%** | **否（>3%，>15%）——诚实披露：这是 8 邻域网格解的方向量化误差，不是最终航线；最终航线 0.000000%** |\n\n结论：交付的**最终航线**精度满足 3% 判据（(a) 为 0.0000%）；网格解本身不满足，已量化并解释，最终航线不依赖它。\n\n## 审计链\n\n- 代码：`backend/api/ice/route_optimization.py`（算法）、`backend/api/ice/route_scenarios.py`（用例参数，不含结果常数）\n- 接口：`POST /api/v1/ice-navigation/route`（替换原“推荐航线A”占位实现；含网格/船型/冰情/风场参数模型与 Cb/L/B 先验校验）\n- 测试：`backend/tests/ice/test_route_optimization.py` — 32 条\n- 工件：`artifacts/ice_route/metrics.json` + `fig1..fig4.png`（每图 sha256 入 `_figures`）\n- 复算：`cd backend && python3 -m pytest tests/ice/test_route_optimization.py -q`；`python3 tests/make_ice_route_artifacts.py`\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "GET /tensor/reports/12724 markdown field + sha256 over utf-8 bytes",
+        "result": "resolved",
+        "detail": "chars=7373 bytes_utf8=12248 sha256=c8c552fa8e470d9b7180aada951c667ad6c6c76ac3ade5a7b123d687a6339f5e"
+      },
+      "source_uri": "tensor://reports/12724",
+      "note": "the source asset itself; its byte hash is the provenance anchor of this work package.",
+      "kind": "report_markdown"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "fig1_uniform_field.png",
+      "in_report_section": "④ 结果图（PNG sha256 入 provenance，见 `metrics.json._figures`）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4738,
+        "end_char": 4836,
+        "start_line": 122,
+        "end_line": 122,
+        "quote": "| `artifacts/ice_route/fig1_uniform_field.png` | (a) 均匀冰场 + 大圆 + 网格解 + 最终航线 | `b88a98e83395a20e` |",
+        "unique": true,
+        "token": "fig1_uniform_field.png",
+        "token_span": [
+          4761,
+          4783
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12724#figures[0]",
+      "caption": "(a) 均匀冰场：网格 Dijkstra 路径（橙）、拉直+平滑后的最终航线（红）与解析大圆（黑虚线）重合，长度超额 0.0000%",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure",
+      "label": "fig2_ridge_detour.png",
+      "in_report_section": "④ 结果图（PNG sha256 入 provenance，见 `metrics.json._figures`）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4837,
+        "end_char": 4936,
+        "start_line": 123,
+        "end_line": 123,
+        "quote": "| `artifacts/ice_route/fig2_ridge_detour.png` | (b) 冰脊场 + 不可航核 + 绕行航线 + 平滑曲线 | `83997c8eaff2fe3b` |",
+        "unique": true,
+        "token": "fig2_ridge_detour.png",
+        "token_span": [
+          4860,
+          4881
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12724#figures[1]",
+      "caption": "(b) 冰脊屏障：黑色叉为不可航冰脊核（h≥1.5 m），航线绕其北端通过，穿越冰脊核节点 0，最大航向偏角 33.74°",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "embedded_figure",
+      "label": "fig3_speed_profile.png",
+      "in_report_section": "④ 结果图（PNG sha256 入 provenance，见 `metrics.json._figures`）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4937,
+        "end_char": 5035,
+        "start_line": 124,
+        "end_line": 124,
+        "quote": "| `artifacts/ice_route/fig3_speed_profile.png` | (c) 两条航线的航速分布与 v_max(h) 包络 | `a1238b910d71c88c` |",
+        "unique": true,
+        "token": "fig3_speed_profile.png",
+        "token_span": [
+          4960,
+          4982
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12724#figures[2]",
+      "caption": "(c) 航速分布：燃油最省航线穿厚冰平台（最低 1.07 kn）、时间最短航线绕薄冰（最低 11.86 kn）；蓝带为 v_max(h) 包络，红线处处不越界",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "embedded_figure",
+      "label": "fig4_cost_comparison.png",
+      "in_report_section": "④ 结果图（PNG sha256 入 provenance，见 `metrics.json._figures`）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5036,
+        "end_char": 5126,
+        "start_line": 125,
+        "end_line": 125,
+        "quote": "| `artifacts/ice_route/fig4_cost_comparison.png` | (d) 燃油/航时双目标成本对比 | `30db05ea3884ffc4` |",
+        "unique": true,
+        "token": "fig4_cost_comparison.png",
+        "token_span": [
+          5059,
+          5083
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[3] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12724#figures[3]",
+      "caption": "(d) 双目标成本对比：燃油最优 vs 时间最优，燃油差 0.61%、航时差 108.92%",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[3] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "source_code_reference",
+      "label": "backend/api/ice/route_optimization.py (markdown line 4)",
+      "in_report_section": "(preamble)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 142,
+        "end_char": 241,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "> 模块：`backend/api/ice/route_optimization.py`（核心 1180 行）、`backend/api/ice/route_scenarios.py`（参数化用例）",
+        "unique": true,
+        "token": "backend/api/ice/route_optimization.py",
+        "token_span": [
+          148,
+          185
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/api/ice/route_optimization.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "source_code_reference",
+      "label": "backend/api/ice/route_scenarios.py (markdown line 4)",
+      "in_report_section": "(preamble)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 142,
+        "end_char": 241,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "> 模块：`backend/api/ice/route_optimization.py`（核心 1180 行）、`backend/api/ice/route_scenarios.py`（参数化用例）",
+        "unique": true,
+        "token": "backend/api/ice/route_scenarios.py",
+        "token_span": [
+          199,
+          233
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/api/ice/route_scenarios.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "backend/tests/ice/test_route_optimization.py (markdown line 5)",
+      "in_report_section": "(preamble)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 242,
+        "end_char": 328,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "> 测试：`backend/tests/ice/test_route_optimization.py`（32 条，全绿）；工件：`artifacts/ice_route/`",
+        "unique": true,
+        "token": "backend/tests/ice/test_route_optimization.py",
+        "token_span": [
+          248,
+          292
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/tests/ice/test_route_optimization.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "source_code_reference",
+      "label": "backend/tests/make_ice_route_artifacts.py (markdown line 52)",
+      "in_report_section": "③ 计算结果（全部数字由 `backend/tests/make_ice_route_artifacts.py` 程序化写入 `artifacts/ice_route/metrics.json`）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2497,
+        "end_char": 2598,
+        "start_line": 52,
+        "end_line": 52,
+        "quote": "## ③ 计算结果（全部数字由 `backend/tests/make_ice_route_artifacts.py` 程序化写入 `artifacts/ice_route/metrics.json`）",
+        "unique": true,
+        "token": "backend/tests/make_ice_route_artifacts.py",
+        "token_span": [
+          2514,
+          2555
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/tests/make_ice_route_artifacts.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/ice_route/metrics.json (markdown line 52)",
+      "in_report_section": "③ 计算结果（全部数字由 `backend/tests/make_ice_route_artifacts.py` 程序化写入 `artifacts/ice_route/metrics.json`）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2497,
+        "end_char": 2598,
+        "start_line": 52,
+        "end_line": 52,
+        "quote": "## ③ 计算结果（全部数字由 `backend/tests/make_ice_route_artifacts.py` 程序化写入 `artifacts/ice_route/metrics.json`）",
+        "unique": true,
+        "token": "artifacts/ice_route/metrics.json",
+        "token_span": [
+          2564,
+          2596
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "artifacts/ice_route/metrics.json",
+      "origin": "inline_code",
+      "note": "data_artifact_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "data_artifact_reference"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "data_artifact_reference",
+      "label": "metrics.json (markdown line 118)",
+      "in_report_section": "④ 结果图（PNG sha256 入 provenance，见 `metrics.json._figures`）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4636,
+        "end_char": 4695,
+        "start_line": 118,
+        "end_line": 118,
+        "quote": "## ④ 结果图（PNG sha256 入 provenance，见 `metrics.json._figures`）",
+        "unique": true,
+        "token": "metrics.json",
+        "token_span": [
+          4672,
+          4684
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "metrics.json",
+      "origin": "inline_code",
+      "note": "data_artifact_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "data_artifact_reference"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "source_code_reference",
+      "label": "backend/api/ice/route_optimization.py (markdown line 162)",
+      "in_report_section": "审计链",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6922,
+        "end_char": 7020,
+        "start_line": 162,
+        "end_line": 162,
+        "quote": "- 代码：`backend/api/ice/route_optimization.py`（算法）、`backend/api/ice/route_scenarios.py`（用例参数，不含结果常数）",
+        "unique": true,
+        "token": "backend/api/ice/route_optimization.py",
+        "token_span": [
+          6928,
+          6965
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/api/ice/route_optimization.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "source_code_reference",
+      "label": "backend/api/ice/route_scenarios.py (markdown line 162)",
+      "in_report_section": "审计链",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6922,
+        "end_char": 7020,
+        "start_line": 162,
+        "end_line": 162,
+        "quote": "- 代码：`backend/api/ice/route_optimization.py`（算法）、`backend/api/ice/route_scenarios.py`（用例参数，不含结果常数）",
+        "unique": true,
+        "token": "backend/api/ice/route_scenarios.py",
+        "token_span": [
+          6972,
+          7006
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/api/ice/route_scenarios.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "source_code_reference",
+      "label": "backend/tests/ice/test_route_optimization.py (markdown line 164)",
+      "in_report_section": "审计链",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7108,
+        "end_char": 7166,
+        "start_line": 164,
+        "end_line": 164,
+        "quote": "- 测试：`backend/tests/ice/test_route_optimization.py` — 32 条",
+        "unique": true,
+        "token": "backend/tests/ice/test_route_optimization.py",
+        "token_span": [
+          7114,
+          7158
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/tests/ice/test_route_optimization.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/ice_route/metrics.json (markdown line 165)",
+      "in_report_section": "审计链",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7167,
+        "end_char": 7249,
+        "start_line": 165,
+        "end_line": 165,
+        "quote": "- 工件：`artifacts/ice_route/metrics.json` + `fig1..fig4.png`（每图 sha256 入 `_figures`）",
+        "unique": true,
+        "token": "artifacts/ice_route/metrics.json",
+        "token_span": [
+          7173,
+          7205
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "artifacts/ice_route/metrics.json",
+      "origin": "inline_code",
+      "note": "data_artifact_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "data_artifact_reference"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "source_code_reference",
+      "label": "tests/ice/test_route_optimization.py (markdown line 166)",
+      "in_report_section": "审计链",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7250,
+        "end_char": 7372,
+        "start_line": 166,
+        "end_line": 166,
+        "quote": "- 复算：`cd backend && python3 -m pytest tests/ice/test_route_optimization.py -q`；`python3 tests/make_ice_route_artifacts.py`",
+        "unique": true,
+        "token": "tests/ice/test_route_optimization.py",
+        "token_span": [
+          7288,
+          7324
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "tests/ice/test_route_optimization.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "source_code_reference",
+      "label": "tests/make_ice_route_artifacts.py (markdown line 166)",
+      "in_report_section": "审计链",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7250,
+        "end_char": 7372,
+        "start_line": 166,
+        "end_line": 166,
+        "quote": "- 复算：`cd backend && python3 -m pytest tests/ice/test_route_optimization.py -q`；`python3 tests/make_ice_route_artifacts.py`",
+        "unique": true,
+        "token": "tests/make_ice_route_artifacts.py",
+        "token_span": [
+          7338,
+          7371
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "tests/make_ice_route_artifacts.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "report_table",
+      "label": "table 1 @ lines 17-23",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 652,
+        "end_char": 987,
+        "start_line": 17,
+        "end_line": 23,
+        "quote": "| 参数 | 值 | 说明 |\n|---|---|---|\n| Lpp / Lwl / B / T | 120.0 / 126.0 / 24.0 / 8.5 m | 冰区加强船主尺度 |\n| Cb / 排水体积 | 0.72 / 17625.6 m³ | 几何自洽：Cb 校验通过 (偏差=0.00%) |\n| 敞水设计点 | 16.0 kn @ 850.0 kN | 敞水阻力二次律 R_ow = R_design·(v/v_open)² |\n| 冰区限速上限 h_max | 1.5 m | v_max(h)=v_open(1-h/h_max)；h≥h_max 视为不可航 |\n| 首部半角 / 柱角 | 22° / 28° | Lindqvist 弯曲/清除项 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "7 rows x 3 columns"
+      },
+      "rows": 7,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "report_table",
+      "label": "table 2 @ lines 27-32",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1013,
+        "end_char": 1334,
+        "start_line": 27,
+        "end_line": 32,
+        "quote": "| 算例 | 网格 | 冰情 | 用途 |\n|---|---|---|---|\n| (a) 均匀冰场 | 0.1°×0.1°，51×311 | h = 0.5 m 常数 | 最优路径 = 大圆（解析基准） |\n| (b) 冰脊屏障 | 0.1°×0.1°，51×311 | 背景 0.4 m + 近南北冰脊带（峰 2.2 m ≥ h_max） | 绕避不可航冰脊核 |\n| (c) 油/时权衡 | 0.1°×0.1°，41×201 | 背景 0.3 m + 平顶厚冰平台（峰 1.4 m） | 两目标航线差异 |\n| (e) 效率基准 | 0.1°×0.1°，100×100 | h = 0.6 m 常数 | Dijkstra < 1 s |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "6 rows x 4 columns"
+      },
+      "rows": 6,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "report_table",
+      "label": "table 3 @ lines 56-59",
+      "in_report_section": "判据 (a) 均匀冰场：最优路径 = 大圆",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2627,
+        "end_char": 2839,
+        "start_line": 56,
+        "end_line": 59,
+        "quote": "| 目标 | 航线长 [km] | 大圆 [km] | 超额 [%] | 最大横向偏距 [km] | 网格解超额 [%] |\n|---|---|---|---|---|---|\n| 燃油最省 | 1006.4398 | 1006.4398 | -0.0000 | 0.0000 | 15.3421 |\n| 时间最短 | 1006.4398 | 1006.4398 | -0.0000 | 0.0000 | 15.3421 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "4 rows x 6 columns"
+      },
+      "rows": 4,
+      "columns": 6,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "report_table",
+      "label": "table 4 @ lines 67-74",
+      "in_report_section": "判据 (b) 冰脊屏障：绕避高阻力区",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2987,
+        "end_char": 3251,
+        "start_line": 67,
+        "end_line": 74,
+        "quote": "| 指标 | 燃油最省 | 时间最短 |\n|---|---|---|\n| 不可航冰脊核单元数 | 54 | 54 |\n| 航线穿越冰脊核节点数 | 0 | 0 |\n| 航线最大冰厚 [m] | 0.400 | 0.400 |\n| 平滑后最大冰厚 [m] | 0.888 | 0.888 |\n| 绕行后航线长 [km]（大圆 755.857） | 794.340（+5.09%） | 794.340（+5.09%） |\n| 最大航向偏角（航线 / 平滑） [°] | 33.74 / 44.24 | 33.74 / 44.24 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "8 rows x 3 columns"
+      },
+      "rows": 8,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "report_table",
+      "label": "table 5 @ lines 78-82",
+      "in_report_section": "判据 (c) 燃油最省 vs 时间最短",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3278,
+        "end_char": 3519,
+        "start_line": 78,
+        "end_line": 82,
+        "quote": "| 航线 | 距离 [km] | 燃油指标 [MJ] | 航时 [h] | 最小航速 [kn] |\n|---|---|---|---|---|\n| 燃油最省（穿厚冰平台） | 623.046 | 422,622.2 | 56.80 | 1.07 |\n| 时间最短（绕薄冰） | 642.489 | 425,213.5 | 27.19 | 11.86 |\n| 差异 | Hausdorff 275.6 km | 时间最优多耗 0.61% | 燃油最优多耗时 108.92% | — |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "5 rows x 5 columns"
+      },
+      "rows": 5,
+      "columns": 5,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "report_table",
+      "label": "table 6 @ lines 90-97",
+      "in_report_section": "判据 (d) 航速约束（6 条航线的逐点核查）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3681,
+        "end_char": 4047,
+        "start_line": 90,
+        "end_line": 97,
+        "quote": "| 航线 | max(v−v_max) [m/s] | 端点腿速法越界 [m/s]（粗采样风险） | 局部限速指派后越界 [m/s] |\n|---|---|---|---|\n| uniform-fuel | 0.000000 | 0.0000 | 0.000000 |\n| uniform-time | 0.000000 | 0.0000 | 0.000000 |\n| ridge-fuel | 0.000000 | 2.6758 | 0.000000 |\n| ridge-time | 0.000000 | 2.6758 | 0.000000 |\n| patch-fuel | 0.000000 | 6.0361 | 0.000000 |\n| patch-time | 0.000000 | 0.4838 | 0.000000 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "8 rows x 4 columns"
+      },
+      "rows": 8,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "report_table",
+      "label": "table 7 @ lines 103-105",
+      "in_report_section": "判据 (e) 计算效率",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4099,
+        "end_char": 4247,
+        "start_line": 103,
+        "end_line": 105,
+        "quote": "| 网格 | 邻域 | 边数 | 单次 Dijkstra 耗时（3 次） [s] | 节点数 | 判据 (<1 s) |\n|---|---|---|---|---|---|\n| 100×100 | 8 | 80000 | 0.1680, 0.2096, 0.1038 | 100 | PASS |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "3 rows x 6 columns"
+      },
+      "rows": 3,
+      "columns": 6,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "report_table",
+      "label": "table 8 @ lines 109-116",
+      "in_report_section": "判据总表",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4259,
+        "end_char": 4634,
+        "start_line": 109,
+        "end_line": 116,
+        "quote": "| 判据 | 指标 | 阈值 | 实测 | 结论 |\n|---|---|---|---|---|\n| (a) 均匀冰场 = 大圆 | 长度超额 | ≤1% | -0.0000% | PASS |\n| (b) 冰脊绕避 | 冰脊核穿越节点 / 航向偏角 | 0 节点 / ≤45° | 0 / 33.74°（平滑 44.24°） | PASS |\n| (c) 油/时双目标 | 成本差 | >5% | 108.92% | PASS |\n| (d) 航速约束 | max(v−v_max) | ≤0 | 0.000000 m/s | PASS |\n| (e) 效率 | 100×100 Dijkstra | <1 s | 0.2096 s | PASS |\n| (f) 测试 | pytest 条数 | ≥10 条全绿 | 32 条全绿 | PASS |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "8 rows x 5 columns"
+      },
+      "rows": 8,
+      "columns": 5,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A26",
+      "asset_class": "report_table",
+      "label": "table 9 @ lines 120-125",
+      "in_report_section": "④ 结果图（PNG sha256 入 provenance，见 `metrics.json._figures`）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4697,
+        "end_char": 5126,
+        "start_line": 120,
+        "end_line": 125,
+        "quote": "| 图 | 内容 | sha256 前 16 位 |\n|---|---|---|\n| `artifacts/ice_route/fig1_uniform_field.png` | (a) 均匀冰场 + 大圆 + 网格解 + 最终航线 | `b88a98e83395a20e` |\n| `artifacts/ice_route/fig2_ridge_detour.png` | (b) 冰脊场 + 不可航核 + 绕行航线 + 平滑曲线 | `83997c8eaff2fe3b` |\n| `artifacts/ice_route/fig3_speed_profile.png` | (c) 两条航线的航速分布与 v_max(h) 包络 | `a1238b910d71c88c` |\n| `artifacts/ice_route/fig4_cost_comparison.png` | (d) 燃油/航时双目标成本对比 | `30db05ea3884ffc4` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "6 rows x 3 columns"
+      },
+      "rows": 6,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A27",
+      "asset_class": "report_table",
+      "label": "table 10 @ lines 146-156",
+      "in_report_section": "⑥ 误差判定（逐项回答“是否 <3%”）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6256,
+        "end_char": 6845,
+        "start_line": 146,
+        "end_line": 156,
+        "quote": "| 关键量 | 基准 | 误差 | 是否 <3% |\n|---|---|---|---|\n| (a) 最优航线长 | 大圆解析长度 1006.4398 km | 0.000000% | **是** |\n| (a) 平滑后航线长 | 同上 | 0.000000% | **是** |\n| 向量化 Lindqvist vs 标量 `calc_lindqvist` | 标量实现（3 位小数） | < 1e-6 相对 | **是** |\n| A* vs Dijkstra 总代价 | Dijkstra（同图） | < 1e-9 相对 | **是** |\n| (b) 航线最大航向偏角 | 判据上限 45° | 44.24°（余量 0.76°） | **是（对 45° 判据；非“误差 vs 解析解”）** |\n| (c) 油/时成本差 | 判据下界 5% | 108.92% | **是** |\n| (d) 航速越界 | 0 | 0.000000 m/s | **是** |\n| (e) Dijkstra 耗时 | 判据上限 1 s | 0.2096 s | **是** |\n| **网格解 vs 大圆（未拉直）** | 大圆 | **15.34%** | **否（>3%，>15%）——诚实披露：这是 8 邻域网格解的方向量化误差，不是最终航线；最终航线 0.000000%** |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "11 rows x 4 columns"
+      },
+      "rows": 11,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A28",
+      "asset_class": "api_endpoint",
+      "label": "/ice-navigation/route",
+      "in_report_section": "(preamble)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 375,
+        "end_char": 396,
+        "start_line": 6,
+        "end_line": 6,
+        "quote": "/ice-navigation/route",
+        "unique": false,
+        "context_line": "> 证据等级：**REAL**（全部为可复算的物理/图论算法，无 MOCK/STUB；原 `/ice-navigation/route` 占位接口已被真实实现替换）"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (exact inline-code span)",
+        "result": "resolved",
+        "detail": "occurs 2 time(s); pinned at line 6"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "api_endpoint"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": {
+      "total_quotes": 28,
+      "quotes_unique_in_source": 27,
+      "repeated_quotes": [
+        "## ③ 计算结果（全部数字由 `backend/tests/make_ice_route_artifacts.py` 程序化写入 `artifacts/ice_route/metrics.json`）",
+        "- 代码：`backend/api/ice/route_optimization.py`（算法）、`backend/api/ice/route_scenarios.py`（用例参数，不含结果常数）",
+        "- 复算：`cd backend && python3 -m pytest tests/ice/test_route_optimization.py -q`；`python3 tests/make_ice_route_artifacts.py`",
+        "> 模块：`backend/api/ice/route_optimization.py`（核心 1180 行）、`backend/api/ice/route_scenarios.py`（参数化用例）"
+      ],
+      "note": "repeated short quotes are structural (identical table rows); each asset still carries its own char span."
+    },
+    "hash_recomputed_locally": "c8c552fa8e470d9b7180aada951c667ad6c6c76ac3ade5a7b123d687a6339f5e",
+    "hash_matches_contract": true,
+    "hash_alg": "sha256 over markdown encoded as utf-8",
+    "locator_scheme": "absolute character span in markdown, 1-based inclusive line numbers"
+  },
+  "identity_granularity": "File references are occurrence-level: identity is (path, markdown line), so a file cited twice yields two assets carrying their own quotes; counts.distinct_referenced_paths is the deduplicated view.",
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no `verified` marks (verification is platform-gated).",
+    "Referenced source paths belong to the producing repository; they are resolved strictly inside the TensorKnowledge delivery worktree, so cross-repository references stay referenced_unresolved by design.",
+    "Figures are inventoried from record.figures[] as-is; when png_base64 is empty the asset is metadata_only and no byte hash is claimed.",
+    "Table and code-fence assets record geometry (rows/columns/language) only; their content is not restated as knowledge.",
+    "Only path-like references, fenced/inline code paths, tables, figures and explicitly configured interface tokens are registered. Bare prose symbols (e.g. a rule table named in the text that lives in the producing repository) are deliberately NOT inferred - registering them would require assuming information the report does not pin to a file.",
+    "Outputs live under docs/kf/<package>/ because the push gate drops artifacts/** (see docs/ops), so registered artifacts are not silently filtered."
+  ],
+  "producer": {
+    "generator": "scripts/kf/kf01_register.py",
+    "contract_version": "1.0",
+    "fetched_via": "GET /api/v1/tensor/reports/12724"
+  }
+}
