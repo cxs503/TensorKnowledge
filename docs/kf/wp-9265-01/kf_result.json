@@ -1,0 +1,596 @@
+{
+  "package_id": "wp-9265-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9265",
+  "provenance": {
+    "source_hash": "sha256:d2ab3780127bff4762a8754ada4720789eaac52fef0de8edf88369d3dea6302c",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15637",
+    "emitted_at": "2026-11-12T01:36:13Z",
+    "notes": "source_hash = sha256 of the markdown bytes returned by GET /api/v1/tensor/reports/9265 (utf-8, no normalisation)."
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-9265-01",
+      "task_type": "01-asset-registration",
+      "report_id": "9265",
+      "lane": "B",
+      "generated_at": "2026-11-12T01:36:13Z",
+      "producer": "kf-worker/m15637",
+      "scope_guard": {
+        "report_ids_touched": [
+          "9265"
+        ],
+        "writes_outside_package_dir": [],
+        "extraction_performed": false,
+        "claims_verified": false,
+        "note": "Registration only (objective.register_assets=true, objective.classify_report_type=false). No upstream/downstream artefact edited."
+      },
+      "source": {
+        "uri": "tensor://reports/9265",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "d2ab3780127bff4762a8754ada4720789eaac52fef0de8edf88369d3dea6302c",
+        "contract_hash": "sha256:d2ab3780127bff4762a8754ada4720789eaac52fef0de8edf88369d3dea6302c",
+        "hash_match": true,
+        "chars": 9599,
+        "contract_chars": 9599,
+        "chars_match": true,
+        "bytes_utf8": 15943,
+        "lines": 235,
+        "has_crlf": false,
+        "has_trailing_newline": false,
+        "title": "DP 系统能力评估：推力分配 QP × 环境力平衡 × 操作包线图（IN144-N05 / m7890）",
+        "contract_title": "DP 系统能力评估：推力分配 QP × 环境力平衡 × 操作包线图（IN144-N05 / m7890）",
+        "title_match": true,
+        "scenario_key": "dp_capability_assessment",
+        "contract_scenario_key": "dp_capability_assessment",
+        "scenario_match": true,
+        "record_status": "published",
+        "record_stage": null,
+        "record_mission_id": 7890,
+        "record_created_at": "2026-11-09T03:36:35.342100+00:00",
+        "record_created_by": 1,
+        "platform_tags": [
+          "DP",
+          "dynamic-positioning",
+          "thrust-allocation",
+          "QP",
+          "capability-plot",
+          "DNV-ST-0111",
+          "environmental-loads",
+          "DP2-redundancy",
+          "IN144-N05"
+        ],
+        "platform_figures": [
+          {
+            "name": "capability_polar.png",
+            "caption": "图1 DP 操作包线极坐标图：等电流族（0~2 m/s）最大可持续风速 vs 环境来向，Hs 3 m，可用推力 0.6",
+            "has_png_base64": false,
+            "caption_in_markdown": false
+          },
+          {
+            "name": "failure_degradation.png",
+            "caption": "图2 单推力器失效后的能力降级（DP-2 最坏单点失效），30% 判据线",
+            "has_png_base64": false,
+            "caption_in_markdown": false
+          },
+          {
+            "name": "load_models.png",
+            "caption": "图3 环境载荷模型：风/流纵向与横向系数、不同海况的波浪平均漂移力随来向变化",
+            "has_png_base64": false,
+            "caption_in_markdown": false
+          },
+          {
+            "name": "balance.png",
+            "caption": "图4 10 个工况点的 3-DOF 平衡残差（对数轴）与 QP 分配峰值利用率",
+            "has_png_base64": false,
+            "caption_in_markdown": false
+          },
+          {
+            "name": "degradation_sensitivity.png",
+            "caption": "图5 DP-2 降级随有义波高变化：最坏艏向 23.0%（Hs1.5）→36.3%（Hs3.0）",
+            "has_png_base64": false,
+            "caption_in_markdown": false
+          }
+        ],
+        "platform_figure_probes": {
+          "/tensor/reports/9265/figures": {
+            "http_status": 404,
+            "bytes": 0,
+            "error": "HTTPError"
+          },
+          "/tensor/reports/9265/artifacts": {
+            "http_status": 404,
+            "bytes": 0,
+            "error": "HTTPError"
+          }
+        },
+        "fetched_via": "GET /api/v1/tensor/reports/9265",
+        "line_counting": "logical lines from markdown.split(chr(10)); 1-based"
+      },
+      "counts": {
+        "assets": 14,
+        "by_class": {
+          "artifact_directory": 1,
+          "benchmark_dataset_absent": 1,
+          "data_artifact_reference": 2,
+          "figure_declared": 5,
+          "script_reference": 1,
+          "source_code_reference": 2,
+          "source_document": 1,
+          "test_reference": 1
+        },
+        "by_resolution": {
+          "declared_absent": 1,
+          "referenced_unresolved": 12,
+          "resolved_in_source": 1
+        },
+        "resolved_in_source": 1,
+        "referenced_unresolved": 12,
+        "declared_absent": 1,
+        "figures_declared_in_record": 5,
+        "locators": 18,
+        "identity_facts": 4,
+        "claims": 0
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "source_document",
+          "label": "report 9265 markdown (source asset itself)",
+          "in_report_section": "whole document",
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "sha256(markdown utf-8) == contract source_hash and chars == 9599",
+            "result": "resolved"
+          },
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 9599,
+            "start_line": 1,
+            "end_line": 235,
+            "quote": "# 动力定位 (DP) 系统能力评估：推力分配 QP × 环境力平衡 × 操作包线图",
+            "unique": true
+          },
+          "note": "Source of truth for every other locator in this manifest; fetched via GET /api/v1/tensor/reports/9265."
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "figure_declared",
+          "label": "capability_polar.png",
+          "in_report_section": "③3.5 图 / record.figures[0]",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 6062,
+            "end_char": 6116,
+            "start_line": 154,
+            "end_line": 154,
+            "quote": "- `capability_polar.png` — 极坐标操作包线图（5 条等电流曲线 + 最坏失效虚线）",
+            "unique": true
+          },
+          "note": "Declared in record metadata (name+caption) and in §3.5; no figure bytes served by the platform for this report, and no such file in the TensorKnowledge worktree. record.caption=\"图1 DP 操作包线极坐标图：等电流族（0~2 m/s）最大可持续风速 vs 环境来向，Hs 3 m，可用推力 0.6\""
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "figure_declared",
+          "label": "failure_degradation.png",
+          "in_report_section": "③3.5 图 / record.figures[1]",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 6117,
+            "end_char": 6165,
+            "start_line": 155,
+            "end_line": 155,
+            "quote": "- `failure_degradation.png` — 单件失效降级柱状图（30% 判据线）",
+            "unique": true
+          },
+          "note": "Declared in record metadata (name+caption) and in §3.5; bytes not available. record.caption=\"图2 单推力器失效后的能力降级（DP-2 最坏单点失效），30% 判据线\""
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "figure_declared",
+          "label": "load_models.png",
+          "in_report_section": "③3.5 图 / record.figures[2]",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 6166,
+            "end_char": 6204,
+            "start_line": 156,
+            "end_line": 156,
+            "quote": "- `load_models.png` — 风/流/波浪漂移力系数随来向变化",
+            "unique": true
+          },
+          "note": "Declared in record metadata (name+caption) and in §3.5; bytes not available. record.caption=\"图3 环境载荷模型：风/流纵向与横向系数、不同海况的波浪平均漂移力随来向变化\""
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "figure_declared",
+          "label": "balance.png",
+          "in_report_section": "③3.5 图 / record.figures[3]",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 6205,
+            "end_char": 6246,
+            "start_line": 157,
+            "end_line": 157,
+            "quote": "- `balance.png` — 10 个工况点平衡残差（对数轴）+ 峰值利用率",
+            "unique": true
+          },
+          "note": "Declared in record metadata (name+caption) and in §3.5; bytes not available. record.caption=\"图4 10 个工况点的 3-DOF 平衡残差（对数轴）与 QP 分配峰值利用率\""
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "figure_declared",
+          "label": "degradation_sensitivity.png",
+          "in_report_section": "③3.5 图 / record.figures[4]",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 6247,
+            "end_char": 6299,
+            "start_line": 158,
+            "end_line": 158,
+            "quote": "- `degradation_sensitivity.png` — 降级随有义波高变化（23%→36%）",
+            "unique": true
+          },
+          "note": "Declared in record metadata (name+caption) and in §3.5; bytes not available. record.caption=\"图5 DP-2 降级随有义波高变化：最坏艏向 23.0%（Hs1.5）→36.3%（Hs3.0）\""
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "artifact_directory",
+          "label": "artifacts/dp_capability/",
+          "in_report_section": "document header (产物行)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "file exists inside this TensorKnowledge worktree at any of [\"artifacts/dp_capability/\", \"artifacts/artifacts/dp_capability/\", \"docs/artifacts/dp_capability/\", \"scripts/artifacts/dp_capability/\", \"tests/artifacts/dp_capability/\", \"ship-performance-platform/artifacts/dp_capability/\"]",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 273,
+            "end_char": 345,
+            "start_line": 6,
+            "end_line": 6,
+            "quote": "**产物** `artifacts/dp_capability/`（JSON + 5 张 PNG + 判据账本 `criteria.json`）",
+            "unique": true
+          },
+          "note": "Output directory of the upstream mission m7890, located in repo ship-performance-platform; not present in this TensorKnowledge delivery worktree."
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "data_artifact_reference",
+          "label": "criteria.json",
+          "in_report_section": "document header (产物行) + ③3.1",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "file exists inside this TensorKnowledge worktree at any of [\"criteria.json\", \"artifacts/criteria.json\", \"docs/criteria.json\", \"scripts/criteria.json\", \"tests/criteria.json\", \"ship-performance-platform/criteria.json\"]",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 324,
+            "end_char": 344,
+            "start_line": 6,
+            "end_line": 6,
+            "quote": "判据账本 `criteria.json`",
+            "unique": true
+          },
+          "note": "Criteria ledger (c2/c3 keys quoted in §3.1 and §④); referenced, content not shipped here."
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "data_artifact_reference",
+          "label": "capability_payload.json",
+          "in_report_section": "③3.1 表格",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "file exists inside this TensorKnowledge worktree at any of [\"capability_payload.json\", \"artifacts/capability_payload.json\", \"docs/capability_payload.json\", \"scripts/capability_payload.json\", \"tests/capability_payload.json\", \"ship-performance-platform/capability_payload.json\"]",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 3578,
+            "end_char": 3606,
+            "start_line": 91,
+            "end_line": 91,
+            "quote": "见表 `capability_payload.json`",
+            "unique": true
+          },
+          "note": "Per-case 3-DOF load table referenced instead of being inlined in the report table."
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "source_code_reference",
+          "label": "backend/physics/dp_core.py",
+          "in_report_section": "document header (落库模块行)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "file exists inside this TensorKnowledge worktree at any of [\"backend/physics/dp_core.py\", \"artifacts/backend/physics/dp_core.py\", \"docs/backend/physics/dp_core.py\", \"scripts/backend/physics/dp_core.py\", \"tests/backend/physics/dp_core.py\", \"ship-performance-platform/backend/physics/dp_core.py\"]",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 128,
+            "end_char": 165,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "`backend/physics/dp_core.py`（物理/数值内核）",
+            "unique": true
+          },
+          "note": "Numeric/physics kernel (L1-L4) in ship-performance-platform; not in this worktree."
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "source_code_reference",
+          "label": "backend/api/dynamic_positioning.py",
+          "in_report_section": "document header (落库模块行)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "file exists inside this TensorKnowledge worktree at any of [\"backend/api/dynamic_positioning.py\", \"artifacts/backend/api/dynamic_positioning.py\", \"docs/backend/api/dynamic_positioning.py\", \"scripts/backend/api/dynamic_positioning.py\", \"tests/backend/api/dynamic_positioning.py\", \"ship-performance-platform/backend/api/dynamic_positioning.py\"]",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 166,
+            "end_char": 214,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "`backend/api/dynamic_positioning.py`（FastAPI 端点）",
+            "unique": true
+          },
+          "note": "FastAPI endpoint module in ship-performance-platform; not in this worktree."
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "test_reference",
+          "label": "tests/test_dp_capability.py",
+          "in_report_section": "document header (验证行)",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "file exists inside this TensorKnowledge worktree at any of [\"tests/test_dp_capability.py\", \"artifacts/tests/test_dp_capability.py\", \"docs/tests/test_dp_capability.py\", \"scripts/tests/test_dp_capability.py\", \"tests/tests/test_dp_capability.py\", \"ship-performance-platform/tests/test_dp_capability.py\"]",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 222,
+            "end_char": 272,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "`tests/test_dp_capability.py`（40 项 pytest，22 s 全绿）",
+            "unique": true
+          },
+          "note": "Test suite claimed 40 passed / 22 s; that claim is NOT reproduced here (registration only)."
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "script_reference",
+          "label": "scripts/dp_capability_artifacts_m7890.py",
+          "in_report_section": "①案例介绍 / 复现",
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "file exists inside this TensorKnowledge worktree at any of [\"scripts/dp_capability_artifacts_m7890.py\", \"artifacts/scripts/dp_capability_artifacts_m7890.py\", \"docs/scripts/dp_capability_artifacts_m7890.py\", \"scripts/scripts/dp_capability_artifacts_m7890.py\", \"tests/scripts/dp_capability_artifacts_m7890.py\", \"ship-performance-platform/scripts/dp_capability_artifacts_m7890.py\"]",
+            "result": "unresolved"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 531,
+            "end_char": 573,
+            "start_line": 16,
+            "end_line": 16,
+            "quote": "`scripts/dp_capability_artifacts_m7890.py`",
+            "unique": true
+          },
+          "note": "Generating script for the report's tables/figures; not in this worktree."
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "benchmark_dataset_absent",
+          "label": "DNV 已发表 PSV 包线数值数据集",
+          "in_report_section": "④与 DNV 规范的对照",
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "report body states the dataset is not available (grep of the verbatim sentence)",
+            "result": "absent"
+          },
+          "locator": {
+            "method": "char_span",
+            "start_char": 6323,
+            "end_char": 6347,
+            "start_line": 162,
+            "end_line": 162,
+            "quote": "仓库内没有可引用的 DNV 已发表包线数值数据集",
+            "unique": true
+          },
+          "note": "Explicitly declared absent by the report itself -> numerical layer of §④ is WITHHELD."
+        }
+      ],
+      "identity_facts": [
+        {
+          "fact_id": "title-h1",
+          "in_report_section": "①H1 标题",
+          "locator": {
+            "method": "char_span",
+            "start_char": 0,
+            "end_char": 42,
+            "start_line": 1,
+            "end_line": 1,
+            "quote": "# 动力定位 (DP) 系统能力评估：推力分配 QP × 环境力平衡 × 操作包线图",
+            "unique": true
+          },
+          "quote_sha256": "218892ffd566bb4b7e1f54b9965c391cd07fe2a15f41f5e4b8839b3c4e898be7"
+        },
+        {
+          "fact_id": "campaign-line",
+          "in_report_section": "文档头 战役节点行",
+          "locator": {
+            "method": "char_span",
+            "start_char": 44,
+            "end_char": 62,
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "**战役节点** IN144-N05",
+            "unique": true
+          },
+          "quote_sha256": "5861ddde1a71471cc77e9ac3d6752f99b744a7feca302bd7c8393ad591ae598c"
+        },
+        {
+          "fact_id": "module-line",
+          "in_report_section": "文档头 落库模块行",
+          "locator": {
+            "method": "char_span",
+            "start_char": 119,
+            "end_char": 127,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "**落库模块**",
+            "unique": true
+          },
+          "quote_sha256": "077835b834d9076c1023d090d4dd3b15b8ef3e4f8beadccb9d685cddd3926f91"
+        },
+        {
+          "fact_id": "repro-block",
+          "in_report_section": "复现代码块",
+          "locator": {
+            "method": "char_span",
+            "start_char": 9214,
+            "end_char": 9262,
+            "start_line": 230,
+            "end_line": 230,
+            "quote": "python3 -m pytest tests/test_dp_capability.py -q",
+            "unique": true
+          },
+          "quote_sha256": "52f13f9f5f5d5f39bf678dd6b3e6ffc5dddc152c54b2cd2b3991cd54cfac4769"
+        }
+      ],
+      "claims": [],
+      "claims_empty_reason": "Contract wp-9265-01 sets objective.register_assets=true, objective.classify_report_type=false, constraints.no_forced_claim_generation=true and notes 'claims 允许为空数组'. This 工序 registers asset identity (report_id + markdown byte hash + declared attachments/artifacts) only; extraction is a downstream 工序. An empty claims array is therefore the complete result, not an omission.",
+      "id_integrity": {
+        "ids_checked": 14,
+        "duplicates": [],
+        "unique": true
+      },
+      "integrity": {
+        "quote_uniqueness": {
+          "all_unique": true,
+          "occurrences": {
+            "A01": 1,
+            "A02": 1,
+            "A03": 1,
+            "A04": 1,
+            "A05": 1,
+            "A06": 1,
+            "A07": 1,
+            "A08": 1,
+            "A09": 1,
+            "A10": 1,
+            "A11": 1,
+            "A12": 1,
+            "A13": 1,
+            "A14": 1
+          },
+          "locators_checked": 18,
+          "max_occurrences": 1
+        },
+        "hash_recomputed_locally": "sha256:d2ab3780127bff4762a8754ada4720789eaac52fef0de8edf88369d3dea6302c",
+        "hash_matches_contract": true,
+        "chars_match_contract": true
+      },
+      "unresolved": [
+        {
+          "asset_id": "A02",
+          "label": "capability_polar.png",
+          "reason": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []"
+        },
+        {
+          "asset_id": "A03",
+          "label": "failure_degradation.png",
+          "reason": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []"
+        },
+        {
+          "asset_id": "A04",
+          "label": "load_models.png",
+          "reason": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []"
+        },
+        {
+          "asset_id": "A05",
+          "label": "balance.png",
+          "reason": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []"
+        },
+        {
+          "asset_id": "A06",
+          "label": "degradation_sensitivity.png",
+          "reason": "platform figure bytes probe (/tensor/reports/9265/figures -> 404, /artifacts -> 404) + worktree file probe over 6 relative paths -> []"
+        },
+        {
+          "asset_id": "A07",
+          "label": "artifacts/dp_capability/",
+          "reason": "file exists inside this TensorKnowledge worktree at any of [\"artifacts/dp_capability/\", \"artifacts/artifacts/dp_capability/\", \"docs/artifacts/dp_capability/\", \"scripts/artifacts/dp_capability/\", \"tests/artifacts/dp_capability/\", \"ship-performance-platform/artifacts/dp_capability/\"]"
+        },
+        {
+          "asset_id": "A08",
+          "label": "criteria.json",
+          "reason": "file exists inside this TensorKnowledge worktree at any of [\"criteria.json\", \"artifacts/criteria.json\", \"docs/criteria.json\", \"scripts/criteria.json\", \"tests/criteria.json\", \"ship-performance-platform/criteria.json\"]"
+        },
+        {
+          "asset_id": "A09",
+          "label": "capability_payload.json",
+          "reason": "file exists inside this TensorKnowledge worktree at any of [\"capability_payload.json\", \"artifacts/capability_payload.json\", \"docs/capability_payload.json\", \"scripts/capability_payload.json\", \"tests/capability_payload.json\", \"ship-performance-platform/capability_payload.json\"]"
+        },
+        {
+          "asset_id": "A10",
+          "label": "backend/physics/dp_core.py",
+          "reason": "file exists inside this TensorKnowledge worktree at any of [\"backend/physics/dp_core.py\", \"artifacts/backend/physics/dp_core.py\", \"docs/backend/physics/dp_core.py\", \"scripts/backend/physics/dp_core.py\", \"tests/backend/physics/dp_core.py\", \"ship-performance-platform/backend/physics/dp_core.py\"]"
+        },
+        {
+          "asset_id": "A11",
+          "label": "backend/api/dynamic_positioning.py",
+          "reason": "file exists inside this TensorKnowledge worktree at any of [\"backend/api/dynamic_positioning.py\", \"artifacts/backend/api/dynamic_positioning.py\", \"docs/backend/api/dynamic_positioning.py\", \"scripts/backend/api/dynamic_positioning.py\", \"tests/backend/api/dynamic_positioning.py\", \"ship-performance-platform/backend/api/dynamic_positioning.py\"]"
+        },
+        {
+          "asset_id": "A12",
+          "label": "tests/test_dp_capability.py",
+          "reason": "file exists inside this TensorKnowledge worktree at any of [\"tests/test_dp_capability.py\", \"artifacts/tests/test_dp_capability.py\", \"docs/tests/test_dp_capability.py\", \"scripts/tests/test_dp_capability.py\", \"tests/tests/test_dp_capability.py\", \"ship-performance-platform/tests/test_dp_capability.py\"]"
+        },
+        {
+          "asset_id": "A13",
+          "label": "scripts/dp_capability_artifacts_m7890.py",
+          "reason": "file exists inside this TensorKnowledge worktree at any of [\"scripts/dp_capability_artifacts_m7890.py\", \"artifacts/scripts/dp_capability_artifacts_m7890.py\", \"docs/scripts/dp_capability_artifacts_m7890.py\", \"scripts/scripts/dp_capability_artifacts_m7890.py\", \"tests/scripts/dp_capability_artifacts_m7890.py\", \"ship-performance-platform/scripts/dp_capability_artifacts_m7890.py\"]"
+        }
+      ],
+      "observations": [
+        "Markdown identity verified independently of the contract: recomputed sha256 == contract source_hash, chars == 9599, title and scenario_key match the contract strings.",
+        "The 5 record figures carry name+caption only (no png_base64), the platform exposes no figure bytes, and no such files exist in this worktree -> referenced_unresolved (no hash is claimed for any image).",
+        "All code/data/test references point into repo ship-performance-platform, which is not part of this worktree -> registered as declared references, existence not asserted.",
+        "One asset is declared_absent by the report itself (DNV published PSV envelope dataset), which is why §④ of the report keeps the numerical layer WITHHELD."
+      ]
+    }
+  },
+  "claims": []
+}
