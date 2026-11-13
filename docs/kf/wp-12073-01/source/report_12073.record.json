@@ -1,0 +1,42 @@
+{
+ "id": 12073,
+ "title": "实时 CII 轨迹追踪与纠偏航行优化（p161w2-arb-n01 / KVLCC2 闭环）",
+ "summary": "新增 backend/modules/cii_tracking（8 模块 + 71 pytest）：分钟级实时 CII、±5% 偏差带、黄3%/红5% 预警与双分解根因、λ-KKT/DP/SLSQP 交叉校验的纠偏优化、航次闭环仿真。同扰动下基线终值偏差 +20.58% → MPC -0.042%（ETA+16%）；ETA+10% 时如实报 eta_limited 残差 +3.38%。",
+ "scenario_key": "cii_tracking_realtime",
+ "mission_id": 10181,
+ "stage": null,
+ "tags": [
+  "CII",
+  "实时合规",
+  "预警",
+  "MPC",
+  "纠偏优化",
+  "绿色航行",
+  "ship-performance-platform"
+ ],
+ "figures": [
+  {
+   "name": "fig1_cumulative_cii_band.png",
+   "caption": "累计 CII 轨迹与目标 ±3%/±5% 偏差带；基线（恒速）在风暴段冲出红带，MPC 纠偏后贴住目标线。"
+  },
+  {
+   "name": "fig2_projection_deviation.png",
+   "caption": "投影终值偏差时间历程：预警阈值（黄 3%/红 5%）与纠偏后回落的闭环证据；ETA 紧时残留偏差如实显示。"
+  },
+  {
+   "name": "fig3_speed_and_disturbance.png",
+   "caption": "上：MPC 指令/实际航速与基线航速；下：加阻因子 γ(t)。纠偏把降速集中在风暴段，ETA 窗口被用满。"
+  },
+  {
+   "name": "fig4_root_cause.png",
+   "caption": "根因分解（链式 vs LMDI 双方法）：加阻 30% 场景下 environment 项主导，两法分配差异显式给出。"
+  },
+  {
+   "name": "fig5_correction_sensitivity.png",
+   "caption": "CII-航速灵敏度（多 γ）+ 目标线与 λ-KKT/SLSQP 求解器解位置：纠偏本质是沿 V² 律找命中目标的航速。"
+  }
+ ],
+ "status": "published",
+ "created_by": 1,
+ "created_at": "2026-11-10T17:28:59.350488+00:00"
+}
