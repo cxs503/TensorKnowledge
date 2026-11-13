@@ -1,0 +1,112 @@
+{
+  "package_id": "wp-12160-01",
+  "report_id": "12160",
+  "checked_at_utc": "2026-11-12T02:26:06+00:00",
+  "acceptance": {
+    "valid_json": {
+      "result": "PASS",
+      "evidence": {
+        "files": [
+          "asset_manifest.json",
+          "kf_result.json"
+        ],
+        "errors": [],
+        "bytes": {
+          "asset_manifest.json": 38560,
+          "kf_result.json": 42833
+        }
+      }
+    },
+    "schema_pass": {
+      "result": "PASS",
+      "evidence": {
+        "schemas": [
+          {
+            "path": "schemas/kf_result.v1.schema.json",
+            "sha256": "170dba8b0b5d54012490aaadc0b68647a9520ecb869e9d03f873afb99b74c076"
+          },
+          {
+            "path": "docs/kf/wp-12160-01/asset_manifest.v1.localized.json",
+            "sha256": "951dff51ea62f5ff0a9eecdda01204ccd0f7bb1896765123c2f9f1d5c7c407cf",
+            "derived_from": "schemas/asset_manifest.v1.schema.json",
+            "derived_from_sha256": "5a464a27d68edf52f18a0a641014d443a244e89c389fb63c58fc0751d53d789c"
+          }
+        ],
+        "errors": []
+      },
+      "note": "asset_manifest.v1.localized.json = shipped schemas/asset_manifest.v1.schema.json with only package_id/report_id `const` localized to this package"
+    },
+    "source_locator_resolvable": {
+      "result": "PASS",
+      "evidence": {
+        "char_span_locators_checked": 31,
+        "document_locators": 1,
+        "failures": [],
+        "check": "md[start:end] == quote; unique quotes occur exactly once; start_line == count('\\n', 0, start_char); document quote is a prefix"
+      }
+    },
+    "source_hash_matches": {
+      "result": "PASS",
+      "evidence": {
+        "source_markdown_sha256": "sha256:e4e2c2d632af95718d0c43099594c1a41003f59610e86aa14ed82f936998b572",
+        "manifest.source.hash": "sha256:e4e2c2d632af95718d0c43099594c1a41003f59610e86aa14ed82f936998b572",
+        "kf_result.provenance.source_hash": "sha256:e4e2c2d632af95718d0c43099594c1a41003f59610e86aa14ed82f936998b572",
+        "contract.source_hash": "sha256:e4e2c2d632af95718d0c43099594c1a41003f59610e86aa14ed82f936998b572",
+        "platform_live_sha256": "sha256:e4e2c2d632af95718d0c43099594c1a41003f59610e86aa14ed82f936998b572"
+      },
+      "note": "all four hash sources must agree; live platform re-fetch adds a fifth"
+    },
+    "no_duplicate_ids": {
+      "result": "PASS",
+      "evidence": {
+        "assets": 32,
+        "duplicates": [],
+        "id_range": [
+          "A01",
+          "A32"
+        ]
+      }
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "result": "PASS",
+      "evidence": {
+        "claims": 0,
+        "violations": [],
+        "policy": "claims=[] by contract (objective.register_assets=true, no extraction, no forced claim generation); no statement of the report is verified or refuted here — verification is computed by the platform gate."
+      },
+      "note": "claims=[] by contract (register_assets only); the item is vacuously satisfied and is reported as such rather than as positive evidence of extraction"
+    }
+  },
+  "extra_checks_not_in_contract": {
+    "no_verification_claim_made": {
+      "result": "PASS",
+      "evidence": {
+        "resolution_values": [
+          "declared_absent",
+          "referenced_unresolved",
+          "resolved_in_source"
+        ]
+      },
+      "note": "platform gate computes verification; this package only registers"
+    },
+    "contract_cross_checks": {
+      "result": "PASS",
+      "evidence": {
+        "chars_recomputed": 9351,
+        "chars_in_contract": "9351",
+        "chars_match": true,
+        "report_id_match": true,
+        "scenario_key_match": true,
+        "source_uri_match": true,
+        "source_field_match": true
+      }
+    }
+  },
+  "all_pass": true,
+  "counts": {
+    "acceptance_items": 6,
+    "extra_checks": 2
+  },
+  "repro_cmd": "python3 scripts/kf_register_12160.py --out docs/kf/wp-12160-01 && python3 scripts/kf_selfcheck_12160.py --out docs/kf/wp-12160-01 --live-api",
+  "not_run": []
+}
