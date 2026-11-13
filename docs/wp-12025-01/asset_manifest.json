@@ -1,0 +1,348 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-12025-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12025",
+  "source": {
+    "uri": "tensor://reports/12025",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "6ebcceb70d4aa23bd429e13496cfa2ac2fc933c83461eef0a0c58a29321df0ed",
+    "chars": 432,
+    "bytes_utf8": 438,
+    "title": "DEM多面体颗粒接触与休止角验证",
+    "scenario_key": "AG29W1-N06",
+    "platform_id": 12025,
+    "platform_mission_id": 10151,
+    "platform_stage": null,
+    "platform_status": "published",
+    "platform_figures": [],
+    "platform_tags": [
+      "DEM",
+      "polyhedra",
+      "GJK",
+      "EPA",
+      "repose-angle"
+    ],
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/12025",
+    "local_copy": "runs/wp-12025-01/report_12025.md"
+  },
+  "counts": {
+    "assets": 12,
+    "by_class": {
+      "document": 1,
+      "heading": 1,
+      "abstract": 1,
+      "deliverables_list": 1,
+      "code_artifact": 1,
+      "test_evidence_statement": 1,
+      "report_document_ref": 1,
+      "verification_checklist": 1,
+      "solver_context": 1,
+      "figure_assets": 1,
+      "quantitative_result_table": 1,
+      "reproduction_record": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 6,
+      "referenced_unresolved": 3,
+      "declared_absent": 3
+    },
+    "resolved_in_source": 6,
+    "referenced_unresolved": 3,
+    "declared_absent": 3
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "document",
+      "label": "报告正文（markdown 全文，432 字符）",
+      "in_report_section": "(document)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 432,
+        "start_line": 0,
+        "end_line": 11,
+        "quote": "# Polyhedral Particle Contact & Repose Angle Validation\n\nImplemented GJK/EPA contact detection, Coulomb friction + EPSD rolling resistance, and repose angle measurement protocol for polyhedral particles in TensorDEM.\n\n## Deliverables\n- polyhedra_repose.py (450 lines)\n- 42 tests passing (14 new + 28 existing)\n- Report: docs/polyhedra_repose_angle_validation.md\n\n## Verification\n- C2: velocity-time <5% error ✓\n- C5: 42 tests ≥ 20 ✓",
+        "unique": true
+      },
+      "note": "整篇 markdown 即源资产；sha256 见 source.hash，与契约 source_hash 逐字节相同"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "heading",
+      "label": "报告标题行（英文标题）",
+      "in_report_section": "# Polyhedral Particle Contact & Repose Angle Validation",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 55,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "# Polyhedral Particle Contact & Repose Angle Validation",
+        "unique": true
+      },
+      "note": "与 API title 字段（中文）不同语言，二者互不覆盖：title 取自 record，标题行取自 markdown"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "abstract",
+      "label": "范围声明段（实现了什么）",
+      "in_report_section": "# Polyhedral Particle Contact & Repose Angle Validation",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 57,
+        "end_char": 216,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "Implemented GJK/EPA contact detection, Coulomb friction + EPSD rolling resistance, and repose angle measurement protocol for polyhedral particles in TensorDEM.",
+        "unique": true
+      },
+      "note": "单段范围声明；不含数值结果，仅声明实现与验证对象"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "deliverables_list",
+      "label": "交付物清单（标题+3 条）",
+      "in_report_section": "## Deliverables",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 218,
+        "end_char": 361,
+        "start_line": 4,
+        "end_line": 7,
+        "quote": "## Deliverables\n- polyhedra_repose.py (450 lines)\n- 42 tests passing (14 new + 28 existing)\n- Report: docs/polyhedra_repose_angle_validation.md",
+        "unique": true
+      },
+      "note": "清单本身在页内；三条指向的实体分别登记为 A05/A06/A07"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "code_artifact",
+      "label": "polyhedra_repose.py（450 行）",
+      "in_report_section": "## Deliverables",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "address_extraction+worktree_file_search",
+        "addresses_found": [],
+        "worktree_matches": [],
+        "result": "unresolved",
+        "detail": "仅在报告文本内检索 URL/DOI，并在工作树内按文件名搜索；不联网猜测地址"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 236,
+        "end_char": 267,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "polyhedra_repose.py (450 lines)",
+        "unique": true
+      },
+      "note": "报告只给文件名与行数，无仓库相对路径/URL/commit，无 sha256；代码本体不可由本报告解析"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "test_evidence_statement",
+      "label": "测试计数声明（42 tests，14 new + 28 existing）",
+      "in_report_section": "## Deliverables",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "detail": "文本可逐字定位；其数值支撑（测试套件/实测值）不在报告内，故不判为已复核"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 270,
+        "end_char": 309,
+        "start_line": 6,
+        "end_line": 6,
+        "quote": "42 tests passing (14 new + 28 existing)",
+        "unique": true
+      },
+      "note": "声明文本在页内可逐字定位；支撑该计数的测试套件与运行日志未在报告中给出（见 A05/A12），故此处只登记声明，不把计数当作已复核事实"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "report_document_ref",
+      "label": "上游验证报告 docs/polyhedra_repose_angle_validation.md",
+      "in_report_section": "## Deliverables",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_exists",
+        "paths": [
+          "docs/polyhedra_repose_angle_validation.md"
+        ],
+        "missing": [
+          "docs/polyhedra_repose_angle_validation.md"
+        ],
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 320,
+        "end_char": 361,
+        "start_line": 7,
+        "end_line": 7,
+        "quote": "docs/polyhedra_repose_angle_validation.md",
+        "unique": true
+      },
+      "note": "仓库相对路径；本工作树（TensorKnowledge）内不存在，属外部仓库（TensorDEM）产物，本报告未附内容"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "verification_checklist",
+      "label": "验证条目 C2/C5（两条带 ✓ 的自检项）",
+      "in_report_section": "## Verification",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "detail": "文本可逐字定位；其数值支撑（测试套件/实测值）不在报告内，故不判为已复核"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 363,
+        "end_char": 432,
+        "start_line": 9,
+        "end_line": 11,
+        "quote": "## Verification\n- C2: velocity-time <5% error ✓\n- C5: 42 tests ≥ 20 ✓",
+        "unique": true
+      },
+      "note": "仅两条“通过”标记，无实测值/基准值/样本量；C2 的 <5% 为判据阈值而非测量结果"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "solver_context",
+      "label": "所属求解器 TensorDEM（仓名）",
+      "in_report_section": "# Polyhedral Particle Contact & Repose Angle Validation",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_checkout_search",
+        "candidates": [
+          "TensorDEM",
+          "tensor_dem",
+          "TensorDem"
+        ],
+        "found": [],
+        "result": "unresolved",
+        "detail": "本工作树内无 TensorDEM 检出；报告亦无 commit/版本可解析"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 206,
+        "end_char": 215,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "TensorDEM",
+        "unique": true
+      },
+      "note": "仅出现仓名，无提交号/版本/分支；TensorDEM 检出不在本工作树内，无法解析到具体代码状态"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "figure_assets",
+      "label": "图件（场量云图/对比曲线）",
+      "in_report_section": "(document)",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "markdown_image_syntax+platform_figures_field",
+        "image_syntax_hits": [],
+        "platform_figures_count": 0,
+        "result": "absent",
+        "detail": "observed-absent：作者未作无图声明，此处只登记观测结果"
+      },
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 432,
+        "start_line": 0,
+        "end_line": 11,
+        "quote": "# Polyhedral Particle Contact & Repose Angle Validation\n\nImplemented GJK/EPA contact detection, Coulomb friction + EPSD rolling resistance, and repose angle measurement protocol for polyhedral particles in TensorDEM.\n\n## Deliverables\n- polyhedra_repose.py (450 lines)\n- 42 tests passing (14 new + 28 existing)\n- Report: docs/polyhedra_repose_angle_validation.md\n\n## Verification\n- C2: velocity-time <5% error ✓\n- C5: 42 tests ≥ 20 ✓",
+        "unique": true
+      },
+      "note": "观测式登记：markdown 无任何图片引用，API figures 字段为空数组；报告自身未写“无图”声明，故这是 observed-absent 而非 author-declared-absent"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "quantitative_result_table",
+      "label": "定量结果表（参数表/误差表）",
+      "in_report_section": "(document)",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "markdown_table_and_numeric_literal_scan",
+        "table_rows": [],
+        "numeric_literals": [],
+        "result": "absent",
+        "detail": "observed-absent：无表格行；numeric_literals 仅含行数/测试计数/阈值，非实测结果值"
+      },
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 432,
+        "start_line": 0,
+        "end_line": 11,
+        "quote": "# Polyhedral Particle Contact & Repose Angle Validation\n\nImplemented GJK/EPA contact detection, Coulomb friction + EPSD rolling resistance, and repose angle measurement protocol for polyhedral particles in TensorDEM.\n\n## Deliverables\n- polyhedra_repose.py (450 lines)\n- 42 tests passing (14 new + 28 existing)\n- Report: docs/polyhedra_repose_angle_validation.md\n\n## Verification\n- C2: velocity-time <5% error ✓\n- C5: 42 tests ≥ 20 ✓",
+        "unique": true
+      },
+      "note": "观测式登记：全文无 markdown 表格、无实测数值与基准数值对照；仅 A08 的两条判据阈值"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "reproduction_record",
+      "label": "复现记录（commit / 运行命令 / 运行 ID / 种子）",
+      "in_report_section": "(document)",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "reproduction_handle_scan",
+        "found": {
+          "git_commit": [],
+          "command": [],
+          "run_id": [],
+          "seed": []
+        },
+        "result": "absent",
+        "detail": "observed-absent：无 commit/命令/run id/seed 任一可复现句柄"
+      },
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 432,
+        "start_line": 0,
+        "end_line": 11,
+        "quote": "# Polyhedral Particle Contact & Repose Angle Validation\n\nImplemented GJK/EPA contact detection, Coulomb friction + EPSD rolling resistance, and repose angle measurement protocol for polyhedral particles in TensorDEM.\n\n## Deliverables\n- polyhedra_repose.py (450 lines)\n- 42 tests passing (14 new + 28 existing)\n- Report: docs/polyhedra_repose_angle_validation.md\n\n## Verification\n- C2: velocity-time <5% error ✓\n- C5: 42 tests ≥ 20 ✓",
+        "unique": true
+      },
+      "note": "观测式登记：全文无 git commit、无命令行、无 run id、无随机种子——450 行代码与 42 个测试均无可复现句柄"
+    }
+  ],
+  "claims": [],
+  "claims_note": "按工作包契约 objective.classify_report_type=false 且 notes 允许 claims 为空数组：本工序只登记资产定位，不做 claim 抽取；claim 抽取由下游工作包负责。空数组使 acceptance 项 all_claims_have_evidence_or_explicit_unresolved_status 空真通过。",
+  "observed_absent_note": "resolution=declared_absent 的三条（A10/A11/A12）是观测式登记：报告全文未作“无图/无表/无复现记录”的声明，缺失是由扫描判定，不是作者自述。",
+  "integrity": {
+    "quote_uniqueness": "每条 locator.quote 均为源 markdown 的唯一子串（本脚本断言，scripts/kf_verify_12025.py 独立重算复核）",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true
+  }
+}
