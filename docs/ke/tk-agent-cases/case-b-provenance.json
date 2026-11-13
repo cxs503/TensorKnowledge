@@ -1,0 +1,43 @@
+{
+  "schema": "tk-agent-case/1",
+  "case_id": "TK-CASE-B",
+  "dimensions": [
+    "evidence"
+  ],
+  "mission_goal": "用 TK 证据维对 oss-lbm 知识包做 claim↔evidence 一致性审计，并核对本地实现对引用源码公式的保真度",
+  "knowledge_used": [
+    {
+      "knowledge_id": "tke:oss-lbm:kruger-poiseuille-bb-tau",
+      "kind": "evidence",
+      "via": "/ko/{id} (from /by-evidence?evidence=supports)",
+      "quote": "tau=sqrt(3/16)+0.5;     % relaxation time (BGK model) (tau=sqrt(3/16)+0.5 gives exact solution)"
+    }
+  ],
+  "audit": {
+    "claims": 150,
+    "evidence": 197,
+    "claim_to_evidence_refs": 205,
+    "evidence_to_claim_refs": 205,
+    "dangling_refs": 0,
+    "asymmetric_refs": 0,
+    "dangling_examples": [],
+    "asymmetric_examples": [],
+    "quote_coverage": 0.9898477157360406,
+    "relations": {
+      "supports": 195,
+      "refutes": 2
+    }
+  },
+  "traceability": {
+    "quoted_tau": 0.9330127018922193,
+    "local_TAU_EXACT": 0.9330127018922193,
+    "rel_error": 0.0,
+    "local_file": "knowledge/oss-lbm/kruger/impl/poiseuille.py"
+  },
+  "facet_queries": {
+    "by_evidence_relation_supports": 195
+  },
+  "verdict": "PASS",
+  "verdict_basis": "0 dangling + 0 asymmetric refs and quote->impl rel_error < 1e-12",
+  "knowledge_effect": "the evidence facet turned a manual, sample-based spot check into a whole-corpus invariant audit with an explicit pass/fail"
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "tk-agent-case/1",
+  "case_id": "TK-CASE-A",
+  "dimensions": [
+    "concept",
+    "method"
+  ],
+  "mission_goal": "独立复现 tkc:oss-lbm:kruger-taylor-green-decay 的 Taylor-Green 衰减率判据（2/t_d = 2ν(kx²+ky²)）",
+  "knowledge_used": [
+    {
+      "knowledge_id": "tkc:oss-lbm:kruger-taylor-green-decay",
+      "kind": "claim",
+      "via": "/by-concept?concept=taylor-green",
+      "statement": "Krüger 教科书 chapter13 实现 Taylor-Green 涡衰减验证：理论衰减率 2/t_d = 2ν(kx²+ky²) 对比拟合 d lnE/dt，实测误差 0.077%（<3%）。"
+    },
+    {
+      "knowledge_id": "tke:oss-lbm:kruger-tg-decay",
+      "kind": "evidence",
+      "via": "/by-evidence?evidence=tkc:oss-lbm:kruger-taylor-green-decay"
+    }
+  ],
+  "knowledge_parsed": {
+    "decay_rate_relation_factor": 2.0,
+    "claimed_error_pct": 0.077
+  },
+  "experiment": {
+    "method": "D2Q9 BGK, periodic 16x16, u_max=0.01, nu=0.05",
+    "tau": 0.65,
+    "ti_formula": 64.84555753109618,
+    "ti_measured": 64.74996750192557,
+    "decay_rate_measured": 0.030888046390764954,
+    "rel_error_vs_knowledge": 0.0014741183946914052,
+    "rel_error_pct": 0.14741183946914052,
+    "control_naive_td": 129.69111506219235,
+    "control_rel_error_pct": 50.073705919734564
+  },
+  "verdict": "PASS",
+  "verdict_basis": "rel_error_vs_knowledge < 3% (owner accuracy gate)",
+  "claim_cross_check": {
+    "claimed_error_pct": 0.077,
+    "measured_error_pct": 0.14741183946914052,
+    "difference_pp": 0.07041183946914052
+  },
+  "control_note": "naive decay time 1/(nu*kx^2) omits the ky^2 term -> ~50% error (>15%)",
+  "knowledge_effect": "formula picks the correct td; the control shows the omitted-term failure"
+}

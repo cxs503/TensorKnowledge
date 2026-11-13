@@ -1,0 +1,60 @@
+{
+  "schema": "tk-agent-case/1",
+  "case_id": "TK-CASE-C",
+  "dimensions": [
+    "problem"
+  ],
+  "mission_goal": "用 tkc:oss-lbm:kruger-poiseuille-bb-exactness-scope 的 contested 适用范围判据设计并执行 half-way bounce-back Poiseuille 宽度扫描，检验「精确解」是否只在部分宽度成立",
+  "knowledge_used": [
+    {
+      "knowledge_id": "tkc:oss-lbm:kruger-poiseuille-bb-exactness-scope",
+      "kind": "claim",
+      "via": "/by-problem?problem=exactness",
+      "claim_type": "hypothesis",
+      "epistemic_status": "contested",
+      "statement": "The documented exactness of the half-way bounce-back Poiseuille solution at tau = sqrt(3/16) + 0.5 was reproduced only for part of the tested channel widths: a line-by-line NumPy port reaches L2 = 7.6e-16 at NY = 5 and 6.8e-13 at NY = 15, but 4.0e-3 at NY = 10 and 1.1e-3 at NY = 20 (u_max = 0.1/scale, tau fixed), so as an unrestricted statement it is not supported by this evidence."
+    },
+    {
+      "knowledge_id": "tke:oss-lbm:kruger-poiseuille-bb-tau",
+      "kind": "evidence",
+      "via": "/ko/tke:oss-lbm:kruger-poiseuille-bb-tau"
+    }
+  ],
+  "knowledge_parsed": {
+    "tau": 0.9330127018922193,
+    "claimed_l2": {
+      "5": 7.6e-16
+    }
+  },
+  "experiment": {
+    "scheme": "force-driven Guo + half-way bounce-back + full D2Q9 equilibrium (the claim's port used PBBC + linear equilibrium)",
+    "widths": {
+      "5": {
+        "H": 3,
+        "steps": 300,
+        "rel_l2": 1.2608106296011615e-13
+      }
+    },
+    "worst_l2": 1.2608106296011615e-13,
+    "comparison_to_claim": [
+      {
+        "NY": 5,
+        "claimed_l2": 7.6e-16,
+        "measured_l2": 1.2608106296011615e-13,
+        "same_order": false
+      }
+    ],
+    "control": {
+      "ny": 18,
+      "tau_naive": 0.515,
+      "tau_knowledge": 0.9330127018922193,
+      "rel_l2_naive": 0.10250227591951094,
+      "rel_l2_knowledge": 4.828601511567798e-11,
+      "naive_fails_15pct": false
+    }
+  },
+  "verdict": "PASS",
+  "verdict_basis": "worst relative L2 over the sweep < 3% under the force-driven scheme; the claim's PBBC-only restriction is therefore scheme-specific, not a property of the magic tau",
+  "honesty_note": "This is NOT a replication of the claim's L2 numbers (different hydrodynamic boundary condition + equilibrium); it is a scope probe.",
+  "knowledge_effect": "the contested claim changed the conclusion from 'exact everywhere' to 'exact under this scheme; the reported limitation is setup-specific', and the control shows a naive tau fails >15%"
+}

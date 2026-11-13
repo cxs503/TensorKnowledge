@@ -23,8 +23,17 @@ Endpoints (see docs/ke/api.md for the full contract + curl examples):
     GET    /query/claim-evidence        Q5 claim -> evidence
     GET    /query/stats                 Q6 aggregate statistics
     GET    /search                      claim text + domain + status filtering
+    GET    /by-concept                  four-dimension retrieval projection (concept)
+    GET    /by-problem                  four-dimension retrieval projection (problem)
+    GET    /by-method                   ... (method; follows claim->evidence edges)
+    GET    /by-evidence                 ... (evidence; exact id or facet value)
+    GET    /facets                      browse one dimension (values + counts)
+    POST   /index/rebuild               recompute the projection (write token)
     GET    /kb/search                   knowledge_base 卡检索（ke.consume 读路径）
                                         — 命中即落注入台账，KB 消费从此可计量
+    POST   /ko/{id}/cite                引用计量：任务实际用到该知识（KPI-KB-REUSE-RATE）
+    GET    /ko/{id}/usage               per-object inject/cite ledger + reuse rate
+    GET    /usage/stats                 KPI-KB-REUSE-RATE aggregate + per-mission
 
 Auth: ``Authorization: Bearer $KE_API_TOKEN`` on every mutating call.  When
 ``KE_API_TOKEN`` is unset the write surface is *disabled* (503) rather than
@@ -123,6 +132,38 @@ def require_write_token(authorization: str | None = Header(default=None)) -> str
     return presented
 
 
+def require_read_token(authorization: str | None = Header(default=None)) -> str | None:
+    """Optional read-surface bearer check, aligned with the platform scheme.
+
+    Read endpoints stay open by default (matching the existing KE deployment),
+    but an operator can close the read surface by setting
+    ``KE_REQUIRE_READ_AUTH=1``; the token is then ``KE_READ_TOKEN`` (falls back
+    to ``KE_API_TOKEN``).  Unset token + auth required -> 503, bad token -> 401.
+    """
+    if os.environ.get("KE_REQUIRE_READ_AUTH") != "1":
+        return None
+    expected = os.environ.get("KE_READ_TOKEN") or os.environ.get("KE_API_TOKEN", "")
+    if not expected:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="read API locked: KE_READ_TOKEN/KE_API_TOKEN is not configured",
+        )
+    if not authorization or not authorization.lower().startswith("bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="missing bearer token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    presented = authorization.split(None, 1)[1].strip()
+    if not hmac.compare_digest(presented, expected):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="invalid bearer token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return presented
+
+
 def _identity(request: Request, body_producer: str | None = None) -> str:
     ident = request.headers.get("x-ke-agent") or body_producer
     if not ident:
@@ -159,6 +200,17 @@ class Publisher(BaseModel):
     model_config = ConfigDict(extra="allow")
 
     producer: str | None = None
+
+
+class CiteIn(BaseModel):
+    """POST /ko/{id}/cite body — who used it, for which task, in which artifact."""
+
+    model_config = ConfigDict(extra="allow")
+
+    mission_id: int | None = None
+    consumer: str | None = None
+    artifact: str | None = None
+    context: dict | None = None
 
 
 class ReviewIn(BaseModel):
@@ -265,7 +317,7 @@ def create_ko(request: Request, body: KOCreate = Body(...)) -> dict:
     return obj
 
 
-@app.get("/ko")
+@app.get("/ko", dependencies=[Depends(require_read_token)])
 def list_ko(
     kind: Literal["claim", "evidence", "provenance", "review"] | None = None,
     axis: Literal["production", "evidence", "review", "publication"] | None = None,
@@ -284,13 +336,18 @@ def list_ko(
     return res
 
 
-@app.get("/ko/{ko_id:path}/reviews")
+@app.get("/ko/{ko_id:path}/reviews", dependencies=[Depends(require_read_token)])
 def list_reviews(ko_id: str) -> dict:
     get_store().get_ko(ko_id)  # 404 if unknown
     return get_store().reviews_for(ko_id)
 
 
-@app.get("/ko/{ko_id:path}")
+@app.get("/ko/{ko_id:path}/usage", dependencies=[Depends(require_read_token)])
+def ko_usage(ko_id: str) -> dict:
+    return get_store().usage_for(ko_id)
+
+
+@app.get("/ko/{ko_id:path}", dependencies=[Depends(require_read_token)])
 def read_ko(ko_id: str) -> dict:
     return get_store().get_ko(ko_id)
 
@@ -346,10 +403,18 @@ def publish_ko(ko_id: str) -> dict:
     return get_store().publish(ko_id)
 
 
+@app.post("/ko/{ko_id:path}/cite", dependencies=[Depends(require_write_token)])
+def cite_ko(ko_id: str, body: CiteIn, request: Request) -> dict:
+    """Record an actual *use* of a knowledge object (KPI-KB-REUSE-RATE source)."""
+    consumer = body.consumer or request.headers.get("x-ke-agent") or "ke-api"
+    return get_store().cite(ko_id, mission_id=body.mission_id, consumer=consumer,
+                            artifact=body.artifact, context=body.context)
+
+
 # --------------------------------------------------------------------------
 # six query classes
 # --------------------------------------------------------------------------
-@app.get("/query/by-status")
+@app.get("/query/by-status", dependencies=[Depends(require_read_token)])
 def q_by_status(
     axis: Literal["production", "evidence", "review", "publication"],
     status_value: str = Query(alias="status"),
@@ -358,24 +423,24 @@ def q_by_status(
     return get_store().by_status(axis, status_value, kind)
 
 
-@app.get("/query/by-evidence-relation")
+@app.get("/query/by-evidence-relation", dependencies=[Depends(require_read_token)])
 def q_by_relation(
     relation: Literal["supports", "refutes", "qualifies", "contextualizes", "mentions", "derived-from"],
 ) -> dict:
     return get_store().by_evidence_relation(relation)
 
 
-@app.get("/query/chain")
+@app.get("/query/chain", dependencies=[Depends(require_read_token)])
 def q_chain(claim_id: str) -> dict:
     return get_store().provenance_chain(claim_id)
 
 
-@app.get("/query/by-domain")
+@app.get("/query/by-domain", dependencies=[Depends(require_read_token)])
 def q_by_domain(domain: str, exact: bool = False, kind: str = "claim") -> dict:
     return get_store().claims_by_domain(domain, exact=exact, kind=kind)
 
 
-@app.get("/query/claim-evidence")
+@app.get("/query/claim-evidence", dependencies=[Depends(require_read_token)])
 def q_claim_evidence(claim_id: str) -> dict:
     return get_store().evidence_for_claim(claim_id)
 
@@ -385,7 +450,113 @@ def q_stats() -> dict:
     return get_store().stats()
 
 
-@app.get("/kb/search")
+# --------------------------------------------------------------------------
+# four-dimension retrieval projection (concept / problem / method / evidence)
+# --------------------------------------------------------------------------
+def _facet_read(dim: str, value: str, *, field: str | None, kind: str | None,
+                domain: str | None, limit: int, offset: int, log: bool,
+                mission_id: int | None, consumer: str | None) -> dict:
+    store = get_store()
+    res = store.by_facet(dim, value, field=field, kind=kind, domain=domain,
+                         limit=limit, offset=offset)
+    if log and res["items"]:
+        res["injection"] = store.record_injections(
+            [it["id"] for it in res["items"]], mission_id=mission_id,
+            consumer=consumer, context={"dim": dim, "value": value, "field": field},
+        )
+    return res
+
+
+@app.get("/by-concept", dependencies=[Depends(require_read_token)])
+def by_concept(
+    concept: str = Query(min_length=1),
+    field: str | None = None,
+    kind: Literal["claim", "evidence", "provenance", "review"] | None = None,
+    domain: str | None = None,
+    limit: int = Query(default=50, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+    log: bool = False,
+    mission_id: int | None = None,
+    consumer: str | None = "ke-api",
+) -> dict:
+    return _facet_read("concept", concept, field=field, kind=kind, domain=domain,
+                       limit=limit, offset=offset, log=log, mission_id=mission_id,
+                       consumer=consumer)
+
+
+@app.get("/by-problem", dependencies=[Depends(require_read_token)])
+def by_problem(
+    problem: str = Query(min_length=1),
+    field: str | None = None,
+    kind: Literal["claim", "evidence", "provenance", "review"] | None = None,
+    domain: str | None = None,
+    limit: int = Query(default=50, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+    log: bool = False,
+    mission_id: int | None = None,
+    consumer: str | None = "ke-api",
+) -> dict:
+    return _facet_read("problem", problem, field=field, kind=kind, domain=domain,
+                       limit=limit, offset=offset, log=log, mission_id=mission_id,
+                       consumer=consumer)
+
+
+@app.get("/by-method", dependencies=[Depends(require_read_token)])
+def by_method(
+    method: str = Query(min_length=1),
+    field: str | None = None,
+    kind: Literal["claim", "evidence", "provenance", "review"] | None = None,
+    domain: str | None = None,
+    limit: int = Query(default=50, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+    log: bool = False,
+    mission_id: int | None = None,
+    consumer: str | None = "ke-api",
+) -> dict:
+    return _facet_read("method", method, field=field, kind=kind, domain=domain,
+                       limit=limit, offset=offset, log=log, mission_id=mission_id,
+                       consumer=consumer)
+
+
+@app.get("/by-evidence", dependencies=[Depends(require_read_token)])
+def by_evidence(
+    evidence: str = Query(min_length=1),
+    field: str | None = None,
+    kind: Literal["claim", "evidence", "provenance", "review"] | None = None,
+    domain: str | None = None,
+    limit: int = Query(default=50, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+    log: bool = False,
+    mission_id: int | None = None,
+    consumer: str | None = "ke-api",
+) -> dict:
+    return _facet_read("evidence", evidence, field=field, kind=kind, domain=domain,
+                       limit=limit, offset=offset, log=log, mission_id=mission_id,
+                       consumer=consumer)
+
+
+@app.get("/facets", dependencies=[Depends(require_read_token)])
+def list_facets(
+    dim: Literal["concept", "problem", "method", "evidence"],
+    q: str | None = None,
+    field: str | None = None,
+    kind: Literal["claim", "evidence", "provenance", "review"] | None = None,
+    limit: int = Query(default=100, ge=1, le=1000),
+) -> dict:
+    return get_store().facet_values(dim, q=q, field=field, kind=kind, limit=limit)
+
+
+@app.post("/index/rebuild", dependencies=[Depends(require_write_token)])
+def rebuild_index() -> dict:
+    return get_store().rebuild_facets()
+
+
+@app.get("/usage/stats", dependencies=[Depends(require_read_token)])
+def usage_stats() -> dict:
+    return get_store().usage_stats()
+
+
+@app.get("/kb/search", dependencies=[Depends(require_read_token)])
 def kb_search(
     q: str = Query(min_length=1),
     domain: str | None = None,
@@ -420,7 +591,7 @@ def kb_search(
             pass
 
 
-@app.get("/search")
+@app.get("/search", dependencies=[Depends(require_read_token)])
 def search(
     q: str = Query(min_length=1),
     kind: Literal["claim", "evidence", "provenance", "review"] | None = None,
