@@ -1,0 +1,428 @@
+{
+ "doc_id": "doc:1ea11ffae5f46297",
+ "package_id": "rci-f1-C-C04",
+ "lane": "C",
+ "path": "docs/rci-f1-abc/snapshot/doc_1ea11ffae5f46297/architecture_convergence_implementation_2026-08.md",
+ "sha256": "f4f91cb0ef81799d9fceb3945336434bc78981caa0b2cdd0126a3faaa5989006",
+ "sha256_prefix_expected": "f4f91cb0ef81",
+ "sha256_verified": true,
+ "doc_type": "creation",
+ "tier": "B",
+ "blocks": 70,
+ "lines": 101,
+ "sentences_candidate": 53,
+ "claims": 11,
+ "claims_with_locator": 11,
+ "claims_with_stated_conditions": 0,
+ "no_forced_claim_generation": true,
+ "zero_claim_doc": false,
+ "drop_histogram": {
+  "no_assertion_cue": 12,
+  "boilerplate": 3,
+  "too_short": 27,
+  "table_header_row": 1,
+  "table_separator_row": 1,
+  "table_row_without_metric": 6
+ },
+ "drops": [
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    62,
+    120
+   ],
+   "quote": "- 库层：`/home/runner/work/TensorLBM/TensorLBM/src/tensorlbm`"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    121,
+    178
+   ],
+   "quote": "- 平台层：`/home/runner/work/TensorLBM/TensorLBM/app/backend`"
+  },
+  {
+   "reason": "boilerplate",
+   "span": [
+    179,
+    225
+   ],
+   "quote": "- 工程层：仓库根目录 worker/launcher 脚本与 `experiments/`"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    241,
+    287
+   ],
+   "quote": "- **状态一致性**：作业生命周期状态仅由 `job_manager` 维护（单一真源）。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    288,
+    321
+   ],
+   "quote": "- **重复逻辑下降**：路由层不再维护与作业管理并行的状态缓存。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    322,
+    379
+   ],
+   "quote": "- **接口稳定性**：现有 `/api/simulations/generic-run/*` 对外路径保持不变。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    380,
+    410
+   ],
+   "quote": "- **迁移风险可控**：改动分阶段、可回滚、每阶段可验证。"
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    425,
+    436
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    437,
+    446
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    447,
+    465
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    466,
+    491
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    492,
+    515
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    516,
+    538
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    539,
+    562
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    563,
+    583
+   ]
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    612,
+    614
+   ],
+   "quote": "1."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    674,
+    676
+   ],
+   "quote": "2."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    759,
+    761
+   ],
+   "quote": "3."
+  },
+  {
+   "reason": "boilerplate",
+   "span": [
+    762,
+    826
+   ],
+   "quote": "**实验层（Experiment）**：仓库根目录存在大量 `*_worker.py`、launcher 脚本，工程边界较松散。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    840,
+    861
+   ],
+   "quote": "- **P0（稳定性/一致性）**  \n "
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    980,
+    1002
+   ],
+   "quote": "- **P1（可维护性/扩展性）**  \n "
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1003,
+    1062
+   ],
+   "quote": "- 问题：`solver.py` 与 `simulations.py` 在提交流程与运行编排上有职责重叠趋势。  \n-"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1061,
+    1080
+   ],
+   "quote": "- **P2（工程整洁性）**  \n "
+  },
+  {
+   "reason": "boilerplate",
+   "span": [
+    1081,
+    1127
+   ],
+   "quote": "- 问题：根目录 worker/launcher 数量大，主产品能力与实验能力边界不够清晰。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1157,
+    1159
+   ],
+   "quote": "1."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1199,
+    1201
+   ],
+   "quote": "2."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1243,
+    1245
+   ],
+   "quote": "3."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1290,
+    1292
+   ],
+   "quote": "4."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1293,
+    1329
+   ],
+   "quote": "**Experiment Layer**：一次性实验、批处理与探索脚本。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1340,
+    1366
+   ],
+   "quote": "- 上层可依赖下层，不允许下层反向依赖上层。  \n-"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1365,
+    1396
+   ],
+   "quote": "- 平台路由层只负责请求编排，不保留并行生命周期状态。  \n-"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1395,
+    1423
+   ],
+   "quote": "- 同层通过契约对象交互，避免隐式全局状态共享。  \n\n"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1511,
+    1531
+   ],
+   "quote": "- 对高风险导出建立兼容清单与弃用窗口。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1551,
+    1574
+   ],
+   "quote": "- 合并重复提交流程，减少路由内重复业务拼装。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1575,
+    1595
+   ],
+   "quote": "- 抽象统一的作业提交与配置标准化入口。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1671,
+    1699
+   ],
+   "quote": "- 删除路由侧并行状态缓存，保留现有 API 路径兼容。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1719,
+    1754
+   ],
+   "quote": "- 统一 schema/config 命名与默认值语义，减少散点配置。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1774,
+    1813
+   ],
+   "quote": "- 将 root 级 worker/launcher 逐步归档到实验分层目录。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1833,
+    1858
+   ],
+   "quote": "- 接口兼容回归 → 功能回归 → 性能基线对比。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1889,
+    1926
+   ],
+   "quote": "- `POST /api/simulations/generic-run`"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1927,
+    1979
+   ],
+   "quote": "- `GET /api/simulations/generic-run/{job_id}/status`"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1980,
+    2033
+   ],
+   "quote": "- `GET /api/simulations/generic-run/{job_id}/results`"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2034,
+    2099
+   ],
+   "quote": "- `GET /api/simulations/generic-run/{job_id}/fields/{field_name}`"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2100,
+    2147
+   ],
+   "quote": "- `WS /api/simulations/generic-run/{job_id}/ws`"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2217,
+    2268
+   ],
+   "quote": "- 结果中的大字段 `fields_data` 继续对 results 接口隐藏，但用于字段切片接口。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    2269,
+    2307
+   ],
+   "quote": "- 数值发散时由“静默中断并返回完成态”改为“显式失败态（failed）”。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2318,
+    2361
+   ],
+   "quote": "- 若发现兼容问题，可回退到本次提交前版本；对外路径不变，回滚风险集中于内部状态管理。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2375,
+    2426
+   ],
+   "quote": "- API 兼容：generic-run 端点仍可提交、查询、取结果、取字段切片、WS 推送。  \n-"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    2480,
+    2519
+   ],
+   "quote": "- 失败可诊断：发散场景返回 failed 而非 completed。  \n-"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    2518,
+    2553
+   ],
+   "quote": "- 测试：新增 generic-run 路由回归测试覆盖关键接口行为。"
+  }
+ ],
+ "drops_truncated": 0,
+ "quality_mean": 14.55,
+ "claim_form_histogram": {
+  "quantitative": 5,
+  "observational": 6
+ },
+ "verification": "see ../../verify/<pkg>.json and ../../<pkg>/review.json"
+}

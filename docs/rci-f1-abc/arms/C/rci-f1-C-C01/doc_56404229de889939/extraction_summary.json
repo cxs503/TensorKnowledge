@@ -1,0 +1,337 @@
+{
+ "doc_id": "doc:56404229de889939",
+ "package_id": "rci-f1-C-C01",
+ "lane": "C",
+ "path": "docs/rci-f1-abc/snapshot/doc_56404229de889939/s1_prereg.md",
+ "sha256": "663978a2c20d03c54414834b8bb2a14721d663e305138ddbe98360db4f1373de",
+ "sha256_prefix_expected": "663978a2c20d",
+ "sha256_verified": true,
+ "doc_type": "research",
+ "tier": "B",
+ "blocks": 50,
+ "lines": 118,
+ "sentences_candidate": 52,
+ "claims": 14,
+ "claims_with_locator": 14,
+ "claims_with_stated_conditions": 0,
+ "no_forced_claim_generation": true,
+ "zero_claim_doc": false,
+ "drop_histogram": {
+  "too_short": 17,
+  "no_assertion_cue": 16,
+  "table_header_row": 1,
+  "table_separator_row": 1,
+  "table_row_without_metric": 3
+ },
+ "drops": [
+  {
+   "reason": "too_short",
+   "span": [
+    26,
+    45
+   ],
+   "quote": "> Append-only 注册文件。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    45,
+    82
+   ],
+   "quote": "先注册后派发，后续只允许追加（以 `## Addendum` 段落形式）。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    83,
+    127
+   ],
+   "quote": "> 编排者：tensor-agent mission m39，architect 角色。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    282,
+    310
+   ],
+   "quote": "- **成熟度声明**：Implemented 级证据。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    383,
+    430
+   ],
+   "quote": "- **fail-closed 语义**：沿用 S0。任一机器门校验失败即停，不消耗剩余预算。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    465,
+    500
+   ],
+   "quote": "DEM 求解器在每步累积四类冲量（单位 N·s，全局 x/y 分量）："
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    502,
+    515
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    516,
+    525
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    526,
+    573
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    574,
+    609
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    610,
+    638
+   ]
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    684,
+    699
+   ],
+   "quote": "**判据**：冲量守恒闭合——"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1040,
+    1047
+   ],
+   "quote": "**判据**："
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1297,
+    1318
+   ],
+   "quote": "- 求解器进程退出码在允许集 {0} 内。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1319,
+    1363
+   ],
+   "quote": "- `history.csv` 可载入、至少一行数值数据、所有数值有限、时间单调非递减。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1364,
+    1422
+   ],
+   "quote": "- `trajectory.pt` 可 torch.load、positions 张量非空且有限、times 单调。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1423,
+    1460
+   ],
+   "quote": "- `accounting.json` 可载入 JSON 且所有数值有限。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1532,
+    1553
+   ],
+   "quote": "- 腿按顺序执行（S1 为单腿 DEM）。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1554,
+    1574
+   ],
+   "quote": "- 任一腿校验失败即停，不消耗剩余预算。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1575,
+    1667
+   ],
+   "quote": "- 判词表：`decision ∈ {s1_impulse_and_energy_ledgers_passed,\n  stop_s1_and_repair_fa"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1668,
+    1727
+   ],
+   "quote": "- `scientific_status = implemented_not_benchmark_verified`。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2097,
+    2258
+   ],
+   "quote": "修改 `TensorDEM/src/tensordem/cli.py`，在运行结束时额外写出 `accounting.json`\n  （完整 `self.acc"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    2259,
+    2286
+   ],
+   "quote": "- **验收**：现有 TensorDEM 测试全绿；"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    2349,
+    2374
+   ],
+   "quote": "`accounting.json` 存在且可载入。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2375,
+    2452
+   ],
+   "quote": "- **仓库路径**：`TensorDEM/src/tensordem/dem.py`、`TensorDEM/src/tensordem/cli.py`。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2504,
+    2566
+   ],
+   "quote": "- **目标**：创建 `TensorPhysics/scenarios/wedge_icebreaking/s1.py`。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2569,
+    2674
+   ],
+   "quote": "单腿 DEM 场景：用 `--hull-profile` 传入预设楔形船体 CSV（由脚本内联生成\n  楔形 polyline，写入 work-dir），调用 "
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2677,
+    2743
+   ],
+   "quote": "运行后检查：\n  (a) 输出完整性（history.csv / trajectory.pt / accounting.json）；"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2891,
+    2990
+   ],
+   "quote": "全部接线到 ValidationReport → LocalArtifactStore → RunManifest →\n  ResearchMemoryReco"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2993,
+    3144
+   ],
+   "quote": "产出 `s1_report.json`，结构对齐 s0_report.json：\n  `schema_version / scenario_id / stage"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    3318,
+    3379
+   ],
+   "quote": "- **仓库路径**：`TensorPhysics/scenarios/wedge_icebreaking/s1.py`。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    3638,
+    3694
+   ],
+   "quote": "- **仓库路径**：`TensorPhysics/scenarios/wedge_icebreaking/`。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    3708,
+    3723
+   ],
+   "quote": "1. 先注册本文件（已完成）。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    3724,
+    3726
+   ],
+   "quote": "2."
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    3727,
+    3780
+   ],
+   "quote": "派发子任务 A（TensorDEM 账本暴露）和子任务 B（TensorPhysics s1.py）并行。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    3874,
+    3898
+   ],
+   "quote": "3. await_children 等全部终态。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    3899,
+    3925
+   ],
+   "quote": "4. 派发子任务 C（verifier 集成验证）。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    3926,
+    3934
+   ],
+   "quote": "5. 收尾汇总。"
+  }
+ ],
+ "drops_truncated": 0,
+ "quality_mean": 18.36,
+ "claim_form_histogram": {
+  "normative": 1,
+  "quantitative": 6,
+  "comparative": 2,
+  "methodological": 1,
+  "observational": 4
+ },
+ "verification": "see ../../verify/<pkg>.json and ../../<pkg>/review.json"
+}

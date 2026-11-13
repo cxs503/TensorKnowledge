@@ -1,0 +1,646 @@
+{
+ "doc_id": "doc:1f82ab24ff6bc45b",
+ "package_id": "rci-f1-C-C05",
+ "lane": "C",
+ "path": "docs/rci-f1-abc/snapshot/doc_1f82ab24ff6bc45b/verification_free_surface.md",
+ "sha256": "42547850755485b6b732d1e23e454036b4001b21e288ea14cb07d9149987ef19",
+ "sha256_prefix_expected": "425478507554",
+ "sha256_verified": true,
+ "doc_type": "research",
+ "tier": "A",
+ "blocks": 64,
+ "lines": 251,
+ "sentences_candidate": 146,
+ "claims": 14,
+ "claims_with_locator": 14,
+ "claims_with_stated_conditions": 0,
+ "no_forced_claim_generation": true,
+ "zero_claim_doc": false,
+ "drop_histogram": {
+  "boilerplate": 1,
+  "no_assertion_cue": 17,
+  "table_header_row": 10,
+  "table_separator_row": 10,
+  "too_short": 37,
+  "table_row_without_metric": 3,
+  "near_duplicate": 1
+ },
+ "drops": [
+  {
+   "reason": "boilerplate",
+   "span": [
+    160,
+    294
+   ],
+   "quote": "全部数字来自\n`docs/benchmarks/free-surface/report.json` 与同目录 `part_*.json`\n（由 `scripts"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    315,
+    393
+   ],
+   "quote": "把 TensorSPH 的自由面能力从\"能画出水面\"推到\"可被解析解定量裁决\"：三类经典问题\n各配一个闭式解锚 + 一个机器判据，另加分辨率阶梯与质量守恒。"
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    395,
+    421
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    422,
+    443
+   ]
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    749,
+    783
+   ],
+   "quote": "结论：**5 门过 3 门，C1/C2 诚实 FAIL**，未粉饰。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    784,
+    820
+   ],
+   "quote": "C3 是\"频率可裁\"，C4 是\"误差随加密下降\"，C5 是\"质量不丢\"；"
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    889,
+    906
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    907,
+    920
+   ]
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1319,
+    1441
+   ],
+   "quote": "判据的**口径**在动手前写死在 `src/tensorsph/freesurface/gates.py`，测量口径写在\n`src/tensorsph/free"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1455,
+    1469
+   ],
+   "quote": "**求解器复用，不加新算子。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    1469,
+    1674
+   ],
+   "quote": "** 三个算例都跑 TensorSPH 既有的 WCSPH 核心\n（`droplet_impact.rhs` + Adami 壁面粒子 + 配对表缓存）：溃坝直"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    1676,
+    1700
+   ],
+   "quote": "**测量算子统一（`profiles.py`）。"
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    1762,
+    1780
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    1781,
+    1794
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    1895,
+    1977
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    2044,
+    2118
+   ]
+  },
+  {
+   "reason": "table_row_without_metric",
+   "span": [
+    2249,
+    2303
+   ]
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    2402,
+    2430
+   ],
+   "quote": "**判据（`gates.py`）。** 阈值只存在一处；"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2473,
+    2531
+   ],
+   "quote": "`maturity()` 只有全 PASS 才给 PASS，否则给 `HONEST_FAIL_OPEN` 并列欠项。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2533,
+    2595
+   ],
+   "quote": "**驱动（`runner.py` + `scripts/run_freesurface_verification.py`）。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    2595,
+    2673
+   ],
+   "quote": "** 研究拆成可独立跑的\npart（`ritter` / `ladder` / `sloshing` / `solitary`），各写一个自描述 JSON；"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    2674,
+    2710
+   ],
+   "quote": "`assemble` 合并、判门、出图、写 `report.json`。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    2710,
+    2747
+   ],
+   "quote": "缺哪个 part，对应的门就是\n`UNMEASURED` 而不是静默通过。"
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    3054,
+    3063
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    3064,
+    3073
+   ]
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    3354,
+    3370
+   ],
+   "quote": "**波前口径为什么必须两个都报。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    3370,
+    3407
+   ],
+   "quote": "** 零水深前沿 `x_dam + 2c0 t` 处的水深在数学上是 0；"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    3464,
+    3546
+   ],
+   "quote": "所以主判据用**分辨率匹配口径**：实测\"水深掉到一个粒子间距\"的位置，与\n解析解上同样水深的等值线位置比较（`analytic_front_at_depth`"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    3598,
+    3608
+   ],
+   "quote": "**过坝体积的常数。"
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    3798,
+    3862
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    3863,
+    3892
+   ]
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    4065,
+    4101
+   ],
+   "quote": "最小二乘斜率：**全扇区 0.614**，**可分辨区 0.847**。"
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    4457,
+    4471
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    4472,
+    4485
+   ]
+  },
+  {
+   "reason": "near_duplicate",
+   "span": [
+    4815,
+    4844
+   ],
+   "quote": "| 质量漂移 / 逃逸粒子 | 0.0 / 0 | — |"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    4846,
+    4864
+   ],
+   "quote": "分辨率对照（同设置，只加密一倍层数；"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    4864,
+    4891
+   ],
+   "quote": "`part_solitary_fine.json`）："
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    4893,
+    4979
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    4980,
+    5017
+   ]
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    5311,
+    5353
+   ],
+   "quote": "消融（同网格、同造波，只改数值设置；`part_solitary_*.json`）："
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    5355,
+    5415
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    5416,
+    5441
+   ]
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    5944,
+    5971
+   ],
+   "quote": "C2 因此是**结构性 FAIL**，不是调参能救的。"
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    6176,
+    6190
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    6191,
+    6204
+   ]
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    6446,
+    6472
+   ],
+   "quote": "频率判据 C3 达标（1.08 % ≪ 10 %）。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    6621,
+    6646
+   ],
+   "quote": "左：三个时刻的水深剖面（实线 SPH，虚线解析）；"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    6646,
+    6683
+   ],
+   "quote": "右：水深/速度 L2 与波前误差随时间，\n点线是 C1 的 10 % 门。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    6757,
+    6783
+   ],
+   "quote": "水深 L2 对粒子间距的双对数图，虚线是一阶参考线。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    6785,
+    6845
+   ],
+   "quote": "![晃荡一阶模态](benchmarks/free-surface/figures/sloshing_mode.png)"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    6847,
+    6886
+   ],
+   "quote": "一阶模态幅值时程（实线 SPH，虚线 `A cos(omega_1 t)`）。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    6888,
+    6945
+   ],
+   "quote": "![孤立波](benchmarks/free-surface/figures/solitary_wave.png)"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    6947,
+    6960
+   ],
+   "quote": "左：三个波高计的水面时程；"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    6960,
+    7025
+   ],
+   "quote": "右：中间波高计过峰时的时程 vs `H sech²(alpha c (t_crest - t))`\n（按实测峰高归一，只看形状）。"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    7027,
+    7087
+   ],
+   "quote": "![三类问题对比](benchmarks/free-surface/figures/summary_gates.png)"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7089,
+    7125
+   ],
+   "quote": "三类问题对判据的对比：柱高 = 实测/门（1.0 是门，红=FAIL）。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7185,
+    7214
+   ],
+   "quote": "这张图就是\n\"哪一例达标、哪一例不达标、差多少\"的一页纸。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7241,
+    7243
+   ],
+   "quote": "1."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7324,
+    7359
+   ],
+   "quote": "第一版把两者混用，报出 72 % 的\"质量\"误差——一个正确解被判死。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7514,
+    7516
+   ],
+   "quote": "2."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7517,
+    7554
+   ],
+   "quote": "**波前不能用 `max(x)`**：单颗飞溅粒子把前沿推到 3 倍之外。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7609,
+    7611
+   ],
+   "quote": "3."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7779,
+    7781
+   ],
+   "quote": "4."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7841,
+    7869
+   ],
+   "quote": "频率不受影响（0.6–1.1 %），幅值与衰减率受影响。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7947,
+    7983
+   ],
+   "quote": "现在：条带 = 1 个粒子间距 + 投影前去掉有限条带的均值（0 阶）。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    7984,
+    7986
+   ],
+   "quote": "5."
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    8196,
+    8198
+   ],
+   "quote": "6."
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    8339,
+    8399
+   ],
+   "quote": "本单顺手改正，并加了 `test_sloshing_analytic_frequency_limits` 左右两极对照。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    8400,
+    8402
+   ],
+   "quote": "7."
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    8403,
+    8462
+   ],
+   "quote": "**`for cells in cells` 把参数变量覆盖了**（阶梯 part 直接崩），已改名 `count`。"
+  },
+  {
+   "reason": "table_header_row",
+   "span": [
+    8493,
+    8526
+   ]
+  },
+  {
+   "reason": "table_separator_row",
+   "span": [
+    8527,
+    8548
+   ]
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    9157,
+    9193
+   ],
+   "quote": "这是这个分辨率下单相 WCSPH 的实际水平，写清楚比刷好看的数字有用。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    9588,
+    9621
+   ],
+   "quote": "峰高的绝对误差\n  （32 %）主要由这个限制决定，不是传播衰减。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    9749,
+    9782
+   ],
+   "quote": "* **晃荡**只有一阶模态、小振幅（`A/H = 0.08`）。"
+  },
+  {
+   "reason": "too_short",
+   "span": [
+    9830,
+    9866
+   ],
+   "quote": "* **下一步（建议）**：①孤立波周期域长时积分节点（真测 10λ）；"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    9866,
+    9915
+   ],
+   "quote": "②晃荡二阶模态与\n  受迫响应谱（与 `tensorsph.sloshing` 的强迫工况对接）；"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    9915,
+    9959
+   ],
+   "quote": "③Ritter 的三维/有摩擦床\n  变体（对标 Martin & Moyce 实验）；"
+  },
+  {
+   "reason": "no_assertion_cue",
+   "span": [
+    9959,
+    10012
+   ],
+   "quote": "④把 `profiles.py` 的测量口径推广成通用\n  \"粒子云→场量\"审计面，供其它自由面算例复用。"
+  }
+ ],
+ "drops_truncated": 0,
+ "quality_mean": 19.57,
+ "claim_form_histogram": {
+  "comparative": 2,
+  "quantitative": 12
+ },
+ "verification": "see ../../verify/<pkg>.json and ../../<pkg>/review.json"
+}

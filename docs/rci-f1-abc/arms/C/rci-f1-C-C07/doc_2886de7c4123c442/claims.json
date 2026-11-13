@@ -1,0 +1,667 @@
+{
+ "doc_id": "doc:2886de7c4123c442",
+ "package_id": "rci-f1-C-C07",
+ "lane": "C",
+ "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc",
+ "claim_schema": "rci-f1.claim/1.0",
+ "claims": [
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-01",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "任务:m3336(platform 席自找活) · 分支:agent/m3336 · 日期:2026-11-04 仓:TensorBEM · 工件:src/tensorbem/capability_evidence.py、tests/test_capability_evidence.py、 tests/test_benchmark_cli_contract.py、docs/audit_baseline.md§4、docs/m3336/outputs/{capability_matrix.json,capability_matrix.png}",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "**任务**：m3336（platform 席自找活） · **分支**：`agent/m3336` · **日期**：2026-11-04\n**仓**：TensorBEM · **工件**：`src/tensorbem/capability_evidence.py`、`tests/test_capability_evidence.py`、\n`tests/test_benchmark_cli_contract.py`、`docs/audit_baseline.md`§4、`docs/m3336/outputs/{capability_matrix.json,capability_matrix.png}`",
+    "span": [
+     49,
+     354
+    ],
+    "lines": [
+     3,
+     5
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-01-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 4,
+    "total": 22,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "TensorBEM：审计基线的能力-证据矩阵从手写改为机器推导（含 4 条失效声明的更正）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-02",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "docs/audit_baseline.md§4 的能力表是本仓对外唯一的「实现了什么、证据到哪一级」清单。",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "`docs/audit_baseline.md`§4 的能力表是本仓对外唯一的「实现了什么、证据到哪一级」清单。",
+    "span": [
+     480,
+     536
+    ],
+    "lines": [
+     11,
+     11
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-02-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 4,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 4,
+    "total": 22,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "1. 欠账是什么",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-03",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "到 2026-11-04,它仍把 有限水深核(2-D/3-D)、有航速兴波阻力(Wigley)、Kutta 条件升力 判为 NOT_SUPPORTED,而 tensorbem/finite_depth.py、finite_depth3d.py、wigley.py、lifting.py 早已随各自测试套件合入。",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "到 2026-11-04，它仍把 **有限水深核（2-D/3-D）、有航速兴波阻力（Wigley）、Kutta 条件升力** 判为\n`NOT_SUPPORTED`，而 `tensorbem/finite_depth.py`、`finite_depth3d.py`、`wigley.py`、`lifting.py` 早已随各自测试套件合入。",
+    "span": [
+     572,
+     741
+    ],
+    "lines": [
+     12,
+     13
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-03-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 2,
+    "total": 20,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "1. 欠账是什么",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-04",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "把每一行变成机器可判的声明:新增 src/tensorbem/capability_evidence.py,登记 28 条能力,每条形如 modules / symbols / tests(file::node) / docs(path, anchor)。",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "**把每一行变成机器可判的声明**：新增 `src/tensorbem/capability_evidence.py`，登记 28 条能力，每条形如\n   `modules / symbols / tests(file::node) / docs(path, anchor)`。",
+    "span": [
+     1114,
+     1253
+    ],
+    "lines": [
+     23,
+     24
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-04-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 2,
+    "total": 20,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "2. 怎么做的",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-05",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "无种子随机或常量返回→MOCK(有种子的 np.random.default_rng(seed=42) 不算 MOCK,conditioning 的幂迭代起点即属此类);",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "无种子随机或常量返回→MOCK（**有种子**的 `np.random.default_rng(seed=42)` 不算 MOCK，conditioning 的幂迭代起点即属此类）；",
+    "span": [
+     1348,
+     1439
+    ],
+    "lines": [
+     26,
+     26
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-05-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 4,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 20,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "2. 怎么做的",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-06",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "重生成 §4:python -m tensorbem.capability_evidence --write 把表格写进 docs/audit_baseline.md 的 marker 块内, §4 附「与 2026-10-29 基线相比的更正日志」与「未测模块清单」。",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "**重生成 §4**：`python -m tensorbem.capability_evidence --write` 把表格写进 `docs/audit_baseline.md` 的 marker 块内，\n   §4 附「与 2026-10-29 基线相比的更正日志」与「未测模块清单」。",
+    "span": [
+     1591,
+     1737
+    ],
+    "lines": [
+     29,
+     30
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-06-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 5,
+    "total": 23,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "2. 怎么做的",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-07",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "入口契约测试:tests/test_benchmark_cli_contract.py 对 6 个 argparse 驱动跑 python -m ... --help(必须 0 退出且打印 usage), 对无 argparse 的 lifting_foil 在进程内验证 analytic_reference 两条解析路径(压力积分 vs 环量)互洽 <1%。",
+   "claim_form": "normative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "**入口契约测试**：`tests/test_benchmark_cli_contract.py` 对 6 个 argparse 驱动跑 `python -m ... --help`（必须 0 退出且打印 usage），\n   对无 argparse 的 `lifting_foil` 在进程内验证 `analytic_reference` 两条解析路径（压力积分 vs 环量）互洽 <1%。",
+    "span": [
+     2149,
+     2345
+    ],
+    "lines": [
+     36,
+     37
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-07-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 4,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 2,
+    "total": 19,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "2. 怎么做的",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-08",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "派生等级分布 — REAL 28、WITHHELD 0、STUB 0、MOCK 0、MISSING 0、STALE_CLAIM 0",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "| 派生等级分布 | — | REAL 28、WITHHELD 0、STUB 0、MOCK 0、MISSING 0、STALE_CLAIM 0 |",
+    "span": [
+     2519,
+     2592
+    ],
+    "lines": [
+     46,
+     46
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-08-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 1,
+    "total": 20,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "3. 计算结果（程序化注入）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-09",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "被更正的 4 条(现均 REAL,各带 ≥2 个真实测试节点):2-D 有限水深核(finite_depth+finite_depth_solver)、 3-D 有限水深核(finite_depth3d,含 bessel_k0/模式正交)、Wigley 兴波阻力(wigley+wigley_verification)、 Kutta 升力(lifting+lifting_foil)。",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "被更正的 4 条（现均 `REAL`，各带 ≥2 个真实测试节点）：2-D 有限水深核（`finite_depth`+`finite_depth_solver`）、\n3-D 有限水深核（`finite_depth3d`，含 `bessel_k0`/模式正交）、Wigley 兴波阻力（`wigley`+`wigley_verification`）、\nKutta 升力（`lifting`+`lifting_foil`）。",
+    "span": [
+     2594,
+     2804
+    ],
+    "lines": [
+     48,
+     50
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-09-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 19,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "3. 计算结果（程序化注入）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-10",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "新增测试:tests/test_capability_evidence.py 11 条 + tests/test_benchmark_cli_contract.py 14 条 = 25 条,25 passed in 4.71 s (含 6 次子进程 --help 探针,实测 2.4 s 内跑完 14 条契约测试)。",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "**新增测试**：`tests/test_capability_evidence.py` 11 条 + `tests/test_benchmark_cli_contract.py` 14 条 = **25 条，25 passed in 4.71 s**\n（含 6 次子进程 `--help` 探针，实测 2.4 s 内跑完 14 条契约测试）。",
+    "span": [
+     2806,
+     2978
+    ],
+    "lines": [
+     52,
+     53
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-10-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 2,
+    "total": 20,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "3. 计算结果（程序化注入）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-11",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "图:左=发布声明与代码事实的差距(红=手写基线,蓝=本单推导:行数 15→28、失效声明 4→0、无解释未测模块 9→0);",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "图：左=发布声明与代码事实的差距（红=手写基线，蓝=本单推导：行数 15→28、失效声明 4→0、无解释未测模块 9→0）；",
+    "span": [
+     3044,
+     3106
+    ],
+    "lines": [
+     57,
+     57
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-11-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 21,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "3. 计算结果（程序化注入）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-12",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "失效 NOT_SUPPORTED 声明数 代码事实(模块可导入+测试在场) 0 0(判据为布尔,不是数值) ✅ 是(精确 0)",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "| 失效 `NOT_SUPPORTED` 声明数 | 代码事实（模块可导入+测试在场） | 0 | 0（判据为布尔，不是数值） | ✅ 是（精确 0） |",
+    "span": [
+     3239,
+     3316
+    ],
+    "lines": [
+     64,
+     64
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-12-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 1,
+    "total": 20,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "4. 误差判定（关键量 vs 基准，逐项）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-13",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "发布块 vs 生成块 document_drift() None(无 diff) 0 行差异 ✅ 是",
+   "claim_form": "comparative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "| 发布块 vs 生成块 | `document_drift()` | `None`（无 diff） | 0 行差异 | ✅ 是 |",
+    "span": [
+     3363,
+     3429
+    ],
+    "lines": [
+     66,
+     66
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-13-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 4,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 3,
+    "evidence_density": 1,
+    "total": 19,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "4. 误差判定（关键量 vs 基准，逐项）",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C07-2886de7c-14",
+   "doc_id": "doc:2886de7c4123c442",
+   "statement": "尝试把 12 个测试文件放进一次 pytest 调用取运行时间证据时超过 shell 120 s 上限被杀,故运行证据只覆盖新增的 25 条;",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_2886de7c4123c442/dev_report_m3336.md",
+    "quote": "- 尝试把 12 个测试文件放进一次 pytest 调用取运行时间证据时**超过 shell 120 s 上限被杀**，故运行证据只覆盖新增的 25 条；",
+    "span": [
+     3779,
+     3856
+    ],
+    "lines": [
+     76,
+     76
+    ],
+    "sha256": "f05e7801bff2cd0e0379626aa001ec539c6e8cb3172e08a77888aa701cae20cc"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C07-2886de7c-14-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 5,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 21,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "5. 注意点 / 局限",
+   "epistemic_status": "draft"
+  }
+ ]
+}

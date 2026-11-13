@@ -1,0 +1,291 @@
+{
+ "doc_id": "doc:05082d8dc8aef859",
+ "package_id": "rci-f1-C-C01",
+ "lane": "C",
+ "sha256": "0d956d0c782d180e3e5671b34c1e0198658278ac6b37374ebc17b32e9b651d39",
+ "claim_schema": "rci-f1.claim/1.0",
+ "claims": [
+  {
+   "claim_id": "rci-f1:c:C01-05082d8d-01",
+   "doc_id": "doc:05082d8dc8aef859",
+   "statement": "The example produces a small CSV, uploads it and a JSON manifest, and checks remote object size and SHA-256 metadata with HEAD requests.",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_05082d8dc8aef859/ARTIFACT_STORAGE.md",
+    "quote": "The example produces a small CSV, uploads it and a JSON manifest, and checks\nremote object size and SHA-256 metadata with HEAD requests.",
+    "span": [
+     951,
+     1087
+    ],
+    "lines": [
+     24,
+     25
+    ],
+    "sha256": "0d956d0c782d180e3e5671b34c1e0198658278ac6b37374ebc17b32e9b651d39"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C01-05082d8d-01-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 19,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "S3 smoke workflow",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C01-05082d8d-02",
+   "doc_id": "doc:05082d8dc8aef859",
+   "statement": "It is an integration smoke test, not a solver benchmark or physical validation.",
+   "claim_form": "observational",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_05082d8dc8aef859/ARTIFACT_STORAGE.md",
+    "quote": "It is an integration\nsmoke test, not a solver benchmark or physical validation.",
+    "span": [
+     1088,
+     1167
+    ],
+    "lines": [
+     25,
+     26
+    ],
+    "sha256": "0d956d0c782d180e3e5671b34c1e0198658278ac6b37374ebc17b32e9b651d39"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C01-05082d8d-02-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 2,
+    "verifiability": 3,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 14,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "S3 smoke workflow",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C01-05082d8d-03",
+   "doc_id": "doc:05082d8dc8aef859",
+   "statement": "Object keys are immutable by convention: a repeated identical write is idempotent; different content at the same key is rejected.",
+   "claim_form": "observational",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_05082d8dc8aef859/ARTIFACT_STORAGE.md",
+    "quote": "- Object keys are immutable by convention: a repeated identical write is\n  idempotent; different content at the same key is rejected.",
+    "span": [
+     1682,
+     1815
+    ],
+    "lines": [
+     38,
+     39
+    ],
+    "sha256": "0d956d0c782d180e3e5671b34c1e0198658278ac6b37374ebc17b32e9b651d39"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C01-05082d8d-03-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 5,
+    "verifiability": 4,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 18,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "Integrity and operational notes",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C01-05082d8d-04",
+   "doc_id": "doc:05082d8dc8aef859",
+   "statement": "The client records SHA-256 in object metadata and checks it with the byte count.",
+   "claim_form": "quantitative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_05082d8dc8aef859/ARTIFACT_STORAGE.md",
+    "quote": "- The client records SHA-256 in object metadata and checks it with the byte\n  count.",
+    "span": [
+     1816,
+     1900
+    ],
+    "lines": [
+     40,
+     41
+    ],
+    "sha256": "0d956d0c782d180e3e5671b34c1e0198658278ac6b37374ebc17b32e9b651d39"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C01-05082d8d-04-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 4,
+    "verifiability": 5,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 18,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "Integrity and operational notes",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C01-05082d8d-05",
+   "doc_id": "doc:05082d8dc8aef859",
+   "statement": "HEAD metadata verification is not a full re-download of object bytes; storage policy, versioning, retention and server-side encryption should be configured in the object store.",
+   "claim_form": "normative",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_05082d8dc8aef859/ARTIFACT_STORAGE.md",
+    "quote": "HEAD metadata verification is not a full re-download of object bytes;\n  storage policy, versioning, retention and server-side encryption should be\n  configured in the object store.",
+    "span": [
+     1901,
+     2081
+    ],
+    "lines": [
+     41,
+     43
+    ],
+    "sha256": "0d956d0c782d180e3e5671b34c1e0198658278ac6b37374ebc17b32e9b651d39"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C01-05082d8d-05-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 3,
+    "verifiability": 4,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 16,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "Integrity and operational notes",
+   "epistemic_status": "draft"
+  },
+  {
+   "claim_id": "rci-f1:c:C01-05082d8d-06",
+   "doc_id": "doc:05082d8dc8aef859",
+   "statement": "The CI suite uses a fake S3 client; it does not prove compatibility with a live AWS or third-party endpoint.",
+   "claim_form": "observational",
+   "faithfulness": {
+    "path": "docs/rci-f1-abc/snapshot/doc_05082d8dc8aef859/ARTIFACT_STORAGE.md",
+    "quote": "- The CI suite uses a fake S3 client; it does not prove compatibility with a\n  live AWS or third-party endpoint.",
+    "span": [
+     2082,
+     2194
+    ],
+    "lines": [
+     44,
+     45
+    ],
+    "sha256": "0d956d0c782d180e3e5671b34c1e0198658278ac6b37374ebc17b32e9b651d39"
+   },
+   "evidence_ids": [
+    "rci-f1:c:C01-05082d8d-06-ev1"
+   ],
+   "conditions": {
+    "stated_in_source": false,
+    "scope": "not-stated-in-source",
+    "text": null,
+    "relation": "none"
+   },
+   "quality": {
+    "locatability": 3,
+    "specificity": 4,
+    "verifiability": 4,
+    "scope_clarity": 1,
+    "non_triviality": 4,
+    "evidence_density": 1,
+    "total": 17,
+    "rubric": {
+     "locatability": "5=single contiguous verified span in frozen snapshot; 3=multi-line span; 0=locator unresolvable",
+     "specificity": "5=>=3 concrete tokens (numbers/units/identifiers); 3=1-2 concrete tokens; 0=pure prose",
+     "verifiability": "5=checkable assertion about a named artifact/metric; 3=checkable but generic; 0=hedged opinion",
+     "scope_clarity": "5=explicit source-stated condition/scope; 2=implicit only; 1=not stated in source",
+     "non_triviality": "5=substantive domain content; 2=boilerplate-adjacent; 0=license/TOC/filler",
+     "evidence_density": "5=carries fig/table/eq/path/commit reference; 3=one reference; 0=none"
+    }
+   },
+   "section": "Integrity and operational notes",
+   "epistemic_status": "draft"
+  }
+ ]
+}

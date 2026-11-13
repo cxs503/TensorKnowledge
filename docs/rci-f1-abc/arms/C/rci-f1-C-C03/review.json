@@ -1,0 +1,39 @@
+{
+ "review_schema": "rci-f1.review/1.0",
+ "package_id": "rci-f1-C-C03",
+ "lane": "C",
+ "reviewer": "rci_f1_review.py",
+ "independence": "read only frozen snapshot via KO locator + objects jsonl + wp manifest; producer narrative not read",
+ "reviewed_objects": 38,
+ "checks_summary": {
+  "kos": 38,
+  "quote_resolvable": 38,
+  "statement_supported": 38,
+  "conditions_faithful": 38,
+  "epistemic_honest": 38,
+  "quality_sane": 38,
+  "no_duplicates": 38,
+  "doc_identity_ok": 38
+ },
+ "coverage": {
+  "quote_resolvable": "38/38",
+  "statement_supported": "38/38",
+  "conditions_faithful": "38/38",
+  "epistemic_honest": "38/38"
+ },
+ "checks_not_run": [
+  "arm B/C paired comparison (lane B receipts not in this worktree)",
+  "scientific validation of claim content (out of RCI-F1 scope)",
+  "cross-arm inter-annotator agreement (single-arm execution)"
+ ],
+ "findings": [],
+ "findings_counts": {
+  "blocking": 0,
+  "major": 0,
+  "minor": 0
+ },
+ "blocking_defects": 0,
+ "verdict": "pass",
+ "disposition": "approve",
+ "reviewer_note": "Semantic gate is rule-based and adversarial: it re-resolves every quote, re-derives statement containment, and rejects any KO marked verified."
+}
