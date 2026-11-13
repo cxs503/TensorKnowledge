@@ -1,0 +1,61 @@
+[
+ {
+  "id": "tkr:wp-7473-01:review-wp-7473-04",
+  "object_ref": "wp-7473-01",
+  "object_version": "report-7473@sha256:c3b3d0954d289cf1f7849f83889e995c71c39bbc15122ddf9f823f5d698d0f6b",
+  "decision": "request-changes",
+  "reviewer": {
+   "id": "m15853-red-team-reviewer",
+   "reviewer_type": "agent",
+   "role": "red-team-reviewer"
+  },
+  "reviewed_at": "2026-11-12T02:58:00Z",
+  "policy_version": "ke-review-v0.1",
+  "rationale": "结论可复现但证据表有两处需修的标注/判据问题（F1/F2）；见 review_report.json",
+  "findings": [
+   {
+    "severity": "major",
+    "finding": "F1 表 1 末行 nu/tau+ 与同格 s+/比率不自洽（0.63% 属 campaign nu=4.444e-4；行内 nu=2.22e-3 实测 3.07%）",
+    "related_claim_refs": [
+     "R1-C3-guo-sp-underdrive"
+    ]
+   },
+   {
+    "severity": "major",
+    "finding": "F2 §6 把 5.5% 偏差标成 '<3% = 是'，事后用 '(几何量)' 改判据",
+    "related_claim_refs": [
+     "R1-C4-laminar-twin"
+    ]
+   },
+   {
+    "severity": "minor",
+    "finding": "F3 拟合式 2.11-1.045 s+ 在 s+>1.9 端偏 61.6%~305%",
+    "related_claim_refs": [
+     "R1-C3-guo-sp-underdrive"
+    ]
+   },
+   {
+    "severity": "minor",
+    "finding": "F4 表 3 把解析 u_max=0.896 与 NaN 仿真并置未标注；§1 恒等式实为 0.900",
+    "related_claim_refs": [
+     "R1-C6-legacy-diverges"
+    ]
+   },
+   {
+    "severity": "minor",
+    "finding": "F5 §7 复跑指针指向未随仓交付的 artifacts/ 目录"
+   },
+   {
+    "severity": "informational",
+    "finding": "F6 §5-1 wall_exchange 42% 已由 merge #927 修复（实测 0.6%），'未修' 状态过期",
+    "related_claim_refs": [
+     "R1-C7-wall-exchange-anomaly"
+    ]
+   }
+  ],
+  "conditions": [
+   "F1 修正表 1 末行/§1 A′ 标注后可复核 0.63% 的可追踪性",
+   "F2 改判 '否' 或预声明几何量判据后重评 §6 列"
+  ]
+ }
+]
