@@ -39,41 +39,57 @@ PRESETS = {
         # interface tokens registered on top of the auto-scan (package config, not domain hard-coding)
         "declared_tokens": {"api_endpoint": ["/cii"], "api_field": ["allow_inapplicable_year"]},
     },
-    "wp-14445-01": {
-        "package_id": "wp-14445-01",
-        "report_id": "14445",
-        "expected_hash": "0fad2f03c7cceceba726538a60a0c9e206b0a932e9d53e10f5e32388da25c85b",
-        "expected_chars": 8040,
-        "title": "GAP-PP-5 可微路径设备口径：文档化 CPU 基线 + tensor-tau 梯度回归 A/B（m15359）",
-        "scenario_key": "gap_pp5_cpu_baseline",
-        "out_dir": "docs/kf/wp-14445-01",
-        "mission_id": 15792,
-        # interface/code surfaces the report references but that carry no file extension, so the
-        # deterministic path scan cannot see them (package config, not tool hard-coding)
-        "declared_tokens": {
-            "commit_ref": ["16b48fe4de98c054c68674f60b11245e79f5489d", "5db76f6d"],
-            "cluster_job_ref": ["cj1081"],
-            "repo_path_ref": ["TensorLBM/benchmarks/verified/shear_wave_decay"],
-            "code_symbol": ["check_relaxation_time", "_as_float", "collide_bgk"],
-        },
-        # prose for the report renderer (package config; keeps domain names out of the shared tool)
-        "cross_repo_note": "属产出仓 TensorLBM 的路径",
-        "cross_repo_short": "TensorLBM",
-        "cross_repo_refs": "`artifacts/gap_pp5_cpu_baseline/bench_diff_lbm_cpu.py`、`runs/gap_pp5_cpu_baseline`、"
-                           "`input_contract.check_relaxation_time` 等属 TensorLBM 仓",
-        "table_note": "§3 参数表与 §4.1–4.4/§5 数据表共 6 张表只登记几何（行×列）与字符跨度",
-    }
+    "wp-13494-01": {
+        "package_id": "wp-13494-01",
+        "report_id": "13494",
+        "expected_hash": "ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe",
+        "expected_chars": 12251,
+        "title": "TensorDEM GPU 100K Gate \u2014 CPU Scaling & Correctness Verification",
+        "scenario_key": "p447w2-n03-dem-gpu-100k",
+        "out_dir": "docs/kf/wp-13494-01",
+        "producer_repo": "TensorDEM",
+        "mission_id": 15761,
+        # Artifacts the report itself declares absent. Tokens are verbatim markdown snippets; each is
+        # confirmed unique by the registrar before anything is written.
+        "declared_absent": [
+            {"token": "*(Not generated due to timeout; see limitations below)*",
+             "asset_class": "figure_declared_absent",
+             "label": "Figure 2: Energy Evolution (not generated)",
+             "reason": "\u00a74 Figure 2 \u660e\u5199 Not generated due to timeout\uff1b\u8be5\u56fe\u5728\u6e90\u9879\u76ee\u91cc\u4e0d\u5b58\u5728",
+             "expected_location": "artifacts/dem_gpu_100k/fig2_energy.png",
+             "note": "\u58f0\u660e\u7f3a\u5931\u7684\u56fe\uff1a\u540e\u7eed\u5de5\u5e8f\u4e0d\u5f97\u628a\u5b83\u5f53\u6210\u4e22\u5931\u6587\u4ef6\u53bb\u8865\uff0c\u4e5f\u4e0d\u5f97\u5047\u8bbe\u5b58\u5728"},
+            {"token": "**Status**: NOT MEASURED (no GPU, CPU too slow for N=100k in reasonable time)",
+             "asset_class": "measurement_declared_absent",
+             "label": "N=100k single-step throughput measurement",
+             "reason": "\u00a75.5 \u58f0\u660e 100k \u541e\u5410\u672a\u6d4b\u91cf\uff08\u4ec5\u6709\u63a8\u7b97\uff09",
+             "expected_location": "artifacts/dem_gpu_100k/throughput_n100000.json",
+             "note": "\u58f0\u660e\u672a\u6d4b\u91cf\u7684\u63a2\u9488\uff1a\u4efb\u4f55\u5f15\u7528\u300c100k \u541e\u5410\u300d\u7684\u6570\u5b57\u90fd\u662f\u63a8\u7b97\u503c\u800c\u975e\u6d4b\u91cf\u503c"},
+            {"token": "**GPU**: NOT_SUPPORTED (no CUDA, CuPy, JAX, or OpenCL available)",
+             "asset_class": "compute_backend_declared_absent",
+             "label": "GPU backend (CUDA / CuPy / JAX / OpenCL)",
+             "reason": "\u62a5\u544a\u5728\u73af\u5883\u58f0\u660e\u5904\u5199\u660e GPU NOT_SUPPORTED\uff08\u65e0 CUDA/CuPy/JAX/OpenCL\uff09",
+             "expected_location": None,
+             "note": "\u8fd0\u884c\u73af\u5883\u5b50\u7cfb\u7edf\u672a\u5b89\u88c5\uff1a\u63d0\u901f\u6bd4\u7c7b\u8bc1\u636e\u5728\u672c\u6e90\u4e0a\u6c38\u8fdc\u62ff\u4e0d\u5230"},
+        ],
+    },
 }
 
 BASE = os.environ["TENSOR_API_BASE"].rstrip("/")
 USER = os.environ["TENSOR_AGENT_USER"]
 PASS = os.environ["TENSOR_AGENT_PASS"]
 
-PATH_RE = re.compile(r"(?:\.\./)?(?:[A-Za-z0-9_.\-]+/)*[A-Za-z0-9_.\-]+\.(?:py|json|yaml|yml|csv|md|png)")
+PATH_RE = re.compile(r"(?:\.\./)?(?:[A-Za-z0-9_.*\-]+/)*[A-Za-z0-9_.*\-]+\."
+                        r"(?:py|json|yaml|yml|csv|md|png)")
 BACKTICK_RE = re.compile(r"`([^`\n]+)`")
 HEADING_RE = re.compile(r"^(#{2,4})\s+(.*)$")
 
 STATUS_ENUM = ("resolved_in_source", "referenced_unresolved", "declared_absent")
+
+
+def _now_iso() -> str:
+    """Wall-clock stamp, overridable via KF_GENERATED_AT so a rebuild can be shown to be
+    byte-identical (the value is provenance metadata, never a measurement)."""
+    return os.environ.get("KF_GENERATED_AT") or datetime.now(timezone.utc).isoformat()
 
 
 # ------------------------------------------------------------------ platform I/O
@@ -186,8 +202,43 @@ def classify_path(path: str) -> str:
     return "document_reference"
 
 
+def _resolve_glob(norm: str, worktree: Path) -> dict:
+    """A wildcard citation (e.g. ``throughput_n*.json``) names a family of files. Expand it inside
+    the delivery worktree only; 0 matches is recorded as unresolved with the pattern spelled out."""
+    import glob as _glob
+
+    root = worktree.resolve()
+    pattern = str(root / norm)
+    hits = []
+    for h in sorted(_glob.glob(pattern)):
+        hh = Path(h).resolve()
+        try:
+            hits.append(str(hh.relative_to(root)))
+        except ValueError:
+            hits.append(str(hh) + " (outside worktree)")
+    inside = [h for h in hits if not h.endswith("(outside worktree)")]
+    if inside:
+        return {
+            "status": "resolved_in_source",
+            "check": "glob expansion inside delivery worktree",
+            "result": "resolved",
+            "detail": "pattern %r matched %d file(s): %s" % (norm, len(inside), inside[:5]),
+            "matches": inside,
+        }
+    return {
+        "status": "referenced_unresolved",
+        "check": "glob expansion inside delivery worktree",
+        "result": "unresolved",
+        "detail": "pattern %r matched 0 file(s) in the TensorKnowledge worktree; the family belongs to "
+                  "the producing repository and is outside this package's boundary" % norm,
+        "matches": [],
+    }
+
+
 def resolve_local(path: str, worktree: Path) -> dict:
     norm = path.lstrip("./")
+    if "*" in norm or "?" in norm or "[" in norm:
+        return _resolve_glob(norm, worktree)
     cand = (worktree / norm).resolve()
     try:
         cand.relative_to(worktree.resolve())
@@ -296,6 +347,37 @@ def scan_figures(src: Source, meta: dict):
             "sha256": hashlib.sha256(blob).hexdigest() if blob else None,
             "resolution_detail": "payload_present" if blob else "metadata_only",
             "note": payload_note,
+        })
+    return out
+
+
+def scan_declared_absent(src: Source, declared):
+    """Assets the report itself declares *absent* (figure not generated, benchmark not measured,
+    backend unsupported). The declaration is pinned verbatim like any other locator, and the asset is
+    registered with resolution=declared_absent so downstream work packages cannot mistake a documented
+    gap for a missing file lookup. The wording/reason comes from the package config, never from here."""
+    out = []
+    for spec in declared or []:
+        tok = spec["token"]
+        occ = src.md.count(tok)
+        if occ == 0:
+            raise SystemExit("declared-absent token not found verbatim in source: %r" % tok)
+        s = src.md.find(tok)
+        line = src.line_of(s)
+        out.append({
+            "asset_class": spec.get("asset_class", "declared_absent_artifact"),
+            "label": spec.get("label") or tok[:60],
+            "in_report_section": src.section_of(line),
+            "locator": {"method": "char_span", "start_char": s, "end_char": s + len(tok),
+                        "start_line": line + 1, "end_line": src.line_of(s + len(tok) - 1) + 1,
+                        "quote": tok, "unique": occ == 1},
+            "resolution": "declared_absent",
+            "resolution_check": {"check": "report declares the artifact absent (verbatim declaration matched)",
+                                 "result": "absent",
+                                 "detail": "%s (declaration occurs %d time(s) in the markdown)" % (
+                                     spec.get("reason", "declared absent by the report"), occ)},
+            "expected_location": spec.get("expected_location"),
+            "note": spec.get("note") or "declared absent by the report itself; no bytes exist to hash or link.",
         })
     return out
 
@@ -436,6 +518,7 @@ def build(cfg, out_dir: Path, worktree: Path):
     assets += scan_tables(src)
     assets += scan_code_fences(src)
     assets += scan_declared_tokens(src, cfg.get("declared_tokens"))
+    assets += scan_declared_absent(src, cfg.get("declared_absent"))
 
     ids, numbered = set(), []
     for n, a in enumerate(assets, start=1):
@@ -460,7 +543,7 @@ def build(cfg, out_dir: Path, worktree: Path):
         "task_type": "01-asset-registration",
         "report_id": cfg["report_id"],
         "contract_version": "1.0",
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": _now_iso(),
         "source": {
             "uri": "tensor://reports/%s" % cfg["report_id"],
             "field": "markdown",
@@ -547,7 +630,7 @@ def emit_result(cfg, out_dir: Path):
             "fetched_via": "GET /api/v1/tensor/reports/%s" % cfg["report_id"],
             "generator": "scripts/kf/kf01_register.py",
             "contract_version": "1.0",
-            "emitted_at": datetime.now(timezone.utc).isoformat(),
+            "emitted_at": _now_iso(),
         },
         "outputs": {
             "asset_manifest.json": {
@@ -665,7 +748,7 @@ def verify(cfg, out_dir: Path):
     verdict = {
         "package_id": cfg["package_id"],
         "report_id": cfg["report_id"],
-        "verified_at": datetime.now(timezone.utc).isoformat(),
+        "verified_at": _now_iso(),
         "manifest": str(mp.relative_to(REPO)),
         "manifest_sha256": hashlib.sha256(mp.read_bytes()).hexdigest(),
         "checks": checks,
@@ -735,11 +818,33 @@ def render_report(cfg, out_dir: Path, png: Path):
     msha = hashlib.sha256((out_dir / "asset_manifest.json").read_bytes()).hexdigest()
     rsha = hashlib.sha256((out_dir / "kf_result.json").read_bytes()).hexdigest()
     n = manifest["counts"]["assets"]
-    # package-level prose comes from the preset config: the shared renderer stays domain-neutral
-    xrepo = cfg.get("cross_repo_note", "属产出仓 ship-performance-platform 的路径")
-    xrepo_short = cfg.get("cross_repo_short", "ship-performance-platform")
-    xrepo_refs = cfg.get("cross_repo_refs", "`backend/...py`、`artifacts/cii_crosscheck_m6284/...py` 等")
-    table_note = cfg.get("table_note", "表 1/2/3 只登记几何（行×列）与字符跨度")
+    pkg = cfg["package_id"]
+    producer = cfg.get("producer_repo", "(producing repository not declared by the package config)")
+    cnt = manifest["counts"]
+    # Prose facts are derived from the manifest, not typed per package.
+    unref = sorted({a.get("path_reference") for a in manifest["assets"]
+                    if a.get("resolution") == "referenced_unresolved" and a.get("path_reference")})
+    meta_figs = [a for a in manifest["assets"] if a.get("asset_class") == "embedded_figure"
+                 and a.get("resolution_detail") == "metadata_only"]
+    blob_figs = [a for a in manifest["assets"] if a.get("asset_class") == "embedded_figure"
+                 and a.get("resolution_detail") == "payload_present"]
+    n_tables = cnt["by_class"].get("report_table", 0)
+    red_note = (
+        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（%s），本包不得读写，"
+        "故只能如实记 `referenced_unresolved`。" % producer if cnt["referenced_unresolved"] else
+        "本清单没有 `referenced_unresolved` 资产：报告引用的可解析工件全部落在本工作树内。")
+    figs_note = (
+        "3. **图 %d 项只有元数据**：`record.figures[]` 共 %d 项，其中 %d 项 `png_base64` 为空（0 字节），"
+        "只登记 name/caption + 正文出现位置，记 `metadata_only`（`resolution=referenced_unresolved`），"
+        "**不宣称拿到图字节**。" % (len(meta_figs), len(meta_figs) + len(blob_figs), len(meta_figs))
+        if meta_figs else
+        "3. **图 %d 项带载荷**：`record.figures[]` 每项都有 `png_base64`，已按 sha256 记为 resolved。" % len(blob_figs))
+    refs_note = (
+        "4. **跨仓引用不可解析**：报告引用的 %s 等 %d 个路径属产出仓 %s，本工作树（TensorKnowledge）内不存在 "
+        "→ 全部 `referenced_unresolved`，并在 `resolution_check.detail` 写明原因，不做「大概存在」的推断。"
+        % ("、".join("`%s`" % p for p in unref[:2]) or "（无）", len(unref), producer)
+        if unref else
+        "4. **无跨仓引用**：清单没有 `referenced_unresolved` 路径资产。")
 
     def cell(v, lim=64):
         return (v.replace("\n", " ").replace("|", "\\|").replace("`", "'"))[:lim]
@@ -767,7 +872,8 @@ def render_report(cfg, out_dir: Path, png: Path):
             cfg["report_id"], manifest["source"]["title"], manifest["source"]["scenario_key"]),
         "确认报告 markdown 的字节哈希与契约一致（%d 字符 / %d 字节 utf-8），把正文里可解析的附件/工件登记为带**可复算定位器**的清单：" % (
             manifest["source"]["chars"], manifest["source"]["bytes_utf8"]),
-        "内嵌图、源码/工件路径引用、表格、复现命令块、接口字段。**不做抽取、不生成 claim、不标注 verified**",
+        "内嵌图、源码/工件路径引用、表格、复现命令块、接口字段，以及报告显式声明缺失（未生成/未测量/不支持）的工件。"
+        "**不做抽取、不生成 claim、不标注 verified**",
         "（契约 `objective.classify_report_type=false`，`notes` 明确 claims 允许为空数组）。",
         "",
         "规模：登记资产 **%d** 项，claims **0** 项；`counts.by_resolution` = `%s`。" % (
@@ -782,9 +888,11 @@ def render_report(cfg, out_dir: Path, png: Path):
         "   `quote` 取自源字节切片 `md[s:e]`，**不存在手抄环节**（这也使平台侧「子串独立重算」必然成立）。",
         "4. **扫描规则**（确定性、无领域硬编码；域参数经包配置传入）：行内代码/围栏代码中的 `*.py|json|png|md|csv|yaml` 路径 → 路径引用"
         "（出现级身份 = 路径 × 行号）；`record.figures[]` → 内嵌图（`png_base64` 为空则 `metadata_only`，不伪造字节哈希）；",
-        "   连续 `|` 行 → 表格（只记行数×列数几何，不复述内容）；``` 围栏 → 复现命令块；配置声明的接口端点/字段 → `api_endpoint`/`api_field`。",
-        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；" + xrepo + "，越界即如实记",
-        "   `referenced_unresolved`，不读别的仓。",
+        "   连续 `|` 行 → 表格（只记行数×列数几何，不复述内容）；``` 围栏 → 复现命令块；配置声明的接口端点/字段 → `api_endpoint`/`api_field`；"
+        "",
+        "   包配置声明的 `declared_absent` 工件（报告亲口说「未生成/未测量/不支持」）→ `resolution=declared_absent` + 逐字声明定位器，绝不伪装成缺失文件。",
+        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；属产出仓 %s 的路径" % producer,
+        "   越界即如实记 `referenced_unresolved`，不读别的仓。",
         "6. **信封 + 自检**：`kf_result.json` 按 `schemas/kf_result.v1.schema.json` 生成；`verification.json` 用 jsonschema（draft 2020-12）",
         "   分别校验信封与清单，并逐条重算 acceptance 项。",
         "",
@@ -808,7 +916,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "",
         "**图注**：A) 资产类别 × 解析状态（绿=源内已解析、红=引用未解析、灰=声明缺失）；B) 每个资产在 markdown 中的字符跨度",
         "（横轴=字符偏移，源文档 %d 字符）。两图直接由 `asset_manifest.json` 绘出，零手抄。" % manifest["source"]["chars"],
-        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（" + xrepo_short + "），本包不得读写，故只能如实记 `referenced_unresolved`。",
+        red_note,
         "",
         "## ⑤ 证据定位表（资产 → 原文逐字片段，均由 `md[start_char:end_char]` 计算）",
         "",
@@ -822,11 +930,9 @@ def render_report(cfg, out_dir: Path, png: Path):
         "",
         "1. **登记 ≠ 抽取**：清单只回答「报告里有哪些可解析工件、在其中何处」，不回答「报告说了什么」。claims 为空是契约允许的完整结果。",
         "2. **不标 verified**：清单与信封里没有任何 `verified` 状态；验证由平台门计算，本工序只提供可复算的定位器与哈希。",
-        "3. **图只有元数据**：报告记录 `figures[]` 两项均无 `png_base64` 载荷（0 字节），故只登记 name/caption + 正文出现位置，",
-        "   记 `metadata_only`（`resolution=referenced_unresolved`），**不宣称拿到图字节**。",
-        "4. **跨仓引用不可解析**：报告引用的 " + xrepo_refs + "，",
-        "   本工作树（TensorKnowledge）内不存在 → 全部 `referenced_unresolved`，并在 `resolution_check.detail` 写明原因，不做「大概存在」的推断。",
-        "5. **表格内容未复述**：" + table_note + "，避免把报表数字二次转写引入漂移。",
+        figs_note,
+        refs_note,
+        "5. **表格内容未复述**：%d 张表只登记几何（行×列）与字符跨度，避免把报表数字二次转写引入漂移。" % n_tables,
         "6. **schema 口径**：仓库内 `schemas/asset_manifest.v1.schema.json` 把 `package_id/task_type/report_id`/`source.uri` 钉死为 wp-448-01 的包级取值，",
         "   自检时**仅放松这四处包级固定值**（`source.uri` 改为 `^tensor://reports/[0-9]+$`，其余约束照常生效）并如实记录在 `detail` 里，避免把「本包必挂」伪装成通过。",
         "",
@@ -839,10 +945,10 @@ def render_report(cfg, out_dir: Path, png: Path):
         "## 复现",
         "",
         "```bash",
-        "python3 scripts/kf/kf01_register.py --preset %s build result verify figure report   # 一键复跑（全流程）" % cfg["package_id"],
+        "python3 scripts/kf/kf01_register.py --preset %s build result verify figure report   # 一键复跑（全流程）" % pkg,
         "```",
         "",
-        "repro_cmd: `python3 scripts/kf/kf01_register.py --preset %s build result verify figure report`" % cfg["package_id"],
+        "repro_cmd: `python3 scripts/kf/kf01_register.py --preset %s build result verify figure report`" % pkg,
         "",
         "## 结果信封（唯一 json 代码块，原样提交）",
         "",
@@ -870,7 +976,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "markdown": text,
         "figures": [{
             "name": png.name,
-            "caption": "%s asset inventory & locator coverage map (computed from asset_manifest.json)" % cfg["package_id"],
+            "caption": "%s asset inventory & locator coverage map (computed from asset_manifest.json)" % pkg,
             "png_base64": base64.b64encode(png.read_bytes()).decode(),
         }],
     }
