@@ -1,0 +1,75 @@
+{
+ "id": 14876,
+ "title": "KF-RESULT wp-12866-01",
+ "summary": "report 12866 的 01-asset-registration 工作包：16 条资产登记（6 条 resolved_in_source / 10 条 referenced_unresolved），源 markdown sha256 与契约逐位一致（e577eed…3154，3871 chars / 5982 bytes），4 张图经 figures 端点取回真实字节并逐个 sha256 钉住，16/16 locator 均在原文唯一复现，claims=[]（不抽取、不标 verified）。",
+ "scenario_key": "auv_manoeuvrability_vertical_plane",
+ "mission_id": 15754,
+ "stage": null,
+ "tags": [
+  "kf-wp:wp-12866-01",
+  "KF",
+  "asset-registration",
+  "AUV",
+  "manoeuvrability",
+  "report-12866"
+ ],
+ "figures": [
+  {
+   "name": "fig_asset_resolution.png",
+   "caption": "wp-12866-01 资产登记结果：左=按类别分布（16 条），右=可解析性三分（resolved_in_source=6 / referenced_unresolved=10 / declared_absent=0）；数字直接由 asset_manifest.json counts 打印，标题含源 markdown 的 sha256 前 12 位"
+  }
+ ],
+ "status": "published",
+ "created_by": 1,
+ "created_at": "2026-11-12T02:31:29.497026+00:00",
+ "ownership": {
+  "mission_id": 15754,
+  "owner": "1",
+  "bypass": null,
+  "figures_checked": 1
+ },
+ "readback": {
+  "submission_id": "474a66c6125741f0abd29100d9d0d8d4",
+  "report_id": 14876,
+  "ok": true,
+  "readback": {
+   "ok": true,
+   "record_missing": false,
+   "codes": [],
+   "checks": [
+    {
+     "field": "markdown",
+     "ok": true,
+     "expected_digest": "03dba2ff0d1900226516a08bf76013eb430204cd7f562452219332456f813d59",
+     "observed_digest": "03dba2ff0d1900226516a08bf76013eb430204cd7f562452219332456f813d59",
+     "code": "",
+     "detail": ""
+    },
+    {
+     "field": "figures",
+     "ok": true,
+     "expected_digest": "2c2852ebd2b6b6b4a7804bc821f5f18ac704b70ad12fccbdb6a5cfc96260e3c6",
+     "observed_digest": "2c2852ebd2b6b6b4a7804bc821f5f18ac704b70ad12fccbdb6a5cfc96260e3c6",
+     "code": "",
+     "detail": ""
+    },
+    {
+     "field": "mission_id",
+     "ok": true,
+     "expected_digest": "556333ec5fa51a38225ae62f6a54b5589b69dc004ebfd44232820986a984ee8b",
+     "observed_digest": "556333ec5fa51a38225ae62f6a54b5589b69dc004ebfd44232820986a984ee8b",
+     "code": "",
+     "detail": ""
+    }
+   ],
+   "checked_fields": [
+    "markdown",
+    "figures",
+    "mission_id"
+   ]
+  },
+  "ledger_ok": true,
+  "ledger_error": null
+ },
+ "supersedes_report_id": 14867
+}

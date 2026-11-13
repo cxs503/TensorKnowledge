@@ -1,0 +1,574 @@
+{
+ "schema": "asset_manifest.v1",
+ "manifest_version": "1.0",
+ "package_id": "wp-12866-01",
+ "task_type": "01-asset-registration",
+ "report_id": "12866",
+ "contract_version": "1.0",
+ "objective": {
+  "register_assets": true,
+  "classify_report_type": false
+ },
+ "generated_at": "2026-11-12T02:31:19.853010+00:00",
+ "source": {
+  "uri": "tensor://reports/12866",
+  "field": "markdown",
+  "hash_alg": "sha256",
+  "hash": "e577eedec941fa1ce25076f7a16b0774d609c1ca6693b056a5b0212ab5483154",
+  "hash_scope": "sha256 of markdown encoded as utf-8",
+  "contract_hash": "e577eedec941fa1ce25076f7a16b0774d609c1ca6693b056a5b0212ab5483154",
+  "hash_matches_contract": true,
+  "chars": 3871,
+  "bytes_utf8": 5982,
+  "title": "AUV 潜器空间/垂直面操纵性：Munk 力矩解析锚 + 回转椭球 Lamb 附加质量 + 定深纵倾闭环（m12371）",
+  "scenario_key": "auv_manoeuvrability_vertical_plane",
+  "mission_id": 12371,
+  "status": "published",
+  "tags": [
+   "AUV",
+   "manoeuvrability",
+   "Munk moment",
+   "Lamb added mass",
+   "depth keeping",
+   "vertical plane",
+   "IN51-W5-N06",
+   "ship-performance-platform"
+  ],
+  "platform_figures": {
+   "1": {
+    "name": "fig1_lamb_coefficients.png",
+    "caption": "Lamb 附加质量系数 k1(λ)、k2(λ)：闭式解曲线与独立求积路线散点重合，球极限 0.5 与 Lamb 表 λ=5 值作外部校验"
+   },
+   "2": {
+    "name": "fig2_munk_convergence.png",
+    "caption": "Munk 力矩系数：精确椭球锚 vs 细长体条带实现随 λ 收敛；右图相对偏差（对数轴）与 5% 判据线，设计艇 λ=20 处 2.06%"
+   },
+   "3": {
+    "name": "fig3_depth_keeping.png",
+    "caption": "定深纵倾闭环时历：深度/纵倾/舵偏与 Newton 代数平衡值（虚线）及 (w,θ) 相图；深度稳态误差 0.033%"
+   },
+   "4": {
+    "name": "fig4_munk_vs_alpha.png",
+    "caption": "设计艇 C_M(α) 精确 vs 条带；右图纵倾刚度预算：舵 −322.0 与 Munk +126.2 → 净 −195.8 N·m·s"
+   }
+  },
+  "fetched_via": "GET /tensor/reports/12866"
+ },
+ "structure_index": {
+  "note": "headings only; char offsets into the markdown string — locator scaffolding for downstream 工序, no content extracted",
+  "headings": [
+   {
+    "level": 1,
+    "text": "AUV/潜器空间与垂直面操纵性：Munk 力矩解析锚 + Lamb 附加质量 + 定深纵倾闭环",
+    "line_no": 1,
+    "start_char": 0
+   },
+   {
+    "level": 2,
+    "text": "① 算例介绍",
+    "line_no": 8,
+    "start_char": 402
+   },
+   {
+    "level": 2,
+    "text": "② 怎么做的",
+    "line_no": 14,
+    "start_char": 620
+   },
+   {
+    "level": 2,
+    "text": "③ 计算结果",
+    "line_no": 23,
+    "start_char": 1056
+   },
+   {
+    "level": 3,
+    "text": "Lamb 系数（判据 <3%）",
+    "line_no": 24,
+    "start_char": 1066
+   },
+   {
+    "level": 3,
+    "text": "Munk 力矩系数（判据 <5%）",
+    "line_no": 35,
+    "start_char": 1465
+   },
+   {
+    "level": 3,
+    "text": "操纵性导数表（垂向平面，U=1.5 m/s）",
+    "line_no": 55,
+    "start_char": 2045
+   },
+   {
+    "level": 3,
+    "text": "定深纵倾响应（判据 <2%，z_cmd=+30 m）",
+    "line_no": 66,
+    "start_char": 2482
+   },
+   {
+    "level": 2,
+    "text": "④ 图",
+    "line_no": 80,
+    "start_char": 2974
+   },
+   {
+    "level": 2,
+    "text": "⑤ 注意点 / 局限",
+    "line_no": 84,
+    "start_char": 3129
+   },
+   {
+    "level": 2,
+    "text": "⑥ 误差判定",
+    "line_no": 93,
+    "start_char": 3506
+   }
+  ]
+ },
+ "resolution_vocabulary": {
+  "resolved_in_source": "anchor located verbatim+uniquely in the markdown; for figure binaries the payload was fetched and sha256-pinned",
+  "referenced_unresolved": "reference parsed verbatim from the markdown but the target lives outside this package scope (domain repo / moving branch)",
+  "declared_absent": "declared by the report but no payload found anywhere (none in this manifest)"
+ },
+ "assets": [
+  {
+   "asset_id": "A01",
+   "asset_class": "report_markdown",
+   "label": "report 12866 的 markdown 正文（本工作包唯一源字段）",
+   "in_report_section": "§title/全文",
+   "locator": {
+    "method": "char_span",
+    "start_char": 0,
+    "end_char": 49,
+    "start_line": 1,
+    "end_line": 1,
+    "quote": "# AUV/潜器空间与垂直面操纵性：Munk 力矩解析锚 + Lamb 附加质量 + 定深纵倾闭环",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "resolved_in_source",
+   "resolution_check": {
+    "check": "verbatim anchor present exactly once in markdown",
+    "result": "resolved"
+   },
+   "note": "sha256 与契约 source_hash 一致；chars/bytes 见 source 块"
+  },
+  {
+   "asset_id": "A02",
+   "asset_class": "embedded_figure",
+   "label": "fig1_lamb_coefficients.png（Lamb 系数 k(λ)：闭式解 vs 求积 + 球极限 + Lamb 表）",
+   "in_report_section": "④ 图",
+   "locator": {
+    "method": "char_span",
+    "start_char": 2981,
+    "end_char": 2998,
+    "start_line": 81,
+    "end_line": 81,
+    "quote": "fig1 Lamb 系数 k(λ)",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "resolved_in_source",
+   "resolution_check": {
+    "check": "markdown anchor unique + figure endpoint HTTP 200 + sha256 pinned",
+    "result": "resolved"
+   },
+   "note": "二进制经 GET /tensor/reports/12866/figures/fig1_lamb_coefficients.png 取回并 sha256 钉住",
+   "payload": {
+    "record_figure_name": "fig1_lamb_coefficients.png",
+    "probe": {
+     "endpoint": "/tensor/reports/12866/figures/fig1_lamb_coefficients.png",
+     "http_status": 200,
+     "bytes": 79517,
+     "sha256": "a436e3c7148449ab41fc316d55769649c7d5abc9242f7f16b51a94c802fc40b5",
+     "resolvable": true
+    },
+    "local_copy": "docs/kf/wp-12866-01/figures/fig1_lamb_coefficients.png"
+   }
+  },
+  {
+   "asset_id": "A03",
+   "asset_class": "embedded_figure",
+   "label": "fig2_munk_convergence.png（Munk 系数随 λ 与 5% 判据线）",
+   "in_report_section": "④ 图",
+   "locator": {
+    "method": "char_span",
+    "start_char": 3027,
+    "end_char": 3042,
+    "start_line": 81,
+    "end_line": 81,
+    "quote": "fig2 Munk 系数随 λ",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "resolved_in_source",
+   "resolution_check": {
+    "check": "markdown anchor unique + figure endpoint HTTP 200 + sha256 pinned",
+    "result": "resolved"
+   },
+   "note": "二进制经 figures 端点取回并 sha256 钉住",
+   "payload": {
+    "record_figure_name": "fig2_munk_convergence.png",
+    "probe": {
+     "endpoint": "/tensor/reports/12866/figures/fig2_munk_convergence.png",
+     "http_status": 200,
+     "bytes": 99375,
+     "sha256": "1f028c314805daf4212ab9bbf55a7d1b6d0c21b410184f8c9fc0716fe2df85fe",
+     "resolvable": true
+    },
+    "local_copy": "docs/kf/wp-12866-01/figures/fig2_munk_convergence.png"
+   }
+  },
+  {
+   "asset_id": "A04",
+   "asset_class": "embedded_figure",
+   "label": "fig3_depth_keeping.png（定深纵倾闭环时历 + 相图 + Newton 平衡虚线）",
+   "in_report_section": "④ 图",
+   "locator": {
+    "method": "char_span",
+    "start_char": 3058,
+    "end_char": 3069,
+    "start_line": 82,
+    "end_line": 82,
+    "quote": "fig3 定深闭环时历",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "resolved_in_source",
+   "resolution_check": {
+    "check": "markdown anchor unique + figure endpoint HTTP 200 + sha256 pinned",
+    "result": "resolved"
+   },
+   "note": "二进制经 figures 端点取回并 sha256 钉住",
+   "payload": {
+    "record_figure_name": "fig3_depth_keeping.png",
+    "probe": {
+     "endpoint": "/tensor/reports/12866/figures/fig3_depth_keeping.png",
+     "http_status": 200,
+     "bytes": 154310,
+     "sha256": "c8e3a5a599a33fd889c151f17532a7a2674cb1b7cba8132e42b4895fe479a806",
+     "resolvable": true
+    },
+    "local_copy": "docs/kf/wp-12866-01/figures/fig3_depth_keeping.png"
+   }
+  },
+  {
+   "asset_id": "A05",
+   "asset_class": "embedded_figure",
+   "label": "fig4_munk_vs_alpha.png（C_M(α) 精确 vs 条带 + 纵倾刚度预算柱图）",
+   "in_report_section": "④ 图",
+   "locator": {
+    "method": "char_span",
+    "start_char": 3095,
+    "end_char": 3115,
+    "start_line": 82,
+    "end_line": 82,
+    "quote": "fig4 C_M(α) 精确 vs 条带",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "resolved_in_source",
+   "resolution_check": {
+    "check": "markdown anchor unique + figure endpoint HTTP 200 + sha256 pinned",
+    "result": "resolved"
+   },
+   "note": "二进制经 figures 端点取回并 sha256 钉住",
+   "payload": {
+    "record_figure_name": "fig4_munk_vs_alpha.png",
+    "probe": {
+     "endpoint": "/tensor/reports/12866/figures/fig4_munk_vs_alpha.png",
+     "http_status": 200,
+     "bytes": 82070,
+     "sha256": "c6fd7505e38eacd87a6d0aa95c8efe591e41f9794a4d6cc319f3f5dda23846e2",
+     "resolvable": true
+    },
+    "local_copy": "docs/kf/wp-12866-01/figures/fig4_munk_vs_alpha.png"
+   }
+  },
+  {
+   "asset_id": "A06",
+   "asset_class": "source_code_reference",
+   "label": "求解器实现 backend/methods/manoeuvring/submarine.py",
+   "in_report_section": "① 算例介绍（代码行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 146,
+    "end_char": 186,
+    "start_line": 4,
+    "end_line": 4,
+    "quote": "backend/methods/manoeuvring/submarine.py",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "目标位于 ship-performance-platform 检出，不在本工作包范围内；报告未给 commit sha"
+  },
+  {
+   "asset_id": "A07",
+   "asset_class": "test_reference",
+   "label": "回归测试 backend/tests/test_auv_manoeuvring_m12371.py（报告称 19 passed）",
+   "in_report_section": "① 算例介绍（测试行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 198,
+    "end_char": 242,
+    "start_line": 4,
+    "end_line": 4,
+    "quote": "backend/tests/test_auv_manoeuvring_m12371.py",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "测试目标不在本仓；'19 passed' 为源报告自述，本单未重跑、不背书"
+  },
+  {
+   "asset_id": "A08",
+   "asset_class": "report_document",
+   "label": "上游详细报告 docs/reports/auv_manoeuvrability_w5n06.md",
+   "in_report_section": "① 算例介绍（详细报告行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 358,
+    "end_char": 399,
+    "start_line": 6,
+    "end_line": 6,
+    "quote": "docs/reports/auv_manoeuvrability_w5n06.md",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "路径相对于 ship-performance-platform 仓，本工作包不含该文件"
+  },
+  {
+   "asset_id": "A09",
+   "asset_class": "artifact_directory",
+   "label": "证据工件目录 artifacts/auv_manoeuvring_m12371/",
+   "in_report_section": "① 算例介绍（工件行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 263,
+    "end_char": 296,
+    "start_line": 5,
+    "end_line": 5,
+    "quote": "artifacts/auv_manoeuvring_m12371/",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "目录内容随分支 agent/m12371 演化，无法从本记录哈希钉住"
+  },
+  {
+   "asset_id": "A10",
+   "asset_class": "artifact_file_reference",
+   "label": "acceptance.json（目录内声明的验收工件）",
+   "in_report_section": "① 算例介绍（工件行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 298,
+    "end_char": 313,
+    "start_line": 5,
+    "end_line": 5,
+    "quote": "acceptance.json",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "仅登记报告内的声明名；文件字节不可从本记录取得"
+  },
+  {
+   "asset_id": "A11",
+   "asset_class": "artifact_file_reference",
+   "label": "depth_keeping.csv（定深闭环时历数据）",
+   "in_report_section": "① 算例介绍（工件行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 316,
+    "end_char": 333,
+    "start_line": 5,
+    "end_line": 5,
+    "quote": "depth_keeping.csv",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "仅登记声明名；CSV 未随报告载荷提供"
+  },
+  {
+   "asset_id": "A12",
+   "asset_class": "artifact_file_reference",
+   "label": "fig1-4.png（工件目录内的图组文件）",
+   "in_report_section": "① 算例介绍（工件行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 336,
+    "end_char": 346,
+    "start_line": 5,
+    "end_line": 5,
+    "quote": "fig1-4.png",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "声称对应 A02–A05 的四张图，但工件目录副本不可得，无法核对是否与 figures 端点字节一致"
+  },
+  {
+   "asset_id": "A13",
+   "asset_class": "platform_identifier",
+   "label": "节点号 IN51-W5-N06（mission 12371 的子节点）",
+   "in_report_section": "① 算例介绍（节点行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 58,
+    "end_char": 69,
+    "start_line": 3,
+    "end_line": 3,
+    "quote": "IN51-W5-N06",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "站内节点标识；本单不解引用任务图，故不声称节点状态"
+  },
+  {
+   "asset_id": "A14",
+   "asset_class": "platform_identifier",
+   "label": "mission_id 12371",
+   "in_report_section": "① 算例介绍（节点行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 70,
+    "end_char": 83,
+    "start_line": 3,
+    "end_line": 3,
+    "quote": "mission 12371",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "resolved_in_source",
+   "resolution_check": {
+    "check": "verbatim anchor present exactly once in markdown",
+    "result": "resolved"
+   },
+   "note": "与报告记录字段 mission_id=12371 交叉核对一致（记录级核对，非内容抽取）",
+   "record_cross_check": {
+    "record_field": "mission_id",
+    "record_value": 12371
+   }
+  },
+  {
+   "asset_id": "A15",
+   "asset_class": "vcs_reference",
+   "label": "分支 agent/m12371",
+   "in_report_section": "① 算例介绍（仓/分支行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 124,
+    "end_char": 136,
+    "start_line": 3,
+    "end_line": 3,
+    "quote": "agent/m12371",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "报告未给 commit sha；分支头会移动，无法从本记录钉住字节"
+  },
+  {
+   "asset_id": "A16",
+   "asset_class": "repository_reference",
+   "label": "仓库 ship-performance-platform",
+   "in_report_section": "① 算例介绍（仓/分支行）",
+   "locator": {
+    "method": "char_span",
+    "start_char": 92,
+    "end_char": 117,
+    "start_line": 3,
+    "end_line": 3,
+    "quote": "ship-performance-platform",
+    "unique": true,
+    "occurrences": 1
+   },
+   "resolution": "referenced_unresolved",
+   "resolution_check": {
+    "check": "parsed from markdown; target outside this package scope (not fetched)",
+    "result": "unresolved"
+   },
+   "note": "域仓，不在本工作包（TensorKnowledge）范围内，未做跨仓检出"
+  }
+ ],
+ "counts": {
+  "assets": 16,
+  "by_class": {
+   "report_markdown": 1,
+   "embedded_figure": 4,
+   "source_code_reference": 1,
+   "test_reference": 1,
+   "report_document": 1,
+   "artifact_directory": 1,
+   "artifact_file_reference": 3,
+   "platform_identifier": 2,
+   "vcs_reference": 1,
+   "repository_reference": 1
+  },
+  "by_resolution": {
+   "resolved_in_source": 6,
+   "referenced_unresolved": 10
+  },
+  "resolved_in_source": 6,
+  "referenced_unresolved": 10,
+  "declared_absent": 0,
+  "claims_registered": 0
+ },
+ "nonextraction_note": "task_type 01: no numbers, formulas or conclusions were lifted out of the report; tables/figures are registered as artifacts, not interpreted",
+ "claims": [],
+ "claims_note": "empty array is the contract-permitted complete result for 01-asset-registration (constraints.no_forced_claim_generation); no claim is marked verified here",
+ "integrity": {
+  "quote_uniqueness": true,
+  "hash_recomputed_locally": true,
+  "hash_matches_contract": true,
+  "asset_ids_unique": true,
+  "single_report_scope": true
+ },
+ "producer": "agent/m15754 (TensorKnowledge) · package wp-12866-01",
+ "repro_cmd": "python3 scripts/kf/build_asset_manifest_12866.py && python3 scripts/kf/build_asset_manifest_12866.py --verify && python3 -m pytest tests/test_wp12866_01_asset_registration.py -q",
+ "tools": {
+  "generator": "scripts/kf/build_asset_manifest_12866.py",
+  "python": "3.11.6"
+ }
+}
