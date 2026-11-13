@@ -1,0 +1,341 @@
+[
+  {
+    "activity": {
+      "activity_type": "extraction",
+      "description": "Source-driven extraction of 12 claims about ebinan92/Fingering_dynamics: two-phase free-energy lattice-Boltzmann with Zou-He open boundaries, half-way bounce-back and wall-order-parameter wetting, plus the companion pseudo-spectral viscous-fingering solver. Every quote is extracted programmatically from the snapshot by line number (see tools/build_claims.py).",
+      "ended_at": "2026-11-09T15:30:00Z",
+      "id": "activity-oss-lbm-fingering-ingest",
+      "software": [
+        {
+          "name": "python",
+          "version": "3.12"
+        },
+        {
+          "name": "jsonschema",
+          "version": "4.23"
+        }
+      ],
+      "started_at": "2026-11-09T15:00:00Z",
+      "used_entities": [
+        "fingering_dynamics@150a5739e"
+      ]
+    },
+    "agents": [
+      {
+        "agent_type": "software-agent",
+        "id": "agent-m8691",
+        "name": "TensorKnowledge builder agent",
+        "role": "knowledge extractor"
+      }
+    ],
+    "derived_from": [
+      "ebinan92/Fingering_dynamics source snapshot (commit 150a5739e320498c6ecf22ba31ab9ebc57130462), verified by git blob SHA-1"
+    ],
+    "extensions": {
+      "provenance_kind": "legacy-migration",
+      "source_table": "ke_service.ke_ko"
+    },
+    "generated_entity": {
+      "entity_type": "knowledge-object",
+      "id": "knowledge/oss-lbm/fingering",
+      "version": "1.0.0"
+    },
+    "id": "tkp:oss-lbm:fing-ingest-2026-11-09",
+    "recorded_at": "2026-11-09T15:30:00Z",
+    "version": "1.0.0"
+  },
+  {
+    "activity": {
+      "activity_type": "extraction",
+      "description": "Source-code-driven extraction of 17 claims about LBM open-source ecosystem (pylbm, lettuce, lbmpy, XLB). Each claim verified against actual source code in /tmp/ caches with file:line locators and verbatim quotes.",
+      "ended_at": "2026-11-09T15:00:00Z",
+      "id": "activity-oss-lbm-ingest",
+      "software": [
+        {
+          "name": "python",
+          "version": "3.12"
+        },
+        {
+          "name": "jsonschema",
+          "version": "4.23"
+        }
+      ],
+      "started_at": "2026-11-09T14:30:00Z",
+      "used_entities": [
+        "pylbm@48c19da",
+        "lettuce@a0e3f2d",
+        "lbmpy@0afc9d5",
+        "xlb@9c23e82"
+      ]
+    },
+    "agents": [
+      {
+        "agent_type": "software-agent",
+        "id": "agent-m8635",
+        "name": "TensorKnowledge builder agent",
+        "role": "knowledge extractor"
+      }
+    ],
+    "derived_from": [
+      "pylbm source code (https://github.com/pyLBM/pyLBM)",
+      "lettuce source code (https://github.com/lettucecfd/lettuce)",
+      "lbmpy source code (https://github.com/lettucecfd/lbmpy)",
+      "XLB source code (https://github.com/lettucecfd/xlb)"
+    ],
+    "extensions": {
+      "provenance_kind": "legacy-migration",
+      "source_table": "ke_service.ke_ko"
+    },
+    "generated_entity": {
+      "entity_type": "knowledge-object",
+      "id": "knowledge/oss-lbm",
+      "version": "1.0.0"
+    },
+    "id": "tkp:oss-lbm:ingestion-2026-11-09",
+    "recorded_at": "2026-11-09T15:00:00Z",
+    "version": "1.0.0"
+  },
+  {
+    "activity": {
+      "activity_type": "extraction",
+      "description": "Source-driven extraction of 16 claims about lbm-principles-practice/code at commit 6e2c592fdc3592c14dfd52f860fc1ceea930bcb0. Every quote is machine-sliced from the upstream file at the recorded line span (build_claims.py); no quotation was transcribed by hand. Four upstream programs were additionally compiled and executed (chapter9, chapter11, chapter13 python3) and the two MATLAB scripts of chapter5 were ported line-by-line, to attach execution evidence to the benchmark-methodology claims.",
+      "ended_at": "2026-11-09T15:20:00Z",
+      "id": "activity-oss-lbm-kruger-ingest",
+      "software": [
+        {
+          "name": "python",
+          "version": "3.12"
+        },
+        {
+          "name": "jsonschema",
+          "version": "4.26"
+        },
+        {
+          "name": "numpy",
+          "version": "2.4"
+        },
+        {
+          "name": "g++",
+          "version": "system"
+        }
+      ],
+      "started_at": "2026-11-09T14:48:00Z",
+      "used_entities": [
+        "lbm-principles-practice/code@6e2c592fdc3592c14dfd52f860fc1ceea930bcb0",
+        "chapter5/poiseuille_BB.m",
+        "chapter5/couette_BB.m",
+        "chapter6/force_poiseuille_BB.m",
+        "chapter8/gaussian_1d_magic6.cpp",
+        "chapter8/gaussian_1d_magic12.cpp",
+        "chapter8/cylinder.cpp",
+        "chapter9/shanchen.cpp",
+        "chapter11/IBLBM_2D_Poiseuille.cpp",
+        "chapter13/python3/vortexdecay.py",
+        "chapter13/cpu/LBM.h"
+      ]
+    },
+    "agents": [
+      {
+        "agent_type": "software-agent",
+        "id": "agent-m8676",
+        "name": "TensorKnowledge builder agent",
+        "role": "knowledge extractor"
+      }
+    ],
+    "derived_from": [
+      "https://github.com/lbm-principles-practice/code (Kruger, Kusumaatmaja, Kuzmin, Shardt, Silva, Viggen, The Lattice Boltzmann Method: Principles and Practice, Springer 2017)",
+      "local verification runs: runs/oss-lbm-kruger-8676"
+    ],
+    "extensions": {
+      "epistemic_note": "All claims are draft (evidence assessment_status = unassessed, no review events).",
+      "gap_anchor_owner": "TensorKnowledge / OSS-LBM ingestion line (m8676); anchor registered in knowledge/oss-lbm/kruger/GAP-ANCHORS.md",
+      "gap_anchors": [
+        "GAP-LBM-BENCH-METHODOLOGY"
+      ],
+      "provenance_kind": "legacy-migration",
+      "source_cache_status": "insufficient: /root/oss-cache/ does not exist in this image (no directory name matches the repo slug). Deviation: the checkout was obtained from the upstream remote at the commit recorded above; every quoted span is pinned by line number and sha256 in artifacts/oss-lbm-kruger/kruger_source_index.json, so the quotes remain auditable.",
+      "source_table": "ke_service.ke_ko"
+    },
+    "generated_entity": {
+      "entity_type": "knowledge-object",
+      "id": "knowledge/oss-lbm/kruger",
+      "version": "1.0.0"
+    },
+    "id": "tkp:oss-lbm:kruger-ingestion-2026-11-09",
+    "recorded_at": "2026-11-09T15:20:00Z",
+    "version": "1.0.0"
+  },
+  {
+    "activity": {
+      "archive_sha256": "6e216ef8f4c2f5654dc11b9c6b4f3570f97cc5e277193922b48cfaf0cd72e198",
+      "branch": "master",
+      "build": {
+        "cc": "gcc 12.3.0",
+        "flags": "-O2 -g -Wall",
+        "model": "D3Q27",
+        "regression": "top-level `make test` fails against stored reference logs (serial-actv-s01 drift ~1e-7 relative) — stale-log artefact, reported honestly",
+        "unit_tests": "tests/unit `make test` -> 98 PASS / 0 FAIL"
+      },
+      "commit": "78d83c5151ff1d4c4201a96b266a08e97047cae6",
+      "method": "tarball snapshot extracted locally; every quote sliced verbatim by scripts/build_package.py; absence claims verified by exhaustive case-insensitive grep over the whole tree",
+      "repo": "ludwig-cf/ludwig",
+      "retrieval": "https://codeload.github.com/ludwig-cf/ludwig/tar.gz/refs/heads/master",
+      "type": "source-inspection"
+    },
+    "agents": [
+      {
+        "name": "agent-m8669",
+        "role": "extractor"
+      }
+    ],
+    "extensions": {
+      "provenance_kind": "legacy-migration",
+      "source_table": "ke_service.ke_ko"
+    },
+    "generated_entity": "knowledge/oss-lbm/ludwig (claims/evidence/provenance)",
+    "id": "tkp:oss-lbm:ludwig-source-snapshot",
+    "recorded_at": "2026-11-09T15:00:00Z",
+    "version": "1.0.0"
+  },
+  {
+    "activity": {
+      "activity_type": "extraction",
+      "description": "Source-code-driven extraction of 10 claims about MF-LBM (lanl/MF-LBM, BSD-3 licensed porous media DNS LBM code). Claims cover: CSF multiphase model, AA streaming, MPI-OpenACC hybrid, comm-compute overlap, SoA layout, MRT collision, domain decomposition, contact angle scheme, checkpoint/restart, and BSD-3 license. All verified against cached source at commit 11be324.",
+      "ended_at": "2026-11-09T16:30:00Z",
+      "id": "activity-mflbm-ingest",
+      "software": [
+        {
+          "name": "python",
+          "version": "3.12"
+        },
+        {
+          "name": "json",
+          "version": "standard"
+        }
+      ],
+      "started_at": "2026-11-09T16:00:00Z",
+      "used_entities": [
+        "MF-LBM@11be324a97fe6331b2271102da370460715355e8"
+      ]
+    },
+    "agents": [
+      {
+        "agent_type": "software-agent",
+        "id": "agent-m8678",
+        "name": "TensorKnowledge builder agent",
+        "role": "knowledge extractor"
+      }
+    ],
+    "derived_from": [
+      "MF-LBM source code (https://github.com/lanl/MF-LBM) @ 11be324a97fe6331b2271102da370460715355e8"
+    ],
+    "extensions": {
+      "provenance_kind": "legacy-migration",
+      "source_table": "ke_service.ke_ko"
+    },
+    "generated_entity": {
+      "entity_type": "knowledge-object",
+      "id": "knowledge/oss-lbm/mflbm",
+      "version": "1.0.0"
+    },
+    "id": "tkp:oss-lbm:mflbm-ingestion-2026-11-09",
+    "recorded_at": "2026-11-09T16:30:00Z",
+    "version": "1.0.0"
+  },
+  {
+    "activity": {
+      "activity_type": "extraction",
+      "description": "Source-code-driven extraction of 13 claims about openLB (multiphase Shan-Chen + free-energy model, Boussinesq thermal coupling, validation surface, descriptor system, turbulence models, GPL-2 license boundary). Every quote extracted programmatically from the cached checkout openlb@6c3934dea66e4c3cad66049f579e00b93effc256 (2019-12-02) at the cited file:line; no hand transcription. Cache note: /root/oss-cache/ does not exist on this host; the openLB cache actually lives at /root/openlb (same commit 6c3934d) and was used instead. The snapshot contains no LICENSE file and no free-surface module; both limitations are recorded as claims.",
+      "ended_at": "2026-11-09T15:15:00Z",
+      "id": "activity-oss-lbm-openlb-ingest",
+      "software": [
+        {
+          "name": "python",
+          "version": "3.12"
+        },
+        {
+          "name": "pytest",
+          "version": "8.x"
+        }
+      ],
+      "started_at": "2026-11-09T15:00:00Z",
+      "used_entities": [
+        "openlb@6c3934dea66e4c3cad66049f579e00b93effc256"
+      ]
+    },
+    "agents": [
+      {
+        "agent_type": "software-agent",
+        "id": "agent-m8677",
+        "name": "TensorKnowledge builder agent",
+        "role": "knowledge extractor"
+      }
+    ],
+    "derived_from": [
+      "openLB source code (https://github.com/openlb/openLB), commit 6c3934dea66e4c3cad66049f579e00b93effc256, cached at /root/openlb"
+    ],
+    "extensions": {
+      "provenance_kind": "legacy-migration",
+      "source_table": "ke_service.ke_ko"
+    },
+    "generated_entity": {
+      "entity_type": "knowledge-object",
+      "id": "knowledge/oss-lbm/openlb",
+      "version": "1.0.0"
+    },
+    "id": "tkp:oss-lbm:openlb-ingestion-2026-11-09",
+    "recorded_at": "2026-11-09T15:15:00Z",
+    "version": "1.0.0"
+  },
+  {
+    "activity": {
+      "activity_type": "extraction",
+      "description": "Source-code-driven extraction of 17 claims about ThermalMultiphaseOpenLB (JuliusWeinmiller/ThermalMultiphaseOpenLB@769efd4), an OpenLB extension for thermal single-component phase change multiphase flow. Each claim verified against actual source code in /tmp/ThermalMultiphaseOpenLB with file:line locators and verbatim quotes. Covers: Peng-Robinson/Carnahan-Starling EoS, modified Guo forcing, semi-hybrid thermal coupling, Maxwell construction, latent heat via EoS, MRT thermal solver, pool boiling, evaporating droplet, Laplace law, wall wettability, thermodynamic consistency, fluid properties, interaction potential, phase separation, d²-law, and OpenLB compatibility.",
+      "ended_at": "2026-11-09T16:30:00Z",
+      "id": "activity-thermalmulti-ingest",
+      "software": [
+        {
+          "name": "python",
+          "version": "3.12"
+        },
+        {
+          "name": "jsonschema",
+          "version": "4.23"
+        }
+      ],
+      "started_at": "2026-11-09T16:00:00Z",
+      "used_entities": [
+        "ThermalMultiphaseOpenLB@769efd4"
+      ]
+    },
+    "agents": [
+      {
+        "agent_type": "software-agent",
+        "id": "agent-m8689",
+        "name": "TensorKnowledge builder agent",
+        "role": "knowledge extractor"
+      }
+    ],
+    "derived_from": [
+      {
+        "commit": "769efd4",
+        "description": "OpenLB extension for thermal single-component phase change multiphase flow by Julius Weinmiller (master thesis, TU Delft)",
+        "entity_type": "source-repository",
+        "id": "ThermalMultiphaseOpenLB@769efd4",
+        "url": "https://github.com/JuliusWeinmiller/ThermalMultiphaseOpenLB"
+      }
+    ],
+    "extensions": {
+      "provenance_kind": "legacy-migration",
+      "source_table": "ke_service.ke_ko"
+    },
+    "generated_entity": {
+      "entity_type": "knowledge-object",
+      "id": "knowledge/oss-lbm/thermalmulti",
+      "version": "1.0.0"
+    },
+    "id": "tkp:oss-lbm:thermalmulti:ingestion-2026-11-09",
+    "recorded_at": "2026-11-09T16:30:00Z",
+    "version": "1.0.0"
+  }
+]

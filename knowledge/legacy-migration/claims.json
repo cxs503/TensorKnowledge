@@ -1,0 +1,2748 @@
+[
+  {
+    "claim_type": "mathematical",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-mu-fingering",
+      "tke:oss-lbm:fing-mu-validation"
+    ],
+    "id": "tkc:oss-lbm:fing-chemical-potential-sign-equivalence",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 迁移 free-energy 内核时不要把两种写法当成两套模型；TensorLBM 侧应固定一套约定（a<0 + (1-psi^2)）并在符号推导测试里锁死。",
+      "Verification surface: sympy symbolic equality check in test_oss_lbm_fingering.py::test_chemical_potential_spellings_equivalent.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "gap-anchor: free-energy-phase-field anchor (bulk chemical potential term of the free energy)",
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "The two chemical-potential spellings used across the repository - a*psi*(1-psi^2) - kappa*lap(psi) with a = -2*kappa/xi^2 (fingering.py) and a*psi*(psi^2-1) - kappa*lap(psi) with a = +2*kappa/xi^2 (validation.py) - are algebraically identical; the sign of the double-well coefficient is carried by the definition of a, not by the potential.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "mathematical",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-free-energy-calibration-fingering",
+      "tke:oss-lbm:fing-free-energy-calibration-periodic",
+      "tke:oss-lbm:fing-free-energy-calibration-validation"
+    ],
+    "id": "tkc:oss-lbm:fing-free-energy-calibration",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 该三式可直接作为 free-energy LBM 内核的参数标定入口（输入 sigma, xi -> kappa, a），TensorLBM 侧可用同一标定关系做相场表面张力的一致性单测。",
+      "Verification surface (runtime, this package): integrating kappa*(dpsi/dx)^2 across the equilibrium tanh(x/xi) profile reproduces the declared sigma = 4*kappa/(3*xi) to machine precision; see test_oss_lbm_fingering.py::test_calibration_triple_reproduces_sigma.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+        "interface thickness xi = 2.0 lattice units"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "Fingering_dynamics calibrates its free-energy phase-field from the requested interfacial tension sigma and interface thickness xi via kappa = 0.75*xi*sigma and a = -2*kappa/xi^2, i.e. exactly the parameter pair for which the equilibrium (tanh) interface carries sigma = 4*kappa/(3*xi).",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "methodological",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-large-f"
+    ],
+    "id": "tkc:oss-lbm:fing-guo-forcing-chemical-potential",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 这是 free-energy LBM 的标准力项写法，TensorLBM 若加多相模块可直接复用该 (1-1/(2tau)) 修正；注意本源在 collision 后整项相加（getF 里 +self.F[i]），等价于 forcing 半隐式的一阶版本。",
+      "未验证面: 仓库无二阶精度/伽利略不变性检验，status=provisional。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+        "force added to the post-collision population"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "The body force driving phase separation is the chemical-potential gradient force F = mu * w_i * (1 - 1/(2*mix_tau)) * [ (e_i - u)*3 + 9*e_i*(e_i.u) ] . grad(psi), i.e. a Guo-style forcing with the (1 - 1/(2*tau)) discrete-lattice correction applied to the same relaxation time used in the collision step.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "methodological",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-bounceback-reference",
+      "tke:oss-lbm:fing-bounceback-assignment"
+    ],
+    "id": "tkc:oss-lbm:fing-halfway-bounceback",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: f 与 g 同步半程反弹（g 反弹等价于壁面零法向通量 + psi_wall Dirichlet），TensorLBM 的 bounce-back 工具可加一个双分布版本用于相场/标量场。",
+      "未验证面: 仓库未提供弯管/泊肃叶解析解对照（README 标题虽称 Poiseuille flow in porous medium，但无误差表），故 status=provisional。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+        "rectangular obstacles given as corner lists"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "Solid obstacles (rectangular blocks) are handled by half-way bounce-back: after streaming, each boundary population is overwritten by the velocity-reversed population taken from the pre-streaming copy (f_behind/g_behind), which places the wall at the mid-link and applies the same rule to both the momentum set f and the order-parameter set g.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-mix-tau"
+    ],
+    "id": "tkc:oss-lbm:fing-mixed-viscosity-relaxation",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 这是一个最小代价的黏度比实现（界面自动过渡），可用于 TensorLBM 变黏度算例；但注意它是「界面加权的两组分黏度」，不是剪切率相关的幂律本构。",
+      "未验证面: 仓库内无该混合黏度的解析/实验对照，status=provisional。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "M = 20.0",
+        "Eta_n = nondimensional Newtonian viscosity",
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "The non-Newtonian (power-law) rheology enters as a local mixed kinematic viscosity: v1 = Eta_n/rho (Newtonian) and v2 = M*Eta_n/rho (non-Newtonian) are blended harmonically with weights (1-psi) and (1+psi), and the momentum relaxation time is mix_tau = 3*mix_v + 0.5, so one fluid is 20x more viscous (M = 20) and the interface interpolates between them through psi.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-getf-mix-tau",
+      "tke:oss-lbm:fing-getg-const-tau"
+    ],
+    "id": "tkc:oss-lbm:fing-mobility-fixed-relaxation",
+    "modality": "asserted",
+    "notes": [
+      "证据面: getF 用 self.mix_tau（fingering.py:289），getG 用模块级 tau（fingering.py:293），同文件内两种松弛时间来源并存且无注释说明。",
+      "可能有意义: 若作者想让 Pe/迁移率固定，这是合理选择；但文档缺失使读者无法判断，故 status=contested。",
+      "TensorLBM 可服务改进点: 迁移率 M 应显式参数化（M = cs^2*(tau_g-0.5)*...），并在配置里与黏度解耦，避免隐含常量。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "possible modelling choice, not necessarily a defect",
+        "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "The momentum populations relax with the local mix_tau while the order-parameter populations always relax with the fixed module-level tau = 1/(3-sqrt(3)) ~ 0.789, so the Cahn-Hilliard mobility is spatially uniform and decoupled from the viscosity field; nothing in the repository documents this choice.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-inlet-velocity-from-ca"
+    ],
+    "id": "tkc:oss-lbm:fing-no-buoyancy-capillary-driven",
+    "modality": "asserted",
+    "notes": [
+      "搜索面: grep -ric 'gravity|buoyan|body force' lattice_boltzmann/*.py -> 全部为 0（源码面负证据）。",
+      "TensorLBM 可服务改进点: 若要做重力驱动指进/瑞利-泰勒，需要外挂 buoyancy 力项——本源没有，不能声称它复现了重力指进（其论文场景为压力/毛细驱动）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "gravity-free configuration",
+        "Ca-based inlet velocity",
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "The displacement is purely capillary/viscous-driven: the inlet velocity is set from the capillary number as u0 = Ca*sigma/Eta_n, and no gravity, buoyancy or density-difference body force term exists anywhere in the solver (a case-insensitive search for gravity/buoyancy/body force over all lattice_boltzmann modules returns zero hits).",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "causal",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-randint-seed"
+    ],
+    "id": "tkc:oss-lbm:fing-one-sided-initial-perturbation",
+    "modality": "asserted",
+    "notes": [
+      "Runtime-confirmed: np.random.randint(0, 1, size=n) returns all zeros, hence my_number = 0*2 - 1.0 = -1.0 (test_oss_lbm_fingering.py::test_randint_seed_is_one_sided).",
+      "TensorLBM 可服务改进点: 不稳定性的初始扰动必须零均值（否则等效叠加一个 1e-3 均值压缩，线性稳定性增长率与主导波数都会被污染）；TensorLBM 的随机扰动工具应内置零均值断言。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "defect",
+        "numpy random API semantics",
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "The initial density perturbation intended to seed the fingering instability is one-sided: np.random.randint(0, 1, size=(H, W)) is identically zero because the high bound is exclusive, so the multiplier my_number is -1.0 everywhere and the density becomes 1 - 1e-3*rand(H, W) instead of the intended symmetric 1 +/- 1e-3*rand(H, W).",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "methodological",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-spectral-reference",
+      "tke:oss-lbm:fing-spectral-ab2"
+    ],
+    "id": "tkc:oss-lbm:fing-spectral-ab2-integrating-factor",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 线性稳定性/指进基准可与 LBM 求解器交叉验证（同一物理、两种数值方法），是 TensorLBM 指进算例的低成本参考解来源。",
+      "未验证面: 无网格收敛/与文献增长率对照表，status=provisional。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent) - adjacent: this is the non-LBM reference solution for the same fingering physics",
+        "spectrum_method/main.py",
+        "DELTA_T = 0.1 (spectral solver)",
+        "FFT collocation 256 x 128"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "The companion spectral solver integrates the viscous-fingering concentration equation in Fourier space with a second-order Adams-Bashforth treatment of the nonlinear term (-1.5*J_hat + 0.5*J_hat_before) combined with an exact integrating factor exp(-k^2*DELTA_T), and cites the Tan & Homsy J. Chem. Phys. paper as its reference.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "interpretive",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-theta-declared",
+      "tke:oss-lbm:fing-validation-output-only-plot"
+    ],
+    "id": "tkc:oss-lbm:fing-validation-no-angle-measurement",
+    "modality": "asserted",
+    "notes": [
+      "证据面: 全仓 grep 'Theta' 仅命中 validation.py:22 一处（定义处），无使用点；main() 收尾仅 plt.pcolor(...)+plt.show()。",
+      "TensorLBM 可服务改进点: 反例——润湿模块的验收判据不能是「画出来像」，必须给 theta 提取器 + 目标角误差表；TensorLBM 润湿验证面应对照 Theta 做数值判据（如 <3%）。",
+      "本条的 contested 指「声称的验证能力 vs 实际代码」矛盾，不是指润湿物理有争议。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "anti-pattern / reproducibility defect",
+        "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "The script advertised as wettability validation ('valitation.py' in the README, validation.py in the tree) never measures a contact angle: the module constant Theta = np.pi/4 is defined and never referenced again anywhere in the repository, and the run ends by colour-mapping psi and calling plt.show(), with no circle fit, no angle extraction and no comparison against a target angle.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "methodological",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-psi-wall-value",
+      "tke:oss-lbm:fing-psi-wall-enforced",
+      "tke:oss-lbm:fing-psi-wall-ghost",
+      "tke:oss-lbm:fing-psi-wall-periodic"
+    ],
+    "id": "tkc:oss-lbm:fing-wetting-via-order-parameter",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: psi_wall 是最小可用的润湿实现（改一个标量即改接触角趋势），可作 TensorLBM润湿模块的 fallback；但它不给出 psi_wall -> 接触角 theta 的解析标定。",
+      "未验证面: 仓库内无水静接触角与 psi_wall 的定量对照表（见 fing-validation-no-angle-measurement 条），status 保守取 provisional。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "gap-anchor: free-energy-phase-field anchor (three calibration relations kappa=0.75*xi*sigma, a=-2*kappa/xi^2, sigma=4*kappa/(3*xi); catalogued in inventory)",
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+        "one-cell ghost layer",
+        "no explicit theta(psi_wall) map"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "Wettability is encoded as a single Dirichlet value of the order parameter on the wall, psi_wall (-1.0 in fingering.py, -0.5 in fingering_periodic.py, 0.0 for the droplet test in validation.py), which is written into psi on the solid mask and replicated as a one-cell ghost layer before every discrete gradient, so the wall free-energy enters only through grad(psi) and the local chemical potential.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "methodological",
+    "created_at": "2026-11-09T15:30:00Z",
+    "created_by": "agent-m8691",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:fing-zou-he-inlet",
+      "tke:oss-lbm:fing-zou-he-outlet"
+    ],
+    "id": "tkc:oss-lbm:fing-zou-he-force-corrected",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 该 force-corrected Zou-He 出口/入口可直接作为 multiphase LBM 的压力边界参考实现；TensorLBM 目前只有单相 Zou-He，扩到多相需带 mu*grad(psi) 修正项。",
+      "未验证面: 仓库内无该边界的解析/质量守恒检验，故 status=provisional（仅源码面证据）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "gap-anchor: GAP-LBM-MCMP-POISEUILLE (adjacent)",
+        "2-D D2Q9, inlet at column 0, outlet at last column"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Fingering_dynamics"
+    },
+    "statement": "Both open boundaries are Zou-He reconstructions (Zou & He 1997, cited in-source) in which the inlet density / outlet unknown populations are corrected with the chemical-potential gradient times mu, e.g. the outlet unknown f_3 gets the additive term psi_x*mu/6, so the pressure boundary is consistent with the non-ideal (free-energy) stress.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-couette-bb-moving-wall",
+      "tke:oss-lbm:kruger-couette-bb-analytic",
+      "tke:oss-lbm:kruger-run-chapter5-port"
+    ],
+    "id": "tkc:oss-lbm:kruger-couette-bb-moving-wall",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 库特算例的运动壁动量注入基准",
+      "TensorLBM 可服务改进点: 运动壁动量偏移 6 w_k rho c_k.u_wall 应由权重推导，不要硬编码 1/6。",
+      "运行佐证: 逐行 NumPy 移植 (runs/oss-lbm-kruger-8676) 得 L2 = 2.3e-15，与解析线性剖面机器精度一致。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "moving wall",
+        "half-way bounce-back",
+        "D2Q9",
+        "steady state"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "chapter5/couette_BB.m drives Couette flow by a moving half-way bounce-back wall: the reflected diagonal populations receive the momentum offset -/+ (1/6) u_max, and the analytic reference is the linear profile u = u_max y / NY with wall planes at y = 0 and y = NY.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-couette-wetnode-variants",
+      "tke:oss-lbm:kruger-poiseuille-wetnode-wallpos"
+    ],
+    "id": "tkc:oss-lbm:kruger-couette-wetnode-family",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 库特标准算例上的壁面条件族对照（湿节点三式 vs 反弹）",
+      "TensorLBM 可服务改进点: 壁面条件应以「族」形式实现并共用同一基准，便于逐个量误差阶。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "wet-node boundary conditions",
+        "Couette flow",
+        "switch by integer flag"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "chapter5/couette_wetnode.m exposes three wet-node wall schemes selected by an integer flag: 1 = equilibrium scheme, 2 = non-equilibrium extrapolation, other = non-equilibrium bounce-back, all applied on wall nodes that lie inside the computational domain.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-trt-cylinder",
+      "tke:oss-lbm:kruger-trt-cylinder-plus",
+      "tke:oss-lbm:kruger-trt-cylinder-domain",
+      "tke:oss-lbm:kruger-trt-cylinder-geometry"
+    ],
+    "id": "tkc:oss-lbm:kruger-cylinder-trt-karman",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 绕流标准算例（圆柱/卡门涡街）的几何与分辨率口径",
+      "TensorLBM 可服务改进点: 圆柱绕流算例必须固定 D（晶格单位）、阻塞比与 Re 定义，否则 Strouhal/Cd/Cl 无法跨实现比对。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "TRT",
+        "cylinder in cross-flow",
+        "129x129 lattice",
+        "radius 40"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "chapter8/cylinder.cpp sets up a D2Q9 TRT flow past a circular cylinder in a 129x129 box with radius 40 lattice units (diameter 80), omega = 1/(0.5 + 0.5/32) and omega_plus = 2 - omega, i.e. the magic-parameter pair Lambda = 1/4, and marks the geometry (fluid / wall / boundary layer) in an integer mask before time stepping.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-force-init-shift"
+    ],
+    "id": "tkc:oss-lbm:kruger-force-init-shift",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 初始条件与力项的一致性（影响瞬态误差而非稳态）",
+      "保守定级理由: 代码事实已逐字核实，但其对收敛速度/瞬态误差的收益本单未做对照实验，故 provisional。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "forced flow",
+        "initial condition",
+        "Guo-type force"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "Initialisation in the forced Poiseuille code carries a half-force offset in the equilibrium, feq = w_k - 0.5 w_k 3 c_k.F, i.e. the populations are initialised consistently with the force to O(dt) rather than to the force-free equilibrium.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-force-model-axes"
+    ],
+    "id": "tkc:oss-lbm:kruger-force-model-axes",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 体积力驱动算例的力项离散口径（一/二阶 × 一/二阶）",
+      "TensorLBM 可服务改进点: 力项实现应参数化为 (spatial_order, velocity_order) 两轴，并以同一泊肃叶基准交叉验证四种组合。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "body force",
+        "Guo forcing",
+        "Buick-Greated forcing",
+        "flag-selected variants"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "chapter6/force_poiseuille_BB.m separates the body-force discretisation into two independent axes: the spatial (time/configuration) order, 1st or 2nd, and the velocity-space order, 1st (Buick and Greated) or 2nd (Guo et al.), each selected by its own flag.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-force-split-matrix"
+    ],
+    "id": "tkc:oss-lbm:kruger-force-pressure-split",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 驱动力分配方式的等价性检查（三种分配应给出同一稳态剖面）",
+      "TensorLBM 可服务改进点: 可作为力项实现的等价性回归测试用例。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "body force",
+        "pressure gradient",
+        "steady state"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "The forced Poiseuille code splits the driving between body force and pressure gradient in three selectable ways: constant body force only; 50/50 constant force plus constant pressure gradient; or 50/50 linearly varying force plus linearly varying pressure gradient.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-ib-lbm-header",
+      "tke:oss-lbm:kruger-ib-lbm-stencil",
+      "tke:oss-lbm:kruger-ib-lbm-wall",
+      "tke:oss-lbm:kruger-ib-lbm-nodes",
+      "tke:oss-lbm:kruger-run-ib-lbm"
+    ],
+    "id": "tkc:oss-lbm:kruger-ib-lbm-poiseuille",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 浸没边界算例的解析基准与分辨率敏感性",
+      "TensorLBM 可服务改进点: IBM 力扩散/插值核（2 点 vs 4 点）应以同一基准分别量误差，并注意低分辨率下中心线速度的系统性偏低。",
+      "运行佐证: Ny=20 时中心线速度 1.642e-3 vs 代码自带解析期望 1.756e-3（-6.5%）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "immersed boundary method",
+        "Guo forcing",
+        "periodic in x",
+        "gravity-driven",
+        "wall_width = 15.3"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "chapter11/IBLBM_2D_Poiseuille.cpp combines D2Q9 with Guo forcing and an immersed-boundary method: each wall is discretised with 19 Lagrangian nodes of stiffness 1, the interpolation stencil is switchable between 2 and 4 points, forces are spread/interpolated every step, and the code prints its own analytic expectation for the Poiseuille centre-line velocity.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "hypothesis",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-bb-tau",
+      "tke:oss-lbm:kruger-run-chapter5-port"
+    ],
+    "id": "tkc:oss-lbm:kruger-poiseuille-bb-exactness-scope",
+    "modality": "hypothetical",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 「精确解」结论的适用范围必须随分辨率登记（negative result）",
+      "诚实的负面结果: 偶数宽度（NY=10/20）未达机器精度；可能源于 PBBC 进出口非平衡外推项与偶数宽度的奇偶耦合，也可能源于本移植与 MATLAB 原码的差异（原码本机不可执行，无法对拍）。在拿到 MATLAB/Octave 原码结果之前，本条保持 contested。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "BGK",
+        "half-way bounce-back",
+        "linear equilibrium",
+        "PBBC inlet/outlet",
+        "tau = sqrt(3/16)+0.5",
+        "steady state",
+        "u_max scaled as 0.1/scale"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code (port)"
+    },
+    "statement": "The documented exactness of the half-way bounce-back Poiseuille solution at tau = sqrt(3/16) + 0.5 was reproduced only for part of the tested channel widths: a line-by-line NumPy port reaches L2 = 7.6e-16 at NY = 5 and 6.8e-13 at NY = 15, but 4.0e-3 at NY = 10 and 1.1e-3 at NY = 20 (u_max = 0.1/scale, tau fixed), so as an unrestricted statement it is not supported by this evidence.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-bb-linear-eq"
+    ],
+    "id": "tkc:oss-lbm:kruger-poiseuille-bb-linear-equilibrium",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 宏观量提取约定（u 未除 rho）必须与解析解比较口径一致",
+      "TensorLBM 可服务改进点: 基准对比时必须统一宏观量定义（ρu 与 u 的差异在 ρ≠1 时成为系统性偏差）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "BGK",
+        "incompressible-limit equilibrium",
+        "momentum from populations"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "The Poiseuille benchmark uses a linearised (incompressible-limit) D2Q9 equilibrium, feq = w_k (rho + 3 c_k.u), and obtains the macroscopic velocity from population sums without dividing by the density.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-bb-tau",
+      "tke:oss-lbm:kruger-poiseuille-bb-analytic"
+    ],
+    "id": "tkc:oss-lbm:kruger-poiseuille-bb-tau",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 泊肃叶标准算例的壁面精度基准点（τ 魔数）",
+      "TensorLBM 可服务改进点: 可作为 TensorLBM 通道流回归测试的参考 τ 与参考剖面，在 CI 中断言稳态剖面对解析抛物线的 L2 误差量级。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "D2Q9",
+        "BGK collision",
+        "half-way bounce-back walls",
+        "steady state"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "chapter5/poiseuille_BB.m simulates the pressure-driven plane Poiseuille benchmark with half-way bounce-back walls using the BGK relaxation time tau = sqrt(3/16) + 0.5, which the source itself documents as the value that gives the exact solution.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-bb-pbbc",
+      "tke:oss-lbm:kruger-poiseuille-wetnode-gradp"
+    ],
+    "id": "tkc:oss-lbm:kruger-poiseuille-pbbc-inout",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 压差驱动算例的进出口边界口径（勿以周期驱动冒充压力驱动）",
+      "TensorLBM 可服务改进点: 压力边界 + 非平衡外推的组合可直接作为 TensorLBM 进出口实现的对照实现。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "PBBC / non-equilibrium extrapolation",
+        "inlet and outlet are non-periodic",
+        "two virtual layers i=1 and i=NX"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "Inlet and outlet of the Poiseuille channel are closed with a pressure boundary condition (the source labels it 'PBBC'): the incoming population is set to the equilibrium at the target density plus the non-equilibrium part copied from the adjacent fluid layer, with density contrast rho_inlet = 3 (NX-1) gradP + rho_outlet.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-poiseuille-wetnode-wallpos",
+      "tke:oss-lbm:kruger-poiseuille-wetnode-gradp"
+    ],
+    "id": "tkc:oss-lbm:kruger-poiseuille-wetnode-setup",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 湿节点壁面位置（通道宽度定义）必须与解析解一致",
+      "TensorLBM 可服务改进点: 通道宽度定义（节点中心距 vs 物理壁面距）在湿节点与反弹壁下不同，基准脚本需显式区分，否则引入 O(1/NY) 的系统偏差。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "wet-node walls",
+        "pressure-driven channel",
+        "tau = 0.7"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "The wet-node Poiseuille variant places the walls on lattice nodes y = 1 and y = NY inside the domain and drives the flow with gradP = 8 nu u_max / (ytop - ybottom)^2, giving the density difference rho_inlet = 3 (NX-1) gradP + rho_outlet.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-sc-pseudopotential",
+      "tke:oss-lbm:kruger-sc-force",
+      "tke:oss-lbm:kruger-sc-pressure",
+      "tke:oss-lbm:kruger-sc-laplace",
+      "tke:oss-lbm:kruger-sc-setup",
+      "tke:oss-lbm:kruger-run-young-laplace"
+    ],
+    "id": "tkc:oss-lbm:kruger-shanchen-laplace",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— Young-Laplace 定律作为多相/界面算例的验证面",
+      "TensorLBM 可服务改进点: 表面张力应从 Laplace 压强差反演并与 Laplace 定律交叉校验，且应在两个以上半径上验证 gamma 不变性。",
+      "运行佐证: 半径 16.32 与 12.29 两算例给出 gamma = 0.02072 / 0.02039（相对差 1.61%）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "D2Q9",
+        "Shan-Chen pseudopotential",
+        "g = -4.7",
+        "64x64 periodic box",
+        "droplet initial radius 15"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "chapter9/shanchen.cpp implements single-component Shan-Chen multiphase flow with the exponential pseudopotential psi = rho0 (1 - exp(-rho/rho0)), nearest-neighbour force summation, pressure p = rho/3 + g psi psi/6, and then measures surface tension from the Young-Laplace law as gamma = (p_liquid - p_gas) * r, with the interface radius r located by linear interpolation of the density profile along the centre line.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-tg-analytic-td",
+      "tke:oss-lbm:kruger-tg-analytic-velocity",
+      "tke:oss-lbm:kruger-tg-l2-norms",
+      "tke:oss-lbm:kruger-run-taylor-green"
+    ],
+    "id": "tkc:oss-lbm:kruger-tg-analytic-solution",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 有解析解的标准算例（Taylor-Green 衰减）作为精度与收敛阶基准",
+      "TensorLBM 可服务改进点: 该解析解与 L2 归一化口径可直接作为 TensorLBM 时间推进器的二阶收敛测试。",
+      "运行佐证: NX=32/64/128 三档执行，L2(ux) = 7.69e-3 / 1.92e-3 / 4.79e-4，实测收敛阶 2.00。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "Taylor-Green vortex",
+        "periodic domain",
+        "BGK tau = 1",
+        "u_max = 0.04/scale"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "chapter13/python3/vortexdecay.py validates the D2Q9 BGK solver against the analytic Taylor-Green vortex solution: velocity components decay as exp(-t/t_d) with t_d = 1/(nu (kx^2+ky^2)), and the L2 norms of density, ux and uy are computed against that solution every NMSG steps.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-tg-cpu-constants",
+      "tke:oss-lbm:kruger-tg-cpu-domain",
+      "tke:oss-lbm:kruger-tg-gpu-backend",
+      "tke:oss-lbm:kruger-tg-mpi-backend",
+      "tke:oss-lbm:kruger-tg-openmp-backend"
+    ],
+    "id": "tkc:oss-lbm:kruger-tg-multi-backend-ladder",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 同一算例跨后端可比性（Mlups 阶梯）",
+      "TensorLBM 可服务改进点: 异构后端基准应固定物理参数与输出口径，只替换内核，避免「换参数换结果」。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "identical physical parameters across backends",
+        "CUDA / MPI / OpenMP / serial"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "The same Taylor-Green case ships in seven implementations (python3, cpu, cpu_intro, openmp, mpi/blocking, mpi/nonblocking, gpu), all built from identical constants (nu = 1/6, tau = 3 nu + 0.5, NX = 32 scale, NSTEPS = 200 scale^2) and compiled with g++, mpic++ or nvcc respectively, so the repository doubles as a performance-ladder benchmark.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:20:00Z",
+    "created_by": "agent-m8676",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:kruger-trt-magic-formula",
+      "tke:oss-lbm:kruger-trt-magic6-values",
+      "tke:oss-lbm:kruger-trt-magic12-values"
+    ],
+    "id": "tkc:oss-lbm:kruger-trt-magic-parameter",
+    "modality": "asserted",
+    "notes": [
+      "GAP 锚: GAP-LBM-BENCH-METHODOLOGY —— 魔数参数（TRT 壁面/边界精度自由度）的成对对照实验设计",
+      "TensorLBM 可服务改进点: TRT 两个松弛频率应由 (omega, Lambda) 参数化，并提供成对算例分辨 Lambda 对边界精度的影响。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "TRT collision",
+        "1D advection-diffusion of a Gaussian",
+        "magic parameter 1/6 vs 1/12"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbm-principles-practice/code"
+    },
+    "statement": "The chapter8 two-relaxation-time examples compute one relaxation frequency from a magic parameter Lambda as omega = 1/(Lambda/(1/omega_other - 0.5) + 0.5), and ship the same 1D Gaussian advection-diffusion case twice with Lambda = 1/6 and Lambda = 1/12 so that the effect of the magic parameter can be isolated.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:lbmpy-ce-src"
+    ],
+    "id": "tkc:oss-lbm:lbmpy-chapman-enskog",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: Chapman-Enskog 符号推导可集成到 TensorLBM 的格式验证流程，自动确认 NS 一致性。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "arbitrary moment/cumulant methods",
+        "symbolic relaxation rates"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbmpy"
+    },
+    "statement": "lbmpy implements Chapman-Enskog analysis that symbolically derives the macroscopic equations (continuity + Navier-Stokes) from the LBM collision rule, computing the viscous stress tensor σ and kinematic viscosity by matching to the Navier-Stokes equations.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:lbmpy-methods-src"
+    ],
+    "id": "tkc:oss-lbm:lbmpy-method-spaces",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 统一方法接口+多碰撞空间设计可作为 TensorLBM 方法模块的架构参考。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "all standard LB stencils"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbmpy"
+    },
+    "statement": "lbmpy supports multiple collision spaces through its methods module: SRT, TRT, MRT (orthogonal and raw), central moments, and cumulant methods, all constructed via a unified AbstractLbMethod interface with symbolic relaxation rates.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:lbmpy-pipeline-src"
+    ],
+    "id": "tkc:oss-lbm:lbmpy-pipeline",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 4 阶段管线设计可指导 TensorLBM 构建从格式定义到可执行代码的自动化流程。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "pystencils backend",
+        "LBMConfig/LBMOptimisation dataclasses"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lbmpy"
+    },
+    "statement": "lbmpy uses a 4-stage kernel generation pipeline: (1) create_lb_method defines collision in moment/cumulant space, (2) create_lb_collision_rule generates symbolic post-collision expressions, (3) create_lb_ast builds the abstract syntax tree with loops, (4) create_lb_function compiles to executable CPU/GPU code via pystencils.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:lettuce-bgk-src"
+    ],
+    "id": "tkc:oss-lbm:lettuce-bgk-differentiable",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 可微碰撞算子设计模式可直接用于 TensorLBM 的伴随优化/反问题模块。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "standard BGK",
+        "optional force term"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lettuce"
+    },
+    "statement": "lettuce BGKCollision is implemented as a plain Python __call__ returning torch.Tensor operations (flow.f - 1/tau * (flow.f - feq) + si), with no detached computations, enabling gradient flow through the collision step for adjoint-based optimization.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:lettuce-cuda-src"
+    ],
+    "id": "tkc:oss-lbm:lettuce-native-cuda",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: Python→CUDA 代码生成管线可参考用于 TensorLBM 的 GPU kernel 自动优化。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "CUDA-capable hardware",
+        "components with native_generator method"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lettuce"
+    },
+    "statement": "lettuce provides a cuda_native extension that generates optimized CUDA kernels from Python collision/boundary/streaming definitions via a code Generator, with automatic JIT compilation and installation.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:lettuce-tests-src"
+    ],
+    "id": "tkc:oss-lbm:lettuce-test-invariants",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 不变量测试模式可直接移植到 TensorLBM 的回归测试面，确保碰撞算子物理一致性。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "pytest framework",
+        "parametrized over stencils and dtypes"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lettuce"
+    },
+    "statement": "lettuce tests verify physical invariants per collision operator: mass conservation (test_collision_conserves_mass.py), momentum conservation (test_collision_conserves_momentum.py), fixpoint property (test_collision_fixpoint_2x.py), shear moment relaxation (test_collision_relaxes_shear_moments.py), and pseudo-entropy optimization.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:lettuce-conftest-src"
+    ],
+    "id": "tkc:oss-lbm:lettuce-test-parametrize",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 参数化 fixture 模式可用于 TensorLBM 的多格式×多精度×多后端系统测试。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "pytest framework"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lettuce"
+    },
+    "statement": "lettuce conftest.py defines systematic pytest parametrization over stencils (D1Q3, D2Q9, D3Q15/19/27), dtypes (float32/64), devices (CPU/CUDA), transforms, and collision operators, enabling combinatorial coverage testing.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:lettuce-context-src"
+    ],
+    "id": "tkc:oss-lbm:lettuce-torch-context",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: lettuce 的 Context 抽象可指导 TensorLBM 设计统一的后端/精度上下文管理。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "CPU and CUDA devices",
+        "float16/32/64 dtypes"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "lettuce"
+    },
+    "statement": "lettuce uses a Context object wrapping torch.device and torch.dtype, with all field data stored as PyTorch tensors, making the entire simulation pipeline differentiable through torch.autograd.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-readme-ansi-c-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "id": "tkc:oss-lbm:ludwig-ansi-c-not-fortran",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 元数据纠错——按 C 代码对待（移植/对照时不要假设 Fortran 数组序与 ABI）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "master snapshot inspected"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Ludwig's README states that the code 'is written in standard ANSI C' and uses MPI plus a TargetDP abstraction for OpenMP/CUDA/HIP; the repository contains no Fortran sources (no *.f90/*.F90 files in the tree). Any description of Ludwig as a Fortran code is therefore incorrect.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-ch-equation-src",
+      "tke:oss-lbm:ludwig-ch-fd-scheme-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "id": "tkc:oss-lbm:ludwig-ch-fd-evolution",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 『LB 水动力 + FD 组分』的算子拆分让两相通道流可用独立模块做收敛研究；TensorLBM 若在 MCMP 上做 POISEUILLE 基准需明确组分方程离散阶数对界面通量的影响。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "finite-difference advection scheme order set by input (fd_advection_scheme_order)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "The order-parameter sector of Ludwig evolves the Cahn-Hilliard equation d_t phi + div(u phi - M grad mu) = 0 by finite difference, with the velocity u taken as known from the hydrodynamic sector and the chemical potential mu supplied by the chosen free energy; i.e. binary-fluid composition dynamics is a separate finite-difference module coupled to the lattice-Boltzmann hydrodynamics, not a second lattice-Boltzmann equation.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "interpretive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-ch-flux-mu-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-MU-STENCIL",
+    "id": "tkc:oss-lbm:ludwig-ch-flux-first-order-mu",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 这是 MCMP 通道流里寄生界面流(parasitic current)的典型来源；TensorLBM 若实现两相驱动流需量化 mu 面梯度阶数对滑移/回流误差的贡献。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "metric/symmetric mesh only (unit spacing)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "The diffusive Cahn-Hilliard flux in Ludwig is assembled from neighbouring chemical potential values as flux = mobility*(mu(ic+1) - mu(ic)), i.e. a two-point (first-order accurate) face gradient of mu, accumulated into an advective-flux buffer before the update; the interfacial current therefore carries O(h) truncation error in the chemical-potential gradient unless a wider stencil is used.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-vtable-mu-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-FORCE-GAUGE",
+    "id": "tkc:oss-lbm:ludwig-fe-vtable-contract",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 化学势/应力以『逐点回调』注入，利于把一个自由能核在 CPU/GPU 两套内核间复用；TensorLBM 多相内核可用同样契约把 mu、应力、分子场分离测试。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "C, function-pointer vtable (no introspection)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Every Ludwig free energy implements a virtual table whose entries are typed callbacks for free-energy density (fed), chemical potential (mu), solvation chemical potential (mu_solv), chemical stress (stress), and molecular fields, so the Cahn-Hilliard and force sectors can evaluate any model without knowing it; the chemical potential entry has signature 'int (*)(fe_t *, int, double *)' evaluated pointwise at a lattice index.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-force-method-src",
+      "tke:oss-lbm:ludwig-thermo-stress-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-FORCE-GAUGE",
+    "id": "tkc:oss-lbm:ludwig-force-methods",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 同一物理（自由能力）有 5 种离散实现→TensorLBM 应把它们做成可切换的力格式并交叉验证（尤其 stress-divergence vs phi grad mu 在小密度比下的差异）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "force method selected at run time (fe_force_method enum)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Ludwig provides five free-energy force formulations for the hydrodynamic sector: no force, stress divergence (documented as the current default), phi*grad(mu), phi*grad(mu) with a conservation correction, and symmetric/antisymmetric relaxation via the LB collision; the stress-divergence form uses the 'thermodynamic' stress tensor derived from the chosen free energy.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-enum-src",
+      "tke:oss-lbm:ludwig-spinodal-inp-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "id": "tkc:oss-lbm:ludwig-free-energy-catalog",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: MCMP 自由能模型的『运行时选择』接口（enum + 虚表）可直接照搬，避免 TensorLBM 里自由能/多相模型与编译期开关耦合；对照 GAP-LBM-MCMP-POISEUILLE 的两相通道流需先能选模型。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "compile-time model choice (D2Q9/D3Q15/D3Q19/D3Q27)",
+        "run-time free-energy choice via input file"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Ludwig exposes nine concrete free-energy models (symmetric phi^4, Brazovskii, surfactant, polar, liquid crystal, electrokinetic, electrokinetic-symmetric, liquid-crystal droplet, ternary) plus a null model behind a single abstract fe_id_enum tag, so that the binary-fluid free-energy sector is selectable at run time (input key 'free_energy') rather than at compile time.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-gradient-rt-src",
+      "tke:oss-lbm:ludwig-grad-27pt-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-MU-STENCIL",
+    "id": "tkc:oss-lbm:ludwig-gradient-stencil-selection",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 模板=运行期参数而非编译期宏，TensorLBM 应照此把离散模板外置，以便在两相基准上做 7pt/27pt 收敛对照。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "3D fluid fields",
+        "solid-like fields use *_solid stencils"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "The discrete gradient/Laplacian used by the free-energy sector is selectable at run time through the input keys 'fd_gradient_calculation' (default) and 'fd_gradient_calculation_phi' / '_q' overrides for the phi and Q_ab fields, with separate 7-point and isotropic 27-point fluid stencils provided as distinct source files (gradient_3d_7pt_fluid.c, gradient_3d_27pt_fluid.c) in addition to the 2D 5-point and Tomita stencils.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "negative",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-no-gauge-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-FORCE-GAUGE",
+    "id": "tkc:oss-lbm:ludwig-no-gauge-formulation",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 否定性结论——不能把 Ludwig 当『gauge 实现』参考；若 TensorLBM 要做 gauge/规范不变的 MCMP 力格式，需另找文献与参考实现（本包已把该缺口挂锚）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "source inspection of master snapshot; absence is grep-exhaustive, not a proof of semantics"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "The string 'gauge' does not occur anywhere in the Ludwig source, documentation, tests or README (case-insensitive search over src/, docs/, tests/, README.md gives zero hits); Ludwig's free-energy forcing is expressed as stress divergence and phi*grad(mu) forms, so a claim that Ludwig implements a 'gauge' formulation of the multicomponent force is not supported by the source.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "negative",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-no-scmp-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SCMP",
+    "id": "tkc:oss-lbm:ludwig-no-scmp-pseudopotential",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 明确 SCMP 是缺口而非参考实现——TensorLBM 若需要 SC 型伪势模型，Ludwig 无法提供对照基线，只能用于自由能型两相（这与 POISEUILLE 两相基准的模型选择直接相关）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "source inspection of master snapshot"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Ludwig contains no Shan-Chen single-component-multiphase (SCMP) pseudo-potential implementation: a case-insensitive search for 'scmp', 'pseudopotential', 'pseudo-potential' and 'shan-chen' over src/, docs/, tests/ and README.md returns zero hits (the string 'Shan' appears only as the code contributor name Shan Chen in the ternary free-energy files, plus one literature citation in gradient_2d_tomita_fluid.c. Multiphase behaviour is obtained from free-energy (Cahn-Hilliard) models instead.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-poiseuille-comment-src",
+      "tke:oss-lbm:ludwig-poiseuille-formula-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "id": "tkc:oss-lbm:ludwig-poiseuille-init",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 直接对齐 GAP-LBM-MCMP-POISEUILLE——Ludwig 只给解析剖面初值，不给压力驱动/两相逆流稳态校核；TensorLBM 应补『驱动-稳态-解析剖面对比』的验收环。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "one non-zero component of umax[3]",
+        "periodic walls unless a wall/bbl condition is set"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Ludwig provides a run-time initial distribution '1d_poiseuille' that sets the analytic parabolic profile u_i = umax_i * x(L - x) * 4/L^2 along each coordinate using the local-to-global offset and lmin so that the profile is centred symmetrically, with the 4/L^2 factor normalising u to umax at the centre; this supplies the closed-form channel-flow reference state for two-phase (MCMP) Poiseuille benchmarks but it is only an initial condition, not a steady-state verification.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-shear-wave-init-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "id": "tkc:oss-lbm:ludwig-shear-wave-init",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 本包用它做了定量验证（见 artifacts/shear_wave_verification.json，L=32 衰减率误差 0.26%）；TensorLBM 可复用同一构型作 LB 粘性/收敛回归环。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "periodic boundaries",
+        "single phase (free_energy none)"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Ludwig provides a run-time initial distribution '2d_shear_wave' with fixed amplitude u0 = 0.04 and wavenumber kappa = 2*pi applied as u_x = u0*sin(kappa*y) with y normalised by the box length in y; this is a single-phase viscous-decay reference configuration whose exact solution u_x = u0 sin(ky) exp(-nu k^2 t) is available in closed form.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-sigma-calib-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SIGMA-CALIB",
+    "id": "tkc:oss-lbm:ludwig-sigma-droplet-calibration",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 『解析 sigma vs 液滴实测 sigma』的双通道标定正是 TensorLBM 两相精度验收模板（误差判据 <3%）。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "symmetric free energy only",
+        "droplet initialisation"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Ludwig calibrates the surface tension of the symmetric free energy from a simulated droplet in 2d or 3d (stats_sigma.c, 128 radial bins), i.e. a measurement-based verification path independent of the analytic formula; it is exercised from the main driver only when the 'sigma' statistics option is requested.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "interpretive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-spinodal-inp-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SPINODAL",
+    "id": "tkc:oss-lbm:ludwig-spinodal-smoke-test",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 说明 Ludwig 的两相回归面偏弱（只 diff 不判物理量）——TensorLBM 的两相回归必须带物理判据（sigma、界面宽度、生长率），否则同类的『绿但无意义』陷阱会重现。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "tests/regression/d3q27",
+        "comparison via tests/awk-fp-diff.sh"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "The only regression test that exercises the binary-fluid free-energy path in the D3Q27 build is a 10-step, 16^3 spinodal-decomposition case labelled 'smoke test' in its own header, using free_energy symmetric, mobility 1.25 and the 7-point gradient; it is a numerical-diff regression against a stored log, with no physical quantity (surface tension, growth rate, phase composition) asserted.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-symm-sigma-src",
+      "tke:oss-lbm:ludwig-fe-symm-xi-src",
+      "tke:oss-lbm:ludwig-sigma-calib-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SIGMA-CALIB",
+    "id": "tkc:oss-lbm:ludwig-symm-analytic-sigma",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 解析 sigma 与数值液滴标定的对照就是 TensorLBM 两相实现的精度判据（目标 <3%）；同一对公式可直接进 TensorLBM 的基准测试夹具。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "a < 0 (double-well)",
+        "sharp-interface (xi << L) regime"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Ludwig computes the interfacial tension of the symmetric free energy from the analytic phi^4 result sigma = sqrt(-8 kappa a^3 / (9 b^2)) (for phi* = sqrt(-a/b), a < 0), and the interfacial width from xi = sqrt(-2 kappa / a); both are exact continuum expressions evaluated from the input parameters, hence usable as closed-form references for measured (droplet-calibrated) surface tension.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "interpretive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-symm-mu-src",
+      "tke:oss-lbm:ludwig-gradient-rt-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-MU-STENCIL",
+    "id": "tkc:oss-lbm:ludwig-symm-mu-discrete",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 说明 mu 的精度是『纯模板』问题——TensorLBM 应在两相基准里做 7pt vs 27pt（各向同性）模板的收敛对照，而不是假设其一更好。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "delsq from field_grad; stencil chosen via fd_gradient_calculation"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "The chemical potential of the symmetric free energy is evaluated as mu = a*phi + b*phi^3 - kappa*delsq(phi), where delsq(phi) is a discrete Laplacian read from the field-gradient object (choice of finite-difference stencil at run time); therefore the discretisation error of mu is entirely inherited from the selected gradient/Laplacian stencil, with no analytic correction term.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-fe-symm-fed-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-POISEUILLE",
+    "id": "tkc:oss-lbm:ludwig-symm-phi4-density",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 二元流体 MCMP 的『参考自由能』可用此 phi^4 形式作为 TensorLBM 的解析基准族；A/B/kappa 三参数直接给出界面张力与界面宽度（见另两条 claims），便于误差判据。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "A < 0, B > 0, kappa > 0 for a stable interface"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "Ludwig's symmetric free energy implements F[phi] = (1/2) A phi^2 + (1/4) B phi^4 + (1/2) kappa (grad phi)^2, with the bulk double-well term from A<0 and the gradient penalty from kappa; this is the canonical phi^4 free energy of Kendon et al. (J. Fluid Mech. 440, 147 (2001)) cited in the file header.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "interpretive",
+    "created_at": "2026-11-09T15:00:00Z",
+    "created_by": "agent-m8669",
+    "epistemic_status": "contested",
+    "evidence_refs": [
+      "tke:oss-lbm:ludwig-unit-ch-src",
+      "tke:oss-lbm:ludwig-ch-equation-src"
+    ],
+    "gap_anchor": "GAP-LBM-MCMP-SPINODAL",
+    "id": "tkc:oss-lbm:ludwig-unit-test-ch-scope",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 可作为 TensorLBM 测试面的反面样本——两相组分算子必须有定量的解析解单元测试（如界面平衡剖面 tanh 拟合），不能只测构造。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "tests/unit/test_ch.c as shipped"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "Ludwig"
+    },
+    "statement": "The Cahn-Hilliard unit test test_ch.c only checks object construction and the mobility bookkeeping (ch->info->mobility[] compared to input values at double epsilon), i.e. the discretised evolution operator of the order-parameter sector is not covered by a quantitative unit test in the repository's own suite.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-aa-streaming-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-aa-streaming",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: AA pull streaming 模式可作为 TensorLBM GPU kernel 的内存优化参考，减少全局内存访问。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "D3Q19 lattice",
+        "Fortran 90",
+        "SoA data layout"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM employs the AA (Anti-Array) pattern streaming method (pull-type) to significantly reduce memory access and memory consumption, reading distribution functions from upstream neighbors rather than pushing to downstream.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-license-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-bsd3-license",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: BSD-3 许可使 MF-LBM 算法模式可安全复用于 TensorLBM，无 GPL 传染性风险。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "LANL copyright 2021",
+        "BSD-3-Clause",
+        "U.S. Government contract"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM is distributed under the BSD-3-Clause license by Los Alamos National Laboratory (Triad National Security, LLC), making it freely reusable for commercial and academic purposes with attribution.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-checkpoint-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-checkpoint-restart",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 检查点/重启机制可作为 TensorLBM 长时间运行的容错参考。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "long-running DNS",
+        "binary checkpoint I/O",
+        "double precision"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM supports checkpoint/restart via job_status.txt and binary checkpoint files (out2.checkpoint), with states: new_simulation, continue_simulation, simulation_done, simulation_failed, simulation_reached_max_step.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-comm-overlap-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-comm-compute-overlap",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 通信-计算重叠模式（async OpenACC + MPI_Irecv/Isend）可直接用于 TensorLBM 的分布式扩展。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "multi-GPU/multi-node",
+        "Y/Z domain decomposition",
+        "async OpenACC kernels"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM overlaps MPI communication with computation using async OpenACC kernels for halo data packing/unpacking and MPI_Isend/MPI_Irecv non-blocking calls, with separate async labels for PDF and phase-field (phi) data along Y and Z faces and edges.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-contact-angle-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-contact-angle-akail",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: Akai 接触角方案可直接集成到 TensorLBM 的润湿边界模块，支持任意接触角。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "geometrical wetting model",
+        "arbitrary contact angle",
+        "Akai et al. 2018 scheme"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM implements the contact angle alteration scheme from Akai et al. (2018) to allow contact angles >90 degrees, removing the earlier limitation where fluid1/fluid2 were fixed as nonwetting/wetting phases.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-csf-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-csf-multiphase",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: CSF+几何润湿模型可直接参考用于 TensorLBM 的多相流模块，降低虚假电流。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "D3Q19 lattice",
+        "double precision only",
+        "porous media DNS"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM implements a color-gradient multiphase model with Continuum-Surface-Force (CSF) and geometrical wetting models to reduce spurious currents, enabling DNS of scCO2-brine displacement in porous media with inertial effects.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-decomp-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-domain-decomposition",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: Y/Z 二维分解+面/边/角 halo 交换模式可作为 TensorLBM 分布式域分解的参考架构。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "MPI parallel",
+        "Y/Z decomposition",
+        "face+edge+corner halos"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM uses 3D MPI domain decomposition along Y and Z directions only (X-direction decomposition disabled due to non-vectorized data packing), with face, edge, and corner halo exchanges for PDF and phase-field variables.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-mpi-openacc-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-mpi-openacc-hybrid",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: MPI+OpenACC 混合编程模式为 TensorLBM 提供跨平台 GPU/CPU 统一的并行策略参考。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "Fortran 90",
+        "NVIDIA/Intel/GCC compilers",
+        "CPU/GPU/MIC targets"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM uses an MPI-OpenACC/OpenMP hybrid programming model with directive-based parallelism (not CUDA) to maintain portability across NVIDIA GPU, Intel Xeon Phi (MIC), and CPU platforms with AVX512.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-mrt-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-mrt-collision",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: MRT 碰撞的矩空间松弛参数化可作为 TensorLBM 多松弛时间格式的参考实现。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "D3Q19 MRT",
+        "moment-space collision",
+        "two-fluid color-gradient"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM implements MRT (Multiple Relaxation Time) collision in moment space for both single-phase (f populations) and multiphase (g populations) with 19 moments, using symbolic relaxation parameters s_e, s_e2, s_q, s_nu, s_pi, s_t.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8678",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:mflbm-soa-src"
+    ],
+    "gap_anchors": [
+      "GAP-LBM-HPC-SCALING"
+    ],
+    "id": "tkc:oss-lbm:mflbm-soa-layout",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: SoA 数据布局是 GPU 合并访问的关键，TensorLBM 应采用相同布局策略。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "D3Q19",
+        "GPU and CPU targets",
+        "Fortran column-major"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "MF-LBM"
+    },
+    "statement": "MF-LBM uses Structure of Arrays (SoA) data layout for distribution functions (f0-f18, g0-g18 as separate 3D arrays) to achieve coalesced memory access on GPUs and maximize vectorization on CPUs with AVX512.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-bounceback-dynamics-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-bounceback-dynamics",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - modeling bounce-back as a dynamics (with fictitious-density option) localizes wall behavior and keeps the boundary module thin.",
+      "TensorLBM service: compare against TensorLBM's boundary design; the fictitious-density constructor is a useful knob for multiphase walls.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "In openLB, bounce-back is implemented as a Dynamics class (not a boundary condition) with an optional fictitious density; off-boundary conditions live in the boundary module.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-boussinesq-coupling-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-boussinesq-coupling",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - Boussinesq coupling is the standard industrial pattern for natural convection (Rayleigh-Benard, cooling, HVAC).",
+      "TensorLBM service: force = gravity*dir*(T-T0) plus velocity-copy is a minimal, testable thermal-coupling contract to mirror in TensorLBM.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "The Boussinesq thermal-coupling post-processor applies a body force proportional to the temperature difference (force = gravity*dir*(T-T0)) on the velocity lattice and copies the velocity from the temperature lattice for the advection term.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-cpu-mpi-parallel-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-cpu-mpi-parallel",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - the snapshot is CPU/MPI-only; openLB's GPU story (later releases) is out of scope for this snapshot.",
+      "TensorLBM service: TensorLBM's GPU-first design is a structural advantage over this openLB snapshot for large industrial meshes.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "The snapshot has no CUDA/GPU backend; parallelism is MPI-based via Communicator2D/3D with cuboid neighbourhoods and a block load balancer (guarded by PARALLEL_MODE_MPI).",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-eos-temperature-overload-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-eos-temperature-overload",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - a temperature-dependent EOS is the minimal hook for thermally coupled multiphase (evaporating/condensing interfaces, boiling-adjacent flows).",
+      "TensorLBM service: if TensorLBM adds multiphase, design the potential interface to accept an optional temperature field from day one.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "The PengRobinson and CarnahanStarling interaction potentials provide a second operator() overload that accepts a temperature field, enabling temperature-dependent (thermally coupled) multiphase simulations.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-free-energy-model-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-free-energy-model",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - the free-energy model with chemical-potential coupling is the route to thermodynamically consistent surface tension (Young-Laplace validation example ships in-repo).",
+      "TensorLBM service: the 9-point 1/12 gradient stencil for the chemical potential is a concrete, testable pattern for gradient-based multiphase coupling.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "openLB implements a multi-component free-energy model: one density lattice per component coupled through a chemical potential whose gradient is evaluated with a 9-point (1/12) stencil; the coupling supports two or three components (partners.size() > 1).",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-gpl2-reference-only-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-gpl2-reference-only",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - explicit license judgment: GPL-2 (or later) is copyleft/contagious; any openLB-derived artifact inside TensorLBM would infect the whole tree, so the boundary is reference-only (clean-room re-implementation required for any port).",
+      "TensorLBM service: this claim is the license gate for every other openlb claim - no code may be copied, only patterns re-implemented from scratch.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "openLB source files carry a GPL-2-or-later copyleft license header ('either version 2 of the License, or (at your option) any later version'); because GPL-2 is contagious, TensorLBM may use openLB strictly as a reference (study algorithms, never copy code) - the reference-only boundary of GAP-LBM-INDUSTRIAL-ENG.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-interaction-potential-library-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-interaction-potential-library",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - a swappable EOS/potential library behind one interface is an industrial-grade engineering pattern (configuration, not code fork).",
+      "TensorLBM service: adopt a pluggable interaction-potential interface so EOS selection becomes a configuration choice.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "openLB provides a pluggable library of interaction potentials as AnalyticalF1D functors - ShanChen93, ShanChen94, PengRobinson, CarnahanStarling, Krause, WeisbrodKrause, Normal and PsiEqualsRho - so the equation of state is swapped without touching collision code.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-meta-descriptor-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-meta-descriptor",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - compile-time field introspection is how openLB keeps one codebase across BGK/MRT/porous/particle dynamics without runtime branching.",
+      "TensorLBM service: a descriptor/field-tag system with compile-time checks would prevent field-mismatch bugs in TensorLBM multi-physics coupling.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "openLB's descriptor system is a variadic template (DESCRIPTOR_BASE<D,Q,FIELDS...>) with compile-time field introspection (provides/index/size), enabling compile-time-checked field access across dynamics, boundaries and functors.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "provisional",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-no-freesurface-snapshot-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-no-freesurface-snapshot",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - negative result: the 2019-12-02 snapshot predates openLB's free-surface module; any free-surface claim about openLB must cite a newer commit.",
+      "TensorLBM service: do not attribute free-surface capabilities to openlb@6c3934d; re-cache a current release before claiming free-surface parity.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "The cached snapshot (6c3934d, 2019-12-02) contains no free-surface module (verified by exhaustive filename and content search); the task's free-surface anchor is therefore insufficient against this snapshot and must be re-verified against a newer openLB release.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-shanchen-two-lattice-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-shanchen-two-lattice",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - two-lattice Shan-Chen with per-component density normalization (force divided by own density) is the baseline industrial pattern for phase-separation/free-surface-adjacent studies.",
+      "TensorLBM service: reference design for a multiphase coupling layer (common velocity + force injection) to benchmark TensorLBM's own multiphase scheme against.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "openLB implements the Shan-Chen multiphase model as a coupling between two partner lattices (one per component): a post-processor computes a common velocity shared by both populations and an interaction force from a lattice-stencil sum of the interaction potential, stored as external force on each lattice.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-thermal-d3q7-lattice-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-thermal-d3q7-lattice",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - a dedicated low-direction (D3Q7) thermal lattice keeps thermal advection cheap while the velocity lattice keeps full accuracy.",
+      "TensorLBM service: consider a reduced-direction thermal lattice to cut thermal-simulation cost on large meshes.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "The temperature field is carried on a separate D3Q7 advection-diffusion lattice (7 directions), and the Navier-Stokes lattice reads its velocity field for the advection term.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-turbulence-models-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-turbulence-models",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - Smagorinsky/dynamic/WALE with tau_eff = tau_mol + tau_turb is the industrial turbulence baseline for LBM CFD.",
+      "TensorLBM service: for industrial CFD targets, a WALE option (rotation-aware) is the differentiator over plain Smagorinsky.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "openLB ships Smagorinsky, dynamic Smagorinsky and WALE subgrid-scale models (plus porous-media variants) for industrial turbulence, with the turbulent relaxation time added to the molecular one (tau_eff = tau_mol + tau_turb).",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T15:15:00Z",
+    "created_by": "agent-m8677",
+    "epistemic_status": "well-supported",
+    "evidence_refs": [
+      "tke:oss-lbm:openlb-validation-surface-src"
+    ],
+    "id": "tkc:oss-lbm:openlb-validation-surface",
+    "modality": "asserted",
+    "notes": [
+      "GAP anchor: GAP-LBM-INDUSTRIAL-ENG - an in-repo validation surface (analytical reference printed beside the numeric) is the industrial-grade habit TensorLBM should copy.",
+      "TensorLBM service: port the 'print numerical vs analytical side by side' pattern into TensorLBM validation examples; magnitudes must be re-run before reuse since the snapshot bundles no results.",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "openlb@6c3934d",
+        "source-inspection-only"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "openlb"
+    },
+    "statement": "The repository ships multiphase and thermal validation examples that print analytical references next to the numerics: youngLaplace2d (Young-Laplace delta-p = alpha*(kappa1+kappa2)/(6R)), contactAngle2d (100-degree droplet), rayleighBenard2d (Ra=1e4, Pr=0.71); numerical run results are not bundled in the snapshot.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:pylbm-bfl-src"
+    ],
+    "id": "tkc:oss-lbm:pylbm-bfl-bounce-back",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: BFL 插值反弹格式可直接移植到 TensorLBM 的边界模块，提升曲面边界精度到二阶。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "curved boundary",
+        "Dirichlet velocity condition"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "pylbm"
+    },
+    "statement": "pylbm implements the Bouzidi-Firdaouss-Lallemand (BFL01) interpolated bounce-back boundary condition, with separate treatment for δ<0.5 (wall closer than half link) and δ≥0.5, using symmetric velocity indices from neighboring fluid nodes.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:pylbm-equiv-eq-src"
+    ],
+    "id": "tkc:oss-lbm:pylbm-equiv-eq",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 可参考 pylbm 的符号推导框架为 TensorLBM 建立自动等价方程分析工具，用于精度验证和格式选型。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "SymPy-based symbolic computation",
+        "schemes without conserved_polynomials"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "pylbm"
+    },
+    "statement": "pylbm implements symbolic equivalent equation derivation to second order in the lattice spacing using SymPy, computing coeff_order1 (convective fluxes) and coeff_order2 (diffusion tensor B_ij) for arbitrary DdQq schemes.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:pylbm-linear-bb-src"
+    ],
+    "id": "tkc:oss-lbm:pylbm-linear-bb-family",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 统一 α(δ) 参数化框架可作为 TensorLBM 边界格式族的模板，便于系统对比精度。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "steady-state solutions",
+        "TRT collision with Λ⁺Λ⁻ parametrization"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "pylbm"
+    },
+    "statement": "pylbm provides a unified LinearBounceBack base class parametrized by α(δ), with concrete subclasses CLIBounceBack (α=4/(1+2δ)), YLIBounceBack (α=2/(1+δ)), and BFL variants, each optionally supporting post-collision correction for TRT parametrization.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:pylbm-stability-src"
+    ],
+    "id": "tkc:oss-lbm:pylbm-stability",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 可为 TensorLBM 引入类似的稳定性分析模块，在格式设计阶段自动筛选松弛参数范围。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "numerical evaluation after symbolic construction",
+        "supports relative velocity frames"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "pylbm"
+    },
+    "statement": "pylbm implements von Neumann stability analysis by constructing the amplification matrix from the symbolic relaxation matrix and computing its eigenvalues over a discretized wave-vector space, classifying modes as inside/on/outside the unit circle.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:pylbm-sympy-src"
+    ],
+    "id": "tkc:oss-lbm:pylbm-sympy-scheme",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: SymPy 符号管线可复用于 TensorLBM 的格式自动推导与代码生成。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "all analysis modules",
+        "code generation pipeline"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "pylbm"
+    },
+    "statement": "pylbm uses SymPy throughout for symbolic scheme definition: the EquivalentEquation class constructs transformation matrices M, inverse M, velocity diagonal matrices Λ, and relaxation polynomials σ symbolically before numerical evaluation.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:cs-eos-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:cs-eos",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: Carnahan-Starling EoS 适用于硬球流体，可为 TensorLBM 提供另一种状态方程选项。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "pseudopotential multiphase",
+        "alternative EoS"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB implements the Carnahan-Starling equation of state as an alternative to Peng-Robinson, providing different thermodynamic behavior for pseudopotential multiphase flows.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:d2law-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:d2-law",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: d² 定律是蒸发模型的标准验证基准，应纳入 TensorLBM 的相变验证面。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "d²-law validation",
+        "droplet evaporation"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB includes 2D and 3D d²-law evaporation examples (d2law2D.cpp, d2law3D.cpp) for validating droplet evaporation rate against the classical d²-law, a standard benchmark for phase change models.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:evap-droplet-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:evaporating-droplet",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 蒸发液滴算例可用于验证 TensorLBM 的动界面相变能力。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "droplet evaporation",
+        "moving interface"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB includes a 2D evaporating droplet simulation example (evaporatingDroplet2D.cpp) demonstrating phase change with moving interface tracking.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:fluid-props-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:fluid-properties",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 流体属性插值类为 TensorLBM 提供了两相物性管理的参考实现。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "property interpolation",
+        "two-phase properties"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB implements a FluidProperties class that interpolates specific heat, thermal conductivity, and density between vapour and liquid phases based on local lattice density, with temperature ratio computation from lattice temperature.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:interaction-pot-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:interaction-potential",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 温度依赖的相互作用势扩展是热-多相耦合的核心机制，可指导 TensorLBM 的势函数设计。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "temperature-dependent interaction",
+        "thermal coupling"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB extends the OpenLB InteractionPotential base class with InteractionPotentialExtended, adding temperature-dependent operators (operator() with temperature ratio tr[]) and derivative computation at constant rho for thermal coupling.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:laplace-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:laplace-law",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: Laplace 定律验证是多相流模拟的标准基准，应纳入 TensorLBM 的验证面。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "interface verification",
+        "Laplace law"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB includes 2D and 3D Laplace law verification examples (laplace2D.cpp, laplace3D.cpp) with Python evaluation scripts to verify pressure jump across curved interfaces against the theoretical Laplace pressure.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:latent-heat-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:latent-heat-eos",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 潜热通过状态方程的 dP/dT 积分计算的方法可直接应用于 TensorLBM 的相变模块。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "phase change",
+        "latent heat"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB incorporates latent heat effects via the equation of state, using the temperature derivative of pressure (dP/dT) integrated over density to compute latent heat following Gong & Cheng (IJHMT 55, 4923-4927, 2012).",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:maxwell-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:maxwell-construction",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: Maxwell 构造验证是相变模拟中热力学一致性的关键工具，可集成到 TensorLBM 的验证流程中。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "thermodynamic consistency",
+        "GSL dependency"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB implements Maxwell construction using GSL (GNU Scientific Library) for root-finding and integration, enabling thermodynamic consistency verification of coexistence densities at given temperature ratios.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:guo-forcing-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:modified-guo-forcing",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 修正的 Guo 力格式可提升 TensorLBM 在多相流中的热力学一致性，消除虚假速度。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "pseudopotential forcing",
+        "thermodynamic consistency"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB implements a modified Guo forcing scheme (ForcedModifiedGuoBGKdynamics) based on Li, Luo & Li (Phys. Rev. E 86, 016709, 2012), with a correction factor sigma for thermodynamically consistent densities in pseudopotential LBM.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:mrt-thermal-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:mrt-thermal",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: MRT 热求解器可提高数值稳定性，尤其在高 Prandtl 数情况下。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "thermal lattice",
+        "MRT collision"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB provides an MRT (Multi-Relaxation-Time) option for the thermal lattice using D2Q5 descriptor with MRT tag, alongside the standard BGK thermal solver.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:compat-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:openlb-compat",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 版本兼容性限制表明需要关注 LBM 框架的版本演进对扩展模块的影响。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "OpenLB v1.3-1",
+        "integration requirements"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB was created for OpenLB v1.3-1 and is not currently compatible with OpenLB v1.4, requiring modification of BounceBack class (private→protected) and global.mk configuration for integration.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:phase-sep-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:phase-separation",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 相分离算例是伪势模型的基础验证，可用于 TensorLBM 的多相流初始化测试。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "phase separation",
+        "3D simulation"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB includes a 3D phase separation example (phaseSeparation3D.cpp) demonstrating spontaneous phase separation from random initial fluctuations in the pseudopotential model.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:pool-boiling-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:pool-boiling",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 池沸腾算例展示了重力驱动相变的实现模式，包括亚稳态处理策略。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "pool boiling",
+        "gravity-driven phase change"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB includes a 2D pool boiling simulation example that demonstrates gravity-driven phase change with metastability issues in the non-ideal equation of state, alleviated by high disturbance fluctuations and higher gravity.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:pr-eos-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:pr-eos",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 可参考 Peng-Robinson EoS 实现为 TensorLBM 建立非理想状态方程模块，支持相变模拟中的热力学一致性密度计算。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "pseudopotential multiphase",
+        "high density ratio"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB implements the Peng-Robinson equation of state with acentric factor support, enabling thermodynamically consistent pseudopotential multiphase simulations at high density ratios.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:semi-hybrid-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:semi-hybrid-thermal",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 半混合热求解器架构可为 TensorLBM 的热-流耦合提供参考，实现热扩散率独立设置。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "thermal multiphase",
+        "DDF approach"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB implements a semi-hybrid thermal solver using Double Distribution Function (DDF) approach, solving the thermal equation with explicit Euler to help set thermal diffusivity independently.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:thermo-consist-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:thermo-consistency",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 热力学一致性验证是相变模拟可信度的核心判据，应作为 TensorLBM 的标准验证流程。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "thermodynamic consistency",
+        "coexistence density"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB includes 2D and 3D thermodynamic consistency verification examples (thermodynamicConsistency2D.cpp, thermodynamicConsistency3D.cpp) with Python evaluation scripts comparing simulated coexistence densities against Maxwell construction predictions.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T16:00:00Z",
+    "created_by": "agent-m8689",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:thermalmulti:wettability-src"
+    ],
+    "id": "tkc:oss-lbm:thermalmulti:wall-wettability",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 壁面润湿性模型对沸腾传热模拟至关重要，可参考其接触角实现。",
+      "GAP 锚: GAP-LBM-THERMAL-MULTIPHASE — 热-多相耦合能力（相变/热毛细）",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "wall interaction",
+        "contact angle"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "ThermalMultiphaseOpenLB"
+    },
+    "statement": "ThermalMultiphaseOpenLB includes 2D and 3D wall wettability simulation examples (wallWettability2D.cpp, wallWettability3D.cpp) for studying contact angle behavior in multiphase flows.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:xlb-distribute-src"
+    ],
+    "id": "tkc:oss-lbm:xlb-jax-distribute",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: JAX shard_map 分布式方案可为 TensorLBM 的多 GPU 扩展提供无 MPI 的替代路径。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "JAX backend",
+        "multi-GPU/multi-device",
+        "1D slab decomposition"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "XLB"
+    },
+    "statement": "XLB implements distributed parallelism via JAX shard_map with rank-slab decomposition along the first spatial axis, using lax.ppermute for halo exchange of left/right velocity populations between devices.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:xlb-operator-src"
+    ],
+    "id": "tkc:oss-lbm:xlb-operator-pattern",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: Operator+backend 注册模式可指导 TensorLBM 构建多后端可插拔架构。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "all operator types",
+        "three compute backends"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "XLB"
+    },
+    "statement": "XLB uses an Operator base class with @register_backend decorators dispatching to JAX/Warp/Neon implementations, providing a unified interface for collision, streaming, equilibrium, macroscopic, and boundary condition operators.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:xlb-tests-src"
+    ],
+    "id": "tkc:oss-lbm:xlb-test-organization",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: 按 kernel 类型+后端分层的测试组织可作为 TensorLBM 测试面重构的参考。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "pytest framework"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "XLB"
+    },
+    "statement": "XLB organizes tests by kernel type (collision, equilibrium, macroscopic, stream) under tests/kernels/ and by backend (neon) under tests/backends/, separating algorithmic correctness from backend-specific behavior.",
+    "version": "1.0.0"
+  },
+  {
+    "claim_type": "descriptive",
+    "created_at": "2026-11-09T14:30:00Z",
+    "created_by": "agent-m8635",
+    "epistemic_status": "established",
+    "evidence_refs": [
+      "tke:oss-lbm:xlb-warp-src"
+    ],
+    "id": "tkc:oss-lbm:xlb-warp-kernel",
+    "modality": "asserted",
+    "notes": [
+      "TensorLBM 可服务改进点: Warp kernel 的 f_0/f_1 双缓冲+pull 模式可作为 TensorLBM GPU 实现的参考架构。",
+      "provenance=legacy-migration (ke_service.ke_ko)"
+    ],
+    "scope": {
+      "conditions": [
+        "Warp compute backend",
+        "pull streaming scheme"
+      ],
+      "domain": "lattice-Boltzmann-method",
+      "system": "XLB"
+    },
+    "statement": "XLB uses NVIDIA Warp for GPU kernel compilation, with streaming implemented as a @wp.kernel function operating on f_0/f_1 double-buffered arrays (array4d), where each thread reads populations from upstream neighbors via pull-scheme indexing.",
+    "version": "1.0.0"
+  }
+]

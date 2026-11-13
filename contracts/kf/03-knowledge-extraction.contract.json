@@ -1,0 +1,53 @@
+{
+  "package_id": "wp-ko-compiler-03",
+  "task_type": "03-knowledge-extraction",
+  "version": "1.0.0",
+  "input": {
+    "report_id": "14537",
+    "source_uri": "tensor://reports/14537",
+    "source_field": "markdown",
+    "source_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "objective": {
+    "identify_research_question": true,
+    "extract_methods_and_claims": true,
+    "extract_evidence": true,
+    "identify_assumptions": true,
+    "identify_limitations": true
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true
+  },
+  "output": {
+    "claims.json": true,
+    "evidence.json": true,
+    "provenance.json": true,
+    "extraction_summary.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_locator_resolvable": true,
+    "source_hash_matches": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true
+  },
+  "review": {
+    "required": true,
+    "independent_reviewer": true,
+    "reviewer_role": "evidence-auditor",
+    "sample_rate": 1.0,
+    "strong_model_sample_rate": 0.2
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "draft",
+    "path": "knowledge/compiled/<report_id>/",
+    "notes": "编译面只出候选 KO（verification_status<=report_claimed）；L3 只走平台验证单。规范见 docs/compiler/KNOWLEDGE-COMPILER-SPEC-v1.md"
+  },
+  "notes": "source_hash 由平台按 markdown 重算校验，异常即判门失败；零 claim 为合法完整结果。"
+}
