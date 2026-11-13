@@ -1,0 +1,146 @@
+{
+  "package_id": "wp-9761-01",
+  "report_id": "9761",
+  "source_sha256": "sha256:4667a18d2c2c183344308980f0b5ef2f018575f060f8129f7e0d8140abca2e2a",
+  "fetched_via": "api",
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "pass",
+      "detail": {
+        "manifest": "artifacts/wp-9761-01/asset_manifest.json",
+        "mirror": "docs/wp-9761-01/verification.json",
+        "result": "runs/wp-9761-01/kf_result.wp-9761-01.json",
+        "block_equals_result": true,
+        "mirror_equals_manifest": false,
+        "artifact_sha256": "dd2856eec94445e18c2271853e3598032f1d3af30e56b2e55771760dbbbc1bbb"
+      }
+    },
+    {
+      "check": "schema_pass",
+      "result": "pass",
+      "detail": {
+        "package_schema": "schemas/asset_manifest.v1.wp-9761-01.schema.json",
+        "envelope_schema": "schemas/kf_result.v1.schema.json",
+        "envelope_top_level_keys": [
+          "claims",
+          "outputs",
+          "package_id",
+          "provenance",
+          "report_id",
+          "task_type"
+        ],
+        "outputs_keys": [
+          "asset_manifest.json"
+        ]
+      }
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "pass",
+      "detail": {
+        "fetched_via": "api",
+        "api_sha256": "4667a18d2c2c183344308980f0b5ef2f018575f060f8129f7e0d8140abca2e2a",
+        "contract_sha256": "4667a18d2c2c183344308980f0b5ef2f018575f060f8129f7e0d8140abca2e2a",
+        "manifest_sha256": "4667a18d2c2c183344308980f0b5ef2f018575f060f8129f7e0d8140abca2e2a",
+        "result_sha256": "sha256:4667a18d2c2c183344308980f0b5ef2f018575f060f8129f7e0d8140abca2e2a",
+        "api_chars": 8931,
+        "manifest_chars": 8931,
+        "api_bytes_utf8": 14845,
+        "platform_figures": 5
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "pass",
+      "detail": {
+        "assets_checked": 29,
+        "defects": [],
+        "resolved_in_source": 26,
+        "referenced_unresolved": 3
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "pass",
+      "detail": {
+        "asset_ids": 29,
+        "observation_ids": 5,
+        "duplicates_or_dangling": []
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": {
+        "claims": 0,
+        "missing_evidence_or_status": [],
+        "note": "claims 为空数组是契约允许的完整结果（不做抽取）"
+      }
+    },
+    {
+      "check": "no_premature_verification_marks",
+      "result": "pass",
+      "detail": {
+        "markers_found": [],
+        "integrity_verified_flags": "none (verification is computed by the platform gate)",
+        "provenance_verification_status": "not_verified"
+      }
+    },
+    {
+      "check": "counts_consistent",
+      "result": "pass",
+      "detail": {
+        "declared": {
+          "assets": 29,
+          "by_class": {
+            "document": 1,
+            "heading": 1,
+            "provenance_statement": 1,
+            "problem_statement": 1,
+            "table": 6,
+            "definition_table": 1,
+            "method_rationale": 1,
+            "negative_control": 1,
+            "toolchain_declaration": 1,
+            "external_code_set": 1,
+            "numeric_result_statement": 3,
+            "interpretation": 2,
+            "verdict_statement": 1,
+            "figure_declaration": 1,
+            "figure_binary_set": 1,
+            "limitation_set": 1,
+            "self_assessment": 1,
+            "artifact_path_list": 1,
+            "audit_chain": 1,
+            "normalization_declaration": 1,
+            "environment_record": 1
+          },
+          "by_resolution": {
+            "resolved_in_source": 26,
+            "referenced_unresolved": 3
+          },
+          "resolved_in_source": 26,
+          "referenced_unresolved": 3,
+          "declared_absent": 0,
+          "unique_quotes": 29
+        },
+        "recomputed": {
+          "resolved_in_source": 26,
+          "referenced_unresolved": 3
+        },
+        "assets": 29
+      }
+    },
+    {
+      "check": "report_scope_isolated",
+      "result": "pass",
+      "detail": {
+        "manifest_report_id": "9761",
+        "result_report_id": "9761",
+        "source_uri": "tensor://reports/9761"
+      }
+    }
+  ],
+  "overall": "PASS"
+}
