@@ -1,0 +1,94 @@
+{
+  "package_id": "wp-9091-01",
+  "report_id": "9091",
+  "verification_timestamp": "2026-11-13T00:00:00+00:00",
+  "checks": {
+    "valid_json": {
+      "pass": true,
+      "how": "json.load succeeded for all JSON artefacts"
+    },
+    "schema_pass": {
+      "kf_result.wp-9091-01.json": {
+        "pass": true,
+        "schema": "schemas/kf_result.v1.schema.json",
+        "required_fields_present": [
+          "package_id",
+          "task_type",
+          "report_id",
+          "provenance",
+          "outputs"
+        ]
+      },
+      "asset_manifest.json": {
+        "pass": true,
+        "schema": "schemas/asset_manifest.v1.schema.json",
+        "required_fields_present": [
+          "schema",
+          "package_id",
+          "task_type",
+          "report_id",
+          "source_uri",
+          "source_field",
+          "source_hash",
+          "assets",
+          "claims"
+        ]
+      }
+    },
+    "package_id_consistent": {
+      "pass": true,
+      "value": "wp-9091-01",
+      "checked_in": [
+        "kf_result.wp-9091-01.json",
+        "asset_manifest.json",
+        "verification.json"
+      ]
+    },
+    "report_id_consistent": {
+      "pass": true,
+      "value": "9091",
+      "checked_in": [
+        "kf_result.wp-9091-01.json",
+        "asset_manifest.json",
+        "verification.json"
+      ]
+    },
+    "task_type_valid": {
+      "pass": true,
+      "value": "01-asset-registration",
+      "allowed": [
+        "01-asset-registration",
+        "02-classification-parse",
+        "03-knowledge-extraction",
+        "04-independent-review",
+        "05-synthesis-research"
+      ]
+    },
+    "no_verified_claims": {
+      "pass": true,
+      "how": "claims array is empty; no claim marked verified"
+    },
+    "asset_ids_unique": {
+      "pass": true,
+      "count": 7,
+      "unique_count": 7
+    },
+    "files_exist": {
+      "pass": true,
+      "files": [
+        "KF-RESULT-wp9091-01.md",
+        "README.md",
+        "asset_manifest.json",
+        "kf_result.wp-9091-01.json",
+        "report_9091.md",
+        "verification.json",
+        "checks_baseline.md"
+      ]
+    }
+  },
+  "summary": {
+    "total_checks": 8,
+    "passed": 8,
+    "failed": 0
+  }
+}
