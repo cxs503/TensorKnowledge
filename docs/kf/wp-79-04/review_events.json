@@ -1,0 +1,54 @@
+[
+  {
+    "id": "tkr:review-report:wp-79-04",
+    "object_ref": "wp-79-01",
+    "object_version": "report_id=79@sha256:235018352a8a4f5351c48414b7ed29bd0259729f871d4ba94377551b56990ea0",
+    "decision": "request-changes",
+    "reviewer": {
+      "id": "m15631",
+      "reviewer_type": "agent",
+      "role": "red-team-reviewer"
+    },
+    "reviewed_at": "2026-11-12T01:34:36.270831+00:00",
+    "policy_version": "GATE-RULES-v1 (M1-M6) / PRODUCTION-LINE-v1 2.4",
+    "rationale": "上游 wp-79-01 不可达使 fidelity 轴 not_run；来源报告自身 1 blocking + 4 major 缺陷。",
+    "findings": [
+      {
+        "severity": "blocking",
+        "finding": "F1 上游知识包 wp-79-01 在平台上不可达 ⇒ fidelity 判据无从施加"
+      },
+      {
+        "severity": "major",
+        "finding": "F2 数字溯源不可重放：只给绝对本机路径通配，无工件文件名/内容哈希"
+      },
+      {
+        "severity": "major",
+        "finding": "F3 自定容差 ±0.01% 未定义口径，且按相对误差读法被自身数据违反"
+      },
+      {
+        "severity": "major",
+        "finding": "F4 声明 6 项质检标准，逐篇只记录 4 项（含报告自己的'结论不超证据'）"
+      },
+      {
+        "severity": "major",
+        "finding": "F5 同一'图件齐备'判据出现三种结论且无 rubric；65 的 PASS 依赖未被引用的'理由'"
+      },
+      {
+        "severity": "minor",
+        "finding": "F6 跨系统断言（返工单 #155、质检文档）无 locator/哈希"
+      },
+      {
+        "severity": "minor",
+        "finding": "F7 报告 64 的误差列只有'参考值来源不明'，无任何数字，无法套用 15% 精度标准"
+      },
+      {
+        "severity": "informational",
+        "finding": "F8 无图理由可接受，但措辞把表格称作'比较曲线'"
+      }
+    ],
+    "conditions": [
+      "wp-79-01 落库后重跑本包",
+      "溯源与容差按 remediation 修正后才可再次送审"
+    ]
+  }
+]
