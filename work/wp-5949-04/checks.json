@@ -1,0 +1,189 @@
+{
+  "C1_source_identity": {
+    "pass": true,
+    "detail": "live sha256=c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002 chars=12605 bytes=17867"
+  },
+  "C2_upstream_source_copy": {
+    "pass": true,
+    "detail": "upstream copy sha256=c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002"
+  },
+  "C3_locator_slices": {
+    "pass": false,
+    "detail": "checked=23 failing=[{'asset': 'A01', 'why': 'slice_ne_quote'}, {'asset': 'A02', 'why': 'slice_ne_quote'}, {'asset': 'A03', 'why': 'slice_ne_quote'}]（document 级 3 条另计于 C3b）"
+  },
+  "C3b_document_locators": {
+    "pass": false,
+    "detail": "document 级 asset=3 字节相等失败=['A01', 'A02', 'A03']（全篇跨度 0..12605 对比首行 quote → 必然不等，属坐标混用）；line 字段为 0 者=[{'asset': 'A02', 'start_line': 0}, {'asset': 'A03', 'start_line': 0}]"
+  },
+  "C3c_quotes_searchable": {
+    "pass": true,
+    "detail": "按子串检索 23 条 quote，未命中=[]"
+  },
+  "C4_locator_line_numbers": {
+    "pass": true,
+    "detail": "mismatch=[]"
+  },
+  "C5_quote_uniqueness": {
+    "pass": true,
+    "detail": "non_unique=[] declared_checked=20"
+  },
+  "C6b_digest_offset_semantics": {
+    "pass": false,
+    "detail": [
+      {
+        "label": "coverage",
+        "declared": [
+          31,
+          49
+        ],
+        "doc_absolute": [
+          155,
+          212
+        ],
+        "slice_at_declared": " 同族查重\n\n> 战役节点 **IN",
+        "matches_line_relative": false
+      },
+      {
+        "label": "seats",
+        "declared": [
+          2,
+          20
+        ],
+        "doc_absolute": [
+          213,
+          280
+        ],
+        "slice_at_declared": "IN25-T2 · 多样性引擎：氏族",
+        "matches_line_relative": false
+      },
+      {
+        "label": "prereg_lock",
+        "declared": [
+          35,
+          53
+        ],
+        "doc_absolute": [
+          213,
+          280
+        ],
+        "slice_at_declared": "重\n\n> 战役节点 **IN25-T",
+        "matches_line_relative": false
+      },
+      {
+        "label": "calibration",
+        "declared": [
+          2,
+          20
+        ],
+        "doc_absolute": [
+          281,
+          337
+        ],
+        "slice_at_declared": "IN25-T2 · 多样性引擎：氏族",
+        "matches_line_relative": false
+      },
+      {
+        "label": "dedup_ledger",
+        "declared": [
+          36,
+          54
+        ],
+        "doc_absolute": [
+          281,
+          337
+        ],
+        "slice_at_declared": "\n\n> 战役节点 **IN25-T2",
+        "matches_line_relative": false
+      },
+      {
+        "label": "blind",
+        "declared": [
+          8,
+          26
+        ],
+        "doc_absolute": [
+          338,
+          365
+        ],
+        "slice_at_declared": "2 · 多样性引擎：氏族矩阵 / 盲",
+        "matches_line_relative": false
+      },
+      {
+        "label": "lock_hash",
+        "declared": [
+          22,
+          41
+        ],
+        "doc_absolute": [
+          2901,
+          3022
+        ],
+        "slice_at_declared": " / 盲预测锁 / 同族查重\n\n> 战",
+        "matches_line_relative": false
+      }
+    ]
+  },
+  "C6_declared_digests": {
+    "pass": false,
+    "detail": "items=7 verifiable=0 failing=['coverage', 'seats', 'prereg_lock', 'calibration', 'dedup_ledger', 'blind', 'lock_hash'] (前缀 16 位且工件不在树内 → 不可复算，属登记声明而非证据)"
+  },
+  "C7_counts_consistency": {
+    "pass": true,
+    "detail": "assets=23 unique_ids=23 by_resolution={'resolved_in_source': 4, 'referenced_unresolved': 19}"
+  },
+  "C8_resolution_falsifiable": {
+    "pass": true,
+    "detail": "path_assets=19 wrong=[]"
+  },
+  "C9_no_self_verification_fields": {
+    "pass": true,
+    "detail": "manifest_hits=[] envelope_hits=[]"
+  },
+  "C10_claims_empty": {
+    "pass": true,
+    "detail": "manifest.claims=[] envelope_has_claims_key=False (信封省略 claims；报告正文称 claims 为空数组——空/缺键语义等价，记差异不记缺陷)"
+  },
+  "C11_envelope_against_canonical_schema": {
+    "pass": true,
+    "detail": "valid vs schemas/kf_result.v1.schema.json"
+  },
+  "C12_outputs_pointer_dereference": {
+    "pass": true,
+    "detail": "outputs 值键=['asset_count', 'bytes', 'claims', 'path', 'sha256']；sha256 可与 docs/kf/wp-5949-01/asset_manifest.json 对上=True；但值是**指针**不是内容对象（schema 描述要求内容对象）"
+  },
+  "C13_figures": {
+    "pass": true,
+    "detail": "platform_figures=2 manifest_figure_assets=2 payload_keys=[['caption', 'name'], ['caption', 'name']]"
+  },
+  "C14_report_single_json_block": {
+    "pass": true,
+    "detail": "json_blocks=1 equals_envelope=True upstream_api_title='KF-RESULT wp-5949-01' upstream_api_tags=['kf-wp:wp-5949-01', 'KF-RESULT', 'asset-registration', 'IN25-T2', 'wp-5949-01'] upstream_status=published"
+  },
+  "C17_upstream_kf_wp_tag": {
+    "pass": true,
+    "detail": "title/tag check on report 14660"
+  },
+  "C18_figure_captions": {
+    "pass": true,
+    "detail": "manifest.source.platform_figures 与平台 figures[] 的 name/caption 逐字比对"
+  },
+  "C15_report_claim_repo_schema_absent": {
+    "pass": true,
+    "detail": "报告有该断言=True 上游 commit 树内该文件存在=False"
+  },
+  "C16_verification_attribution": {
+    "pass": false,
+    "detail": "报告称 verification.json 为「平台侧独立复算」；实际由本包 scripts/kf/build_asset_manifest_5949.py verify 子命令（生产者会话内）产出，含 verified_at/all_pass=True——非平台门签发"
+  },
+  "summary": {
+    "pass": false,
+    "n_checks": 21,
+    "n_fail": [
+      "C3_locator_slices",
+      "C3b_document_locators",
+      "C6b_digest_offset_semantics",
+      "C6_declared_digests",
+      "C16_verification_attribution"
+    ]
+  }
+}
