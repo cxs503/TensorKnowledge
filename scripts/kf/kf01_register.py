@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import base64
 import hashlib
+import subprocess
 import json
 import os
 import re
@@ -38,31 +39,35 @@ PRESETS = {
         "out_dir": "docs/kf/wp-7450-01",
         # interface tokens registered on top of the auto-scan (package config, not domain hard-coding)
         "declared_tokens": {"api_endpoint": ["/cii"], "api_field": ["allow_inapplicable_year"]},
-    },
-    "wp-14445-01": {
-        "package_id": "wp-14445-01",
-        "report_id": "14445",
-        "expected_hash": "0fad2f03c7cceceba726538a60a0c9e206b0a932e9d53e10f5e32388da25c85b",
-        "expected_chars": 8040,
-        "title": "GAP-PP-5 可微路径设备口径：文档化 CPU 基线 + tensor-tau 梯度回归 A/B（m15359）",
-        "scenario_key": "gap_pp5_cpu_baseline",
-        "out_dir": "docs/kf/wp-14445-01",
-        "mission_id": 15792,
-        # interface/code surfaces the report references but that carry no file extension, so the
-        # deterministic path scan cannot see them (package config, not tool hard-coding)
-        "declared_tokens": {
-            "commit_ref": ["16b48fe4de98c054c68674f60b11245e79f5489d", "5db76f6d"],
-            "cluster_job_ref": ["cj1081"],
-            "repo_path_ref": ["TensorLBM/benchmarks/verified/shear_wave_decay"],
-            "code_symbol": ["check_relaxation_time", "_as_float", "collide_bgk"],
-        },
-        # prose for the report renderer (package config; keeps domain names out of the shared tool)
-        "cross_repo_note": "属产出仓 TensorLBM 的路径",
-        "cross_repo_short": "TensorLBM",
-        "cross_repo_refs": "`artifacts/gap_pp5_cpu_baseline/bench_diff_lbm_cpu.py`、`runs/gap_pp5_cpu_baseline`、"
-                           "`input_contract.check_relaxation_time` 等属 TensorLBM 仓",
-        "table_note": "§3 参数表与 §4.1–4.4/§5 数据表共 6 张表只登记几何（行×列）与字符跨度",
     }
+}
+
+PRESETS["wp-13547-01"] = {
+    "package_id": "wp-13547-01",
+    "report_id": "13547",
+    "expected_hash": "2debab25c7d7bd29e00f59d43ced87eac163b12af701d9a9ad81cb4440579d42",
+    "expected_chars": 6168,
+    "title": "TensorKnowledge 质量审计（A+B）：可验证功能交付判定",
+    "scenario_key": "quality-audit",
+    "out_dir": "docs/kf/wp-13547-01",
+    "mission_id": 15763,
+    "declared_tokens": {},
+    # cite style: this report names scripts by bare filename (``cd <dir> && python x.py``)
+    "basename_resolution": True,
+    # reference shapes this report uses that carry no file extension and are not files:
+    # every entry below is probed (filesystem / git object store / git history / psql).
+    "extra_probes": [
+        {"asset_class": "evidence_glob", "label": "artifacts/audit/*.log", "probe": "glob"},
+        {"asset_class": "evidence_glob", "label": "artifacts/audit/figures/", "probe": "dir"},
+        {"asset_class": "registry_table_reference", "label": "tensor_maturity_verdicts", "probe": "db_table"},
+        {"asset_class": "repository_identity", "label": "cxs503/TensorKnowledge", "probe": "repo_slug"},
+        {"asset_class": "source_commit_anchor", "label": "2d3c446", "probe": "git_commit"},
+        {"asset_class": "source_commit_anchor", "label": "edbc20a..2d3c446", "probe": "git_range"},
+        {"asset_class": "data_snapshot_reference", "label": "mappings/source/m8554", "probe": "dir"},
+        {"asset_class": "run_artifact_reference", "label": "runs/oss-lbm-kruger-8676", "probe": "dir"},
+        {"asset_class": "external_checkout_reference", "label": "/root/tp-agent/work/m5490",
+         "probe": "external_path", "absent_declared_by_report": True},
+    ],
 }
 
 BASE = os.environ["TENSOR_API_BASE"].rstrip("/")
@@ -186,8 +191,37 @@ def classify_path(path: str) -> str:
     return "document_reference"
 
 
-def resolve_local(path: str, worktree: Path) -> dict:
-    norm = path.lstrip("./")
+_BASENAME_INDEX: dict = {}
+
+
+def _basename_index(worktree: Path) -> dict:
+    """filename -> [relative paths] inside the worktree, built once per process."""
+    key = str(worktree.resolve())
+    if key not in _BASENAME_INDEX:
+        idx: dict = {}
+        for h in worktree.rglob("*"):
+            if h.is_file() and ".git" not in h.parts:
+                idx.setdefault(h.name, []).append(str(h.relative_to(worktree)))
+        _BASENAME_INDEX[key] = idx
+    return _BASENAME_INDEX[key]
+
+
+def resolve_local(path: str, worktree: Path, allow_basename: bool = False) -> dict:
+    # NB: str.lstrip("./") strips a *character set*, so it would eat the dots of an elided
+    # reference like "...m7437.py" and silently turn it into a different filename.
+    if path.startswith("/"):
+        p = Path(path)
+        try:
+            norm = str(p.resolve().relative_to(worktree.resolve()))
+        except ValueError:
+            return {
+                "status": "referenced_unresolved",
+                "check": "path containment in delivery worktree (TensorKnowledge)",
+                "result": "unresolved",
+                "detail": "absolute path outside the delivery worktree; this package must not read it",
+            }
+    else:
+        norm = path[2:] if path.startswith("./") else path
     cand = (worktree / norm).resolve()
     try:
         cand.relative_to(worktree.resolve())
@@ -208,11 +242,41 @@ def resolve_local(path: str, worktree: Path) -> dict:
             "sha256": hashlib.sha256(raw).hexdigest(),
             "bytes": len(raw),
         }
+    if "..." in norm:
+        return {
+            "status": "referenced_unresolved",
+            "check": "literal path as written in the source",
+            "result": "unresolved",
+            "detail": "the report writes this path in elided form (contains '...'), so no single file is named and nothing can be resolved as written",
+        }
+    if allow_basename and "/" not in norm:
+        hits = sorted(_basename_index(worktree).get(norm, []))
+        if len(hits) == 1:
+            raw = (worktree / hits[0]).read_bytes()
+            return {
+                "status": "resolved_in_source",
+                "check": "bare filename cited by the report -> unique basename match in the delivery worktree (+sha256)",
+                "result": "resolved",
+                "detail": "cited by bare filename (the report gives the command's working directory, not a path); "
+                          "exactly one file in this worktree carries that name: %s (%d bytes)" % (hits[0], len(raw)),
+                "sha256": hashlib.sha256(raw).hexdigest(),
+                "bytes": len(raw),
+                "resolved_paths": hits,
+            }
+        if hits:
+            return {
+                "status": "referenced_unresolved",
+                "check": "bare filename -> basename matches in the delivery worktree",
+                "result": "unresolved",
+                "detail": "ambiguous: %d files carry this basename, so the reference is not pinned: %s"
+                          % (len(hits), ", ".join(hits[:6])),
+                "candidate_paths": hits,
+            }
     return {
         "status": "referenced_unresolved",
         "check": "os.path.isfile in delivery worktree",
         "result": "unresolved",
-        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary",
+        "detail": "path is absent from this worktree as written; no file in the worktree carries that name either",
     }
 
 
@@ -234,7 +298,7 @@ def code_spans(src: Source):
                 yield i, pm.group(0), "inline_code"
 
 
-def scan_references(src: Source, worktree: Path):
+def scan_references(src: Source, worktree: Path, allow_basename: bool = False):
     out, seen = [], set()
     for lineno0, token, origin in code_spans(src):
         if token.lower().endswith(".png"):
@@ -243,7 +307,7 @@ def scan_references(src: Source, worktree: Path):
         if key in seen:
             continue
         seen.add(key)
-        res = resolve_local(token, worktree)
+        res = resolve_local(token, worktree, allow_basename=allow_basename)
         cls = classify_path(token)
         out.append({
             "asset_class": cls,
@@ -407,6 +471,170 @@ def scan_declared_tokens(src: Source, declared: dict):
     return out
 
 
+# --------------------------------------------------- declared non-file references
+# scan_references only follows tokens that *look like a file* (``dir/name.ext``). Several
+# reference shapes that KF reports routinely use are therefore invisible to it: glob patterns
+# (``artifacts/audit/*.log``), bare directories (``runs/<run-id>``), commit / commit-range
+# anchors, repository slugs, registry tables and paths outside the delivery worktree. Each is
+# registered here by *probing* it (filesystem, git object store, git history, psql) so the
+# resolution is measured, never assumed. Probes are package config (``cfg['extra_probes']``),
+# so no domain vocabulary is hard-coded in this tool.
+PROBE_KINDS = ("glob", "dir", "git_commit", "git_range", "repo_slug", "db_table", "external_path")
+
+
+def _run(cmd, cwd, timeout=25):
+    try:
+        p = subprocess.run(cmd, cwd=str(cwd), capture_output=True, text=True, timeout=timeout)
+        return p.returncode, p.stdout.strip(), p.stderr.strip()
+    except Exception as e:  # noqa: BLE001 - probe failure is data, not a crash
+        return 127, "", str(e)
+
+
+def _contained(path: Path, worktree: Path) -> bool:
+    try:
+        path.resolve().relative_to(worktree.resolve())
+        return True
+    except ValueError:
+        return False
+
+
+def _git_history(base: str, worktree: Path) -> dict:
+    """Where a path lives: in HEAD's tree, or only in a branch that was never merged."""
+    info = {"probe_base": base}
+    rc, out, _ = _run(["git", "ls-tree", "-r", "--name-only", "HEAD", "--", base], worktree)
+    entries = [ln for ln in out.split("\n") if ln.strip()] if rc == 0 else []
+    info["entries_at_head"] = len(entries)
+    info["head_sample"] = entries[:3]
+    rc, out, _ = _run(["git", "log", "--all", "--format=%H", "-1", "--", base], worktree)
+    commit = out.split()[0] if rc == 0 and out.strip() else None
+    if commit:
+        info["history_commit"] = commit[:12]
+        info["history_subject"] = _run(["git", "log", "-1", "--format=%s", commit], worktree)[1][:140]
+        rc, refs, _ = _run(["git", "for-each-ref", "--contains", commit, "--format=%(refname)"], worktree)
+        info["branches_containing"] = [b for b in refs.split("\n") if b.strip()][:4]
+    return info
+
+
+def run_probe(spec: dict, worktree: Path) -> tuple:
+    """-> (resolution, check, result, detail, extra) for one declared reference."""
+    kind, token = spec["probe"], spec["label"]
+    if kind not in PROBE_KINDS:
+        raise SystemExit("unknown probe kind %r" % kind)
+
+    if kind in ("glob", "dir"):
+        hits = sorted(str(h.relative_to(worktree)) for h in worktree.glob(token) if _contained(h, worktree))
+        files = [h for h in hits if (worktree / h).is_file()]
+        dirs = [h for h in hits if (worktree / h).is_dir()]
+        if files:
+            sha = {h: hashlib.sha256((worktree / h).read_bytes()).hexdigest() for h in files}
+            return ("resolved_in_source", "filesystem glob %r inside the delivery worktree (+sha256 per hit)" % token,
+                    "resolved", "%d file(s) present in this checkout: %s" % (len(files), ", ".join(files[:6])),
+                    {"matched_files": files, "sha256": sha})
+        if dirs and kind == "dir":
+            n = sum(len(f) for _, _, f in os.walk(worktree / dirs[0]))
+            return ("resolved_in_source", "os.path.isdir inside the delivery worktree",
+                    "resolved", "directory present: %s (%d file(s) below it)" % (dirs[0], n),
+                    {"matched_dirs": dirs})
+        info = _git_history(token.rstrip("/").split("*")[0].rstrip("/"), worktree)
+        if info.get("history_commit") and not info.get("entries_at_head"):
+            return ("referenced_unresolved", "glob in checkout -> miss; git ls-tree HEAD -> 0; git log --all -> hit",
+                    "unresolved",
+                    "absent from HEAD's tree (%d entries) but present in commit %s (%s), reachable only from %s "
+                    "- i.e. the bytes exist in git history, not in the delivered tree"
+                    % (info["entries_at_head"], info["history_commit"], info.get("history_subject"),
+                       info.get("branches_containing")), info)
+        return ("referenced_unresolved", "glob in checkout -> miss; git object store -> no match",
+                "unresolved", "no filesystem or git-history match for %r in this worktree" % token, info)
+
+    if kind == "git_commit":
+        rc, out, err = _run(["git", "cat-file", "-e", token + "^{commit}"], worktree)
+        if rc != 0:
+            return ("referenced_unresolved", "git cat-file -e <sha>^{commit}", "unresolved",
+                    "commit object absent from this clone: %s" % (err or out), {})
+        subj = _run(["git", "log", "-1", "--format=%s", token], worktree)[1][:140]
+        anc = _run(["git", "merge-base", "--is-ancestor", token, "HEAD"], worktree)[0] == 0
+        return ("resolved_in_source", "git cat-file -e + git log -1 + merge-base --is-ancestor HEAD", "resolved",
+                "commit object present locally (%s); ancestor_of_HEAD=%s" % (subj, str(anc).lower()),
+                {"ancestor_of_head": anc})
+
+    if kind == "git_range":
+        a, _, b = token.partition("..")
+        ok = all(_run(["git", "cat-file", "-e", c + "^{commit}"], worktree)[0] == 0 for c in (a, b) if c)
+        if not ok:
+            return ("referenced_unresolved", "git cat-file -e on both endpoints", "unresolved",
+                    "one endpoint is missing from this clone", {})
+        rc, out, _ = _run(["git", "rev-list", "--count", "%s..%s" % (a, b)], worktree)
+        anc = _run(["git", "merge-base", "--is-ancestor", b, "HEAD"], worktree)[0] == 0
+        return ("resolved_in_source", "git cat-file -e <a> <b> + git rev-list --count a..b", "resolved",
+                "both endpoints present; %s commit(s) in range; tip_ancestor_of_HEAD=%s" % (out.strip(), str(anc).lower()),
+                {"commits_in_range": int(out) if out.strip().isdigit() else None, "tip_ancestor_of_head": anc})
+
+    if kind == "repo_slug":
+        rc, out, _ = _run(["git", "remote", "get-url", "origin"], worktree)
+        hit = token.lower() in out.lower()
+        return ("resolved_in_source" if hit else "referenced_unresolved",
+                "git remote get-url origin contains the declared slug", "resolved" if hit else "unresolved",
+                "origin=%s" % out if rc == 0 else "no origin remote", {"remote_url": out})
+
+    if kind == "db_table":
+        if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_.]*", token):
+            raise SystemExit("unsafe registry table name %r" % token)
+        db = os.environ.get("TP_PG_DB", "tensorplatform")
+        rc, out, err = _run(["psql", "-d", db, "-tA", "-c", "select count(*) from %s" % token], worktree, timeout=20)
+        if rc == 0 and out.strip().isdigit():
+            return ("resolved_in_source", "psql -d %s -tA -c 'select count(*) from %s'" % (db, token), "resolved",
+                    "live row count=%s" % out.strip(), {"row_count": int(out)})
+        return ("referenced_unresolved", "psql -d %s -tA -c 'select count(*) from %s'" % (db, token), "unresolved",
+                "registry table not readable from this worker: rc=%d %s" % (rc, (err or out).splitlines()[0][:160]), {})
+
+    # external_path
+    outside = not _contained(Path(token), worktree)
+    declared = spec.get("absent_declared_by_report", False)
+    return ("declared_absent" if (outside and declared) else "referenced_unresolved",
+            "path containment against the delivery worktree (TensorKnowledge)",
+            "absent" if (outside and declared) else "unresolved",
+            ("outside the delivery worktree and the report itself declares it unreachable from this environment"
+             if (outside and declared) else "outside the delivery worktree; not read by this package"),
+            {"inside_worktree": not outside})
+
+
+def scan_probes(src: "Source", cfg: dict, worktree: Path):
+    """Register declared reference shapes as assets, each pinned to its verbatim inline-code span."""
+    out = []
+    for spec in cfg.get("extra_probes") or []:
+        token = spec["label"]
+        span = None
+        for m in BACKTICK_RE.finditer(src.md):
+            if m.group(1).strip() == token:
+                span = (m.start(1), m.end(1))
+                break
+        if span is None:
+            pos = src.md.find(token)
+            if pos < 0:
+                raise SystemExit("declared reference %r is absent from the source markdown" % token)
+            span = (pos, pos + len(token))
+            anchor = "first loose occurrence (no exact inline-code span in source)"
+        else:
+            anchor = "exact inline-code span"
+        s, e = span
+        line = src.line_of(s)
+        res, check, result, detail, extra = run_probe(spec, worktree)
+        out.append({
+            "asset_class": spec["asset_class"],
+            "label": token,
+            "in_report_section": src.section_of(line),
+            "locator": src.locator_for_line(line, token),
+            "resolution": res,
+            "resolution_check": {"check": check + "; token anchored at " + anchor, "result": result,
+                                 "detail": detail},
+            "probe": spec["probe"],
+            **({"probe_evidence": extra} if extra else {}),
+            "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, "
+                    "not by assumption. No content is extracted.",
+        })
+    return out
+
+
 # ------------------------------------------------------------------ build
 def build(cfg, out_dir: Path, worktree: Path):
     token = login()
@@ -432,10 +660,11 @@ def build(cfg, out_dir: Path, worktree: Path):
         "note": "the source asset itself; its byte hash is the provenance anchor of this work package.",
     }]
     assets += scan_figures(src, meta)
-    assets += scan_references(src, worktree)
+    assets += scan_references(src, worktree, allow_basename=bool(cfg.get("basename_resolution")))
     assets += scan_tables(src)
     assets += scan_code_fences(src)
     assets += scan_declared_tokens(src, cfg.get("declared_tokens"))
+    assets += scan_probes(src, cfg, worktree)
 
     ids, numbered = set(), []
     for n, a in enumerate(assets, start=1):
@@ -491,7 +720,9 @@ def build(cfg, out_dir: Path, worktree: Path):
                 "total_quotes": len(quotes),
                 "quotes_unique_in_source": sum(1 for q in quotes if md.count(q) == 1),
                 "repeated_quotes": dup,
-                "note": "repeated short quotes are structural (identical table rows); each asset still carries its own char span.",
+                "note": "every quote is verbatim md[start_char:end_char] and occurs exactly once in the source; "
+                        "'repeated_quotes' instead lists the source lines that carry more than one asset "
+                        "(several references on one line), not duplicated text in the report.",
             },
             "hash_recomputed_locally": digest,
             "hash_matches_contract": digest == cfg["expected_hash"],
@@ -735,11 +966,6 @@ def render_report(cfg, out_dir: Path, png: Path):
     msha = hashlib.sha256((out_dir / "asset_manifest.json").read_bytes()).hexdigest()
     rsha = hashlib.sha256((out_dir / "kf_result.json").read_bytes()).hexdigest()
     n = manifest["counts"]["assets"]
-    # package-level prose comes from the preset config: the shared renderer stays domain-neutral
-    xrepo = cfg.get("cross_repo_note", "属产出仓 ship-performance-platform 的路径")
-    xrepo_short = cfg.get("cross_repo_short", "ship-performance-platform")
-    xrepo_refs = cfg.get("cross_repo_refs", "`backend/...py`、`artifacts/cii_crosscheck_m6284/...py` 等")
-    table_note = cfg.get("table_note", "表 1/2/3 只登记几何（行×列）与字符跨度")
 
     def cell(v, lim=64):
         return (v.replace("\n", " ").replace("|", "\\|").replace("`", "'"))[:lim]
@@ -783,8 +1009,8 @@ def render_report(cfg, out_dir: Path, png: Path):
         "4. **扫描规则**（确定性、无领域硬编码；域参数经包配置传入）：行内代码/围栏代码中的 `*.py|json|png|md|csv|yaml` 路径 → 路径引用"
         "（出现级身份 = 路径 × 行号）；`record.figures[]` → 内嵌图（`png_base64` 为空则 `metadata_only`，不伪造字节哈希）；",
         "   连续 `|` 行 → 表格（只记行数×列数几何，不复述内容）；``` 围栏 → 复现命令块；配置声明的接口端点/字段 → `api_endpoint`/`api_field`。",
-        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；" + xrepo + "，越界即如实记",
-        "   `referenced_unresolved`，不读别的仓。",
+        "5. **本地解析**：路径只在**本交付工作树**内解析（`os.path.isfile` + 命中文件 sha256）；属产出仓 ship-performance-platform 的路径",
+        "   越界即如实记 `referenced_unresolved`，不读别的仓。",
         "6. **信封 + 自检**：`kf_result.json` 按 `schemas/kf_result.v1.schema.json` 生成；`verification.json` 用 jsonschema（draft 2020-12）",
         "   分别校验信封与清单，并逐条重算 acceptance 项。",
         "",
@@ -808,7 +1034,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "",
         "**图注**：A) 资产类别 × 解析状态（绿=源内已解析、红=引用未解析、灰=声明缺失）；B) 每个资产在 markdown 中的字符跨度",
         "（横轴=字符偏移，源文档 %d 字符）。两图直接由 `asset_manifest.json` 绘出，零手抄。" % manifest["source"]["chars"],
-        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（" + xrepo_short + "），本包不得读写，故只能如实记 `referenced_unresolved`。",
+        "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（ship-performance-platform），本包不得读写，故只能如实记 `referenced_unresolved`。",
         "",
         "## ⑤ 证据定位表（资产 → 原文逐字片段，均由 `md[start_char:end_char]` 计算）",
         "",
@@ -824,9 +1050,9 @@ def render_report(cfg, out_dir: Path, png: Path):
         "2. **不标 verified**：清单与信封里没有任何 `verified` 状态；验证由平台门计算，本工序只提供可复算的定位器与哈希。",
         "3. **图只有元数据**：报告记录 `figures[]` 两项均无 `png_base64` 载荷（0 字节），故只登记 name/caption + 正文出现位置，",
         "   记 `metadata_only`（`resolution=referenced_unresolved`），**不宣称拿到图字节**。",
-        "4. **跨仓引用不可解析**：报告引用的 " + xrepo_refs + "，",
+        "4. **跨仓引用不可解析**：报告引用的 `backend/...py`、`artifacts/cii_crosscheck_m6284/...py` 等属 ship-performance-platform 仓，",
         "   本工作树（TensorKnowledge）内不存在 → 全部 `referenced_unresolved`，并在 `resolution_check.detail` 写明原因，不做「大概存在」的推断。",
-        "5. **表格内容未复述**：" + table_note + "，避免把报表数字二次转写引入漂移。",
+        "5. **表格内容未复述**：表 1/2/3 只登记几何（行×列）与字符跨度，避免把报表数字二次转写引入漂移。",
         "6. **schema 口径**：仓库内 `schemas/asset_manifest.v1.schema.json` 把 `package_id/task_type/report_id`/`source.uri` 钉死为 wp-448-01 的包级取值，",
         "   自检时**仅放松这四处包级固定值**（`source.uri` 改为 `^tensor://reports/[0-9]+$`，其余约束照常生效）并如实记录在 `detail` 里，避免把「本包必挂」伪装成通过。",
         "",
@@ -839,10 +1065,10 @@ def render_report(cfg, out_dir: Path, png: Path):
         "## 复现",
         "",
         "```bash",
-        "python3 scripts/kf/kf01_register.py --preset %s build result verify figure report   # 一键复跑（全流程）" % cfg["package_id"],
+        "python3 scripts/kf/kf01_register.py --preset wp-7450-01 build result verify figure report   # 一键复跑（全流程）",
         "```",
         "",
-        "repro_cmd: `python3 scripts/kf/kf01_register.py --preset %s build result verify figure report`" % cfg["package_id"],
+        "repro_cmd: `python3 scripts/kf/kf01_register.py --preset wp-7450-01 build result verify figure report`",
         "",
         "## 结果信封（唯一 json 代码块，原样提交）",
         "",
@@ -870,7 +1096,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "markdown": text,
         "figures": [{
             "name": png.name,
-            "caption": "%s asset inventory & locator coverage map (computed from asset_manifest.json)" % cfg["package_id"],
+            "caption": "wp-7450-01 asset inventory & locator coverage map (computed from asset_manifest.json)",
             "png_base64": base64.b64encode(png.read_bytes()).decode(),
         }],
     }

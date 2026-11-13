@@ -1,0 +1,960 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-13547-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13547",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-12T02:32:37.208674+00:00",
+  "source": {
+    "uri": "tensor://reports/13547",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "2debab25c7d7bd29e00f59d43ced87eac163b12af701d9a9ad81cb4440579d42",
+    "chars": 6168,
+    "bytes_utf8": 8782,
+    "title": "TensorKnowledge 质量审计（A+B）：14 个 scope 的成熟度判定与 main 红态根因",
+    "scenario_key": "quality-audit",
+    "platform_figures": [
+      "fig1_maturity_levels.png",
+      "fig2_suite_health.png",
+      "fig3_kruger_benchmark.png"
+    ],
+    "platform_tags": [
+      "AUDIT-ASSET-12REPO",
+      "TensorKnowledge",
+      "maturity-verdict",
+      "red-main",
+      "gate-filtering",
+      "honest-fail"
+    ],
+    "platform_status": "published",
+    "platform_created_at": "2026-11-11T07:26:24.592333+00:00"
+  },
+  "counts": {
+    "assets": 29,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 3,
+      "document_reference": 2,
+      "source_code_reference": 9,
+      "report_table": 5,
+      "evidence_glob": 2,
+      "registry_table_reference": 1,
+      "repository_identity": 1,
+      "source_commit_anchor": 2,
+      "data_snapshot_reference": 1,
+      "run_artifact_reference": 1,
+      "external_checkout_reference": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 20,
+      "referenced_unresolved": 8,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 20,
+    "referenced_unresolved": 8,
+    "declared_absent": 1,
+    "distinct_referenced_paths": 10
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "source markdown of report 13547",
+      "in_report_section": "(whole document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 6168,
+        "start_line": 1,
+        "end_line": 104,
+        "quote": "# TensorKnowledge 质量审计（A+B）：可验证功能交付判定\n\n**mission 14492 · verdict_by=audit2-ab · 审计基线 `edbc20a..2d3c446`（105 新增文件 / 15,233 行）**\n\n## ① 案例介绍（审计对象与参数）\n\n| 项目 | 值 |\n|---|---|\n| 仓库 | `cxs503/TensorKnowledge`（main = PR #26 / m8817 合并点 `2d3c446`） |\n| 审计区间 | `edbc20a..2d3c446`：105 个新增文件（不含 `.pyc`），15,233 行 |\n| 审计区间内并入的 agent PR | m8810 / m8813 / m8815 / m8823 / m8824 / m8830 / m8834 / m8837 / m8838 / m8843 / m8846 + `restore gate-filtered dependencies`(m8554) |\n| 判据 | 可验证的功能交付；owner 六级 L0–L5；L≥2 需执行证据、L≥4 需基准对照 |\n| 证据目录 | `artifacts/audit/*.log`、`artifacts/audit/figures/`、`audit_report.md` |\n| 落表 | `tensor_maturity_verdicts` 14 行（repo=TensorKnowledge, mission_id=14492, verdict_by=audit2-ab） |\n\n审计对象不是数值求解器，而是\"知识基础设施\"：四契约（claim/evidence/provenance/review-event）+ 知识引擎投影 + 训练/评测数据出水口 + 知识沉淀流水线。因此\"真执行\"的判据是：四契约输入 → 门禁/校验 → 结构化产物（JSONL/manifest/校验报告），而非物理量误差。\n\n## ② 怎么做的（方法/流程/工具链）\n\n1. **资产盘点（机器化）**：`git diff --name-status edbc20a..HEAD` 取新增清单，脚本按路径分类并统计行数（`__pycache__` 剔除）；stub 扫描用 `grep -nE 'NotImplementedError|^\\s*pass$|TODO|FIXME|placeholder|stub|hardcod'`；调用方扫描用 `grep -rl <module>` 计 `callers`。\n2. **功能真实性（六问）**：对 14 个 scope 逐一追执行路径——CLI→库函数→I/O；再实跑（见下）；再对照 PR/报告声明，差异逐条列（报告 §4）。\n3. **成熟度判级**：只用本轮实跑证据；不可跑即 L0，并对脚本的\"traceback/FAIL\"与\"honest-FAIL 报告\"加以区分。\n4. **工具链执行记录**（全部在本 worktree 复跑，日志入 `artifacts/audit/`）：\n   - `python -m pytest tests/ -q` → `Interrupted: 1 error during collection`\n   - `python -m pytest tests/ -q --ignore=tests/test_sediment_m7437.py` → **8 failed, 83 passed, 6 skipped, 12 errors**\n   - `python -m pytest tests/test_ke_export.py tests/test_datasets.py tests/test_datasets_e2e.py -q` → **81 passed**\n   - `python -m ke.cli export mappings/source/m8554 --kind sft --out /tmp/m14492/export` → `included=2 / excluded=2`\n   - `cd runs/oss-lbm-kruger-8676 && python analyze_validation.py && git status --short -- runs/` → **空（逐字节复现）**\n   - 4 个 CI 校验器 + 4 个 sediment verify 逐个执行（见 ③ 表）\n\n## ③ 计算结果（程序化注入，零手抄）\n\n**表 A 资产分类（新增，行数）**\n\n| 类别 | 文件 | 行数 |\n|---|---:|---:|\n| 核心功能模块 `ke/` | 5 | 1,443 |\n| 验证/提取脚本 `scripts/` | 12 | 3,235 |\n| 测试 `tests/` | 7 | 1,192 |\n| 文档报告 | 13 | 1,793 |\n| 知识地图 `knowledge-map/` | 26 | 2,093 |\n| 运行证据 `runs/` | 20 | 3,904 |\n| 报告工具 `artifacts/` | 4 | 679 |\n| 数据快照 `mappings/source/m8554` | 16 | 694 |\n| 许可/杂项 | 2 | 198 |\n| **合计** | **105** | **15,233** |\n\n**表 B 执行判定（本轮实跑）**\n\n| 对象 | 命令 | 结果 | 判定 |\n|---|---|---|---|\n| 全仓测试（默认） | `pytest tests/` | 收集期 `ModuleNotFoundError: verify_records` → Interrupted | **红（阻断）** |\n| 全仓测试（剔除该文件） | `pytest tests/ --ignore=...m7437.py` | 83 passed / 8 failed / 12 errors / 6 skipped | **红** |\n| m8810+m8813 三组测试 | `pytest test_ke_export test_datasets test_datasets_e2e` | **81 passed** | 绿 |\n| ke export 真数据 | `ke.cli export mappings/source/m8554 --kind sft` | included=2, excluded=2（contested×1, not-assessed×1）, upstream_commit=2d3c446 | 真执行 |\n| CI 校验器 | `validate_epistemic_benchmark / validate_knowledge_assets / validate_ke_mapping / build_ke_mapping` | PASS(12 cases/5 schemas) / PASS(14 nodes/13 schemas) / PASS 19/19 / 19 records 0 uncovered | 绿 |\n| 知识包校验 | `validate_oss_lbm.py` / `validate_kruger.py` | PASS（27 claims/27 evidence/2 provenance） | 绿 |\n| ontology v1 | `validate_ontology_v1.py` | 6 schemas PASS，3 example cards MISSING → FAILED | **红** |\n| sediment verify ×3 | `verify_sediment_m2400/m5490/m7485.py` | FileNotFoundError INDEX.md / FAIL src:sha_available(exit 128) / package missing | **红（0 项检查被执行）** |\n| README 快速开始 | 3 条命令 | 19/19 PASS、14 nodes PASS、`ke.cli demo` FileNotFoundError | 1/3 失败（旗舰 demo） |\n| 基准复现 | `analyze_validation.py` 重跑 | `git status -- runs/` 空 | 逐字节复现 |\n\n**表 C 成熟度分布（14 行落表）**\n\n| L | 数量 | scope |\n|---|---:|---|\n| L5 | 0 | — |\n| **L4** | **1** | runs/oss-lbm-kruger-8676 bench (m8676) |\n| **L3** | **2** | ke/export (m8810)；ke/datasets+server+loader (m8813) |\n| **L2** | **1** | knowledge/oss-lbm package+validators (m8635 lineage) |\n| **L1** | **1** | docs/ontology v1 + 6 schemas + validator (m8815) |\n| **L0** | **9** | knowledge-map (m8817)；m2591 report+schema patch (m8830)；verify_sediment_m7485 (m8823)；test_m5054 (m8824)；m5490 三脚本 (m8834)；m2400 两脚本 (m8837)；m8838 报告；test_m7437 (m8843)；PR m8846 |\n\n**表 D 基准数字（唯一 L4 证据面，解析解对照）**\n\n| 算例 | 关键量 | 实测 | 基准（解析） | 误差 | <3%? |\n|---|---|---|---|---|---|\n| Taylor–Green NX=32 | E/E0 | 0.005766 | 0.005855 | -1.53% | 是 |\n| Taylor–Green NX=64 | E/E0 | 0.005833 | 0.005855 | -0.38% | 是 |\n| Taylor–Green NX=128 | E/E0 | 0.005850 | 0.005855 | -0.10% | 是 |\n| Taylor–Green 收敛阶 | order | 2.0018 / 2.0028 | 2（理论） | +0.09% / +0.14% | 是 |\n| Young–Laplace | γ (r12 vs r15) | 0.02039 / 0.02072 | 自洽 | 1.61% | 是 |\n| IBM Poiseuille | u_centre | 0.001642 | 0.001756 | -6.47% | **否** |\n| chapter5 移植 | L2 (Poiseuille/Couette) | 7.568e-16 / 2.319e-15 | 0（机器精度） | ~0 | 是 |\n\n## ④ 结果图\n\n1. **图1** 成熟度判级分布：L0 占 9/14（64%），L2 以上仅 4 个 scope。\n2. **图2** main 测试健康度：83 passed / 8 failed / 12 errors / 6 skipped，且默认命令在收集阶段即中断。\n3. **图3** 唯一 L4 证据面（Kruger/OSS-LBM 上游代码基准）：TG 二阶收敛 + 能量衰减对照 + IBM 剖面 vs 解析解。\n\n## ⑤ 注意点（坑与局限）\n\n- **最大陷阱：把\"能 import 的测试文件\"当作交付**。7 个新增测试里 4 个断言的数据包在 main 上不存在（门禁滤除），其中 1 个直接打断全仓 pytest。commit message 逐个写着\"X 个文件被门禁滤除\"，但没人检查消费方是否随之失效。\n- **CI 与测试红解耦**：4 个 workflow 只跑 validate 脚本（全 PASS），无 pytest job → 红态可以无限期存活。\n- **报告 ≠ 证据**：2 份 sediment 报告 + 1 份 MISSION_COMPLETION 的\"验证完成\"均为文档；`docs/sediment-m2591-report.md` 甚至把\"逐字节一致 / 13 passed\"写成既成事实，而其包目录不在仓内。\n- **schema 是被第三方消费的公共面**：m8830 往 `epistemic_status.enum` 加 `draft` 时写成 9 项含重复值，并把 description 指向不存在的路径；无版本号变更、无正例卡验证。\n- **局限（未验证项，如实声明）**：① sediment 系的真实计算逻辑无法判定——其数据包与源仓（`/root/tp-agent/work/m5490`、TensorDG/TensorBEM 检出）在本环境不可达，故一律 L0 而非\"按代码猜测的 L2\"；② `tk_eval_loader` 的 torch 分支未执行（本环境无 torch 消费方），只验证了 fallback 纯 Python 路径；③ 知识地图卡片内容（如 KCS Ct=0.0038–0.0045）属文献值，无法在本环境复算，未计为任何级别的验证证据。\n\n## ⑥ 误差判定\n\n- **有基准的量**：表 D 逐项给出，显式回答\"是否 <3%\"：TG 能量衰减 3 个网格档（-1.53%/-0.38%/-0.10%）**<3%**；TG 收敛阶（+0.09%/+0.14%）**<3%**；Young–Laplace γ（1.61%）**<3%**；chapter5 移植 L2（~1e-16）**<3%**；**IBM Poiseuille 中心线 -6.47% 不满足 <3%**（但 <15% 可接受线，且属上游书代码未改参数下的原样结果，已如实登记）。\n- **无基准的量**：审计判级本身（L0–L4）不适用百分比误差——其可证伪形式是\"脚本能否运行/断言能否成立\"。本报告把这类判定全部落到可复跑命令与日志路径上；凡不能跑的，标 L0 而非推测级别。\n- **honest-FAIL 声明**：本审计**未拔高任何一级**；sediment 线 7 个 mission 在 main 上的净交付按实测判为 L0，尽管其代码量最大（3,235 行脚本 + 348 行测试）。\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "GET /tensor/reports/13547 markdown field + sha256 over utf-8 bytes",
+        "result": "resolved",
+        "detail": "chars=6168 bytes_utf8=8782 sha256=2debab25c7d7bd29e00f59d43ced87eac163b12af701d9a9ad81cb4440579d42"
+      },
+      "source_uri": "tensor://reports/13547",
+      "note": "the source asset itself; its byte hash is the provenance anchor of this work package.",
+      "kind": "report_markdown"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "fig1_maturity_levels.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 6168,
+        "start_line": 1,
+        "end_line": 104,
+        "quote": "# TensorKnowledge 质量审计（A+B）：可验证功能交付判定\n\n**mission 14492 · verdict_by=audit2-ab · 审计基线 `edbc20a..2d3c446`（105 新增文件 / 15,233 行）**\n\n## ① 案例介绍（审计对象与参数）\n\n| 项目 | 值 |\n|---|---|\n| 仓库 | `cxs503/TensorKnowledge`（main = PR #26 / m8817 合并点 `2d3c446`） |\n| 审计区间 | `edbc20a..2d3c446`：105 个新增文件（不含 `.pyc`），15,233 行 |\n| 审计区间内并入的 agent PR | m8810 / m8813 / m8815 / m8823 / m8824 / m8830 / m8834 / m8837 / m8838 / m8843 / m8846 + `restore gate-filtered dependencies`(m8554) |\n| 判据 | 可验证的功能交付；owner 六级 L0–L5；L≥2 需执行证据、L≥4 需基准对照 |\n| 证据目录 | `artifacts/audit/*.log`、`artifacts/audit/figures/`、`audit_report.md` |\n| 落表 | `tensor_maturity_verdicts` 14 行（repo=TensorKnowledge, mission_id=14492, verdict_by=audit2-ab） |\n\n审计对象不是数值求解器，而是\"知识基础设施\"：四契约（claim/evidence/provenance/review-event）+ 知识引擎投影 + 训练/评测数据出水口 + 知识沉淀流水线。因此\"真执行\"的判据是：四契约输入 → 门禁/校验 → 结构化产物（JSONL/manifest/校验报告），而非物理量误差。\n\n## ② 怎么做的（方法/流程/工具链）\n\n1. **资产盘点（机器化）**：`git diff --name-status edbc20a..HEAD` 取新增清单，脚本按路径分类并统计行数（`__pycache__` 剔除）；stub 扫描用 `grep -nE 'NotImplementedError|^\\s*pass$|TODO|FIXME|placeholder|stub|hardcod'`；调用方扫描用 `grep -rl <module>` 计 `callers`。\n2. **功能真实性（六问）**：对 14 个 scope 逐一追执行路径——CLI→库函数→I/O；再实跑（见下）；再对照 PR/报告声明，差异逐条列（报告 §4）。\n3. **成熟度判级**：只用本轮实跑证据；不可跑即 L0，并对脚本的\"traceback/FAIL\"与\"honest-FAIL 报告\"加以区分。\n4. **工具链执行记录**（全部在本 worktree 复跑，日志入 `artifacts/audit/`）：\n   - `python -m pytest tests/ -q` → `Interrupted: 1 error during collection`\n   - `python -m pytest tests/ -q --ignore=tests/test_sediment_m7437.py` → **8 failed, 83 passed, 6 skipped, 12 errors**\n   - `python -m pytest tests/test_ke_export.py tests/test_datasets.py tests/test_datasets_e2e.py -q` → **81 passed**\n   - `python -m ke.cli export mappings/source/m8554 --kind sft --out /tmp/m14492/export` → `included=2 / excluded=2`\n   - `cd runs/oss-lbm-kruger-8676 && python analyze_validation.py && git status --short -- runs/` → **空（逐字节复现）**\n   - 4 个 CI 校验器 + 4 个 sediment verify 逐个执行（见 ③ 表）\n\n## ③ 计算结果（程序化注入，零手抄）\n\n**表 A 资产分类（新增，行数）**\n\n| 类别 | 文件 | 行数 |\n|---|---:|---:|\n| 核心功能模块 `ke/` | 5 | 1,443 |\n| 验证/提取脚本 `scripts/` | 12 | 3,235 |\n| 测试 `tests/` | 7 | 1,192 |\n| 文档报告 | 13 | 1,793 |\n| 知识地图 `knowledge-map/` | 26 | 2,093 |\n| 运行证据 `runs/` | 20 | 3,904 |\n| 报告工具 `artifacts/` | 4 | 679 |\n| 数据快照 `mappings/source/m8554` | 16 | 694 |\n| 许可/杂项 | 2 | 198 |\n| **合计** | **105** | **15,233** |\n\n**表 B 执行判定（本轮实跑）**\n\n| 对象 | 命令 | 结果 | 判定 |\n|---|---|---|---|\n| 全仓测试（默认） | `pytest tests/` | 收集期 `ModuleNotFoundError: verify_records` → Interrupted | **红（阻断）** |\n| 全仓测试（剔除该文件） | `pytest tests/ --ignore=...m7437.py` | 83 passed / 8 failed / 12 errors / 6 skipped | **红** |\n| m8810+m8813 三组测试 | `pytest test_ke_export test_datasets test_datasets_e2e` | **81 passed** | 绿 |\n| ke export 真数据 | `ke.cli export mappings/source/m8554 --kind sft` | included=2, excluded=2（contested×1, not-assessed×1）, upstream_commit=2d3c446 | 真执行 |\n| CI 校验器 | `validate_epistemic_benchmark / validate_knowledge_assets / validate_ke_mapping / build_ke_mapping` | PASS(12 cases/5 schemas) / PASS(14 nodes/13 schemas) / PASS 19/19 / 19 records 0 uncovered | 绿 |\n| 知识包校验 | `validate_oss_lbm.py` / `validate_kruger.py` | PASS（27 claims/27 evidence/2 provenance） | 绿 |\n| ontology v1 | `validate_ontology_v1.py` | 6 schemas PASS，3 example cards MISSING → FAILED | **红** |\n| sediment verify ×3 | `verify_sediment_m2400/m5490/m7485.py` | FileNotFoundError INDEX.md / FAIL src:sha_available(exit 128) / package missing | **红（0 项检查被执行）** |\n| README 快速开始 | 3 条命令 | 19/19 PASS、14 nodes PASS、`ke.cli demo` FileNotFoundError | 1/3 失败（旗舰 demo） |\n| 基准复现 | `analyze_validation.py` 重跑 | `git status -- runs/` 空 | 逐字节复现 |\n\n**表 C 成熟度分布（14 行落表）**\n\n| L | 数量 | scope |\n|---|---:|---|\n| L5 | 0 | — |\n| **L4** | **1** | runs/oss-lbm-kruger-8676 bench (m8676) |\n| **L3** | **2** | ke/export (m8810)；ke/datasets+server+loader (m8813) |\n| **L2** | **1** | knowledge/oss-lbm package+validators (m8635 lineage) |\n| **L1** | **1** | docs/ontology v1 + 6 schemas + validator (m8815) |\n| **L0** | **9** | knowledge-map (m8817)；m2591 report+schema patch (m8830)；verify_sediment_m7485 (m8823)；test_m5054 (m8824)；m5490 三脚本 (m8834)；m2400 两脚本 (m8837)；m8838 报告；test_m7437 (m8843)；PR m8846 |\n\n**表 D 基准数字（唯一 L4 证据面，解析解对照）**\n\n| 算例 | 关键量 | 实测 | 基准（解析） | 误差 | <3%? |\n|---|---|---|---|---|---|\n| Taylor–Green NX=32 | E/E0 | 0.005766 | 0.005855 | -1.53% | 是 |\n| Taylor–Green NX=64 | E/E0 | 0.005833 | 0.005855 | -0.38% | 是 |\n| Taylor–Green NX=128 | E/E0 | 0.005850 | 0.005855 | -0.10% | 是 |\n| Taylor–Green 收敛阶 | order | 2.0018 / 2.0028 | 2（理论） | +0.09% / +0.14% | 是 |\n| Young–Laplace | γ (r12 vs r15) | 0.02039 / 0.02072 | 自洽 | 1.61% | 是 |\n| IBM Poiseuille | u_centre | 0.001642 | 0.001756 | -6.47% | **否** |\n| chapter5 移植 | L2 (Poiseuille/Couette) | 7.568e-16 / 2.319e-15 | 0（机器精度） | ~0 | 是 |\n\n## ④ 结果图\n\n1. **图1** 成熟度判级分布：L0 占 9/14（64%），L2 以上仅 4 个 scope。\n2. **图2** main 测试健康度：83 passed / 8 failed / 12 errors / 6 skipped，且默认命令在收集阶段即中断。\n3. **图3** 唯一 L4 证据面（Kruger/OSS-LBM 上游代码基准）：TG 二阶收敛 + 能量衰减对照 + IBM 剖面 vs 解析解。\n\n## ⑤ 注意点（坑与局限）\n\n- **最大陷阱：把\"能 import 的测试文件\"当作交付**。7 个新增测试里 4 个断言的数据包在 main 上不存在（门禁滤除），其中 1 个直接打断全仓 pytest。commit message 逐个写着\"X 个文件被门禁滤除\"，但没人检查消费方是否随之失效。\n- **CI 与测试红解耦**：4 个 workflow 只跑 validate 脚本（全 PASS），无 pytest job → 红态可以无限期存活。\n- **报告 ≠ 证据**：2 份 sediment 报告 + 1 份 MISSION_COMPLETION 的\"验证完成\"均为文档；`docs/sediment-m2591-report.md` 甚至把\"逐字节一致 / 13 passed\"写成既成事实，而其包目录不在仓内。\n- **schema 是被第三方消费的公共面**：m8830 往 `epistemic_status.enum` 加 `draft` 时写成 9 项含重复值，并把 description 指向不存在的路径；无版本号变更、无正例卡验证。\n- **局限（未验证项，如实声明）**：① sediment 系的真实计算逻辑无法判定——其数据包与源仓（`/root/tp-agent/work/m5490`、TensorDG/TensorBEM 检出）在本环境不可达，故一律 L0 而非\"按代码猜测的 L2\"；② `tk_eval_loader` 的 torch 分支未执行（本环境无 torch 消费方），只验证了 fallback 纯 Python 路径；③ 知识地图卡片内容（如 KCS Ct=0.0038–0.0045）属文献值，无法在本环境复算，未计为任何级别的验证证据。\n\n## ⑥ 误差判定\n\n- **有基准的量**：表 D 逐项给出，显式回答\"是否 <3%\"：TG 能量衰减 3 个网格档（-1.53%/-0.38%/-0.10%）**<3%**；TG 收敛阶（+0.09%/+0.14%）**<3%**；Young–Laplace γ（1.61%）**<3%**；chapter5 移植 L2（~1e-16）**<3%**；**IBM Poiseuille 中心线 -6.47% 不满足 <3%**（但 <15% 可接受线，且属上游书代码未改参数下的原样结果，已如实登记）。\n- **无基准的量**：审计判级本身（L0–L4）不适用百分比误差——其可证伪形式是\"脚本能否运行/断言能否成立\"。本报告把这类判定全部落到可复跑命令与日志路径上；凡不能跑的，标 L0 而非推测级别。\n- **honest-FAIL 声明**：本审计**未拔高任何一级**；sediment 线 7 个 mission 在 main 上的净交付按实测判为 L0，尽管其代码量最大（3,235 行脚本 + 348 行测试）。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/13547#figures[0]",
+      "caption": "图1 TensorKnowledge @2d3c446 成熟度判级分布（14 个 scope，verdict_by=audit2-ab）：L0=9 / L1=1 / L2=1 / L3=2 / L4=1。",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure",
+      "label": "fig2_suite_health.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 6168,
+        "start_line": 1,
+        "end_line": 104,
+        "quote": "# TensorKnowledge 质量审计（A+B）：可验证功能交付判定\n\n**mission 14492 · verdict_by=audit2-ab · 审计基线 `edbc20a..2d3c446`（105 新增文件 / 15,233 行）**\n\n## ① 案例介绍（审计对象与参数）\n\n| 项目 | 值 |\n|---|---|\n| 仓库 | `cxs503/TensorKnowledge`（main = PR #26 / m8817 合并点 `2d3c446`） |\n| 审计区间 | `edbc20a..2d3c446`：105 个新增文件（不含 `.pyc`），15,233 行 |\n| 审计区间内并入的 agent PR | m8810 / m8813 / m8815 / m8823 / m8824 / m8830 / m8834 / m8837 / m8838 / m8843 / m8846 + `restore gate-filtered dependencies`(m8554) |\n| 判据 | 可验证的功能交付；owner 六级 L0–L5；L≥2 需执行证据、L≥4 需基准对照 |\n| 证据目录 | `artifacts/audit/*.log`、`artifacts/audit/figures/`、`audit_report.md` |\n| 落表 | `tensor_maturity_verdicts` 14 行（repo=TensorKnowledge, mission_id=14492, verdict_by=audit2-ab） |\n\n审计对象不是数值求解器，而是\"知识基础设施\"：四契约（claim/evidence/provenance/review-event）+ 知识引擎投影 + 训练/评测数据出水口 + 知识沉淀流水线。因此\"真执行\"的判据是：四契约输入 → 门禁/校验 → 结构化产物（JSONL/manifest/校验报告），而非物理量误差。\n\n## ② 怎么做的（方法/流程/工具链）\n\n1. **资产盘点（机器化）**：`git diff --name-status edbc20a..HEAD` 取新增清单，脚本按路径分类并统计行数（`__pycache__` 剔除）；stub 扫描用 `grep -nE 'NotImplementedError|^\\s*pass$|TODO|FIXME|placeholder|stub|hardcod'`；调用方扫描用 `grep -rl <module>` 计 `callers`。\n2. **功能真实性（六问）**：对 14 个 scope 逐一追执行路径——CLI→库函数→I/O；再实跑（见下）；再对照 PR/报告声明，差异逐条列（报告 §4）。\n3. **成熟度判级**：只用本轮实跑证据；不可跑即 L0，并对脚本的\"traceback/FAIL\"与\"honest-FAIL 报告\"加以区分。\n4. **工具链执行记录**（全部在本 worktree 复跑，日志入 `artifacts/audit/`）：\n   - `python -m pytest tests/ -q` → `Interrupted: 1 error during collection`\n   - `python -m pytest tests/ -q --ignore=tests/test_sediment_m7437.py` → **8 failed, 83 passed, 6 skipped, 12 errors**\n   - `python -m pytest tests/test_ke_export.py tests/test_datasets.py tests/test_datasets_e2e.py -q` → **81 passed**\n   - `python -m ke.cli export mappings/source/m8554 --kind sft --out /tmp/m14492/export` → `included=2 / excluded=2`\n   - `cd runs/oss-lbm-kruger-8676 && python analyze_validation.py && git status --short -- runs/` → **空（逐字节复现）**\n   - 4 个 CI 校验器 + 4 个 sediment verify 逐个执行（见 ③ 表）\n\n## ③ 计算结果（程序化注入，零手抄）\n\n**表 A 资产分类（新增，行数）**\n\n| 类别 | 文件 | 行数 |\n|---|---:|---:|\n| 核心功能模块 `ke/` | 5 | 1,443 |\n| 验证/提取脚本 `scripts/` | 12 | 3,235 |\n| 测试 `tests/` | 7 | 1,192 |\n| 文档报告 | 13 | 1,793 |\n| 知识地图 `knowledge-map/` | 26 | 2,093 |\n| 运行证据 `runs/` | 20 | 3,904 |\n| 报告工具 `artifacts/` | 4 | 679 |\n| 数据快照 `mappings/source/m8554` | 16 | 694 |\n| 许可/杂项 | 2 | 198 |\n| **合计** | **105** | **15,233** |\n\n**表 B 执行判定（本轮实跑）**\n\n| 对象 | 命令 | 结果 | 判定 |\n|---|---|---|---|\n| 全仓测试（默认） | `pytest tests/` | 收集期 `ModuleNotFoundError: verify_records` → Interrupted | **红（阻断）** |\n| 全仓测试（剔除该文件） | `pytest tests/ --ignore=...m7437.py` | 83 passed / 8 failed / 12 errors / 6 skipped | **红** |\n| m8810+m8813 三组测试 | `pytest test_ke_export test_datasets test_datasets_e2e` | **81 passed** | 绿 |\n| ke export 真数据 | `ke.cli export mappings/source/m8554 --kind sft` | included=2, excluded=2（contested×1, not-assessed×1）, upstream_commit=2d3c446 | 真执行 |\n| CI 校验器 | `validate_epistemic_benchmark / validate_knowledge_assets / validate_ke_mapping / build_ke_mapping` | PASS(12 cases/5 schemas) / PASS(14 nodes/13 schemas) / PASS 19/19 / 19 records 0 uncovered | 绿 |\n| 知识包校验 | `validate_oss_lbm.py` / `validate_kruger.py` | PASS（27 claims/27 evidence/2 provenance） | 绿 |\n| ontology v1 | `validate_ontology_v1.py` | 6 schemas PASS，3 example cards MISSING → FAILED | **红** |\n| sediment verify ×3 | `verify_sediment_m2400/m5490/m7485.py` | FileNotFoundError INDEX.md / FAIL src:sha_available(exit 128) / package missing | **红（0 项检查被执行）** |\n| README 快速开始 | 3 条命令 | 19/19 PASS、14 nodes PASS、`ke.cli demo` FileNotFoundError | 1/3 失败（旗舰 demo） |\n| 基准复现 | `analyze_validation.py` 重跑 | `git status -- runs/` 空 | 逐字节复现 |\n\n**表 C 成熟度分布（14 行落表）**\n\n| L | 数量 | scope |\n|---|---:|---|\n| L5 | 0 | — |\n| **L4** | **1** | runs/oss-lbm-kruger-8676 bench (m8676) |\n| **L3** | **2** | ke/export (m8810)；ke/datasets+server+loader (m8813) |\n| **L2** | **1** | knowledge/oss-lbm package+validators (m8635 lineage) |\n| **L1** | **1** | docs/ontology v1 + 6 schemas + validator (m8815) |\n| **L0** | **9** | knowledge-map (m8817)；m2591 report+schema patch (m8830)；verify_sediment_m7485 (m8823)；test_m5054 (m8824)；m5490 三脚本 (m8834)；m2400 两脚本 (m8837)；m8838 报告；test_m7437 (m8843)；PR m8846 |\n\n**表 D 基准数字（唯一 L4 证据面，解析解对照）**\n\n| 算例 | 关键量 | 实测 | 基准（解析） | 误差 | <3%? |\n|---|---|---|---|---|---|\n| Taylor–Green NX=32 | E/E0 | 0.005766 | 0.005855 | -1.53% | 是 |\n| Taylor–Green NX=64 | E/E0 | 0.005833 | 0.005855 | -0.38% | 是 |\n| Taylor–Green NX=128 | E/E0 | 0.005850 | 0.005855 | -0.10% | 是 |\n| Taylor–Green 收敛阶 | order | 2.0018 / 2.0028 | 2（理论） | +0.09% / +0.14% | 是 |\n| Young–Laplace | γ (r12 vs r15) | 0.02039 / 0.02072 | 自洽 | 1.61% | 是 |\n| IBM Poiseuille | u_centre | 0.001642 | 0.001756 | -6.47% | **否** |\n| chapter5 移植 | L2 (Poiseuille/Couette) | 7.568e-16 / 2.319e-15 | 0（机器精度） | ~0 | 是 |\n\n## ④ 结果图\n\n1. **图1** 成熟度判级分布：L0 占 9/14（64%），L2 以上仅 4 个 scope。\n2. **图2** main 测试健康度：83 passed / 8 failed / 12 errors / 6 skipped，且默认命令在收集阶段即中断。\n3. **图3** 唯一 L4 证据面（Kruger/OSS-LBM 上游代码基准）：TG 二阶收敛 + 能量衰减对照 + IBM 剖面 vs 解析解。\n\n## ⑤ 注意点（坑与局限）\n\n- **最大陷阱：把\"能 import 的测试文件\"当作交付**。7 个新增测试里 4 个断言的数据包在 main 上不存在（门禁滤除），其中 1 个直接打断全仓 pytest。commit message 逐个写着\"X 个文件被门禁滤除\"，但没人检查消费方是否随之失效。\n- **CI 与测试红解耦**：4 个 workflow 只跑 validate 脚本（全 PASS），无 pytest job → 红态可以无限期存活。\n- **报告 ≠ 证据**：2 份 sediment 报告 + 1 份 MISSION_COMPLETION 的\"验证完成\"均为文档；`docs/sediment-m2591-report.md` 甚至把\"逐字节一致 / 13 passed\"写成既成事实，而其包目录不在仓内。\n- **schema 是被第三方消费的公共面**：m8830 往 `epistemic_status.enum` 加 `draft` 时写成 9 项含重复值，并把 description 指向不存在的路径；无版本号变更、无正例卡验证。\n- **局限（未验证项，如实声明）**：① sediment 系的真实计算逻辑无法判定——其数据包与源仓（`/root/tp-agent/work/m5490`、TensorDG/TensorBEM 检出）在本环境不可达，故一律 L0 而非\"按代码猜测的 L2\"；② `tk_eval_loader` 的 torch 分支未执行（本环境无 torch 消费方），只验证了 fallback 纯 Python 路径；③ 知识地图卡片内容（如 KCS Ct=0.0038–0.0045）属文献值，无法在本环境复算，未计为任何级别的验证证据。\n\n## ⑥ 误差判定\n\n- **有基准的量**：表 D 逐项给出，显式回答\"是否 <3%\"：TG 能量衰减 3 个网格档（-1.53%/-0.38%/-0.10%）**<3%**；TG 收敛阶（+0.09%/+0.14%）**<3%**；Young–Laplace γ（1.61%）**<3%**；chapter5 移植 L2（~1e-16）**<3%**；**IBM Poiseuille 中心线 -6.47% 不满足 <3%**（但 <15% 可接受线，且属上游书代码未改参数下的原样结果，已如实登记）。\n- **无基准的量**：审计判级本身（L0–L4）不适用百分比误差——其可证伪形式是\"脚本能否运行/断言能否成立\"。本报告把这类判定全部落到可复跑命令与日志路径上；凡不能跑的，标 L0 而非推测级别。\n- **honest-FAIL 声明**：本审计**未拔高任何一级**；sediment 线 7 个 mission 在 main 上的净交付按实测判为 L0，尽管其代码量最大（3,235 行脚本 + 348 行测试）。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/13547#figures[1]",
+      "caption": "图2 main 分支 pytest 结果（忽略收集失败文件）：passed=83 / failed=8 / errors=12 / skipped=6；默认 `pytest tests/` 在收集阶段即因 test_sediment_m7437 ImportError 中断。",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "embedded_figure",
+      "label": "fig3_kruger_benchmark.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 6168,
+        "start_line": 1,
+        "end_line": 104,
+        "quote": "# TensorKnowledge 质量审计（A+B）：可验证功能交付判定\n\n**mission 14492 · verdict_by=audit2-ab · 审计基线 `edbc20a..2d3c446`（105 新增文件 / 15,233 行）**\n\n## ① 案例介绍（审计对象与参数）\n\n| 项目 | 值 |\n|---|---|\n| 仓库 | `cxs503/TensorKnowledge`（main = PR #26 / m8817 合并点 `2d3c446`） |\n| 审计区间 | `edbc20a..2d3c446`：105 个新增文件（不含 `.pyc`），15,233 行 |\n| 审计区间内并入的 agent PR | m8810 / m8813 / m8815 / m8823 / m8824 / m8830 / m8834 / m8837 / m8838 / m8843 / m8846 + `restore gate-filtered dependencies`(m8554) |\n| 判据 | 可验证的功能交付；owner 六级 L0–L5；L≥2 需执行证据、L≥4 需基准对照 |\n| 证据目录 | `artifacts/audit/*.log`、`artifacts/audit/figures/`、`audit_report.md` |\n| 落表 | `tensor_maturity_verdicts` 14 行（repo=TensorKnowledge, mission_id=14492, verdict_by=audit2-ab） |\n\n审计对象不是数值求解器，而是\"知识基础设施\"：四契约（claim/evidence/provenance/review-event）+ 知识引擎投影 + 训练/评测数据出水口 + 知识沉淀流水线。因此\"真执行\"的判据是：四契约输入 → 门禁/校验 → 结构化产物（JSONL/manifest/校验报告），而非物理量误差。\n\n## ② 怎么做的（方法/流程/工具链）\n\n1. **资产盘点（机器化）**：`git diff --name-status edbc20a..HEAD` 取新增清单，脚本按路径分类并统计行数（`__pycache__` 剔除）；stub 扫描用 `grep -nE 'NotImplementedError|^\\s*pass$|TODO|FIXME|placeholder|stub|hardcod'`；调用方扫描用 `grep -rl <module>` 计 `callers`。\n2. **功能真实性（六问）**：对 14 个 scope 逐一追执行路径——CLI→库函数→I/O；再实跑（见下）；再对照 PR/报告声明，差异逐条列（报告 §4）。\n3. **成熟度判级**：只用本轮实跑证据；不可跑即 L0，并对脚本的\"traceback/FAIL\"与\"honest-FAIL 报告\"加以区分。\n4. **工具链执行记录**（全部在本 worktree 复跑，日志入 `artifacts/audit/`）：\n   - `python -m pytest tests/ -q` → `Interrupted: 1 error during collection`\n   - `python -m pytest tests/ -q --ignore=tests/test_sediment_m7437.py` → **8 failed, 83 passed, 6 skipped, 12 errors**\n   - `python -m pytest tests/test_ke_export.py tests/test_datasets.py tests/test_datasets_e2e.py -q` → **81 passed**\n   - `python -m ke.cli export mappings/source/m8554 --kind sft --out /tmp/m14492/export` → `included=2 / excluded=2`\n   - `cd runs/oss-lbm-kruger-8676 && python analyze_validation.py && git status --short -- runs/` → **空（逐字节复现）**\n   - 4 个 CI 校验器 + 4 个 sediment verify 逐个执行（见 ③ 表）\n\n## ③ 计算结果（程序化注入，零手抄）\n\n**表 A 资产分类（新增，行数）**\n\n| 类别 | 文件 | 行数 |\n|---|---:|---:|\n| 核心功能模块 `ke/` | 5 | 1,443 |\n| 验证/提取脚本 `scripts/` | 12 | 3,235 |\n| 测试 `tests/` | 7 | 1,192 |\n| 文档报告 | 13 | 1,793 |\n| 知识地图 `knowledge-map/` | 26 | 2,093 |\n| 运行证据 `runs/` | 20 | 3,904 |\n| 报告工具 `artifacts/` | 4 | 679 |\n| 数据快照 `mappings/source/m8554` | 16 | 694 |\n| 许可/杂项 | 2 | 198 |\n| **合计** | **105** | **15,233** |\n\n**表 B 执行判定（本轮实跑）**\n\n| 对象 | 命令 | 结果 | 判定 |\n|---|---|---|---|\n| 全仓测试（默认） | `pytest tests/` | 收集期 `ModuleNotFoundError: verify_records` → Interrupted | **红（阻断）** |\n| 全仓测试（剔除该文件） | `pytest tests/ --ignore=...m7437.py` | 83 passed / 8 failed / 12 errors / 6 skipped | **红** |\n| m8810+m8813 三组测试 | `pytest test_ke_export test_datasets test_datasets_e2e` | **81 passed** | 绿 |\n| ke export 真数据 | `ke.cli export mappings/source/m8554 --kind sft` | included=2, excluded=2（contested×1, not-assessed×1）, upstream_commit=2d3c446 | 真执行 |\n| CI 校验器 | `validate_epistemic_benchmark / validate_knowledge_assets / validate_ke_mapping / build_ke_mapping` | PASS(12 cases/5 schemas) / PASS(14 nodes/13 schemas) / PASS 19/19 / 19 records 0 uncovered | 绿 |\n| 知识包校验 | `validate_oss_lbm.py` / `validate_kruger.py` | PASS（27 claims/27 evidence/2 provenance） | 绿 |\n| ontology v1 | `validate_ontology_v1.py` | 6 schemas PASS，3 example cards MISSING → FAILED | **红** |\n| sediment verify ×3 | `verify_sediment_m2400/m5490/m7485.py` | FileNotFoundError INDEX.md / FAIL src:sha_available(exit 128) / package missing | **红（0 项检查被执行）** |\n| README 快速开始 | 3 条命令 | 19/19 PASS、14 nodes PASS、`ke.cli demo` FileNotFoundError | 1/3 失败（旗舰 demo） |\n| 基准复现 | `analyze_validation.py` 重跑 | `git status -- runs/` 空 | 逐字节复现 |\n\n**表 C 成熟度分布（14 行落表）**\n\n| L | 数量 | scope |\n|---|---:|---|\n| L5 | 0 | — |\n| **L4** | **1** | runs/oss-lbm-kruger-8676 bench (m8676) |\n| **L3** | **2** | ke/export (m8810)；ke/datasets+server+loader (m8813) |\n| **L2** | **1** | knowledge/oss-lbm package+validators (m8635 lineage) |\n| **L1** | **1** | docs/ontology v1 + 6 schemas + validator (m8815) |\n| **L0** | **9** | knowledge-map (m8817)；m2591 report+schema patch (m8830)；verify_sediment_m7485 (m8823)；test_m5054 (m8824)；m5490 三脚本 (m8834)；m2400 两脚本 (m8837)；m8838 报告；test_m7437 (m8843)；PR m8846 |\n\n**表 D 基准数字（唯一 L4 证据面，解析解对照）**\n\n| 算例 | 关键量 | 实测 | 基准（解析） | 误差 | <3%? |\n|---|---|---|---|---|---|\n| Taylor–Green NX=32 | E/E0 | 0.005766 | 0.005855 | -1.53% | 是 |\n| Taylor–Green NX=64 | E/E0 | 0.005833 | 0.005855 | -0.38% | 是 |\n| Taylor–Green NX=128 | E/E0 | 0.005850 | 0.005855 | -0.10% | 是 |\n| Taylor–Green 收敛阶 | order | 2.0018 / 2.0028 | 2（理论） | +0.09% / +0.14% | 是 |\n| Young–Laplace | γ (r12 vs r15) | 0.02039 / 0.02072 | 自洽 | 1.61% | 是 |\n| IBM Poiseuille | u_centre | 0.001642 | 0.001756 | -6.47% | **否** |\n| chapter5 移植 | L2 (Poiseuille/Couette) | 7.568e-16 / 2.319e-15 | 0（机器精度） | ~0 | 是 |\n\n## ④ 结果图\n\n1. **图1** 成熟度判级分布：L0 占 9/14（64%），L2 以上仅 4 个 scope。\n2. **图2** main 测试健康度：83 passed / 8 failed / 12 errors / 6 skipped，且默认命令在收集阶段即中断。\n3. **图3** 唯一 L4 证据面（Kruger/OSS-LBM 上游代码基准）：TG 二阶收敛 + 能量衰减对照 + IBM 剖面 vs 解析解。\n\n## ⑤ 注意点（坑与局限）\n\n- **最大陷阱：把\"能 import 的测试文件\"当作交付**。7 个新增测试里 4 个断言的数据包在 main 上不存在（门禁滤除），其中 1 个直接打断全仓 pytest。commit message 逐个写着\"X 个文件被门禁滤除\"，但没人检查消费方是否随之失效。\n- **CI 与测试红解耦**：4 个 workflow 只跑 validate 脚本（全 PASS），无 pytest job → 红态可以无限期存活。\n- **报告 ≠ 证据**：2 份 sediment 报告 + 1 份 MISSION_COMPLETION 的\"验证完成\"均为文档；`docs/sediment-m2591-report.md` 甚至把\"逐字节一致 / 13 passed\"写成既成事实，而其包目录不在仓内。\n- **schema 是被第三方消费的公共面**：m8830 往 `epistemic_status.enum` 加 `draft` 时写成 9 项含重复值，并把 description 指向不存在的路径；无版本号变更、无正例卡验证。\n- **局限（未验证项，如实声明）**：① sediment 系的真实计算逻辑无法判定——其数据包与源仓（`/root/tp-agent/work/m5490`、TensorDG/TensorBEM 检出）在本环境不可达，故一律 L0 而非\"按代码猜测的 L2\"；② `tk_eval_loader` 的 torch 分支未执行（本环境无 torch 消费方），只验证了 fallback 纯 Python 路径；③ 知识地图卡片内容（如 KCS Ct=0.0038–0.0045）属文献值，无法在本环境复算，未计为任何级别的验证证据。\n\n## ⑥ 误差判定\n\n- **有基准的量**：表 D 逐项给出，显式回答\"是否 <3%\"：TG 能量衰减 3 个网格档（-1.53%/-0.38%/-0.10%）**<3%**；TG 收敛阶（+0.09%/+0.14%）**<3%**；Young–Laplace γ（1.61%）**<3%**；chapter5 移植 L2（~1e-16）**<3%**；**IBM Poiseuille 中心线 -6.47% 不满足 <3%**（但 <15% 可接受线，且属上游书代码未改参数下的原样结果，已如实登记）。\n- **无基准的量**：审计判级本身（L0–L4）不适用百分比误差——其可证伪形式是\"脚本能否运行/断言能否成立\"。本报告把这类判定全部落到可复跑命令与日志路径上；凡不能跑的，标 L0 而非推测级别。\n- **honest-FAIL 声明**：本审计**未拔高任何一级**；sediment 线 7 个 mission 在 main 上的净交付按实测判为 L0，尽管其代码量最大（3,235 行脚本 + 348 行测试）。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/13547#figures[2]",
+      "caption": "图3 唯一 L4 证据面：runs/oss-lbm-kruger-8676 的 Taylor–Green 二阶收敛（实测阶 2.0018/2.0028）、能量衰减误差（-1.53%/-0.38%/-0.10%）与 IBM Poiseuille 剖面 vs 解析解（中心线 -6.47%）。",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "document_reference",
+      "label": "audit_report.md (markdown line 13)",
+      "in_report_section": "① 案例介绍（审计对象与参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 509,
+        "end_char": 588,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "| 证据目录 | `artifacts/audit/*.log`、`artifacts/audit/figures/`、`audit_report.md` |",
+        "unique": true,
+        "token": "audit_report.md",
+        "token_span": [
+          570,
+          585
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "os.path.isfile + sha256 of worktree file",
+        "result": "resolved",
+        "detail": "found at audit_report.md (25338 bytes)"
+      },
+      "path_reference": "audit_report.md",
+      "origin": "inline_code",
+      "note": "document_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "document_reference"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_sediment_m7437.py (markdown line 25)",
+      "in_report_section": "② 怎么做的（方法/流程/工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1392,
+        "end_char": 1511,
+        "start_line": 25,
+        "end_line": 25,
+        "quote": "   - `python -m pytest tests/ -q --ignore=tests/test_sediment_m7437.py` → **8 failed, 83 passed, 6 skipped, 12 errors**",
+        "unique": true,
+        "token": "tests/test_sediment_m7437.py",
+        "token_span": [
+          1434,
+          1462
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "os.path.isfile + sha256 of worktree file",
+        "result": "resolved",
+        "detail": "found at tests/test_sediment_m7437.py (2664 bytes)"
+      },
+      "path_reference": "tests/test_sediment_m7437.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_ke_export.py (markdown line 26)",
+      "in_report_section": "② 怎么做的（方法/流程/工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1512,
+        "end_char": 1628,
+        "start_line": 26,
+        "end_line": 26,
+        "quote": "   - `python -m pytest tests/test_ke_export.py tests/test_datasets.py tests/test_datasets_e2e.py -q` → **81 passed**",
+        "unique": true,
+        "token": "tests/test_ke_export.py",
+        "token_span": [
+          1535,
+          1558
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "os.path.isfile + sha256 of worktree file",
+        "result": "resolved",
+        "detail": "found at tests/test_ke_export.py (12194 bytes)"
+      },
+      "path_reference": "tests/test_ke_export.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "analyze_validation.py (markdown line 28)",
+      "in_report_section": "② 怎么做的（方法/流程/工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1746,
+        "end_char": 1858,
+        "start_line": 28,
+        "end_line": 28,
+        "quote": "   - `cd runs/oss-lbm-kruger-8676 && python analyze_validation.py && git status --short -- runs/` → **空（逐字节复现）**",
+        "unique": true,
+        "token": "analyze_validation.py",
+        "token_span": [
+          1790,
+          1811
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "bare filename cited by the report -> unique basename match in the delivery worktree (+sha256)",
+        "result": "resolved",
+        "detail": "cited by bare filename (the report gives the command's working directory, not a path); exactly one file in this worktree carries that name: runs/oss-lbm-kruger-8676/analyze_validation.py (13164 bytes)"
+      },
+      "path_reference": "analyze_validation.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "source_code_reference",
+      "label": "...m7437.py (markdown line 53)",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2462,
+        "end_char": 2571,
+        "start_line": 53,
+        "end_line": 53,
+        "quote": "| 全仓测试（剔除该文件） | `pytest tests/ --ignore=...m7437.py` | 83 passed / 8 failed / 12 errors / 6 skipped | **红** |",
+        "unique": true,
+        "token": "...m7437.py",
+        "token_span": [
+          2502,
+          2513
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "literal path as written in the source",
+        "result": "unresolved",
+        "detail": "the report writes this path in elided form (contains '...'), so no single file is named and nothing can be resolved as written"
+      },
+      "path_reference": "...m7437.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "source_code_reference",
+      "label": "validate_oss_lbm.py (markdown line 57)",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3035,
+        "end_char": 3138,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "| 知识包校验 | `validate_oss_lbm.py` / `validate_kruger.py` | PASS（27 claims/27 evidence/2 provenance） | 绿 |",
+        "unique": true,
+        "token": "validate_oss_lbm.py",
+        "token_span": [
+          3046,
+          3065
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "bare filename cited by the report -> unique basename match in the delivery worktree (+sha256)",
+        "result": "resolved",
+        "detail": "cited by bare filename (the report gives the command's working directory, not a path); exactly one file in this worktree carries that name: knowledge/oss-lbm/validate_oss_lbm.py (18278 bytes)"
+      },
+      "path_reference": "validate_oss_lbm.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "source_code_reference",
+      "label": "validate_kruger.py (markdown line 57)",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3035,
+        "end_char": 3138,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "| 知识包校验 | `validate_oss_lbm.py` / `validate_kruger.py` | PASS（27 claims/27 evidence/2 provenance） | 绿 |",
+        "unique": true,
+        "token": "validate_kruger.py",
+        "token_span": [
+          3070,
+          3088
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "bare filename cited by the report -> unique basename match in the delivery worktree (+sha256)",
+        "result": "resolved",
+        "detail": "cited by bare filename (the report gives the command's working directory, not a path); exactly one file in this worktree carries that name: knowledge/oss-lbm/kruger/validate_kruger.py (10279 bytes)"
+      },
+      "path_reference": "validate_kruger.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "source_code_reference",
+      "label": "validate_ontology_v1.py (markdown line 58)",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3139,
+        "end_char": 3240,
+        "start_line": 58,
+        "end_line": 58,
+        "quote": "| ontology v1 | `validate_ontology_v1.py` | 6 schemas PASS，3 example cards MISSING → FAILED | **红** |",
+        "unique": true,
+        "token": "validate_ontology_v1.py",
+        "token_span": [
+          3156,
+          3179
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "bare filename cited by the report -> unique basename match in the delivery worktree (+sha256)",
+        "result": "resolved",
+        "detail": "cited by bare filename (the report gives the command's working directory, not a path); exactly one file in this worktree carries that name: scripts/validate_ontology_v1.py (4138 bytes)"
+      },
+      "path_reference": "validate_ontology_v1.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "source_code_reference",
+      "label": "verify_sediment_m2400/m5490/m7485.py (markdown line 59)",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3241,
+        "end_char": 3404,
+        "start_line": 59,
+        "end_line": 59,
+        "quote": "| sediment verify ×3 | `verify_sediment_m2400/m5490/m7485.py` | FileNotFoundError INDEX.md / FAIL src:sha_available(exit 128) / package missing | **红（0 项检查被执行）** |",
+        "unique": true,
+        "token": "verify_sediment_m2400/m5490/m7485.py",
+        "token_span": [
+          3265,
+          3301
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from this worktree as written; no file in the worktree carries that name either"
+      },
+      "path_reference": "verify_sediment_m2400/m5490/m7485.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "source_code_reference",
+      "label": "analyze_validation.py (markdown line 61)",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3506,
+        "end_char": 3577,
+        "start_line": 61,
+        "end_line": 61,
+        "quote": "| 基准复现 | `analyze_validation.py` 重跑 | `git status -- runs/` 空 | 逐字节复现 |",
+        "unique": true,
+        "token": "analyze_validation.py",
+        "token_span": [
+          3516,
+          3537
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "bare filename cited by the report -> unique basename match in the delivery worktree (+sha256)",
+        "result": "resolved",
+        "detail": "cited by bare filename (the report gives the command's working directory, not a path); exactly one file in this worktree carries that name: runs/oss-lbm-kruger-8676/analyze_validation.py (13164 bytes)"
+      },
+      "path_reference": "analyze_validation.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "document_reference",
+      "label": "docs/sediment-m2591-report.md (markdown line 96)",
+      "in_report_section": "⑤ 注意点（坑与局限）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5175,
+        "end_char": 5313,
+        "start_line": 96,
+        "end_line": 96,
+        "quote": "- **报告 ≠ 证据**：2 份 sediment 报告 + 1 份 MISSION_COMPLETION 的\"验证完成\"均为文档；`docs/sediment-m2591-report.md` 甚至把\"逐字节一致 / 13 passed\"写成既成事实，而其包目录不在仓内。",
+        "unique": true,
+        "token": "docs/sediment-m2591-report.md",
+        "token_span": [
+          5243,
+          5272
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "os.path.isfile + sha256 of worktree file",
+        "result": "resolved",
+        "detail": "found at docs/sediment-m2591-report.md (5326 bytes)"
+      },
+      "path_reference": "docs/sediment-m2591-report.md",
+      "origin": "inline_code",
+      "note": "document_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "document_reference"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "report_table",
+      "label": "table 1 @ lines 7-14",
+      "in_report_section": "① 案例介绍（审计对象与参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 148,
+        "end_char": 691,
+        "start_line": 7,
+        "end_line": 14,
+        "quote": "| 项目 | 值 |\n|---|---|\n| 仓库 | `cxs503/TensorKnowledge`（main = PR #26 / m8817 合并点 `2d3c446`） |\n| 审计区间 | `edbc20a..2d3c446`：105 个新增文件（不含 `.pyc`），15,233 行 |\n| 审计区间内并入的 agent PR | m8810 / m8813 / m8815 / m8823 / m8824 / m8830 / m8834 / m8837 / m8838 / m8843 / m8846 + `restore gate-filtered dependencies`(m8554) |\n| 判据 | 可验证的功能交付；owner 六级 L0–L5；L≥2 需执行证据、L≥4 需基准对照 |\n| 证据目录 | `artifacts/audit/*.log`、`artifacts/audit/figures/`、`audit_report.md` |\n| 落表 | `tensor_maturity_verdicts` 14 行（repo=TensorKnowledge, mission_id=14492, verdict_by=audit2-ab） |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "8 rows x 2 columns"
+      },
+      "rows": 8,
+      "columns": 2,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "report_table",
+      "label": "table 2 @ lines 35-46",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1953,
+        "end_char": 2299,
+        "start_line": 35,
+        "end_line": 46,
+        "quote": "| 类别 | 文件 | 行数 |\n|---|---:|---:|\n| 核心功能模块 `ke/` | 5 | 1,443 |\n| 验证/提取脚本 `scripts/` | 12 | 3,235 |\n| 测试 `tests/` | 7 | 1,192 |\n| 文档报告 | 13 | 1,793 |\n| 知识地图 `knowledge-map/` | 26 | 2,093 |\n| 运行证据 `runs/` | 20 | 3,904 |\n| 报告工具 `artifacts/` | 4 | 679 |\n| 数据快照 `mappings/source/m8554` | 16 | 694 |\n| 许可/杂项 | 2 | 198 |\n| **合计** | **105** | **15,233** |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "12 rows x 3 columns"
+      },
+      "rows": 12,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "report_table",
+      "label": "table 3 @ lines 50-61",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2321,
+        "end_char": 3577,
+        "start_line": 50,
+        "end_line": 61,
+        "quote": "| 对象 | 命令 | 结果 | 判定 |\n|---|---|---|---|\n| 全仓测试（默认） | `pytest tests/` | 收集期 `ModuleNotFoundError: verify_records` → Interrupted | **红（阻断）** |\n| 全仓测试（剔除该文件） | `pytest tests/ --ignore=...m7437.py` | 83 passed / 8 failed / 12 errors / 6 skipped | **红** |\n| m8810+m8813 三组测试 | `pytest test_ke_export test_datasets test_datasets_e2e` | **81 passed** | 绿 |\n| ke export 真数据 | `ke.cli export mappings/source/m8554 --kind sft` | included=2, excluded=2（contested×1, not-assessed×1）, upstream_commit=2d3c446 | 真执行 |\n| CI 校验器 | `validate_epistemic_benchmark / validate_knowledge_assets / validate_ke_mapping / build_ke_mapping` | PASS(12 cases/5 schemas) / PASS(14 nodes/13 schemas) / PASS 19/19 / 19 records 0 uncovered | 绿 |\n| 知识包校验 | `validate_oss_lbm.py` / `validate_kruger.py` | PASS（27 claims/27 evidence/2 provenance） | 绿 |\n| ontology v1 | `validate_ontology_v1.py` | 6 schemas PASS，3 example cards MISSING → FAILED | **红** |\n| sediment verify ×3 | `verify_sediment_m2400/m5490/m7485.py` | FileNotFoundError INDEX.md / FAIL src:sha_available(exit 128) / package missing | **红（0 项检查被执行）** |\n| README 快速开始 | 3 条命令 | 19/19 PASS、14 nodes PASS、`ke.cli demo` FileNotFoundError | 1/3 失败（旗舰 demo） |\n| 基准复现 | `analyze_validation.py` 重跑 | `git status -- runs/` 空 | 逐字节复现 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "12 rows x 4 columns"
+      },
+      "rows": 12,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "report_table",
+      "label": "table 4 @ lines 65-72",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3602,
+        "end_char": 4126,
+        "start_line": 65,
+        "end_line": 72,
+        "quote": "| L | 数量 | scope |\n|---|---:|---|\n| L5 | 0 | — |\n| **L4** | **1** | runs/oss-lbm-kruger-8676 bench (m8676) |\n| **L3** | **2** | ke/export (m8810)；ke/datasets+server+loader (m8813) |\n| **L2** | **1** | knowledge/oss-lbm package+validators (m8635 lineage) |\n| **L1** | **1** | docs/ontology v1 + 6 schemas + validator (m8815) |\n| **L0** | **9** | knowledge-map (m8817)；m2591 report+schema patch (m8830)；verify_sediment_m7485 (m8823)；test_m5054 (m8824)；m5490 三脚本 (m8834)；m2400 两脚本 (m8837)；m8838 报告；test_m7437 (m8843)；PR m8846 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "8 rows x 3 columns"
+      },
+      "rows": 8,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "report_table",
+      "label": "table 5 @ lines 76-84",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4159,
+        "end_char": 4722,
+        "start_line": 76,
+        "end_line": 84,
+        "quote": "| 算例 | 关键量 | 实测 | 基准（解析） | 误差 | <3%? |\n|---|---|---|---|---|---|\n| Taylor–Green NX=32 | E/E0 | 0.005766 | 0.005855 | -1.53% | 是 |\n| Taylor–Green NX=64 | E/E0 | 0.005833 | 0.005855 | -0.38% | 是 |\n| Taylor–Green NX=128 | E/E0 | 0.005850 | 0.005855 | -0.10% | 是 |\n| Taylor–Green 收敛阶 | order | 2.0018 / 2.0028 | 2（理论） | +0.09% / +0.14% | 是 |\n| Young–Laplace | γ (r12 vs r15) | 0.02039 / 0.02072 | 自洽 | 1.61% | 是 |\n| IBM Poiseuille | u_centre | 0.001642 | 0.001756 | -6.47% | **否** |\n| chapter5 移植 | L2 (Poiseuille/Couette) | 7.568e-16 / 2.319e-15 | 0（机器精度） | ~0 | 是 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "9 rows x 6 columns"
+      },
+      "rows": 9,
+      "columns": 6,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "evidence_glob",
+      "label": "artifacts/audit/*.log",
+      "in_report_section": "① 案例介绍（审计对象与参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 509,
+        "end_char": 588,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "| 证据目录 | `artifacts/audit/*.log`、`artifacts/audit/figures/`、`audit_report.md` |",
+        "unique": true,
+        "token": "artifacts/audit/*.log",
+        "token_span": [
+          519,
+          540
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "glob in checkout -> miss; git ls-tree HEAD -> 0; git log --all -> hit; token anchored at exact inline-code span",
+        "result": "unresolved",
+        "detail": "absent from HEAD's tree (0 entries) but present in commit 14fc40dd618c (audit(m14492): TensorKnowledge A+B quality audit — asset inventory, six-question truth check, L0-L4 verdicts (14 scopes), red-main root caus), reachable only from ['refs/heads/agent/m14492'] - i.e. the bytes exist in git history, not in the delivered tree"
+      },
+      "probe": "glob",
+      "probe_evidence": {
+        "probe_base": "artifacts/audit",
+        "entries_at_head": 0,
+        "head_sample": [],
+        "history_commit": "14fc40dd618c",
+        "history_subject": "audit(m14492): TensorKnowledge A+B quality audit — asset inventory, six-question truth check, L0-L4 verdicts (14 scopes), red-main root caus",
+        "branches_containing": [
+          "refs/heads/agent/m14492"
+        ]
+      },
+      "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, not by assumption. No content is extracted.",
+      "kind": "evidence_glob"
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "evidence_glob",
+      "label": "artifacts/audit/figures/",
+      "in_report_section": "① 案例介绍（审计对象与参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 509,
+        "end_char": 588,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "| 证据目录 | `artifacts/audit/*.log`、`artifacts/audit/figures/`、`audit_report.md` |",
+        "unique": true,
+        "token": "artifacts/audit/figures/",
+        "token_span": [
+          543,
+          567
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "glob in checkout -> miss; git ls-tree HEAD -> 0; git log --all -> hit; token anchored at exact inline-code span",
+        "result": "unresolved",
+        "detail": "absent from HEAD's tree (0 entries) but present in commit 14fc40dd618c (audit(m14492): TensorKnowledge A+B quality audit — asset inventory, six-question truth check, L0-L4 verdicts (14 scopes), red-main root caus), reachable only from ['refs/heads/agent/m14492'] - i.e. the bytes exist in git history, not in the delivered tree"
+      },
+      "probe": "dir",
+      "probe_evidence": {
+        "probe_base": "artifacts/audit/figures",
+        "entries_at_head": 0,
+        "head_sample": [],
+        "history_commit": "14fc40dd618c",
+        "history_subject": "audit(m14492): TensorKnowledge A+B quality audit — asset inventory, six-question truth check, L0-L4 verdicts (14 scopes), red-main root caus",
+        "branches_containing": [
+          "refs/heads/agent/m14492"
+        ]
+      },
+      "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, not by assumption. No content is extracted.",
+      "kind": "evidence_glob"
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "registry_table_reference",
+      "label": "tensor_maturity_verdicts",
+      "in_report_section": "① 案例介绍（审计对象与参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 589,
+        "end_char": 691,
+        "start_line": 14,
+        "end_line": 14,
+        "quote": "| 落表 | `tensor_maturity_verdicts` 14 行（repo=TensorKnowledge, mission_id=14492, verdict_by=audit2-ab） |",
+        "unique": true,
+        "token": "tensor_maturity_verdicts",
+        "token_span": [
+          597,
+          621
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "psql -d tensorplatform -tA -c 'select count(*) from tensor_maturity_verdicts'; token anchored at exact inline-code span",
+        "result": "unresolved",
+        "detail": "registry table not readable from this worker: rc=1 ERROR:  permission denied for table tensor_maturity_verdicts"
+      },
+      "probe": "db_table",
+      "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, not by assumption. No content is extracted.",
+      "kind": "registry_table_reference"
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "repository_identity",
+      "label": "cxs503/TensorKnowledge",
+      "in_report_section": "① 案例介绍（审计对象与参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 169,
+        "end_char": 239,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "| 仓库 | `cxs503/TensorKnowledge`（main = PR #26 / m8817 合并点 `2d3c446`） |",
+        "unique": true,
+        "token": "cxs503/TensorKnowledge",
+        "token_span": [
+          177,
+          199
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "git remote get-url origin contains the declared slug; token anchored at exact inline-code span",
+        "result": "resolved",
+        "detail": "origin=https://cxs503@github.com/cxs503/TensorKnowledge.git"
+      },
+      "probe": "repo_slug",
+      "probe_evidence": {
+        "remote_url": "https://cxs503@github.com/cxs503/TensorKnowledge.git"
+      },
+      "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, not by assumption. No content is extracted.",
+      "kind": "repository_identity"
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "source_commit_anchor",
+      "label": "2d3c446",
+      "in_report_section": "① 案例介绍（审计对象与参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 169,
+        "end_char": 239,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "| 仓库 | `cxs503/TensorKnowledge`（main = PR #26 / m8817 合并点 `2d3c446`） |",
+        "unique": true,
+        "token": "2d3c446",
+        "token_span": [
+          228,
+          235
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "git cat-file -e + git log -1 + merge-base --is-ancestor HEAD; token anchored at exact inline-code span",
+        "result": "resolved",
+        "detail": "commit object present locally (Merge pull request #26 from cxs503/agent/m8817); ancestor_of_HEAD=true"
+      },
+      "probe": "git_commit",
+      "probe_evidence": {
+        "ancestor_of_head": true
+      },
+      "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, not by assumption. No content is extracted.",
+      "kind": "source_commit_anchor"
+    },
+    {
+      "asset_id": "A26",
+      "asset_class": "source_commit_anchor",
+      "label": "edbc20a..2d3c446",
+      "in_report_section": "(preamble)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 39,
+        "end_char": 126,
+        "start_line": 3,
+        "end_line": 3,
+        "quote": "**mission 14492 · verdict_by=audit2-ab · 审计基线 `edbc20a..2d3c446`（105 新增文件 / 15,233 行）**",
+        "unique": true,
+        "token": "edbc20a..2d3c446",
+        "token_span": [
+          86,
+          102
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "git cat-file -e <a> <b> + git rev-list --count a..b; token anchored at exact inline-code span",
+        "result": "resolved",
+        "detail": "both endpoints present; 33 commit(s) in range; tip_ancestor_of_HEAD=true"
+      },
+      "probe": "git_range",
+      "probe_evidence": {
+        "commits_in_range": 33,
+        "tip_ancestor_of_head": true
+      },
+      "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, not by assumption. No content is extracted.",
+      "kind": "source_commit_anchor"
+    },
+    {
+      "asset_id": "A27",
+      "asset_class": "data_snapshot_reference",
+      "label": "mappings/source/m8554",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2202,
+        "end_char": 2245,
+        "start_line": 44,
+        "end_line": 44,
+        "quote": "| 数据快照 `mappings/source/m8554` | 16 | 694 |",
+        "unique": true,
+        "token": "mappings/source/m8554",
+        "token_span": [
+          2210,
+          2231
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "os.path.isdir inside the delivery worktree; token anchored at exact inline-code span",
+        "result": "resolved",
+        "detail": "directory present: mappings/source/m8554 (16 file(s) below it)"
+      },
+      "probe": "dir",
+      "probe_evidence": {
+        "matched_dirs": [
+          "mappings/source/m8554"
+        ]
+      },
+      "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, not by assumption. No content is extracted.",
+      "kind": "data_snapshot_reference"
+    },
+    {
+      "asset_id": "A28",
+      "asset_class": "run_artifact_reference",
+      "label": "runs/oss-lbm-kruger-8676",
+      "in_report_section": "② 怎么做的（方法/流程/工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1746,
+        "end_char": 1858,
+        "start_line": 28,
+        "end_line": 28,
+        "quote": "   - `cd runs/oss-lbm-kruger-8676 && python analyze_validation.py && git status --short -- runs/` → **空（逐字节复现）**",
+        "unique": true,
+        "token": "runs/oss-lbm-kruger-8676",
+        "token_span": [
+          1755,
+          1779
+        ]
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "os.path.isdir inside the delivery worktree; token anchored at first loose occurrence (no exact inline-code span in source)",
+        "result": "resolved",
+        "detail": "directory present: runs/oss-lbm-kruger-8676 (19 file(s) below it)"
+      },
+      "probe": "dir",
+      "probe_evidence": {
+        "matched_dirs": [
+          "runs/oss-lbm-kruger-8676"
+        ]
+      },
+      "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, not by assumption. No content is extracted.",
+      "kind": "run_artifact_reference"
+    },
+    {
+      "asset_id": "A29",
+      "asset_class": "external_checkout_reference",
+      "label": "/root/tp-agent/work/m5490",
+      "in_report_section": "⑤ 注意点（坑与局限）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5432,
+        "end_char": 5700,
+        "start_line": 98,
+        "end_line": 98,
+        "quote": "- **局限（未验证项，如实声明）**：① sediment 系的真实计算逻辑无法判定——其数据包与源仓（`/root/tp-agent/work/m5490`、TensorDG/TensorBEM 检出）在本环境不可达，故一律 L0 而非\"按代码猜测的 L2\"；② `tk_eval_loader` 的 torch 分支未执行（本环境无 torch 消费方），只验证了 fallback 纯 Python 路径；③ 知识地图卡片内容（如 KCS Ct=0.0038–0.0045）属文献值，无法在本环境复算，未计为任何级别的验证证据。",
+        "unique": true,
+        "token": "/root/tp-agent/work/m5490",
+        "token_span": [
+          5486,
+          5511
+        ]
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "path containment against the delivery worktree (TensorKnowledge); token anchored at exact inline-code span",
+        "result": "absent",
+        "detail": "outside the delivery worktree and the report itself declares it unreachable from this environment"
+      },
+      "probe": "external_path",
+      "probe_evidence": {
+        "inside_worktree": false
+      },
+      "note": "reference shape that carries no file extension or is not a file at all; resolved by probe, not by assumption. No content is extracted.",
+      "kind": "external_checkout_reference"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": {
+      "total_quotes": 29,
+      "quotes_unique_in_source": 29,
+      "repeated_quotes": [
+        "   - `cd runs/oss-lbm-kruger-8676 && python analyze_validation.py && git status --short -- runs/` → **空（逐字节复现）**",
+        "| 仓库 | `cxs503/TensorKnowledge`（main = PR #26 / m8817 合并点 `2d3c446`） |",
+        "| 知识包校验 | `validate_oss_lbm.py` / `validate_kruger.py` | PASS（27 claims/27 evidence/2 provenance） | 绿 |",
+        "| 证据目录 | `artifacts/audit/*.log`、`artifacts/audit/figures/`、`audit_report.md` |"
+      ],
+      "note": "every quote is verbatim md[start_char:end_char] and occurs exactly once in the source; 'repeated_quotes' instead lists the source lines that carry more than one asset (several references on one line), not duplicated text in the report."
+    },
+    "hash_recomputed_locally": "2debab25c7d7bd29e00f59d43ced87eac163b12af701d9a9ad81cb4440579d42",
+    "hash_matches_contract": true,
+    "hash_alg": "sha256 over markdown encoded as utf-8",
+    "locator_scheme": "absolute character span in markdown, 1-based inclusive line numbers"
+  },
+  "identity_granularity": "File references are occurrence-level: identity is (path, markdown line), so a file cited twice yields two assets carrying their own quotes; counts.distinct_referenced_paths is the deduplicated view.",
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no `verified` marks (verification is platform-gated).",
+    "Referenced source paths belong to the producing repository; they are resolved strictly inside the TensorKnowledge delivery worktree, so cross-repository references stay referenced_unresolved by design.",
+    "Figures are inventoried from record.figures[] as-is; when png_base64 is empty the asset is metadata_only and no byte hash is claimed.",
+    "Table and code-fence assets record geometry (rows/columns/language) only; their content is not restated as knowledge.",
+    "Only path-like references, fenced/inline code paths, tables, figures and explicitly configured interface tokens are registered. Bare prose symbols (e.g. a rule table named in the text that lives in the producing repository) are deliberately NOT inferred - registering them would require assuming information the report does not pin to a file.",
+    "Outputs live under docs/kf/<package>/ because the push gate drops artifacts/** (see docs/ops), so registered artifacts are not silently filtered."
+  ],
+  "producer": {
+    "generator": "scripts/kf/kf01_register.py",
+    "contract_version": "1.0",
+    "fetched_via": "GET /api/v1/tensor/reports/13547"
+  }
+}
