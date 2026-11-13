@@ -1,0 +1,149 @@
+{
+  "package_id": "wp-14179-01",
+  "report_id": "14179",
+  "source_hash": "sha256:2352b96c50e792447e06d9d7450f16f0b34ba7ce2cbf1bf775c3402dcee59315",
+  "chars": 5506,
+  "verifier": "scripts/kf_wp14179_01_verify.py",
+  "blocking_failures": [],
+  "all_passed": true,
+  "checks": [
+    {
+      "check": "source_hash_matches",
+      "ok": true,
+      "detail": "live sha256=2352b96c50e792447e06d9d7450f16f0b34ba7ce2cbf1bf775c3402dcee59315 | contract=2352b96c50e792447e06d9d7450f16f0b34ba7ce2cbf1bf775c3402dcee59315 | manifest=2352b96c50e792447e06d9d7450f16f0b34ba7ce2cbf1bf775c3402dcee59315 | envelope=sha256:2352b96c50e792447e06d9d7450f16f0b34ba7ce2cbf1bf775c3402dcee59315",
+      "blocking": true
+    },
+    {
+      "check": "chars_match_contract",
+      "ok": true,
+      "detail": "len(markdown)=5506 contract=5506 manifest=5506",
+      "blocking": true
+    },
+    {
+      "check": "utf8_bytes_recorded",
+      "ok": true,
+      "detail": "bytes_utf8=8406 vs 8406 (chars 5506 != bytes: CJK body)",
+      "blocking": true
+    },
+    {
+      "check": "title_scenario_match",
+      "ok": true,
+      "detail": "title from live record reproduced verbatim: 交差审计 m14897 H5-CALIB-REFLUX：三件套重跑通过、A_ha…; scenario_key=calib_reflux_audit",
+      "blocking": true
+    },
+    {
+      "check": "report_id_consistent",
+      "ok": true,
+      "detail": "manifest/envelope report_id == 14179; record.id=14179",
+      "blocking": true
+    },
+    {
+      "check": "mirror_byte_identical",
+      "ok": true,
+      "detail": "artifacts/ copy == docs/kf/ durable mirror (sha256 09c5c1bad1ae02c8…)",
+      "blocking": true
+    },
+    {
+      "check": "valid_json[asset_manifest.json]",
+      "ok": true,
+      "detail": "json.loads round-trip OK",
+      "blocking": true
+    },
+    {
+      "check": "valid_json[kf_result.json]",
+      "ok": true,
+      "detail": "json.loads round-trip OK",
+      "blocking": true
+    },
+    {
+      "check": "valid_json[locator_check.json]",
+      "ok": true,
+      "detail": "json.loads round-trip OK",
+      "blocking": true
+    },
+    {
+      "check": "schema_pass[kf_result.v1]",
+      "ok": true,
+      "detail": "envelope validates against schemas/kf_result.v1.schema.json (draft 2020-12)",
+      "blocking": true
+    },
+    {
+      "check": "schema_pass[asset_manifest.v1 pinned]",
+      "ok": true,
+      "detail": "manifest validates against docs/kf/wp-14179-01/asset_manifest.v1.wp-14179-01.schema.json (draft-07, locally pinned)",
+      "blocking": true
+    },
+    {
+      "check": "source_locator_resolvable",
+      "ok": true,
+      "detail": "27/27 locators: md[start:end]==quote, unique, line offsets consistent; failures=[]",
+      "blocking": true
+    },
+    {
+      "check": "no_duplicate_ids",
+      "ok": true,
+      "detail": "27 asset ids, 27 distinct, format ok=True",
+      "blocking": true
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "ok": true,
+      "detail": "claims=[] in manifest and envelope (contract: classify_report_type=false, no extraction) -> acceptance item is vacuously satisfied; no claim carries status=verified",
+      "blocking": true
+    },
+    {
+      "check": "nothing_marked_verified",
+      "ok": true,
+      "detail": "envelope.verification_status=not_verified; verification is computed by the platform gate",
+      "blocking": true
+    },
+    {
+      "check": "boundary_respected",
+      "ok": true,
+      "detail": "{\"only_report_id\": \"14179\", \"read_other_reports\": false, \"modified_upstream_artifacts\": false, \"marked_verified\": false, \"extraction_done\": false, \"classification_done\": false}",
+      "blocking": true
+    },
+    {
+      "check": "counts_consistent",
+      "ok": true,
+      "detail": "assets=27 by_resolution={'resolved_in_source': 17, 'referenced_unresolved': 10}",
+      "blocking": true
+    },
+    {
+      "check": "every_asset_has_resolution_check",
+      "ok": true,
+      "detail": "27/27 assets carry a machine-check result",
+      "blocking": true
+    },
+    {
+      "check": "envelope_output_is_the_manifest",
+      "ok": true,
+      "detail": "outputs['asset_manifest.json'] is byte-equal (as JSON value) to artifacts/wp-14179-01/asset_manifest.json",
+      "blocking": true
+    },
+    {
+      "check": "no_invented_information",
+      "ok": true,
+      "detail": "every registered quote is a substring of the live markdown (fetched fresh in this run)",
+      "blocking": true
+    },
+    {
+      "check": "published_report_roundtrip",
+      "ok": true,
+      "detail": "report 14892 stored markdown sha256=2b2b9c468c464335… == local body sha256; figures=['figure1_asset_coverage.png']; tags contain kf-wp tag=True",
+      "blocking": false
+    },
+    {
+      "check": "report_body_single_json_block_equals_envelope",
+      "ok": true,
+      "detail": "1 json block(s); the single json block equals docs/kf/wp-14179-01/kf_result.json",
+      "blocking": true
+    },
+    {
+      "check": "report_body_title_and_tags",
+      "ok": true,
+      "detail": "title line '# KF-RESULT wp-14179-01' + tag kf-wp:wp-14179-01 present",
+      "blocking": true
+    }
+  ]
+}
