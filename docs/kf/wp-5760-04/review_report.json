@@ -1,0 +1,613 @@
+{
+  "schema_version": "1.0",
+  "package_id": "wp-5760-04",
+  "task_type": "04-independent-review",
+  "reviewer": {
+    "role": "red-team-reviewer",
+    "independent_reviewer": true,
+    "independence": {
+      "basis": "review built from source bytes + delivered artefact bytes + upstream payload; no producer explanation consumed",
+      "inputs": [
+        {
+          "kind": "source_markdown",
+          "report_id": "5760",
+          "field": "markdown",
+          "sha256": "sha256:95a6ffec44f492fe4f7f39f8d6bb989d845f6a781cd5749197177b6c05308bfe",
+          "chars": 6808,
+          "bytes": 10847
+        },
+        {
+          "kind": "reviewed_artifact",
+          "path": "docs/kf/wp-5760-01/asset_manifest.json",
+          "sha256": "sha256:c68aae2630dc40475db080dc49966c035308999722eb2a4f2613bc3dc9b9efb8",
+          "bytes": 57776
+        },
+        {
+          "kind": "upstream_result_report",
+          "report_id": 14662,
+          "chars": 11807
+        }
+      ],
+      "excluded": [
+        "producer chat",
+        "producer prompt",
+        "producer reasoning/scratch notes"
+      ],
+      "prompt_copied_from_producer": false
+    },
+    "tooling": {
+      "verifier": "scripts/kf/review_wp5760_04_checks.py",
+      "verifier_imports_producer_code": false,
+      "repo_head": "3d43e3c9b989b1b166f68ced4e9497f143af008b"
+    }
+  },
+  "subject": {
+    "package_id": "wp-5760-01",
+    "task_type": "01-asset-registration",
+    "report_id": "5760",
+    "artifact": "docs/kf/wp-5760-01/asset_manifest.json",
+    "artifact_sha256": "sha256:c68aae2630dc40475db080dc49966c035308999722eb2a4f2613bc3dc9b9efb8",
+    "artifact_bytes": 57776,
+    "claims_in_artifact": 0,
+    "assets_in_artifact": 52
+  },
+  "verdict": "pass",
+  "disposition": "approve-with-notes",
+  "disposition_rationale": "17/19 independent checks pass; both failing checks are documentation/structural nits (F1, F5) that do not change any byte of the reviewed artefact; the one major finding (F2) is a platform-level gate gap, and the independent recheck shows the risk is not realised.",
+  "checks_summary": {
+    "n_checks": 19,
+    "passed": 17,
+    "failed": [
+      "C13.schema_absence_claim",
+      "C19.quote_slice_invariant"
+    ],
+    "blocking_failed": []
+  },
+  "checks": [
+    {
+      "id": "C1.source_identity",
+      "ok": true,
+      "claim_audited": "source hash/chars match contract; manifest built on identical bytes",
+      "observed": {
+        "live_hash": "sha256:95a6ffec44f492fe4f7f39f8d6bb989d845f6a781cd5749197177b6c05308bfe",
+        "contract_hash": "sha256:95a6ffec44f492fe4f7f39f8d6bb989d845f6a781cd5749197177b6c05308bfe",
+        "live_chars": 6808,
+        "live_bytes": 10847,
+        "snapshot_identical_to_live": true
+      },
+      "blocking": true
+    },
+    {
+      "id": "C2.manifest_bytes",
+      "ok": true,
+      "claim_audited": "envelope declares manifest sha256/bytes",
+      "observed": {
+        "recomputed_sha256": "c68aae2630dc40475db080dc49966c035308999722eb2a4f2613bc3dc9b9efb8",
+        "declared_sha256": "c68aae2630dc40475db080dc49966c035308999722eb2a4f2613bc3dc9b9efb8",
+        "recomputed_bytes": 57776,
+        "declared_bytes": 57776
+      },
+      "blocking": true
+    },
+    {
+      "id": "C3.id_uniqueness",
+      "ok": true,
+      "claim_audited": "52 distinct, gapless ids",
+      "observed": {
+        "n": 52,
+        "distinct": 52,
+        "first": [
+          "A01",
+          "A02",
+          "A03"
+        ],
+        "last": [
+          "A52"
+        ]
+      },
+      "blocking": true
+    },
+    {
+      "id": "C4.locator_chars",
+      "ok": true,
+      "claim_audited": "every locator quote is the verbatim md[start:end] slice",
+      "observed": {
+        "checked": 52,
+        "mismatch": [],
+        "out_of_bounds": []
+      },
+      "blocking": true
+    },
+    {
+      "id": "C5.locator_lines",
+      "ok": true,
+      "claim_audited": "every locator start_line equals the recomputed line of start_char",
+      "observed": {
+        "checked": 52,
+        "mismatch": []
+      },
+      "blocking": true
+    },
+    {
+      "id": "C6.locator_lengths",
+      "ok": true,
+      "claim_audited": "span length end-start equals quote length (no silent truncation)",
+      "observed": {
+        "truncated_quotes": 0,
+        "length_mismatch": []
+      },
+      "blocking": false
+    },
+    {
+      "id": "C7.counts_recomputed",
+      "ok": true,
+      "claim_audited": "counts.by_class / by_resolution reproduced from the asset array",
+      "observed": {
+        "by_class": {
+          "source_document": 1,
+          "section": 11,
+          "table": 7,
+          "figure_reference": 1,
+          "figure_metadata": 1,
+          "file_reference": 20,
+          "artifact_directory_reference": 5,
+          "bare_filename_reference": 5,
+          "repro_command_block": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 20,
+          "referenced_unresolved": 31,
+          "declared_absent": 1
+        },
+        "declared": {
+          "assets": 52,
+          "by_class": {
+            "source_document": 1,
+            "section": 11,
+            "table": 7,
+            "figure_reference": 1,
+            "figure_metadata": 1,
+            "file_reference": 20,
+            "artifact_directory_reference": 5,
+            "bare_filename_reference": 5,
+            "repro_command_block": 1
+          },
+          "by_resolution": {
+            "resolved_in_source": 20,
+            "referenced_unresolved": 31,
+            "declared_absent": 1
+          },
+          "resolved_in_source": 20,
+          "referenced_unresolved": 31,
+          "declared_absent": 1,
+          "distinct_referenced_paths": 19
+        }
+      },
+      "blocking": true
+    },
+    {
+      "id": "C8.resolution_enum",
+      "ok": true,
+      "claim_audited": "no asset marked verified locally; source_document resolved",
+      "observed": {
+        "source_document_bad": [],
+        "verified_marks": [],
+        "claims_len": 0
+      },
+      "blocking": false
+    },
+    {
+      "id": "C9.coverage_recount",
+      "ok": true,
+      "claim_audited": "section/table/image counts reproduced by an independent rule",
+      "observed": {
+        "independent": {
+          "sections_h2_h3": 11,
+          "tables": 7,
+          "inline_images": 1
+        },
+        "manifest": {
+          "section": 11,
+          "table": 7,
+          "figure_reference": 1
+        }
+      },
+      "blocking": true
+    },
+    {
+      "id": "C10.figure_absence_claim",
+      "ok": true,
+      "claim_audited": "platform figures[] carries no png_base64 (basis for declared_absent)",
+      "observed": {
+        "figures_entries": 1,
+        "names": [
+          "fig_stall_timeline.png"
+        ],
+        "with_png_base64": [],
+        "figure_assets": [
+          {
+            "id": "A20",
+            "class": "figure_reference",
+            "resolution": "referenced_unresolved"
+          },
+          {
+            "id": "A21",
+            "class": "figure_metadata",
+            "resolution": "declared_absent"
+          }
+        ]
+      },
+      "blocking": false
+    },
+    {
+      "id": "C11.quote_uniqueness",
+      "ok": true,
+      "claim_audited": "non-unique quote ledger reproduced (occurrence-level ids, not duplicates)",
+      "observed": {
+        "recomputed_non_unique": [
+          "A21",
+          "A23",
+          "A24",
+          "A27",
+          "A28",
+          "A29",
+          "A31",
+          "A32",
+          "A33",
+          "A35",
+          "A36",
+          "A37",
+          "A38",
+          "A39",
+          "A41",
+          "A42",
+          "A43",
+          "A45",
+          "A46",
+          "A47",
+          "A48",
+          "A50"
+        ],
+        "declared_non_unique": [
+          "A21",
+          "A23",
+          "A24",
+          "A27",
+          "A28",
+          "A29",
+          "A31",
+          "A32",
+          "A33",
+          "A35",
+          "A36",
+          "A37",
+          "A38",
+          "A39",
+          "A41",
+          "A42",
+          "A43",
+          "A45",
+          "A46",
+          "A47",
+          "A48",
+          "A50"
+        ],
+        "recomputed_unique": 30
+      },
+      "blocking": false
+    },
+    {
+      "id": "C12.scope_single_report",
+      "ok": true,
+      "claim_audited": "manifest bound to report 5760 only, source hash = live bytes",
+      "observed": {
+        "report_id": "5760",
+        "source_uri": "tensor://reports/5760",
+        "source_hash": true
+      },
+      "blocking": false
+    },
+    {
+      "id": "C13.schema_absence_claim",
+      "ok": false,
+      "claim_audited": "reported limitation: 'schemas/kf_result.v1.schema.json absent in repo'",
+      "observed": {
+        "path": "schemas/kf_result.v1.schema.json",
+        "exists": true,
+        "size": 3597
+      },
+      "blocking": false
+    },
+    {
+      "id": "C14.report_table_spans",
+      "ok": true,
+      "claim_audited": "the char/line locators printed in the producer report resolve on live bytes",
+      "observed": {
+        "rows_checked": 10,
+        "rejected": []
+      },
+      "blocking": false
+    },
+    {
+      "id": "C15.repo_schema_available",
+      "ok": true,
+      "claim_audited": "repo envelope schema exists and the producer envelope validates against it",
+      "observed": {
+        "schema_present": true,
+        "validation_errors": []
+      },
+      "blocking": false
+    },
+    {
+      "id": "C16.no_omitted_path_tokens",
+      "ok": true,
+      "claim_audited": "no extension-bearing path token in the source is left unregistered",
+      "observed": {
+        "distinct_tokens": 14,
+        "missing_from_manifest": []
+      },
+      "blocking": true
+    },
+    {
+      "id": "C17.distinct_path_accounting",
+      "ok": true,
+      "claim_audited": "distinct_referenced_paths reproduced as file tokens + directory refs",
+      "observed": {
+        "file_tokens": 14,
+        "directory_refs": 5,
+        "sum": 19,
+        "declared": 19
+      },
+      "blocking": false
+    },
+    {
+      "id": "C18.repo_v1_const",
+      "ok": true,
+      "claim_audited": "reported limitation: repo asset_manifest.v1 hardcodes package_id=wp-448-01",
+      "observed": {
+        "repo_schema_package_id_const": "wp-448-01"
+      },
+      "blocking": false
+    },
+    {
+      "id": "C19.quote_slice_invariant",
+      "ok": false,
+      "claim_audited": "quote equals md[start_char:end_char] for every asset (single, uniform locator rule)",
+      "observed": {
+        "exact_assets": 51,
+        "non_exact": [
+          {
+            "id": "A01",
+            "method": "document",
+            "span": [
+              0,
+              6808
+            ],
+            "quote_chars": 47,
+            "span_chars": 6808
+          }
+        ]
+      },
+      "blocking": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "minor",
+      "blocking": false,
+      "title": "Limitation clause ⑤.7 is stale: repo envelope schema root cause is not reproducible",
+      "claim_audited": "reported limitation: scripts/kf/wp-5760-01 report states 'schemas/kf_result.v1.schema.json 在仓内不存在'",
+      "evidence": {
+        "check": "C13.schema_absence_claim",
+        "observed": {
+          "path": "schemas/kf_result.v1.schema.json",
+          "exists": true,
+          "size": 3597
+        },
+        "schema_commit": "548f89e 2026-11-12 09:21:16 +0800",
+        "envelope_validation": {
+          "schema_present": true,
+          "validation_errors": []
+        }
+      },
+      "reproduction": "ls -l schemas/kf_result.v1.schema.json && python3 -c \"import json,jsonschema;jsonschema.validate(json.load(open('docs/kf/wp-5760-01/kf_result.json')),json.load(open('schemas/kf_result.v1.schema.json')))\"",
+      "impact": "Documentation only: the envelope validates against the repo schema with zero errors, so no artefact is wrong. The derived package-level schema remains justified by the separate, verified fact that repo v1 hardcodes package_id=wp-448-01 (C18).",
+      "remediation": "Restate the limitation with the branch point/commit it was true for, or point schema_ref at the repo schema once the const is generalised by the platform owner.",
+      "status": "open-needs-fix-doc"
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "blocking": false,
+      "title": "52 locator assertions are only self-attested at platform level",
+      "claim_audited": "acceptance 'source_locator_resolvable' claimed as checked 52 / resolved 52",
+      "evidence": {
+        "check": "C4.locator_chars",
+        "observed": {
+          "checked": 52,
+          "mismatch": [],
+          "out_of_bounds": []
+        },
+        "platform_gate": {
+          "gate": "g5_source_locator_resolvable",
+          "checked": 0,
+          "resolved": 0,
+          "reason": "claims=0 -> no claim locators consumed"
+        },
+        "independent_recheck": {
+          "locators": 52,
+          "exact": 52,
+          "line_mismatch": []
+        }
+      },
+      "reproduction": "python3 scripts/kf/review_wp5760_04_checks.py docs/kf/wp-5760-01/asset_manifest.json runs/wp-5760-04/source_report_5760.md /tmp/checks.json",
+      "impact": "Risk not realised: an outside re-implementation reproduces all 52 spans and 52 start-line numbers exactly. But the capability claim ('locators are verifiable') is not protected by any platform gate, so a future package could regress silently.",
+      "remediation": "Platform: let task_type 01 register its locators as evidence locators so g5 counts them; reviewer-side: keep an external recheck (this package ships one).",
+      "status": "accepted-as-process-gap"
+    },
+    {
+      "id": "F3",
+      "severity": "minor",
+      "blocking": false,
+      "title": "Figure caption carries numbers that no byte in this package can support",
+      "claim_audited": "figures[0] caption asserts 'R3 fire 01:23 / R1 fire 01:10 / 断档 147.55 min'",
+      "evidence": {
+        "check": "C10.figure_absence_claim",
+        "observed": {
+          "figures_entries": 1,
+          "names": [
+            "fig_stall_timeline.png"
+          ],
+          "with_png_base64": [],
+          "figure_assets": [
+            {
+              "id": "A20",
+              "class": "figure_reference",
+              "resolution": "referenced_unresolved"
+            },
+            {
+              "id": "A21",
+              "class": "figure_metadata",
+              "resolution": "declared_absent"
+            }
+          ]
+        },
+        "caption": null
+      },
+      "reproduction": "jq -r '.figures[].caption' docs/kf/wp-5760-01/published_report.json",
+      "impact": "The PNG is genuinely absent (no png_base64 anywhere; declared_absent is honest), so the caption's numbers are WITHHELD at this layer and must be judged against the report text (where the same numbers are present). No drop of scope; a reader must not treat the caption as evidence.",
+      "remediation": "Downstream consumers should route figure-caption numbers to the report text; no change requested from the producer.",
+      "status": "withheld-declared"
+    },
+    {
+      "id": "F4",
+      "severity": "info",
+      "blocking": false,
+      "title": "locator interval convention (end_char exclusive) is undocumented",
+      "claim_audited": "A01 registers chars 0-6808 for a 6808-char document",
+      "evidence": {
+        "check": "C4.locator_chars",
+        "observed": {
+          "quote_equals_md_slice": true,
+          "A01_span": [
+            0,
+            6808
+          ],
+          "document_chars": 6808,
+          "document_lines": 186
+        }
+      },
+      "reproduction": "python3 -c \"import json;m=json.load(open('docs/kf/wp-5760-01/asset_manifest.json'));print(m['assets'][0]['locator'])\"",
+      "impact": "No error: every quote equals md[start:end] (half-open), so end_char==6808 is correct; only the convention is implicit and a reader could miscount by one char.",
+      "remediation": "Add 'interval': 'half-open [start,end)' to the locator schema.",
+      "status": "note"
+    },
+    {
+      "id": "F5",
+      "severity": "minor",
+      "blocking": false,
+      "title": "A01 quote is not its own char slice: locator rule not uniform across the 52 assets",
+      "claim_audited": "locator = char span + line + verbatim quote, quote = markdown[start_char:end_char]",
+      "evidence": {
+        "check": "C19.quote_slice_invariant",
+        "observed": {
+          "exact_assets": 51,
+          "non_exact": [
+            {
+              "id": "A01",
+              "method": "document",
+              "span": [
+                0,
+                6808
+              ],
+              "quote_chars": 47,
+              "span_chars": 6808
+            }
+          ]
+        },
+        "manifest_note": "The registered asset itself. quote pinned to the H1 title line; method=document covers the whole charset span 0..6808."
+      },
+      "reproduction": "python3 scripts/kf/review_wp5760_04_checks.py docs/kf/wp-5760-01/asset_manifest.json runs/wp-5760-04/source_report_5760.md /tmp/checks.json",
+      "impact": "51/52 assets satisfy quote == md[start:end] exactly; A01 (method=document) pins a 47-char H1 title inside a 6808-char span, so a uniform checker must special-case it and a reader cannot separate span extent from quote extent. Intent is documented in the manifest note, so no byte is misregistered.",
+      "remediation": "Split A01 into a document span without quote + a separate H1 anchor asset, or set end_char to the H1 line end and carry document length in its own field.",
+      "status": "open-needs-fix-structural"
+    }
+  ],
+  "semantic_fidelity": {
+    "claims_reviewed": 0,
+    "claims_marked_verified": 0,
+    "assets_sampled_for_fidelity": 52,
+    "registration_fidelity": {
+      "locator_quotes_exact": 52,
+      "locator_lines_exact": 52,
+      "classes_reproduced": {
+        "section": 11,
+        "table": 7,
+        "figure_reference": 1
+      },
+      "path_token_omissions": {
+        "distinct_tokens": 14,
+        "missing_from_manifest": []
+      },
+      "distinct_path_accounting": {
+        "file_tokens": 14,
+        "directory_refs": 5,
+        "sum": 19,
+        "declared": 19
+      }
+    },
+    "judgement": "faithful: every registered locator is the verbatim source slice, the class census is reproducible by an independent rule, and no extension-bearing path token in the source is left unregistered. Fidelity is NOT asserted for the truth of the report's own engineering numbers (out of scope for task_type 01)."
+  },
+  "not_run": [
+    "Running the reviewed package's own build/verify pipeline (scripts/kf/build_asset_manifest_5760.py) — would re-write the producer's package directory, outside this work package's boundary.",
+    "Resolving referenced paths inside the producing repo TensorPlatform (ops/taskplane/stall_detector.py, artifacts/in20_r5/**): not present in TensorKnowledge; kept as upstream-declared unresolved.",
+    "Executing the report's repro_cmd (it writes artifacts/in20_r5/** in TensorPlatform).",
+    "Rendering/validating fig_stall_timeline.png pixels — no PNG bytes exist in the report payload.",
+    "Any judgement of the IN20-R5 mechanism's numerical accuracy (that is task_type 03/02 scope, not 01)."
+  ],
+  "limitations": [
+    "Independence is input-level: I received the report markdown, the delivered asset_manifest.json and the upstream KF-RESULT report (payload + its limitation clauses). I did not read producer chat, prompts or scratch reasoning; no producer sentence was reused as my review prompt.",
+    "I cannot prove which commit the producer had checked out at run time; F1 is therefore phrased as 'not reproducible on current HEAD' with the commit that introduced the schema file.",
+    "The source report body itself is out of scope for re-derivation of its physics/mechanism numbers; this review audits registration fidelity and locator truth, not the IN20-R5 claims' truth.",
+    "Grading is my own; the platform verification state of wp-5760-01 is not changed by this report and no upstream claim is marked verified here."
+  ],
+  "checks_not_passed": [
+    {
+      "id": "C13.schema_absence_claim",
+      "claim": "reported limitation: 'schemas/kf_result.v1.schema.json absent in repo'",
+      "observed": {
+        "path": "schemas/kf_result.v1.schema.json",
+        "exists": true,
+        "size": 3597
+      },
+      "blocking": false
+    },
+    {
+      "id": "C19.quote_slice_invariant",
+      "claim": "quote equals md[start_char:end_char] for every asset (single, uniform locator rule)",
+      "observed": {
+        "exact_assets": 51,
+        "non_exact": [
+          {
+            "id": "A01",
+            "method": "document",
+            "span": [
+              0,
+              6808
+            ],
+            "quote_chars": 47,
+            "span_chars": 6808
+          }
+        ]
+      },
+      "blocking": false
+    }
+  ],
+  "verification_marking": {
+    "upstream_claims_marked_verified": 0,
+    "platform_verification_untouched": true,
+    "note": "This package judges the review subject only; verification stays a platform gate."
+  },
+  "repro_cmd": "python3 scripts/kf/kf_fetch_report.py 5760 runs/wp-5760-04/source_report_5760.md && cp runs/wp-5760-04/source_report_5760.md /tmp/snap.md && python3 scripts/kf/review_wp5760_04_checks.py docs/kf/wp-5760-01/asset_manifest.json runs/wp-5760-04/source_report_5760.md runs/wp-5760-04/independent_checks.json && python3 scripts/kf/build_review_5760_04.py && python3 -m pytest tests/test_kf_wp5760_04_review.py -q"
+}
