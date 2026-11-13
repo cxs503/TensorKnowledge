@@ -1,0 +1,418 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.registration.v1.schema.json",
+  "title": "asset_manifest.registration.v1 (KF work package task_type=01-asset-registration, package-agnostic)",
+  "description": "Shape used by the asset_manifest.json produced for 01-asset-registration work packages. Unlike schemas/asset_manifest.v1.schema.json (which pins the wp-448-01 identity with consts), this schema is package-agnostic: package_id / report_id are patterns, so any registration package can be checked with the same machine rule. It exists so that the `schema_pass` acceptance item of a registration package is a reproducible check rather than an assertion.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema",
+    "package_id",
+    "task_type",
+    "report_id",
+    "source",
+    "counts",
+    "assets",
+    "claims",
+    "integrity"
+  ],
+  "properties": {
+    "schema": {
+      "const": "asset_manifest.v1"
+    },
+    "package_id": {
+      "type": "string",
+      "pattern": "^wp-[A-Za-z0-9][A-Za-z0-9_.:-]*-[0-9]{2}$"
+    },
+    "task_type": {
+      "const": "01-asset-registration"
+    },
+    "report_id": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "lane": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "report_id",
+        "source_uri",
+        "source_field",
+        "source_hash",
+        "hash_algo",
+        "chars",
+        "bytes_utf8",
+        "record_fields"
+      ],
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "source_uri": {
+          "type": "string",
+          "pattern": "^tensor://reports/[0-9]+$"
+        },
+        "source_field": {
+          "enum": [
+            "markdown",
+            "summary",
+            "record"
+          ]
+        },
+        "source_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "contract_source_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "hash_algo": {
+          "const": "sha256"
+        },
+        "hash_match": {
+          "type": "boolean"
+        },
+        "chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "contract_chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "chars_match_contract": {
+          "type": "boolean"
+        },
+        "bytes_utf8": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "lines": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fetched_via": {
+          "type": "string"
+        },
+        "local_copy": {
+          "type": "string"
+        },
+        "record_fields": {
+          "type": "object",
+          "required": [
+            "title",
+            "scenario_key",
+            "title_matches_contract",
+            "scenario_matches_contract"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scenario_key": {
+              "type": "string"
+            },
+            "mission_id": {},
+            "status": {},
+            "stage": {},
+            "created_at": {},
+            "tags": {
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "figures": {
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "contract_title": {
+              "type": "string"
+            },
+            "title_matches_contract": {
+              "type": "boolean"
+            },
+            "scenario_matches_contract": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "assets",
+        "by_class",
+        "by_resolution",
+        "resolved_in_source",
+        "metadata_only",
+        "referenced_unresolved",
+        "declared_absent",
+        "claims"
+      ],
+      "properties": {
+        "assets": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "by_class": {
+          "type": "object"
+        },
+        "by_resolution": {
+          "type": "object"
+        },
+        "resolved_in_source": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "metadata_only": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "referenced_unresolved": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "declared_absent": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "claims": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "asset_id",
+          "asset_class",
+          "label",
+          "in_report_section",
+          "resolution",
+          "resolution_check",
+          "locator",
+          "note"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "pattern": "^A[0-9]{2,3}$"
+          },
+          "asset_class": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "in_report_section": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolution": {
+            "enum": [
+              "resolved_in_source",
+              "metadata_only",
+              "referenced_unresolved",
+              "declared_absent"
+            ]
+          },
+          "resolution_check": {
+            "type": "object",
+            "required": [
+              "check",
+              "result"
+            ],
+            "properties": {
+              "check": {
+                "type": "string",
+                "minLength": 1
+              },
+              "result": {
+                "enum": [
+                  "resolved",
+                  "unresolved",
+                  "absent",
+                  "present"
+                ]
+              }
+            }
+          },
+          "locator": {
+            "type": "object",
+            "required": [
+              "method",
+              "start_char",
+              "end_char",
+              "start_line",
+              "end_line",
+              "quote",
+              "unique"
+            ],
+            "properties": {
+              "method": {
+                "enum": [
+                  "char_span",
+                  "document"
+                ]
+              },
+              "start_char": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end_char": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "start_line": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "end_line": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1
+              },
+              "quote_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "unique": {
+                "type": "boolean"
+              },
+              "occurrences": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "occurrence_index": {
+                "type": "integer",
+                "minimum": -1
+              }
+            }
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "Empty is legitimate for a pure registration package (classify_report_type=false, no_forced_claim_generation=true). Each claim, if any, must carry an evidence locator or an explicit non-supported status.",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim_id",
+          "text"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "evidence_locator"
+            ]
+          },
+          {
+            "required": [
+              "evidence"
+            ]
+          },
+          {
+            "required": [
+              "status"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "unresolved",
+                  "partially-supported",
+                  "refuted"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "claims_empty_reason": {
+      "type": "string"
+    },
+    "integrity": {
+      "type": "object",
+      "required": [
+        "quote_uniqueness",
+        "hash_recomputed_locally",
+        "hash_matches_contract"
+      ],
+      "properties": {
+        "quote_uniqueness": {
+          "type": "object",
+          "required": [
+            "quotes_total",
+            "quotes_unique",
+            "all_resolvable_by_occurrence_index"
+          ],
+          "properties": {
+            "quotes_total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "quotes_unique": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "quotes_multi_occurrence": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "all_resolvable_by_occurrence_index": {
+              "type": "boolean"
+            }
+          }
+        },
+        "hash_recomputed_locally": {
+          "type": "boolean"
+        },
+        "hash_matches_contract": {
+          "type": "boolean"
+        },
+        "chars_matches_contract": {
+          "type": "boolean"
+        },
+        "title_matches_contract": {
+          "type": "boolean"
+        },
+        "scenario_matches_contract": {
+          "type": "boolean"
+        },
+        "id_duplicates": {
+          "type": "array"
+        }
+      }
+    }
+  }
+}
