@@ -1,0 +1,115 @@
+{
+  "package_id": "wp-11720-01",
+  "task_type": "01-asset-registration",
+  "report_id": "11720",
+  "source_uri": "tensor://reports/11720",
+  "source_field": "markdown",
+  "source_hash": "sha256:d9d8b0a44cbd18c56e6d78706aa550c1d6e0d6649af816aa4a43d25d32791a59",
+  "source_hash_expected": "sha256:d9d8b0a44cbd18c56e6d78706aa550c1d6e0d6649af816aa4a43d25d32791a59",
+  "source_hash_matches": true,
+  "hash_algorithm": "sha256 over UTF-8 bytes of the markdown field",
+  "title": "FVM-DEM 碎冰场两相耦合成熟化验证：从单相水流到水流+浮冰双向耦合",
+  "scenario_key": "p348w2-n10-fvm-dem-ice-coupling",
+  "source_mission_id": 9858,
+  "source_status": "published",
+  "chars": 2674,
+  "bytes_utf8": 4405,
+  "heading_count": 19,
+  "headings": [
+    {"level": 1, "text": "FVM-DEM 碎冰场两相耦合成熟化验证报告", "line_no": 1},
+    {"level": 2, "text": "① 案例介绍", "line_no": 3},
+    {"level": 3, "text": "物理背景", "line_no": 5},
+    {"level": 3, "text": "几何与参数", "line_no": 8},
+    {"level": 3, "text": "耦合模型", "line_no": 21},
+    {"level": 2, "text": "② 方法", "line_no": 26},
+    {"level": 3, "text": "数值方法", "line_no": 28},
+    {"level": 3, "text": "工具链", "line_no": 34},
+    {"level": 2, "text": "③ 计算结果", "line_no": 39},
+    {"level": 3, "text": "C1: 单 floe 漂移（解析锚 v_drift ≈ u_∞）", "line_no": 41},
+    {"level": 3, "text": "C2: 双向动量守恒", "line_no": 49},
+    {"level": 3, "text": "C3: 阻塞力牛顿第三定律", "line_no": 54},
+    {"level": 3, "text": "C4: 多 floe 相互作用（N=10）", "line_no": 58},
+    {"level": 3, "text": "C5: 网格收敛", "line_no": 64},
+    {"level": 3, "text": "C6: 时间步收敛", "line_no": 70},
+    {"level": 3, "text": "C7: 负控（无水流）", "line_no": 76},
+    {"level": 2, "text": "④ 结果图", "line_no": 81},
+    {"level": 2, "text": "⑤ 注意点与局限", "line_no": 85},
+    {"level": 2, "text": "⑥ 误差判定汇总", "line_no": 94}
+  ],
+  "attachments": [
+    {
+      "name": "C1_single_floe_drift",
+      "caption": "Single floe drift velocity vs time for 3 inlet velocities (C1 verification)",
+      "origin": "record.figures"
+    },
+    {
+      "name": "C3_newton_third_law",
+      "caption": "Newton 3rd law: drag force equals negative blocking force at every step (C3)",
+      "origin": "record.figures"
+    },
+    {
+      "name": "C4_multi_floe",
+      "caption": "Multi-floe interaction: 10 floes drifting in channel flow (C4)",
+      "origin": "record.figures"
+    },
+    {
+      "name": "C5_grid_convergence",
+      "caption": "Grid convergence: coarse vs fine grid show negligible difference (C5)",
+      "origin": "record.figures"
+    }
+  ],
+  "attachments_note": "figure metadata from the report record only; PNG payloads are not downloaded or checked in this package",
+  "tables": [
+    {
+      "table_id": "T1",
+      "label": "几何与参数表",
+      "in_report_section": "§① 案例介绍 / 几何与参数",
+      "locator": {
+        "method": "line_span",
+        "start_line": 10,
+        "end_line": 19,
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "note": "8-row parameter table: domain size, densities, floe geometry, drag coefficient, inlet velocities"
+    },
+    {
+      "table_id": "T2",
+      "label": "C1 单 floe 漂移结果",
+      "in_report_section": "§③ 计算结果 / C1",
+      "locator": {
+        "method": "line_span",
+        "start_line": 43,
+        "end_line": 47,
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "note": "3-row results table: v_drift for u_∞ = 0.5, 1.0, 1.5 m/s with relative errors"
+    },
+    {
+      "table_id": "T3",
+      "label": "误差判定汇总表",
+      "in_report_section": "§⑥ 误差判定汇总",
+      "locator": {
+        "method": "line_span",
+        "start_line": 96,
+        "end_line": 106,
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "note": "9-row summary table covering all 7 verification criteria (C1-C7) with errors and pass/fail"
+    }
+  ],
+  "code_blocks": [],
+  "code_blocks_note": "No fenced code blocks found in the report markdown",
+  "file_references": [],
+  "file_references_note": "No external file paths or artifact references found in the report markdown",
+  "claims": [],
+  "claims_note": "claims intentionally empty: this package only registers assets; no extraction, no invented claims (contract: classify_report_type=false, 不做抽取)",
+  "limitations": [
+    "Registration only: no extraction, no claim generation, no verified marks (verification is platform-gated).",
+    "Figure PNG payloads are not included in the report record (figures array carries name+caption only); figures are registered as metadata-only.",
+    "No external file paths or artifact references exist in the report markdown; all content is self-contained text and tables.",
+    "Tables are registered by line-span locators into the markdown; byte-level hashing of individual table content is not performed in this package."
+  ]
+}
