@@ -1,0 +1,54 @@
+{
+  "schema": "tk-stats/1",
+  "definition": {
+    "raw_records": "claim+evidence+provenance 记录条数（按 id 去重）",
+    "pending_ko": "无 review-event 的 claim 条数",
+    "governed_ko": "review_status=approved 且 publication_status=published 的 KO 条数",
+    "rule": "三口径互不替代；scope 亦不得跨域相加冒充总量，总量单列 total"
+  },
+  "scopes": {
+    "fixtures": {
+      "claims": 4,
+      "evidence": 8,
+      "provenance": 3,
+      "raw_records": 15,
+      "pending_ko": 4,
+      "governed_ko": 0,
+      "duplicates_collapsed": 0,
+      "files": 19,
+      "file_list_sha256": "4989ba840cef9cae050c4ae96e1ac417c90cfe3c2c2c8c1c80af43d7091054a0"
+    },
+    "knowledge": {
+      "claims": 10162,
+      "evidence": 10238,
+      "provenance": 10028,
+      "raw_records": 30428,
+      "pending_ko": 10162,
+      "governed_ko": 0,
+      "duplicates_collapsed": 18,
+      "files": 216,
+      "file_list_sha256": "92fdae510e394b7c3a16b94050414f6c17afed99fddb4f0112ed634d3305d8d9"
+    },
+    "benchmark": {
+      "claims": 0,
+      "evidence": 0,
+      "provenance": 0,
+      "raw_records": 0,
+      "pending_ko": 0,
+      "governed_ko": 0,
+      "duplicates_collapsed": 0,
+      "files": 13,
+      "file_list_sha256": "b2af3db5b8504230a6fb247ce5c11361d432f3614e379c4d6b4cb3731ed5b3ef"
+    }
+  },
+  "total": {
+    "claims": 10166,
+    "evidence": 10246,
+    "provenance": 10031,
+    "raw_records": 30443,
+    "pending_ko": 10166,
+    "governed_ko": 0,
+    "files": 248
+  },
+  "digest": "f444d1f1d376846775d6cda274d78aec42315d87f0b5ce54c54fb5d3d9d1beef"
+}
