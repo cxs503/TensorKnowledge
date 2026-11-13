@@ -1,0 +1,39 @@
+package_id: wp-12160-01
+task_type: 01-asset-registration
+contract_version: '1.0'
+mission_id: null
+lane: C
+input:
+  report_id: '12160'
+  source_uri: tensor://reports/12160
+  source_field: markdown
+  source_hash: sha256:e4e2c2d632af95718d0c43099594c1a41003f59610e86aa14ed82f936998b572
+  title: EEXI attained 端到端闭合链路（Holtrop→P_D→η_S→gCO2/(t·nm)）成熟化：链路全闭合、端到端 <5% 被否证 + 1852 倍单位缺陷修复
+  scenario_key: p73w3-n02-eexi-maturity
+  chars: 9351
+objective:
+  register_assets: true
+  classify_report_type: false
+constraints:
+  every_claim_must_have_source_locator: true
+  do_not_invent_missing_information: true
+  preserve_uncertainty: true
+  no_forced_claim_generation: true
+  do_not_mark_claims_as_verified: true
+output:
+  asset_manifest.json: true
+acceptance:
+  valid_json: true
+  schema_pass: true
+  source_locator_resolvable: true
+  source_hash_matches: true
+  no_duplicate_ids: true
+  all_claims_have_evidence_or_explicit_unresolved_status: true
+review:
+  required: false
+  independent_reviewer: false
+  reviewer_role: evidence-auditor
+delivery:
+  repo: TensorKnowledge
+  status: draft
+notes: 登记源资产：确认 report_id 与其 markdown 的字节哈希，列出可解析的附件/工件，不做抽取。claims 允许为空数组。 ｜分层=EEXI|p73w3-n02-eexi-maturity|l
