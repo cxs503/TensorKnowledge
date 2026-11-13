@@ -1,0 +1,85 @@
+{
+  "package_id": "wp-12629-01",
+  "report_id": "12629",
+  "checks": {
+    "independent_refetch": {
+      "source": "http://127.0.0.1:8010/api/v1/tensor/reports/12629",
+      "chars": 1899,
+      "sha256_recomputed": "6cbf559cfaec918c26cf69c0081a2a3dcdceee4f7870797b35a27af8ca7e10eb",
+      "contract_hash": "6cbf559cfaec918c26cf69c0081a2a3dcdceee4f7870797b35a27af8ca7e10eb",
+      "pass": true
+    },
+    "artifacts_present": {
+      "artifact_manifest": true,
+      "docs_manifest_mirror_identical": true,
+      "envelope_present": true,
+      "pass": true
+    },
+    "source_hash_matches": {
+      "manifest.source.hash": "6cbf559cfaec918c26cf69c0081a2a3dcdceee4f7870797b35a27af8ca7e10eb",
+      "envelope.provenance.source_hash": "sha256:6cbf559cfaec918c26cf69c0081a2a3dcdceee4f7870797b35a27af8ca7e10eb",
+      "pass": true
+    },
+    "source_locator_resolvable": {
+      "assets_checked": 34,
+      "failures": [],
+      "pass": true
+    },
+    "no_duplicate_ids": {
+      "n": 34,
+      "unique": true,
+      "sequential": true,
+      "pass": true
+    },
+    "counts_consistent": {
+      "counts.assets": 34,
+      "len(assets)": 34,
+      "counts.by_resolution": {
+        "resolved_in_source": 29,
+        "referenced_unresolved": 4,
+        "declared_absent": 1
+      },
+      "recount": {
+        "resolved_in_source": 29,
+        "referenced_unresolved": 4,
+        "declared_absent": 1
+      },
+      "pass": true
+    },
+    "claims_policy": {
+      "claims_len": 0,
+      "envelope_claims_len": 0,
+      "claims_marked_verified": 0,
+      "pass": true
+    },
+    "unresolved_items_documented": {
+      "items": [
+        "A10",
+        "A22",
+        "A24",
+        "A29",
+        "A31"
+      ],
+      "each_has_check": true,
+      "pass": true
+    },
+    "schema_pass": {
+      "validated_against": [
+        "schemas/kf_result.v1.schema.json",
+        "schemas/asset_manifest.wp-12629-01.schema.json"
+      ],
+      "errors": {},
+      "pass": true
+    },
+    "report_single_json_block": {
+      "report": "docs/wp-12629-01/KF-RESULT-wp-12629-01.md",
+      "n_json_blocks": 1,
+      "equals_envelope": true,
+      "has_required_title": true,
+      "has_wp_tag": true,
+      "pass": true
+    }
+  },
+  "all_pass": true,
+  "verifier": "scripts/kf_verify_12629.py (independent re-fetch, in-process)"
+}

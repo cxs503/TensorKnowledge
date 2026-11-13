@@ -1,0 +1,938 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-12629-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12629",
+  "objective": {
+    "register_assets": true,
+    "classify_report_type": false
+  },
+  "source": {
+    "uri": "tensor://reports/12629",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "6cbf559cfaec918c26cf69c0081a2a3dcdceee4f7870797b35a27af8ca7e10eb",
+    "chars": 1899,
+    "bytes_utf8": 3545,
+    "contract_chars": 1899,
+    "lines": 29,
+    "title": "P333W2-N07 动力定位时域闭环与单点失效漂移：降额因子场与解析漂移锚",
+    "scenario_key": "dp_timedomain",
+    "platform_mission_id": 11102,
+    "platform_status": "published",
+    "platform_created_at": "2026-11-10T22:13:13.450712+00:00",
+    "platform_tags": [
+      "DP",
+      "动力定位",
+      "时域仿真",
+      "失效漂移",
+      "能力包线",
+      "P333W2-N07"
+    ],
+    "platform_figures": [
+      {
+        "name": "fig1_capability_polar.png",
+        "caption": "图1 12 来向能力包线：静力/时域完好/时域失效"
+      },
+      {
+        "name": "fig2_derating_field.png",
+        "caption": "图2 降额因子场（波频储备 + 单点失效）"
+      },
+      {
+        "name": "fig5_wave_and_drift.png",
+        "caption": "图3 JONSWAP 谱、波频激励与二阶漂移力（STAWAVE-1 一致性）"
+      },
+      {
+        "name": "fig3_drift_anchor.png",
+        "caption": "图4 失效后漂移速度 vs 解析预测"
+      },
+      {
+        "name": "fig4_drift_linearity.png",
+        "caption": "图5 漂移距离-时间线性区"
+      },
+      {
+        "name": "fig6_layers.png",
+        "caption": "图6 分层可证伪"
+      },
+      {
+        "name": "fig7_station_keeping.png",
+        "caption": "图7 站桩时域历程"
+      }
+    ]
+  },
+  "counts": {
+    "assets": 34,
+    "by_class": {
+      "document": 1,
+      "heading": 6,
+      "case_declaration": 1,
+      "geometry_declaration": 1,
+      "actuator_set": 1,
+      "environment_baseline": 1,
+      "companion_case": 1,
+      "governing_equation": 1,
+      "code_pointer": 1,
+      "model_component": 5,
+      "experiment_setup": 1,
+      "result_block": 7,
+      "cross_reference": 2,
+      "figure_index": 1,
+      "figure_asset_set": 1,
+      "dataset": 1,
+      "limitation_block": 1,
+      "table": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 29,
+      "referenced_unresolved": 4,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 29,
+    "referenced_unresolved": 4,
+    "declared_absent": 1,
+    "claims": 0
+  },
+  "assets": [
+    {
+      "asset_class": "document",
+      "label": "报告正文（markdown 全文）",
+      "in_report_section": "全文",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(markdown utf-8) 与契约 source_hash 重算比对",
+        "result": "resolved"
+      },
+      "note": "整篇 markdown 即源资产；locator method=document 覆盖 0..1899 字符；hash=6cbf559cfaec918c26cf69c0081a2a3dcdceee4f7870797b35a27af8ca7e10eb",
+      "asset_id": "A01",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 1899,
+        "start_line": 1,
+        "end_line": 29,
+        "quote": "## 1 案例介绍\nDP-2 平台供应船（L=90 m, B=20 m, T=6.5 m, Cb=0.75, Δ=8994 t，几何自校验 rel_dev=0.0000），2×尾全回转 + 2×艏侧推（总推力 120 tf）。环境基准 Hs=4.0 m / Tp=9.0 s / 流速 0.60 m/s；12 个环境来向。附算例：110 000 t 穿梭油船（漂移锚）。\n\n## 2 怎么做的\n`(M+A)v̇+Dv = τ_cmd + τ_env(v,t)`（低速水平面三自由度）；风/流系数**复用平台单一源**（`backend.api.coupled_maneuvering` 的 Blendermann/OCIMF 系数），只把相对运动学改为二维矢量；二阶定常漂移系数标定得使**定常值严格等于 STAWAVE-1**，慢漂用 Newman(1974) `C_D|η|²`（同一 JONSWAP 实现，测试钉住均值一致）；一阶波频力为声明式简化 RAO；推力分配=加权最小能量解+逐轮饱和冻结的迭代 QP；控制器=PD+积分抗风偏置+一阶波滤+条件积分抗饱和；RK4 推进；失效在 t=120 s 注入。\n\n## 3 计算结果\n* **12 来向能力包线**：静力均值 49.0 m/s，时域均值 39.7 m/s，**降额因子 δ_wave 均值 25.3%**（8 个有界来向，min 6.2%，max 46.9%）；叠加最坏单机失效后 δ_fail 均值 46.6%，失效后时域能力均值 26.4 m/s。\n* **(a) 静力一致性**：PD-only 末态距解析平衡点 0.0000 m = 0.000%·L（判据 0.5%·L，PASS）；开积分后回到设定点残差 0.041%·L。\n* **(b) 包含关系**：判定域 48 点、违例 0 → PASS；边界带（0.7–1.0·V_static）12 点中 2 点不可保持（见 §5 局限）。\n* **(c) 解析漂移锚**：严格二次根 `Du=k(V−u)²` 误差最大 0.84%，线性等效阻尼式 `F_unbal/C_eq` 误差最大 5.39%（气动/船体阻尼比 r 见报告表）。\n* **(d) 漂移线性区**：准稳态窗 R² 最小 0.9993，字面 30–300 s 窗 R² 最小 0.9584（物理时间常数 τ≈4009 s，30–300 s 窗整体落在加速段内，口径偏差已在报告 §6.4 声明）。\n* **(e) 分层可证伪**：包线内 16 点全收敛、包线外 5 点全发散，混淆矩阵 {'TP_hold': 16, 'FP_inside_not_held': 0, 'TN_diverged': 5, 'FN_outside_held': 0}，准确率 100%。\n* **单点失效漂移事件**（V_wind=16 m/s）：稳态漂移速度 0.010 m/s@45°、0.011 m/s@90°、0.009 m/s@180°；600 s 漂移距离 1.9 m、0.4 m、0.4 m。\n\n## 4 图\n图1 能力包线极坐标；图2 降额因子场；图3 波谱与二阶漂移力（STAWAVE-1 一致性）；图4 失效漂移速度 vs 两个解析预测；图5 漂移距离-时间线性区；图6 分层可证伪；图7 站桩时域历程。\n\n## 5 注意点（局限）\n1. 一阶波频力 RAO、附加质量/阻尼分项、Newman 单系数化均为**声明式**工程模型（非试验 RAO），只作趋势与量级结论；2. 分配器为迭代饱和冻结，包线是 `ALLOCATOR_BOUND`（非数学上界）；3. 顺风失控工况存在真实转首失稳（broaching），1D 解析锚算例锁定转艏自由度后比对；4. 未建模横摇/纵摇耦合、推进器响应滞后、波浪漂移阻尼。\n\n## 6 误差判定（逐项，显式回答是否 <3%）\n| 关键量 | 基准 | 误差 | <3%? |\n|---|---|---|---|\n| 二阶定常漂移力 | STAWAVE-1 | <3%（测试钉住） | 是 |\n| 稳态漂移速度 | 严格二次根 | 0.84% | 是 |\n| 稳态漂移速度 | 线性等效阻尼式 | 5.39% | 否（公式适用边界 r≪1，已给出 r 分布） |\n| 静力平衡位置 | 解析 x*=x_sp+Kp⁻¹τ | 0.000%·L | 是 |\n| 一阶波频力 / 时域能力绝对值 / 失效漂移距离 | 无公开基准 | 不声明精度 | 无基准，只作趋势结论 |",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "heading",
+      "label": "章节标题 §1 案例介绍",
+      "in_report_section": "§1",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "行 1 全文唯一出现",
+        "result": "resolved"
+      },
+      "note": "一级章节标题行，供下游按节定位",
+      "asset_id": "A02",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 9,
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "## 1 案例介绍",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "case_declaration",
+      "label": "船型与主尺度参数（L/B/T/Cb/Δ）",
+      "in_report_section": "§1",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§1 首句按“。”切分后取含“供应船”的片段；片段在全文唯一",
+        "result": "resolved"
+      },
+      "note": "数值仅登记不换算；几何一致性判据见下一条",
+      "asset_id": "A03",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10,
+        "end_char": 112,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "DP-2 平台供应船（L=90 m, B=20 m, T=6.5 m, Cb=0.75, Δ=8994 t，几何自校验 rel_dev=0.0000），2×尾全回转 + 2×艏侧推（总推力 120 tf）",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "geometry_declaration",
+      "label": "几何自校验结果（rel_dev）",
+      "in_report_section": "§1",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "同片段按“，”切分后取含字段名 rel_dev 的子片段",
+        "result": "resolved"
+      },
+      "note": "船型几何自校验条款原文；是否达标不在本工序判定",
+      "asset_id": "A04",
+      "locator": {
+        "method": "char_span",
+        "start_char": 64,
+        "end_char": 84,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "几何自校验 rel_dev=0.0000",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "actuator_set",
+      "label": "推进器配置（2×尾全回转 + 2×艏侧推，总推力）",
+      "in_report_section": "§1",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "同片段按“），”切分后取含“侧推”的子片段",
+        "result": "resolved"
+      },
+      "note": "执行器配置声明；推力分配器实现体见 §2 分配器条目",
+      "asset_id": "A05",
+      "locator": {
+        "method": "char_span",
+        "start_char": 86,
+        "end_char": 112,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "2×尾全回转 + 2×艏侧推（总推力 120 tf）",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "environment_baseline",
+      "label": "环境基准参数（Hs/Tp/流速/来向数）",
+      "in_report_section": "§1",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§1 按“。”切分后取含“环境基准”的片段",
+        "result": "resolved"
+      },
+      "note": "环境工况声明；分布实现（JONSWAP）见 §2",
+      "asset_id": "A06",
+      "locator": {
+        "method": "char_span",
+        "start_char": 113,
+        "end_char": 160,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "环境基准 Hs=4.0 m / Tp=9.0 s / 流速 0.60 m/s；12 个环境来向",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "companion_case",
+      "label": "附算例：穿梭油船漂移锚",
+      "in_report_section": "§1",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§1 按“。”切分后取含“附算例”的片段",
+        "result": "resolved"
+      },
+      "note": "附加算例声明，与主算例分属不同船型",
+      "asset_id": "A07",
+      "locator": {
+        "method": "char_span",
+        "start_char": 161,
+        "end_char": 184,
+        "start_line": 2,
+        "end_line": 2,
+        "quote": "附算例：110 000 t 穿梭油船（漂移锚）",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "heading",
+      "label": "章节标题 §2 怎么做的",
+      "in_report_section": "§2",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "行 4 全文唯一出现",
+        "result": "resolved"
+      },
+      "note": "方法章节标题行",
+      "asset_id": "A08",
+      "locator": {
+        "method": "char_span",
+        "start_char": 187,
+        "end_char": 196,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "## 2 怎么做的",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "governing_equation",
+      "label": "运动方程（低速水平面三自由度）",
+      "in_report_section": "§2",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§2 按“；”切分后取含状态导数符号 v̇ 的片段",
+        "result": "resolved"
+      },
+      "note": "支配方程原文；自由度声明随片段一并登记",
+      "asset_id": "A09",
+      "locator": {
+        "method": "char_span",
+        "start_char": 197,
+        "end_char": 241,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "`(M+A)v̇+Dv = τ_cmd + τ_env(v,t)`（低速水平面三自由度）",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "code_pointer",
+      "label": "风/流系数来源（平台单一源，代码引用）",
+      "in_report_section": "§2",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "grep -rIl 'coupled_maneuvering' 全树：命中仅 knowledge/kb10k 的 claims/evidence JSON（数据记录），无同名 .py 代码文件 → 代码工件本体不在本工作树",
+        "result": "unresolved"
+      },
+      "note": "报告指向平台仓模块 backend.api.coupled_maneuvering；本仓只有 kb10k 代码指针记录提及该文件，代码本体不可解析，故登记为未解析、不臆造地址（kb10k 指针记录见 checks.code_pointer_target_in_worktree）",
+      "asset_id": "A10",
+      "locator": {
+        "method": "char_span",
+        "start_char": 242,
+        "end_char": 330,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "风/流系数**复用平台单一源**（`backend.api.coupled_maneuvering` 的 Blendermann/OCIMF 系数），只把相对运动学改为二维矢量",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "model_component",
+      "label": "二阶定常/慢漂力模型（含标定口径）",
+      "in_report_section": "§2",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§2 按“；”切分后取含 Newman 的片段",
+        "result": "resolved"
+      },
+      "note": "标定目标与慢漂模型原文；一致性由报告自述“测试钉住”，测试工件未在本仓",
+      "asset_id": "A11",
+      "locator": {
+        "method": "char_span",
+        "start_char": 331,
+        "end_char": 415,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "二阶定常漂移系数标定得使**定常值严格等于 STAWAVE-1**，慢漂用 Newman(1974) `C_D|η|²`（同一 JONSWAP 实现，测试钉住均值一致）",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "model_component",
+      "label": "一阶波频力（声明式简化 RAO）",
+      "in_report_section": "§2",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§2 按“；”切分后取含 RAO 的片段",
+        "result": "resolved"
+      },
+      "note": "声明式简化模型，非试验 RAO：精度结论只到趋势/量级（与 §5 第 1 条一致）",
+      "asset_id": "A12",
+      "locator": {
+        "method": "char_span",
+        "start_char": 416,
+        "end_char": 431,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "一阶波频力为声明式简化 RAO",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "model_component",
+      "label": "推力分配（迭代 QP + 饱和冻结）",
+      "in_report_section": "§2",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§2 按“；”切分后取含 QP 的片段",
+        "result": "resolved"
+      },
+      "note": "分配器实现方式原文；其边界性质见 §5 第 2 条",
+      "asset_id": "A13",
+      "locator": {
+        "method": "char_span",
+        "start_char": 432,
+        "end_char": 457,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "推力分配=加权最小能量解+逐轮饱和冻结的迭代 QP",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "model_component",
+      "label": "控制器（PD + 积分 + 波滤 + 抗饱和）",
+      "in_report_section": "§2",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§2 按“；”切分后取含 PD 的片段",
+        "result": "resolved"
+      },
+      "note": "控制器结构与波滤环节原文",
+      "asset_id": "A14",
+      "locator": {
+        "method": "char_span",
+        "start_char": 458,
+        "end_char": 484,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "控制器=PD+积分抗风偏置+一阶波滤+条件积分抗饱和",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "model_component",
+      "label": "时间推进（RK4）",
+      "in_report_section": "§2",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§2 按“；”切分后取含 RK4 的片段",
+        "result": "resolved"
+      },
+      "note": "积分格式原文；步长未在该片段声明",
+      "asset_id": "A15",
+      "locator": {
+        "method": "char_span",
+        "start_char": 485,
+        "end_char": 491,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "RK4 推进",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "experiment_setup",
+      "label": "单点失效注入时刻",
+      "in_report_section": "§2",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§2 按“；”切分后取含“注入”的片段",
+        "result": "resolved"
+      },
+      "note": "失效工况注入时刻原文",
+      "asset_id": "A16",
+      "locator": {
+        "method": "char_span",
+        "start_char": 492,
+        "end_char": 507,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "失效在 t=120 s 注入。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "heading",
+      "label": "章节标题 §3 计算结果",
+      "in_report_section": "§3",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "行 7 全文唯一出现",
+        "result": "resolved"
+      },
+      "note": "结果章节标题行",
+      "asset_id": "A17",
+      "locator": {
+        "method": "char_span",
+        "start_char": 509,
+        "end_char": 518,
+        "start_line": 7,
+        "end_line": 7,
+        "quote": "## 3 计算结果",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "result_block",
+      "label": "能力包线条目（静力/时域均值、降额因子、失效叠加）",
+      "in_report_section": "§3",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§3 第 8 行整行（项目符号行）在全文唯一",
+        "result": "resolved"
+      },
+      "note": "整行登记：内含多个数值，仅登记不改写、不判定精度",
+      "asset_id": "A18",
+      "locator": {
+        "method": "char_span",
+        "start_char": 519,
+        "end_char": 661,
+        "start_line": 8,
+        "end_line": 8,
+        "quote": "* **12 来向能力包线**：静力均值 49.0 m/s，时域均值 39.7 m/s，**降额因子 δ_wave 均值 25.3%**（8 个有界来向，min 6.2%，max 46.9%）；叠加最坏单机失效后 δ_fail 均值 46.6%，失效后时域能力均值 26.4 m/s。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "result_block",
+      "label": "结果 (a) 静力一致性",
+      "in_report_section": "§3",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§3 第 9 行整行（项目符号行）在全文唯一",
+        "result": "resolved"
+      },
+      "note": "整行登记：内含多个数值，仅登记不改写、不判定精度",
+      "asset_id": "A19",
+      "locator": {
+        "method": "char_span",
+        "start_char": 662,
+        "end_char": 752,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "* **(a) 静力一致性**：PD-only 末态距解析平衡点 0.0000 m = 0.000%·L（判据 0.5%·L，PASS）；开积分后回到设定点残差 0.041%·L。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "result_block",
+      "label": "结果 (b) 包含关系",
+      "in_report_section": "§3",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§3 第 10 行整行（项目符号行）在全文唯一",
+        "result": "resolved"
+      },
+      "note": "整行登记：内含多个数值，仅登记不改写、不判定精度",
+      "asset_id": "A20",
+      "locator": {
+        "method": "char_span",
+        "start_char": 753,
+        "end_char": 833,
+        "start_line": 10,
+        "end_line": 10,
+        "quote": "* **(b) 包含关系**：判定域 48 点、违例 0 → PASS；边界带（0.7–1.0·V_static）12 点中 2 点不可保持（见 §5 局限）。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "result_block",
+      "label": "结果 (c) 解析漂移锚",
+      "in_report_section": "§3",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§3 第 11 行整行（项目符号行）在全文唯一",
+        "result": "resolved"
+      },
+      "note": "整行登记：内含多个数值，仅登记不改写、不判定精度",
+      "asset_id": "A21",
+      "locator": {
+        "method": "char_span",
+        "start_char": 834,
+        "end_char": 931,
+        "start_line": 11,
+        "end_line": 11,
+        "quote": "* **(c) 解析漂移锚**：严格二次根 `Du=k(V−u)²` 误差最大 0.84%，线性等效阻尼式 `F_unbal/C_eq` 误差最大 5.39%（气动/船体阻尼比 r 见报告表）。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "cross_reference",
+      "label": "被引“报告表”（阻尼比 r 分布）",
+      "in_report_section": "§3 (c)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "全文检索 '报告表' 命中 1 处；§6 误差表内无含“阻尼比/r”的数据行",
+        "result": "unresolved"
+      },
+      "note": "所指的 r 分布表在本 markdown 中不存在：引用不可解析，未臆造转向其它来源",
+      "asset_id": "A22",
+      "locator": {
+        "method": "char_span",
+        "start_char": 913,
+        "end_char": 930,
+        "start_line": 11,
+        "end_line": 11,
+        "quote": "（气动/船体阻尼比 r 见报告表）",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "result_block",
+      "label": "结果 (d) 漂移线性区",
+      "in_report_section": "§3",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§3 第 12 行整行（项目符号行）在全文唯一",
+        "result": "resolved"
+      },
+      "note": "整行登记：内含多个数值，仅登记不改写、不判定精度",
+      "asset_id": "A23",
+      "locator": {
+        "method": "char_span",
+        "start_char": 932,
+        "end_char": 1046,
+        "start_line": 12,
+        "end_line": 12,
+        "quote": "* **(d) 漂移线性区**：准稳态窗 R² 最小 0.9993，字面 30–300 s 窗 R² 最小 0.9584（物理时间常数 τ≈4009 s，30–300 s 窗整体落在加速段内，口径偏差已在报告 §6.4 声明）。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "cross_reference",
+      "label": "被引小节 §6.4（口径偏差声明）",
+      "in_report_section": "§3 (d)",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "全文检索 '§6.4' 命中 1 处；章节标题列表中不存在 6.4 小节",
+        "result": "unresolved"
+      },
+      "note": "指向的小节在本 markdown 中不存在：登记为断链引用，供 report 修订方补齐或改指",
+      "asset_id": "A24",
+      "locator": {
+        "method": "char_span",
+        "start_char": 992,
+        "end_char": 1045,
+        "start_line": 12,
+        "end_line": 12,
+        "quote": "（物理时间常数 τ≈4009 s，30–300 s 窗整体落在加速段内，口径偏差已在报告 §6.4 声明）",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "result_block",
+      "label": "结果 (e) 分层可证伪混淆矩阵",
+      "in_report_section": "§3",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§3 第 13 行整行（项目符号行）在全文唯一",
+        "result": "resolved"
+      },
+      "note": "整行登记：内含多个数值，仅登记不改写、不判定精度",
+      "asset_id": "A25",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1047,
+        "end_char": 1181,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "* **(e) 分层可证伪**：包线内 16 点全收敛、包线外 5 点全发散，混淆矩阵 {'TP_hold': 16, 'FP_inside_not_held': 0, 'TN_diverged': 5, 'FN_outside_held': 0}，准确率 100%。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "result_block",
+      "label": "单点失效漂移事件条目（稳态漂移速度与漂移距离）",
+      "in_report_section": "§3",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§3 第 14 行整行（项目符号行）在全文唯一",
+        "result": "resolved"
+      },
+      "note": "整行登记：内含多个数值，仅登记不改写、不判定精度",
+      "asset_id": "A26",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1182,
+        "end_char": 1291,
+        "start_line": 14,
+        "end_line": 14,
+        "quote": "* **单点失效漂移事件**（V_wind=16 m/s）：稳态漂移速度 0.010 m/s@45°、0.011 m/s@90°、0.009 m/s@180°；600 s 漂移距离 1.9 m、0.4 m、0.4 m。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "heading",
+      "label": "章节标题 §4 图",
+      "in_report_section": "§4",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "行 16 全文唯一出现",
+        "result": "resolved"
+      },
+      "note": "图目录章节标题行",
+      "asset_id": "A27",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1293,
+        "end_char": 1299,
+        "start_line": 16,
+        "end_line": 16,
+        "quote": "## 4 图",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "figure_index",
+      "label": "图目录（图1–图7 声明）",
+      "in_report_section": "§4",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§4 整行；正则 图\\d+ 计数与平台 record.figures 长度比对",
+        "result": "resolved"
+      },
+      "note": "仅图序号与用途文字，非图件本体；图件登记见下一条",
+      "asset_id": "A28",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1300,
+        "end_char": 1400,
+        "start_line": 17,
+        "end_line": 17,
+        "quote": "图1 能力包线极坐标；图2 降额因子场；图3 波谱与二阶漂移力（STAWAVE-1 一致性）；图4 失效漂移速度 vs 两个解析预测；图5 漂移距离-时间线性区；图6 分层可证伪；图7 站桩时域历程。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "figure_asset_set",
+      "label": "平台 record.figures 图件（7 项）",
+      "in_report_section": "§4",
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "record.figures 每项仅含 name/caption，无内联图片数据、base64 或可下载 URI",
+        "result": "unresolved"
+      },
+      "note": "图件二进制在本报告中不可解析：文件名=fig1_capability_polar.png; fig2_derating_field.png; fig5_wave_and_drift.png; fig3_drift_anchor.png; fig4_drift_linearity.png; fig6_layers.png; fig7_station_keeping.png；同名 figN 序号与图号存在错位（见 checks.figure_name_caption_permutation）",
+      "asset_id": "A29",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1300,
+        "end_char": 1400,
+        "start_line": 17,
+        "end_line": 17,
+        "quote": "图1 能力包线极坐标；图2 降额因子场；图3 波谱与二阶漂移力（STAWAVE-1 一致性）；图4 失效漂移速度 vs 两个解析预测；图5 漂移距离-时间线性区；图6 分层可证伪；图7 站桩时域历程。",
+        "unique": true,
+        "duplicate_quote_of": "A28"
+      }
+    },
+    {
+      "asset_class": "heading",
+      "label": "章节标题 §5 注意点（局限）",
+      "in_report_section": "§5",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "行 19 全文唯一出现",
+        "result": "resolved"
+      },
+      "note": "局限章节标题行",
+      "asset_id": "A30",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1402,
+        "end_char": 1414,
+        "start_line": 19,
+        "end_line": 19,
+        "quote": "## 5 注意点（局限）",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "dataset",
+      "label": "试验/公开 RAO 数据集",
+      "in_report_section": "§5",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "§5 第 1 条显式声明“非试验 RAO”；全文检索无试验 RAO 数据表/文件引用",
+        "result": "absent"
+      },
+      "note": "报告自述该数据资产不存在：登记为 declared_absent，不得由本工序补造",
+      "asset_id": "A31",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1415,
+        "end_char": 1481,
+        "start_line": 20,
+        "end_line": 20,
+        "quote": "1. 一阶波频力 RAO、附加质量/阻尼分项、Newman 单系数化均为**声明式**工程模型（非试验 RAO），只作趋势与量级结论",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "limitation_block",
+      "label": "局限条目（4 条，声明式模型/包线性质/broaching/未建模项）",
+      "in_report_section": "§5",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§5 整行按“；”切分得 4 条",
+        "result": "resolved"
+      },
+      "note": "局限原文：适用于下游判断结论适用范围",
+      "asset_id": "A32",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1415,
+        "end_char": 1602,
+        "start_line": 20,
+        "end_line": 20,
+        "quote": "1. 一阶波频力 RAO、附加质量/阻尼分项、Newman 单系数化均为**声明式**工程模型（非试验 RAO），只作趋势与量级结论；2. 分配器为迭代饱和冻结，包线是 `ALLOCATOR_BOUND`（非数学上界）；3. 顺风失控工况存在真实转首失稳（broaching），1D 解析锚算例锁定转艏自由度后比对；4. 未建模横摇/纵摇耦合、推进器响应滞后、波浪漂移阻尼。",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "heading",
+      "label": "章节标题 §6 误差判定",
+      "in_report_section": "§6",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "行 22 全文唯一出现",
+        "result": "resolved"
+      },
+      "note": "误差判定章节标题行",
+      "asset_id": "A33",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1604,
+        "end_char": 1628,
+        "start_line": 22,
+        "end_line": 22,
+        "quote": "## 6 误差判定（逐项，显式回答是否 <3%）",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    },
+    {
+      "asset_class": "table",
+      "label": "误差判定表（表头+分隔行+5 行数据）",
+      "in_report_section": "§6",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "§6 行 23–29 连续切片；逐行以 '|' 起始的行计数=7",
+        "result": "resolved"
+      },
+      "note": "表格逐行原文登记；误差数值与其“<3%?”判定仅登记，复算/裁量属平台门",
+      "asset_id": "A34",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1629,
+        "end_char": 1899,
+        "start_line": 23,
+        "end_line": 29,
+        "quote": "| 关键量 | 基准 | 误差 | <3%? |\n|---|---|---|---|\n| 二阶定常漂移力 | STAWAVE-1 | <3%（测试钉住） | 是 |\n| 稳态漂移速度 | 严格二次根 | 0.84% | 是 |\n| 稳态漂移速度 | 线性等效阻尼式 | 5.39% | 否（公式适用边界 r≪1，已给出 r 分布） |\n| 静力平衡位置 | 解析 x*=x_sp+Kp⁻¹τ | 0.000%·L | 是 |\n| 一阶波频力 / 时域能力绝对值 / 失效漂移距离 | 无公开基准 | 不声明精度 | 无基准，只作趋势结论 |",
+        "unique": true,
+        "duplicate_quote_of": null
+      }
+    }
+  ],
+  "claims": [],
+  "claims_note": "claims intentionally empty: contract objective = asset registration only (register_assets=true, classify_report_type=false, no extraction). Emitting claims here would fabricate task_type-03 knowledge objects.",
+  "checks": {
+    "source_hash_matches": true,
+    "chars_match_contract": true,
+    "title_matches_contract": true,
+    "scenario_key_matches_contract": true,
+    "all_quotes_unique": true,
+    "all_locators_slice_back": true,
+    "record_summary_numbers_present_in_markdown": {
+      "tokens": [
+        "12",
+        "25.3%",
+        "46.6%",
+        "100%"
+      ],
+      "present": {
+        "12": true,
+        "25.3%": true,
+        "46.6%": true,
+        "100%": true
+      },
+      "all_present": true
+    },
+    "figure_count": {
+      "record_figures": 7,
+      "markdown_figure_refs": 7,
+      "figure_refs": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "consistent": true
+    },
+    "figure_name_caption_permutation": {
+      "count": 3,
+      "items": [
+        {
+          "name": "fig5_wave_and_drift.png",
+          "name_index": 5,
+          "caption_index": 3
+        },
+        {
+          "name": "fig3_drift_anchor.png",
+          "name_index": 3,
+          "caption_index": 4
+        },
+        {
+          "name": "fig4_drift_linearity.png",
+          "name_index": 4,
+          "caption_index": 5
+        }
+      ]
+    },
+    "code_pointer_target_in_worktree": {
+      "command": "grep -rIl --exclude-dir=.git coupled_maneuvering . (this package's own outputs excluded)",
+      "hits_total": [
+        "./knowledge/kb10k/claims/part-006.json",
+        "./knowledge/kb10k/evidence/part-006.json"
+      ],
+      "hits_python_code": [],
+      "code_artifact_present": false,
+      "reading": "hits are knowledge/kb10k claim+evidence JSON (code-pointer records naming backend/api/coupled_maneuvering.py); no .py module in this worktree"
+    },
+    "dangling_reference_6_4": {
+      "headings": [
+        "## 1 案例介绍",
+        "## 2 怎么做的",
+        "## 3 计算结果",
+        "## 4 图",
+        "## 5 注意点（局限）",
+        "## 6 误差判定（逐项，显式回答是否 <3%）"
+      ],
+      "has_6_4_heading": false
+    }
+  },
+  "integrity": {
+    "quote_uniqueness": "every quote occurs exactly once in the markdown (checked in-script)",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "no_claim_marked_verified": true,
+    "verified_by": "scripts/kf_verify_12629.py (independent re-fetch + locator re-resolution)"
+  },
+  "boundaries": {
+    "only_report_id": "12629",
+    "other_reports_read_or_written": false,
+    "upstream_work_package_artifacts_rewritten": false,
+    "claims_marked_verified": 0
+  }
+}
