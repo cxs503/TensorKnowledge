@@ -1,0 +1,1335 @@
+{
+  "tool": "tools/audit/criteria_mutation.py",
+  "mutant_classes": {
+    "M1": "数值扰动 ε∈{1%,3%,15%}",
+    "M2": "单位/量纲/容器错位",
+    "M3": "常数替身",
+    "M4": "样本伪装",
+    "M5": "基准替换"
+  },
+  "epsilon_grid": [
+    0.01,
+    0.03,
+    0.15
+  ],
+  "kill_rate_floor": 0.9,
+  "criteria": [
+    {
+      "cid": "PT-PG4",
+      "gate": "PAPER-TRACE",
+      "statement": "PG4 表内误差列必须由「数值/参考」复算得出（容差 0.05pp + 0.5%）",
+      "source": "tools/paper_gate/traceability_gate.py:check_table_arithmetic",
+      "numeric_knob": true,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[PT-PG4]"
+      ],
+      "mutants": [
+        {
+          "class": "M1",
+          "label": "M1@1%",
+          "eps": 0.01,
+          "killed": false,
+          "detail": "0 处误差列与值/参考不平"
+        },
+        {
+          "class": "M1",
+          "label": "M1@3%",
+          "eps": 0.03,
+          "killed": false,
+          "detail": "0 处误差列与值/参考不平"
+        },
+        {
+          "class": "M1",
+          "label": "M1@15%",
+          "eps": 0.15,
+          "killed": true,
+          "detail": "1 处误差列与值/参考不平"
+        },
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": true,
+          "detail": "1 处误差列与值/参考不平"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "1 处误差列与值/参考不平"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": false,
+          "detail": "0 处误差列与值/参考不平"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": true,
+          "detail": "1 处误差列与值/参考不平"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "0 处误差列与值/参考不平",
+      "instantiable": true,
+      "error": null,
+      "killed": 4,
+      "total": 7,
+      "kill_rate": 0.5714,
+      "killed_classes": 4,
+      "classes_total": 5,
+      "survivors": [
+        {
+          "class": "M1",
+          "label": "M1@1%",
+          "eps": 0.01,
+          "killed": false,
+          "detail": "0 处误差列与值/参考不平"
+        },
+        {
+          "class": "M1",
+          "label": "M1@3%",
+          "eps": 0.03,
+          "killed": false,
+          "detail": "0 处误差列与值/参考不平"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": false,
+          "detail": "0 处误差列与值/参考不平"
+        }
+      ]
+    },
+    {
+      "cid": "PT-PG5",
+      "gate": "PAPER-TRACE",
+      "statement": "PG5 正文「A vs B，误差 Z%」必须能复算（H2/H3 行内数字）",
+      "source": "tools/paper_gate/traceability_gate.py:check_inline_errors",
+      "numeric_knob": true,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[PT-PG5]"
+      ],
+      "mutants": [
+        {
+          "class": "M1",
+          "label": "M1@1%",
+          "eps": 0.01,
+          "killed": false,
+          "detail": "0 处行内误差复算不上"
+        },
+        {
+          "class": "M1",
+          "label": "M1@3%",
+          "eps": 0.03,
+          "killed": false,
+          "detail": "0 处行内误差复算不上"
+        },
+        {
+          "class": "M1",
+          "label": "M1@15%",
+          "eps": 0.15,
+          "killed": true,
+          "detail": "1 处行内误差复算不上"
+        },
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": false,
+          "detail": "0 处行内误差复算不上"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "1 处行内误差复算不上"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": false,
+          "detail": "0 处行内误差复算不上"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": true,
+          "detail": "1 处行内误差复算不上"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "0 处行内误差复算不上",
+      "instantiable": true,
+      "error": null,
+      "killed": 3,
+      "total": 7,
+      "kill_rate": 0.4286,
+      "killed_classes": 3,
+      "classes_total": 5,
+      "survivors": [
+        {
+          "class": "M1",
+          "label": "M1@1%",
+          "eps": 0.01,
+          "killed": false,
+          "detail": "0 处行内误差复算不上"
+        },
+        {
+          "class": "M1",
+          "label": "M1@3%",
+          "eps": 0.03,
+          "killed": false,
+          "detail": "0 处行内误差复算不上"
+        },
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": false,
+          "detail": "0 处行内误差复算不上"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": false,
+          "detail": "0 处行内误差复算不上"
+        }
+      ]
+    },
+    {
+      "cid": "PT-PG7",
+      "gate": "PAPER-TRACE",
+      "statement": "PG7 带数字的结果表必须给出工件级出处（path#pointer）",
+      "source": "tools/paper_gate/traceability_gate.py:artifact_provenance",
+      "numeric_knob": false,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[PT-PG7]"
+      ],
+      "mutants": [
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": true,
+          "detail": "1 处缺工件级出处"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "1 处缺工件级出处"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": true,
+          "detail": "1 处缺工件级出处"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": true,
+          "detail": "1 处缺工件级出处"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "0 处缺工件级出处",
+      "instantiable": true,
+      "error": null,
+      "killed": 4,
+      "total": 4,
+      "kill_rate": 1.0,
+      "killed_classes": 4,
+      "classes_total": 4,
+      "survivors": []
+    },
+    {
+      "cid": "RQ-PHYSICS",
+      "gate": "REPORT-QUALITY",
+      "statement": "六要素①：物理/案例介绍必须给问题背景 **且** 几何或参数",
+      "source": "backend/services/report_gate.py:check_report_quality",
+      "numeric_knob": false,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[RQ-PHYSICS]"
+      ],
+      "mutants": [
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=[]"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "codes=['missing_physics_statement']"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": true,
+          "detail": "codes=['missing_physics_statement']"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=[]"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "codes=[]",
+      "instantiable": true,
+      "error": null,
+      "killed": 2,
+      "total": 4,
+      "kill_rate": 0.5,
+      "killed_classes": 2,
+      "classes_total": 4,
+      "survivors": [
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=[]"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=[]"
+        }
+      ]
+    },
+    {
+      "cid": "RQ-VALIDATION",
+      "gate": "REPORT-QUALITY",
+      "statement": "六要素③：必须有对标/验证入口（基准、文献、解析解之一）",
+      "source": "backend/services/report_gate.py:check_report_quality",
+      "numeric_knob": false,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[RQ-VALIDATION]"
+      ],
+      "mutants": [
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=[]"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "codes=['missing_validation']"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": true,
+          "detail": "codes=['missing_validation']"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=[]"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "codes=[]",
+      "instantiable": true,
+      "error": null,
+      "killed": 2,
+      "total": 4,
+      "kill_rate": 0.5,
+      "killed_classes": 2,
+      "classes_total": 4,
+      "survivors": [
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=[]"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=[]"
+        }
+      ]
+    },
+    {
+      "cid": "RQ-FIGURES",
+      "gate": "REPORT-QUALITY",
+      "statement": "六要素④：必须有真图（带 caption）或显式无图理由",
+      "source": "backend/services/report_gate.py:check_report_quality",
+      "numeric_knob": false,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[RQ-FIGURES]"
+      ],
+      "mutants": [
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": true,
+          "detail": "codes=['missing_figures']"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=['figures_missing_caption']"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": true,
+          "detail": "codes=['missing_figures']"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": true,
+          "detail": "codes=['missing_figures']"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "codes=[]",
+      "instantiable": true,
+      "error": null,
+      "killed": 3,
+      "total": 4,
+      "kill_rate": 0.75,
+      "killed_classes": 3,
+      "classes_total": 4,
+      "survivors": [
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": false,
+          "detail": "codes=['figures_missing_caption']"
+        }
+      ]
+    },
+    {
+      "cid": "RO-MISSION",
+      "gate": "REPORT-OWNERSHIP",
+      "statement": "POST /tensor/reports 的 mission_id 必须属于提交者（claimed_user_id/claimed_by）",
+      "source": "backend/services/report_ownership.py:ownership_verdict",
+      "numeric_knob": true,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[RO-MISSION]"
+      ],
+      "mutants": [
+        {
+          "class": "M1",
+          "label": "M1@1%",
+          "eps": 0.01,
+          "killed": true,
+          "detail": "code=REPORT_MISSION_NOT_OWNED"
+        },
+        {
+          "class": "M1",
+          "label": "M1@3%",
+          "eps": 0.03,
+          "killed": true,
+          "detail": "code=REPORT_MISSION_NOT_OWNED"
+        },
+        {
+          "class": "M1",
+          "label": "M1@15%",
+          "eps": 0.15,
+          "killed": true,
+          "detail": "code=REPORT_MISSION_NOT_OWNED"
+        },
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_MISSION_NOT_OWNED"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_MISSION_NOT_OWNED"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_MISSION_NOT_OWNED"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_MISSION_NOT_OWNED"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "code=None",
+      "instantiable": true,
+      "error": null,
+      "killed": 7,
+      "total": 7,
+      "kill_rate": 1.0,
+      "killed_classes": 5,
+      "classes_total": 5,
+      "survivors": []
+    },
+    {
+      "cid": "RO-PNG-MAGIC",
+      "gate": "REPORT-OWNERSHIP",
+      "statement": "配图必须是 PNG（八字节魔数 89 50 4E 47 0D 0A 1A 0A），其它容器 422",
+      "source": "backend/services/report_ownership.py:validate_png_payload",
+      "numeric_knob": false,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[RO-PNG-MAGIC]"
+      ],
+      "mutants": [
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_FIGURE_NOT_PNG"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_FIGURE_NOT_PNG"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_FIGURE_NOT_PNG"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_FIGURE_NOT_PNG"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "accepted",
+      "instantiable": true,
+      "error": null,
+      "killed": 4,
+      "total": 4,
+      "kill_rate": 1.0,
+      "killed_classes": 4,
+      "classes_total": 4,
+      "survivors": []
+    },
+    {
+      "cid": "RO-PNG-IEND",
+      "gate": "REPORT-OWNERSHIP",
+      "statement": "PNG 必须以 IEND 段收尾；截断/半截上传 422 REPORT_FIGURE_TRUNCATED",
+      "source": "backend/services/report_ownership.py:validate_png_payload",
+      "numeric_knob": false,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[RO-PNG-IEND]"
+      ],
+      "mutants": [
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_FIGURE_TRUNCATED"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_FIGURE_TRUNCATED"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_FIGURE_TRUNCATED"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": true,
+          "detail": "code=REPORT_FIGURE_TRUNCATED"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "accepted",
+      "instantiable": true,
+      "error": null,
+      "killed": 4,
+      "total": 4,
+      "kill_rate": 1.0,
+      "killed_classes": 4,
+      "classes_total": 4,
+      "survivors": []
+    },
+    {
+      "cid": "PL-NAME",
+      "gate": "CLIENT-PAYLOAD",
+      "statement": "报告文件名必须含 mission_id 令牌（否则无法反查归属、不同单互相覆盖）",
+      "source": "tools/report_payload.py:require_exclusive_name",
+      "numeric_knob": true,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[PL-NAME]"
+      ],
+      "mutants": [
+        {
+          "class": "M1",
+          "label": "M1@1%",
+          "eps": 0.01,
+          "killed": true,
+          "detail": "PayloadNameNotExclusive"
+        },
+        {
+          "class": "M1",
+          "label": "M1@3%",
+          "eps": 0.03,
+          "killed": true,
+          "detail": "PayloadNameNotExclusive"
+        },
+        {
+          "class": "M1",
+          "label": "M1@15%",
+          "eps": 0.15,
+          "killed": true,
+          "detail": "PayloadNameNotExclusive"
+        },
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": true,
+          "detail": "PayloadNameNotExclusive"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "PayloadNameNotExclusive"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": true,
+          "detail": "PayloadNameNotExclusive"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": true,
+          "detail": "PayloadNameNotExclusive"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "accepted",
+      "instantiable": true,
+      "error": null,
+      "killed": 7,
+      "total": 7,
+      "kill_rate": 1.0,
+      "killed_classes": 5,
+      "classes_total": 5,
+      "survivors": []
+    },
+    {
+      "cid": "PL-DRIFT",
+      "gate": "CLIENT-PAYLOAD",
+      "statement": "提交前本地复算：磁盘字节 sha256 必须等于写盘自证（漂移即拒）",
+      "source": "tools/report_payload.py:preflight",
+      "numeric_knob": true,
+      "control": false,
+      "killer_tests": [
+        "tests/test_criteria_mutation.py::test_criterion_kills_canonical_mutant[PL-DRIFT]"
+      ],
+      "mutants": [
+        {
+          "class": "M1",
+          "label": "M1@1%",
+          "eps": 0.01,
+          "killed": true,
+          "detail": "PayloadDrift"
+        },
+        {
+          "class": "M1",
+          "label": "M1@3%",
+          "eps": 0.03,
+          "killed": true,
+          "detail": "PayloadDrift"
+        },
+        {
+          "class": "M1",
+          "label": "M1@15%",
+          "eps": 0.15,
+          "killed": true,
+          "detail": "PayloadDrift"
+        },
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": true,
+          "detail": "PayloadDrift"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": true,
+          "detail": "PayloadDrift"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": true,
+          "detail": "PayloadDrift"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": true,
+          "detail": "PayloadDrift"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "accepted",
+      "instantiable": true,
+      "error": null,
+      "killed": 7,
+      "total": 7,
+      "kill_rate": 1.0,
+      "killed_classes": 5,
+      "classes_total": 5,
+      "survivors": []
+    },
+    {
+      "cid": "NEG-TAUTOLOGY",
+      "gate": "NEGATIVE-CONTROL",
+      "statement": "负控：恒真判据（必须 0 kill；用来证明台账本身不是恒真）",
+      "source": "tools/audit/criteria_mutation.py:_control_criterion",
+      "numeric_knob": true,
+      "control": true,
+      "killer_tests": [],
+      "mutants": [
+        {
+          "class": "M1",
+          "label": "M1@1%",
+          "eps": 0.01,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M1",
+          "label": "M1@3%",
+          "eps": 0.03,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M1",
+          "label": "M1@15%",
+          "eps": 0.15,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        }
+      ],
+      "base_clean": true,
+      "base_detail": "tautology: 恒放行",
+      "instantiable": true,
+      "error": null,
+      "killed": 0,
+      "total": 7,
+      "kill_rate": 0.0,
+      "killed_classes": 0,
+      "classes_total": 5,
+      "survivors": [
+        {
+          "class": "M1",
+          "label": "M1@1%",
+          "eps": 0.01,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M1",
+          "label": "M1@3%",
+          "eps": 0.03,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M1",
+          "label": "M1@15%",
+          "eps": 0.15,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M2",
+          "label": "M2",
+          "eps": null,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M3",
+          "label": "M3",
+          "eps": null,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M4",
+          "label": "M4",
+          "eps": null,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        },
+        {
+          "class": "M5",
+          "label": "M5",
+          "eps": null,
+          "killed": false,
+          "detail": "tautology: 恒放行"
+        }
+      ]
+    }
+  ],
+  "paper_trace_ast_audit": {
+    "audit_c6_baseline.json": {
+      "module": "/data/test002/jobs/c1794056344_686/repo/tools/paper_gate/traceability_gate.py",
+      "tests": [
+        "/data/test002/jobs/c1794056344_686/repo/backend/tests/test_paper_traceability_gate.py"
+      ],
+      "total": 186,
+      "killed": 92,
+      "survived": 94,
+      "kill_rate": 0.4946,
+      "baseline_green": true,
+      "by_operator": {
+        "append_drop": {
+          "total": 11,
+          "killed": 8,
+          "kill_rate": 0.7273
+        },
+        "binop_swap": {
+          "total": 45,
+          "killed": 17,
+          "kill_rate": 0.3778
+        },
+        "boolop_swap": {
+          "total": 21,
+          "killed": 9,
+          "kill_rate": 0.4286
+        },
+        "cmp_swap": {
+          "total": 42,
+          "killed": 30,
+          "kill_rate": 0.7143
+        },
+        "const_scale": {
+          "total": 24,
+          "killed": 7,
+          "kill_rate": 0.2917
+        },
+        "not_removal": {
+          "total": 17,
+          "killed": 12,
+          "kill_rate": 0.7059
+        },
+        "return_empty": {
+          "total": 9,
+          "killed": 6,
+          "kill_rate": 0.6667
+        },
+        "severity_flip": {
+          "total": 17,
+          "killed": 3,
+          "kill_rate": 0.1765
+        }
+      },
+      "survivors": 94,
+      "survivor_names": [
+        "const_scale[0]",
+        "cmp_swap[1]",
+        "binop_swap[0]",
+        "binop_swap[1]",
+        "const_scale[1]",
+        "binop_swap[3]",
+        "binop_swap[4]",
+        "cmp_swap[2]",
+        "binop_swap[5]",
+        "binop_swap[6]",
+        "binop_swap[7]",
+        "cmp_swap[4]",
+        "binop_swap[8]",
+        "binop_swap[11]",
+        "return_empty[0]",
+        "boolop_swap[3]",
+        "boolop_swap[4]",
+        "return_empty[1]",
+        "boolop_swap[5]",
+        "cmp_swap[9]",
+        "cmp_swap[10]",
+        "cmp_swap[11]",
+        "boolop_swap[6]",
+        "boolop_swap[7]",
+        "not_removal[5]",
+        "not_removal[6]",
+        "binop_swap[15]",
+        "const_scale[4]",
+        "severity_flip[0]",
+        "binop_swap[16]",
+        "binop_swap[17]",
+        "binop_swap[18]",
+        "const_scale[5]",
+        "boolop_swap[8]",
+        "boolop_swap[9]",
+        "not_removal[8]",
+        "not_removal[9]",
+        "binop_swap[22]",
+        "const_scale[10]",
+        "binop_swap[23]",
+        "severity_flip[1]",
+        "const_scale[11]",
+        "severity_flip[2]",
+        "binop_swap[27]",
+        "append_drop[2]",
+        "boolop_swap[11]",
+        "severity_flip[3]",
+        "binop_swap[28]",
+        "severity_flip[4]",
+        "binop_swap[29]",
+        "severity_flip[5]",
+        "binop_swap[33]",
+        "boolop_swap[13]",
+        "severity_flip[6]",
+        "binop_swap[35]",
+        "const_scale[13]",
+        "severity_flip[7]",
+        "binop_swap[36]",
+        "append_drop[7]",
+        "boolop_swap[15]",
+        "cmp_swap[28]",
+        "severity_flip[8]",
+        "binop_swap[37]",
+        "append_drop[8]",
+        "return_empty[7]",
+        "boolop_swap[16]",
+        "cmp_swap[30]",
+        "boolop_swap[17]",
+        "binop_swap[38]",
+        "binop_swap[39]",
+        "const_scale[14]",
+        "severity_flip[10]",
+        "binop_swap[40]",
+        "binop_swap[41]",
+        "cmp_swap[33]",
+        "binop_swap[42]",
+        "severity_flip[11]",
+        "const_scale[15]",
+        "const_scale[16]",
+        "cmp_swap[36]",
+        "cmp_swap[39]",
+        "severity_flip[13]",
+        "binop_swap[43]",
+        "severity_flip[15]",
+        "const_scale[17]",
+        "const_scale[18]",
+        "const_scale[19]",
+        "not_removal[16]",
+        "const_scale[20]",
+        "const_scale[21]",
+        "const_scale[22]",
+        "const_scale[23]",
+        "cmp_swap[40]",
+        "severity_flip[16]"
+      ]
+    },
+    "audit_c7_v3.json": {
+      "module": "/data/test002/jobs/c1794056912_684/repo/tools/paper_gate/traceability_gate.py",
+      "tests": [
+        "/data/test002/jobs/c1794056912_684/repo/backend/tests/test_paper_traceability_gate.py",
+        "/data/test002/jobs/c1794056912_684/repo/backend/tests/test_paper_traceability_gate_kills.py",
+        "/data/test002/jobs/c1794056912_684/repo/backend/tests/test_paper_traceability_gate_kills_v2.py",
+        "/data/test002/jobs/c1794056912_684/repo/backend/tests/test_paper_traceability_gate_kills_v3.py"
+      ],
+      "total": 186,
+      "killed": 182,
+      "survived": 4,
+      "kill_rate": 0.9785,
+      "baseline_green": true,
+      "by_operator": {
+        "append_drop": {
+          "total": 11,
+          "killed": 11,
+          "kill_rate": 1.0
+        },
+        "binop_swap": {
+          "total": 45,
+          "killed": 43,
+          "kill_rate": 0.9556
+        },
+        "boolop_swap": {
+          "total": 21,
+          "killed": 21,
+          "kill_rate": 1.0
+        },
+        "cmp_swap": {
+          "total": 42,
+          "killed": 42,
+          "kill_rate": 1.0
+        },
+        "const_scale": {
+          "total": 24,
+          "killed": 24,
+          "kill_rate": 1.0
+        },
+        "not_removal": {
+          "total": 17,
+          "killed": 17,
+          "kill_rate": 1.0
+        },
+        "return_empty": {
+          "total": 9,
+          "killed": 7,
+          "kill_rate": 0.7778
+        },
+        "severity_flip": {
+          "total": 17,
+          "killed": 17,
+          "kill_rate": 1.0
+        }
+      },
+      "survivors": 4,
+      "survivor_names": [
+        "binop_swap[5]",
+        "binop_swap[6]",
+        "return_empty[0]",
+        "return_empty[1]"
+      ]
+    }
+  },
+  "kpi": {
+    "n_gates": 4,
+    "gates": [
+      "CLIENT-PAYLOAD",
+      "PAPER-TRACE",
+      "REPORT-OWNERSHIP",
+      "REPORT-QUALITY"
+    ],
+    "n_criteria": 12,
+    "n_criteria_accepted_gates": 11,
+    "n_instantiable": 12,
+    "instantiation_rate": 1.0,
+    "n_mutants": 66,
+    "n_killed": 47,
+    "overall_kill_rate": 0.7121,
+    "accepted_gate_kill_rate": 0.7966,
+    "per_gate": {
+      "PAPER-TRACE": {
+        "criteria": [
+          "PT-PG4",
+          "PT-PG5",
+          "PT-PG7"
+        ],
+        "mutants": 18,
+        "killed": 11,
+        "control": false,
+        "kill_rate": 0.6111,
+        "n_criteria": 3
+      },
+      "REPORT-QUALITY": {
+        "criteria": [
+          "RQ-PHYSICS",
+          "RQ-VALIDATION",
+          "RQ-FIGURES"
+        ],
+        "mutants": 12,
+        "killed": 7,
+        "control": false,
+        "kill_rate": 0.5833,
+        "n_criteria": 3
+      },
+      "REPORT-OWNERSHIP": {
+        "criteria": [
+          "RO-MISSION",
+          "RO-PNG-MAGIC",
+          "RO-PNG-IEND"
+        ],
+        "mutants": 15,
+        "killed": 15,
+        "control": false,
+        "kill_rate": 1.0,
+        "n_criteria": 3
+      },
+      "CLIENT-PAYLOAD": {
+        "criteria": [
+          "PL-NAME",
+          "PL-DRIFT"
+        ],
+        "mutants": 14,
+        "killed": 14,
+        "control": false,
+        "kill_rate": 1.0,
+        "n_criteria": 2
+      },
+      "NEGATIVE-CONTROL": {
+        "criteria": [
+          "NEG-TAUTOLOGY"
+        ],
+        "mutants": 7,
+        "killed": 0,
+        "control": true,
+        "kill_rate": 0.0,
+        "n_criteria": 1
+      }
+    },
+    "weakest_mutants": [
+      {
+        "cid": "PT-PG4",
+        "gate": "PAPER-TRACE",
+        "label": "M1@1%",
+        "class": "M1",
+        "detail": "0 处误差列与值/参考不平"
+      },
+      {
+        "cid": "PT-PG4",
+        "gate": "PAPER-TRACE",
+        "label": "M1@3%",
+        "class": "M1",
+        "detail": "0 处误差列与值/参考不平"
+      },
+      {
+        "cid": "PT-PG4",
+        "gate": "PAPER-TRACE",
+        "label": "M4",
+        "class": "M4",
+        "detail": "0 处误差列与值/参考不平"
+      },
+      {
+        "cid": "PT-PG5",
+        "gate": "PAPER-TRACE",
+        "label": "M1@1%",
+        "class": "M1",
+        "detail": "0 处行内误差复算不上"
+      },
+      {
+        "cid": "PT-PG5",
+        "gate": "PAPER-TRACE",
+        "label": "M1@3%",
+        "class": "M1",
+        "detail": "0 处行内误差复算不上"
+      },
+      {
+        "cid": "PT-PG5",
+        "gate": "PAPER-TRACE",
+        "label": "M2",
+        "class": "M2",
+        "detail": "0 处行内误差复算不上"
+      },
+      {
+        "cid": "PT-PG5",
+        "gate": "PAPER-TRACE",
+        "label": "M4",
+        "class": "M4",
+        "detail": "0 处行内误差复算不上"
+      },
+      {
+        "cid": "RQ-FIGURES",
+        "gate": "REPORT-QUALITY",
+        "label": "M3",
+        "class": "M3",
+        "detail": "codes=['figures_missing_caption']"
+      },
+      {
+        "cid": "RQ-PHYSICS",
+        "gate": "REPORT-QUALITY",
+        "label": "M2",
+        "class": "M2",
+        "detail": "codes=[]"
+      },
+      {
+        "cid": "RQ-PHYSICS",
+        "gate": "REPORT-QUALITY",
+        "label": "M5",
+        "class": "M5",
+        "detail": "codes=[]"
+      },
+      {
+        "cid": "RQ-VALIDATION",
+        "gate": "REPORT-QUALITY",
+        "label": "M2",
+        "class": "M2",
+        "detail": "codes=[]"
+      },
+      {
+        "cid": "RQ-VALIDATION",
+        "gate": "REPORT-QUALITY",
+        "label": "M5",
+        "class": "M5",
+        "detail": "codes=[]"
+      }
+    ],
+    "n_weakest": 12,
+    "unfalsifiable_criteria": [
+      {
+        "cid": "NEG-TAUTOLOGY",
+        "gate": "NEGATIVE-CONTROL",
+        "killed": 0,
+        "total": 7,
+        "killed_classes": 0,
+        "classes_total": 5,
+        "verdict": "UNFALSIFIABLE"
+      }
+    ],
+    "m1_monotonic": {
+      "counts": {
+        "1%": 3,
+        "3%": 3,
+        "15%": 5
+      },
+      "sequence": [
+        3,
+        3,
+        5
+      ],
+      "violations": [],
+      "n_violations": 0
+    },
+    "control": {
+      "cids": [
+        "NEG-TAUTOLOGY"
+      ],
+      "killed": 0,
+      "total": 7,
+      "killed_classes": 0,
+      "classes_total": 5,
+      "flagged_unfalsifiable": [
+        "NEG-TAUTOLOGY"
+      ]
+    },
+    "criteria_below_floor": [
+      {
+        "cid": "PT-PG4",
+        "gate": "PAPER-TRACE",
+        "kill_rate": 0.5714
+      },
+      {
+        "cid": "PT-PG5",
+        "gate": "PAPER-TRACE",
+        "kill_rate": 0.4286
+      },
+      {
+        "cid": "RQ-PHYSICS",
+        "gate": "REPORT-QUALITY",
+        "kill_rate": 0.5
+      },
+      {
+        "cid": "RQ-VALIDATION",
+        "gate": "REPORT-QUALITY",
+        "kill_rate": 0.5
+      },
+      {
+        "cid": "RQ-FIGURES",
+        "gate": "REPORT-QUALITY",
+        "kill_rate": 0.75
+      }
+    ]
+  }
+}
