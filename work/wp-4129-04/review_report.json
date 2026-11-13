@@ -1,0 +1,704 @@
+{
+  "schema": "kf-review-report/v1",
+  "package_id": "wp-4129-04",
+  "task_type": "04-independent-review",
+  "reviewer_role": "red-team-reviewer",
+  "report_id": "4129",
+  "reviewed_package": "wp-4129-01",
+  "reviewed_artifacts": [
+    {
+      "path": "knowledge/kf/wp-4129-01/kf_result.json",
+      "sha256": "sha256:698fb66e1d877a75bd4f921720b3a9f6bc0b8d576fdfe28c835f58d0122d8a4f",
+      "what": "envelope + outputs/asset_manifest.json of wp-4129-01"
+    },
+    {
+      "path": "knowledge/kf/wp-4129-01/asset_manifest.json",
+      "sha256": "not_hashed",
+      "what": "same manifest, standalone copy (bytes not compared: standalone copy is indented separately)"
+    }
+  ],
+  "reviewed_package_provenance": {
+    "source_hash": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+    "producer": "kf-worker/m15534",
+    "emitted_at": "2026-11-12T00:56:30.446587+00:00"
+  },
+  "source_provenance": {
+    "source_uri": "tensor://reports/4129",
+    "source_field": "markdown",
+    "source_hash": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+    "bytes": 6901,
+    "chars": 3969,
+    "lines": 109,
+    "fetched_via": "GET /api/v1/tensor/reports/4129 (own login, own request; no reuse of upstream copy)",
+    "hash_recomputed_by_reviewer": true,
+    "hash_matches_contract_string": true
+  },
+  "verdict": "needs-fix",
+  "verdict_scope": "non-blocking: the registered facts are true, two registration-precision defects must be fixed before the manifest is used as a machine-readable reference index",
+  "semantic_fidelity": {
+    "judgement": "faithful-with-minor-precision-defects",
+    "what_faithful_means_here": "every asserted datum re-derived from the markdown independently; no datum found to contradict the source; no claim upgraded beyond what the source states",
+    "facts_re_derived": 14,
+    "facts_passed": 12,
+    "facts_failed": 2,
+    "per_fact": [
+      {
+        "fact_id": "source-hash",
+        "upstream": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+        "rederived": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+        "pass": true,
+        "evidence": {
+          "quote": "# PR #77 三方合并：`CHANGELOG.md` 语义并集，以及「行保全 ≠ 文档正确」的可复现审计",
+          "line": 1,
+          "quote_sha256": "sha256:76a4732b39f7d3d8fa496bcfa4659dfb37f1d75325f5fd1cc8d783d3311185e9",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "source-bytes-chars-lines",
+        "upstream": {
+          "bytes": 6901,
+          "chars": 3969,
+          "lines": 109
+        },
+        "rederived": {
+          "bytes": 6901,
+          "chars": 3969,
+          "lines": 109
+        },
+        "pass": true,
+        "evidence": {
+          "quote": "# PR #77 三方合并：`CHANGELOG.md` 语义并集，以及「行保全 ≠ 文档正确」的可复现审计",
+          "line": 1,
+          "quote_sha256": "sha256:76a4732b39f7d3d8fa496bcfa4659dfb37f1d75325f5fd1cc8d783d3311185e9",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "record-fields",
+        "upstream": "PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）",
+        "rederived": "record title/scenario/mission/status/created_at/tags all equal the live record",
+        "pass": true,
+        "evidence": {
+          "quote": "# PR #77 三方合并：`CHANGELOG.md` 语义并集，以及「行保全 ≠ 文档正确」的可复现审计",
+          "line": 1,
+          "quote_sha256": "sha256:76a4732b39f7d3d8fa496bcfa4659dfb37f1d75325f5fd1cc8d783d3311185e9",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "markdown-quotes-verbatim",
+        "upstream": "13 registered path refs; 25 markdown quotes in total",
+        "rederived": "25 verbatim",
+        "pass": true,
+        "evidence": {
+          "quote": "| **解冲结果（入仓）** | 379 | 292 | 1 | 4 | 0 | **通过（0 项）** |",
+          "line": 50,
+          "quote_sha256": "sha256:9bfd57e9fb35c80d0fa5256efaf668566f5913457a7d8c4135b11a16b584dca6",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "record-pointer-locators",
+        "upstream": "pointer /figures/0/name, /figures/1/name",
+        "rederived": "2 resolve+equal",
+        "pass": true,
+        "evidence": {
+          "quote": "图 1（左）四种状态的 `CHANGELOG.md` 结构发现数（0 = 干净）",
+          "line": 65,
+          "quote_sha256": "sha256:784084b4eb36a748ab60c1bdf8d57aaed8a481a7baa0e528f9f713c8f32861fa",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "merge-commit-sha",
+        "upstream": "b7bbe3707838 / b7bbe3707 / c441d91 / 7accc4b9c / 7accc4b",
+        "rederived": "all 5 git tokens present verbatim",
+        "pass": true,
+        "evidence": {
+          "quote": "（父 `c441d91` = 分支旧头，`7accc4b9c` = `main`）",
+          "line": 4,
+          "quote_sha256": "sha256:7870e1b1c974abb97a928ec095516ef54ad44827e565e89b5cc79a981adbe7d8",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "prefix-arithmetic",
+        "upstream": {
+          "merge_commit_short_is_prefix_of_full": true,
+          "main_head_7hex_is_prefix_of_9hex": true,
+          "branch_head_prefix_of_merge_commit": false,
+          "note": "`c441d91` (branch head) is a *parent* of the merge commit, not a prefix of it; the report states this relation, the worker only checks prefix arithmetic."
+        },
+        "rederived": "re-computed: short/full prefixes consistent; c441d91 is a parent, not a prefix",
+        "pass": true,
+        "evidence": {
+          "quote": "新 SHA `b7bbe3707838bc8bb25af16c77134efd58b2b75e`（旧 `c441d91`）。",
+          "line": 61,
+          "quote_sha256": "sha256:48d59a258ef52114c3b3eb9b80bd316d35f3a98f51d652471396115da03acd6c",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "figure-endpoints-404",
+        "upstream": "artifacts 404 / 22 B; both figures 404 / 29 B",
+        "rederived": {
+          "/tensor/reports/4129/artifacts": {
+            "status": 404,
+            "bytes": 22
+          },
+          "/tensor/reports/4129/figures/merge_audit.png": {
+            "status": 404,
+            "bytes": 29
+          },
+          "/tensor/reports/4129/figures/plate_gate.png": {
+            "status": 404,
+            "bytes": 29
+          }
+        },
+        "pass": true,
+        "evidence": {
+          "quote": "图 2 本 PR 携带的板锚点误差（对数横轴）",
+          "line": 69,
+          "quote_sha256": "sha256:ca68226e84fa1e8f072925823a134c80cea2b3701ad9cd6c8142bb6748e48a6a",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "no-verified-marks",
+        "upstream": "checks.no_verified_marks_emitted = true",
+        "rederived": [],
+        "pass": true,
+        "evidence": {
+          "quote": "| 本地全量套件（1707 项） | 全绿 | **未完成**（见下） | **不计为通过** |",
+          "line": 100,
+          "quote_sha256": "sha256:3d3570e2cbc0aa85a6274163663b8194df22a9e4e6c0969c6afb44e14e233564",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "claims-empty",
+        "upstream": "claims = [] with claims_empty_reason",
+        "rederived": "0/0",
+        "pass": true,
+        "evidence": {
+          "quote": "| **解冲结果（入仓）** | 379 | 292 | 1 | 4 | 0 | **通过（0 项）** |",
+          "line": 50,
+          "quote_sha256": "sha256:9bfd57e9fb35c80d0fa5256efaf668566f5913457a7d8c4135b11a16b584dca6",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "honest-unfinished-row-preserved",
+        "upstream": "findings[honest-incomplete-local-suite] registered as reported, not upgraded",
+        "rederived": "the source's own row keeps the suite 'not run to completion', and the manifest does not turn it into a pass",
+        "pass": true,
+        "evidence": {
+          "quote": "| 本地全量套件（1707 项） | 全绿 | **未完成**（见下） | **不计为通过** |",
+          "line": 100,
+          "quote_sha256": "sha256:3d3570e2cbc0aa85a6274163663b8194df22a9e4e6c0969c6afb44e14e233564",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "symbol-locator-anchors-its-token",
+        "upstream": "symbol_references/r4129:sym:02 -> line 80 quote",
+        "rederived": "the token `tensorfem.__file__` occurs on line 81 only; the line-80 quote does not contain it",
+        "pass": false,
+        "evidence": {
+          "quote": "`tensorfem.__file__` 自证，否则测的是别人的代码。",
+          "line": 81,
+          "quote_sha256": "sha256:1854a74ee6e872d0351c7b7000610fd6c6a8601680ebc8d07c6039f4127bfd6c",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "path-reference-census",
+        "upstream": {
+          "body_path_references": 13,
+          "distinct_referenced_paths": 9
+        },
+        "rederived": {
+          "body_path_references": 14,
+          "distinct_referenced_paths": 9,
+          "unregistered": [
+            {
+              "line": 36,
+              "token": "CHANGELOG.md"
+            }
+          ]
+        },
+        "pass": false,
+        "evidence": {
+          "quote": "5. 不动 `main` 其余正文与顺序——本 PR 相对 `main` 的 `CHANGELOG.md` 差异仅 51 行。",
+          "line": 36,
+          "quote_sha256": "sha256:a2544bf7a9945dd42e284c4b6d5784093420e9439a399c53c2c49828336c5d35",
+          "source_field": "markdown"
+        }
+      },
+      {
+        "fact_id": "figures-not-asserted",
+        "upstream": "embedded_figure/metadata_only x2, figures_with_bytes = 0",
+        "rederived": {
+          "figure_links_in_body": [],
+          "endpoints": "404"
+        },
+        "pass": true,
+        "evidence": {
+          "quote": "图 1（左）四种状态的 `CHANGELOG.md` 结构发现数（0 = 干净）",
+          "line": 65,
+          "quote_sha256": "sha256:784084b4eb36a748ab60c1bdf8d57aaed8a481a7baa0e528f9f713c8f32861fa",
+          "source_field": "markdown"
+        }
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_hash",
+      "pass": true,
+      "upstream_value": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+      "recomputed": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "source_bytes",
+      "pass": true,
+      "upstream_value": 6901,
+      "recomputed": 6901,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "source_chars",
+      "pass": true,
+      "upstream_value": 3969,
+      "recomputed": 3969,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "source_lines",
+      "pass": true,
+      "upstream_value": 109,
+      "recomputed": 109,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "source_crlf",
+      "pass": true,
+      "upstream_value": false,
+      "recomputed": false,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "provenance_hash_eq_contract",
+      "pass": true,
+      "upstream_value": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+      "recomputed": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "record_title",
+      "pass": true,
+      "upstream_value": "PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）",
+      "recomputed": "PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "record_scenario_key",
+      "pass": true,
+      "upstream_value": "benchmark-closure",
+      "recomputed": "benchmark-closure",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "record_mission_id",
+      "pass": true,
+      "upstream_value": 3369,
+      "recomputed": 3369,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "record_status",
+      "pass": true,
+      "upstream_value": "published",
+      "recomputed": "published",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "record_created_at",
+      "pass": true,
+      "upstream_value": "2026-11-05T04:00:32.361154+00:00",
+      "recomputed": "2026-11-05T04:00:32.361154+00:00",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "record_tags",
+      "pass": true,
+      "upstream_value": [
+        "TensorFEM",
+        "merge-resolution",
+        "changelog",
+        "audit",
+        "verification-debt"
+      ],
+      "recomputed": [
+        "TensorFEM",
+        "merge-resolution",
+        "changelog",
+        "audit",
+        "verification-debt"
+      ],
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "markdown_quotes_verbatim",
+      "pass": true,
+      "upstream_value": "25 markdown quotes",
+      "recomputed": "25 verbatim",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "markdown_quotes_on_declared_line",
+      "pass": true,
+      "upstream_value": "25 markdown quotes",
+      "recomputed": "25 verified on declared line",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "record_pointers_resolve_to_quote",
+      "pass": true,
+      "upstream_value": "2 record locators",
+      "recomputed": "2 resolve+equal",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "token_inside_locator_quote",
+      "pass": false,
+      "upstream_value": "every vcs/symbol token inside its quote",
+      "recomputed": "1 outside",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "kind_status_histogram",
+      "pass": true,
+      "upstream_value": {
+        "data_artifact_reference/unresolved": 1,
+        "directory_reference/unresolved": 2,
+        "embedded_figure/metadata_only": 2,
+        "figure_reference/declared_only": 2,
+        "file_reference/unresolved": 4,
+        "report_markdown/resolved": 1,
+        "source_code_reference/unresolved": 2,
+        "test_reference/unresolved": 3,
+        "worktree_path_reference/unresolved": 1
+      },
+      "recomputed": {
+        "report_markdown/resolved": 1,
+        "embedded_figure/metadata_only": 2,
+        "file_reference/unresolved": 4,
+        "data_artifact_reference/unresolved": 1,
+        "source_code_reference/unresolved": 2,
+        "test_reference/unresolved": 3,
+        "directory_reference/unresolved": 2,
+        "worktree_path_reference/unresolved": 1,
+        "figure_reference/declared_only": 2
+      },
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "assets_total",
+      "pass": true,
+      "upstream_value": 18,
+      "recomputed": 18,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "id_uniqueness_per_namespace",
+      "pass": true,
+      "upstream_value": "id_integrity.unique = true (27 ids)",
+      "recomputed": "no intra-namespace duplicates; sizes={'assets': 18, 'locators': 27, 'vcs_references': 7, 'symbol_references': 2, 'identity_facts': 4}",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "id_integrity_scope_matches_claim",
+      "pass": true,
+      "upstream_value": {
+        "ids_checked": 27,
+        "unique": true
+      },
+      "recomputed": {
+        "locators": 27,
+        "intra_namespace_duplicates": {},
+        "cross_namespace_overlap": 18,
+        "flat_distinct": 31
+      },
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "locators_count",
+      "pass": true,
+      "upstream_value": 27,
+      "recomputed": 27,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "locators_resolved_count",
+      "pass": true,
+      "upstream_value": 27,
+      "recomputed": 27,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "no_verified_status",
+      "pass": true,
+      "upstream_value": "none",
+      "recomputed": [],
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "claims_empty",
+      "pass": true,
+      "upstream_value": "empty claims (permitted by contract)",
+      "recomputed": "0/0",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "single_report_scope",
+      "pass": true,
+      "upstream_value": "report 4129 only",
+      "recomputed": [],
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "merge_short_is_prefix_of_full",
+      "pass": true,
+      "upstream_value": true,
+      "recomputed": true,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "main_head_7hex_is_prefix_of_9hex",
+      "pass": true,
+      "upstream_value": true,
+      "recomputed": true,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "branch_head_is_not_prefix_of_merge",
+      "pass": true,
+      "upstream_value": false,
+      "recomputed": false,
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "all_four_sha_forms_present_in_source",
+      "pass": true,
+      "upstream_value": "5 git tokens registered",
+      "recomputed": [],
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "finding_anchors_verbatim",
+      "pass": true,
+      "upstream_value": "all anchors verbatim",
+      "recomputed": [],
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "body_path_reference_census",
+      "pass": false,
+      "upstream_value": {
+        "body_path_references": 13,
+        "distinct_referenced_paths": 9
+      },
+      "recomputed": {
+        "body_path_references": 14,
+        "distinct_referenced_paths": 9,
+        "unregistered_sites": [
+          [
+            36,
+            "CHANGELOG.md"
+          ]
+        ]
+      },
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "contract_fields_match_record",
+      "pass": true,
+      "upstream_value": {
+        "title": "PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）",
+        "scenario_key": "benchmark-closure",
+        "chars": 3969,
+        "source_hash": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155"
+      },
+      "recomputed": {
+        "title": "PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）",
+        "scenario_key": "benchmark-closure",
+        "chars": 3969,
+        "source_hash": "sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155"
+      },
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "unresolved_reasons_true_in_worktree",
+      "pass": true,
+      "upstream_value": "15 unresolved entries",
+      "recomputed": "13 re-checked, 0 contradicted",
+      "method": "independent re-derivation from the fetched markdown/record"
+    },
+    {
+      "check_id": "artifacts_probe_404",
+      "pass": true,
+      "upstream_value": 404,
+      "recomputed": {
+        "status": 404,
+        "bytes": 22
+      },
+      "method": "independent re-derivation from the fetched markdown/record"
+    }
+  ],
+  "quotation_surface": {
+    "markdown_quotes": 25,
+    "markdown_quotes_on_declared_line": 25,
+    "record_locators": 2
+  },
+  "certified_by_review": {
+    "checks_total": 34,
+    "checks_passed": 32,
+    "checks_failed": 2,
+    "failed_check_ids": [
+      "token_inside_locator_quote",
+      "body_path_reference_census"
+    ]
+  },
+  "findings": [
+    {
+      "finding_id": "F1-symbol-locator-quote-lacks-token",
+      "severity": "minor",
+      "blocking": false,
+      "title": "the locator of symbol `tensorfem.__file__` quotes the preceding line, which does not contain the symbol",
+      "evidence": {
+        "locator": "symbol_references/r4129:sym:02",
+        "declared_line": 80,
+        "quote": "`/root/tp-agent/work/m3182/src`；验证必须 `PYTHONPATH=<本 worktree>/src` 并打印",
+        "token": "tensorfem.__file__",
+        "token_actual_lines": [
+          81
+        ],
+        "token_quote": "`tensorfem.__file__` 自证，否则测的是别人的代码。"
+      },
+      "impact": "a consumer that checks 'is the token inside the recorded quote' gets false; the fact itself is true (the symbol occurs verbatim on line 81), and the manifest writes no quote_in_source flag for symbol refs, so nothing false is asserted",
+      "requested_fix": "move the locator of r4129:sym:02 to line 81 and use the line-81 quote"
+    },
+    {
+      "finding_id": "F2-path-reference-census-undercount",
+      "severity": "minor",
+      "blocking": false,
+      "title": "counts.body_path_references = 13 while re-derivation finds 14 backticked path sites; the missing one is the `CHANGELOG.md` occurrence on line 36",
+      "evidence": {
+        "upstream": {
+          "body_path_references": 13,
+          "distinct_referenced_paths": 9
+        },
+        "rederived": {
+          "body_path_references": 14,
+          "distinct_referenced_paths": 9,
+          "rule": "backticked token in the body that is a concrete path (placeholder PYTHONPATH=<本 worktree>/src excluded, title line 1 excluded, branch token agent/m3369 counted as vcs_reference not as a path)"
+        },
+        "missing_sites": [
+          {
+            "line": 36,
+            "token": "CHANGELOG.md"
+          }
+        ],
+        "missing_quote": {
+          "quote": "5. 不动 `main` 其余正文与顺序——本 PR 相对 `main` 的 `CHANGELOG.md` 差异仅 51 行。",
+          "line": 36,
+          "quote_sha256": "sha256:a2544bf7a9945dd42e284c4b6d5784093420e9439a399c53c2c49828336c5d35",
+          "source_field": "markdown"
+        },
+        "counting_rule_declared_upstream": false
+      },
+      "impact": "the distinct-path count is right (9), the site count is one short; without a declared counting rule the number is not reproducible, which matters for a manifest whose value is machine re-checkability",
+      "requested_fix": "register the line-36 `CHANGELOG.md` occurrence as an additional file_reference (body_path_references -> 14) and declare the census rule in the manifest so the count is reproducible"
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "O1-id-namespaces-overlap",
+      "detail": "the 18 asset ids are reused as locator ids (locators = 27); id_integrity reports 27 ids checked / unique, which is namespace-local. Merging the namespaces gives 58 ids / 31 distinct with an asset<->locator overlap of 18.",
+      "impact": "non-blocking; the consumer must know the namespace to dereference an id like `r4129:source-markdown` (it is both an asset and a locator)"
+    },
+    {
+      "observation_id": "O2-record-title-vs-h1",
+      "detail": "the record title and the markdown H1 differ in punctuation, and the manifest keeps them in separate fields instead of collapsing them: record_fields.title for the record, identity_facts/title-line for the H1",
+      "impact": "strength, not defect: the divergence is registered, not smoothed over"
+    },
+    {
+      "observation_id": "O3-unresolved-reasons-verified",
+      "detail": "every unresolved entry whose reason is about the delivery worktree was re-checked by probing the tree: 13 re-checked, 0 contradicted; `tests/` is correctly flagged as same-named-but-foreign instead of resolved",
+      "impact": "strength: no unresolved reason is a silent resolution"
+    },
+    {
+      "observation_id": "O4-source-field-of-record-locators",
+      "detail": "two figure-name locators use source_field=record with quote_in_source=false, so the markdown-substring rule is not silently applied to record pointers",
+      "impact": "strength"
+    }
+  ],
+  "independence": {
+    "reviewer_context_used": [
+      "report 4129 markdown fetched by the reviewer (bytes pinned by sha256)",
+      "live report record fields (title/scenario/mission/status/created_at/tags)",
+      "the artefact under review: knowledge/kf/wp-4129-01/kf_result.json",
+      "live endpoint probes for /artifacts and both /figures/*"
+    ],
+    "reviewer_context_excluded": [
+      "the producer's scripts (scripts/kf_wp_4129_01_*.py)",
+      "the producer's test file (tests/test_kf_wp_4129_01.py)",
+      "the producer's narrative wrapper docs/kf/wp-4129-01.md (it is an echo of the same JSON; using it would not add independent evidence)"
+    ],
+    "limitations": [
+      "the review does not open the TensorFEM repository: the upstream artefacts (CHANGELOG.md, scripts/audit_changelog_merge.py, tests/*, src/tensorfem/plate_uniform_load.py) stay unresolved, as the manifest itself states, and the review can only confirm that non-assertion",
+      "the review re-derives registration fidelity, not the physics of the plate anchors: the numbers 0.4886 % / 11 anchors are read from the source and their provenance is inside TensorFEM",
+      "figure bytes are 404 from the API, so no image content was reviewed"
+    ],
+    "review_prompt_not_copied_from_producer": true,
+    "no_claim_marked_verified": true
+  },
+  "checks_not_run": [
+    {
+      "check": "figure image content vs caption",
+      "why": "both figure endpoints return 404 (re-probed)"
+    },
+    {
+      "check": "clone-level verification of the merge result in TensorFEM",
+      "why": "out of the reviewer's worktree (repo TensorKnowledge); the manifest also refuses to assert it"
+    },
+    {
+      "check": "re-running the TensorFEM suites (1707 items, test_changelog_integrity, test_plate_uniform_load)",
+      "why": "not runnable here; the source itself reports the full suite as not completed, and this review keeps that honest FAIL instead of trading it for a pass"
+    }
+  ],
+  "verdict_detail": {
+    "passes": [
+      "source identity: hash / bytes / chars / lines / record fields exact",
+      "25 of 25 markdown quotes verbatim and on their declared line; 2 of 2 record pointers resolve",
+      "all 5 git tokens and both finding anchors present verbatim",
+      "figure/artefact endpoints re-probed: 404 with identical byte counts",
+      "no verified mark emitted; empty claims justified by contract",
+      "honest 'not completed' row preserved, not upgraded"
+    ],
+    "must_fix": [
+      "F1-symbol-locator-quote-lacks-token",
+      "F2-path-reference-census-undercount"
+    ],
+    "recommended_disposition": "accept the manifest's factual content; fix F1/F2 in the manifest before it is used as a reference index (both are one-line edits, no physics content involved)"
+  },
+  "repro_cmd": "python3 scripts/kf_review_wp_4129_04_fetch.py && python3 scripts/kf_review_wp_4129_04_verify.py && python3 scripts/kf_review_wp_4129_04_evidence.py && python3 scripts/kf_review_wp_4129_04_emit.py && python3 -m pytest -q tests/test_kf_wp_4129_04.py",
+  "limits": [
+    "verdict is the reviewer's judgement over registration fidelity; the platform gate computes acceptance",
+    "a markdown whitespace change invalidates the pinned source_hash",
+    "probes depend on the local platform API being reachable"
+  ]
+}
