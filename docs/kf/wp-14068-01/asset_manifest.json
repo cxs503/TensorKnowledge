@@ -1,0 +1,589 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-14068-01",
+  "task_type": "01-asset-registration",
+  "report_id": "14068",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-12T02:43:32.134098+00:00",
+  "source": {
+    "uri": "tensor://reports/14068",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "07e3638afcd4d95b84fdc83576de7cd1bfb2a6c1f2a664461a23064e84a753e6",
+    "chars": 4557,
+    "bytes_utf8": 6847,
+    "title": "交差审计 m14680 GAP-DEM-AUTOCALIB：证据三件套重跑通过、基准 38.5–50.1 % 未达标 → verdict L2",
+    "scenario_key": "gap_dem_autocalib_audit",
+    "platform_figures": [
+      "fig1_audit_gap_autocalib.png",
+      "fig1_repose_diagnosis.png"
+    ],
+    "platform_tags": [
+      "DEM",
+      "自动标定",
+      "休止角",
+      "交差审计",
+      "maturity_gate",
+      "TensorDEM",
+      "证据复核"
+    ],
+    "platform_status": "published",
+    "platform_created_at": "2026-11-11T13:53:43.466938+00:00"
+  },
+  "counts": {
+    "assets": 18,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 2,
+      "source_code_reference": 4,
+      "data_artifact_reference": 4,
+      "document_reference": 2,
+      "report_table": 5
+    },
+    "by_resolution": {
+      "resolved_in_source": 6,
+      "referenced_unresolved": 12
+    },
+    "resolved_in_source": 6,
+    "referenced_unresolved": 12,
+    "declared_absent": 0,
+    "distinct_referenced_paths": 9
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "source markdown of report 14068",
+      "in_report_section": "(whole document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 4557,
+        "start_line": 1,
+        "end_line": 109,
+        "quote": "# 交差审计：m14680 GAP-DEM-AUTOCALIB（TensorDEM）→ verdict **L2**\n\n## ① 案例介绍（审计对象与物理背景）\n\n对象 = mission **m14680**（status `succeeded`，PR **#1246** merged，平台报告 **13828**，commit `fa79baa5`）：\n「GAP-DEM-AUTOCALIB · DEM 自动标定 round 1」。本单 m14980 是**交差核验**（非重做）。\n\n物理问题：DEM 微观参数（摩擦 μ / 刚度 k_n / 阻尼 e）→ 宏观响应（休止角 θ_r）→ 优化器对标文献 →\n标定后角度误差 < 10 %。m14680 的结论是 **honest FAIL**：前向映射先不合格，因此没把优化器指向文献。\n\n| 参数 | 值 |\n|---|---|\n| 粒径 r / 密度 ρ | 3.0 mm / 2650 kg/m³ |\n| 法向刚度 k_n / 切向比 k_s/k_n | 800 N/m / 2.2 |\n| 恢复系数 e / 滚动摩擦 μ_r | 0.38 / 0.10 |\n| 容器半径 / 装填高度 | 21 mm / 42 mm（**7 个粒径**） |\n| 颗粒数 | **275** |\n| 变化量 | μ ∈ {0.20, 0.35, 0.52, 0.70, 0.85} |\n| 文献锚 | 干砂休止角 **[30.0, 37.0]°** |\n\n## ② 怎么做的（方法与工具链）\n\n1. **取证三件套复核（全部重跑，不信报告）**：`scripts/m14980_audit_m14680.py --rerun`\n   - run artifact：`artifacts/gap_dem_autocalib/diagnosis.json`（committed sha256 `299ab09c4e7a0f97…`，4442 B）\n   - 重跑 `repro_cmd`：rc=0，90.0 s（交付时 114.8 s）\n   - 逐字段比对：**物理载荷完全相同** = True，只有 `wall_seconds` 变\n     （leaf diff = True），per-seed digest 全等 = True\n   - 图重生成：sha256 `58a716bf63f4bcd7…`，与交付 PNG **逐字节相同** = True\n2. **基准数字重算**（非引用）：从 artifact 重新算误差、Spearman、SNR。\n3. **文档 vs 工件逐条对照**（零手抄核查）：正则抽出 round-1 文档表格里的数字，与 artifact 字段比对。\n4. **单测重跑**：`PYTHONPATH=src python -m pytest tests/test_dem_repose_settle_termination.py -q` → `5 passed, 1 warning in 10.99s`（18.3 s，5 个不变量测试）。\n5. **判级+网关自检**：按 L0–L5 功能实质判级，并用 `maturity_gate.judge` 本地模拟复核（claimed L2 → gate_level 2，无缺键）。\n6. **落表**：`tensor_maturity_verdicts` id=206，scope `m14680 GAP-DEM-AUTOCALIB`，level **2**，verdict_by `board-audit`。\n\n## ③ 计算结果（程序化注入，零手抄）\n\n**P1 — 休止角 vs 摩擦（artifact `p1_friction_response`）**\n\n| μ | θ_r [°] | ke/PE | φ_solid | 侧坡拟合 r² |\n|---|---|---|---|---|\n| 0.20 | 13.83 | 0.295 | 0.0965 | 0.551 |\n| 0.35 | 9.92 | 0.250 | 0.1209 | 0.699 |\n| 0.52 | 18.45 | 0.294 | 0.1275 | 0.793 |\n| 0.70 | 15.88 | 0.326 | 0.1123 | 0.621 |\n| 0.85 | 14.89 | 0.329 | 0.1234 | 0.813 |\n\n**P3 — 静止判据（固定窗 vs 自适应 `ke_stop`=2 %)**\n\n| μ | 固定窗 θ_r [°] | 固定窗 ke/PE | ke_stop θ_r [°] | ke_stop ke/PE | 步数 |\n|---|---|---|---|---|---|\n| 0.40 | 0.78 | 1.1e-03 | 2.09 | 1.9e-02 | 3300 |\n| 0.65 | 1.18 | 5.7e-04 | 4.53 | 2.0e-02 | 3150 |\n\n**重算的判据量**：Spearman(μ,θ_r) = 0.5（artifact 0.5），\n非增区间 3/4；\n复算散差 5.005° vs 信号跨度 8.53° → **SNR 1.704**（artifact 1.704）。\n可达带 9.92–18.45°，文献可达 = False。\n\n**文档 vs 工件（零手抄核查）**\n\n| 声明 | 文档值 | 工件值 | 一致 |\n|---|---|---|---|\n| P1 table θ_r row (doc §3) | `[13.83, 9.92, 18.45, 15.88, 14.89]` | `[13.83, 9.92, 18.45, 15.88, 14.89]` | yes |\n| P1 table ke_ratio row (doc §3) | `[0.295, 0.25, 0.294, 0.326, 0.329]` | `[0.295, 0.25, 0.294, 0.326, 0.329]` | yes |\n| P2 replica θ_r (doc §3) | `[18.45, 17.27, 13.45]` | `[18.45, 17.27, 13.45]` | yes |\n| P2 replica spread (doc §3) | `5.0` | `5.0` | yes |\n| P2 signal-to-noise (doc §3) | `1.7` | `1.7` | yes |\n\n另有 1 个**无工件背书**的手填数字：文档 §5「cone relaxation 50.9°」不在 `diagnosis.json` 中\n（present_in_artifact = False）；本次独立复算得\n**51.0°**（0.5° 内相符）→ 物理可信，记账不合规。\n\n## ④ 结果图\n\n图 1（本次审计生成）：左=文献带 vs 仿真带（基准 FAIL）；中=信号跨度 vs 重复性噪声（SNR<3 不可反演）；\n右=固定窗与 `ke_stop` 静止判据的 θ_r 与残余动能占比 —— 显示\"测到的是单层沉积而非锥体侧坡\"。\n\n图 2（被审交付的原始诊断图，本次重跑 pixel-identical 复现）。\n\n## ⑤ 注意点（局限与踩坑）\n\n1. **新能力没覆盖标定回路真正用的协议**：`run_pluviation`（P1）没有 `ke_stop`，测量时 ke/PE = 0.25–0.33，\n   即\"θ_r 是在 25–33 % 释放势能仍是动能时读的\"——m14680 自己指出的核心缺陷在关键协议上仍未修。\n2. **弹性模量支路不存在**：管线返回 `phi_solid` 而非 E，任务的第二个宏观响应无前向模型。\n3. **体系太小**：275 颗粒 / 7 个粒径高，崩落后 φ_solid 仅 1–3 %（单层），物理上不可能有站立侧坡。\n4. **平台侧记账观察（不是 m14680 的错）**：maturity_gate 以 `/root/tensor-ecosystem/{repo}`\n   为证据根，该 checkout 已陈旧（最后一次 merge #1147，活跃 worktree 已到 #1256）；\n   若审计把证据指针指向只存在于 mission worktree 的工件，会被机器判\"工件缺失\"。\n   本单因此把重跑工件落在自己的 worktree（gate 同时以 `/root/tp-agent/work/m<审计单号>` 为根）。\n5. **未做**：`tests/test_dem_calibration.py` 全量（改动路径默认档 digest 不变已单测覆盖）、round-2 扫描（属后续单）。\n\n## ⑥ 误差判定（显式回答）\n\n| 关键量 | 基准（ref） | 实测（got） | 误差 | <3 % ? |\n|---|---|---|---|---|\n| 休止角（最优仿真点） | [30.0, 37.0]°（文献干砂带） | 18.45° | **38.5–50.1 %** | **否** |\n| 休止角（任务判据 <10 %） | 30–37° | 18.45° | 同上 | **否（误差超标 3.8–5.0 倍）** |\n| θ_r(μ) 单调性 | 0 反序 | 3/4 反序，ρ=0.5 | — | **否** |\n| 信噪比 | ≥3（可稳定反演） | 1.704 | — | **否** |\n| 复现性（同机重跑） | 物理载荷逐字段相同 | identical = True | 0 | **是（唯一达标项）** |\n| 单测不变量 | 5/5 | 5 passed, 1 warning in 10.99s | 0 | **是（单元级）** |\n\n**结论**：m14680 的交付是诚实的负面结果 + 一个真实但未接入生产路径的新能力（自适应静止判据），\n故判 **L2**（L1 单元验证 + L2 独立功能通过；L3 拒：`ke_stop` 无生产调用方且 `run_pluviation` 无判据；\nL4 拒：唯一基准以 38.5–50.1 % 失败）。\nGAP 状态 = **OPEN**，round 2 已在 `docs/GAP-DEM-AUTOCALIB_round2_gate1.md` 继续。\n\n**工件**：`docs/GAP-DEM-AUTOCALIB_audit_m14980.md`（审计报告）、`reports/m14980_audit_m14680.json`（全部数字）、\n`reports/m14980_verdict_evidence.json`（落表证据）、`script: scripts/m14980_audit_m14680.py`。\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "GET /tensor/reports/14068 markdown field + sha256 over utf-8 bytes",
+        "result": "resolved",
+        "detail": "chars=4557 bytes_utf8=6847 sha256=07e3638afcd4d95b84fdc83576de7cd1bfb2a6c1f2a664461a23064e84a753e6"
+      },
+      "source_uri": "tensor://reports/14068",
+      "note": "the source asset itself; its byte hash is the provenance anchor of this work package.",
+      "kind": "report_markdown"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "fig1_audit_gap_autocalib.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 4557,
+        "start_line": 1,
+        "end_line": 109,
+        "quote": "# 交差审计：m14680 GAP-DEM-AUTOCALIB（TensorDEM）→ verdict **L2**\n\n## ① 案例介绍（审计对象与物理背景）\n\n对象 = mission **m14680**（status `succeeded`，PR **#1246** merged，平台报告 **13828**，commit `fa79baa5`）：\n「GAP-DEM-AUTOCALIB · DEM 自动标定 round 1」。本单 m14980 是**交差核验**（非重做）。\n\n物理问题：DEM 微观参数（摩擦 μ / 刚度 k_n / 阻尼 e）→ 宏观响应（休止角 θ_r）→ 优化器对标文献 →\n标定后角度误差 < 10 %。m14680 的结论是 **honest FAIL**：前向映射先不合格，因此没把优化器指向文献。\n\n| 参数 | 值 |\n|---|---|\n| 粒径 r / 密度 ρ | 3.0 mm / 2650 kg/m³ |\n| 法向刚度 k_n / 切向比 k_s/k_n | 800 N/m / 2.2 |\n| 恢复系数 e / 滚动摩擦 μ_r | 0.38 / 0.10 |\n| 容器半径 / 装填高度 | 21 mm / 42 mm（**7 个粒径**） |\n| 颗粒数 | **275** |\n| 变化量 | μ ∈ {0.20, 0.35, 0.52, 0.70, 0.85} |\n| 文献锚 | 干砂休止角 **[30.0, 37.0]°** |\n\n## ② 怎么做的（方法与工具链）\n\n1. **取证三件套复核（全部重跑，不信报告）**：`scripts/m14980_audit_m14680.py --rerun`\n   - run artifact：`artifacts/gap_dem_autocalib/diagnosis.json`（committed sha256 `299ab09c4e7a0f97…`，4442 B）\n   - 重跑 `repro_cmd`：rc=0，90.0 s（交付时 114.8 s）\n   - 逐字段比对：**物理载荷完全相同** = True，只有 `wall_seconds` 变\n     （leaf diff = True），per-seed digest 全等 = True\n   - 图重生成：sha256 `58a716bf63f4bcd7…`，与交付 PNG **逐字节相同** = True\n2. **基准数字重算**（非引用）：从 artifact 重新算误差、Spearman、SNR。\n3. **文档 vs 工件逐条对照**（零手抄核查）：正则抽出 round-1 文档表格里的数字，与 artifact 字段比对。\n4. **单测重跑**：`PYTHONPATH=src python -m pytest tests/test_dem_repose_settle_termination.py -q` → `5 passed, 1 warning in 10.99s`（18.3 s，5 个不变量测试）。\n5. **判级+网关自检**：按 L0–L5 功能实质判级，并用 `maturity_gate.judge` 本地模拟复核（claimed L2 → gate_level 2，无缺键）。\n6. **落表**：`tensor_maturity_verdicts` id=206，scope `m14680 GAP-DEM-AUTOCALIB`，level **2**，verdict_by `board-audit`。\n\n## ③ 计算结果（程序化注入，零手抄）\n\n**P1 — 休止角 vs 摩擦（artifact `p1_friction_response`）**\n\n| μ | θ_r [°] | ke/PE | φ_solid | 侧坡拟合 r² |\n|---|---|---|---|---|\n| 0.20 | 13.83 | 0.295 | 0.0965 | 0.551 |\n| 0.35 | 9.92 | 0.250 | 0.1209 | 0.699 |\n| 0.52 | 18.45 | 0.294 | 0.1275 | 0.793 |\n| 0.70 | 15.88 | 0.326 | 0.1123 | 0.621 |\n| 0.85 | 14.89 | 0.329 | 0.1234 | 0.813 |\n\n**P3 — 静止判据（固定窗 vs 自适应 `ke_stop`=2 %)**\n\n| μ | 固定窗 θ_r [°] | 固定窗 ke/PE | ke_stop θ_r [°] | ke_stop ke/PE | 步数 |\n|---|---|---|---|---|---|\n| 0.40 | 0.78 | 1.1e-03 | 2.09 | 1.9e-02 | 3300 |\n| 0.65 | 1.18 | 5.7e-04 | 4.53 | 2.0e-02 | 3150 |\n\n**重算的判据量**：Spearman(μ,θ_r) = 0.5（artifact 0.5），\n非增区间 3/4；\n复算散差 5.005° vs 信号跨度 8.53° → **SNR 1.704**（artifact 1.704）。\n可达带 9.92–18.45°，文献可达 = False。\n\n**文档 vs 工件（零手抄核查）**\n\n| 声明 | 文档值 | 工件值 | 一致 |\n|---|---|---|---|\n| P1 table θ_r row (doc §3) | `[13.83, 9.92, 18.45, 15.88, 14.89]` | `[13.83, 9.92, 18.45, 15.88, 14.89]` | yes |\n| P1 table ke_ratio row (doc §3) | `[0.295, 0.25, 0.294, 0.326, 0.329]` | `[0.295, 0.25, 0.294, 0.326, 0.329]` | yes |\n| P2 replica θ_r (doc §3) | `[18.45, 17.27, 13.45]` | `[18.45, 17.27, 13.45]` | yes |\n| P2 replica spread (doc §3) | `5.0` | `5.0` | yes |\n| P2 signal-to-noise (doc §3) | `1.7` | `1.7` | yes |\n\n另有 1 个**无工件背书**的手填数字：文档 §5「cone relaxation 50.9°」不在 `diagnosis.json` 中\n（present_in_artifact = False）；本次独立复算得\n**51.0°**（0.5° 内相符）→ 物理可信，记账不合规。\n\n## ④ 结果图\n\n图 1（本次审计生成）：左=文献带 vs 仿真带（基准 FAIL）；中=信号跨度 vs 重复性噪声（SNR<3 不可反演）；\n右=固定窗与 `ke_stop` 静止判据的 θ_r 与残余动能占比 —— 显示\"测到的是单层沉积而非锥体侧坡\"。\n\n图 2（被审交付的原始诊断图，本次重跑 pixel-identical 复现）。\n\n## ⑤ 注意点（局限与踩坑）\n\n1. **新能力没覆盖标定回路真正用的协议**：`run_pluviation`（P1）没有 `ke_stop`，测量时 ke/PE = 0.25–0.33，\n   即\"θ_r 是在 25–33 % 释放势能仍是动能时读的\"——m14680 自己指出的核心缺陷在关键协议上仍未修。\n2. **弹性模量支路不存在**：管线返回 `phi_solid` 而非 E，任务的第二个宏观响应无前向模型。\n3. **体系太小**：275 颗粒 / 7 个粒径高，崩落后 φ_solid 仅 1–3 %（单层），物理上不可能有站立侧坡。\n4. **平台侧记账观察（不是 m14680 的错）**：maturity_gate 以 `/root/tensor-ecosystem/{repo}`\n   为证据根，该 checkout 已陈旧（最后一次 merge #1147，活跃 worktree 已到 #1256）；\n   若审计把证据指针指向只存在于 mission worktree 的工件，会被机器判\"工件缺失\"。\n   本单因此把重跑工件落在自己的 worktree（gate 同时以 `/root/tp-agent/work/m<审计单号>` 为根）。\n5. **未做**：`tests/test_dem_calibration.py` 全量（改动路径默认档 digest 不变已单测覆盖）、round-2 扫描（属后续单）。\n\n## ⑥ 误差判定（显式回答）\n\n| 关键量 | 基准（ref） | 实测（got） | 误差 | <3 % ? |\n|---|---|---|---|---|\n| 休止角（最优仿真点） | [30.0, 37.0]°（文献干砂带） | 18.45° | **38.5–50.1 %** | **否** |\n| 休止角（任务判据 <10 %） | 30–37° | 18.45° | 同上 | **否（误差超标 3.8–5.0 倍）** |\n| θ_r(μ) 单调性 | 0 反序 | 3/4 反序，ρ=0.5 | — | **否** |\n| 信噪比 | ≥3（可稳定反演） | 1.704 | — | **否** |\n| 复现性（同机重跑） | 物理载荷逐字段相同 | identical = True | 0 | **是（唯一达标项）** |\n| 单测不变量 | 5/5 | 5 passed, 1 warning in 10.99s | 0 | **是（单元级）** |\n\n**结论**：m14680 的交付是诚实的负面结果 + 一个真实但未接入生产路径的新能力（自适应静止判据），\n故判 **L2**（L1 单元验证 + L2 独立功能通过；L3 拒：`ke_stop` 无生产调用方且 `run_pluviation` 无判据；\nL4 拒：唯一基准以 38.5–50.1 % 失败）。\nGAP 状态 = **OPEN**，round 2 已在 `docs/GAP-DEM-AUTOCALIB_round2_gate1.md` 继续。\n\n**工件**：`docs/GAP-DEM-AUTOCALIB_audit_m14980.md`（审计报告）、`reports/m14980_audit_m14680.json`（全部数字）、\n`reports/m14980_verdict_evidence.json`（落表证据）、`script: scripts/m14980_audit_m14680.py`。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/14068#figures[0]",
+      "caption": "本次审计图：左 文献带(30–37°)vs 仿真带(13.83–18.45°)基准 FAIL；中 信号跨度 8.53° vs 复算噪声 5.00°（SNR 1.70）；右 固定窗 vs ke_stop 静止判据",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure",
+      "label": "fig1_repose_diagnosis.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 4557,
+        "start_line": 1,
+        "end_line": 109,
+        "quote": "# 交差审计：m14680 GAP-DEM-AUTOCALIB（TensorDEM）→ verdict **L2**\n\n## ① 案例介绍（审计对象与物理背景）\n\n对象 = mission **m14680**（status `succeeded`，PR **#1246** merged，平台报告 **13828**，commit `fa79baa5`）：\n「GAP-DEM-AUTOCALIB · DEM 自动标定 round 1」。本单 m14980 是**交差核验**（非重做）。\n\n物理问题：DEM 微观参数（摩擦 μ / 刚度 k_n / 阻尼 e）→ 宏观响应（休止角 θ_r）→ 优化器对标文献 →\n标定后角度误差 < 10 %。m14680 的结论是 **honest FAIL**：前向映射先不合格，因此没把优化器指向文献。\n\n| 参数 | 值 |\n|---|---|\n| 粒径 r / 密度 ρ | 3.0 mm / 2650 kg/m³ |\n| 法向刚度 k_n / 切向比 k_s/k_n | 800 N/m / 2.2 |\n| 恢复系数 e / 滚动摩擦 μ_r | 0.38 / 0.10 |\n| 容器半径 / 装填高度 | 21 mm / 42 mm（**7 个粒径**） |\n| 颗粒数 | **275** |\n| 变化量 | μ ∈ {0.20, 0.35, 0.52, 0.70, 0.85} |\n| 文献锚 | 干砂休止角 **[30.0, 37.0]°** |\n\n## ② 怎么做的（方法与工具链）\n\n1. **取证三件套复核（全部重跑，不信报告）**：`scripts/m14980_audit_m14680.py --rerun`\n   - run artifact：`artifacts/gap_dem_autocalib/diagnosis.json`（committed sha256 `299ab09c4e7a0f97…`，4442 B）\n   - 重跑 `repro_cmd`：rc=0，90.0 s（交付时 114.8 s）\n   - 逐字段比对：**物理载荷完全相同** = True，只有 `wall_seconds` 变\n     （leaf diff = True），per-seed digest 全等 = True\n   - 图重生成：sha256 `58a716bf63f4bcd7…`，与交付 PNG **逐字节相同** = True\n2. **基准数字重算**（非引用）：从 artifact 重新算误差、Spearman、SNR。\n3. **文档 vs 工件逐条对照**（零手抄核查）：正则抽出 round-1 文档表格里的数字，与 artifact 字段比对。\n4. **单测重跑**：`PYTHONPATH=src python -m pytest tests/test_dem_repose_settle_termination.py -q` → `5 passed, 1 warning in 10.99s`（18.3 s，5 个不变量测试）。\n5. **判级+网关自检**：按 L0–L5 功能实质判级，并用 `maturity_gate.judge` 本地模拟复核（claimed L2 → gate_level 2，无缺键）。\n6. **落表**：`tensor_maturity_verdicts` id=206，scope `m14680 GAP-DEM-AUTOCALIB`，level **2**，verdict_by `board-audit`。\n\n## ③ 计算结果（程序化注入，零手抄）\n\n**P1 — 休止角 vs 摩擦（artifact `p1_friction_response`）**\n\n| μ | θ_r [°] | ke/PE | φ_solid | 侧坡拟合 r² |\n|---|---|---|---|---|\n| 0.20 | 13.83 | 0.295 | 0.0965 | 0.551 |\n| 0.35 | 9.92 | 0.250 | 0.1209 | 0.699 |\n| 0.52 | 18.45 | 0.294 | 0.1275 | 0.793 |\n| 0.70 | 15.88 | 0.326 | 0.1123 | 0.621 |\n| 0.85 | 14.89 | 0.329 | 0.1234 | 0.813 |\n\n**P3 — 静止判据（固定窗 vs 自适应 `ke_stop`=2 %)**\n\n| μ | 固定窗 θ_r [°] | 固定窗 ke/PE | ke_stop θ_r [°] | ke_stop ke/PE | 步数 |\n|---|---|---|---|---|---|\n| 0.40 | 0.78 | 1.1e-03 | 2.09 | 1.9e-02 | 3300 |\n| 0.65 | 1.18 | 5.7e-04 | 4.53 | 2.0e-02 | 3150 |\n\n**重算的判据量**：Spearman(μ,θ_r) = 0.5（artifact 0.5），\n非增区间 3/4；\n复算散差 5.005° vs 信号跨度 8.53° → **SNR 1.704**（artifact 1.704）。\n可达带 9.92–18.45°，文献可达 = False。\n\n**文档 vs 工件（零手抄核查）**\n\n| 声明 | 文档值 | 工件值 | 一致 |\n|---|---|---|---|\n| P1 table θ_r row (doc §3) | `[13.83, 9.92, 18.45, 15.88, 14.89]` | `[13.83, 9.92, 18.45, 15.88, 14.89]` | yes |\n| P1 table ke_ratio row (doc §3) | `[0.295, 0.25, 0.294, 0.326, 0.329]` | `[0.295, 0.25, 0.294, 0.326, 0.329]` | yes |\n| P2 replica θ_r (doc §3) | `[18.45, 17.27, 13.45]` | `[18.45, 17.27, 13.45]` | yes |\n| P2 replica spread (doc §3) | `5.0` | `5.0` | yes |\n| P2 signal-to-noise (doc §3) | `1.7` | `1.7` | yes |\n\n另有 1 个**无工件背书**的手填数字：文档 §5「cone relaxation 50.9°」不在 `diagnosis.json` 中\n（present_in_artifact = False）；本次独立复算得\n**51.0°**（0.5° 内相符）→ 物理可信，记账不合规。\n\n## ④ 结果图\n\n图 1（本次审计生成）：左=文献带 vs 仿真带（基准 FAIL）；中=信号跨度 vs 重复性噪声（SNR<3 不可反演）；\n右=固定窗与 `ke_stop` 静止判据的 θ_r 与残余动能占比 —— 显示\"测到的是单层沉积而非锥体侧坡\"。\n\n图 2（被审交付的原始诊断图，本次重跑 pixel-identical 复现）。\n\n## ⑤ 注意点（局限与踩坑）\n\n1. **新能力没覆盖标定回路真正用的协议**：`run_pluviation`（P1）没有 `ke_stop`，测量时 ke/PE = 0.25–0.33，\n   即\"θ_r 是在 25–33 % 释放势能仍是动能时读的\"——m14680 自己指出的核心缺陷在关键协议上仍未修。\n2. **弹性模量支路不存在**：管线返回 `phi_solid` 而非 E，任务的第二个宏观响应无前向模型。\n3. **体系太小**：275 颗粒 / 7 个粒径高，崩落后 φ_solid 仅 1–3 %（单层），物理上不可能有站立侧坡。\n4. **平台侧记账观察（不是 m14680 的错）**：maturity_gate 以 `/root/tensor-ecosystem/{repo}`\n   为证据根，该 checkout 已陈旧（最后一次 merge #1147，活跃 worktree 已到 #1256）；\n   若审计把证据指针指向只存在于 mission worktree 的工件，会被机器判\"工件缺失\"。\n   本单因此把重跑工件落在自己的 worktree（gate 同时以 `/root/tp-agent/work/m<审计单号>` 为根）。\n5. **未做**：`tests/test_dem_calibration.py` 全量（改动路径默认档 digest 不变已单测覆盖）、round-2 扫描（属后续单）。\n\n## ⑥ 误差判定（显式回答）\n\n| 关键量 | 基准（ref） | 实测（got） | 误差 | <3 % ? |\n|---|---|---|---|---|\n| 休止角（最优仿真点） | [30.0, 37.0]°（文献干砂带） | 18.45° | **38.5–50.1 %** | **否** |\n| 休止角（任务判据 <10 %） | 30–37° | 18.45° | 同上 | **否（误差超标 3.8–5.0 倍）** |\n| θ_r(μ) 单调性 | 0 反序 | 3/4 反序，ρ=0.5 | — | **否** |\n| 信噪比 | ≥3（可稳定反演） | 1.704 | — | **否** |\n| 复现性（同机重跑） | 物理载荷逐字段相同 | identical = True | 0 | **是（唯一达标项）** |\n| 单测不变量 | 5/5 | 5 passed, 1 warning in 10.99s | 0 | **是（单元级）** |\n\n**结论**：m14680 的交付是诚实的负面结果 + 一个真实但未接入生产路径的新能力（自适应静止判据），\n故判 **L2**（L1 单元验证 + L2 独立功能通过；L3 拒：`ke_stop` 无生产调用方且 `run_pluviation` 无判据；\nL4 拒：唯一基准以 38.5–50.1 % 失败）。\nGAP 状态 = **OPEN**，round 2 已在 `docs/GAP-DEM-AUTOCALIB_round2_gate1.md` 继续。\n\n**工件**：`docs/GAP-DEM-AUTOCALIB_audit_m14980.md`（审计报告）、`reports/m14980_audit_m14680.json`（全部数字）、\n`reports/m14980_verdict_evidence.json`（落表证据）、`script: scripts/m14980_audit_m14680.py`。\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/14068#figures[1]",
+      "caption": "被审交付 m14680 的原始诊断图，本次重跑 sha256 逐字节一致（可复现性证据）",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "source_code_reference",
+      "label": "scripts/m14980_audit_m14680.py (markdown line 23)",
+      "in_report_section": "② 怎么做的（方法与工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 672,
+        "end_char": 738,
+        "start_line": 23,
+        "end_line": 23,
+        "quote": "1. **取证三件套复核（全部重跑，不信报告）**：`scripts/m14980_audit_m14680.py --rerun`",
+        "unique": true,
+        "token": "scripts/m14980_audit_m14680.py",
+        "token_span": [
+          699,
+          729
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "scripts/m14980_audit_m14680.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/gap_dem_autocalib/diagnosis.json (markdown line 24)",
+      "in_report_section": "② 怎么做的（方法与工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 739,
+        "end_char": 846,
+        "start_line": 24,
+        "end_line": 24,
+        "quote": "   - run artifact：`artifacts/gap_dem_autocalib/diagnosis.json`（committed sha256 `299ab09c4e7a0f97…`，4442 B）",
+        "unique": true,
+        "token": "artifacts/gap_dem_autocalib/diagnosis.json",
+        "token_span": [
+          758,
+          800
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "artifacts/gap_dem_autocalib/diagnosis.json",
+      "origin": "inline_code",
+      "note": "data_artifact_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "data_artifact_reference"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_dem_repose_settle_termination.py (markdown line 31)",
+      "in_report_section": "② 怎么做的（方法与工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1171,
+        "end_char": 1315,
+        "start_line": 31,
+        "end_line": 31,
+        "quote": "4. **单测重跑**：`PYTHONPATH=src python -m pytest tests/test_dem_repose_settle_termination.py -q` → `5 passed, 1 warning in 10.99s`（18.3 s，5 个不变量测试）。",
+        "unique": true,
+        "token": "tests/test_dem_repose_settle_termination.py",
+        "token_span": [
+          1216,
+          1259
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "tests/test_dem_repose_settle_termination.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "data_artifact_reference",
+      "label": "diagnosis.json (markdown line 69)",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2754,
+        "end_char": 2824,
+        "start_line": 69,
+        "end_line": 69,
+        "quote": "另有 1 个**无工件背书**的手填数字：文档 §5「cone relaxation 50.9°」不在 `diagnosis.json` 中",
+        "unique": true,
+        "token": "diagnosis.json",
+        "token_span": [
+          2807,
+          2821
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "diagnosis.json",
+      "origin": "inline_code",
+      "note": "data_artifact_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "data_artifact_reference"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_dem_calibration.py (markdown line 90)",
+      "in_report_section": "⑤ 注意点（局限与踩坑）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3613,
+        "end_char": 3699,
+        "start_line": 90,
+        "end_line": 90,
+        "quote": "5. **未做**：`tests/test_dem_calibration.py` 全量（改动路径默认档 digest 不变已单测覆盖）、round-2 扫描（属后续单）。",
+        "unique": true,
+        "token": "tests/test_dem_calibration.py",
+        "token_span": [
+          3624,
+          3653
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "tests/test_dem_calibration.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "document_reference",
+      "label": "docs/GAP-DEM-AUTOCALIB_round2_gate1.md (markdown line 106)",
+      "in_report_section": "⑥ 误差判定（显式回答）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4299,
+        "end_char": 4372,
+        "start_line": 106,
+        "end_line": 106,
+        "quote": "GAP 状态 = **OPEN**，round 2 已在 `docs/GAP-DEM-AUTOCALIB_round2_gate1.md` 继续。",
+        "unique": true,
+        "token": "docs/GAP-DEM-AUTOCALIB_round2_gate1.md",
+        "token_span": [
+          4329,
+          4367
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "docs/GAP-DEM-AUTOCALIB_round2_gate1.md",
+      "origin": "inline_code",
+      "note": "document_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "document_reference"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "document_reference",
+      "label": "docs/GAP-DEM-AUTOCALIB_audit_m14980.md (markdown line 108)",
+      "in_report_section": "⑥ 误差判定（显式回答）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4374,
+        "end_char": 4469,
+        "start_line": 108,
+        "end_line": 108,
+        "quote": "**工件**：`docs/GAP-DEM-AUTOCALIB_audit_m14980.md`（审计报告）、`reports/m14980_audit_m14680.json`（全部数字）、",
+        "unique": true,
+        "token": "docs/GAP-DEM-AUTOCALIB_audit_m14980.md",
+        "token_span": [
+          4382,
+          4420
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "docs/GAP-DEM-AUTOCALIB_audit_m14980.md",
+      "origin": "inline_code",
+      "note": "document_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "document_reference"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "data_artifact_reference",
+      "label": "reports/m14980_audit_m14680.json (markdown line 108)",
+      "in_report_section": "⑥ 误差判定（显式回答）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4374,
+        "end_char": 4469,
+        "start_line": 108,
+        "end_line": 108,
+        "quote": "**工件**：`docs/GAP-DEM-AUTOCALIB_audit_m14980.md`（审计报告）、`reports/m14980_audit_m14680.json`（全部数字）、",
+        "unique": true,
+        "token": "reports/m14980_audit_m14680.json",
+        "token_span": [
+          4429,
+          4461
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "reports/m14980_audit_m14680.json",
+      "origin": "inline_code",
+      "note": "data_artifact_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "data_artifact_reference"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "data_artifact_reference",
+      "label": "reports/m14980_verdict_evidence.json (markdown line 109)",
+      "in_report_section": "⑥ 误差判定（显式回答）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4470,
+        "end_char": 4556,
+        "start_line": 109,
+        "end_line": 109,
+        "quote": "`reports/m14980_verdict_evidence.json`（落表证据）、`script: scripts/m14980_audit_m14680.py`。",
+        "unique": true,
+        "token": "reports/m14980_verdict_evidence.json",
+        "token_span": [
+          4471,
+          4507
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "reports/m14980_verdict_evidence.json",
+      "origin": "inline_code",
+      "note": "data_artifact_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "data_artifact_reference"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "source_code_reference",
+      "label": "scripts/m14980_audit_m14680.py (markdown line 109)",
+      "in_report_section": "⑥ 误差判定（显式回答）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4470,
+        "end_char": 4556,
+        "start_line": 109,
+        "end_line": 109,
+        "quote": "`reports/m14980_verdict_evidence.json`（落表证据）、`script: scripts/m14980_audit_m14680.py`。",
+        "unique": true,
+        "token": "scripts/m14980_audit_m14680.py",
+        "token_span": [
+          4524,
+          4554
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "scripts/m14980_audit_m14680.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "report_table",
+      "label": "table 1 @ lines 11-19",
+      "in_report_section": "① 案例介绍（审计对象与物理背景）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 374,
+        "end_char": 651,
+        "start_line": 11,
+        "end_line": 19,
+        "quote": "| 参数 | 值 |\n|---|---|\n| 粒径 r / 密度 ρ | 3.0 mm / 2650 kg/m³ |\n| 法向刚度 k_n / 切向比 k_s/k_n | 800 N/m / 2.2 |\n| 恢复系数 e / 滚动摩擦 μ_r | 0.38 / 0.10 |\n| 容器半径 / 装填高度 | 21 mm / 42 mm（**7 个粒径**） |\n| 颗粒数 | **275** |\n| 变化量 | μ ∈ {0.20, 0.35, 0.52, 0.70, 0.85} |\n| 文献锚 | 干砂休止角 **[30.0, 37.0]°** |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "9 rows x 2 columns"
+      },
+      "rows": 9,
+      "columns": 2,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "report_table",
+      "label": "table 2 @ lines 39-45",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1601,
+        "end_char": 1875,
+        "start_line": 39,
+        "end_line": 45,
+        "quote": "| μ | θ_r [°] | ke/PE | φ_solid | 侧坡拟合 r² |\n|---|---|---|---|---|\n| 0.20 | 13.83 | 0.295 | 0.0965 | 0.551 |\n| 0.35 | 9.92 | 0.250 | 0.1209 | 0.699 |\n| 0.52 | 18.45 | 0.294 | 0.1275 | 0.793 |\n| 0.70 | 15.88 | 0.326 | 0.1123 | 0.621 |\n| 0.85 | 14.89 | 0.329 | 0.1234 | 0.813 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "7 rows x 5 columns"
+      },
+      "rows": 7,
+      "columns": 5,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "report_table",
+      "label": "table 3 @ lines 49-52",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1918,
+        "end_char": 2114,
+        "start_line": 49,
+        "end_line": 52,
+        "quote": "| μ | 固定窗 θ_r [°] | 固定窗 ke/PE | ke_stop θ_r [°] | ke_stop ke/PE | 步数 |\n|---|---|---|---|---|---|\n| 0.40 | 0.78 | 1.1e-03 | 2.09 | 1.9e-02 | 3300 |\n| 0.65 | 1.18 | 5.7e-04 | 4.53 | 2.0e-02 | 3150 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "4 rows x 6 columns"
+      },
+      "rows": 4,
+      "columns": 6,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "report_table",
+      "label": "table 4 @ lines 61-67",
+      "in_report_section": "③ 计算结果（程序化注入，零手抄）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2285,
+        "end_char": 2752,
+        "start_line": 61,
+        "end_line": 67,
+        "quote": "| 声明 | 文档值 | 工件值 | 一致 |\n|---|---|---|---|\n| P1 table θ_r row (doc §3) | `[13.83, 9.92, 18.45, 15.88, 14.89]` | `[13.83, 9.92, 18.45, 15.88, 14.89]` | yes |\n| P1 table ke_ratio row (doc §3) | `[0.295, 0.25, 0.294, 0.326, 0.329]` | `[0.295, 0.25, 0.294, 0.326, 0.329]` | yes |\n| P2 replica θ_r (doc §3) | `[18.45, 17.27, 13.45]` | `[18.45, 17.27, 13.45]` | yes |\n| P2 replica spread (doc §3) | `5.0` | `5.0` | yes |\n| P2 signal-to-noise (doc §3) | `1.7` | `1.7` | yes |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "7 rows x 4 columns"
+      },
+      "rows": 7,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "report_table",
+      "label": "table 5 @ lines 94-101",
+      "in_report_section": "⑥ 误差判定（显式回答）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3718,
+        "end_char": 4139,
+        "start_line": 94,
+        "end_line": 101,
+        "quote": "| 关键量 | 基准（ref） | 实测（got） | 误差 | <3 % ? |\n|---|---|---|---|---|\n| 休止角（最优仿真点） | [30.0, 37.0]°（文献干砂带） | 18.45° | **38.5–50.1 %** | **否** |\n| 休止角（任务判据 <10 %） | 30–37° | 18.45° | 同上 | **否（误差超标 3.8–5.0 倍）** |\n| θ_r(μ) 单调性 | 0 反序 | 3/4 反序，ρ=0.5 | — | **否** |\n| 信噪比 | ≥3（可稳定反演） | 1.704 | — | **否** |\n| 复现性（同机重跑） | 物理载荷逐字段相同 | identical = True | 0 | **是（唯一达标项）** |\n| 单测不变量 | 5/5 | 5 passed, 1 warning in 10.99s | 0 | **是（单元级）** |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "8 rows x 5 columns"
+      },
+      "rows": 8,
+      "columns": 5,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": {
+      "total_quotes": 18,
+      "quotes_unique_in_source": 18,
+      "repeated_quotes": [
+        "**工件**：`docs/GAP-DEM-AUTOCALIB_audit_m14980.md`（审计报告）、`reports/m14980_audit_m14680.json`（全部数字）、",
+        "`reports/m14980_verdict_evidence.json`（落表证据）、`script: scripts/m14980_audit_m14680.py`。"
+      ],
+      "note": "repeated short quotes are structural (identical table rows); each asset still carries its own char span."
+    },
+    "hash_recomputed_locally": "07e3638afcd4d95b84fdc83576de7cd1bfb2a6c1f2a664461a23064e84a753e6",
+    "hash_matches_contract": true,
+    "hash_alg": "sha256 over markdown encoded as utf-8",
+    "locator_scheme": "absolute character span in markdown, 1-based inclusive line numbers"
+  },
+  "identity_granularity": "File references are occurrence-level: identity is (path, markdown line), so a file cited twice yields two assets carrying their own quotes; counts.distinct_referenced_paths is the deduplicated view.",
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no `verified` marks (verification is platform-gated).",
+    "Referenced source paths belong to the producing repository; they are resolved strictly inside the TensorKnowledge delivery worktree, so cross-repository references stay referenced_unresolved by design.",
+    "Figures are inventoried from record.figures[] as-is; when png_base64 is empty the asset is metadata_only and no byte hash is claimed.",
+    "Table and code-fence assets record geometry (rows/columns/language) only; their content is not restated as knowledge.",
+    "Only path-like references, fenced/inline code paths, tables, figures and explicitly configured interface tokens are registered. Bare prose symbols (e.g. a rule table named in the text that lives in the producing repository) are deliberately NOT inferred - registering them would require assuming information the report does not pin to a file.",
+    "Outputs live under docs/kf/<package>/ because the push gate drops artifacts/** (see docs/ops), so registered artifacts are not silently filtered."
+  ],
+  "producer": {
+    "generator": "scripts/kf/kf01_register.py",
+    "contract_version": "1.0",
+    "fetched_via": "GET /api/v1/tensor/reports/14068"
+  }
+}
