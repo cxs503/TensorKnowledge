@@ -1,0 +1,304 @@
+{
+  "package_id": "wp-9083-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9083",
+  "provenance": {
+    "source_hash": "sha256:345797326b826eafbe0bc05f0db0fd6da866a6297f5a14fdc6444117fdb6dfd8",
+    "source_field": "markdown",
+    "producer": "scripts/kf_register_9083.py",
+    "emitted_at": "2026-11-12T01:32:15+00:00",
+    "notes": "asset registration only; source_hash recomputed from the platform markdown field, not copied; every locator quote re-verified unique in that markdown"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-9083-01",
+      "task_type": "01-asset-registration",
+      "report_id": "9083",
+      "source": {
+        "uri": "tensor://reports/9083",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "345797326b826eafbe0bc05f0db0fd6da866a6297f5a14fdc6444117fdb6dfd8",
+        "chars": 258,
+        "bytes_utf8": 258,
+        "title": "Dense Particle-Fluid CFD-DEM Coupling: Bed Closure Verification",
+        "scenario_key": "p50w2-arb7250-n03-dense-dem-cfd",
+        "platform_status": "published",
+        "platform_tags": [
+          "CFD-DEM",
+          "dense coupling",
+          "fluidization",
+          "Ergun",
+          "Richardson-Zaki"
+        ],
+        "platform_figures": [
+          {
+            "name": "fig1_rz_curve.png",
+            "caption": "Verification figure 1"
+          },
+          {
+            "name": "fig2_ergun_pressure_drop.png",
+            "caption": "Verification figure 2"
+          },
+          {
+            "name": "fig3_momentum_conservation.png",
+            "caption": "Verification figure 3"
+          },
+          {
+            "name": "fig4_grid_convergence.png",
+            "caption": "Verification figure 4"
+          },
+          {
+            "name": "fig5_superficial_velocity.png",
+            "caption": "Verification figure 5"
+          }
+        ],
+        "platform_mission_id": 7742,
+        "contract_chars": 258,
+        "contract_hash_matches": true
+      },
+      "counts": {
+        "assets": 8,
+        "by_class": {
+          "report_document": 1,
+          "results_block": 1,
+          "tests_block": 1,
+          "declared_figure": 5
+        },
+        "by_resolution": {
+          "resolved_in_source": 3,
+          "referenced_unresolved": 5
+        },
+        "resolved_in_source": 3,
+        "referenced_unresolved": 5,
+        "declared_absent": 0,
+        "figures_declared": 5,
+        "figures_retrievable": 0
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "report_document",
+          "label": "markdown of report 9083 (258 chars, 11 lines)",
+          "in_report_section": "whole document",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 258,
+            "start_line": 1,
+            "end_line": 11,
+            "quote": "# Dense CFD-DEM Coupling Verification\n\n## Results\n- RZ exponent: n=3.01\n- Ergun error: <0.01%\n- u_mf: 0.01085 m/s, Re_mf=10.83\n- Momentum conservation: 0 (machine precision)\n- All 7 criteria pass\n\n## Tests\n31 tests including 3 negative controls, all passing.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9083 -> field 'markdown'; sha256 recomputed locally == contract source_hash",
+            "result": "resolved"
+          },
+          "note": "byte-exact match: sha256:345797326b826eafbe0bc05f0db0fd6da866a6297f5a14fdc6444117fdb6dfd8 == contract source_hash; chars 258 == contract chars 258"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "results_block",
+          "label": "section starting at '## Results' (156 chars)",
+          "in_report_section": "## Results",
+          "locator": {
+            "method": "char_span",
+            "start_char": 39,
+            "end_char": 195,
+            "start_line": 3,
+            "end_line": 8,
+            "quote": "## Results\n- RZ exponent: n=3.01\n- Ergun error: <0.01%\n- u_mf: 0.01085 m/s, Re_mf=10.83\n- Momentum conservation: 0 (machine precision)\n- All 7 criteria pass",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "section byte span located in markdown; quote occurs exactly once",
+            "result": "resolved"
+          },
+          "note": "structure pointer only; no numeric extraction performed in this package"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "tests_block",
+          "label": "section starting at '## Tests' (61 chars)",
+          "in_report_section": "## Tests",
+          "locator": {
+            "method": "char_span",
+            "start_char": 197,
+            "end_char": 258,
+            "start_line": 10,
+            "end_line": 11,
+            "quote": "## Tests\n31 tests including 3 negative controls, all passing.",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "section byte span located in markdown; quote occurs exactly once",
+            "result": "resolved"
+          },
+          "note": "structure pointer only; no numeric extraction performed in this package"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "declared_figure",
+          "label": "fig1_rz_curve.png",
+          "in_report_section": "not referenced in markdown; declared only in record field figures[0]",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 258,
+            "start_line": 1,
+            "end_line": 11,
+            "quote": "# Dense CFD-DEM Coupling Verification\n\n## Results\n- RZ exponent: n=3.01\n- Ergun error: <0.01%\n- u_mf: 0.01085 m/s, Re_mf=10.83\n- Momentum conservation: 0 (machine precision)\n- All 7 criteria pass\n\n## Tests\n31 tests including 3 negative controls, all passing.",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9083/figures/fig1_rz_curve.png -> HTTP 404 detail='figure not found'; and figure name is not a substring of the markdown",
+            "result": "unresolved"
+          },
+          "declaration_source": {
+            "field": "record",
+            "path": "figures[0]",
+            "verbatim": {
+              "name": "fig1_rz_curve.png",
+              "caption": "Verification figure 1"
+            },
+            "in_markdown": false
+          },
+          "note": "declared in report record metadata, bytes not retrievable through the platform figure endpoint (HTTP 404); caption is generic text, not evidence"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "declared_figure",
+          "label": "fig2_ergun_pressure_drop.png",
+          "in_report_section": "not referenced in markdown; declared only in record field figures[1]",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 258,
+            "start_line": 1,
+            "end_line": 11,
+            "quote": "# Dense CFD-DEM Coupling Verification\n\n## Results\n- RZ exponent: n=3.01\n- Ergun error: <0.01%\n- u_mf: 0.01085 m/s, Re_mf=10.83\n- Momentum conservation: 0 (machine precision)\n- All 7 criteria pass\n\n## Tests\n31 tests including 3 negative controls, all passing.",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9083/figures/fig2_ergun_pressure_drop.png -> HTTP 404 detail='figure not found'; and figure name is not a substring of the markdown",
+            "result": "unresolved"
+          },
+          "declaration_source": {
+            "field": "record",
+            "path": "figures[1]",
+            "verbatim": {
+              "name": "fig2_ergun_pressure_drop.png",
+              "caption": "Verification figure 2"
+            },
+            "in_markdown": false
+          },
+          "note": "declared in report record metadata, bytes not retrievable through the platform figure endpoint (HTTP 404); caption is generic text, not evidence"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "declared_figure",
+          "label": "fig3_momentum_conservation.png",
+          "in_report_section": "not referenced in markdown; declared only in record field figures[2]",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 258,
+            "start_line": 1,
+            "end_line": 11,
+            "quote": "# Dense CFD-DEM Coupling Verification\n\n## Results\n- RZ exponent: n=3.01\n- Ergun error: <0.01%\n- u_mf: 0.01085 m/s, Re_mf=10.83\n- Momentum conservation: 0 (machine precision)\n- All 7 criteria pass\n\n## Tests\n31 tests including 3 negative controls, all passing.",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9083/figures/fig3_momentum_conservation.png -> HTTP 404 detail='figure not found'; and figure name is not a substring of the markdown",
+            "result": "unresolved"
+          },
+          "declaration_source": {
+            "field": "record",
+            "path": "figures[2]",
+            "verbatim": {
+              "name": "fig3_momentum_conservation.png",
+              "caption": "Verification figure 3"
+            },
+            "in_markdown": false
+          },
+          "note": "declared in report record metadata, bytes not retrievable through the platform figure endpoint (HTTP 404); caption is generic text, not evidence"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "declared_figure",
+          "label": "fig4_grid_convergence.png",
+          "in_report_section": "not referenced in markdown; declared only in record field figures[3]",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 258,
+            "start_line": 1,
+            "end_line": 11,
+            "quote": "# Dense CFD-DEM Coupling Verification\n\n## Results\n- RZ exponent: n=3.01\n- Ergun error: <0.01%\n- u_mf: 0.01085 m/s, Re_mf=10.83\n- Momentum conservation: 0 (machine precision)\n- All 7 criteria pass\n\n## Tests\n31 tests including 3 negative controls, all passing.",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9083/figures/fig4_grid_convergence.png -> HTTP 404 detail='figure not found'; and figure name is not a substring of the markdown",
+            "result": "unresolved"
+          },
+          "declaration_source": {
+            "field": "record",
+            "path": "figures[3]",
+            "verbatim": {
+              "name": "fig4_grid_convergence.png",
+              "caption": "Verification figure 4"
+            },
+            "in_markdown": false
+          },
+          "note": "declared in report record metadata, bytes not retrievable through the platform figure endpoint (HTTP 404); caption is generic text, not evidence"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "declared_figure",
+          "label": "fig5_superficial_velocity.png",
+          "in_report_section": "not referenced in markdown; declared only in record field figures[4]",
+          "locator": {
+            "method": "document",
+            "start_char": 0,
+            "end_char": 258,
+            "start_line": 1,
+            "end_line": 11,
+            "quote": "# Dense CFD-DEM Coupling Verification\n\n## Results\n- RZ exponent: n=3.01\n- Ergun error: <0.01%\n- u_mf: 0.01085 m/s, Re_mf=10.83\n- Momentum conservation: 0 (machine precision)\n- All 7 criteria pass\n\n## Tests\n31 tests including 3 negative controls, all passing.",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9083/figures/fig5_superficial_velocity.png -> HTTP 404 detail='figure not found'; and figure name is not a substring of the markdown",
+            "result": "unresolved"
+          },
+          "declaration_source": {
+            "field": "record",
+            "path": "figures[4]",
+            "verbatim": {
+              "name": "fig5_superficial_velocity.png",
+              "caption": "Verification figure 5"
+            },
+            "in_markdown": false
+          },
+          "note": "declared in report record metadata, bytes not retrievable through the platform figure endpoint (HTTP 404); caption is generic text, not evidence"
+        }
+      ],
+      "claims": [],
+      "integrity": {
+        "quote_uniqueness": "all locator quotes re-verified unique in markdown (8/8)",
+        "hash_recomputed_locally": "sha256:345797326b826eafbe0bc05f0db0fd6da866a6297f5a14fdc6444117fdb6dfd8",
+        "hash_matches_contract": true,
+        "no_claim_verification": "claims empty by contract (objective.classify_report_type=false, no extraction); nothing marked verified"
+      }
+    }
+  },
+  "claims": []
+}
