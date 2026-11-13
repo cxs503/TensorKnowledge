@@ -1,0 +1,172 @@
+{
+  "package_id": "wp-8605-01",
+  "report_id": "8605",
+  "verified_by": "scripts/kf_verify_8605.py",
+  "source_hash_recomputed": "sha256:a0488678cd1241a31152fc71c6fc86856a77cbcc4c94612a78a8a20cdd4a8e36",
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "pass",
+      "detail": {
+        "manifest": "artifacts/wp-8605-01/asset_manifest.json",
+        "result": "runs/wp-8605-01/kf_result.wp-8605-01.json",
+        "block_equals_result": true
+      }
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "pass",
+      "detail": {
+        "api_sha256": "a0488678cd1241a31152fc71c6fc86856a77cbcc4c94612a78a8a20cdd4a8e36",
+        "contract_sha256": "a0488678cd1241a31152fc71c6fc86856a77cbcc4c94612a78a8a20cdd4a8e36",
+        "manifest_sha256": "a0488678cd1241a31152fc71c6fc86856a77cbcc4c94612a78a8a20cdd4a8e36",
+        "result_sha256": "sha256:a0488678cd1241a31152fc71c6fc86856a77cbcc4c94612a78a8a20cdd4a8e36",
+        "api_chars": 8006,
+        "manifest_chars": 8006,
+        "api_bytes_utf8": 13153
+      }
+    },
+    {
+      "check": "schema_pass",
+      "result": "pass",
+      "detail": {
+        "schema": "schemas/asset_manifest.wp8605.v1.schema.json",
+        "note": "local schema schemas/asset_manifest.wp8605.v1.schema.json (canonical kf_result schema absent from worktree)"
+      }
+    },
+    {
+      "check": "result_envelope_shape",
+      "result": "pass",
+      "detail": {
+        "keys": [
+          "outputs",
+          "package_id",
+          "provenance",
+          "report_id",
+          "schema_version",
+          "task_type"
+        ],
+        "outputs_keys": [
+          "asset_manifest.json"
+        ]
+      }
+    },
+    {
+      "check": "result_ids_match_contract",
+      "result": "pass",
+      "detail": {
+        "package_id": "wp-8605-01",
+        "task_type": "01-asset-registration",
+        "report_id": "8605"
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "pass",
+      "detail": {
+        "assets_checked": 17,
+        "failures": [],
+        "method": "re-slice fresh API markdown at [start_char,end_char) + uniqueness count"
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "pass",
+      "detail": {
+        "asset_ids": [
+          "A01",
+          "A02",
+          "A03",
+          "A04",
+          "A05",
+          "A06",
+          "A07",
+          "A08",
+          "A09",
+          "A10",
+          "A11",
+          "A12",
+          "A13",
+          "A14",
+          "A15",
+          "A16",
+          "A17"
+        ],
+        "duplicates": []
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": {
+        "claims": 0,
+        "offenders": [],
+        "note": "claims=[] by contract scope (objective.register_assets only; no extraction); asset-level resolution status carried on all 17 assets"
+      }
+    },
+    {
+      "check": "no_verified_markers",
+      "result": "pass",
+      "detail": {
+        "structural_hits": [],
+        "note": "contract forbids marking claims verified; verification is computed by the platform gate"
+      }
+    },
+    {
+      "check": "counts_consistent",
+      "result": "pass",
+      "detail": {
+        "assets": 17,
+        "by_class": {
+          "document": 1,
+          "heading": 1,
+          "statement": 1,
+          "parameter_set": 1,
+          "module_table": 1,
+          "gate_result_table": 1,
+          "external_anchor": 1,
+          "table": 1,
+          "result_table": 2,
+          "figure_set": 1,
+          "figure_artifact": 1,
+          "external_file_set": 1,
+          "limitation_set": 1,
+          "error_table": 1,
+          "repro_chain": 1,
+          "relationship": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 15,
+          "referenced_unresolved": 2
+        },
+        "resolved_in_source": 15,
+        "referenced_unresolved": 2,
+        "declared_absent": 0
+      }
+    },
+    {
+      "check": "artifact_hash_matches_envelope",
+      "result": "pass",
+      "detail": {
+        "file_sha256": "88de6e9959c78ec90cfdecf5c4778f582df82f78777aaa2102572becd4e180f6",
+        "envelope_sha256": "88de6e9959c78ec90cfdecf5c4778f582df82f78777aaa2102572becd4e180f6"
+      }
+    },
+    {
+      "check": "durable_mirror_identical",
+      "result": "pass",
+      "detail": {
+        "mirror": "docs/wp-8605-01/asset_manifest.json",
+        "mirror_sha256": "88de6e9959c78ec90cfdecf5c4778f582df82f78777aaa2102572becd4e180f6",
+        "artifact_sha256": "88de6e9959c78ec90cfdecf5c4778f582df82f78777aaa2102572becd4e180f6",
+        "mirrored_figures": [
+          "fig_asset_inventory.png",
+          "fig_locator_coverage.png",
+          "fig_verification.png"
+        ],
+        "why": "tp_pusher._EXCLUDE drops artifacts/** and runs/**; docs/ is committed"
+      }
+    }
+  ],
+  "overall": "PASS"
+}
