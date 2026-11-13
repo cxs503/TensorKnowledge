@@ -1,0 +1,48 @@
+{
+  "package_id": "wp-6551-01",
+  "verified_at": "2026-11-12T01:31:00.464484+00:00",
+  "mode": {
+    "source": "live_api",
+    "figure_payloads": "not retrievable (HTTP 404 on /tensor/reports/6551/figures/<name>)"
+  },
+  "acceptance": {
+    "valid_json": {
+      "ok": true,
+      "detail": "asset_manifest.json and kf_result.json parse as JSON"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": "manifest vs schemas/asset_manifest.v1.generic.schema.json: 0 error(s); envelope vs schemas/kf_result.v1.schema.json: 0 error(s)",
+      "errors": []
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": "12/12 char-span locators re-resolved (md[start:end]==quote, quote_sha256, quote present on declared line) + 8 identity facts",
+      "failures": []
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": "live_api: live=sha256:879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431 manifest=sha256:879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431 contract=sha256:879d4b3cb0112589ae9f58962c23b8d92d07a4de2ea71b950dba6a5d83c47431",
+      "chars": {
+        "live": 5491,
+        "manifest": 5491,
+        "contract": 5491
+      }
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": "13 asset ids, duplicates=[]"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": "0 claims; explicit empty-claims reason present: True; no claim carries a 'verified' status"
+    }
+  },
+  "all_ok": true,
+  "not_checked": [
+    "figure pixel data: endpoint returns 404, so no image hash/pHash is claimed",
+    "existence of the TensorLBM-side paths (src/tensorlbm/…, run.py, results.json, refs_lock.json, benchmarks/pending/…): outside this delivery worktree; recorded as referenced_unresolved",
+    "report-type classification and claim extraction: out of scope for task_type 01-asset-registration"
+  ],
+  "note": "Self-check only. No asset/claim is marked verified here; the platform gate recomputes hash and locators independently."
+}
