@@ -1,0 +1,219 @@
+{
+  "package_id": "wp-9840-01",
+  "report_id": "9840",
+  "verified_by": "scripts/kf_verify_9840.py",
+  "source_hash_recomputed_live": "sha256:159d4a1419890fe82d46b49037d00273376244d1f24a6503e386c6243d882524",
+  "acceptance": {
+    "valid_json": "pass",
+    "schema_pass": "pass",
+    "source_locator_resolvable": "pass",
+    "source_hash": "pass",
+    "no_duplicate_ids": "pass",
+    "all_claims_have_evidence_or_explicit_unresolved_status": "pass"
+  },
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "pass",
+      "detail": {
+        "manifest": "artifacts/wp-9840-01/asset_manifest.json",
+        "result": "runs/wp-9840-01/kf_result.wp-9840-01.json"
+      }
+    },
+    {
+      "check": "schema_pass_manifest",
+      "result": "pass",
+      "detail": {
+        "schema": "schemas/asset_manifest.wp-9840-01.schema.json",
+        "assets_validated": 32
+      }
+    },
+    {
+      "check": "schema_pass_envelope",
+      "result": "pass",
+      "detail": {
+        "schema": "schemas/kf_result.v1.schema.json",
+        "top_level_keys": [
+          "claims",
+          "outputs",
+          "package_id",
+          "provenance",
+          "report_id",
+          "task_type"
+        ],
+        "note": "repo schema unmodified; schema_version removed to satisfy additionalProperties=false"
+      }
+    },
+    {
+      "check": "source_hash_recomputed_live",
+      "result": "pass",
+      "detail": {
+        "live_sha256": "sha256:159d4a1419890fe82d46b49037d00273376244d1f24a6503e386c6243d882524",
+        "manifest_sha256": "sha256:159d4a1419890fe82d46b49037d00273376244d1f24a6503e386c6243d882524",
+        "live_chars": 14740,
+        "bytes_utf8": 19763
+      }
+    },
+    {
+      "check": "source_hash_matches_contract",
+      "result": "pass",
+      "detail": {
+        "contract": "sha256:159d4a1419890fe82d46b49037d00273376244d1f24a6503e386c6243d882524",
+        "live": "sha256:159d4a1419890fe82d46b49037d00273376244d1f24a6503e386c6243d882524",
+        "envelope": "sha256:159d4a1419890fe82d46b49037d00273376244d1f24a6503e386c6243d882524"
+      }
+    },
+    {
+      "check": "source_chars_match_contract",
+      "result": "pass",
+      "detail": {
+        "contract": 14740,
+        "live": 14740,
+        "manifest": 14740
+      }
+    },
+    {
+      "check": "source_field_markdown",
+      "result": "pass",
+      "detail": {
+        "field": "markdown",
+        "platform_id": 9840
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "pass",
+      "detail": {
+        "assets_checked": 32,
+        "char_spans_re_sliced": 32,
+        "failures": [],
+        "shared_spans": [
+          {
+            "asset": "A29",
+            "shared_with": "A03"
+          },
+          {
+            "asset": "A33",
+            "shared_with": "A08"
+          }
+        ],
+        "method": "fresh API markdown re-sliced at [start_char,end_char); equality + uniqueness recomputed"
+      }
+    },
+    {
+      "check": "quotes_are_substrings_of_source",
+      "result": "pass",
+      "detail": {
+        "assets": 32
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "pass",
+      "detail": {
+        "assets": 32,
+        "duplicates": []
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": {
+        "claims": 0,
+        "offenders": [],
+        "note": "claims=[] by contract scope (objective.register_assets only, classify_report_type=false, no extraction); every asset still carries an explicit resolution status (26 resolved_in_source / 5 referenced_unresolved / 1 declared_absent)"
+      }
+    },
+    {
+      "check": "no_verified_markers",
+      "result": "pass",
+      "detail": {
+        "structural_hits": [],
+        "envelope_verification_status": "not_verified",
+        "note": "contract forbids marking claims verified; verification is computed by the platform gate"
+      }
+    },
+    {
+      "check": "counts_consistent",
+      "result": "pass",
+      "detail": {
+        "assets": 32,
+        "by_class": {
+          "heading": 1,
+          "metadata": 1,
+          "problem_statement": 1,
+          "criteria_table": 1,
+          "method_setup": 1,
+          "code_declaration": 1,
+          "toolchain": 1,
+          "table": 12,
+          "numeric_anchor": 2,
+          "figure_section": 1,
+          "limitation_set": 1,
+          "statement": 1,
+          "unevaluated_claims": 1,
+          "verdict_summary": 1,
+          "repro_block": 1,
+          "external_module": 1,
+          "external_test": 1,
+          "external_script_set": 1,
+          "external_artifact": 1,
+          "compute_provenance": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 26,
+          "declared_absent": 1,
+          "referenced_unresolved": 5
+        },
+        "resolved_in_source": 26,
+        "referenced_unresolved": 5,
+        "declared_absent": 1
+      }
+    },
+    {
+      "check": "shared_span_documented",
+      "result": "pass",
+      "detail": {
+        "violations": [],
+        "sharing": [
+          {
+            "asset": "A29",
+            "with": "A03"
+          },
+          {
+            "asset": "A33",
+            "with": "A08"
+          }
+        ]
+      }
+    },
+    {
+      "check": "artifact_hash_matches_envelope",
+      "result": "pass",
+      "detail": {
+        "file_sha256": "acae6c5456e3d2fc426fd88150ddd98c7557290f90b34034304d69cc4169affd",
+        "envelope_sha256": "acae6c5456e3d2fc426fd88150ddd98c7557290f90b34034304d69cc4169affd"
+      }
+    },
+    {
+      "check": "durable_mirror_identical",
+      "result": "pass",
+      "detail": {
+        "mirror": "docs/wp-9840-01/asset_manifest.json",
+        "mirror_sha256": "acae6c5456e3d2fc426fd88150ddd98c7557290f90b34034304d69cc4169affd",
+        "artifact_sha256": "acae6c5456e3d2fc426fd88150ddd98c7557290f90b34034304d69cc4169affd",
+        "why": "tp_pusher._EXCLUDE drops artifacts/** and runs/**; docs/ is committed"
+      }
+    },
+    {
+      "check": "single_report_scope",
+      "result": "pass",
+      "detail": {
+        "report_id": "9840",
+        "source_uri": "tensor://reports/9840",
+        "other_report_ids_touched": []
+      }
+    }
+  ],
+  "overall": "PASS"
+}
