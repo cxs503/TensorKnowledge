@@ -1,0 +1,99 @@
+{
+ "package_id": "wp-11204-01",
+ "report_id": "11204",
+ "all_pass": true,
+ "checks": {
+  "A1_valid_json": {
+   "pass": true,
+   "detail": "both files parse as JSON"
+  },
+  "A4_source_hash_matches": {
+   "pass": true,
+   "detail": {
+    "live_sha256": "d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86",
+    "contract_sha256": "d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86",
+    "kf_provenance_sha256": "sha256:d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86",
+    "kf_provenance_sha256_normalised": "d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86",
+    "live_chars": 5999,
+    "contract_chars": 5999,
+    "local_snapshot_identical_to_live": true
+   }
+  },
+  "A2_schema_pass": {
+   "pass": true,
+   "detail": "envelope + manifest schema valid"
+  },
+  "A3_source_locator_resolvable": {
+   "pass": true,
+   "detail": {
+    "locators_checked": 38,
+    "failures": []
+   }
+  },
+  "A5_no_duplicate_ids": {
+   "pass": true,
+   "detail": {
+    "count": 27,
+    "unique": 27
+   }
+  },
+  "A6_claims_evidence_or_unresolved": {
+   "pass": true,
+   "detail": {
+    "claims": 0,
+    "policy": "empty array is the contract-legal outcome for 01-asset-registration; no claim is emitted, so nothing can be overstated as supported"
+   }
+  },
+  "I1_no_verified_status_anywhere": {
+   "pass": true,
+   "detail": "no asset or claim carries a verified/confirmed status (the platform gate owns verification)"
+  },
+  "I2_counts_self_consistent": {
+   "pass": true,
+   "detail": {
+    "recounted": {
+     "assets": 27,
+     "by_class": {
+      "report_source_markdown": 1,
+      "record_metadata": 1,
+      "figure_file": 3,
+      "repo_path_reference": 3,
+      "module_reference": 1,
+      "source_code_path": 5,
+      "script_path": 2,
+      "test_path": 1,
+      "result_data_path": 2,
+      "symbol_reference": 1,
+      "parameter_reference": 1,
+      "provenance_pointer": 1,
+      "external_standard": 2,
+      "external_law": 1,
+      "node_identifier": 1,
+      "repro_command_block": 1
+     },
+     "by_resolution": {
+      "resolved_in_source": 6,
+      "referenced_unresolved": 21
+     },
+     "resolved_in_source": 6,
+     "referenced_unresolved": 21,
+     "declared_absent": 0
+    }
+   }
+  },
+  "I3_figure_bytes_hashed": {
+   "pass": true,
+   "detail": {
+    "A03": "d3bc9cdb6cde95a0b16e0a99165bfac96baff4fcb61e9f6d9005c95a63f9e6c3",
+    "A04": "356910833e5f3abd1c7a5512171a6b30606355ab431e4d9f573c1ff10b21f750",
+    "A05": "17996f7f2626586dc5fb7c4d3bf1a3407ba281d2ca7f09c10fc9bba81197cfb9"
+   }
+  },
+  "I4_completeness_scanner_clean": {
+   "pass": true,
+   "detail": {
+    "tokens": 16
+   }
+  }
+ }
+}
