@@ -1,0 +1,60 @@
+{
+  "package_id": "wp-8583-01",
+  "report_id": "8583",
+  "task_type": "01-asset-registration",
+  "verified_at": "2026-11-12T01:35:47+00:00",
+  "source_hash": "sha256:2dae949f5c82c8f0e931f5280c0ea5c565bd188e05b0c109e49763d47a4fdfa4",
+  "acceptance": {
+    "valid_json": {
+      "ok": true,
+      "detail": "asset_manifest.json + kf_result envelope parsed by json.loads"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": {
+        "kf_result.v1": "0 errors",
+        "manifest_structure": "0 errors"
+      }
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": {
+        "locators_checked": 32,
+        "unresolvable": [],
+        "char_span_mismatch": [],
+        "all_quotes_unique": true,
+        "rechecked_against": "live GET /tensor/reports/8583, not the local copy"
+      }
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": {
+        "recomputed": "sha256:2dae949f5c82c8f0e931f5280c0ea5c565bd188e05b0c109e49763d47a4fdfa4",
+        "contract": "sha256:2dae949f5c82c8f0e931f5280c0ea5c565bd188e05b0c109e49763d47a4fdfa4",
+        "envelope": "sha256:2dae949f5c82c8f0e931f5280c0ea5c565bd188e05b0c109e49763d47a4fdfa4",
+        "chars_live": 4087,
+        "chars_contract": 4087
+      }
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": {
+        "ids": 38,
+        "duplicates": []
+      }
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": {
+        "claims": 0,
+        "claims_empty_reason_present": true,
+        "entries_with_explicit_status": 38,
+        "problems": []
+      }
+    }
+  },
+  "all_pass": true,
+  "checks_passed": 6,
+  "checks_total": 6,
+  "note": "self-checks run by this package on its own artefacts; the platform gate independently recomputes hash/schema/locators and owns the final verdict. No claim is marked verified here."
+}
