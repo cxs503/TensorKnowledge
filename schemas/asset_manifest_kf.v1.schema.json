@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest_kf.v1.schema.json",
+  "title": "asset_manifest_kf.v1 - KF work package task_type=01-asset-registration",
+  "description": "Generic (package-agnostic) shape for the asset_manifest.json produced by scripts/kf_wp8398_01_register.py. Supersedes the frozen wp-448-01 variant (schemas/asset_manifest.v1.schema.json, left untouched) which hard-coded package_id/report_id as const. Registration only: no claim is ever marked verified here.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_version", "package_id", "task_type", "report_id", "lane", "generated_at", "producer", "source", "assets", "counts", "claims", "integrity"],
+  "properties": {
+    "manifest_version": {"const": "1.0"},
+    "package_id": {"type": "string", "pattern": "^wp-[A-Za-z0-9][A-Za-z0-9_.:-]*-[0-9]{2}$"},
+    "task_type": {"const": "01-asset-registration"},
+    "report_id": {"type": "string", "pattern": "^[0-9]+$"},
+    "lane": {"type": "string", "minLength": 1},
+    "generated_at": {"type": "string", "minLength": 20},
+    "producer": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["report_id", "source_uri", "source_field", "source_hash", "hash_match", "chars", "bytes", "lines"],
+      "properties": {
+        "report_id": {"type": "string", "pattern": "^[0-9]+$"},
+        "source_uri": {"type": "string", "pattern": "^tensor://reports/[0-9]+$"},
+        "source_field": {"const": "markdown"},
+        "source_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "hash_match": {"type": "boolean"},
+        "chars": {"type": "integer", "minimum": 1},
+        "bytes": {"type": "integer", "minimum": 1},
+        "lines": {"type": "integer", "minimum": 1}
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["asset_id", "asset_class", "label", "token", "locator", "resolution"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^r[0-9]+:[A-Za-z0-9:_-]+$"},
+          "asset_class": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "token": {"type": "string", "minLength": 1},
+          "locator": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source_field", "method", "start_char", "end_char", "start_line", "end_line", "quote", "quote_sha256", "unique", "occurrences", "context"],
+            "properties": {
+              "source_field": {"enum": ["markdown", "record"]},
+              "method": {"enum": ["char_span", "document", "record_pointer"]},
+              "start_char": {"type": "integer", "minimum": 0},
+              "end_char": {"type": "integer", "minimum": 1},
+              "start_line": {"type": "integer", "minimum": 1},
+              "end_line": {"type": "integer", "minimum": 1},
+              "quote": {"type": "string", "minLength": 1},
+              "quote_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "unique": {"type": "boolean"},
+              "occurrences": {"type": "integer", "minimum": 1},
+              "context": {"type": "string", "minLength": 1}
+            }
+          },
+          "resolution": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": ["status", "scope", "checks"],
+            "properties": {
+              "status": {"enum": ["resolved", "metadata_only", "declared_only", "unresolved"]},
+              "scope": {"type": "string", "minLength": 1},
+              "reason": {"type": "string"},
+              "checks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": ["check", "result"],
+                  "properties": {
+                    "check": {"type": "string", "minLength": 1},
+                    "result": {"type": "string", "minLength": 1}
+                  }
+                }
+              }
+            }
+          },
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["assets", "by_class", "by_resolution", "markdown_locators"],
+      "properties": {
+        "assets": {"type": "integer", "minimum": 1},
+        "by_class": {"type": "object"},
+        "by_resolution": {"type": "object"},
+        "markdown_locators": {"type": "integer", "minimum": 0}
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "Empty is legitimate and expected for task_type=01 (objective.classify_report_type=false, no extraction).",
+      "items": {"type": "object"}
+    },
+    "claims_note": {"type": "string"},
+    "integrity": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["hash_recomputed_locally", "hash_algorithm", "verified_logic"],
+      "properties": {
+        "hash_recomputed_locally": {"type": "boolean"},
+        "hash_algorithm": {"const": "sha256"},
+        "verified_logic": {"type": "string"}
+      }
+    }
+  }
+}
