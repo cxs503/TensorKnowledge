@@ -1,0 +1,155 @@
+{
+ "package_id": "wp-11156-01",
+ "report_id": "11156",
+ "source_hash": "4e34bdac8a446701f339014fec117feea5083ad4ef85543edae87ccb77806d77",
+ "checked_at": "2026-11-12T01:51:57+00:00",
+ "locators": {
+  "A01": {
+   "source_field": "markdown",
+   "quote": "# DEM Parameter Auto-Calibration Framework",
+   "resolvable_in_markdown": true,
+   "offset_chars": 0,
+   "count_occurrences": 1
+  },
+  "A02": {
+   "source_field": "markdown",
+   "quote": "| Benchmark | Input Parameters | Output |\n|-----------|-----------------|--------|\n| Angle of repose | mu, mu_r, e, kt/kn | Heap slope angle (degrees) |\n| Direct shear box | mu, mu_r, e, kt/kn | Internal friction angle phi (degrees), cohesion c (Pa) |\n| Uniaxial compression | mu, mu_r, e, kt/kn | Elastic modulus E (Pa), Poisson ratio nu |",
+   "resolvable_in_markdown": true,
+   "offset_chars": 952,
+   "count_occurrences": 1
+  },
+  "A03": {
+   "source_field": "markdown",
+   "quote": "| Criterion | Target | Status |\n|-----------|--------|--------|\n| (a) Repose angle error < 5 degrees | < 5 degrees | Framework supports this |\n| (b) Shear phi error < 3 degrees, c error < 10% | < 3 degrees, < 10% | Framework supports this |\n| (c) Compression E error < 10% | < 10% | Framework supports this |\n| (d) BO convergence < 100 evals | < 100 | Verified (38 evals for test case) |\n| (e) UQ 95% CI contains true value | Yes | Verified with synthetic data |\n| (f) pytest >= 15 all green | >= 15 | 30 tests pass |",
+   "resolvable_in_markdown": true,
+   "offset_chars": 2944,
+   "count_occurrences": 1
+  },
+  "A04": {
+   "source_field": "markdown",
+   "quote": "- **Glass beads**: mu in [0.1, 0.5], mu_r in [0.0, 0.08], e in [0.5, 0.9]",
+   "resolvable_in_markdown": true,
+   "offset_chars": 2704,
+   "count_occurrences": 1
+  },
+  "A05": {
+   "source_field": "markdown",
+   "quote": "- **Sand**: mu in [0.3, 0.8], mu_r in [0.02, 0.12], e in [0.1, 0.5]",
+   "resolvable_in_markdown": true,
+   "offset_chars": 2778,
+   "count_occurrences": 1
+  },
+  "A06": {
+   "source_field": "markdown",
+   "quote": "- **Gravel**: mu in [0.4, 0.8], mu_r in [0.05, 0.15], e in [0.1, 0.4]",
+   "resolvable_in_markdown": true,
+   "offset_chars": 2846,
+   "count_occurrences": 1
+  },
+  "A07": {
+   "source_field": "markdown",
+   "quote": "- src/tensordem/auto_calibration.py - Main calibration framework (forward solver, BO, MCMC, pipeline)",
+   "resolvable_in_markdown": true,
+   "offset_chars": 3975,
+   "count_occurrences": 1
+  },
+  "A08": {
+   "source_field": "markdown",
+   "quote": "- tests/test_auto_calibration.py - 30 pytest tests covering all components",
+   "resolvable_in_markdown": true,
+   "offset_chars": 4077,
+   "count_occurrences": 1
+  },
+  "A09": {
+   "source_field": "markdown",
+   "quote": "- artifacts/fig*.png - Result figures",
+   "resolvable_in_markdown": true,
+   "offset_chars": 4152,
+   "count_occurrences": 1
+  },
+  "A10": {
+   "source_field": "markdown",
+   "quote": "- runs/calibration_result.json - Calibration run results",
+   "resolvable_in_markdown": true,
+   "offset_chars": 4190,
+   "count_occurrences": 1
+  },
+  "A11": {
+   "source_field": "markdown",
+   "quote": "The BO framework converges to the optimum within 38 evaluations for a 2D quadratic test function, achieving objective < 0.01.",
+   "resolvable_in_markdown": true,
+   "offset_chars": 2248,
+   "count_occurrences": 1
+  },
+  "A12": {
+   "source_field": "markdown",
+   "quote": "With experimental repose angle data (25 degrees +/- 3 degrees), the MCMC posterior for mu shows:",
+   "resolvable_in_markdown": true,
+   "offset_chars": 2411,
+   "count_occurrences": 1
+  },
+  "A13": {
+   "source_field": "markdown",
+   "quote": "| (f) pytest >= 15 all green | >= 15 | 30 tests pass |",
+   "resolvable_in_markdown": true,
+   "offset_chars": 3407,
+   "count_occurrences": 1
+  },
+  "A14": {
+   "source_field": "markdown",
+   "quote": "ledger sha256 `16685355b1c97e5a01daa492b9c1c05046b286b2b295773591dcd011a81861d0`",
+   "resolvable_in_markdown": true,
+   "offset_chars": 4259,
+   "count_occurrences": 1
+  },
+  "A15": {
+   "source_field": "markdown",
+   "quote": "corpus sha256 `4f09e8caa017ce8c1a54170aae734f78f98073ff2cac4ef7fcd23a224a07add9`",
+   "resolvable_in_markdown": true,
+   "offset_chars": 4342,
+   "count_occurrences": 1
+  },
+  "A16": {
+   "source_field": "markdown",
+   "quote": "mission 9437 / branch agent/m9437 · commit 89b3ec6f",
+   "resolvable_in_markdown": true,
+   "offset_chars": 4425,
+   "count_occurrences": 1
+  },
+  "A17": {
+   "source_field": "record",
+   "quote": "判据族大小分布（对数轴）：冗余集中在少数族上，长尾是单例独立判据",
+   "resolvable_in_markdown": true,
+   "offset_chars": null,
+   "count_occurrences": 1
+  },
+  "A18": {
+   "source_field": "record",
+   "quote": "每新增节点的新增独立判据族 vs 判据实例数（plan_id 序）",
+   "resolvable_in_markdown": true,
+   "offset_chars": null,
+   "count_occurrences": 1
+  },
+  "A19": {
+   "source_field": "record",
+   "quote": "独立族 / 冗余族杀伤率分布，标题含 Mann-Whitney p 与均值差",
+   "resolvable_in_markdown": true,
+   "offset_chars": null,
+   "count_occurrences": 1
+  },
+  "A20": {
+   "source_field": "record",
+   "quote": "三种变异体（数值/单位/符号）的杀伤-存活结构（检出包络）",
+   "resolvable_in_markdown": true,
+   "offset_chars": null,
+   "count_occurrences": 1
+  },
+  "A21": {
+   "source_field": "record",
+   "quote": "尺寸匹配补充检验：逐条判据杀伤率分布（横线为均值）",
+   "resolvable_in_markdown": true,
+   "offset_chars": null,
+   "count_occurrences": 1
+  }
+ }
+}
