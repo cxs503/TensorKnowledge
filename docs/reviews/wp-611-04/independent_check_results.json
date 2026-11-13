@@ -1,0 +1,216 @@
+{
+  "report_id": "611",
+  "source_sha256": "sha256:72175cbfcd1c0273e48480878d29788a533b67f32b6129bcc0b153e1386a1c88",
+  "source_sha256_matches_contract": true,
+  "parameters_recomputed_from_report": {
+    "R": 0.5,
+    "rho_i": 917.0,
+    "rho_w": 1025.0,
+    "g": 9.81,
+    "wave_A": 0.1,
+    "wave_lambda": 10.0,
+    "wave_T": 2.5
+  },
+  "quotes": [
+    {
+      "quote": "**Parameters:** R=0.5m, ρ_i=917 kg/m³, ρ_w=1025 kg/m³, g=9.81 m/s², wave A=0.1m, λ=10m, T=2.5s.",
+      "start_offset": 310,
+      "end_offset": 405,
+      "found": true
+    },
+    {
+      "quote": "- **Buoyancy:** Archimedes principle: F_b = ρ_w·g·V_sub",
+      "start_offset": 518,
+      "end_offset": 573,
+      "found": true
+    },
+    {
+      "quote": "- **Stability:** Heave restoring stiffness k_heave = ρ_w·g·V_total·|df_sub/dh| > 0",
+      "start_offset": 772,
+      "end_offset": 854,
+      "found": true
+    },
+    {
+      "quote": "- **Wave force:** Morison equation with Airy wave theory (deep-water decay)",
+      "start_offset": 640,
+      "end_offset": 715,
+      "found": true
+    },
+    {
+      "quote": "| Buoyancy max rel error | 2.15e-16 | 2.19e-16 |",
+      "start_offset": 941,
+      "end_offset": 989,
+      "found": true
+    },
+    {
+      "quote": "| Equilibrium h_eq (m) | -0.3378 | -0.2986 |",
+      "start_offset": 990,
+      "end_offset": 1034,
+      "found": true
+    },
+    {
+      "quote": "| f_sub at equilibrium | 0.8946 | 0.8946 |",
+      "start_offset": 1035,
+      "end_offset": 1077,
+      "found": true
+    },
+    {
+      "quote": "| Heave stiffness (N/m) | 7414 | 5081 |",
+      "start_offset": 1078,
+      "end_offset": 1117,
+      "found": true
+    },
+    {
+      "quote": "| GM (m) | ≈0 (neutral) | -0.115 (unstable) |",
+      "start_offset": 1149,
+      "end_offset": 1194,
+      "found": true
+    },
+    {
+      "quote": "- 2-D disk GM≈0 and 3-D sphere GM<0 are known analytical results; roll stability in ice fields comes from inter-particle contacts.",
+      "start_offset": 1368,
+      "end_offset": 1498,
+      "found": true
+    },
+    {
+      "quote": "- Morison equation valid for D/λ < ~0.1; at D/λ=0.1 we are at the upper limit.",
+      "start_offset": 1613,
+      "end_offset": 1691,
+      "found": true
+    },
+    {
+      "quote": "| Buoyancy force | Archimedes | 2.19e-16 | YES |",
+      "start_offset": 1797,
+      "end_offset": 1845,
+      "found": true
+    },
+    {
+      "quote": "| Equilibrium f_sub | ρ_i/ρ_w | 7.18e-13 | YES |",
+      "start_offset": 1846,
+      "end_offset": 1894,
+      "found": true
+    },
+    {
+      "quote": "| Heave stability | k>0 | k=5081 N/m | YES |",
+      "start_offset": 1895,
+      "end_offset": 1939,
+      "found": true
+    },
+    {
+      "quote": "**All acceptance criteria PASS.**",
+      "start_offset": 1941,
+      "end_offset": 1974,
+      "found": true
+    },
+    {
+      "quote": "See attached figures (6 total): submerged fraction, buoyancy force, wetted area, equilibrium diagram, heave stiffness, wave force time series.",
+      "start_offset": 1211,
+      "end_offset": 1353,
+      "found": true
+    }
+  ],
+  "quotes_all_found": true,
+  "geometry_and_equilibrium": {
+    "target_f_sub": 0.8946341463414634,
+    "h_eq_2d": 0.3377671145878769,
+    "h_eq_3d": 0.29858100521893727,
+    "f_sub_at_h2": 0.8946341463414633,
+    "f_sub_at_h3": 0.8946341463414634,
+    "report_h_eq_2d": -0.3378,
+    "report_h_eq_3d": -0.2986,
+    "report_f_sub": 0.8946,
+    "h_eq_2d_rel_diff": 9.736120155812305e-05,
+    "h_eq_3d_rel_diff": 6.361684343845253e-05,
+    "sign_convention": "report quotes h_eq as a negative centre height (below waterline); recomputation uses depth>0"
+  },
+  "buoyancy": {
+    "Fb_2d_N_per_m": 7065.261236345863,
+    "Fb_3d_N": 4710.174157563908,
+    "weight_2d_N_per_m": 7065.261236345864,
+    "weight_3d_N": 4710.174157563909,
+    "equilibrium_residual_2d": 1.2872768201325798e-16,
+    "equilibrium_residual_3d": 1.9309152301988697e-16,
+    "report_buoyancy_rel_error": {
+      "2d": 2.15e-16,
+      "3d": 2.19e-16
+    },
+    "independent_reference_rel_errors": {
+      "quadrature_n2000": {
+        "rel_err_2d": 1.5048134346923489e-06,
+        "rel_err_3d": 7.115762914323817e-08
+      },
+      "quadrature_n50000": {
+        "rel_err_2d": 1.1917132426569572e-08,
+        "rel_err_3d": 1.1385211694470715e-10
+      },
+      "closed_form_same_expression": {
+        "rel_err_2d": 0.0,
+        "rel_err_3d": 0.0
+      },
+      "monte_carlo_3d": {
+        "f_sub_ref": 0.8955042875422548,
+        "rel_err_3d": 0.0009726223891069814
+      }
+    }
+  },
+  "stability": {
+    "2d": {
+      "h": 0.3377671145878769,
+      "A_sub": 0.7026440154492293,
+      "A_waterplane": 0.7373286276904758,
+      "I_waterplane": 0.03340427441141851,
+      "k_heave": 7414.023683584657,
+      "KB_from_centre": -0.047540823161287354,
+      "BM": 0.04754082248898367,
+      "BG": 0.047540823161287354,
+      "GM": -6.723036849454189e-10,
+      "report_k_heave": 7414.0,
+      "report_GM": 0.0
+    },
+    "3d": {
+      "h": 0.29858100521893727,
+      "A_sub": 0.4684293436328195,
+      "A_waterplane": 0.5053232409802543,
+      "I_waterplane": 0.020320232922543795,
+      "k_heave": 5081.151518866702,
+      "KB_from_centre": -0.04337950472064012,
+      "BM": 0.043379504718798964,
+      "BG": 0.04337950472064012,
+      "GM": -1.84115916956884e-12,
+      "report_k_heave": 5081.0,
+      "report_GM": -0.115
+    },
+    "k_heave_rel_diff_2d": 3.194440876340992e-06,
+    "k_heave_rel_diff_3d": 2.9820678351059934e-05,
+    "GM_abs_diff_2d": 6.723036849454189e-10,
+    "GM_abs_diff_3d": 0.11499999999815885,
+    "GM_max_abs_over_draught_grid_2d": 7.98632535103927e-10,
+    "GM_max_abs_over_draught_grid_3d": 2.0023982472139323e-12,
+    "GM_hypotheses_3d": {
+      "GM_at_equilibrium (BM=I/A_sub, BG=|zB|, G=centre)": -1.84115916956884e-12,
+      "GM_half_draught (=-R/8)": -0.0625,
+      "GM=I_full_circle/A_sub - BG": 0.06141193475591387,
+      "GM=I/A_total - BG": 0.05037049527935988,
+      "GM_half_draught_with_BG_from_keel_mis_set": -0.125,
+      "reported_by_producer": -0.115,
+      "nearest_standard_variant_gap": 0.009999999999999995
+    }
+  },
+  "GM_identity": {
+    "BM": "3*(2*R - hc)**2/(4*(3*R - hc))",
+    "BG": "3*(2*R - hc)**2/(4*(3*R - hc))",
+    "BM_minus_BG": "0",
+    "symbolic_ok": true,
+    "reading": "GM = BM - BG identically 0 for a homogeneous sphere at ANY draught"
+  },
+  "wave_consistency": {
+    "lambda_from_T_deepwater": 9.758187448321832,
+    "T_from_lambda_deepwater": 2.5307860417210333,
+    "g_implied_by_lambda_T": 10.053096491487338,
+    "depth_required_for_deep_water": 5.0,
+    "D_over_lambda": 0.1,
+    "D_over_lambda_from_T": 0.10247804782352027,
+    "wave_steepness_A_over_lambda": 0.01
+  },
+  "verdict_inputs": {}
+}
