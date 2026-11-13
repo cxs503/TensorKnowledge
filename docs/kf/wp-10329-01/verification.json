@@ -1,0 +1,54 @@
+{
+  "package_id": "wp-10329-01",
+  "verified_at": "2026-11-12T01:45:01.329197+00:00",
+  "acceptance": {
+    "valid_json": {
+      "ok": true,
+      "detail": "asset_manifest.json + kf_result.json parsed"
+    },
+    "schema_pass": {
+      "ok": true,
+      "detail": "kf_result.v1 schema: 0 errors"
+    },
+    "source_locator_resolvable": {
+      "ok": true,
+      "detail": "35/35 markdown locators re-resolved (line + verbatim + quote_sha256)",
+      "failures": []
+    },
+    "source_hash_matches": {
+      "ok": true,
+      "detail": "live=sha256:9541130e9906db22f2da835d346b0205d8e573cd9812d989094e227b7971ec7d manifest=sha256:9541130e9906db22f2da835d346b0205d8e573cd9812d989094e227b7971ec7d contract=sha256:9541130e9906db22f2da835d346b0205d8e573cd9812d989094e227b7971ec7d",
+      "chars": {
+        "live": 7644,
+        "manifest": 7644,
+        "contract": 7644
+      }
+    },
+    "no_duplicate_ids": {
+      "ok": true,
+      "detail": "23 ids, duplicates=[]"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "ok": true,
+      "detail": "0 claims (empty allowed by contract); empty-claims reason stated: True"
+    }
+  },
+  "extra_checks": {
+    "stored_bytes_match_recorded_sha256": {
+      "ok": true,
+      "detail": "re-hashed 6 local copies on disk (0 mismatch, 0 copies would be a bug)",
+      "failures": []
+    },
+    "no_verified_marks": {
+      "ok": true,
+      "detail": "result carries 0 claims and no `verified` key; verification is the gate's"
+    },
+    "local_asset_manifest_v1_applicable": {
+      "ok": true,
+      "applicable": false,
+      "detail": "schemas/asset_manifest.v1.schema.json pins package_id const='wp-448-01' and report_id const='448', so it cannot validate wp-10329-01; it is the wp-448-01 local shape, not the canonical gate (contract names kf_result.v1)"
+    }
+  },
+  "all_ok": true,
+  "note": "Self-check only. No claim is marked verified here (no claims exist); the platform gate recomputes hash/locators independently."
+}
