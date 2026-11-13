@@ -1,0 +1,141 @@
+{
+  "package_id": "wp-9763-01",
+  "report_id": "9763",
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "pass",
+      "detail": {
+        "manifest": "artifacts/wp-9763-01/asset_manifest.json",
+        "envelope": "runs/wp-9763-01/kf_result.wp-9763-01.json"
+      }
+    },
+    {
+      "check": "schema_pass",
+      "result": "pass",
+      "detail": {
+        "schemas": [
+          "schemas/asset_manifest.v1.wp-9763-01.schema.json",
+          "schemas/kf_result.v1.schema.json"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "pass",
+      "detail": {
+        "refetched_sha256": "ca29ba6f428001ddc1546e10c82b71ad1a18dcbf1c2bd09a1abd96e9760b1df3",
+        "contract_sha256": "ca29ba6f428001ddc1546e10c82b71ad1a18dcbf1c2bd09a1abd96e9760b1df3",
+        "manifest_sha256": "ca29ba6f428001ddc1546e10c82b71ad1a18dcbf1c2bd09a1abd96e9760b1df3",
+        "envelope_source_hash": "sha256:ca29ba6f428001ddc1546e10c82b71ad1a18dcbf1c2bd09a1abd96e9760b1df3",
+        "chars_live": 3884,
+        "chars_contract": 3884,
+        "chars_manifest": 3884,
+        "local_copy_identical": true,
+        "fetched_via": "bearer"
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "pass",
+      "detail": {
+        "assets_checked": 32,
+        "failures": [],
+        "method": "re-slice every locator out of the re-fetched markdown; assert quote == slice, line/char agreement, uniqueness"
+      }
+    },
+    {
+      "check": "all_assets_span_within_source",
+      "result": "pass",
+      "detail": {
+        "source_chars": 3884
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "pass",
+      "detail": {
+        "assets": 32,
+        "duplicates": []
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": {
+        "claim_count": 0,
+        "unbacked": [],
+        "note": "claims=[] is permitted by the contract (objective.classify_report_type=false); policy check is vacuous-safe"
+      }
+    },
+    {
+      "check": "nothing_marked_verified",
+      "result": "pass",
+      "detail": {
+        "hits": [],
+        "note": "verification_status must stay not_verified; the platform gate owns verification"
+      }
+    },
+    {
+      "check": "artifact_hash_matches_envelope",
+      "result": "pass",
+      "detail": {
+        "file_sha256": "f5d18ed17c8602b83af807602abfe6eb614a51909b01e20c402e9947fd550870",
+        "envelope_embedded_sha256": "f5d18ed17c8602b83af807602abfe6eb614a51909b01e20c402e9947fd550870",
+        "provenance_artifact_sha256": "f5d18ed17c8602b83af807602abfe6eb614a51909b01e20c402e9947fd550870"
+      }
+    },
+    {
+      "check": "durable_mirror_identical",
+      "result": "pass",
+      "detail": {
+        "mirror": "docs/kf/wp-9763-01/asset_manifest.json",
+        "mirror_sha256": "f5d18ed17c8602b83af807602abfe6eb614a51909b01e20c402e9947fd550870",
+        "artifact_sha256": "f5d18ed17c8602b83af807602abfe6eb614a51909b01e20c402e9947fd550870",
+        "why": "push gate drops artifacts/** and runs/**; docs/ is committed, so the mirror must be byte-identical"
+      }
+    },
+    {
+      "check": "envelope_source_hash_equals_manifest_hash",
+      "result": "pass",
+      "detail": {}
+    },
+    {
+      "check": "scope_single_report",
+      "result": "pass",
+      "detail": {
+        "report_ids": [
+          "9763"
+        ],
+        "envelope_report_id": "9763"
+      }
+    },
+    {
+      "check": "cross_checks_present",
+      "result": "pass",
+      "detail": {
+        "results": {
+          "C1_contract_source_identity": "consistent",
+          "C2_figure_count_agreement": "consistent",
+          "C3_pytest_count_conflict": "inconsistent",
+          "C4_metric_naming_drift": "inconsistent",
+          "C5_arith_reproduction": "consistent",
+          "C6_reference_column_circularity": "unresolved"
+        },
+        "note": "inconsistent/unresolved entries are registered evidence for downstream packages, not gate failures"
+      }
+    },
+    {
+      "check": "cross_check_quotes_locate",
+      "result": "pass",
+      "detail": {}
+    }
+  ],
+  "overall": "PASS",
+  "independence": {
+    "source": "markdown re-fetched by this process (fresh login), not read from the local copy only",
+    "limitation": "TensorFEM solver code/tests and figure png files are outside this worktree; this package registers pointers only and does not execute or re-validate the physics"
+  },
+  "note": "not a platform gate result: verification_status stays not_verified"
+}
