@@ -1,0 +1,1074 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-9706-01",
+  "task_type": "01-asset-registration",
+  "contract_version": "1.0",
+  "report_id": "9706",
+  "source": {
+    "uri": "tensor://reports/9706",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+    "chars": 12546,
+    "bytes_utf8": 20505,
+    "title": "IN145-N04 DP 系统能力评估：凸推力分配 × 环境力平衡 × 操作包线（PSV-6450，判据全过）",
+    "scenario_key": "dp_capability",
+    "contract_title": "IN145-N04 DP 系统能力评估：凸推力分配 × 环境力平衡 × 操作包线（PSV-6450，判据全过）",
+    "contract_scenario_key": "dp_capability",
+    "platform_id": 9706,
+    "platform_mission_id": 8390,
+    "platform_figures": [
+      {
+        "name": "dp_capability_polar",
+        "caption": "图 1 DP 操作包线（极坐标）：最大风速 vs 相对来向角，全配置 vs 最恶劣单点失效（AZ3 失效）"
+      },
+      {
+        "name": "dp_wind_current_boundary",
+        "caption": "图 2 风-流边界：给定流速下可抗最大风速（按相对来向族），参考线 = IMO 40 kn DP 设计环境条件"
+      },
+      {
+        "name": "dp_failure_degradation",
+        "caption": "图 3 单推力器失效能力降级（平均/最差航向/包线面积三口径，限值 30%）"
+      },
+      {
+        "name": "dp_allocation_profile",
+        "caption": "图 4 典型工况推力器利用率（SOCP 分配结果，来向 45°/90°、20 kn 风）"
+      }
+    ],
+    "platform_tags": [
+      "DP",
+      "动力定位",
+      "推力分配",
+      "SOCP",
+      "操作包线",
+      "失效降级",
+      "ship-performance-platform",
+      "IN145-N04"
+    ],
+    "platform_created_at": "2026-11-09T07:38:41.336773+00:00",
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/9706",
+    "local_copy": "runs/wp-9706-01/report_9706.md"
+  },
+  "conventions": {
+    "char_offsets": "0-based character offsets into the decoded markdown string (str indices, not bytes)",
+    "line_numbers": "1-based, inclusive",
+    "resolution_meaning": "resolved_in_source = the in-report reference/quote resolves to an exact, unique substring of the source markdown; it does NOT mean the referenced artifact bytes were obtained or verified"
+  },
+  "counts": {
+    "assets": 40,
+    "by_class": {
+      "document": 1,
+      "heading": 1,
+      "provenance_header": 1,
+      "section": 1,
+      "table": 12,
+      "statement": 2,
+      "figure_diagram": 1,
+      "method_spec": 1,
+      "provenance_marker": 1,
+      "figure_block": 1,
+      "figure_artifact": 4,
+      "json_artifact": 3,
+      "command_block": 1,
+      "trap_record": 2,
+      "limitation": 4,
+      "scope_declaration": 1,
+      "capability_absence": 1,
+      "code_pointer": 2
+    },
+    "by_resolution": {
+      "resolved_in_source": 36,
+      "referenced_unresolved": 3,
+      "declared_absent": 1
+    },
+    "resolved_in_source": 36,
+    "referenced_unresolved": 3,
+    "declared_absent": 1
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "document",
+      "label": "报告 markdown 全文（源资产本体）",
+      "in_report_section": "(document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 12546,
+        "start_line": 1,
+        "end_line": 345,
+        "quote": "# IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图\n\n**仓**：`ship-performance-platform` ｜ **分支**：`agent/m8390` ｜ **节点**：IN145-N04（战役 DAG，物理域）\n**物理内核**：`backend/physics/dp_capability/` ｜ **对外端点**：`backend/api/dynamic_positioning.py`\n**工件**：`artifacts/dp_capability/`（JSON 报告 + 4 张 PNG + 敏感性 + 验收判定 + sha256 审计链）\n**测试**：`tests/test_dp_capability.py`（44 例，全绿）\n\n---\n\n## 摘要\n\n本文把\"DP 能不能抗住这个环境\"这件事做成可机器裁决的三个物理环节：\n（1）**环境力**——风（投影面积 × 经验系数族）、流（水下侧投影阻力）、二阶平均波浪漂移力（长波衍射型谱积分）；\n（2）**推力分配**——把\"抵抗环境所需的广义力 τ=[F_x,F_y,M_z]\"在推力器上限内**精确**分解，\n其可行域是凸的（各推力器可及集 = 椭圆的 Minkowski 和），因此写成凸二阶锥问题（SOCP），\n用对偶阻尼 Newton 求解，给出可数的迭代次数与唯一最优；\n（3）**操作包线**——对每个相对来向角，用二分法在风速上找\"广义力仍能精确平衡\"的上限，\n得到 DNV/IMCA 风格的能力图；再逐个剔除推力器重算，得到单点失效降级。\n\n结论（判据全过，数字见 §3 表 3–表 6）：QP 迭代 3 次（< 50）且推力/方位约束精确满足；\n10 个工况点的环境力-推力平衡残差为 0（机器精度，限值 1%）；能力图形状与 DNV/IMCA 典型 PSV\n能力图一致（最差扇区在正横附近、最优在首尾、最优/最差 ≈ 2），并**高于** IMO MSC.1/Circ.645\n的 40 kn 全向设计环境条件；单推力器失效降级 ≤ 19%（平均口径）/ 26%（最差航向口径），限值 30%。\n**如实登记的一处偏差**：本模型算出的最差扇区绝对风速（≈59 kn @ 1 kn 流、Hs 2 m）高于公开能力图\n常见的最差扇区带（15–30 kn），见 §5 的敏感性诊断——主因是推力折减取 5%（乐观端）、未计波浪中\n推力器出入水/通风损失、未计 DP 冗余预留，属\"模型偏乐观\"的**声明**而非判据失败。\n\n---\n\n## 1 案例介绍（物理背景 / 几何 / 参数）\n\n**物理背景**：动力定位船不抛锚，靠推力器实时抵消风、浪、流的环境载荷以保持位置与艏向。\n工程上\"DP 能力\"= 在给定流与波浪条件下，能从**任意**相对来向抗住的最大风速（能力图），\n以及\"任一推力器失效后还剩多少\"（DP-2/DP-3 冗余的核心指标）。本节点覆盖\n船舶总体性能学科中的**操纵/耐波交叉面**：环境力（耐波）+ 推力器控制分配（操纵）。\n\n**参考船**：78 m 级平台供应船（PSV），DP-2 冗余配置（表 1、表 2）。\n几何先校验后计算（平台纪律：先证 Cb/L/B）：Δ = ρ·L·B·T·C_b 与给定排水量的相对偏差\n2.2×10⁻⁵，L/B=4.33、B/T=2.90、Cb=0.72 均在船型合理带内；总系柱推力 1140 kN（116 t），\n与同尺度 PSV 的推力器装机（4~8 MW）同量级。\n**声明**：这是\"参数化参考船\"，不是某一实船的图纸数据；所有结论对该船的参数空间成立，\n换船只需替换 `physics/dp_capability/vessel.py` 的 `PSV_6450`。\n\n**环境力模型与证据分级**（诚实分级，写在代码 docstring 与 `/models` 端点里）：\n\n| 要素 | 模型 | 分级 | 不确定度（声明） |\n|---|---|---|---|\n| 风 | 0–180° 系数表（CX 偶 / CY,CN 奇）→ 最小二乘 Fourier（4 阶）拟合，0–360° 由镜像对称延拓 | REAL（经验系数族，非 CFD） | 幅值 ±25% |\n| 流 | 参考面积 A_uv=T·Lpp 的阻力系数族（正横 C_d≈0.95，纵流 0.03） | REAL（工程惯例） | ±15% |\n| 波浪漂移 | 二阶平均漂移力 F_k=2∫S(ω)·ρg·D_k(ψ)·A_ref·f(ω)dω，f=1/(1+(ω/ω₀)⁴)，谱型用平台**单源谱核** `physics.wave_spectrum_core` | REAL（长波衍射近似） | ±30% |\n| 推力折减 | 推力器-船体/推力器-推力器干扰 5%（IMCA M140 量级）+ 隧道推力器横流线性折减 0.12/kn（上限 40%） | 参数化假设（已在 §5/表 8 做敏感性） | 见敏感性 |\n\n---\n\n## 2 怎么做的（方法 / 流程 / 关键设置 / 工具链）\n\n**流程**（`physics/dp_capability/envelope.py`）：\n\n```\n环境工况 EnvCase(heading, wind_kn, current_kn, Hs, Tp)\n      │  environment.env_components → F_wind + F_current + F_drift\n      ▼\nτ_req = −F_env   (N, N, N·m)                       ← 力矩原点取水线面舯\n      │  allocation.allocate（SOCP 对偶 Newton）\n      ▼\nT_i（有符号推力）+ θ_i（方位）  →  残差 ‖τ−ΣB_i w_i‖ / ‖τ‖\n      │  二分风速（tol 0.10 kn）：\n      │    v 可行 ⇔ 残差 ≤ 1e-4（可行点实测 1e-12）\n      ▼\n能力包线 max_wind(heading) → 24 航向；沿流速扫掠 → 风-流边界；逐个剔除推力器 → 失效降级\n```\n\n**关键设置**\n\n* 推力器模型：全回转 w∈R²（广义力映射 B=T_max·[[1,0],[0,1],[−y,x]]）；隧道式 w∈R¹（只横向），\n  圆约束 |w|≤1 **精确**成立 ⇒ 不会出现\"分配结果超出推力上限再被裁掉的假平衡\"。\n* 分配目标三选一（`MODES`）：`min_power`（J=ΣT²/T_max，功率 P∝T^1.5 的二次代理）、\n  `min_wear`（J=Σ(1+λh_i)(T/T_max)²，h_i 为工时归一化，压高工时推力器满载）、\n  `fault_tolerant`（可用上限乘冗余预留 0.85，解后逐个剔除推力器复算可行性并报告）。\n* 包线判据口径：**可行 = 广义力相对残差 ≤ 1e-4**（物理上 0.01% 失衡）。二分容差 0.10 kn。\n* 工具链：numpy（向量化 + 3×3 正规方程/lstsq）、matplotlib(Agg) 出图、FastAPI 端点、\n  pytest 验收；谱型复用平台单源谱核（不另写第二套谱）。\n\n**为什么不用\"方向启发式 + QP\"**：第一版实现按\"实际推力方向\"阻尼更新方位角，在单推力器失效工况\n（如首伸缩全回转 AZ3 失效、正横风）会卡在局部最优，把**可行**工况误判为不可行（能力图整片归零）。\n改为 SOCP 凸形式后该问题结构性消失——详见 §5 踩坑记录，这是本节点最重要的方法学结论。\n\n---\n\n## 3 计算结果\n\n<!-- TABLES:BEGIN -->\n\n<!-- 以下表格由 scripts/gen_dp_capability_doc.py 从 artifacts JSON 程序化生成，勿手改 -->\n\n### 表 1 参考船主尺度与几何一致性校验\n\n| 项目 | 数值 |\n|---|---|\n| 船型 | PSV-6450 (DP-2 reference) |\n| Lpp / B / T | 78.0 m / 18.0 m / 6.2 m |\n| 排水量 Δ | 6424 t |\n| Cb | 0.72 |\n| 水线以上正投影面积 A_F / 侧投影面积 A_L | 330 m² / 950 m² |\n| 水下侧投影 A_uv = T·Lpp | 483.6 m² |\n| 几何校验（Δ = ρ L B T Cb） | 相对偏差 0.0022% ，判定 ok=True |\n| 总系柱推力 | 1140 kN（116.2 t） |\n\n### 表 2 推力器布置（DP-2 冗余：2 尾全回转 + 1 首伸缩全回转 + 2 首隧道）\n\n| 推力器 | 类型 | x [m] | y [m] | 系柱推力 [kN] | 折减后可用 [kN] |\n|---|---|---|---|---|---|\n| TT1 | tunnel | +26.0 | +0.0 | 150 | 142.5 |\n| TT2 | tunnel | +21.0 | +0.0 | 150 | 142.5 |\n| AZ3 | azimuth | +31.0 | +0.0 | 200 | 190.0 |\n| AZ1 | azimuth | -31.0 | +3.0 | 350 | 332.5 |\n| AZ2 | azimuth | -31.0 | -3.0 | 350 | 332.5 |\n\n### 表 3 判据②：10 个工况点的环境力-推力平衡（力单位 kN，力矩单位 kN·m）\n\n| 来向[°] | 风速[kn] | 流速[kn] | Hs[m] | F_env,x | F_env,y | M_env | F_thrust,y | 力平衡相对残差 | QP 迭代 |\n|---|---|---|---|---|---|---|---|---|---|\n| 0 | 8 | 0.5 | 1.0 | -7.42 | 0.00 | 0.00 | 0.00 | 0.000e+00 | 3 |\n| 36 | 10 | 0.6 | 1.2 | -8.13 | -30.04 | -289.42 | 30.04 | 0.000e+00 | 3 |\n| 72 | 12 | 0.7 | 1.4 | -3.04 | -65.73 | -678.87 | 65.73 | 0.000e+00 | 3 |\n| 108 | 14 | 0.8 | 1.6 | 4.61 | -87.01 | -891.04 | 87.01 | 0.000e+00 | 3 |\n| 144 | 16 | 0.9 | 1.8 | 19.58 | -70.67 | -578.61 | 70.67 | 0.000e+00 | 3 |\n| 180 | 18 | 1.0 | 2.0 | 32.68 | -0.00 | -0.00 | 0.00 | 0.000e+00 | 3 |\n| 216 | 20 | 1.1 | 2.2 | 29.88 | 107.31 | 880.31 | -107.31 | 0.000e+00 | 3 |\n| 252 | 22 | 1.2 | 2.4 | 11.03 | 202.03 | 2059.51 | -202.03 | 0.000e+00 | 3 |\n| 288 | 24 | 1.3 | 2.6 | -11.62 | 238.27 | 2442.27 | -238.27 | 0.000e+00 | 3 |\n| 324 | 26 | 1.4 | 2.8 | -49.08 | 176.61 | 1695.21 | -176.61 | 0.000e+00 | 3 |\n\n判据②：最大力平衡相对残差 = **0.000e+00**（限值 1%），\n广义力加权残差 = 0.000e+00，10 点全部可行\n（pass=True）。\n\n### 表 4 判据①：随机 24 工况的分配器核查\n\n| 指标 | 数值 | 限值/说明 |\n|---|---|---|\n| QP 迭代（最大 / 平均） | 3 / 3.0 | < 50（判据①） |\n| 最大推力利用率 max |T_i|/T_max | 0.4655 | ≤ 1（圆约束精确成立） |\n| 可行点最大广义力残差 | 1.280e-12 | ≤ 1e-4 |\n| 全部推力在限内 | True | 必须 True |\n\n### 表 5 判据③：操作包线（流速 1.0 kn、Hs 2.0 m、Tp 8.0 s；24 航向）\n\n| 相对来向[°] | 可抗最大风速[kn] |\n|---|---|\n| 0 | 120.00 |\n| 15 | 102.95 |\n| 30 | 78.75 |\n| 45 | 67.44 |\n| 60 | 61.88 |\n| 75 | 59.41 |\n| 90 | 62.40 |\n| 105 | 59.41 |\n| 120 | 61.93 |\n| 135 | 67.62 |\n| 150 | 78.98 |\n| 165 | 103.12 |\n| 180 | 120.00 |\n| 195 | 103.12 |\n| 210 | 78.98 |\n| 225 | 67.62 |\n| 240 | 61.93 |\n| 255 | 59.41 |\n| 270 | 62.40 |\n| 285 | 59.41 |\n| 300 | 61.88 |\n| 315 | 67.44 |\n| 330 | 78.75 |\n| 345 | 102.95 |\n\n最差扇区 **59.41 kn @ 75°**，\n最优扇区 120.0 kn @ 0°，\n最优/最差 = **2.02**，包线面积 19847.5 kn²·rad，\n包线顶点超过图中 60 kn 截断的航向数 = 2。\n\nDNV/IMCA 定性一致性核查（`dnv_qualitative_check`）：\n最差航向 75°（正横 ±30° 内 = True）、\n最优航向 0°（首尾 ±45° 内 = True）、\n形状比落在 1.3~4 带内 = True、\n满足 IMO MSC.1/Circ.645 的 40 kn 全向 DP 设计环境条件 = True、\n落在公开能力图最差扇区 15~30 kn 带内 = **False**（如实报告：本模型偏高）。\n\n### 表 6 判据④：单推力器失效降级（与全配置对比，风速口径）\n\n| 失效推力器 | 占总推力比[%] | 失效后最差扇区[kn] | 平均降级[%] | 最差航向降级[%] | 逐航向最大降级[%] | 包线面积降级[%] |\n|---|---|---|---|---|---|---|\n| TT1 | 12.5 | 48.40 | 13.79 | 18.54 | 18.54 | 22.93 |\n| TT2 | 12.5 | 50.16 | 11.59 | 15.58 | 15.58 | 19.49 |\n| AZ3 | 16.7 | 44.00 | 19.03 | 25.94 | 29.48 | 30.38 |\n| AZ1 | 29.2 | 59.12 | 4.13 | 0.49 | 11.04 | 9.99 |\n| AZ2 | 29.2 | 59.12 | 4.13 | 0.49 | 11.04 | 9.99 |\n\n判据④（平均/最差航向口径，限值 30%）：最大平均降级 **19.03%**，\n最大最差航向降级 **25.94%**，\n包线面积口径最大降级 30.38%\n（该口径对 AZ3 失效略超 30%，如实登记为口径差异，不作覆盖）。\n\n### 表 7 风-流边界（可抗最大风速，`*` = 超过 120 kn 搜索上限）\n\n| 流速[kn] | heading 0° | heading 45° | heading 90° | heading 135° |\n|---|---|---|---|---|\n| 0.00 | 120.0* | 72.8 | 67.9 | 72.9 |\n| 0.50 | 120.0* | 71.0 | 63.7 | 71.0 |\n| 1.00 | 120.0* | 67.4 | 62.4 | 67.6 |\n| 1.50 | 120.0* | 63.8 | 56.9 | 62.6 |\n| 2.00 | 120.0* | 54.5 | 48.9 | 55.3 |\n| 2.50 | 120.0* | 43.2 | 36.5 | 44.8 |\n| 3.00 | 120.0* | 23.6 | 9.0 | 27.4 |\n\n### 表 8 关键假设敏感性（最差扇区可抗风速，DAG 判据③的量级稳定性）\n\n| 变体 | 最差扇区[kn] | 最差航向[°] | 形状比 | 圈平均风速[kn] | 判据③ pass |\n|---|---|---|---|---|---|\n| baseline（interaction 0.95, 1.0 kn, ×1.0） | 61.88 | 60 | 1.94 | 77.32 | — |\n| interaction_0.85 (总推力折减 15%) | 56.13 | 90 | 2.14 | 73.42 | True |\n| interaction_0.90 | 59.94 | 60 | 2.00 | 75.60 | True |\n| wind_coefficient_x1.25 | 55.37 | 60 | 2.17 | 71.28 | True |\n| wind_coefficient_x0.80 | 67.09 | 90 | 1.79 | 83.64 | True |\n| current_2.0kn | 48.05 | 60 | 2.50 | 66.87 | True |\n| current_1.5kn | 56.31 | 60 | 2.13 | 73.05 | True |\n\n### 表 9 典型工况的分配结果（审计用，mode = min_power）\n\n| 工况 | QP 迭代 | 广义力残差 | 各推力器（推力 / 方位） |\n|---|---|---|---|\n| heading 45°, wind 20 kn | 3 | 9.80e-13 | TT1=22.6 kN/90°, TT2=21.2 kN/90°, AZ3=36.7 kN/82°, AZ1=18.3 kN/69°, AZ2=20.4 kN/57° |\n| heading 90°, wind 20 kn | 3 | 9.71e-13 | TT1=31.2 kN/90°, TT2=29.3 kN/90°, AZ3=50.4 kN/90°, AZ1=22.8 kN/99°, AZ2=22.7 kN/83° |\n\n### 表 10 工件与审计链（sha256）\n\n| 文件 | 字节 | sha256（前 16 位） |\n|---|---|---|\n| `artifacts/dp_capability/dp_allocation_profile.png` | 30488 | `79fc5909c58dbab5…` |\n| `artifacts/dp_capability/dp_capability_polar.png` | 179017 | `08120e114f59dd10…` |\n| `artifacts/dp_capability/dp_capability_report.json` | 36254 | `11f58960a7503108…` |\n| `artifacts/dp_capability/dp_failure_degradation.png` | 40985 | `f4b3798724649bfc…` |\n| `artifacts/dp_capability/dp_wind_current_boundary.png` | 74891 | `98656762fb0dcc7f…` |\n| `artifacts/dp_capability/sensitivity.json` | 1658 | `1194cc19f3407fcb…` |\n\n<!-- TABLES:END -->\n\n---\n\n## 4 结果图\n\n图件由 `scripts/gen_dp_capability_artifacts.py` 生成（matplotlib Agg，sha256 已入 `acceptance.json`）：\n\n1. `artifacts/dp_capability/dp_capability_polar.png` —— **极坐标操作包线**（DNV/IMCA 风格）：\n   实线 = 全配置，虚线 = 最恶劣单点失效（AZ3 失效）；径向 = 可抗最大风速，角度 = 环境相对来向\n   （0° = 顶风，顺时针，90° = 右舷正横）。超出 60 kn 的扇区画在截断圈上并标注（能力图惯例）。\n   可见**正横两侧最差、首尾两侧最好**的经典蝶形，且失效后包线整体内缩。\n2. `artifacts/dp_capability/dp_wind_current_boundary.png` —— **风-流边界**：x = 流速，\n   y = 可抗最大风速，按来向族；叠加 IMO 40 kn 设计环境条件参考线。可见流从 0→3 kn 时\n   正横可抗风速快速塌落（这是 DP 现场最真实的约束方向）。\n3. `artifacts/dp_capability/dp_failure_degradation.png` —— **单点失效降级**柱状图，\n   平均 / 最差航向 / 包线面积三口径并列，附 30% 限值线。\n4. `artifacts/dp_capability/dp_allocation_profile.png` —— 典型工况（来向 45°/90°、20 kn 风）\n   的推力器利用率分布，用于审计\"谁在顶、顶到多少\"。\n\n---\n\n## 5 注意点（踩过的坑 / 局限 / 适用范围）\n\n**踩坑 1（方法学，最重要）**：方向启发式 + 盒式约束 QP 的分配器**不是**凸问题：\n方位角更新按\"实际推力方向\"做阻尼固定点时，在失效工况会卡在\"两尾全回转只出横向\"的局部最优，\n此时缺的纵向力（哪怕只有 0.6 kN）无法补，残差 3.8e-3 > 容差 ⇒ **可行工况被误判不可行**，\n表现为 AZ3 失效后能力图整圈归零（降级 100%）。修正：把分配写成 SOCP（凸），\n对偶阻尼 Newton，圆约束精确、最优唯一。旧实现已废弃，差异在 git 历史里可查。\n**教训**：包线/降级的可信度首先取决于分配器是否**凸而完备**，而不是包线算法本身。\n\n**踩坑 2**：可行/不可行边界附近（风速刚好越过极限）对偶问题呈\"渐近平台\"，残差缓慢趋零，\n若不设停滞退出会吃满迭代上限（并让判据①的\"迭代 < 50\"变得难看）。加了\"全钳制即停 + 残差\n4 次不降即停\"后，最大迭代从 40 降到 10 量级。**教训**：对偶法要显式编码\"不可行侧\"的出口。\n\n**局限 1（绝对幅值偏乐观）**：最差扇区 59 kn（1 kn 流 + Hs 2 m）高于公开能力图常见的 15–30 kn。\n敏感性（表 8）显示：推力折减 5%→15% 使最差扇区降 ~5%；风系数 +25% 降 ~7%；流速 1→2 kn 降 ~19%。\n即**单靠这三项不足以把 59 kn 拉到 25 kn**，缺口更可能来自本模型未包含的物理：\n波浪中推力器出入水/通风/横流失效、横倾引起的推力损失、DP 系统为满足 DNV 冗余要求留的\n运行预留（常按 50%~70% 持续推力计入）、以及\"最差单点失效 + 最差来向\"同时发生的组合工况。\n**结论**：本模型给的绝对风速应视为**乐观上限**（对照的是\"理想推力器 + 理想流况\"），\n用于方案比选与趋势分析可靠；用于合同/作业窗口签认必须叠加上上述工程折减。\n\n**局限 2（定性判据不是定量基准）**：判据③是\"与 DNV 典型 PSV 能力图定性一致\"，\n手上没有可逐点比对的公开数值表，因此本报告只做：形状（最差扇区位置、最优扇区位置、形状比）\n+ 量级（IMO 40 kn 设计锚、10–80 kn 物理带）+ 逐项如实报告是否落在公开图示的 15–30 kn 带内。\n**不做**任何\"与 DNV 图误差 < x%\"的声明——没有基准就不许编基准。\n\n**局限 3（漂移力与风系数是近似）**：漂移力用长波衍射型近似（无 RAO/无二阶传递函数），\n对 Tp < 6 s 的短峰浪偏保守（滚降项压得住）；风系数是 Fourier 拟合的经验族，\n不是 CFD/风洞数据，横风艏摇系数（≈0.108）的不确定度对包线最差扇区影响最大（因为最差扇区\n正是\"艏摇力矩把首部推力器吃满\"的位置）。\n\n**局限 4（推进器水动力未建模）**：未计螺旋桨尾流对相邻推力器的影响、未计推进器-船体相互作用\n的方向依赖（只用一个常数折减 + 隧道横流项）、未计吃水/纵倾变化。\n\n**适用范围**：准静态能力评估（时间平均环境力、稳态推力分配）；不含 DP 控制器动力学、\n不含 DP 在波浪中的瞬时推力波动、不含锚泊/拖轮辅助、不含冰区（冰载荷未接入）。\n\n---\n\n## 6 误差判定（逐项 vs 基准，显式回答\"是否 < 3%\"）\n\n| 关键量 | 基准（clean-room / 解析） | 本次结果 | 相对偏差 | 是否 < 3% |\n|---|---|---|---|---|\n| 环境力-推力平衡残差（10 工况点） | 0（等式约束应精确成立） | 0.0（机器精度 ≤1e-12） | 0 | **是** |\n| 广义力加权残差（随机 24 工况） | 0 | ≤1.3e-12 | 0 | **是** |\n| 顶风风力 F_x（20 kn） | ½ρV²A_F·0.80（钝体经验） | ½ρV²A_F·0.8089 | 1.1% | **是** |\n| 正横风力 F_y（20 kn） | ½ρV²A_L·0.95 | ½ρV²A_L·0.9526 | 0.3% | **是** |\n| 正横流力 F_y（1 kn） | ½ρV²(T·Lpp)·0.95 | 同式（系数表拟合残差 0.56%） | 0.6% | **是** |\n| Fourier 拟合残差（风力系数） | 系数表节点 | RMS ≤ 0.0098（峰值 0.97 的 1.0%） | 1.0% | **是** |\n| 漂移力对 Hs 的标度 | ∝Hs²（解析） | 4.000×（Hs 2→4 m） | <1e-6 | **是** |\n| 谱核归一化 | Hs = 4√m0 | 4√m0 = 3.00（给 Hs=3） | <2% | **是** |\n| 漂移力幅值（Hs 4 m 正横） | 长波衍射估计 100–260 kN / 1.5–6 MN·m（量级带，非单值基准） | ≈181 kN / 3.5 MN·m | 落在带内 | **不适用**（无单值基准，声明） |\n| 最差扇区风速 vs DNV/IMCA 能力图 | 公开图示 15–30 kn（定性带） | 59.4 kn | 显著偏高（约 +100%） | **否——如实登记**（见局限 1 诊断） |\n| 单推力器失效降级 | 限值 30% | 平均 19.0% / 最差航向 25.9% | 低于限值 | **是**（包线面积口径 30.4%，略超，已如实登记） |\n| QP 迭代 | 限值 < 50 | 最大 3（随机核查）/ 10（包线扫掠含不可行点） | — | **是** |\n\n**结论**：凡有**解析/clean-room 基准**的量（力平衡、力系数、标度律、谱归一化）全部 < 3%；\n唯一超差的是\"能力图绝对风速 vs 公开定性带\"，且它**没有定量基准**、偏差方向可解释（模型偏乐观），\n按 honest-FAIL 纪律如实登记，不粉饰、不覆盖。\n\n---\n\n## 7 复现 / 验收命令\n\n```bash\ncd <repo>            # ship-performance-platform worktree\npython -m pytest tests/test_dp_capability.py -q            # 44 passed\npython scripts/gen_dp_capability_artifacts.py              # 工件 + sha256 审计链\npython scripts/gen_dp_capability_doc.py                    # 由 JSON 程序化注入本报告表格\n# 端点\nuvicorn backend.main:app --port 8001\ncurl -s -X POST localhost:8001/api/v1/dynamic-positioning/capability \\\n     -H 'Content-Type: application/json' \\\n     -d '{\"current_kn\":1.0,\"Hs\":2.0,\"mode\":\"min_power\"}' | head -c 400\n```\n\n**审计链**：表 10 给出每个工件的 sha256；`artifacts/dp_capability/acceptance.json` 逐条判据\n（①–⑥）落 pass 标记与数字，`dp_capability_report.json` 内含全部逐点原始数据\n（24 航向 × 包线、10 点平衡、5 个失效工况 × 24 航向、风-流 4 航向 × 7 流速）。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "document_span_equals_whole_markdown",
+        "result": "resolved",
+        "chars": 12546,
+        "sha256": "7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534"
+      },
+      "note": "整篇 markdown 即本源资产；字节哈希见 source.hash（平台独立重算）。"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "heading",
+      "label": "报告正文标题行",
+      "in_report_section": "(document)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 49,
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "# IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "platform_title_vs_heading_line",
+        "result": "resolved",
+        "platform_title": "IN145-N04 DP 系统能力评估：凸推力分配 × 环境力平衡 × 操作包线（PSV-6450，判据全过）",
+        "heading_line": "IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图",
+        "identical": false,
+        "detail": "合同 title 为摘要式命名；正文标题行与平台 title 的异同在此如实记录"
+      },
+      "note": "正文标题与平台 title 同源；合同 title 是摘要式命名（更短），差异如实登记不复写。"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "provenance_header",
+      "label": "产出仓/分支/节点/物理内核/工件/测试声明（4 行）",
+      "in_report_section": "# IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 51,
+        "end_char": 353,
+        "start_line": 3,
+        "end_line": 6,
+        "quote": "**仓**：`ship-performance-platform` ｜ **分支**：`agent/m8390` ｜ **节点**：IN145-N04（战役 DAG，物理域）\n**物理内核**：`backend/physics/dp_capability/` ｜ **对外端点**：`backend/api/dynamic_positioning.py`\n**工件**：`artifacts/dp_capability/`（JSON 报告 + 4 张 PNG + 敏感性 + 验收判定 + sha256 审计链）\n**测试**：`tests/test_dp_capability.py`（44 例，全绿）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 302
+      },
+      "note": "声明上游仓 ship-performance-platform、分支 agent/m8390、节点 IN145-N04；本工作树无法校验该分支内容，只登记原文。"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "section",
+      "label": "摘要（三物理环节 + 一处如实偏差登记）",
+      "in_report_section": "# IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 360,
+        "end_char": 1084,
+        "start_line": 10,
+        "end_line": 26,
+        "quote": "## 摘要\n\n本文把\"DP 能不能抗住这个环境\"这件事做成可机器裁决的三个物理环节：\n（1）**环境力**——风（投影面积 × 经验系数族）、流（水下侧投影阻力）、二阶平均波浪漂移力（长波衍射型谱积分）；\n（2）**推力分配**——把\"抵抗环境所需的广义力 τ=[F_x,F_y,M_z]\"在推力器上限内**精确**分解，\n其可行域是凸的（各推力器可及集 = 椭圆的 Minkowski 和），因此写成凸二阶锥问题（SOCP），\n用对偶阻尼 Newton 求解，给出可数的迭代次数与唯一最优；\n（3）**操作包线**——对每个相对来向角，用二分法在风速上找\"广义力仍能精确平衡\"的上限，\n得到 DNV/IMCA 风格的能力图；再逐个剔除推力器重算，得到单点失效降级。\n\n结论（判据全过，数字见 §3 表 3–表 6）：QP 迭代 3 次（< 50）且推力/方位约束精确满足；\n10 个工况点的环境力-推力平衡残差为 0（机器精度，限值 1%）；能力图形状与 DNV/IMCA 典型 PSV\n能力图一致（最差扇区在正横附近、最优在首尾、最优/最差 ≈ 2），并**高于** IMO MSC.1/Circ.645\n的 40 kn 全向设计环境条件；单推力器失效降级 ≤ 19%（平均口径）/ 26%（最差航向口径），限值 30%。\n**如实登记的一处偏差**：本模型算出的最差扇区绝对风速（≈59 kn @ 1 kn 流、Hs 2 m）高于公开能力图\n常见的最差扇区带（15–30 kn），见 §5 的敏感性诊断——主因是推力折减取 5%（乐观端）、未计波浪中\n推力器出入水/通风损失、未计 DP 冗余预留，属\"模型偏乐观\"的**声明**而非判据失败。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 724
+      },
+      "note": "含结论数字（QP 迭代 3、降级 19%/26%、最差扇区 ≈59 kn）；本工序只登记位置，不复核数值。"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "table",
+      "label": "环境力模型与证据分级表（风/流/波浪漂移/推力折减）",
+      "in_report_section": "## 1 案例介绍（物理背景 / 几何 / 参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1649,
+        "end_char": 2106,
+        "start_line": 46,
+        "end_line": 51,
+        "quote": "| 要素 | 模型 | 分级 | 不确定度（声明） |\n|---|---|---|---|\n| 风 | 0–180° 系数表（CX 偶 / CY,CN 奇）→ 最小二乘 Fourier（4 阶）拟合，0–360° 由镜像对称延拓 | REAL（经验系数族，非 CFD） | 幅值 ±25% |\n| 流 | 参考面积 A_uv=T·Lpp 的阻力系数族（正横 C_d≈0.95，纵流 0.03） | REAL（工程惯例） | ±15% |\n| 波浪漂移 | 二阶平均漂移力 F_k=2∫S(ω)·ρg·D_k(ψ)·A_ref·f(ω)dω，f=1/(1+(ω/ω₀)⁴)，谱型用平台**单源谱核** `physics.wave_spectrum_core` | REAL（长波衍射近似） | ±30% |\n| 推力折减 | 推力器-船体/推力器-推力器干扰 5%（IMCA M140 量级）+ 隧道推力器横流线性折减 0.12/kn（上限 40%） | 参数化假设（已在 §5/表 8 做敏感性） | 见敏感性 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 457
+      },
+      "note": "上游自报证据分级（REAL/参数化假设）与不确定度带；属报告声明，本工序未复核。"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "statement",
+      "label": "几何先校验声明（Δ 相对偏差 2.2e-5、L/B、B/T、Cb 在带内）",
+      "in_report_section": "## 1 案例介绍（物理背景 / 几何 / 参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1346,
+        "end_char": 1492,
+        "start_line": 38,
+        "end_line": 40,
+        "quote": "几何先校验后计算（平台纪律：先证 Cb/L/B）：Δ = ρ·L·B·T·C_b 与给定排水量的相对偏差\n2.2×10⁻⁵，L/B=4.33、B/T=2.90、Cb=0.72 均在船型合理带内；总系柱推力 1140 kN（116 t），\n与同尺度 PSV 的推力器装机（4~8 MW）同量级。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 146
+      },
+      "note": "平台几何纪律（先证 Cb/L/B）的落实声明；数值只登记不换算。"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "table",
+      "label": "表 1 参考船主尺度与几何一致性校验",
+      "in_report_section": "### 表 1 参考船主尺度与几何一致性校验",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3384,
+        "end_char": 3678,
+        "start_line": 98,
+        "end_line": 107,
+        "quote": "| 项目 | 数值 |\n|---|---|\n| 船型 | PSV-6450 (DP-2 reference) |\n| Lpp / B / T | 78.0 m / 18.0 m / 6.2 m |\n| 排水量 Δ | 6424 t |\n| Cb | 0.72 |\n| 水线以上正投影面积 A_F / 侧投影面积 A_L | 330 m² / 950 m² |\n| 水下侧投影 A_uv = T·Lpp | 483.6 m² |\n| 几何校验（Δ = ρ L B T Cb） | 相对偏差 0.0022% ，判定 ok=True |\n| 总系柱推力 | 1140 kN（116.2 t） |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 294
+      },
+      "note": "Lpp/B/T、Δ、Cb、A_F/A_L、A_uv、总系柱推力；参数化参考船（非实船图纸）。"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "table",
+      "label": "表 2 推力器布置（5 台：2 尾全回转 + 1 首伸缩 + 2 首隧道）",
+      "in_report_section": "### 表 2 推力器布置（DP-2 冗余：2 尾全回转 + 1 首伸缩全回转 + 2 首隧道）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3730,
+        "end_char": 4042,
+        "start_line": 111,
+        "end_line": 117,
+        "quote": "| 推力器 | 类型 | x [m] | y [m] | 系柱推力 [kN] | 折减后可用 [kN] |\n|---|---|---|---|---|---|\n| TT1 | tunnel | +26.0 | +0.0 | 150 | 142.5 |\n| TT2 | tunnel | +21.0 | +0.0 | 150 | 142.5 |\n| AZ3 | azimuth | +31.0 | +0.0 | 200 | 190.0 |\n| AZ1 | azimuth | -31.0 | +3.0 | 350 | 332.5 |\n| AZ2 | azimuth | -31.0 | -3.0 | 350 | 332.5 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 312
+      },
+      "note": "含系柱推力与折减后可用推力；DP-2 冗余配置声明。"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "figure_diagram",
+      "label": "§2 计算流程图（环境力 → τ_req → SOCP 分配 → 二分包线）",
+      "in_report_section": "## 2 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2192,
+        "end_char": 2624,
+        "start_line": 59,
+        "end_line": 71,
+        "quote": "```\n环境工况 EnvCase(heading, wind_kn, current_kn, Hs, Tp)\n      │  environment.env_components → F_wind + F_current + F_drift\n      ▼\nτ_req = −F_env   (N, N, N·m)                       ← 力矩原点取水线面舯\n      │  allocation.allocate（SOCP 对偶 Newton）\n      ▼\nT_i（有符号推力）+ θ_i（方位）  →  残差 ‖τ−ΣB_i w_i‖ / ‖τ‖\n      │  二分风速（tol 0.10 kn）：\n      │    v 可行 ⇔ 残差 ≤ 1e-4（可行点实测 1e-12）\n      ▼\n能力包线 max_wind(heading) → 24 航向；沿流速扫掠 → 风-流边界；逐个剔除推力器 → 失效降级\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 432
+      },
+      "note": "ASCII 流程图（代码围栏），不是位图；位图资产见 A21–A24。"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "method_spec",
+      "label": "§2 关键设置（推力器模型/分配模式/包线判据/工具链）",
+      "in_report_section": "## 2 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2626,
+        "end_char": 3085,
+        "start_line": 73,
+        "end_line": 82,
+        "quote": "**关键设置**\n\n* 推力器模型：全回转 w∈R²（广义力映射 B=T_max·[[1,0],[0,1],[−y,x]]）；隧道式 w∈R¹（只横向），\n  圆约束 |w|≤1 **精确**成立 ⇒ 不会出现\"分配结果超出推力上限再被裁掉的假平衡\"。\n* 分配目标三选一（`MODES`）：`min_power`（J=ΣT²/T_max，功率 P∝T^1.5 的二次代理）、\n  `min_wear`（J=Σ(1+λh_i)(T/T_max)²，h_i 为工时归一化，压高工时推力器满载）、\n  `fault_tolerant`（可用上限乘冗余预留 0.85，解后逐个剔除推力器复算可行性并报告）。\n* 包线判据口径：**可行 = 广义力相对残差 ≤ 1e-4**（物理上 0.01% 失衡）。二分容差 0.10 kn。\n* 工具链：numpy（向量化 + 3×3 正规方程/lstsq）、matplotlib(Agg) 出图、FastAPI 端点、\n  pytest 验收；谱型复用平台单源谱核（不另写第二套谱）。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 459
+      },
+      "note": "含可行判据（相对残差 ≤1e-4）与二分容差（0.10 kn）等可复现设置。"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "table",
+      "label": "表 3 判据②：10 工况点环境力-推力平衡",
+      "in_report_section": "### 表 3 判据②：10 个工况点的环境力-推力平衡（力单位 kN，力矩单位 kN·m）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4092,
+        "end_char": 4981,
+        "start_line": 121,
+        "end_line": 132,
+        "quote": "| 来向[°] | 风速[kn] | 流速[kn] | Hs[m] | F_env,x | F_env,y | M_env | F_thrust,y | 力平衡相对残差 | QP 迭代 |\n|---|---|---|---|---|---|---|---|---|---|\n| 0 | 8 | 0.5 | 1.0 | -7.42 | 0.00 | 0.00 | 0.00 | 0.000e+00 | 3 |\n| 36 | 10 | 0.6 | 1.2 | -8.13 | -30.04 | -289.42 | 30.04 | 0.000e+00 | 3 |\n| 72 | 12 | 0.7 | 1.4 | -3.04 | -65.73 | -678.87 | 65.73 | 0.000e+00 | 3 |\n| 108 | 14 | 0.8 | 1.6 | 4.61 | -87.01 | -891.04 | 87.01 | 0.000e+00 | 3 |\n| 144 | 16 | 0.9 | 1.8 | 19.58 | -70.67 | -578.61 | 70.67 | 0.000e+00 | 3 |\n| 180 | 18 | 1.0 | 2.0 | 32.68 | -0.00 | -0.00 | 0.00 | 0.000e+00 | 3 |\n| 216 | 20 | 1.1 | 2.2 | 29.88 | 107.31 | 880.31 | -107.31 | 0.000e+00 | 3 |\n| 252 | 22 | 1.2 | 2.4 | 11.03 | 202.03 | 2059.51 | -202.03 | 0.000e+00 | 3 |\n| 288 | 24 | 1.3 | 2.6 | -11.62 | 238.27 | 2442.27 | -238.27 | 0.000e+00 | 3 |\n| 324 | 26 | 1.4 | 2.8 | -49.08 | 176.61 | 1695.21 | -176.61 | 0.000e+00 | 3 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 889
+      },
+      "note": "10 行工况 + 残差列；残差数值仅登记，未复核。"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "table",
+      "label": "表 4 判据①：随机 24 工况分配器核查",
+      "in_report_section": "### 表 4 判据①：随机 24 工况的分配器核查",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5092,
+        "end_char": 5283,
+        "start_line": 140,
+        "end_line": 145,
+        "quote": "| 指标 | 数值 | 限值/说明 |\n|---|---|---|\n| QP 迭代（最大 / 平均） | 3 / 3.0 | < 50（判据①） |\n| 最大推力利用率 max |T_i|/T_max | 0.4655 | ≤ 1（圆约束精确成立） |\n| 可行点最大广义力残差 | 1.280e-12 | ≤ 1e-4 |\n| 全部推力在限内 | True | 必须 True |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 191
+      },
+      "note": "QP 迭代 / 推力利用率 / 最大广义力残差。"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "table",
+      "label": "表 5 判据③：操作包线（24 航向可抗最大风速）",
+      "in_report_section": "### 表 5 判据③：操作包线（流速 1.0 kn、Hs 2.0 m、Tp 8.0 s；24 航向）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5338,
+        "end_char": 5754,
+        "start_line": 149,
+        "end_line": 174,
+        "quote": "| 相对来向[°] | 可抗最大风速[kn] |\n|---|---|\n| 0 | 120.00 |\n| 15 | 102.95 |\n| 30 | 78.75 |\n| 45 | 67.44 |\n| 60 | 61.88 |\n| 75 | 59.41 |\n| 90 | 62.40 |\n| 105 | 59.41 |\n| 120 | 61.93 |\n| 135 | 67.62 |\n| 150 | 78.98 |\n| 165 | 103.12 |\n| 180 | 120.00 |\n| 195 | 103.12 |\n| 210 | 78.98 |\n| 225 | 67.62 |\n| 240 | 61.93 |\n| 255 | 59.41 |\n| 270 | 62.40 |\n| 285 | 59.41 |\n| 300 | 61.88 |\n| 315 | 67.44 |\n| 330 | 78.75 |\n| 345 | 102.95 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 416
+      },
+      "note": "包线主数据集：最差扇区 59.41 kn @75°，最优 120.0 kn @0°，形状比 2.02。"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "table",
+      "label": "表 6 判据④：单推力器失效降级（5 个失效工况）",
+      "in_report_section": "### 表 6 判据④：单推力器失效降级（与全配置对比，风速口径）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6125,
+        "end_char": 6505,
+        "start_line": 190,
+        "end_line": 196,
+        "quote": "| 失效推力器 | 占总推力比[%] | 失效后最差扇区[kn] | 平均降级[%] | 最差航向降级[%] | 逐航向最大降级[%] | 包线面积降级[%] |\n|---|---|---|---|---|---|---|\n| TT1 | 12.5 | 48.40 | 13.79 | 18.54 | 18.54 | 22.93 |\n| TT2 | 12.5 | 50.16 | 11.59 | 15.58 | 15.58 | 19.49 |\n| AZ3 | 16.7 | 44.00 | 19.03 | 25.94 | 29.48 | 30.38 |\n| AZ1 | 29.2 | 59.12 | 4.13 | 0.49 | 11.04 | 9.99 |\n| AZ2 | 29.2 | 59.12 | 4.13 | 0.49 | 11.04 | 9.99 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 380
+      },
+      "note": "三口径（平均/最差航向/包线面积）并列；AZ3 失效包线面积口径 30.38% 略超 30%，正文已如实登记。"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "table",
+      "label": "表 7 风-流边界（4 航向 × 7 流速）",
+      "in_report_section": "### 表 7 风-流边界（可抗最大风速，`*` = 超过 120 kn 搜索上限）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6668,
+        "end_char": 7028,
+        "start_line": 205,
+        "end_line": 213,
+        "quote": "| 流速[kn] | heading 0° | heading 45° | heading 90° | heading 135° |\n|---|---|---|---|---|\n| 0.00 | 120.0* | 72.8 | 67.9 | 72.9 |\n| 0.50 | 120.0* | 71.0 | 63.7 | 71.0 |\n| 1.00 | 120.0* | 67.4 | 62.4 | 67.6 |\n| 1.50 | 120.0* | 63.8 | 56.9 | 62.6 |\n| 2.00 | 120.0* | 54.5 | 48.9 | 55.3 |\n| 2.50 | 120.0* | 43.2 | 36.5 | 44.8 |\n| 3.00 | 120.0* | 23.6 | 9.0 | 27.4 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 360
+      },
+      "note": "'*' = 超过 120 kn 搜索上限（截断标记，不是真实上限）。"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "table",
+      "label": "表 8 关键假设敏感性（7 变体）",
+      "in_report_section": "### 表 8 关键假设敏感性（最差扇区可抗风速，DAG 判据③的量级稳定性）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7071,
+        "end_char": 7584,
+        "start_line": 217,
+        "end_line": 225,
+        "quote": "| 变体 | 最差扇区[kn] | 最差航向[°] | 形状比 | 圈平均风速[kn] | 判据③ pass |\n|---|---|---|---|---|---|\n| baseline（interaction 0.95, 1.0 kn, ×1.0） | 61.88 | 60 | 1.94 | 77.32 | — |\n| interaction_0.85 (总推力折减 15%) | 56.13 | 90 | 2.14 | 73.42 | True |\n| interaction_0.90 | 59.94 | 60 | 2.00 | 75.60 | True |\n| wind_coefficient_x1.25 | 55.37 | 60 | 2.17 | 71.28 | True |\n| wind_coefficient_x0.80 | 67.09 | 90 | 1.79 | 83.64 | True |\n| current_2.0kn | 48.05 | 60 | 2.50 | 66.87 | True |\n| current_1.5kn | 56.31 | 60 | 2.13 | 73.05 | True |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 513
+      },
+      "note": "baseline 最差扇区 61.88 kn 与表 5 的 59.41 kn 口径不同（航向取样差异），差异保留不调和。"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "table",
+      "label": "表 9 典型工况分配结果（审计用，mode=min_power）",
+      "in_report_section": "### 表 9 典型工况的分配结果（审计用，mode = min_power）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7627,
+        "end_char": 7941,
+        "start_line": 229,
+        "end_line": 232,
+        "quote": "| 工况 | QP 迭代 | 广义力残差 | 各推力器（推力 / 方位） |\n|---|---|---|---|\n| heading 45°, wind 20 kn | 3 | 9.80e-13 | TT1=22.6 kN/90°, TT2=21.2 kN/90°, AZ3=36.7 kN/82°, AZ1=18.3 kN/69°, AZ2=20.4 kN/57° |\n| heading 90°, wind 20 kn | 3 | 9.71e-13 | TT1=31.2 kN/90°, TT2=29.3 kN/90°, AZ3=50.4 kN/90°, AZ1=22.8 kN/99°, AZ2=22.7 kN/83° |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 314
+      },
+      "note": "逐推力器推力/方位明细，可用于分配结果审计。"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "table",
+      "label": "表 10 工件与审计链（字节数 + sha256 前 16 位）",
+      "in_report_section": "### 表 10 工件与审计链（sha256）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7968,
+        "end_char": 8519,
+        "start_line": 236,
+        "end_line": 243,
+        "quote": "| 文件 | 字节 | sha256（前 16 位） |\n|---|---|---|\n| `artifacts/dp_capability/dp_allocation_profile.png` | 30488 | `79fc5909c58dbab5…` |\n| `artifacts/dp_capability/dp_capability_polar.png` | 179017 | `08120e114f59dd10…` |\n| `artifacts/dp_capability/dp_capability_report.json` | 36254 | `11f58960a7503108…` |\n| `artifacts/dp_capability/dp_failure_degradation.png` | 40985 | `f4b3798724649bfc…` |\n| `artifacts/dp_capability/dp_wind_current_boundary.png` | 74891 | `98656762fb0dcc7f…` |\n| `artifacts/dp_capability/sensitivity.json` | 1658 | `1194cc19f3407fcb…` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 551
+      },
+      "note": "6 个工件的引用行；全量 sha256 与文件本体不在源内（逐项见 A21–A26）。"
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "provenance_marker",
+      "label": "表格程序化注入标记 + 生成器声明（TABLES:BEGIN）",
+      "in_report_section": "## 3 计算结果",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3261,
+        "end_char": 3358,
+        "start_line": 92,
+        "end_line": 94,
+        "quote": "<!-- TABLES:BEGIN -->\n\n<!-- 以下表格由 scripts/gen_dp_capability_doc.py 从 artifacts JSON 程序化生成，勿手改 -->",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 97
+      },
+      "note": "TABLES:BEGIN/END 成对标记（END 在表 10 之后）；声明表格由 scripts/gen_dp_capability_doc.py 从 artifacts JSON 程序化注入，是防手抄机制的证据。"
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "figure_block",
+      "label": "§4 结果图说明块（4 图：极坐标包线/风-流边界/失效降级/分配画像）",
+      "in_report_section": "## 4 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8557,
+        "end_char": 9277,
+        "start_line": 251,
+        "end_line": 263,
+        "quote": "图件由 `scripts/gen_dp_capability_artifacts.py` 生成（matplotlib Agg，sha256 已入 `acceptance.json`）：\n\n1. `artifacts/dp_capability/dp_capability_polar.png` —— **极坐标操作包线**（DNV/IMCA 风格）：\n   实线 = 全配置，虚线 = 最恶劣单点失效（AZ3 失效）；径向 = 可抗最大风速，角度 = 环境相对来向\n   （0° = 顶风，顺时针，90° = 右舷正横）。超出 60 kn 的扇区画在截断圈上并标注（能力图惯例）。\n   可见**正横两侧最差、首尾两侧最好**的经典蝶形，且失效后包线整体内缩。\n2. `artifacts/dp_capability/dp_wind_current_boundary.png` —— **风-流边界**：x = 流速，\n   y = 可抗最大风速，按来向族；叠加 IMO 40 kn 设计环境条件参考线。可见流从 0→3 kn 时\n   正横可抗风速快速塌落（这是 DP 现场最真实的约束方向）。\n3. `artifacts/dp_capability/dp_failure_degradation.png` —— **单点失效降级**柱状图，\n   平均 / 最差航向 / 包线面积三口径并列，附 30% 限值线。\n4. `artifacts/dp_capability/dp_allocation_profile.png` —— 典型工况（来向 45°/90°、20 kn 风）\n   的推力器利用率分布，用于审计\"谁在顶、顶到多少\"。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 720
+      },
+      "note": "含出图脚本指针与每图读法；图件字节本体不在源文本内（见 A21–A24）。"
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "figure_artifact",
+      "label": "dp_capability_polar.png（极坐标操作包线）",
+      "in_report_section": "### 表 10 工件与审计链（sha256）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8097,
+        "end_char": 8181,
+        "start_line": 239,
+        "end_line": 239,
+        "quote": "| `artifacts/dp_capability/dp_capability_polar.png` | 179017 | `08120e114f59dd10…` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "artifact_row_size_and_hash_prefix_present",
+        "result": "resolved",
+        "bytes_declared": 179017,
+        "sha256_prefix_declared": "08120e114f59dd10",
+        "full_sha256_available": false,
+        "detail": "源内只有 16 位前缀与字节数；文件本体/全量哈希不在源内，未做字节校验",
+        "platform_figure_declared": true,
+        "platform_figures": [
+          "dp_capability_polar",
+          "dp_wind_current_boundary",
+          "dp_failure_degradation",
+          "dp_allocation_profile"
+        ]
+      },
+      "note": "源内 179017 字节 + 哈希前缀 `08120e114f59dd10…`；全量 sha256 与 PNG 字节不在源内，故只能校验前缀。"
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "figure_artifact",
+      "label": "dp_wind_current_boundary.png（风-流边界）",
+      "in_report_section": "### 表 10 工件与审计链（sha256）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8355,
+        "end_char": 8443,
+        "start_line": 242,
+        "end_line": 242,
+        "quote": "| `artifacts/dp_capability/dp_wind_current_boundary.png` | 74891 | `98656762fb0dcc7f…` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "artifact_row_size_and_hash_prefix_present",
+        "result": "resolved",
+        "bytes_declared": 74891,
+        "sha256_prefix_declared": "98656762fb0dcc7f",
+        "full_sha256_available": false,
+        "detail": "源内只有 16 位前缀与字节数；文件本体/全量哈希不在源内，未做字节校验",
+        "platform_figure_declared": true,
+        "platform_figures": [
+          "dp_capability_polar",
+          "dp_wind_current_boundary",
+          "dp_failure_degradation",
+          "dp_allocation_profile"
+        ]
+      },
+      "note": "源内 74891 字节 + 哈希前缀 `98656762fb0dcc7f…`；全量 sha256 与字节不在源内。"
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "figure_artifact",
+      "label": "dp_failure_degradation.png（失效降级柱状图）",
+      "in_report_section": "### 表 10 工件与审计链（sha256）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8268,
+        "end_char": 8354,
+        "start_line": 241,
+        "end_line": 241,
+        "quote": "| `artifacts/dp_capability/dp_failure_degradation.png` | 40985 | `f4b3798724649bfc…` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "artifact_row_size_and_hash_prefix_present",
+        "result": "resolved",
+        "bytes_declared": 40985,
+        "sha256_prefix_declared": "f4b3798724649bfc",
+        "full_sha256_available": false,
+        "detail": "源内只有 16 位前缀与字节数；文件本体/全量哈希不在源内，未做字节校验",
+        "platform_figure_declared": true,
+        "platform_figures": [
+          "dp_capability_polar",
+          "dp_wind_current_boundary",
+          "dp_failure_degradation",
+          "dp_allocation_profile"
+        ]
+      },
+      "note": "源内 40985 字节 + 哈希前缀 `f4b3798724649bfc…`；全量 sha256 与字节不在源内。"
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "figure_artifact",
+      "label": "dp_allocation_profile.png（典型工况推力器利用率）",
+      "in_report_section": "### 表 10 工件与审计链（sha256）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8011,
+        "end_char": 8096,
+        "start_line": 238,
+        "end_line": 238,
+        "quote": "| `artifacts/dp_capability/dp_allocation_profile.png` | 30488 | `79fc5909c58dbab5…` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "artifact_row_size_and_hash_prefix_present",
+        "result": "resolved",
+        "bytes_declared": 30488,
+        "sha256_prefix_declared": "79fc5909c58dbab5",
+        "full_sha256_available": false,
+        "detail": "源内只有 16 位前缀与字节数；文件本体/全量哈希不在源内，未做字节校验",
+        "platform_figure_declared": true,
+        "platform_figures": [
+          "dp_capability_polar",
+          "dp_wind_current_boundary",
+          "dp_failure_degradation",
+          "dp_allocation_profile"
+        ]
+      },
+      "note": "源内 30488 字节 + 哈希前缀 `79fc5909c58dbab5…`；全量 sha256 与字节不在源内。"
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "json_artifact",
+      "label": "dp_capability_report.json（逐点原始数据）",
+      "in_report_section": "### 表 10 工件与审计链（sha256）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8182,
+        "end_char": 8267,
+        "start_line": 240,
+        "end_line": 240,
+        "quote": "| `artifacts/dp_capability/dp_capability_report.json` | 36254 | `11f58960a7503108…` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "artifact_row_size_and_hash_prefix_present",
+        "result": "resolved",
+        "bytes_declared": 36254,
+        "sha256_prefix_declared": "11f58960a7503108",
+        "full_sha256_available": false,
+        "detail": "源内只有 16 位前缀与字节数；文件本体/全量哈希不在源内，未做字节校验"
+      },
+      "note": "源内 36254 字节 + 哈希前缀 `11f58960a7503108…`；JSON 本体不在源内，内容未登记。"
+    },
+    {
+      "asset_id": "A26",
+      "asset_class": "json_artifact",
+      "label": "sensitivity.json（敏感性原始结果）",
+      "in_report_section": "### 表 10 工件与审计链（sha256）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8444,
+        "end_char": 8519,
+        "start_line": 243,
+        "end_line": 243,
+        "quote": "| `artifacts/dp_capability/sensitivity.json` | 1658 | `1194cc19f3407fcb…` |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "artifact_row_size_and_hash_prefix_present",
+        "result": "resolved",
+        "bytes_declared": 1658,
+        "sha256_prefix_declared": "1194cc19f3407fcb",
+        "full_sha256_available": false,
+        "detail": "源内只有 16 位前缀与字节数；文件本体/全量哈希不在源内，未做字节校验"
+      },
+      "note": "源内 1658 字节 + 哈希前缀 `1194cc19f3407fcb…`；JSON 本体不在源内。"
+    },
+    {
+      "asset_id": "A27",
+      "asset_class": "json_artifact",
+      "label": "acceptance.json（逐条判据 ①–⑥ 落 pass 标记）",
+      "in_report_section": "# 端点",
+      "locator": {
+        "method": "char_span",
+        "start_char": 12362,
+        "end_char": 12493,
+        "start_line": 343,
+        "end_line": 344,
+        "quote": "**审计链**：表 10 给出每个工件的 sha256；`artifacts/dp_capability/acceptance.json` 逐条判据\n（①–⑥）落 pass 标记与数字，`dp_capability_report.json` 内含全部逐点原始数据",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "table10_artifact_row_lookup",
+        "result": "unresolved",
+        "queried": "acceptance.json",
+        "artifact_row_in_table10": false,
+        "detail": "§7 提及但表 10 无该工件行（无字节数/无哈希）→ 不可解析"
+      },
+      "note": "只在 §7 审计链段被提及；表 10 无该文件行（无字节数、无哈希），故不可解析到可校验地址。"
+    },
+    {
+      "asset_id": "A28",
+      "asset_class": "command_block",
+      "label": "§7 复现/验收命令（pytest + 两个生成脚本 + 端点 curl）",
+      "in_report_section": "## 7 复现 / 验收命令",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11837,
+        "end_char": 12360,
+        "start_line": 331,
+        "end_line": 341,
+        "quote": "```bash\ncd <repo>            # ship-performance-platform worktree\npython -m pytest tests/test_dp_capability.py -q            # 44 passed\npython scripts/gen_dp_capability_artifacts.py              # 工件 + sha256 审计链\npython scripts/gen_dp_capability_doc.py                    # 由 JSON 程序化注入本报告表格\n# 端点\nuvicorn backend.main:app --port 8001\ncurl -s -X POST localhost:8001/api/v1/dynamic-positioning/capability \\\n     -H 'Content-Type: application/json' \\\n     -d '{\"current_kn\":1.0,\"Hs\":2.0,\"mode\":\"min_power\"}' | head -c 400\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 523
+      },
+      "note": "repro 命令块；仓库路径属 ship-performance-platform，本工作树不可执行（见 A39/A40）。"
+    },
+    {
+      "asset_id": "A29",
+      "asset_class": "trap_record",
+      "label": "踩坑 1：方向启发式 + QP 非凸 → 可行工况被误判不可行（SOCP 修正）",
+      "in_report_section": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 9312,
+        "end_char": 9602,
+        "start_line": 269,
+        "end_line": 274,
+        "quote": "**踩坑 1（方法学，最重要）**：方向启发式 + 盒式约束 QP 的分配器**不是**凸问题：\n方位角更新按\"实际推力方向\"做阻尼固定点时，在失效工况会卡在\"两尾全回转只出横向\"的局部最优，\n此时缺的纵向力（哪怕只有 0.6 kN）无法补，残差 3.8e-3 > 容差 ⇒ **可行工况被误判不可行**，\n表现为 AZ3 失效后能力图整圈归零（降级 100%）。修正：把分配写成 SOCP（凸），\n对偶阻尼 Newton，圆约束精确、最优唯一。旧实现已废弃，差异在 git 历史里可查。\n**教训**：包线/降级的可信度首先取决于分配器是否**凸而完备**，而不是包线算法本身。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 290
+      },
+      "note": "方法学结论；旧实现差异只在 git 历史里，本工序无法校验该历史。"
+    },
+    {
+      "asset_id": "A30",
+      "asset_class": "trap_record",
+      "label": "踩坑 2：可行/不可行边界的对偶渐近平台与停滞退出",
+      "in_report_section": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 9604,
+        "end_char": 9756,
+        "start_line": 276,
+        "end_line": 278,
+        "quote": "**踩坑 2**：可行/不可行边界附近（风速刚好越过极限）对偶问题呈\"渐近平台\"，残差缓慢趋零，\n若不设停滞退出会吃满迭代上限（并让判据①的\"迭代 < 50\"变得难看）。加了\"全钳制即停 + 残差\n4 次不降即停\"后，最大迭代从 40 降到 10 量级。**教训**：对偶法要显式编码\"不可行侧\"的出口。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 152
+      },
+      "note": "迭代退出策略（全钳制即停 + 残差 4 次不降即停）；最大迭代 40 → 10 量级。"
+    },
+    {
+      "asset_id": "A31",
+      "asset_class": "limitation",
+      "label": "局限 1：绝对幅值偏乐观（59 kn vs 公开 15–30 kn 带）+ 敏感性诊断",
+      "in_report_section": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 9758,
+        "end_char": 10125,
+        "start_line": 280,
+        "end_line": 286,
+        "quote": "**局限 1（绝对幅值偏乐观）**：最差扇区 59 kn（1 kn 流 + Hs 2 m）高于公开能力图常见的 15–30 kn。\n敏感性（表 8）显示：推力折减 5%→15% 使最差扇区降 ~5%；风系数 +25% 降 ~7%；流速 1→2 kn 降 ~19%。\n即**单靠这三项不足以把 59 kn 拉到 25 kn**，缺口更可能来自本模型未包含的物理：\n波浪中推力器出入水/通风/横流失效、横倾引起的推力损失、DP 系统为满足 DNV 冗余要求留的\n运行预留（常按 50%~70% 持续推力计入）、以及\"最差单点失效 + 最差来向\"同时发生的组合工况。\n**结论**：本模型给的绝对风速应视为**乐观上限**（对照的是\"理想推力器 + 理想流况\"），\n用于方案比选与趋势分析可靠；用于合同/作业窗口签认必须叠加上上述工程折减。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 367
+      },
+      "note": "报告自认的超差项及工程折减建议；下游不得改写为「判据通过」或抹去。"
+    },
+    {
+      "asset_id": "A32",
+      "asset_class": "limitation",
+      "label": "局限 2：定性判据不是定量基准（拒绝编基准）",
+      "in_report_section": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10127,
+        "end_char": 10325,
+        "start_line": 288,
+        "end_line": 291,
+        "quote": "**局限 2（定性判据不是定量基准）**：判据③是\"与 DNV 典型 PSV 能力图定性一致\"，\n手上没有可逐点比对的公开数值表，因此本报告只做：形状（最差扇区位置、最优扇区位置、形状比）\n+ 量级（IMO 40 kn 设计锚、10–80 kn 物理带）+ 逐项如实报告是否落在公开图示的 15–30 kn 带内。\n**不做**任何\"与 DNV 图误差 < x%\"的声明——没有基准就不许编基准。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 198
+      },
+      "note": "明确声明不做「与 DNV 图误差 < x%」的断言；抽取时须保留该不确定性。"
+    },
+    {
+      "asset_id": "A33",
+      "asset_class": "limitation",
+      "label": "局限 3：漂移力近似与风系数经验族（无 RAO / 二阶传递函数）",
+      "in_report_section": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10327,
+        "end_char": 10495,
+        "start_line": 293,
+        "end_line": 296,
+        "quote": "**局限 3（漂移力与风系数是近似）**：漂移力用长波衍射型近似（无 RAO/无二阶传递函数），\n对 Tp < 6 s 的短峰浪偏保守（滚降项压得住）；风系数是 Fourier 拟合的经验族，\n不是 CFD/风洞数据，横风艏摇系数（≈0.108）的不确定度对包线最差扇区影响最大（因为最差扇区\n正是\"艏摇力矩把首部推力器吃满\"的位置）。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 168
+      },
+      "note": "横风艏摇系数 ≈0.108 的不确定度声明。"
+    },
+    {
+      "asset_id": "A34",
+      "asset_class": "limitation",
+      "label": "局限 4：推进器水动力未建模（尾流/方向依赖/吃水纵倾）",
+      "in_report_section": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10497,
+        "end_char": 10581,
+        "start_line": 298,
+        "end_line": 299,
+        "quote": "**局限 4（推进器水动力未建模）**：未计螺旋桨尾流对相邻推力器的影响、未计推进器-船体相互作用\n的方向依赖（只用一个常数折减 + 隧道横流项）、未计吃水/纵倾变化。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 84
+      },
+      "note": "适用边界声明。"
+    },
+    {
+      "asset_id": "A35",
+      "asset_class": "scope_declaration",
+      "label": "适用范围（准静态能力评估）",
+      "in_report_section": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10583,
+        "end_char": 10671,
+        "start_line": 301,
+        "end_line": 302,
+        "quote": "**适用范围**：准静态能力评估（时间平均环境力、稳态推力分配）；不含 DP 控制器动力学、\n不含 DP 在波浪中的瞬时推力波动、不含锚泊/拖轮辅助、不含冰区（冰载荷未接入）。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 88
+      },
+      "note": "准静态口径声明；不含项清单单独登记为 A36（declared_absent）。"
+    },
+    {
+      "asset_id": "A36",
+      "asset_class": "capability_absence",
+      "label": "未纳入能力清单（DP 控制器动力学/波浪瞬时推力波动/锚泊拖轮/冰区）",
+      "in_report_section": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10583,
+        "end_char": 10671,
+        "start_line": 301,
+        "end_line": 302,
+        "quote": "**适用范围**：准静态能力评估（时间平均环境力、稳态推力分配）；不含 DP 控制器动力学、\n不含 DP 在波浪中的瞬时推力波动、不含锚泊/拖轮辅助、不含冰区（冰载荷未接入）。",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "absent_capability_markers_in_quote",
+        "result": "absent",
+        "markers": {
+          "不含": true,
+          "未接入": true
+        },
+        "detail": "报告用否定句声明这些能力未纳入；登记为 declared_absent，不作数值推断"
+      },
+      "note": "报告以「不含…不含…不含冰区（冰载荷未接入）」显式声明缺席；本工序按缺席登记，不推断其数值。"
+    },
+    {
+      "asset_id": "A37",
+      "asset_class": "table",
+      "label": "§6 误差判定表（关键量 vs 基准，逐项回答是否 < 3%）",
+      "in_report_section": "## 6 误差判定（逐项 vs 基准，显式回答\"是否 < 3%\"）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10713,
+        "end_char": 11671,
+        "start_line": 308,
+        "end_line": 321,
+        "quote": "| 关键量 | 基准（clean-room / 解析） | 本次结果 | 相对偏差 | 是否 < 3% |\n|---|---|---|---|---|\n| 环境力-推力平衡残差（10 工况点） | 0（等式约束应精确成立） | 0.0（机器精度 ≤1e-12） | 0 | **是** |\n| 广义力加权残差（随机 24 工况） | 0 | ≤1.3e-12 | 0 | **是** |\n| 顶风风力 F_x（20 kn） | ½ρV²A_F·0.80（钝体经验） | ½ρV²A_F·0.8089 | 1.1% | **是** |\n| 正横风力 F_y（20 kn） | ½ρV²A_L·0.95 | ½ρV²A_L·0.9526 | 0.3% | **是** |\n| 正横流力 F_y（1 kn） | ½ρV²(T·Lpp)·0.95 | 同式（系数表拟合残差 0.56%） | 0.6% | **是** |\n| Fourier 拟合残差（风力系数） | 系数表节点 | RMS ≤ 0.0098（峰值 0.97 的 1.0%） | 1.0% | **是** |\n| 漂移力对 Hs 的标度 | ∝Hs²（解析） | 4.000×（Hs 2→4 m） | <1e-6 | **是** |\n| 谱核归一化 | Hs = 4√m0 | 4√m0 = 3.00（给 Hs=3） | <2% | **是** |\n| 漂移力幅值（Hs 4 m 正横） | 长波衍射估计 100–260 kN / 1.5–6 MN·m（量级带，非单值基准） | ≈181 kN / 3.5 MN·m | 落在带内 | **不适用**（无单值基准，声明） |\n| 最差扇区风速 vs DNV/IMCA 能力图 | 公开图示 15–30 kn（定性带） | 59.4 kn | 显著偏高（约 +100%） | **否——如实登记**（见局限 1 诊断） |\n| 单推力器失效降级 | 限值 30% | 平均 19.0% / 最差航向 25.9% | 低于限值 | **是**（包线面积口径 30.4%，略超，已如实登记） |\n| QP 迭代 | 限值 < 50 | 最大 3（随机核查）/ 10（包线扫掠含不可行点） | — | **是** |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 958
+      },
+      "note": "12 行逐项判定，含 1 行「不适用（无单值基准）」与 1 行「否——如实登记」；本工序只登记不复判。"
+    },
+    {
+      "asset_id": "A38",
+      "asset_class": "statement",
+      "label": "§6 结论：有解析基准的量全部 < 3%，唯一超差项无定量基准",
+      "in_report_section": "## 6 误差判定（逐项 vs 基准，显式回答\"是否 < 3%\"）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11673,
+        "end_char": 11814,
+        "start_line": 323,
+        "end_line": 325,
+        "quote": "**结论**：凡有**解析/clean-room 基准**的量（力平衡、力系数、标度律、谱归一化）全部 < 3%；\n唯一超差的是\"能力图绝对风速 vs 公开定性带\"，且它**没有定量基准**、偏差方向可解释（模型偏乐观），\n按 honest-FAIL 纪律如实登记，不粉饰、不覆盖。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_roundtrip_and_uniqueness",
+        "result": "resolved",
+        "quote_occurrences": 1,
+        "char_span_len": 141
+      },
+      "note": "上游 honest-FAIL 纪律声明；是否成立由下游/平台门判，本工序不背书。"
+    },
+    {
+      "asset_id": "A39",
+      "asset_class": "code_pointer",
+      "label": "物理内核包 backend/physics/dp_capability/ + 端点 backend/api/dynamic_positioning.py",
+      "in_report_section": "# IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 139,
+        "end_char": 228,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "**物理内核**：`backend/physics/dp_capability/` ｜ **对外端点**：`backend/api/dynamic_positioning.py`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_exists",
+        "result": "unresolved",
+        "repo": "ship-performance-platform",
+        "paths_checked": [
+          "backend/physics/dp_capability",
+          "backend/api/dynamic_positioning.py"
+        ],
+        "paths_present_here": [],
+        "detail": "指针属上游仓；本工作树（TensorKnowledge）内不存在 → 未解析，不猜地址"
+      },
+      "note": "指针属上游仓 ship-performance-platform；本工作树（TensorKnowledge）内不存在，按未解析登记，不猜地址。"
+    },
+    {
+      "asset_id": "A40",
+      "asset_class": "code_pointer",
+      "label": "谱核指针 physics.wave_spectrum_core（平台单源谱核）",
+      "in_report_section": "## 1 案例介绍（物理背景 / 几何 / 参数）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1868,
+        "end_char": 2001,
+        "start_line": 50,
+        "end_line": 50,
+        "quote": "| 波浪漂移 | 二阶平均漂移力 F_k=2∫S(ω)·ρg·D_k(ψ)·A_ref·f(ω)dω，f=1/(1+(ω/ω₀)⁴)，谱型用平台**单源谱核** `physics.wave_spectrum_core` | REAL（长波衍射近似） | ±30% |",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree_path_exists",
+        "result": "unresolved",
+        "repo": "ship-performance-platform",
+        "paths_checked": [
+          "physics/wave_spectrum_core"
+        ],
+        "paths_present_here": [],
+        "detail": "指针属上游仓；本工作树（TensorKnowledge）内不存在 → 未解析，不猜地址"
+      },
+      "note": "跨仓模块指针；本工作树无法解析，按未解析登记。"
+    }
+  ],
+  "claims": [],
+  "claims_note": "contract objective.classify_report_type=false and notes allow claims: [] -> this package registers asset locators only, no claim extraction, no forced claim generation. Claim extraction belongs to a downstream work package.",
+  "integrity": {
+    "quote_uniqueness": "every quote confirmed a unique substring of the source markdown (scripts/kf_register_9706.py build_locator + scripts/kf_verify_9706.py)",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "verification_status": "not_verified",
+    "verification_note": "verification is computed by the platform gate; nothing here is self-marked verified"
+  }
+}
