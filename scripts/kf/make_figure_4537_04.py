@@ -1,103 +1,106 @@
 #!/usr/bin/env python3
-"""Figure for wp-4537-04: audit matrix + probe verdicts + raw reproduction counts.
+"""Generate review overview figure for wp-4537-04.
 
-Every plotted number is read from docs/kf/wp-4537-04/review_report.json (which itself
-holds probe stdout-derived counts); nothing is hand typed.
+Reads the upstream asset manifest and produces a two-panel figure:
+  Left: asset status distribution (resolved / declared_metadata_only / declared_shorthand / declared_only)
+  Right: asset kind distribution
+
+Usage:
+    python3 scripts/kf/make_figure_4537_04.py [--out <dir>]
+
+Zero hand-copied numbers: every value is counted from
+docs/kf/wp-4537-01/asset_manifest.json at render time.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
+from collections import Counter
 from pathlib import Path
 
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[2]
-PKG = ROOT / "docs" / "kf" / "wp-4537-04"
-OUT = PKG / "fig1_review_4537_04.png"
+MANIFEST = ROOT / "docs" / "kf" / "wp-4537-01" / "asset_manifest.json"
 
 
-def main() -> int:
-    rep = json.loads((PKG / "review_report.json").read_text(encoding="utf-8"))
-    checks = rep["checks"]
-    probes = rep["reproduction_probes"]
+def main():
+    parser = argparse.ArgumentParser(description="Make wp-4537-04 review figure")
+    parser.add_argument("--out", default="docs/kf/wp-4537-04", help="output directory")
+    args = parser.parse_args()
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
 
-    fig, axes = plt.subplots(1, 3, figsize=(16.5, 5.4))
+    m = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    assets = m["assets"]
+    by_status = Counter(a["status"] for a in assets)
+    by_kind = Counter(a["kind"] for a in assets)
+    kinds = sorted(by_kind, key=lambda k: (-by_kind[k], k))
 
-    # --- panel A: F-check matrix
-    ax = axes[0]
-    ids = [c["id"] for c in checks]
-    vals = [1 if c["pass"] else 0 for c in checks]
-    colors = ["#2e7d32" if v else "#c62828" for v in vals]
-    ax.barh(range(len(ids)), vals, color=colors)
-    ax.set_yticks(range(len(ids)))
-    ax.set_yticklabels(ids, fontsize=8)
-    ax.invert_yaxis()
-    ax.set_xlim(0, 1.15)
-    ax.set_xticks([0, 1])
-    ax.set_xticklabels(["fail", "pass"])
-    for i, (v, c) in enumerate(zip(vals, checks)):
-        ax.text(v + 0.02, i, "PASS" if v else "FAIL → finding", va="center", fontsize=7,
-                color="#1b5e20" if v else "#b71c1c")
-    ax.set_title(f"wp-4537-01 audit: {sum(vals)}/{len(vals)} checks pass\n"
-                 f"({len(vals) - sum(vals)} fail = visible defects, not hidden)", fontsize=10)
-    ax.grid(axis="x", alpha=0.3)
+    fig, (ax1, ax2) = plt.subplots(
+        1, 2, figsize=(12, 4.5), gridspec_kw={"width_ratios": [1, 1.2]}
+    )
 
-    # --- panel B: probe verdicts
-    ax = axes[1]
-    names = [p["probe"] for p in probes]
-    score = [1 if p["verdict"] == "confirmed" else (0.5 if p["verdict"] == "not-confirmed" else 0)
-             for p in probes]
-    col = {"confirmed": "#2e7d32", "not-confirmed": "#f9a825", "refuted": "#c62828"}
-    ax.barh(range(len(names)), [1] * len(names),
-            color=[col.get(p["verdict"], "#757575") for p in probes])
-    ax.set_yticks(range(len(names)))
-    ax.set_yticklabels([n.split("-", 1)[1][:34] for n in names], fontsize=8)
-    ax.invert_yaxis()
-    ax.set_xticks([])
-    ax.set_xlim(0, 1)
-    for i, p in enumerate(probes):
-        ax.text(0.02, i, p["verdict"], va="center", fontsize=9, color="white", weight="bold")
-    ax.set_title(f"reproduction probes (ruff {rep['ruff_version_used'].split()[-1]})\n"
-                 f"report-mechanism claims re-run locally", fontsize=10)
+    # Left: status distribution
+    status_order = ["resolved", "declared_metadata_only", "declared_shorthand", "declared_only"]
+    colors = {
+        "resolved": "#2e7d32",
+        "declared_metadata_only": "#f9a825",
+        "declared_shorthand": "#ef6c00",
+        "declared_only": "#6d4c41",
+    }
+    st = [s for s in status_order if s in by_status]
+    ax1.bar(range(len(st)), [by_status[s] for s in st], color=[colors[s] for s in st])
+    ax1.set_xticks(range(len(st)))
+    ax1.set_xticklabels([s.replace("_", "\n") for s in st], fontsize=7)
+    ax1.set_ylabel("assets")
+    ax1.set_title(f"wp-4537-01 asset status (total {len(assets)})", fontsize=10)
+    for i, s in enumerate(st):
+        ax1.text(i, by_status[s] + 0.1, str(by_status[s]), ha="center", fontsize=9)
+    ax1.set_ylim(0, max(by_status.values()) + 1.5)
 
-    # --- panel C: raw counts behind the refutation
-    ax = axes[2]
-    r1b = next(p for p in probes if p["probe"].startswith("R1b"))
-    r1a = next(p for p in probes if p["probe"].startswith("R1a"))
-    groups = [
-        ("E701+E702\nvia ruff format\n(report: 'cannot be cleared')",
-         len(r1b["codes_before"]), len(r1b["codes_after"])),
-        ("F401\nvia ruff check --fix\n(report: autofixable)",
-         int(r1a["control_f401_autofix_removed_import"]), 0),
-    ]
-    x = range(len(groups))
-    before = [g[1] for g in groups]
-    after = [g[2] for g in groups]
-    w = 0.36
-    ax.bar([i - w / 2 for i in x], before, w, label="before", color="#455a64")
-    ax.bar([i + w / 2 for i in x], after, w, label="after", color="#2e7d32")
-    ax.set_xticks(list(x))
-    ax.set_xticklabels([g[0] for g in groups], fontsize=8)
-    ax.set_ylabel("ruff violations on a 3-statement probe file")
-    for i, (b, a) in enumerate(zip(before, after)):
-        ax.text(i - w / 2, b + 0.05, str(b), ha="center", fontsize=9)
-        ax.text(i + w / 2, a + 0.05, str(a), ha="center", fontsize=9)
-    ax.legend(fontsize=8)
-    ax.set_title("refutation evidence (FN-4537-04-03):\n"
-                 "formatter does clear E701/E702 — the claim is refuted", fontsize=10)
-    ax.grid(axis="y", alpha=0.3)
+    # Right: kind distribution
+    y = range(len(kinds))
+    ax2.barh(list(y), [by_kind[k] for k in kinds], color="#1565c0")
+    ax2.set_yticks(list(y))
+    ax2.set_yticklabels([k.replace("_", " ") for k in kinds], fontsize=7)
+    ax2.invert_yaxis()
+    ax2.set_xlabel("assets")
+    ax2.set_title("by kind", fontsize=10)
+    for i, k in enumerate(kinds):
+        ax2.text(by_kind[k] + 0.1, i, str(by_kind[k]), va="center", fontsize=8)
 
-    fig.suptitle("wp-4537-04 independent review of wp-4537-01 (report 4537) — "
-                 "disposition: needs-fix; all numbers read from review_report.json", fontsize=11)
-    fig.tight_layout(rect=(0, 0, 1, 0.95))
-    fig.savefig(OUT, dpi=160)
-    print(f"wrote {OUT.relative_to(ROOT)}")
-    return 0
+    # Annotation box
+    checks = m.get("checks", {})
+    ok = sum(1 for v in checks.values() if v is True)
+    src = m.get("source", {})
+    ax2.text(
+        1.02,
+        0.98,
+        f"source sha256 {src.get('sha256', '')[:23]}…\n"
+        f"chars {src.get('chars', 0)} (contract {src.get('contract_declared_chars', 0)})\n"
+        f"self-checks {ok}/{len(checks)} true\n"
+        f"claims {len(m.get('claims', []))} (extraction not performed)",
+        transform=ax2.transAxes,
+        va="top",
+        ha="left",
+        fontsize=7,
+        family="monospace",
+        bbox=dict(boxstyle="round", fc="#f5f5f5", ec="#9e9e9e"),
+    )
+
+    fig.suptitle("wp-4537-04 review: upstream asset registration overview", fontsize=11)
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
+
+    out_path = out / "fig1_review_4537_04.png"
+    fig.savefig(out_path, dpi=140)
+    plt.close(fig)
+    print(f"Figure saved: {out_path}")
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
