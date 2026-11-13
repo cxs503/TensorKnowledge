@@ -1,0 +1,244 @@
+{
+  "report_type": "kf-independent-review",
+  "review_id": "rv-wp-5611-01-by-wp-5611-04",
+  "reviewed_package": "wp-5611-01",
+  "reviewed_task_type": "01-asset-registration",
+  "report_id": "5611",
+  "source_identity": {
+    "source_uri": "tensor://reports/5611",
+    "source_field": "markdown",
+    "sha256_recomputed": "sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d",
+    "contract_source_hash": "sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d",
+    "chars": 7533,
+    "bytes_utf8": 10925,
+    "hash_matches_contract": true
+  },
+  "reviewer": {
+    "id": "kf-reviewer-m15836",
+    "reviewer_type": "agent",
+    "role": "red-team-reviewer",
+    "package": "wp-5611-04",
+    "producer_reviewed": "agent/m15570 (TensorKnowledge) · package wp-5611-01",
+    "independent": true,
+    "independence_basis": "distinct identity; no shared session token with producer (m15570)"
+  },
+  "context_isolation": {
+    "inputs_read": [
+      "tensor://reports/5611 markdown (fetched via platform API, hash re-verified)",
+      "tensor_reports.id=5611 record fields (title/scenario_key/figures/...mission_id/status/tags)",
+      "docs/kf/wp-5611-01/kf_result.json (upstream envelope + asset_manifest)",
+      "wp-5611-04 contract (source hash anchor)"
+    ],
+    "excluded_on_purpose": [
+      "any producer explanation / extraction_summary / self_assessment / producer_rationale prose about this package",
+      "review prompts or notes from the producing session"
+    ],
+    "review_prompt_origin": "authored for this package from the adversarial-review skill; not copied from the production prompt",
+    "note": "the reviewed package's own KF-RESULT markdown was NOT used as an input; only its machine envelope + the record were opened"
+  },
+  "scope_and_checks_performed": {
+    "n_checks": 16,
+    "n_pass": 12,
+    "n_fail": 4,
+    "check_ids": [
+      "R01.source_hash_recompute",
+      "R02.chars_and_bytes",
+      "R03.identity_fields",
+      "R04.scope_single_report",
+      "R05.asset_ids_unique_and_scoped",
+      "R06.markdown_locators_verbatim",
+      "R07.declared_offsets_byte_exact",
+      "R08.record_locators_match_record",
+      "R09.figure_locators_match_record",
+      "R10.inventory_recall",
+      "R11.no_self_verification_stamp",
+      "R12.zero_claim_and_scope_declared",
+      "R13.reviewer_independent",
+      "R14.referenced_artifacts_existence_probe",
+      "R15.figure_content_hash_pinned",
+      "R16.locator_quote_length_floor"
+    ],
+    "repro_cmd": "python3 scripts/kf_fetch_5611.py && python3 scripts/kf_review_5611_04.py",
+    "raw_detail": "docs/kf/wp-5611-04/review_checks.json"
+  },
+  "semantic_fidelity": {
+    "judged": true,
+    "asset_labels_faithful": "13/14 assets: kind/role/name/locator/caption re-derived from the record and markdown and found faithful (R03/R06/R08/R09); 1 inventory gap (F-02)",
+    "over_claiming": "two claims softened, see overstated_claims",
+    "verdict": "fidelity holds for every registered item; completeness does not (one report-named artifact missing)"
+  },
+  "findings": [
+    {
+      "finding_id": "F-01",
+      "severity": "major",
+      "blocking": false,
+      "category": "locator_integrity",
+      "locus": "wp-5611-01: ast-5611-01 locators[0] (source_field=markdown)",
+      "statement": "Declared offsets do not delimit the declared quote: the locator claims [0,43) but the quote is 9 characters and searches back at [0,9). The byte-exactness contract (G2 E4: text[start:end] == quote) is therefore violated by the only whole-document asset locator.",
+      "evidence": {
+        "source_uri": "tensor://reports/5611",
+        "source_field": "markdown",
+        "declared_offsets": [
+          0,
+          43
+        ],
+        "quote": "## ① 案例介绍",
+        "quote_len": 9,
+        "window_at_declared_offsets": "## ① 案例介绍\n\n**节点**：IN15-O1「自回归O1·饱和脉搏度量管线成熟化",
+        "quote_search_offset": 0,
+        "upstream_json_path": "$.outputs['asset_manifest.json'].assets[0].locators[0]"
+      },
+      "why_it_matters": "Asset registration is the hash/offset anchor the rest of the line builds on. An unverified offset is either sloppiness that the gate cannot catch or a hand-written number presented as computed — 01's own report says all quotes come from the source verbatim, which is what E4 is there to prove.",
+      "gate_visibility": "G2 reads `start_offset`/`end_offset`; this locator uses `char_start`/`char_end` (gate keys present=False). E3/E4 therefore fall through to verbatim search and PASS, so the wrong offsets are invisible to the programmatic gate.",
+      "reproduction": "python3 - <<'PY'\nimport json,pathlib\nmd=pathlib.Path('work/kf-wp-5611/source_5611.md').read_text()\nd=json.load(open('docs/kf/wp-5611-01/kf_result.json'))\nloc=d['outputs']['asset_manifest.json']['assets'][0]['locators'][0]\nprint(loc['char_start'],loc['char_end'],repr(md[loc['char_start']:loc['char_end']]),repr(loc['quote']))\nPY",
+      "remediation": "Either drop the offsets for ast-5611-01 (verbatim-quote search already resolves, content_ref.sha256 pins the document) or emit the real span [0,9) under the gate's key names `start_offset`/`end_offset` and re-verify with ke/wp_gate.locator_matches().",
+      "remediation_owner": "wp-5611-01"
+    },
+    {
+      "finding_id": "F-02",
+      "severity": "major",
+      "blocking": false,
+      "category": "inventory_completeness",
+      "locus": "wp-5611-01: outputs.asset_manifest.json.assets (missing entry)",
+      "statement": "The report names `tools/pulse/gen_pulse_figures.py` among the implementation artifacts, but no asset in the manifest covers it. The markdown yields 14 distinct artifact paths; 13 of them are covered by the manifest's entries (ast-5611-02 is record metadata with no path), and the remaining one is this module. 01's stated purpose is a complete inventory, so a silent omission is a completeness defect even though every registered entry is faithful.",
+      "evidence": {
+        "source_uri": "tensor://reports/5611",
+        "source_field": "markdown",
+        "quote": "- 采集器/报表/证据/DDL/测试路径：`tools/pulse/{saturation_pulse,pulse_report,acceptance_evidence,gen_pulse_figures}.py`、`tools/pulse/sql/001_saturation_pulse.sql`、`tests/pulse/test_saturation_pulse.py`",
+        "missing_token": "tools/pulse/gen_pulse_figures.py",
+        "registered_code_references": [
+          "tools/pulse/saturation_pulse.py",
+          "tools/pulse/sql/001_saturation_pulse.sql",
+          "tools/pulse/pulse_report.py",
+          "tools/pulse/acceptance_evidence.py",
+          "tests/pulse/test_saturation_pulse.py"
+        ]
+      },
+      "why_it_matters": "A dropped artifact is invisible downstream: 02/03 and any asset-completeness audit read the manifest, not the prose. Silent omission is exactly the failure mode 01 exists to prevent (G1 'xref closure' has no analogue for prose mentions).",
+      "gate_visibility": "No programmatic gate compares manifest coverage against the prose of the source document — recall is only visible to an independent reviewer.",
+      "reproduction": "python3 - <<'PY'\nimport json,pathlib\nmd=pathlib.Path('work/kf-wp-5611/source_5611.md').read_text()\nstem='gen_pulse_figures'\nprint([l for l in md.splitlines() if stem in l])\nd=json.load(open('docs/kf/wp-5611-01/kf_result.json'))\nnames=[a['name'] for a in d['outputs']['asset_manifest.json']['assets'] if a['kind']=='code_reference']\nprint('tools/pulse/gen_pulse_figures.py' in names, names)\nPY",
+      "remediation": "Register `tools/pulse/gen_pulse_figures.py` as a code_reference with the same verbatim-quote locator convention as ast-5611-06 (resolvable=false / referenced_in_markdown_not_fetched), which also brings the code-reference count in the package report from 5 to 6.",
+      "remediation_owner": "wp-5611-01"
+    },
+    {
+      "finding_id": "N-01",
+      "severity": "minor",
+      "blocking": false,
+      "category": "limitation",
+      "locus": "wp-5611-01: assets ast-5611-03..05",
+      "statement": "Figure assets are name/caption-addressed only: the report record exposes `name`+`caption` and no bytes, so no content hash can be pinned. Not a producer defect (the source has no payload) but it means figure identity downstream rests on filenames, unlike ast-5611-01 which is hash-pinned.",
+      "evidence": {
+        "source_uri": "tensor://reports/5611",
+        "source_field": "figures",
+        "figure_names": [
+          "fig1_pulse_trend.png",
+          "fig2_verification.png",
+          "fig3_state_reconciliation.png"
+        ],
+        "payload_present": false
+      },
+      "why_it_matters": "Dedup/drift detection on figures is name-based; a renamed figure silently becomes a new asset.",
+      "gate_visibility": "none — G2 cannot hash what the source does not expose.",
+      "reproduction": "python3 scripts/kf_review_5611_04.py  # see R09/R15",
+      "remediation": "When the platform starts storing figure bytes, add content_ref.sha256 per figure; until then keep the limitation recorded.",
+      "remediation_owner": "platform"
+    },
+    {
+      "finding_id": "N-02",
+      "severity": "minor",
+      "blocking": false,
+      "category": "locator_style",
+      "locus": "wp-5611-01: ast-5611-01 locators[0].quote",
+      "statement": "The whole-document asset's quote is 9 characters, below the gate's E6 floor of 12 for a *trivial* quote. Acceptable here only because content_ref.sha256 pins the entire document; if the pattern were copied to a per-claim locator it would be refused by E6.",
+      "evidence": {
+        "source_uri": "tensor://reports/5611",
+        "source_field": "markdown",
+        "quote": "## ① 案例介绍"
+      },
+      "why_it_matters": "Template risk: the 01 locator convention is what 03 will copy.",
+      "gate_visibility": "E6 would flag it for evidence locators (min-quote-chars=12).",
+      "reproduction": "python3 scripts/kf_review_5611_04.py  # see R16",
+      "remediation": "Quote a longer verbatim span for the document anchor.",
+      "remediation_owner": "wp-5611-01"
+    },
+    {
+      "finding_id": "N-03",
+      "severity": "informational",
+      "blocking": false,
+      "category": "not_run",
+      "locus": "wp-5611-01: assets ast-5611-06..14 (code_reference / evidence_artifact)",
+      "statement": "Existence and content of the 9 referenced code/evidence paths could not be independently verified: no TensorPlatform checkout exposing tools/pulse/ exists on this host, and 01 deliberately did not fetch them. Their `resolvable:false` / `referenced_in_markdown_not_fetched` labels are therefore neither confirmed nor refuted here — marked not_run, not passed.",
+      "evidence": {
+        "source_uri": "tensor://reports/5611",
+        "source_field": "markdown",
+        "quote": "1. **三态采集器** `tools/pulse/saturation_pulse.py`",
+        "probe_root": null
+      },
+      "why_it_matters": "A manifest that lists paths the file system does not have would still pass every structural check.",
+      "gate_visibility": "none — G2 resolves locators in the markdown, never on disk.",
+      "reproduction": "test -d /root/tp-agent/*/tools/pulse && echo checkout || echo absent",
+      "remediation": "When the platform exposes artifact storage, add an existence probe to the 01 pipeline and record it per asset.",
+      "remediation_owner": "platform"
+    }
+  ],
+  "overstated_claims": [
+    {
+      "claim": "manifest 的 code_reference 条目 = 报告所提代码路径的完整清单（上游包报告表述为 5 个代码/测试文件路径）",
+      "why_overstated": "the markdown names 14 distinct artifact paths; the manifest covers 13 of them and drops `tools/pulse/gen_pulse_figures.py` — the list is short by one and the prose presents it as exhaustive",
+      "evidence": {
+        "source_field": "markdown",
+        "quote": "- 采集器/报表/证据/DDL/测试路径：`tools/pulse/{saturation_pulse,pulse_report,acceptance_evidence,gen_pulse_figures}.py`、`tools/pulse/sql/001_saturation_pulse.sql`、`tests/pulse/test_saturation_pulse.py`"
+      }
+    },
+    {
+      "claim": "所有引文逐字来自报告 markdown 且 locator 偏移字节精确（ast-5611-01 声明 [0,43)）",
+      "why_overstated": "quotes are verbatim (R06 pass) but the declared [0,43) span for ast-5611-01 does not delimit its 9-char quote, so the artifact is not byte-exact at the offset level the package itself declares",
+      "evidence": {
+        "source_field": "markdown",
+        "quote": "## ① 案例介绍"
+      }
+    }
+  ],
+  "checks_not_run": [
+    "R14 existence of the 9 referenced code/evidence paths (no TensorPlatform checkout with tools/pulse/ on this host) -> not_run, never 'pass'",
+    "figure byte-level identity (source record carries no figure payload) -> impossible with current platform API",
+    "downstream consumer behaviour (02/03 reading this manifest) -> out of scope"
+  ],
+  "independence_limitations": [
+    "same model family as the producer; independence is procedural (context isolation + re-derivation), not model-level",
+    "existence probe of upstream repo artifacts unavailable on this host"
+  ],
+  "verdict": {
+    "disposition": "request-changes",
+    "pass": false,
+    "blocking_findings": [],
+    "major_findings": [
+      "F-01",
+      "F-02"
+    ],
+    "rationale": "Identity, hash, size, record-field, figure and scope checks all pass, and no verification stamp is smuggled (honest zero-claim package). Two major, non-corrupting defects: a mis-declared locator offset that the programmatic gate cannot see (F-01) and one report-named implementation module missing from the inventory (F-02). Both are cheap to fix inside 01, so the package is returned for changes rather than rejected."
+  },
+  "remediation_summary": [
+    {
+      "finding_id": "F-01",
+      "owner": "wp-5611-01",
+      "action": "Either drop the offsets for ast-5611-01 (verbatim-quote search already resolves, content_ref.sha256 pins the document) or emit the real span [0,9) under the gate's key names `start_offset`/`end_offset` and re-verify with ke/wp_gate.locator_matches()."
+    },
+    {
+      "finding_id": "F-02",
+      "owner": "wp-5611-01",
+      "action": "Register `tools/pulse/gen_pulse_figures.py` as a code_reference with the same verbatim-quote locator convention as ast-5611-06 (resolvable=false / referenced_in_markdown_not_fetched), which also brings the code-reference count in the package report from 5 to 6."
+    },
+    {
+      "finding_id": "N-01",
+      "owner": "platform",
+      "action": "When the platform starts storing figure bytes, add content_ref.sha256 per figure; until then keep the limitation recorded."
+    },
+    {
+      "finding_id": "N-02",
+      "owner": "wp-5611-01",
+      "action": "Quote a longer verbatim span for the document anchor."
+    }
+  ],
+  "notes": "verification status is deliberately NOT asserted here: the platform gate computes it (V-ladder). This report only informs the review axis."
+}

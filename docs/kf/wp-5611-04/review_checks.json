@@ -1,0 +1,115 @@
+{
+  "reviewed_package": "wp-5611-01",
+  "report_id": "5611",
+  "n_checks": 16,
+  "n_pass": 12,
+  "n_fail": 4,
+  "checks": [
+    {
+      "check_id": "R01.source_hash_recompute",
+      "ok": true,
+      "detail": "recomputed=sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d contract=sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d manifest=sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d envelope=sha256:41d35315395fcd30eb99e57e8fe1c7aaf521bfa1db147dddfeb9a421abc9863d"
+    },
+    {
+      "check_id": "R02.chars_and_bytes",
+      "ok": true,
+      "detail": "chars=7533 bytes_utf8=10925 manifest=(7533,10925) content_ref.chars=7533"
+    },
+    {
+      "check_id": "R03.identity_fields",
+      "ok": true,
+      "detail": "mismatches={} manifest_report_id='5611' record_id=5611"
+    },
+    {
+      "check_id": "R04.scope_single_report",
+      "ok": true,
+      "detail": "reports_touched=['5611']"
+    },
+    {
+      "check_id": "R05.asset_ids_unique_and_scoped",
+      "ok": true,
+      "detail": "n=14 dup=[] prefix_bad=[]"
+    },
+    {
+      "check_id": "R06.markdown_locators_verbatim",
+      "ok": true,
+      "detail": "locators=10 failures=[]"
+    },
+    {
+      "check_id": "R07.declared_offsets_byte_exact",
+      "ok": false,
+      "detail": "offset-bearing locators=1 failures=[{\"asset_id\": \"ast-5611-01\", \"kind\": \"QUOTE_NOT_AT_LOCATOR\", \"start\": 0, \"end\": 43, \"quote\": \"## ① 案例介绍\", \"window\": \"## ① 案例介绍\\n\\n**节点**：IN15-O1「自回归O1·饱和脉搏度量管线成熟化\", \"quote_len\": 9, \"searched_at\": 0, \"keys_used\": [\"char_start\", \"char_end\"], \"gate_keys_present\": false}]",
+      "n_offset_locators": 1
+    },
+    {
+      "check_id": "R08.record_locators_match_record",
+      "ok": true,
+      "detail": "mismatches=[]"
+    },
+    {
+      "check_id": "R09.figure_locators_match_record",
+      "ok": true,
+      "detail": "figure_locators=3 record_figures=3 failures=[]"
+    },
+    {
+      "check_id": "R10.inventory_recall",
+      "ok": false,
+      "detail": "concrete path tokens=14 unregistered=['tools/pulse/gen_pulse_figures.py'] elided_shorthand_ignored=['fig1..3.png']",
+      "tokens": [
+        "tools/pulse/saturation_pulse.py",
+        "tools/pulse/sql/001_saturation_pulse.sql",
+        "tools/pulse/pulse_report.py",
+        "tools/pulse/acceptance_evidence.py",
+        "acceptance_IN15-O1.json",
+        "tests/pulse/test_saturation_pulse.py",
+        "fig1_pulse_trend.png",
+        "fig2_verification.png",
+        "fig3_state_reconciliation.png",
+        "tools/pulse/gen_pulse_figures.py",
+        "artifacts/m4959/acceptance_IN15-O1.json",
+        "cross_check_psql.json",
+        "pulse_samples.jsonl",
+        "pytest_pulse.txt"
+      ],
+      "unregistered": [
+        "tools/pulse/gen_pulse_figures.py"
+      ],
+      "elided": [
+        "fig1..3.png"
+      ]
+    },
+    {
+      "check_id": "R11.no_self_verification_stamp",
+      "ok": true,
+      "detail": "stamp fields found=[]"
+    },
+    {
+      "check_id": "R12.zero_claim_and_scope_declared",
+      "ok": true,
+      "detail": "claims=[] registration_note_ok=True kinds=['code_reference', 'evidence_artifact', 'figure', 'record_metadata', 'source_document']"
+    },
+    {
+      "check_id": "R13.reviewer_independent",
+      "ok": true,
+      "detail": "producer='agent/m15570 (TensorKnowledge) · package wp-5611-01' reviewer='kf-reviewer-m15836' shared_session_tokens=[]"
+    },
+    {
+      "check_id": "R14.referenced_artifacts_existence_probe",
+      "ok": false,
+      "detail": "not_run: no TensorPlatform checkout exposing tools/pulse/ on this host; referenced code/evidence paths stay unverified either way",
+      "status": "not_run"
+    },
+    {
+      "check_id": "R15.figure_content_hash_pinned",
+      "ok": true,
+      "detail": "record carries figure name+caption only (no bytes) -> figure assets are name-addressed, not hash-pinned; not a producer defect, recorded as a downstream limitation",
+      "status": "limitation"
+    },
+    {
+      "check_id": "R16.locator_quote_length_floor",
+      "ok": false,
+      "detail": "markdown locators shorter than E6 floor (12 chars): ['ast-5611-01:9 chars']; tolerated here because ast-5611-01 also pins the whole document via content_ref.sha256",
+      "status": "note"
+    }
+  ]
+}
