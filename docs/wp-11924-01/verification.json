@@ -1,0 +1,165 @@
+{
+  "package_id": "wp-11924-01",
+  "report_id": "11924",
+  "verified_by": "scripts/kf_wp11924_01_verify.py",
+  "verification_status": "not_verified",
+  "note": "self-check of the acceptance list; the authoritative verification is the platform gate",
+  "source": {
+    "fetched_from": "platform_api",
+    "sha256": "21d915c88bbf78f6f90384f52ce2001f1d7709306c373b159625154ab221bd73",
+    "chars": 13138
+  },
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "pass",
+      "detail": {
+        "manifest": "artifacts/wp-11924-01/asset_manifest.json",
+        "result": "runs/wp-11924-01/kf_result.wp-11924-01.json",
+        "block_identical_to_result": true
+      }
+    },
+    {
+      "check": "schema_pass",
+      "result": "pass",
+      "detail": {
+        "schema": "schemas/asset_manifest.v1.generic.schema.json",
+        "envelope_schema": "schemas/kf_result.v1.schema.json",
+        "note": "generic twin of the package-pinned asset_manifest schema (the pinned one hardcodes package_id/report_id of another package)"
+      }
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "pass",
+      "detail": {
+        "recomputed_sha256": "21d915c88bbf78f6f90384f52ce2001f1d7709306c373b159625154ab221bd73",
+        "contract_sha256": "21d915c88bbf78f6f90384f52ce2001f1d7709306c373b159625154ab221bd73",
+        "manifest_sha256": "21d915c88bbf78f6f90384f52ce2001f1d7709306c373b159625154ab221bd73",
+        "envelope_sha256": "sha256:21d915c88bbf78f6f90384f52ce2001f1d7709306c373b159625154ab221bd73",
+        "chars": 13138,
+        "bytes_utf8": 22299,
+        "fetched_from": "platform_api"
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "pass",
+      "detail": {
+        "assets_checked": 42,
+        "failures": [],
+        "quote_uniqueness": "every char_span quote occurs exactly once in the fetched markdown"
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "pass",
+      "detail": {
+        "duplicate_asset_ids": [],
+        "asset_ids": 42,
+        "claim_ids": []
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": {
+        "claims": 0,
+        "offending": [],
+        "policy": "claims=[] by contract (objective.classify_report_type=false, no extraction); any future claim must carry evidence/evidence_locator or an explicit status"
+      }
+    },
+    {
+      "check": "resolution_check_consistency",
+      "result": "pass",
+      "detail": {
+        "failures": []
+      }
+    },
+    {
+      "check": "counts_consistency",
+      "result": "pass",
+      "detail": {
+        "failures": [],
+        "counts": {
+          "assets": 42,
+          "by_class": {
+            "document": 1,
+            "heading": 1,
+            "provenance_header": 1,
+            "acceptance_table": 1,
+            "statement": 2,
+            "table": 10,
+            "parameter_box": 1,
+            "procedure": 1,
+            "identifiability_result": 1,
+            "statement_set": 2,
+            "recommendation": 1,
+            "branch_verdict": 1,
+            "count_record": 1,
+            "numeric_record": 1,
+            "verdict": 1,
+            "figure_declaration": 1,
+            "figure_binary_set": 1,
+            "limitation_set": 6,
+            "test_record": 1,
+            "code_reference": 4,
+            "dataset": 2,
+            "audit_archive": 1
+          },
+          "by_resolution": {
+            "resolved_in_source": 34,
+            "referenced_unresolved": 8
+          },
+          "resolved_in_source": 34,
+          "referenced_unresolved": 8,
+          "declared_absent": 0,
+          "chars_covered_by_char_spans": 11643,
+          "coverage_fraction": 0.8862
+        }
+      }
+    },
+    {
+      "check": "no_verified_markers",
+      "result": "pass",
+      "detail": {
+        "hits": [],
+        "note": "contract forbids marking claims verified; verification is computed by the platform gate, this package records verification_status=not_verified"
+      }
+    },
+    {
+      "check": "artifact_hash_matches_envelope",
+      "result": "pass",
+      "detail": {
+        "artifact_sha256": "3d09203c46705aa4833bfbaf48c165b62498773f6d063872b4438524e272c360",
+        "envelope_sha256": "3d09203c46705aa4833bfbaf48c165b62498773f6d063872b4438524e272c360",
+        "artifact_bytes": 58841
+      }
+    },
+    {
+      "check": "report_scope_isolation",
+      "result": "pass",
+      "detail": {
+        "failures": [],
+        "note": "package touches report 11924 only"
+      }
+    },
+    {
+      "check": "durable_mirror_identical",
+      "result": "pass",
+      "detail": {
+        "mirror": "docs/wp-11924-01/asset_manifest.json",
+        "exists": true
+      }
+    },
+    {
+      "check": "platform_metadata_matches_manifest",
+      "result": "pass",
+      "detail": {
+        "platform_id": 11924,
+        "title_match": true,
+        "scenario_key_match": true
+      }
+    }
+  ],
+  "overall": "PASS"
+}
