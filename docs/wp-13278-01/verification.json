@@ -1,0 +1,134 @@
+{
+  "schema_version": "verification.v1",
+  "package_id": "wp-13278-01",
+  "report_id": "13278",
+  "acceptance": [
+    "valid_json",
+    "schema_pass",
+    "source_locator_resolvable",
+    "source_hash_matches",
+    "no_duplicate_ids",
+    "all_claims_have_evidence_or_explicit_unresolved_status"
+  ],
+  "status": "pass",
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "pass",
+      "detail": {
+        "parsed": true,
+        "bytes": 21085
+      }
+    },
+    {
+      "check": "schema_pass",
+      "result": "pass",
+      "detail": {
+        "manifest_errors": [],
+        "envelope_errors": [],
+        "manifest_schema": "schemas/asset_manifest.wp-13278-01.schema.json",
+        "envelope_schema": "schemas/kf_result.v1.schema.json"
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "pass",
+      "detail": {
+        "assets_checked": 16,
+        "failures": [],
+        "method": "re-fetched markdown, md[start:end]==quote, uniqueness for char_span"
+      }
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "pass",
+      "detail": {
+        "recomputed": "sha256:f9c336f0d77c618b2a03ff4dd4fbc7d04b0d78a16bb29406537cfac742dcc90f",
+        "contract": "sha256:f9c336f0d77c618b2a03ff4dd4fbc7d04b0d78a16bb29406537cfac742dcc90f",
+        "chars": 1592,
+        "bytes_utf8": 2167,
+        "platform_title": "TensorBEM bem_finite_depth 验证算例缺失图件补全",
+        "platform_figures": [],
+        "platform_mission_id": 13784
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "pass",
+      "detail": {
+        "assets": 16,
+        "duplicates": []
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": {
+        "claims": 0,
+        "orphans": [],
+        "vacuous": true,
+        "note": "claims=[] is declared legitimate by the package contract (objective.classify_report_type=false)"
+      }
+    },
+    {
+      "check": "E1_envelope_contract_shape",
+      "result": "pass",
+      "detail": {
+        "problems": [],
+        "verification_status": "not_verified"
+      }
+    },
+    {
+      "check": "E2_report_block_single_json",
+      "result": "pass",
+      "detail": {
+        "json_blocks": 1,
+        "doc": "docs/wp-13278-01/KF-RESULT-wp-13278-01.md",
+        "parses": true
+      }
+    },
+    {
+      "check": "E3_no_verified_markers",
+      "result": "pass",
+      "detail": {
+        "offenders": []
+      }
+    },
+    {
+      "check": "E4_counts_consistent",
+      "result": "pass",
+      "detail": {
+        "counts.assets": 16,
+        "len(assets)": 16,
+        "by_resolution": {
+          "resolved_in_source": 11,
+          "referenced_unresolved": 5
+        }
+      }
+    },
+    {
+      "check": "E5_scope_single_report",
+      "result": "pass",
+      "detail": {
+        "report_id": "13278",
+        "boundary": "report_id=13278 only"
+      }
+    },
+    {
+      "check": "E6_durable_mirror_identical",
+      "result": "pass",
+      "detail": {
+        "mirror": "docs/wp-13278-01/asset_manifest.json"
+      }
+    },
+    {
+      "check": "E7_source_chars_match_contract",
+      "result": "pass",
+      "detail": {
+        "chars": 1592,
+        "contract": 1592
+      }
+    }
+  ],
+  "E6_durable_mirror_identical": "ok"
+}
