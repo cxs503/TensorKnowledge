@@ -1,0 +1,33 @@
+[
+  {
+    "id": "tkr:wp-4537-04:needs-fix",
+    "decision": "request-changes",
+    "policy_version": "ke-review-v0.1",
+    "reviewer": {
+      "id": "reviewer-m15829-redteam",
+      "reviewer_type": "agent"
+    },
+    "reviewed_at": "2026-11-12T02:48:32Z",
+    "subject_package_id": "wp-4537-01",
+    "independence_basis": "distinct-identity",
+    "findings": [
+      {
+        "finding_id": "FN-4537-04-01",
+        "severity": "medium",
+        "title": "注册完整性缺口：报告点名的测试文件路径未进 assets[]，也不在 unresolved[]"
+      },
+      {
+        "finding_id": "FN-4537-04-02",
+        "severity": "low",
+        "title": "unresolved[] 与 assets[status!=resolved] 集合完全同构，不是独立未决清单"
+      },
+      {
+        "finding_id": "FN-4537-04-03",
+        "severity": "medium",
+        "title": "报告的关键机制论断被同版本复现证伪：`ruff format` 会拆 E701/E702 语句"
+      }
+    ],
+    "review_report": "review_report.json",
+    "touches_epistemic_status": false
+  }
+]
