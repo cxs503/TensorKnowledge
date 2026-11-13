@@ -1,0 +1,857 @@
+{
+  "package_id": "wp-5606-04",
+  "task_type": "04-independent-review",
+  "report_id": "5606",
+  "provenance": {
+    "source_hash": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+    "source_field": "markdown",
+    "producer": "m15835 / wp-5606-04 red-team reviewer",
+    "emitted_at": "2026-11-12T02:56:27+00:00",
+    "notes": "review 输入=report 5606 markdown 原文；未读生产者解释；未标 verified"
+  },
+  "outputs": {
+    "review_report.json": {
+      "package_id": "wp-5606-04",
+      "task_type": "04-independent-review",
+      "report_id": "5606",
+      "reviewed_package": "wp-5606-01",
+      "reviewed_artifact": {
+        "report_id": "5606",
+        "source_field": "markdown",
+        "sha256": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+        "chars": 5853,
+        "scenario_key": "campaign:IN18-T3:chronicle-report-v2"
+      },
+      "reviewer": {
+        "id": "agent:m15835-red-team",
+        "reviewer_type": "agent",
+        "role": "red-team-reviewer"
+      },
+      "disposition": "request-changes",
+      "disposition_scope": "缺陷集中在『文档与账本的可复核性』（G1/G2 层）；数值层未发现矛盾，故不判 reject。",
+      "independence": {
+        "inputs_used": [
+          "任务书契约声明（source_uri / source_hash / scenario_key）",
+          "GET /tensor/reports/5606 的 markdown（落盘 artifacts/wp-5606-04/report_source_5606.md）"
+        ],
+        "not_used": [
+          "生产者实现代码（snapshot.py / provenance.py / skeleton.py / figures.py / verify.py）",
+          "生产者 rationale / 自评 / 笔记",
+          "其它 report_id 的 markdown"
+        ],
+        "limitation": "未读实现 ⇒ 本审核判的是『文档与账本能否支撑其声明』，不是『代码是否照描述执行』；门禁整体未重执行（见 missing_checks）。",
+        "producer_explanation_excluded": true
+      },
+      "scope": {
+        "in_scope": [
+          "报告 6 节论断的语义保真",
+          "表 1 与 20 条溯源记录的算术/分类一致性",
+          "溯源机制自洽性与可复核性",
+          "图件与冻结工件的可追溯性"
+        ],
+        "out_of_scope": [
+          "物理量精度（本节点声称无物理基准）",
+          "代码级实现正确性",
+          "门禁实际 PASS/FAIL 的重现"
+        ]
+      },
+      "checks": [
+        {
+          "id": "C01.source_hash",
+          "question": "落盘原文 sha256 是否等于契约 source_hash",
+          "status": "pass",
+          "expected": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+          "observed": {
+            "sha256": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+            "chars": 5853,
+            "bytes": 8896
+          },
+          "note": null
+        },
+        {
+          "id": "C02.quotes_locatable",
+          "question": "审核所用全部原文引用是否逐字命中 markdown（零手抄机器保证）",
+          "status": "pass",
+          "expected": "0 missing",
+          "observed": {
+            "n_quotes": 40,
+            "n_missing": 0,
+            "missing": []
+          },
+          "note": null
+        },
+        {
+          "id": "C03.record_count",
+          "question": "『溯源记录数 23（数字 20 / 图 3）』是否与原文可解析行一致",
+          "status": "pass",
+          "expected": {
+            "number_rows": 20,
+            "figure_rows": 3,
+            "sum": 23
+          },
+          "observed": {
+            "number_rows": 20,
+            "figure_rows": 3,
+            "sum": 23
+          },
+          "note": null
+        },
+        {
+          "id": "C04.percent_recompute",
+          "question": "表 1 百分比是否由计数/21 精确导出（rel_err < 1e-3）",
+          "status": "pass",
+          "expected": "<1e-3",
+          "observed": {
+            "max_rel_err": 1.0000010000341966e-06,
+            "detail": [
+              {
+                "field": "对账 REAL %",
+                "printed": 4.7619,
+                "recomputed": 4.761905,
+                "rel_err": 1.0000010000341966e-06
+              },
+              {
+                "field": "一致 OK %",
+                "printed": 19.0476,
+                "recomputed": 19.047619,
+                "rel_err": 1.0000010000341966e-06
+              },
+              {
+                "field": "过度宣称 %",
+                "printed": 9.52381,
+                "recomputed": 9.52381,
+                "rel_err": 4.9999997427052975e-08
+              }
+            ]
+          },
+          "note": null
+        },
+        {
+          "id": "C05.partition_conservation",
+          "question": "OK+OVERCLAIM+UNVERIFIED 是否分完 21 项；宣称 REAL 18 是否被 1+2+15 解释",
+          "status": "pass",
+          "expected": "两处闭合",
+          "observed": {
+            "partition": {
+              "OK": 4.0,
+              "OVERCLAIM": 2.0,
+              "UNVERIFIED": 15.0,
+              "sum": 21.0,
+              "equals_total": true
+            },
+            "claimed_vs_reconciled": {
+              "claimed_REAL": 18.0,
+              "reconciled_REAL": 1.0,
+              "gap": 17.0,
+              "explained_by": {
+                "reconciled_REAL": 1.0,
+                "OVERCLAIM": 2.0,
+                "UNVERIFIED": 15.0,
+                "sum": 18.0
+              }
+            }
+          },
+          "note": null
+        },
+        {
+          "id": "C06.saturation",
+          "question": "饱和比 0.300 是否恰等于 3 能力 / 10 证据行",
+          "status": "pass",
+          "expected": 0.0,
+          "observed": {
+            "printed": 0.3,
+            "recomputed": 0.3,
+            "abs_err": 0.0
+          },
+          "note": null
+        },
+        {
+          "id": "C07.sql_uniqueness",
+          "question": "『重跑 SQL 条数 20』是否等于互不相同的查询数",
+          "status": "fail",
+          "expected": "20 distinct",
+          "observed": {
+            "n_rows": 20,
+            "distinct_sql_prefixes": 14,
+            "duplicate_value_groups": {
+              "1": [
+                "n-007",
+                "n-014"
+              ],
+              "3": [
+                "n-012",
+                "n-023"
+              ],
+              "4.7619": [
+                "n-008",
+                "n-015"
+              ],
+              "10": [
+                "n-005",
+                "n-006",
+                "n-011",
+                "n-022"
+              ],
+              "19.0476": [
+                "n-009",
+                "n-017"
+              ],
+              "21": [
+                "n-004",
+                "n-010"
+              ]
+            },
+            "caveat": "正文 SQL 列被截断（如 `...FROM capabi`），互异性按截断串比较，真实互异数可能更低"
+          },
+          "note": null
+        },
+        {
+          "id": "C08.provenance_markers_present",
+          "question": "被审对象 markdown 内是否存在真实溯源标记/块（非语法示例），以复核『块内裸数字 0』",
+          "status": "fail",
+          "expected": ">=20 real markers inside 2 blocks",
+          "observed": {
+            "real_marker_occurrences": 0,
+            "prov_begin_occurrences": 1,
+            "syntax_example_present": true,
+            "interpretation": "仅 1 处语法示例 + 1 处语法说明；无任何真实 {{prov:<id>}} 标注、无 prov:begin/end 块"
+          },
+          "note": null
+        },
+        {
+          "id": "C09.negative_control_coverage",
+          "question": "声明的 8 类 FAIL 码是否各有命名负例（§6 仅列 5 类）",
+          "status": "fail",
+          "expected": "8/8 covered",
+          "observed": {
+            "declared_fail_codes": 8,
+            "codes_with_named_negative_control": [
+              "FABRICATED",
+              "FIGURE_HASH",
+              "SNAP_HASH",
+              "SOURCE_DRIFT",
+              "UNMARKED"
+            ],
+            "uncovered": 3
+          },
+          "note": null
+        },
+        {
+          "id": "C10.frozen_artifact_reachable",
+          "question": "声明的冻结工件能否取回、snapshot_hash 能否独立复算",
+          "status": "not_run",
+          "expected": "sha256:f46ab6f316a2c10c1c38b67594643eb0483c0e7cbe7d67c7e20dfcb374f9f572",
+          "observed": {
+            "path": "/root/tp-agent/work/m4976/artifacts/capability_ledger/capability_ledger_resolved.json",
+            "exists": false,
+            "recomputed": null,
+            "note": "所在工作树 m4976 已不存在；其他工作树同名副本抽样哈希≠f46ab6f3…；全盘 find 超时（120s）未完成，故判 not_run 而非 fail"
+          },
+          "note": null
+        },
+        {
+          "id": "C11.toolchain_version",
+          "question": "工具链版本自陈能否在本节点复现",
+          "status": "not_run",
+          "expected": "构建镜像与控制面节点可不同版本故不判 fail；但『matplotlib 2.4.6』与本节点 numpy 2.4.6 同号，疑为版本号错记到 matplotlib 名下（matplotlib 2.x 无 2.4.6 属外部知识，未机器验证）",
+          "observed": {
+            "python": "3.11.6",
+            "matplotlib": "3.10.8",
+            "numpy": "2.4.6",
+            "reported_toolchain": "Python 3.10 / matplotlib 2.4.6 后端 Agg / numpy / stdlib sqlite3"
+          },
+          "note": null
+        },
+        {
+          "id": "C12.figure_data_traceability",
+          "question": "图 1–3 的数组是否在溯源账本内有可重跑 SQL 记录",
+          "status": "fail",
+          "expected": "figure arrays bound to sql records",
+          "observed": {
+            "figure_records": 3,
+            "fields_per_record": [
+              "pid",
+              "figure",
+              "files",
+              "hash_prefixes"
+            ],
+            "figure_data_sql_bindings": 0,
+            "implication": "账本只锁图件字节、不锁图件数值；『图数组=一条可重跑 SQL』在账本内不可复核"
+          },
+          "note": null
+        },
+        {
+          "id": "C13.funnel_stage_values",
+          "question": "图 3 五阶段是否每阶段都给出可复核计数",
+          "status": "fail",
+          "expected": "5/5 有值",
+          "observed": {
+            "stages_in_text": [
+              "claimed",
+              "reconciled",
+              "machine-checked",
+              "OK",
+              "REAL"
+            ],
+            "stages_with_value": [
+              "21",
+              "4",
+              "1"
+            ],
+            "missing": [
+              "reconciled",
+              "machine-checked"
+            ]
+          },
+          "note": null
+        },
+        {
+          "id": "C14.divergence_rule",
+          "question": "『宣称 REAL 18 → 对账 REAL 1』之间 17 项的降级判据是否在文中定义",
+          "status": "fail",
+          "expected": "classification rule stated",
+          "observed": {
+            "claimed_REAL": 18.0,
+            "reconciled_REAL": 1.0,
+            "gap": 17.0,
+            "labelled_OVERCLAIM": 2.0,
+            "labelled_UNVERIFIED": 15.0,
+            "implication": "17 项降级中仅 2 项命名为 OVERCLAIM，其余 15 项归 UNVERIFIED；两标签的判定谓词全文未给出，『过度宣称 9.5%』易被读成全貌"
+          },
+          "note": null
+        },
+        {
+          "id": "C15.gate_rerun",
+          "question": "门禁裁定 PASS（FAIL 0 / WARN 0）能否由审核者独立重执行",
+          "status": "not_run",
+          "expected": "rerun reproduces PASS",
+          "observed": {
+            "snapshot_sqlite": "不可得",
+            "manuscript_with_markers": "不可得",
+            "producer_scripts": "未读取（保独立性）",
+            "consequence": "该裁定在本次审核中保持『未复核』，不升格为 verified"
+          },
+          "note": null
+        },
+        {
+          "id": "C16.readonly_claim_strength",
+          "question": "『校验器物理上无法改写自己的证据』是否成立",
+          "status": "fail",
+          "expected": "holds against filesystem-level rewrite",
+          "observed": {
+            "actual_guarantee": "sqlite3 mode=ro 只阻止经该连接的写事务；文件系统层替换不受约束",
+            "report_own_caveat": "未知造假形态（重写工件→重建快照→一致重算哈希）可绕过，需外部时间戳/签名。"
+          },
+          "note": null
+        },
+        {
+          "id": "C17.reviewer_independence",
+          "question": "审核输入是否仅含原文、不含生产者解释",
+          "status": "pass",
+          "expected": "context == source only",
+          "observed": {
+            "inputs": [
+              "任务书契约声明",
+              "GET /tensor/reports/5606 的 markdown 落盘件"
+            ],
+            "not_read": [
+              "生产者实现代码 snapshot.py/provenance.py/skeleton.py/figures.py/verify.py",
+              "生产者 rationale / 自评",
+              "其它 report_id 的 markdown"
+            ],
+            "limitation": "未读实现 ⇒ 只能判『文档与账本能否支撑声明』，不能判代码是否照描述执行"
+          },
+          "note": null
+        },
+        {
+          "id": "C18.no_numeric_contradiction",
+          "question": "表 1 与 20 条记录之间是否存在数值矛盾",
+          "status": "pass",
+          "expected": "no contradiction",
+          "observed": {
+            "percent_checks": 3,
+            "max_rel_err": 1.0000010000341966e-06,
+            "partition_closed": true,
+            "note": "本次审核的正面结论：印刷数字、SQL 语义、分类划分自洽，未见伪造痕迹"
+          },
+          "note": null
+        }
+      ],
+      "checks_summary": {
+        "pass": [
+          "C01.source_hash",
+          "C02.quotes_locatable",
+          "C03.record_count",
+          "C04.percent_recompute",
+          "C05.partition_conservation",
+          "C06.saturation",
+          "C17.reviewer_independence",
+          "C18.no_numeric_contradiction"
+        ],
+        "fail": [
+          "C07.sql_uniqueness",
+          "C08.provenance_markers_present",
+          "C09.negative_control_coverage",
+          "C12.figure_data_traceability",
+          "C13.funnel_stage_values",
+          "C14.divergence_rule",
+          "C16.readonly_claim_strength"
+        ],
+        "not_run": [
+          "C10.frozen_artifact_reachable",
+          "C11.toolchain_version",
+          "C15.gate_rerun"
+        ]
+      },
+      "findings": {
+        "blocking": [],
+        "major": [
+          {
+            "finding_id": "F1",
+            "severity": "major",
+            "title": "核心防造假断言在被审对象内不可复核：report 5606 markdown 无任何真实溯源标记或 prov 块",
+            "evidence": {
+              "quote": "稿中数字唯一合法形态为 `数值 {{prov:<id>}}`；强制范围是 `prov:begin/end` 块；| 块内裸数字 | 0 |；| 块内带标记数字 | 23 |",
+              "observed": {
+                "real_marker_occurrences": 0,
+                "prov_begin_occurrences": 1,
+                "note": "唯一 1 处 prov:begin 与 1 处 {{prov:<id>}} 均为第 2 节的语法说明，不是数据标注",
+                "check": "C08"
+              }
+            },
+            "impact": "独立审核只能复核被交付的那份文本；该文本是渲染稿而非门禁作用的手稿，故『块内带标记数字 23 / 块内裸数字 0』『数字-记录一致 20 条』在审核面上不可复算，只能算生产者自陈。这是本报告最关键的一条缺口：反造假证据本身没有随报告一起被冻结。",
+            "remediation": "把门禁作用的手稿（含 {{prov:...}} 与 prov:begin/end）作为附件随报告发布并以 SHA 挂账，或在 report markdown 中保留标记形态（由渲染层剥离）。",
+            "reproduction": "python3 artifacts/wp-5606-04/indep_check.py —— 检查项 C08"
+          },
+          {
+            "finding_id": "F2",
+            "severity": "major",
+            "title": "声明的冻结工件不可达 → snapshot_hash 无法独立复算",
+            "evidence": {
+              "quote": "被冻结的真实工件：`/root/tp-agent/work/m4976/artifacts/capability_ledger/capability_ledger_resolved.json`；快照哈希 `f46ab6f316a2c10c1c38b67594643eb0483c0e7cbe7d67c7e20dfcb374f9f572`",
+              "observed": {
+                "path": "/root/tp-agent/work/m4976/artifacts/capability_ledger/capability_ledger_resolved.json",
+                "exists": false,
+                "sha256": null,
+                "scan_note": "其他工作树同名副本抽样哈希（如 7adb9835…）≠ f46ab6f3…；全盘 find 120s 超时未完成",
+                "check": "C10"
+              }
+            },
+            "impact": "『快照未被改』这条判据的根基是工件字节→哈希，而工件随工作树 m4976 一起消失；审核者无法重建该链，也就无法把该判据记为通过（本次记为 not_run，不是 pass）。",
+            "remediation": "工件入仓或对象存储 + 内容寻址（例如 TensorKnowledge/artifacts/…/capability_ledger_resolved.json 与 f46ab6f3… 一并登记），路径与哈希同账。",
+            "reproduction": "ls /root/tp-agent/work/m4976 → No such file or directory（检查项 C10）"
+          },
+          {
+            "finding_id": "F3",
+            "severity": "major",
+            "title": "8 类 FAIL 码只有 5 类有命名负例，与报告自己的核心教训互相拆台",
+            "evidence": {
+              "quote": "8 类 FAIL 码 + 2 类 WARN 码；FABRICATED/SOURCE_DRIFT/SNAP_HASH/FIGURE_HASH/UNMARKED 全部命中；没有负例的门禁等于没有门禁",
+              "observed": {
+                "declared_fail_codes": 8,
+                "codes_with_named_negative_control": [
+                  "FABRICATED",
+                  "FIGURE_HASH",
+                  "SNAP_HASH",
+                  "SOURCE_DRIFT",
+                  "UNMARKED"
+                ],
+                "uncovered": 3,
+                "check": "C09"
+              }
+            },
+            "impact": "报告第 5 节第 4 条把『没有负例的门禁等于没有门禁』当作本节点最直接的教训，但 8 类 FAIL 码里有 3 类没有任何负例证据；若这 3 类正是语义判定类（过度宣称/不可核验），缺口恰好落在风险最高处。",
+            "remediation": "补齐 8×N 负例注入矩阵（每码 ≥1 条），把矩阵作为表随报告发布；门禁自检里对『无负例的 FAIL 码』直接判 WARN。",
+            "reproduction": "检查项 C09"
+          },
+          {
+            "finding_id": "F4",
+            "severity": "major",
+            "title": "图件只锁字节不锁数值：『图数组=一条可重跑 SQL』在图件账本内不可复核",
+            "evidence": {
+              "quote": "数组全部由 SQL 窗口函数与分组查询产出，；图件账本（文件字节哈希，替换即 FAIL）：",
+              "observed": {
+                "figure_records": 3,
+                "fields": [
+                  "pid",
+                  "figure",
+                  "files",
+                  "hash_prefixes"
+                ],
+                "figure_data_sql_bindings": 0,
+                "check": "C12"
+              }
+            },
+            "impact": "哈希证明图件文件未被替换，不证明曲线点来自 SQL；保留图件字节而让数组来自手填的做法不会被现有账本抓到。报告第 5 节仅承认『哈希是篡改证据非证明』，未承认这条图件数值级缺口。",
+            "remediation": "为 fig-001..fig-003 各登记 (sql, params, array_sha256)，门禁重跑 SQL 并比对数组哈希。",
+            "reproduction": "检查项 C12"
+          }
+        ],
+        "minor": [
+          {
+            "finding_id": "F5",
+            "severity": "minor",
+            "title": "『过度宣称 2 项（9.5%）』与『宣称 REAL 18 / 对账 REAL 1』并列，降级判据未给",
+            "evidence": {
+              "quote": "| 宣称 REAL | 18 |；| 对账 REAL | 1（4.8 %） |；| 过度宣称 OVERCLAIM | 2（9.5 %） |；| 未验证 UNVERIFIED | 15 |；对账后仅 1 项 —— 这是本次审计最重要的定量发现。",
+              "observed": {
+                "claimed_REAL": 18.0,
+                "reconciled_REAL": 1.0,
+                "gap": 17.0,
+                "explained_by": {
+                  "reconciled_REAL": 1.0,
+                  "OVERCLAIM": 2.0,
+                  "UNVERIFIED": 15.0,
+                  "sum": 18.0
+                },
+                "check": "C05,C14"
+              }
+            },
+            "impact": "算术上完全自洽（1+2+15=18，且 4+2+15=21），但 18→1 的 17 项降级里只有 2 项被命名为 OVERCLAIM，其余 15 项进 UNVERIFIED；两个标签的判定谓词全文未给出。读者会把『过度宣称仅 9.5%』读成审计全貌，而 17 项 REAL 缺口才是全貌。",
+            "remediation": "Methods 写明 OVERCLAIM / UNVERIFIED 判定谓词；表 1 增加一行『宣称 REAL 未获对账 REAL | 17』。",
+            "reproduction": "检查项 C05、C14"
+          },
+          {
+            "finding_id": "F6",
+            "severity": "minor",
+            "title": "『重跑 SQL 条数 20』高估互异查询数：实际互异 14 条（6 组重复）",
+            "evidence": {
+              "quote": "| 重跑 SQL 条数 | 20 |；| `n-004` | 21 | `SELECT COUNT(*) FROM capability` | / | `n-010` | 21 | `SELECT COUNT(*) FROM capability` |；| `n-005` | 10 | `SELECT COUNT(*) FROM evidence` | / | `n-011` | 10 | `SELECT COUNT(*) FROM evidence` |",
+              "observed": {
+                "n_rows": 20,
+                "distinct_sql_prefixes": 14,
+                "duplicate_pairs": [
+                  [
+                    "n-004",
+                    "n-010"
+                  ],
+                  [
+                    "n-005",
+                    "n-011"
+                  ],
+                  [
+                    "n-006",
+                    "n-022"
+                  ],
+                  [
+                    "n-007",
+                    "n-014"
+                  ],
+                  [
+                    "n-008",
+                    "n-015"
+                  ],
+                  [
+                    "n-009",
+                    "n-017"
+                  ]
+                ],
+                "caveat": "正文 SQL 列被截断（`...FROM capabi`），互异性按截断串比较，真实互异数可能更低",
+                "check": "C07"
+              }
+            },
+            "impact": "『20 条全部复现』的证据强度被计件法放大：同一 SQL 同一值登记两次，看起来像两条独立证据。",
+            "remediation": "台账加 distinct_sql 字段；gate 对重复 (sql, params) 记 WARN 而非双计。",
+            "reproduction": "检查项 C07"
+          },
+          {
+            "finding_id": "F7",
+            "severity": "minor",
+            "title": "图 3 五阶段只印 3 个计数，reconciled / machine-checked 无数值",
+            "evidence": {
+              "quote": "图 3 成功漏斗：claimed 21 → reconciled → machine-checked → OK 4 → REAL 1，；各阶段为 SQL 谓词定义，计数单调不增，未做任何平滑。",
+              "observed": {
+                "printed": [
+                  "claimed 21",
+                  "OK 4",
+                  "REAL 1"
+                ],
+                "missing": [
+                  "reconciled",
+                  "machine-checked"
+                ],
+                "check": "C13"
+              }
+            },
+            "impact": "『计数单调不增』这句结构性断言无法逐段复核；漏斗中段（有多少被机器检查）恰好缺失。",
+            "remediation": "五阶段全部印数并各自挂 pid；单调性由门禁对数组做检查而非由文字声明。",
+            "reproduction": "检查项 C13"
+          }
+        ],
+        "informational": [
+          {
+            "finding_id": "F8",
+            "severity": "informational",
+            "title": "工具链版本自陈与控制面节点不符，『matplotlib 2.4.6』疑为 numpy 版本错记",
+            "evidence": {
+              "quote": "工具链：Python 3.10 / matplotlib 2.4.6 后端 Agg / numpy / stdlib sqlite3；无新增第三方依赖。",
+              "observed": {
+                "python": "3.11.6",
+                "matplotlib": "3.10.8",
+                "numpy": "2.4.6",
+                "reported_toolchain": "Python 3.10 / matplotlib 2.4.6 后端 Agg / numpy / stdlib sqlite3",
+                "check": "C11"
+              }
+            },
+            "impact": "不影响任何计数结论；但版本串是复现性记录的一部分，手写版本号会削弱『重跑可复现』的可信度。（构建镜像可与控制面节点不同版本，故不判 fail。）",
+            "remediation": "版本串由构建镜像程序化注入（importlib.metadata / platform），禁止手写。",
+            "reproduction": "检查项 C11"
+          },
+          {
+            "finding_id": "F9",
+            "severity": "informational",
+            "title": "『校验器物理上无法改写自己的证据』强度过头",
+            "evidence": {
+              "quote": "连接以 `mode=ro` 打开，校验器物理上无法改写自己的证据。；未知造假形态（重写工件→重建快照→一致重算哈希）可绕过，需外部时间戳/签名。",
+              "observed": {
+                "actual_guarantee": "mode=ro 只约束该 sqlite 连接；文件系统层替换不受约束",
+                "check": "C16"
+              }
+            },
+            "impact": "措辞超出机制的实际保证范围，且与报告自己第 5 节的局限⑤口径不一致。",
+            "remediation": "改为『校验器经 mode=ro 连接无写权限』，磁盘级改写风险留在局限节。",
+            "reproduction": "检查项 C16"
+          }
+        ]
+      },
+      "claim_fidelity": [
+        {
+          "claim": "溯源记录数 23 = 数字 20 + 图 3",
+          "quote": "| 溯源记录数 | 23（数字 20 / 图 3） |",
+          "verdict": "supported",
+          "detail": "原文可解析 20 行数字记录 + 3 行图件记录",
+          "check": "C03"
+        },
+        {
+          "claim": "表 1 百分比由计数导出",
+          "quote": "| 对账 REAL | 1（4.8 %） | / | 一致 OK | 4（19.0 %） | / | 过度宣称 OVERCLAIM | 2（9.5 %） |",
+          "verdict": "supported",
+          "detail": "重算 100*k/21，最大相对偏差 1.00e-06",
+          "check": "C04"
+        },
+        {
+          "claim": "分类划分闭合 21 项",
+          "quote": "| 一致 OK | 4（19.0 %） | / | 过度宣称 OVERCLAIM | 2（9.5 %） | / | 未验证 UNVERIFIED | 15 |",
+          "verdict": "supported",
+          "detail": "4+2+15=21；且 1+2+15=18 解释宣称 REAL",
+          "check": "C05"
+        },
+        {
+          "claim": "证据获取饱和比 0.300",
+          "quote": "| 证据获取饱和比 | 0.300（3 能力 / 10 证据行） |",
+          "verdict": "supported",
+          "detail": "3/10 精确等于 0.3",
+          "check": "C06"
+        },
+        {
+          "claim": "块内裸数字 0 / 块内带标记数字 23",
+          "quote": "| 块内裸数字 | 0 |",
+          "verdict": "not verifiable on this artifact",
+          "detail": "被审 markdown 无真实 {{prov:...}} 标注与 prov 块",
+          "check": "C08"
+        },
+        {
+          "claim": "冻结工件 + 快照哈希 f46ab6f3…",
+          "quote": "快照哈希 `f46ab6f316a2c10c1c38b67594643eb0483c0e7cbe7d67c7e20dfcb374f9f572`",
+          "verdict": "not recomputable",
+          "detail": "工件路径不存在，哈希链无法重建",
+          "check": "C10"
+        },
+        {
+          "claim": "8 类 FAIL 码 + 2 类 WARN 码",
+          "quote": "8 类 FAIL 码 + 2 类 WARN 码",
+          "verdict": "partially supported",
+          "detail": "命名负例仅覆盖 5/8 类 FAIL 码",
+          "check": "C09"
+        },
+        {
+          "claim": "门禁裁定 PASS（FAIL 0 / WARN 0）",
+          "quote": "| 门禁裁定 | **PASS**（FAIL 0 / WARN 0） |",
+          "verdict": "not rerun by reviewer",
+          "detail": "快照与含标记手稿均不可得，本次不重执行",
+          "check": "C15"
+        },
+        {
+          "claim": "20 条记录全部一致/复现",
+          "quote": "| 数字-记录一致 | 印刷值 vs 记录值（容差 = 半量级） | 20 条全部一致 | 是 | / | 记录-SQL 一致 | 记录值 vs 重跑 SQL（rtol 1e-9） | 20 条全部复现 | 是 |",
+          "verdict": "partially supported",
+          "detail": "互异 SQL 仅 14 条，6 组重复计件",
+          "check": "C07"
+        },
+        {
+          "claim": "无数值型物理基准，误差判定不适用",
+          "quote": "是否 <3%？—— 本节点无数值型物理基准，**不适用**",
+          "verdict": "supported",
+          "detail": "本节点确无物理基准；用哈希/计数替代是恰当的尺子选择",
+          "check": "—"
+        },
+        {
+          "claim": "自陈局限（哈希非证明 / 仅 2 块 / 一致重写可绕过）",
+          "quote": "哈希是篡改*证据*非*证明* / 强制范围仅 2 个块，非全文",
+          "verdict": "supported",
+          "detail": "honest disclosure 存在且具体；但未覆盖图件数值级与负例覆盖缺口",
+          "check": "—"
+        }
+      ],
+      "missing_checks": [
+        {
+          "check": "门禁全量重执行（重跑 20 条 SQL + 6 个图件哈希）",
+          "status": "not_run",
+          "cause": "快照 sqlite 与含标记手稿均不可得；读生产者实现又会破坏独立性"
+        },
+        {
+          "check": "snapshot_hash 复算",
+          "status": "not_run",
+          "cause": "冻结工件路径不存在（C10）"
+        },
+        {
+          "check": "负例注入矩阵复跑（8 类 FAIL 码）",
+          "status": "not_run",
+          "cause": "同上，且负例矩阵本身未随报告发布（F3）"
+        },
+        {
+          "check": "图件数组 ↔ SQL 的对应关系复核",
+          "status": "fail",
+          "cause": "账本未登记数组绑定（C12）"
+        },
+        {
+          "check": "代码级实现正确性（skeleton/provenance/verify 是否真按描述执行）",
+          "status": "not_run",
+          "cause": "为保独立性未读生产者代码"
+        }
+      ],
+      "overstated_claims": [
+        {
+          "quote": "连接以 `mode=ro` 打开，校验器物理上无法改写自己的证据。",
+          "why": "mode=ro 的保证范围被表述成『物理上无法改写』，超出机制实际强度（F9）"
+        },
+        {
+          "quote": "8 类 FAIL 码 + 2 类 WARN 码",
+          "why": "8 类 FAIL 码配 8 类负例的暗示不成立：实测 5 类有命名负例（F3）"
+        },
+        {
+          "quote": "| 重跑 SQL 条数 | 20 |",
+          "why": "20『条』SQL 未去重，互异查询仅 14 条（F6）"
+        },
+        {
+          "quote": "| 块内带标记数字 | 23 |",
+          "why": "『块内带标记数字 23』实为 20 数字 + 3 图引用，字段名与内容不符（F1）"
+        }
+      ],
+      "positive_observations": [
+        "表 1 全部百分比由计数/21 精确导出（最大相对偏差 1.00e-06）；OK+OVERCLAIM+UNVERIFIED=21 闭合，宣称 REAL 18 被 1+2+15 完全解释 —— 未见伪造痕迹。",
+        "第 5 节主动披露三条真实局限（哈希非证明、强制范围仅 2 块、一致重写可绕过），并要求外部时间戳/签名。",
+        "第 5 节第 4 条把『乱序检查因两列表恒等而永不触发』的契约级 bug 写进正文，负面经验入账。"
+      ],
+      "remediation_priority": [
+        {
+          "order": 1,
+          "finding_id": "F1",
+          "action": "把门禁作用的含标记手稿冻结为附件并以 SHA 挂账"
+        },
+        {
+          "order": 2,
+          "finding_id": "F2",
+          "action": "冻结工件入仓/对象存储，路径与哈希同账"
+        },
+        {
+          "order": 3,
+          "finding_id": "F4",
+          "action": "图件登记 (sql, params, array_sha256) 并由门禁重跑比对"
+        },
+        {
+          "order": 4,
+          "finding_id": "F3",
+          "action": "补齐 8 类 FAIL 码的负例注入矩阵"
+        },
+        {
+          "order": 5,
+          "finding_id": "F5",
+          "action": "写明 OVERCLAIM/UNVERIFIED 判定谓词，表 1 加 17 项缺口行"
+        }
+      ],
+      "verification_statement": "本次审核不把任何上游结论标为 verified；本次只有 pass/fail/not_run 与 findings，verification 由平台门计算。",
+      "acceptance_selfcheck": {
+        "valid_json": "pass —— 本文件 json.load 复读通过，且经 jsonschema 校验",
+        "schema_pass": "pass —— kf_result.v1.schema.json / review-event.schema.json / work-package-contract.schema.json 本地校验通过（build_report.py 内）",
+        "reviewer_independent": "pass —— 输入仅原文与契约；未读实现/自评；见 independence",
+        "upstream_packages_completed": "pass（有保留）—— 上游产物 report 5606 存在、status=published、sha256 与契约一致（C01）；但本次无法枚举包注册面，仅以工件层与任务书声明为据"
+      },
+      "contract_deviations": [
+        {
+          "field": "review.required / review.independent_reviewer",
+          "task_sheet": "false / false",
+          "emitted": "true / true",
+          "cause": "work-package-contract.schema.json 的 04 分支以 const:true 强制；不改则 schema_pass 不成立。本单不改变审核结论，只让交付物过结构门。"
+        },
+        {
+          "field": "input.reviewed_package.claims_sha256 / evidence_sha256",
+          "task_sheet": "未提供",
+          "emitted": "对本次被审材料自算的两条摘要（20 条溯源记录 / 图件账本+表 1）",
+          "cause": "上游工序未产出 claims.json / evidence.json；摘要口径已写入 review_report 与 delivery.notes，避免把不存在的文件冒充成被审对象。"
+        }
+      ],
+      "generated_at": "2026-11-12T02:56:27+00:00"
+    },
+    "review_events.json": [
+      {
+        "id": "tkr:review:wp-5606-04",
+        "object_ref": "report:5606#wp-5606-01",
+        "object_version": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+        "decision": "request-changes",
+        "reviewer": {
+          "id": "agent:m15835-red-team",
+          "reviewer_type": "agent",
+          "role": "red-team-reviewer"
+        },
+        "reviewed_at": "2026-11-12T02:56:27+00:00",
+        "policy_version": "kf-review-policy/v1",
+        "rationale": "数值自洽但反造假证据本身未被冻结：核心断言（块内裸数字 0）与快照哈希在被审工件/路径上不可复核；另有 3 类 FAIL 码无负例、图件只锁字节不锁数值。据 F1–F4 请求修改。",
+        "findings": [
+          {
+            "severity": "major",
+            "finding": "F1 核心防造假断言在被审对象内不可复核：report 5606 markdown 无任何真实溯源标记或 prov 块"
+          },
+          {
+            "severity": "major",
+            "finding": "F2 声明的冻结工件不可达 → snapshot_hash 无法独立复算"
+          },
+          {
+            "severity": "major",
+            "finding": "F3 8 类 FAIL 码只有 5 类有命名负例，与报告自己的核心教训互相拆台"
+          },
+          {
+            "severity": "major",
+            "finding": "F4 图件只锁字节不锁数值：『图数组=一条可重跑 SQL』在图件账本内不可复核"
+          },
+          {
+            "severity": "minor",
+            "finding": "F5 『过度宣称 2 项（9.5%）』与『宣称 REAL 18 / 对账 REAL 1』并列，降级判据未给"
+          },
+          {
+            "severity": "minor",
+            "finding": "F6 『重跑 SQL 条数 20』高估互异查询数：实际互异 14 条（6 组重复）"
+          },
+          {
+            "severity": "minor",
+            "finding": "F7 图 3 五阶段只印 3 个计数，reconciled / machine-checked 无数值"
+          },
+          {
+            "severity": "informational",
+            "finding": "F8 工具链版本自陈与控制面节点不符，『matplotlib 2.4.6』疑为 numpy 版本错记"
+          },
+          {
+            "severity": "informational",
+            "finding": "F9 『校验器物理上无法改写自己的证据』强度过头"
+          }
+        ],
+        "conditions": [
+          "提供含 {{prov:...}} 标记与 prov:begin/end 块的手稿工件（含 SHA）",
+          "提供冻结工件使 snapshot_hash 可复算",
+          "补齐 8 类 FAIL 码负例矩阵",
+          "图件登记数组级 (sql, params, array_sha256) 绑定"
+        ]
+      }
+    ]
+  }
+}

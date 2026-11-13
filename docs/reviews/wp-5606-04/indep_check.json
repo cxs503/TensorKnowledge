@@ -1,0 +1,816 @@
+{
+  "package_id": "wp-5606-04",
+  "report_id": "5606",
+  "source": {
+    "channel": "snapshot_file",
+    "chars": 5853,
+    "bytes": 8896,
+    "sha256": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+    "hash_matches_contract": true
+  },
+  "quote_index": {
+    "q_title": {
+      "offset": 2,
+      "chars": 22
+    },
+    "q_artifact": {
+      "offset": 221,
+      "chars": 96
+    },
+    "q_snap_hash": {
+      "offset": 319,
+      "chars": 71
+    },
+    "q_n_records": {
+      "offset": 583,
+      "chars": 27
+    },
+    "q_n_marked": {
+      "offset": 624,
+      "chars": 16
+    },
+    "q_n_bare": {
+      "offset": 641,
+      "chars": 13
+    },
+    "q_n_sql": {
+      "offset": 655,
+      "chars": 18
+    },
+    "q_n_figfiles": {
+      "offset": 674,
+      "chars": 15
+    },
+    "q_gate": {
+      "offset": 690,
+      "chars": 36
+    },
+    "q_blocks": {
+      "offset": 611,
+      "chars": 12
+    },
+    "q_total_cap": {
+      "offset": 1611,
+      "chars": 15
+    },
+    "q_ev_rows": {
+      "offset": 1627,
+      "chars": 14
+    },
+    "q_claimed_real": {
+      "offset": 1657,
+      "chars": 16
+    },
+    "q_recon_real": {
+      "offset": 1674,
+      "chars": 22
+    },
+    "q_ok": {
+      "offset": 1697,
+      "chars": 21
+    },
+    "q_over": {
+      "offset": 1719,
+      "chars": 29
+    },
+    "q_unver": {
+      "offset": 1749,
+      "chars": 23
+    },
+    "q_sat": {
+      "offset": 1773,
+      "chars": 34
+    },
+    "q_n004": {
+      "offset": 1892,
+      "chars": 52
+    },
+    "q_n010": {
+      "offset": 2478,
+      "chars": 52
+    },
+    "q_n005": {
+      "offset": 1962,
+      "chars": 50
+    },
+    "q_n011": {
+      "offset": 2548,
+      "chars": 50
+    },
+    "q_failcodes": {
+      "offset": 1378,
+      "chars": 23
+    },
+    "q_negctl": {
+      "offset": 5588,
+      "chars": 59
+    },
+    "q_lesson": {
+      "offset": 5094,
+      "chars": 13
+    },
+    "q_ro": {
+      "offset": 844,
+      "chars": 33
+    },
+    "q_toolchain": {
+      "offset": 1430,
+      "chars": 76
+    },
+    "q_syntax": {
+      "offset": 904,
+      "chars": 30
+    },
+    "q_block": {
+      "offset": 986,
+      "chars": 24
+    },
+    "q_figarr": {
+      "offset": 1268,
+      "chars": 22
+    },
+    "q_figledger": {
+      "offset": 3885,
+      "chars": 22
+    },
+    "q_funnel": {
+      "offset": 4535,
+      "chars": 67
+    },
+    "q_funnel2": {
+      "offset": 4603,
+      "chars": 28
+    },
+    "q_fig2": {
+      "offset": 4506,
+      "chars": 27
+    },
+    "q_lim_hash": {
+      "offset": 5132,
+      "chars": 14
+    },
+    "q_lim_block": {
+      "offset": 5169,
+      "chars": 14
+    },
+    "q_lim_unknown": {
+      "offset": 5213,
+      "chars": 38
+    },
+    "q_err1": {
+      "offset": 5358,
+      "chars": 49
+    },
+    "q_err2": {
+      "offset": 5408,
+      "chars": 55
+    },
+    "q_err_n3": {
+      "offset": 5699,
+      "chars": 29
+    }
+  },
+  "checks": [
+    {
+      "id": "C01.source_hash",
+      "question": "落盘原文 sha256 是否等于契约 source_hash",
+      "status": "pass",
+      "expected": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+      "observed": {
+        "sha256": "sha256:da0d91e5c5eae1aa240fba2fcc6b0ebab3960fb49f0f31378cf9a7f866b14edd",
+        "chars": 5853,
+        "bytes": 8896
+      },
+      "note": null
+    },
+    {
+      "id": "C02.quotes_locatable",
+      "question": "审核所用全部原文引用是否逐字命中 markdown（零手抄机器保证）",
+      "status": "pass",
+      "expected": "0 missing",
+      "observed": {
+        "n_quotes": 40,
+        "n_missing": 0,
+        "missing": []
+      },
+      "note": null
+    },
+    {
+      "id": "C03.record_count",
+      "question": "『溯源记录数 23（数字 20 / 图 3）』是否与原文可解析行一致",
+      "status": "pass",
+      "expected": {
+        "number_rows": 20,
+        "figure_rows": 3,
+        "sum": 23
+      },
+      "observed": {
+        "number_rows": 20,
+        "figure_rows": 3,
+        "sum": 23
+      },
+      "note": null
+    },
+    {
+      "id": "C04.percent_recompute",
+      "question": "表 1 百分比是否由计数/21 精确导出（rel_err < 1e-3）",
+      "status": "pass",
+      "expected": "<1e-3",
+      "observed": {
+        "max_rel_err": 1.0000010000341966e-06,
+        "detail": [
+          {
+            "field": "对账 REAL %",
+            "printed": 4.7619,
+            "recomputed": 4.761905,
+            "rel_err": 1.0000010000341966e-06
+          },
+          {
+            "field": "一致 OK %",
+            "printed": 19.0476,
+            "recomputed": 19.047619,
+            "rel_err": 1.0000010000341966e-06
+          },
+          {
+            "field": "过度宣称 %",
+            "printed": 9.52381,
+            "recomputed": 9.52381,
+            "rel_err": 4.9999997427052975e-08
+          }
+        ]
+      },
+      "note": null
+    },
+    {
+      "id": "C05.partition_conservation",
+      "question": "OK+OVERCLAIM+UNVERIFIED 是否分完 21 项；宣称 REAL 18 是否被 1+2+15 解释",
+      "status": "pass",
+      "expected": "两处闭合",
+      "observed": {
+        "partition": {
+          "OK": 4.0,
+          "OVERCLAIM": 2.0,
+          "UNVERIFIED": 15.0,
+          "sum": 21.0,
+          "equals_total": true
+        },
+        "claimed_vs_reconciled": {
+          "claimed_REAL": 18.0,
+          "reconciled_REAL": 1.0,
+          "gap": 17.0,
+          "explained_by": {
+            "reconciled_REAL": 1.0,
+            "OVERCLAIM": 2.0,
+            "UNVERIFIED": 15.0,
+            "sum": 18.0
+          }
+        }
+      },
+      "note": null
+    },
+    {
+      "id": "C06.saturation",
+      "question": "饱和比 0.300 是否恰等于 3 能力 / 10 证据行",
+      "status": "pass",
+      "expected": 0.0,
+      "observed": {
+        "printed": 0.3,
+        "recomputed": 0.3,
+        "abs_err": 0.0
+      },
+      "note": null
+    },
+    {
+      "id": "C07.sql_uniqueness",
+      "question": "『重跑 SQL 条数 20』是否等于互不相同的查询数",
+      "status": "fail",
+      "expected": "20 distinct",
+      "observed": {
+        "n_rows": 20,
+        "distinct_sql_prefixes": 14,
+        "duplicate_value_groups": {
+          "1": [
+            "n-007",
+            "n-014"
+          ],
+          "3": [
+            "n-012",
+            "n-023"
+          ],
+          "4.7619": [
+            "n-008",
+            "n-015"
+          ],
+          "10": [
+            "n-005",
+            "n-006",
+            "n-011",
+            "n-022"
+          ],
+          "19.0476": [
+            "n-009",
+            "n-017"
+          ],
+          "21": [
+            "n-004",
+            "n-010"
+          ]
+        },
+        "caveat": "正文 SQL 列被截断（如 `...FROM capabi`），互异性按截断串比较，真实互异数可能更低"
+      },
+      "note": null
+    },
+    {
+      "id": "C08.provenance_markers_present",
+      "question": "被审对象 markdown 内是否存在真实溯源标记/块（非语法示例），以复核『块内裸数字 0』",
+      "status": "fail",
+      "expected": ">=20 real markers inside 2 blocks",
+      "observed": {
+        "real_marker_occurrences": 0,
+        "prov_begin_occurrences": 1,
+        "syntax_example_present": true,
+        "interpretation": "仅 1 处语法示例 + 1 处语法说明；无任何真实 {{prov:<id>}} 标注、无 prov:begin/end 块"
+      },
+      "note": null
+    },
+    {
+      "id": "C09.negative_control_coverage",
+      "question": "声明的 8 类 FAIL 码是否各有命名负例（§6 仅列 5 类）",
+      "status": "fail",
+      "expected": "8/8 covered",
+      "observed": {
+        "declared_fail_codes": 8,
+        "codes_with_named_negative_control": [
+          "FABRICATED",
+          "FIGURE_HASH",
+          "SNAP_HASH",
+          "SOURCE_DRIFT",
+          "UNMARKED"
+        ],
+        "uncovered": 3
+      },
+      "note": null
+    },
+    {
+      "id": "C10.frozen_artifact_reachable",
+      "question": "声明的冻结工件能否取回、snapshot_hash 能否独立复算",
+      "status": "not_run",
+      "expected": "sha256:f46ab6f316a2c10c1c38b67594643eb0483c0e7cbe7d67c7e20dfcb374f9f572",
+      "observed": {
+        "path": "/root/tp-agent/work/m4976/artifacts/capability_ledger/capability_ledger_resolved.json",
+        "exists": false,
+        "recomputed": null,
+        "note": "所在工作树 m4976 已不存在；其他工作树同名副本抽样哈希≠f46ab6f3…；全盘 find 超时（120s）未完成，故判 not_run 而非 fail"
+      },
+      "note": null
+    },
+    {
+      "id": "C11.toolchain_version",
+      "question": "工具链版本自陈能否在本节点复现",
+      "status": "not_run",
+      "expected": "构建镜像与控制面节点可不同版本故不判 fail；但『matplotlib 2.4.6』与本节点 numpy 2.4.6 同号，疑为版本号错记到 matplotlib 名下（matplotlib 2.x 无 2.4.6 属外部知识，未机器验证）",
+      "observed": {
+        "python": "3.11.6",
+        "matplotlib": "3.10.8",
+        "numpy": "2.4.6",
+        "reported_toolchain": "Python 3.10 / matplotlib 2.4.6 后端 Agg / numpy / stdlib sqlite3"
+      },
+      "note": null
+    },
+    {
+      "id": "C12.figure_data_traceability",
+      "question": "图 1–3 的数组是否在溯源账本内有可重跑 SQL 记录",
+      "status": "fail",
+      "expected": "figure arrays bound to sql records",
+      "observed": {
+        "figure_records": 3,
+        "fields_per_record": [
+          "pid",
+          "figure",
+          "files",
+          "hash_prefixes"
+        ],
+        "figure_data_sql_bindings": 0,
+        "implication": "账本只锁图件字节、不锁图件数值；『图数组=一条可重跑 SQL』在账本内不可复核"
+      },
+      "note": null
+    },
+    {
+      "id": "C13.funnel_stage_values",
+      "question": "图 3 五阶段是否每阶段都给出可复核计数",
+      "status": "fail",
+      "expected": "5/5 有值",
+      "observed": {
+        "stages_in_text": [
+          "claimed",
+          "reconciled",
+          "machine-checked",
+          "OK",
+          "REAL"
+        ],
+        "stages_with_value": [
+          "21",
+          "4",
+          "1"
+        ],
+        "missing": [
+          "reconciled",
+          "machine-checked"
+        ]
+      },
+      "note": null
+    },
+    {
+      "id": "C14.divergence_rule",
+      "question": "『宣称 REAL 18 → 对账 REAL 1』之间 17 项的降级判据是否在文中定义",
+      "status": "fail",
+      "expected": "classification rule stated",
+      "observed": {
+        "claimed_REAL": 18.0,
+        "reconciled_REAL": 1.0,
+        "gap": 17.0,
+        "labelled_OVERCLAIM": 2.0,
+        "labelled_UNVERIFIED": 15.0,
+        "implication": "17 项降级中仅 2 项命名为 OVERCLAIM，其余 15 项归 UNVERIFIED；两标签的判定谓词全文未给出，『过度宣称 9.5%』易被读成全貌"
+      },
+      "note": null
+    },
+    {
+      "id": "C15.gate_rerun",
+      "question": "门禁裁定 PASS（FAIL 0 / WARN 0）能否由审核者独立重执行",
+      "status": "not_run",
+      "expected": "rerun reproduces PASS",
+      "observed": {
+        "snapshot_sqlite": "不可得",
+        "manuscript_with_markers": "不可得",
+        "producer_scripts": "未读取（保独立性）",
+        "consequence": "该裁定在本次审核中保持『未复核』，不升格为 verified"
+      },
+      "note": null
+    },
+    {
+      "id": "C16.readonly_claim_strength",
+      "question": "『校验器物理上无法改写自己的证据』是否成立",
+      "status": "fail",
+      "expected": "holds against filesystem-level rewrite",
+      "observed": {
+        "actual_guarantee": "sqlite3 mode=ro 只阻止经该连接的写事务；文件系统层替换不受约束",
+        "report_own_caveat": "未知造假形态（重写工件→重建快照→一致重算哈希）可绕过，需外部时间戳/签名。"
+      },
+      "note": null
+    },
+    {
+      "id": "C17.reviewer_independence",
+      "question": "审核输入是否仅含原文、不含生产者解释",
+      "status": "pass",
+      "expected": "context == source only",
+      "observed": {
+        "inputs": [
+          "任务书契约声明",
+          "GET /tensor/reports/5606 的 markdown 落盘件"
+        ],
+        "not_read": [
+          "生产者实现代码 snapshot.py/provenance.py/skeleton.py/figures.py/verify.py",
+          "生产者 rationale / 自评",
+          "其它 report_id 的 markdown"
+        ],
+        "limitation": "未读实现 ⇒ 只能判『文档与账本能否支撑声明』，不能判代码是否照描述执行"
+      },
+      "note": null
+    },
+    {
+      "id": "C18.no_numeric_contradiction",
+      "question": "表 1 与 20 条记录之间是否存在数值矛盾",
+      "status": "pass",
+      "expected": "no contradiction",
+      "observed": {
+        "percent_checks": 3,
+        "max_rel_err": 1.0000010000341966e-06,
+        "partition_closed": true,
+        "note": "本次审核的正面结论：印刷数字、SQL 语义、分类划分自洽，未见伪造痕迹"
+      },
+      "note": null
+    }
+  ],
+  "checks_summary": {
+    "pass": [
+      "C01.source_hash",
+      "C02.quotes_locatable",
+      "C03.record_count",
+      "C04.percent_recompute",
+      "C05.partition_conservation",
+      "C06.saturation",
+      "C17.reviewer_independence",
+      "C18.no_numeric_contradiction"
+    ],
+    "fail": [
+      "C07.sql_uniqueness",
+      "C08.provenance_markers_present",
+      "C09.negative_control_coverage",
+      "C12.figure_data_traceability",
+      "C13.funnel_stage_values",
+      "C14.divergence_rule",
+      "C16.readonly_claim_strength"
+    ],
+    "not_run": [
+      "C10.frozen_artifact_reachable",
+      "C11.toolchain_version",
+      "C15.gate_rerun"
+    ]
+  },
+  "derived": {
+    "table1": {
+      "快照哈希（SQLite 字节 SHA-256）": 46.0,
+      "溯源记录数": 23.0,
+      "强制块数": 2.0,
+      "块内带标记数字": 23.0,
+      "块内裸数字": 0.0,
+      "重跑 SQL 条数": 20.0,
+      "校验图件文件数": 6.0,
+      "门禁裁定": 0.0,
+      "注册能力总数": 21.0,
+      "证据行总数": 10.0,
+      "带证据能力数": 3.0,
+      "宣称 REAL": 18.0,
+      "对账 REAL": 1.0,
+      "一致 OK": 4.0,
+      "过度宣称 OVERCLAIM": 2.0,
+      "未验证 UNVERIFIED": 15.0,
+      "证据获取饱和比": 0.3,
+      "领域数": 10.0
+    },
+    "conservation": {
+      "capability_total": 21.0,
+      "divergence_partition": {
+        "OK": 4.0,
+        "OVERCLAIM": 2.0,
+        "UNVERIFIED": 15.0,
+        "sum": 21.0,
+        "equals_total": true
+      },
+      "claimed_vs_reconciled": {
+        "claimed_REAL": 18.0,
+        "reconciled_REAL": 1.0,
+        "gap": 17.0,
+        "explained_by": {
+          "reconciled_REAL": 1.0,
+          "OVERCLAIM": 2.0,
+          "UNVERIFIED": 15.0,
+          "sum": 18.0
+        }
+      },
+      "percent_recompute": [
+        {
+          "field": "对账 REAL %",
+          "printed": 4.7619,
+          "recomputed": 4.761905,
+          "rel_err": 1.0000010000341966e-06
+        },
+        {
+          "field": "一致 OK %",
+          "printed": 19.0476,
+          "recomputed": 19.047619,
+          "rel_err": 1.0000010000341966e-06
+        },
+        {
+          "field": "过度宣称 %",
+          "printed": 9.52381,
+          "recomputed": 9.52381,
+          "rel_err": 4.9999997427052975e-08
+        }
+      ],
+      "percent_max_rel_err": 1.0000010000341966e-06,
+      "saturation": {
+        "printed": 0.3,
+        "recomputed": 0.3,
+        "abs_err": 0.0
+      },
+      "duplicate_value_groups": {
+        "1": [
+          "n-007",
+          "n-014"
+        ],
+        "3": [
+          "n-012",
+          "n-023"
+        ],
+        "4.7619": [
+          "n-008",
+          "n-015"
+        ],
+        "10": [
+          "n-005",
+          "n-006",
+          "n-011",
+          "n-022"
+        ],
+        "19.0476": [
+          "n-009",
+          "n-017"
+        ],
+        "21": [
+          "n-004",
+          "n-010"
+        ]
+      },
+      "distinct_values": 12,
+      "distinct_sql_prefixes": 14,
+      "n_rows": 20
+    },
+    "provenance_rows": [
+      {
+        "pid": "n-004",
+        "value": 21.0,
+        "sql": "SELECT COUNT(*) FROM capability",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 1892
+      },
+      {
+        "pid": "n-005",
+        "value": 10.0,
+        "sql": "SELECT COUNT(*) FROM evidence",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 1962
+      },
+      {
+        "pid": "n-006",
+        "value": 10.0,
+        "sql": "SELECT COUNT(DISTINCT domain) FROM capability",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2030
+      },
+      {
+        "pid": "n-007",
+        "value": 1.0,
+        "sql": "SELECT COUNT(*) FROM capability WHERE reconciled_level = 'REAL'",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2114
+      },
+      {
+        "pid": "n-008",
+        "value": 4.7619,
+        "sql": "SELECT 100.0 * SUM(CASE WHEN reconciled_level = 'REAL' THEN 1 ELSE 0 END) / COUNT(*) FRO",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2215
+      },
+      {
+        "pid": "n-009",
+        "value": 19.0476,
+        "sql": "SELECT 100.0 * SUM(CASE WHEN divergence = 'OK' THEN 1 ELSE 0 END) / COUNT(*) FROM capabi",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2346
+      },
+      {
+        "pid": "n-010",
+        "value": 21.0,
+        "sql": "SELECT COUNT(*) FROM capability",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2478
+      },
+      {
+        "pid": "n-011",
+        "value": 10.0,
+        "sql": "SELECT COUNT(*) FROM evidence",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2548
+      },
+      {
+        "pid": "n-012",
+        "value": 3.0,
+        "sql": "SELECT COUNT(*) FROM capability WHERE evidence_count > 0",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2616
+      },
+      {
+        "pid": "n-013",
+        "value": 18.0,
+        "sql": "SELECT COUNT(*) FROM capability WHERE claimed_level = 'REAL'",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2710
+      },
+      {
+        "pid": "n-014",
+        "value": 1.0,
+        "sql": "SELECT COUNT(*) FROM capability WHERE reconciled_level = 'REAL'",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2809
+      },
+      {
+        "pid": "n-015",
+        "value": 4.7619,
+        "sql": "SELECT 100.0 * SUM(CASE WHEN reconciled_level = 'REAL' THEN 1 ELSE 0 END) / COUNT(*) FRO",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 2910
+      },
+      {
+        "pid": "n-016",
+        "value": 4.0,
+        "sql": "SELECT COUNT(*) FROM capability WHERE divergence = 'OK'",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 3041
+      },
+      {
+        "pid": "n-017",
+        "value": 19.0476,
+        "sql": "SELECT 100.0 * SUM(CASE WHEN divergence = 'OK' THEN 1 ELSE 0 END) / COUNT(*) FROM capabi",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 3134
+      },
+      {
+        "pid": "n-018",
+        "value": 2.0,
+        "sql": "SELECT COUNT(*) FROM capability WHERE divergence = 'OVERCLAIM'",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 3266
+      },
+      {
+        "pid": "n-019",
+        "value": 9.52381,
+        "sql": "SELECT 100.0 * SUM(CASE WHEN divergence = 'OVERCLAIM' THEN 1 ELSE 0 END) / COUNT(*) FROM",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 3366
+      },
+      {
+        "pid": "n-020",
+        "value": 15.0,
+        "sql": "SELECT COUNT(*) FROM capability WHERE divergence = 'UNVERIFIED'",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 3498
+      },
+      {
+        "pid": "n-021",
+        "value": 0.3,
+        "sql": "SELECT COUNT(DISTINCT capability_id) * 1.0 / COUNT(*) FROM evidence",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 3600
+      },
+      {
+        "pid": "n-022",
+        "value": 10.0,
+        "sql": "SELECT COUNT(DISTINCT domain) FROM capability",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 3707
+      },
+      {
+        "pid": "n-023",
+        "value": 3.0,
+        "sql": "SELECT COUNT(DISTINCT reconciled_level) FROM capability",
+        "snap_prefix": "f46ab6f316a2",
+        "offset": 3791
+      }
+    ],
+    "figure_rows": [
+      {
+        "pid": "fig-001",
+        "figure": "fig1_saturation",
+        "files": [
+          "fig1_saturation.png",
+          "fig1_saturation.pdf"
+        ],
+        "hash_prefixes": [
+          "c2c890360ad3",
+          "037bb6c488eb"
+        ],
+        "offset": 3956
+      },
+      {
+        "pid": "fig-002",
+        "figure": "fig2_coverage_heatmap",
+        "files": [
+          "fig2_coverage_heatmap.png",
+          "fig2_coverage_heatmap.pdf"
+        ],
+        "hash_prefixes": [
+          "00e5bb968654",
+          "fea7a9751b20"
+        ],
+        "offset": 4062
+      },
+      {
+        "pid": "fig-003",
+        "figure": "fig3_success_funnel",
+        "files": [
+          "fig3_success_funnel.png",
+          "fig3_success_funnel.pdf"
+        ],
+        "hash_prefixes": [
+          "f5a14a4b1ddf",
+          "d1996496a632"
+        ],
+        "offset": 4186
+      }
+    ],
+    "frozen_artifact": {
+      "path": "/root/tp-agent/work/m4976/artifacts/capability_ledger/capability_ledger_resolved.json",
+      "exists": false,
+      "sha256": null
+    }
+  },
+  "env": {
+    "python": "3.11.6",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.6",
+    "reported_toolchain": "Python 3.10 / matplotlib 2.4.6 后端 Agg / numpy / stdlib sqlite3"
+  },
+  "generated_at": "2026-11-12T02:56:26.992990+00:00"
+}
