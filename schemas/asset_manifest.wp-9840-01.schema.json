@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://tensorplatform.local/schemas/asset_manifest.wp-9840-01.schema.json",
   "title": "asset_manifest.v1 — pinned instance schema for work package wp-9840-01 (report 9840)",
   "description": "Package-scoped companion to schemas/asset_manifest.v1.schema.json (that file pins package_id=wp-448-01, i.e. another package's contract, so it cannot be reused verbatim). This file pins the shape actually emitted by scripts/kf_register_9840.py (32 fragment assets; whole-document registration is carried by source.hash, see integrity.document_registration) so that acceptance item schema_pass is a re-runnable check rather than an assertion. The result envelope itself is validated against the unmodified repo schema schemas/kf_result.v1.schema.json. If the platform-side schema differs, the platform gate wins and this artifact must be revised.",

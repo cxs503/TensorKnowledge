@@ -22,6 +22,11 @@ Checks (each printed PASS/FAIL, exit code 1 on any failure):
   lit:<id>         every claim literal is a canonical rendering of ref/got
   bench:*          benchmark table complete (ref, got, relative error)
 
+A missing python dependency (``jsonschema``) is reported as ``env:dependency =
+FAIL`` with the install command instead of a traceback: it says nothing about the
+package content, and the repository runner (``validate_sediment_packages.py``)
+labels it ``blocked-missing-dependency`` rather than ``fail``.
+
 Outputs (committed as run artefacts)::
 
     run/verification.json   all checks + environment + record hashes
@@ -50,6 +55,7 @@ sys.path.insert(0, str(SCRIPTS))
 import sloshing_reference as REF  # noqa: E402
 from sediment_lib import (  # noqa: E402
     Checks,
+    DependencyError,
     GitSource,
     SchemaSet,
     canonical_renderings,
@@ -139,7 +145,14 @@ def main() -> int:
                  f"{len(claims)}/{len(evidences)}/{len(provenances)}")
 
     # ---- schema / xref / index / discipline ------------------------------
-    schemas = SchemaSet(SCHEMAS)
+    try:
+        schemas = SchemaSet(SCHEMAS)
+    except DependencyError as exc:
+        # an environment problem is reported as such: it is *not* evidence that
+        # the package content is wrong, and the repository runner classifies on
+        # the ``env:dependency`` line rather than on the exit code alone
+        checks.check("env:dependency", False, str(exc))
+        return _finish(checks, pkg, args, {"benchmark": None}, src_root, sha, partial=True)
     for kind, records in (("claim", claims), ("evidence", evidences), ("provenance", provenances)):
         bad = [m for m in (schemas.validate(f"{kind}-record.schema.json", r) for r in records) if m]
         checks.check(f"schema:{kind}", not bad, bad[0] if bad else f"{len(records)} valid")

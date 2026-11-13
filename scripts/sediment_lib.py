@@ -35,6 +35,7 @@ from pathlib import Path
 from typing import Iterable, Sequence
 
 __all__ = [
+    "DependencyError",
     "GitSource",
     "quote_sha256",
     "SchemaSet",
@@ -109,12 +110,32 @@ def quote_of(lines: Sequence[str], first: int, last: int) -> str:
 # ---------------------------------------------------------------------------
 # schema validation
 # ---------------------------------------------------------------------------
+class DependencyError(RuntimeError):
+    """A python package the verifier needs is not installed in this interpreter.
+
+    Raised instead of a bare ``ModuleNotFoundError`` so a caller can *report* the
+    missing module (and the pinned requirements file) as an environment problem
+    rather than let it look like a failed knowledge asset.
+    """
+
+    def __init__(self, module: str, detail: str = ""):
+        self.module = module
+        self.detail = detail or f"No module named '{module}'"
+        super().__init__(
+            f"missing python module '{module}' ({self.detail}); "
+            "install requirements-validation.txt: python -m pip install -r requirements-validation.txt"
+        )
+
+
 class SchemaSet:
     """``schemas/*.schema.json`` loaded into a registry keyed by ``$id``."""
 
     def __init__(self, schema_dir: Path):
-        import jsonschema
-        from referencing import Registry, Resource
+        try:
+            import jsonschema
+            from referencing import Registry, Resource
+        except ImportError as exc:  # environment, not asset content
+            raise DependencyError(getattr(exc, "name", None) or "jsonschema", str(exc)) from exc
 
         self._jsonschema = jsonschema
         self.docs: dict[str, dict] = {}
