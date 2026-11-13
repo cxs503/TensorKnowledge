@@ -1,0 +1,437 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-9246-01",
+  "task_type": "01-asset-registration",
+  "report_id": "9246",
+  "lane": "B",
+  "generated_at": "2026-11-12T01:35:04.027065Z",
+  "producer": "kf-worker/m15636",
+  "source": {
+    "report_id": "9246",
+    "source_uri": "tensor://reports/9246",
+    "source_field": "markdown",
+    "source_hash": "sha256:80bcb3216845e02d844926b8d2e733882e8de69ebd756ff706296a8ab3e165b5",
+    "contract_source_hash": "sha256:80bcb3216845e02d844926b8d2e733882e8de69ebd756ff706296a8ab3e165b5",
+    "hash_algo": "sha256",
+    "hash_match": true,
+    "chars": 11250,
+    "contract_chars": 11250,
+    "chars_match_contract": true,
+    "bytes": 11440,
+    "lines": 223,
+    "has_crlf": false,
+    "has_trailing_newline": true,
+    "line_counting": "logical lines = markdown.split(chr(10)); 1-based",
+    "fetched_via": "GET /api/v1/tensor/reports/9246",
+    "record_fields": {
+      "title": "IN144-N09: Granular Bed Fluid-Solid Coupling - Ergun Pressure Drop & Richardson-Zaki Settling Validation",
+      "scenario_key": "IN144-N09",
+      "status": "unknown"
+    }
+  },
+  "counts": {
+    "assets": 18,
+    "by_class": {
+      "report_markdown": 1,
+      "source_code_reference": 3,
+      "data_artifact_reference": 1,
+      "figure_reference": 6,
+      "repository_reference": 1,
+      "literature_reference": 5,
+      "method_reference": 1
+    },
+    "by_resolution": {
+      "referenced_unresolved": 18
+    },
+    "resolved_in_source": 0,
+    "referenced_unresolved": 18,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "report-9246-markdown",
+      "in_report_section": "\u00a71 Case Introduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 50,
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "# IN144-N09: Granular Bed Fluid-Solid Coupling Min",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Full markdown source of report 9246"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "source_code_reference",
+      "label": "tensordem.bedcoupling",
+      "in_report_section": "\u00a7 Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10821,
+        "end_char": 10842,
+        "start_line": 216,
+        "end_line": 216,
+        "quote": "tensordem.bedcoupling",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Module containing closures, packing, bed, study submodules"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_bedcoupling_*.py",
+      "in_report_section": "\u00a7 Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10890,
+        "end_char": 10917,
+        "start_line": 217,
+        "end_line": 217,
+        "quote": "tests/test_bedcoupling_*.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "4 test files, 28 tests, all passing"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "source_code_reference",
+      "label": "run_acceptance_study()",
+      "in_report_section": "\u00a7 Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10982,
+        "end_char": 11004,
+        "start_line": 218,
+        "end_line": 218,
+        "quote": "run_acceptance_study()",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Deterministic, seed-controlled acceptance study function"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/in144_n09/results.json",
+      "in_report_section": "\u00a7 Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11060,
+        "end_char": 11092,
+        "start_line": 219,
+        "end_line": 219,
+        "quote": "artifacts/in144_n09/results.json",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Results JSON from acceptance study"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "figure_reference",
+      "label": "artifacts/in144_n09/fig*.png",
+      "in_report_section": "\u00a7 Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11110,
+        "end_char": 11138,
+        "start_line": 220,
+        "end_line": 220,
+        "quote": "artifacts/in144_n09/fig*.png",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "5 figures, programmatic generation"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "repository_reference",
+      "label": "TensorDEM branch agent/m7894",
+      "in_report_section": "\u00a7 Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11195,
+        "end_char": 11226,
+        "start_line": 221,
+        "end_line": 221,
+        "quote": "TensorDEM, branch `agent/m7894`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Source repository and branch"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "literature_reference",
+      "label": "Ergun (1952)",
+      "in_report_section": "\u00a71 Case Introduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 307,
+        "end_char": 338,
+        "start_line": 8,
+        "end_line": 8,
+        "quote": "Ergun pressure drop correlation",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Ergun, S. (1952) pressure drop correlation for packed beds"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "literature_reference",
+      "label": "Richardson-Zaki (1954)",
+      "in_report_section": "\u00a71 Case Introduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 472,
+        "end_char": 505,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "Richardson-Zaki hindered settling",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Richardson & Zaki (1954) hindered settling correlation"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "method_reference",
+      "label": "Gidaspow drag law",
+      "in_report_section": "\u00a71 Case Introduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 670,
+        "end_char": 687,
+        "start_line": 12,
+        "end_line": 12,
+        "quote": "Gidaspow drag law",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Blends Ergun (dense) and Wen-Yu (dilute) correlations"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "literature_reference",
+      "label": "Schiller-Naumann",
+      "in_report_section": "\u00a71 Case Introduction",
+      "locator": {
+        "method": "char_span",
+        "start_char": 929,
+        "end_char": 963,
+        "start_line": 15,
+        "end_line": 15,
+        "quote": "Schiller-Naumann terminal velocity",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Schiller-Naumann single-particle drag correlation"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "literature_reference",
+      "label": "Anderson-Jackson coupling",
+      "in_report_section": "\u00a72 Methodology",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2484,
+        "end_char": 2509,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "Anderson-Jackson coupling",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Anderson & Jackson inter-phase coupling formulation"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "literature_reference",
+      "label": "Koch-Hill smooth blend",
+      "in_report_section": "\u00a75 Limitations",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8223,
+        "end_char": 8232,
+        "start_line": 171,
+        "end_line": 171,
+        "quote": "Koch-Hill",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Alternative smooth drag blend, not implemented"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "figure_reference",
+      "label": "Figure 1: Fixed Bed Pressure Drop",
+      "in_report_section": "\u00a74 Results Visualization",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6054,
+        "end_char": 6087,
+        "start_line": 146,
+        "end_line": 146,
+        "quote": "Figure 1: Fixed Bed Pressure Drop",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "DEM-computed pressure gradient vs Ergun correlation"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "figure_reference",
+      "label": "Figure 2: Local Voidage Field",
+      "in_report_section": "\u00a74 Results Visualization",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6375,
+        "end_char": 6404,
+        "start_line": 149,
+        "end_line": 149,
+        "quote": "Figure 2: Local Voidage Field",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Spatial distribution of per-particle porosity"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "figure_reference",
+      "label": "Figure 3: Richardson-Zaki Correlation",
+      "in_report_section": "\u00a74 Results Visualization",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6667,
+        "end_char": 6704,
+        "start_line": 152,
+        "end_line": 152,
+        "quote": "Figure 3: Richardson-Zaki Correlation",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Normalized particle velocity vs porosity"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "figure_reference",
+      "label": "Figure 4: Acceptance Criteria Summary",
+      "in_report_section": "\u00a74 Results Visualization",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6950,
+        "end_char": 6987,
+        "start_line": 155,
+        "end_line": 155,
+        "quote": "Figure 4: Acceptance Criteria Summary",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Bar chart of all six criteria"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "figure_reference",
+      "label": "Figure 5: Terminal Velocity Comparison",
+      "in_report_section": "\u00a74 Results Visualization",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7199,
+        "end_char": 7237,
+        "start_line": 158,
+        "end_line": 158,
+        "quote": "Figure 5: Terminal Velocity Comparison",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "file_exists_in_worktree",
+        "result": "unresolved"
+      },
+      "note": "Simulation vs Schiller-Naumann analytical solution"
+    }
+  ],
+  "claims": [],
+  "claims_note": "claims intentionally empty: this package only registers assets (task_type=01-asset-registration); objective.classify_report_type=false, no extraction performed; no invented claims",
+  "integrity": {
+    "quote_uniqueness": "all locator quotes verified unique or flagged non-unique",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true
+  }
+}
