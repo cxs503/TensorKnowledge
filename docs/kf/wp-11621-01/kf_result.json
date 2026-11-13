@@ -1,0 +1,808 @@
+{
+  "package_id": "wp-11621-01",
+  "task_type": "01-asset-registration",
+  "report_id": "11621",
+  "provenance": {
+    "source_hash": "sha256:89a6a0828d4feddbc1c1ee81e80cc7c844ea234c01c2efeec215fcd7ed54dafb",
+    "source_field": "markdown",
+    "producer": "kf-worker/m15727",
+    "emitted_at": "2026-11-12T03:00:38.717475+00:00",
+    "notes": "hash recomputed from GET /api/v1/tensor/reports/11621 markdown (UTF-8 bytes); matches contract source_hash sha256:89a6a0828d4feddbc1c1ee81e80cc7c844ea234c01c2efeec215fcd7ed54dafb"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "manifest_version": "1.0",
+      "package_id": "wp-11621-01",
+      "task_type": "01-asset-registration",
+      "report_id": "11621",
+      "lane": "C",
+      "generated_at": "2026-11-12T03:00:38.245637+00:00",
+      "producer": "kf-worker/m15727",
+      "source": {
+        "report_id": "11621",
+        "source_uri": "tensor://reports/11621",
+        "source_field": "markdown",
+        "source_hash": "sha256:89a6a0828d4feddbc1c1ee81e80cc7c844ea234c01c2efeec215fcd7ed54dafb",
+        "contract_source_hash": "sha256:89a6a0828d4feddbc1c1ee81e80cc7c844ea234c01c2efeec215fcd7ed54dafb",
+        "hash_algo": "sha256",
+        "hash_match": true,
+        "chars": 7198,
+        "contract_chars": 7198,
+        "chars_match_contract": true,
+        "bytes": 10224,
+        "lines": 303,
+        "has_crlf": false,
+        "has_trailing_newline": true,
+        "line_counting": "logical lines = markdown.rstrip(chr(10)).split(chr(10)); 1-based",
+        "fetched_via": "GET /api/v1/tensor/reports/11621",
+        "record_fields": {
+          "title": "TensorFVM 数值黏性/色散算子验证面：修正方程 ν_num=cΔx(1-C)/2 波包衰减实测 + 离散放大因子 G(θ) 全域比对",
+          "scenario_key": "p73w3-n04-fvm-numerical-viscosity",
+          "mission_id": 9775,
+          "status": "published",
+          "created_at": "2026-11-10T14:48:37.712306+00:00",
+          "tags": [
+            "FVM",
+            "numerical-viscosity",
+            "dispersion",
+            "von-Neumann",
+            "modified-equation",
+            "verification"
+          ],
+          "contract_title": "TensorFVM 数值黏性/色散算子验证面：修正方程 ν_num=cΔx(1-C)/2 波包衰减实测 + 离散放大因子 G(θ) 全域比对",
+          "contract_scenario_key": "p73w3-n04-fvm-numerical-viscosity",
+          "title_matches_contract": true,
+          "scenario_matches_contract": true
+        },
+        "platform_attachment_probes": {
+          "GET /tensor/reports/11621/artifacts": "not_probed_here",
+          "figure_probe": {
+            "fig1_geometry.png": {
+              "http_status": 200,
+              "bytes": 71730
+            },
+            "fig2_added_mass.png": {
+              "http_status": 200,
+              "bytes": 50100
+            },
+            "fig3_wet_modes.png": {
+              "http_status": 200,
+              "bytes": 54516
+            },
+            "fig4_springing.png": {
+              "http_status": 200,
+              "bytes": 47473
+            },
+            "fig5_whipping.png": {
+              "http_status": 200,
+              "bytes": 59749
+            },
+            "fig6_fatigue.png": {
+              "http_status": 200,
+              "bytes": 38855
+            }
+          }
+        }
+      },
+      "assets": [
+        {
+          "asset_id": "r11621:source-markdown",
+          "kind": "report_markdown",
+          "name": "report-11621-markdown",
+          "locator": {
+            "source_field": "markdown",
+            "line": 1
+          },
+          "source_uri": "tensor://reports/11621",
+          "media_type": "text/markdown",
+          "bytes": 10224,
+          "chars": 7198,
+          "lines": 303,
+          "sha256": "89a6a0828d4feddbc1c1ee81e80cc7c844ea234c01c2efeec215fcd7ed54dafb",
+          "hash_scope": "UTF-8 bytes of the markdown field as served by GET /api/v1/tensor/reports/11621",
+          "local_copy": "runs/wp-11621-01/source_11621.md",
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/11621"
+          },
+          "hash_matches_contract": true,
+          "chars_matches_contract": true
+        },
+        {
+          "asset_id": "r11621:figure:01",
+          "kind": "embedded_figure",
+          "name": "fig1_geometry.png",
+          "caption": "船型/剖面/3D 湿表面面元",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/0/name",
+            "quote": "fig1_geometry.png"
+          },
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/11621/figures/fig1_geometry.png",
+            "http_status": 200,
+            "bytes": 71730,
+            "sha256": "010769471374eadbd69e4ea47765880602851f353cefa1f49fd5d44677abe964"
+          }
+        },
+        {
+          "asset_id": "r11621:figure:02",
+          "kind": "embedded_figure",
+          "name": "fig2_added_mass.png",
+          "caption": "a33(x) 与条带/3D 广义附加质量",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/1/name",
+            "quote": "fig2_added_mass.png"
+          },
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/11621/figures/fig2_added_mass.png",
+            "http_status": 200,
+            "bytes": 50100,
+            "sha256": "ea04c1c6d4682e10e3de597e33822f06815727bf79fe1615afcbcf228c614fc5"
+          }
+        },
+        {
+          "asset_id": "r11621:figure:03",
+          "kind": "embedded_figure",
+          "name": "fig3_wet_modes.png",
+          "caption": "干湿频率与条带 vs 3D BEM 偏差",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/2/name",
+            "quote": "fig3_wet_modes.png"
+          },
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/11621/figures/fig3_wet_modes.png",
+            "http_status": 200,
+            "bytes": 54516,
+            "sha256": "7ec6bd4847c79a93a9b2eb563cf092469311c14fee9efda263b9e283672c13b0"
+          }
+        },
+        {
+          "asset_id": "r11621:figure:04",
+          "kind": "embedded_figure",
+          "name": "fig4_springing.png",
+          "caption": "springing 共振扫频与应力模型带",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/3/name",
+            "quote": "fig4_springing.png"
+          },
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/11621/figures/fig4_springing.png",
+            "http_status": 200,
+            "bytes": 47473,
+            "sha256": "94fbeaa662c490a28617c328b91ac0853752d2c2c130ff59aad3433fc030a4e0"
+          }
+        },
+        {
+          "asset_id": "r11621:figure:05",
+          "kind": "embedded_figure",
+          "name": "fig5_whipping.png",
+          "caption": "鞭振应力时程与衰减包络",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/4/name",
+            "quote": "fig5_whipping.png"
+          },
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/11621/figures/fig5_whipping.png",
+            "http_status": 200,
+            "bytes": 59749,
+            "sha256": "34c548a9156b632715853eb222f36925e92f289fa3ce50f4ffc3d178ec06071b"
+          }
+        },
+        {
+          "asset_id": "r11621:figure:06",
+          "kind": "embedded_figure",
+          "name": "fig6_fatigue.png",
+          "caption": "三分量疲劳损伤与寿命",
+          "locator": {
+            "source_field": "record",
+            "pointer": "/figures/5/name",
+            "quote": "fig6_fatigue.png"
+          },
+          "resolution": {
+            "status": "resolved",
+            "scope": "platform_api",
+            "via": "GET /tensor/reports/11621/figures/fig6_fatigue.png",
+            "http_status": 200,
+            "bytes": 38855,
+            "sha256": "bf275c6f8e238b802b910e5c3ccd4289334aa3e909105ab855ba256ec4496b10"
+          }
+        },
+        {
+          "asset_id": "r11621:ref:01",
+          "kind": "data_artifact_reference",
+          "name": "artifacts/fvm_modified_equation.json",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 160,
+            "quote": "**产物路径**: `artifacts/fvm_modified_equation.json` (227 KB)"
+          },
+          "quote_token": "artifacts/fvm_modified_equation.json",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:02",
+          "kind": "figure_reference",
+          "name": "fig1_von_neumann.png",
+          "reference_form": "markdown_image_link",
+          "locator": {
+            "source_field": "markdown",
+            "line": 175,
+            "quote": "![Von Neumann Amplification Factor](fig1_von_neumann.png)"
+          },
+          "quote_token": "fig1_von_neumann.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:03",
+          "kind": "figure_reference",
+          "name": "fig2_nu_comparison.png",
+          "reference_form": "markdown_image_link",
+          "locator": {
+            "source_field": "markdown",
+            "line": 184,
+            "quote": "![Numerical Viscosity Comparison](fig2_nu_comparison.png)"
+          },
+          "quote_token": "fig2_nu_comparison.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:04",
+          "kind": "figure_reference",
+          "name": "fig3_grid_convergence.png",
+          "reference_form": "markdown_image_link",
+          "locator": {
+            "source_field": "markdown",
+            "line": 192,
+            "quote": "![Grid Convergence](fig3_grid_convergence.png)"
+          },
+          "quote_token": "fig3_grid_convergence.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:05",
+          "kind": "source_code_reference",
+          "name": "src/tensorfvm/verification/numerical_viscosity.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 261,
+            "quote": "| `src/tensorfvm/verification/numerical_viscosity.py` | 核心验证模块 | 18.6 KB |"
+          },
+          "quote_token": "src/tensorfvm/verification/numerical_viscosity.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:06",
+          "kind": "source_code_reference",
+          "name": "tests/test_numerical_viscosity.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 262,
+            "quote": "| `tests/test_numerical_viscosity.py` | pytest 测试套件（57 用例） | 9.5 KB |"
+          },
+          "quote_token": "tests/test_numerical_viscosity.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:07",
+          "kind": "data_artifact_reference",
+          "name": "artifacts/fvm_modified_equation.json",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 263,
+            "quote": "| `artifacts/fvm_modified_equation.json` | JSON 产物 | 227 KB |"
+          },
+          "quote_token": "artifacts/fvm_modified_equation.json",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:08",
+          "kind": "document_reference",
+          "name": "docs/numerical-viscosity/REPORT.md",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 264,
+            "quote": "| `docs/numerical-viscosity/REPORT.md` | 本报告 | - |"
+          },
+          "quote_token": "docs/numerical-viscosity/REPORT.md",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": [
+              "docs/kf/wp-1226-01/REPORT.md",
+              "docs/rci-f1-abc/REPORT.md"
+            ]
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:09",
+          "kind": "figure_reference",
+          "name": "docs/numerical-viscosity/fig1_von_neumann.png",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 265,
+            "quote": "| `docs/numerical-viscosity/fig1_von_neumann.png` | von Neumann 图 | 291 KB |"
+          },
+          "quote_token": "docs/numerical-viscosity/fig1_von_neumann.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:10",
+          "kind": "figure_reference",
+          "name": "docs/numerical-viscosity/fig2_nu_comparison.png",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 266,
+            "quote": "| `docs/numerical-viscosity/fig2_nu_comparison.png` | ν 对比图 | 84 KB |"
+          },
+          "quote_token": "docs/numerical-viscosity/fig2_nu_comparison.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:11",
+          "kind": "figure_reference",
+          "name": "docs/numerical-viscosity/fig3_grid_convergence.png",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 267,
+            "quote": "| `docs/numerical-viscosity/fig3_grid_convergence.png` | 网格收敛图 | 62 KB |"
+          },
+          "quote_token": "docs/numerical-viscosity/fig3_grid_convergence.png",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:12",
+          "kind": "source_code_reference",
+          "name": "scripts/generate_numerical_viscosity_artifacts.py",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 268,
+            "quote": "| `scripts/generate_numerical_viscosity_artifacts.py` | 产物生成脚本 | 5.3 KB |"
+          },
+          "quote_token": "scripts/generate_numerical_viscosity_artifacts.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:13",
+          "kind": "document_reference",
+          "name": "agent/m9775",
+          "reference_form": "backticked_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 274,
+            "quote": "- **代码提交**: 分支 `agent/m9775`，commit 待平台自动推送"
+          },
+          "quote_token": "agent/m9775",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        },
+        {
+          "asset_id": "r11621:ref:14",
+          "kind": "source_code_reference",
+          "name": "tests/test_numerical_viscosity.py",
+          "reference_form": "bare_path",
+          "locator": {
+            "source_field": "markdown",
+            "line": 275,
+            "quote": "- **测试执行**: `pytest tests/test_numerical_viscosity.py -v`，57 passed"
+          },
+          "quote_token": "tests/test_numerical_viscosity.py",
+          "resolution": {
+            "status": "unresolved",
+            "scope": "delivery_worktree",
+            "reason": "path not present in delivery worktree TensorKnowledge",
+            "same_basename_hits": []
+          },
+          "declared_in_report": true,
+          "existence_asserted_by_worker": false
+        }
+      ],
+      "locators": [
+        {
+          "asset_id": "r11621:source-markdown",
+          "locator": {
+            "line": 1,
+            "quote": "# TensorFVM 数值黏性/色散算子验证面"
+          },
+          "quote_sha256": "06f09597f4008bd4415aa43c94928e4782752dcc0393c26a746b42eb618c2dea",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:01",
+          "locator": {
+            "line": 160,
+            "quote": "**产物路径**: `artifacts/fvm_modified_equation.json` (227 KB)"
+          },
+          "quote_sha256": "927948ea57dccf4b6cb335d2688f351c3291b0d8d091eeff958f2fe2e0b62e94",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:02",
+          "locator": {
+            "line": 175,
+            "quote": "![Von Neumann Amplification Factor](fig1_von_neumann.png)"
+          },
+          "quote_sha256": "f754f984d5653f5587b86c582284558be38a476a9d2ca647e2af13a891861685",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:03",
+          "locator": {
+            "line": 184,
+            "quote": "![Numerical Viscosity Comparison](fig2_nu_comparison.png)"
+          },
+          "quote_sha256": "b0c6809d55a506203cd71bed9c1fecd77876073f0dd9713571f9a6ecf63cad44",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:04",
+          "locator": {
+            "line": 192,
+            "quote": "![Grid Convergence](fig3_grid_convergence.png)"
+          },
+          "quote_sha256": "fb362fc9626bf2f8d8315c309d634368b4c2cc30926077b88a5f01c9043413f6",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:05",
+          "locator": {
+            "line": 261,
+            "quote": "| `src/tensorfvm/verification/numerical_viscosity.py` | 核心验证模块 | 18.6 KB |"
+          },
+          "quote_sha256": "3a6ca63a9f1d4c1ad42babdffc7f15668644f495e17c51956865a1b027b4d708",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:06",
+          "locator": {
+            "line": 262,
+            "quote": "| `tests/test_numerical_viscosity.py` | pytest 测试套件（57 用例） | 9.5 KB |"
+          },
+          "quote_sha256": "ea6416d6ee5603986b70a87d34022d077c0d8c8b1dd6f49e05d5878d6acc1ccd",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:07",
+          "locator": {
+            "line": 263,
+            "quote": "| `artifacts/fvm_modified_equation.json` | JSON 产物 | 227 KB |"
+          },
+          "quote_sha256": "65c9220e00c977ee397beec15737c2fc3ae6751a98e3716970ac23309ef256fc",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:08",
+          "locator": {
+            "line": 264,
+            "quote": "| `docs/numerical-viscosity/REPORT.md` | 本报告 | - |"
+          },
+          "quote_sha256": "0f36e76c734dfad6cdf456d051aa323d594b5e4c0173c6ff16fc37af3ca2bcd8",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:09",
+          "locator": {
+            "line": 265,
+            "quote": "| `docs/numerical-viscosity/fig1_von_neumann.png` | von Neumann 图 | 291 KB |"
+          },
+          "quote_sha256": "d3ac4b6a75d07b46fedfe09722c2db52cf088843ecc7db85bdfe6abbe5465c3a",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:10",
+          "locator": {
+            "line": 266,
+            "quote": "| `docs/numerical-viscosity/fig2_nu_comparison.png` | ν 对比图 | 84 KB |"
+          },
+          "quote_sha256": "64b2a9bb93edbe4f469bc65b4b950de5abfbc042cc2e57d0953d3d8e5969b3f6",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:11",
+          "locator": {
+            "line": 267,
+            "quote": "| `docs/numerical-viscosity/fig3_grid_convergence.png` | 网格收敛图 | 62 KB |"
+          },
+          "quote_sha256": "b01d476cc1aa73a1de7eecc0914cdcbc5f49b05fd013d99ac06c548396bdd78b",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:12",
+          "locator": {
+            "line": 268,
+            "quote": "| `scripts/generate_numerical_viscosity_artifacts.py` | 产物生成脚本 | 5.3 KB |"
+          },
+          "quote_sha256": "580acffeb7efda4cd9e4658611e3eff43e784e271488001ed1c1e5450aaefd38",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:13",
+          "locator": {
+            "line": 274,
+            "quote": "- **代码提交**: 分支 `agent/m9775`，commit 待平台自动推送"
+          },
+          "quote_sha256": "190c19794e727feb7335ef9a7363ee7784f5c18c4db404465f36bf230069ffc1",
+          "resolved": true
+        },
+        {
+          "asset_id": "r11621:ref:14",
+          "locator": {
+            "line": 275,
+            "quote": "- **测试执行**: `pytest tests/test_numerical_viscosity.py -v`，57 passed"
+          },
+          "quote_sha256": "3c9eda4bc7957361d4e07e25421f03fea50bdfaba71318b56000dedb094d2b23",
+          "resolved": true
+        }
+      ],
+      "identity_facts": [
+        {
+          "fact_id": "r11621:fact:title",
+          "field": "title",
+          "label": "报告标题",
+          "locator": {
+            "line": 1,
+            "quote": "# TensorFVM 数值黏性/色散算子验证面"
+          },
+          "quote_sha256": "06f09597f4008bd4415aa43c94928e4782752dcc0393c26a746b42eb618c2dea",
+          "resolved": true
+        },
+        {
+          "fact_id": "r11621:fact:scenario_key",
+          "field": "scenario_key",
+          "label": "战役节点",
+          "locator": {
+            "line": 3,
+            "quote": "**战役节点**: p73w3-n04-fvm-numerical-viscosity  "
+          },
+          "quote_sha256": "92baab3fc6cb6e4cfcdb13dbfa555ce854bc2c3182783e9b4a740ec5e570a3a2",
+          "resolved": true
+        },
+        {
+          "fact_id": "r11621:fact:mission_id",
+          "field": "mission_id",
+          "label": "任务ID",
+          "locator": {
+            "line": 4,
+            "quote": "**任务ID**: m9775  "
+          },
+          "quote_sha256": "0cee523f32eaef3bd1ac7a61e382b810253f85ab7d3094a73054aaee751d781a",
+          "resolved": true
+        },
+        {
+          "fact_id": "r11621:fact:status",
+          "field": "status",
+          "label": "完成日期",
+          "locator": {
+            "line": 5,
+            "quote": "**完成日期**: 2026-11-10  "
+          },
+          "quote_sha256": "364d26f738907c28614dce8a43ef4798a1e99832f4c32431bcbdc0adab7d81cc",
+          "resolved": true
+        }
+      ],
+      "claims": [],
+      "claims_empty_reason": "Contract wp-11621-01 objective is register_assets=true / classify_report_type=false, and notes state 'claims 允许为空数组' plus constraints no_forced_claim_generation=true. This工序 registers asset identity only (report_id, markdown byte hash, declared attachments/artifacts); extraction is a downstream工序, so an empty claims array is the complete result, not an omission.",
+      "counts": {
+        "source_documents": 1,
+        "figures_declared_in_record": 6,
+        "figures_with_bytes": 6,
+        "body_references": 14,
+        "distinct_referenced_paths": 12,
+        "assets_total": 21,
+        "assets_resolved": 7,
+        "assets_metadata_only": 0,
+        "assets_unresolved": 14,
+        "locators": 15,
+        "locators_resolved": 15,
+        "claims": 0,
+        "kind_status_histogram": {
+          "data_artifact_reference/unresolved": 2,
+          "document_reference/unresolved": 2,
+          "embedded_figure/resolved": 6,
+          "figure_reference/unresolved": 6,
+          "report_markdown/resolved": 1,
+          "source_code_reference/unresolved": 4
+        }
+      },
+      "id_integrity": {
+        "ids_checked": 21,
+        "duplicates": [],
+        "unique": true
+      },
+      "unresolved": [
+        {
+          "asset_id": "r11621:ref:01",
+          "name": "artifacts/fvm_modified_equation.json",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:02",
+          "name": "fig1_von_neumann.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:03",
+          "name": "fig2_nu_comparison.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:04",
+          "name": "fig3_grid_convergence.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:05",
+          "name": "src/tensorfvm/verification/numerical_viscosity.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:06",
+          "name": "tests/test_numerical_viscosity.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:07",
+          "name": "artifacts/fvm_modified_equation.json",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:08",
+          "name": "docs/numerical-viscosity/REPORT.md",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:09",
+          "name": "docs/numerical-viscosity/fig1_von_neumann.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:10",
+          "name": "docs/numerical-viscosity/fig2_nu_comparison.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:11",
+          "name": "docs/numerical-viscosity/fig3_grid_convergence.png",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:12",
+          "name": "scripts/generate_numerical_viscosity_artifacts.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:13",
+          "name": "agent/m9775",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        },
+        {
+          "asset_id": "r11621:ref:14",
+          "name": "tests/test_numerical_viscosity.py",
+          "reason": "path not present in delivery worktree TensorKnowledge"
+        }
+      ],
+      "observations": [
+        "Report markdown is complete and self-consistent: first line is the H1 title, sections 1-9 all present (303 lines).",
+        "The record metadata declares 6 figures (fig1_geometry.png ... fig6_fatigue.png) whose captions describe a ship hydrodynamics (added-mass/springing/whipping/fatigue) topic that does NOT match this FVM numerical-viscosity report's body (which references fig1_von_neumann.png / fig2_nu_comparison.png / fig3_grid_convergence.png). The platform DOES serve byte payloads for these 6 record figures (HTTP 200, sha256 recorded), so they are registered as resolved attachments; the topic mismatch is flagged as a data-integrity observation for the platform gate, not resolved here.",
+        "All body path references point at TensorFVM artefacts (src/tensorfvm/verification/*.py, tests/*, artifacts/fvm_modified_equation.json, docs/numerical-viscosity/*.png) which do not exist in the TensorKnowledge delivery worktree; they are registered as declared references with existence_asserted_by_worker=false."
+      ],
+      "limitations": [
+        "Registration only: no claim/evidence extraction, no report-type classification, no verified marks (verification is computed by the platform gate).",
+        "source_hash scope = UTF-8 bytes of the markdown string returned by the platform API; any change to the stored markdown (even whitespace) invalidates it.",
+        "Direct psql read of tensor_reports was denied (permission denied for table tensor_reports), so the API is the only source channel used.",
+        "Reference resolution is limited to the delivery worktree; a missing path here is reported as unresolved, never as a broken upstream artefact."
+      ]
+    }
+  },
+  "claims": []
+}
