@@ -1,0 +1,75 @@
+{
+  "id": 14950,
+  "title": "wp-4129-04 独立审核：report 4129 / wp-4129-01 登记包逐条复算（verdict: needs-fix，不阻塞）",
+  "summary": "独立审核 wp-4129-01：原文独立取源复算 34 项，32 通过；注册事实无一条与原文矛盾，查出 2 处登记精度缺陷（符号引文行号错位、引用站点少登记 1 条）。verdict=needs-fix（不阻塞）。",
+  "scenario_key": "benchmark-closure",
+  "mission_id": 15827,
+  "stage": null,
+  "tags": [
+    "kf-wp:wp-4129-04",
+    "independent-review",
+    "red-team",
+    "report-4129",
+    "wp-4129-01",
+    "TensorKnowledge"
+  ],
+  "figures": [
+    {
+      "name": "wp-4129-04.png",
+      "caption": "wp-4129-04 审核证据：34 项复算检查通过面、登记 vs 复算的引用计数缺口、引文面逐字率"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-12T02:48:34.833280+00:00",
+  "markdown": "# wp-4129-04 独立审核：report 4129 / wp-4129-01 资产登记包的逐条复算（verdict: needs-fix）\n\n**工序**：报告→知识产线 `04-independent-review`（lane C） · **审核对象**：`wp-4129-01`（report 4129 的资产登记包）\n**报告原文**：`tensor://reports/4129`，独立取源重算 `sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155`\n（bytes 6901 / chars 3969 / lines 109）\n\n## ① 案例介绍（背景 / 对象 / 参数表）\n\n知识产线的正确性前提是\"互不覆盖 + 零手抄\"：每个工序把结论写进自己的结果信封，任何数字都要能在原文里\n逐字定位。本单是**质量保证工序**，不是生产工序：它不产生新的知识对象，只回答一个问题——\n\n> 上游 `wp-4129-01` 写在 `asset_manifest.json` 里的每一条断言，能不能由审核者从报告原文**独立重算**出来？\n> 它有没有把未验证的东西写成已验证？\n\n被审报告是 TensorFEM PR #77 的三方合并审计（冲突仅 `CHANGELOG.md`，\"行保全≠文档正确\"）。审核对象的参数表：\n\n| 项 | 值 | 来源 |\n|---|---|---|\n| 工序 | wp-4129-04 / 04-independent-review | 工作包契约 |\n| 审核对象 | wp-4129-01 | 上游 KO |\n| 上游产物 sha256 | `sha256:698fb66e1d877a75bd4f921720b3a9f6bc0b8d576fdfe28c835f58d0122d8a4f` | 本单重算 |\n| 报告原文 sha256 | `sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f155` | 本单重算（与契约声明相等） |\n| 报告原文规模 | 3969 chars / 6901 bytes / 109 lines | 本单实测 |\n| 复算检查项 | 34 条（通过 32） | `review_findings.json` |\n| 保真事实 | 14 条（通过 12） | `review_report.json` |\n| 发现 | 2 条（均 minor、不阻塞） | 同上 |\n\n## ② 怎么做的（方法 / 流程 / 工具链）\n\n1. **自己取源**：`GET /api/v1/tensor/reports/4129`，独立登录独立请求，落盘后取 UTF-8 字节哈希；\n   与契约声明 `sha256:8670fa44138a8835…` 逐字节相等（`chars` 也对上）。\n   直连 psql 读表被拒（`permission denied for table tensor_reports`），API 是唯一信道。\n2. **逐条复算**（`scripts/kf_review_wp_4129_04_verify.py`）：把上游 manifest 拆成 5 类可判定的断言面，\n   每条都重新算而不是\"读一遍觉得对\"：\n   - 源身份：hash / bytes / chars / lines / CRLF / 记录字段 / 契约字段；\n   - 定位器：25 条 markdown 引文是否原文子串、是否落在**它声明的那一行**；2 条 record 指针解引用是否等于其 quote；\n   - 计数与 id：类型-状态直方图、资产数、定位器数、定位器 resolved 数、命名空间内唯一性、`id_integrity` 的口径；\n   - git 面：5 个 commit/branch 记号是否逐字存在、前缀算术是否成立；\n   - 诚实面：有无 `verified` 标记、claims 为空是否合规、`未完成` 行有没有被偷换、findings 锚点是否逐字。\n3. **原文切片取证**（`scripts/kf_review_wp_4129_04_evidence.py`）：审核要引的每一句都按行号/子串**切片**得到，\n   随切片存 `quote_sha256`；写盘前断言\"报告里每条引文都是原文子串\"（`scripts/kf_review_wp_4129_04_emit.py`）。\n4. **端点复探**：`/artifacts` 与两张图端点自己再打一次，见 ③ 表。\n5. **独立性**：审核不看生产者的脚本、测试与叙述（`docs/kf/wp-4129-01.md` 里的 JSON 块实测与该包\n   `kf_result.json` 完全相等，读它不增加独立证据）。被排除的上下文逐项写进 `independence.reviewer_context_excluded`。\n\n## ③ 计算结果（数字表，全部程序化注入）\n\n| 检查面 | 上游断言（截断） | 复算值（截断） | 判定 |\n|---|---|---|---|\n| source_hash | \"sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f1 | \"sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f1 | ✓ |\n| source_bytes | 6901 | 6901 | ✓ |\n| source_chars | 3969 | 3969 | ✓ |\n| source_lines | 109 | 109 | ✓ |\n| source_crlf | false | false | ✓ |\n| provenance_hash_eq_contract | \"sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f1 | \"sha256:8670fa44138a8835fac88bbc2722e7b0b8f11c9f87ce8fa728ac0971c2a0f1 | ✓ |\n| record_title | \"PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）\" | \"PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）\" | ✓ |\n| record_scenario_key | \"benchmark-closure\" | \"benchmark-closure\" | ✓ |\n| record_mission_id | 3369 | 3369 | ✓ |\n| record_status | \"published\" | \"published\" | ✓ |\n| record_created_at | \"2026-11-05T04:00:32.361154+00:00\" | \"2026-11-05T04:00:32.361154+00:00\" | ✓ |\n| record_tags | [\"TensorFEM\", \"merge-resolution\", \"changelog\", \"audit\", \"verification- | [\"TensorFEM\", \"merge-resolution\", \"changelog\", \"audit\", \"verification- | ✓ |\n| markdown_quotes_verbatim | \"25 markdown quotes\" | \"25 verbatim\" | ✓ |\n| markdown_quotes_on_declared_line | \"25 markdown quotes\" | \"25 verified on declared line\" | ✓ |\n| record_pointers_resolve_to_quote | \"2 record locators\" | \"2 resolve+equal\" | ✓ |\n| token_inside_locator_quote | \"every vcs/symbol token inside its quote\" | \"1 outside\" | ✗ |\n| kind_status_histogram | {\"data_artifact_reference/unresolved\": 1, \"directory_reference/unresol | {\"report_markdown/resolved\": 1, \"embedded_figure/metadata_only\": 2, \"f | ✓ |\n| assets_total | 18 | 18 | ✓ |\n| id_uniqueness_per_namespace | \"id_integrity.unique = true (27 ids)\" | \"no intra-namespace duplicates; sizes={'assets': 18, 'locators': 27, ' | ✓ |\n| id_integrity_scope_matches_claim | {\"ids_checked\": 27, \"unique\": true} | {\"locators\": 27, \"intra_namespace_duplicates\": {}, \"cross_namespace_ov | ✓ |\n| locators_count | 27 | 27 | ✓ |\n| locators_resolved_count | 27 | 27 | ✓ |\n| no_verified_status | \"none\" | [] | ✓ |\n| claims_empty | \"empty claims (permitted by contract)\" | \"0/0\" | ✓ |\n| single_report_scope | \"report 4129 only\" | [] | ✓ |\n| merge_short_is_prefix_of_full | true | true | ✓ |\n| main_head_7hex_is_prefix_of_9hex | true | true | ✓ |\n| branch_head_is_not_prefix_of_merge | false | false | ✓ |\n| all_four_sha_forms_present_in_source | \"5 git tokens registered\" | [] | ✓ |\n| finding_anchors_verbatim | \"all anchors verbatim\" | [] | ✓ |\n| body_path_reference_census | {\"body_path_references\": 13, \"distinct_referenced_paths\": 9} | {\"body_path_references\": 14, \"distinct_referenced_paths\": 9, \"unregist | ✗ |\n| contract_fields_match_record | {\"title\": \"PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）\", \" | {\"title\": \"PR #77 三方合并：CHANGELOG 语义并集 + 「行保全≠文档正确」可复现审计（TensorFEM）\", \" | ✓ |\n| unresolved_reasons_true_in_worktree | \"15 unresolved entries\" | \"13 re-checked, 0 contradicted\" | ✓ |\n| artifacts_probe_404 | 404 | {\"status\": 404, \"bytes\": 22} | ✓ |\n\n端点复探（自己打，不引用上游记录）：\n\n| 端点 | HTTP | 字节 |\n|---|---|---|\n| `/tensor/reports/4129/artifacts` | 404 | 22 |\n| `/tensor/reports/4129/figures/merge_audit.png` | 404 | 29 |\n| `/tensor/reports/4129/figures/plate_gate.png` | 404 | 29 |\n\n两条发现（证据均在原文可定位）：\n\n- **F1-symbol-locator-quote-lacks-token**（minor，阻塞=False）：`r4129:sym:02` 的引文取第 80 行，\n  但符号 `tensorfem.__file__` 只在第 81 行出现 → 引文不含自己的记号。\n- **F2-path-reference-census-undercount**（minor，阻塞=False）：登记 `body_path_references=13`，\n  按同一口径复算为 14；差的一条是第 36 行的 `CHANGELOG.md` 出现。\n  `distinct_referenced_paths` 登记 9、复算 9，一致。\n\n## ④ 结果图\n\n图（`docs/kf/figures/wp-4129-04.png`）三个面板：(a) 34 条复算检查按检查面分组的通过/失败；\n(b) 登记的引用计数 vs 复算计数（缺口=第 36 行未登记站点）；(c) 引文面：25 条 markdown 引文\n全部逐字、25 条同时落在声明行，2 条 record 指针解引用一致，\n而\"记号不在自己引文里\"的恰好 1 条。\n本单是审核/文档工序，没有场量可画云图；图的用途是把审核证据本身可视化（每个数字都从 JSON 读，不手抄）。\n\n## ⑤ 注意点（坑 / 局限 / 适用范围）\n\n1. **审核不进入 TensorFEM 仓**：上游引用的 `CHANGELOG.md`、`benchmarks/*`、`scripts/audit_changelog_merge.py`、\n   `tests/*`、`src/tensorfem/plate_uniform_load.py` 在交付树里都不存在；上游自己也拒绝断言其存在，\n   审核只能确认\"它确实没断言\"，不能确认\"它们确实那样\"。\n2. **物理数字只查转述一致性**：`0.4886 %`、`11 项` anchor、`1707 项` 套件等来自原文，证据在 TensorFEM 仓内；\n   审核确认了关键一点——原文把\"本地未跑完全量套件\"写成 `未完成 / 不计为通过`，上游**没有**把它升级成通过。\n3. **图未审**：两个图片端点 404（字节数与上游记录一致），所以图内容没审。\n4. **id 命名空间**：34 检查里 `id_integrity` 只覆盖 27 个 locator；18 个 asset id 与 locator id 共用同一套字符串，\n   是命名空间内的唯一性，消费者需知道命名空间才能解引用（记为观察，不是缺陷）。\n5. **计数规则必须声明**：F2 的根因不是\"数错\"，而是\"没写清口径\"——同一份原文可以有 13/14 两种合法数法，\n   机器门要可复算，就必须把规则写进产物。\n6. **哈希脆弱**：原文 markdown 一个空白变化就让钉住的 `source_hash` 失效（设计使然）。\n\n## ⑥ 误差判定（关键量 vs 基准，逐项）\n\n| 关键量 | 基准（上游登记/契约） | 本单复算 | 误差 | 是否 <3% |\n|---|---|---|---|---|\n| 报告原文 sha256 | `sha256:8670fa44138a8…` | 相同 | 0 | 是（完全相等） |\n| chars / bytes / lines | 3969 / 6901 / 109 | 3969 / 6901 / 109 | 0 | 是 |\n| markdown 引文逐字率 | 25/25 | 25/25 | 0 | 是 |\n| 引文落行率 | 25/25 | 25/25 | 0 | 是 |\n| 引用站点计数 | 13 | 14 | 1 站（7.1%） | **否（7.1% > 3%）** |\n| 去重路径计数 | 9 | 9 | 0.0% | 是 |\n| 记号-引文一致率 | 9/9 vcs+symbol 记号 | 8/9 | 1 条不符（11.1%） | **否（11.1% > 3%）** |\n| 机器检查通过率 | 34/34 | 32/34 | 2 条失败 | **否（但失败均为登记精度，非事实错误）** |\n\n**结论**：注册的事实没有一条与原文矛盾（事实层误差 0）；两处偏差都在\"登记精度\"层（一个行号、一个计数口径），\n其中引用站点计数偏差 7.1% 已超 3% 线，因此本单给出 **needs-fix（不阻塞）**，\n而不是\"通过\"。修法各一行：把 sym:02 的 locator 移到第 81 行；\n把第 36 行的 `CHANGELOG.md` 登记为 file_reference 并写明计数口径。\n\n**复跑**：`python3 scripts/kf_review_wp_4129_04_fetch.py && python3 scripts/kf_review_wp_4129_04_verify.py && python3 scripts/kf_review_wp_4129_04_evidence.py && python3 scripts/kf_review_wp_4129_04_emit.py && python3 -m pytest -q tests/test_kf_wp_4129_04.py`\n",
+  "ownership": {
+    "mission_id": 15827,
+    "owner": "1",
+    "bypass": null,
+    "figures_checked": 1
+  },
+  "readback": {
+    "submission_id": "2fb8d0b9f9f24efdb513e98ed15239cc",
+    "report_id": 14950,
+    "ok": true,
+    "readback": {
+      "ok": true,
+      "record_missing": false,
+      "codes": [],
+      "checks": [
+        {
+          "field": "markdown",
+          "ok": true,
+          "expected_digest": "7a0caa1660880495e24c0e6373c03ec7049dbdd527cbfd00b7b1e7ef18fd191f",
+          "observed_digest": "7a0caa1660880495e24c0e6373c03ec7049dbdd527cbfd00b7b1e7ef18fd191f",
+          "code": "",
+          "detail": ""
+        },
+        {
+          "field": "figures",
+          "ok": true,
+          "expected_digest": "fca874e8d5ea04405c24c8b19955083c518da96550453f1f93e15e28e5df87b6",
+          "observed_digest": "fca874e8d5ea04405c24c8b19955083c518da96550453f1f93e15e28e5df87b6",
+          "code": "",
+          "detail": ""
+        },
+        {
+          "field": "mission_id",
+          "ok": true,
+          "expected_digest": "04e2cac4aa8e08298134642af40ca691e985249c3f9e8a26bee272a1bb05d047",
+          "observed_digest": "04e2cac4aa8e08298134642af40ca691e985249c3f9e8a26bee272a1bb05d047",
+          "code": "",
+          "detail": ""
+        }
+      ],
+      "checked_fields": [
+        "markdown",
+        "figures",
+        "mission_id"
+      ]
+    },
+    "ledger_ok": true,
+    "ledger_error": null
+  }
+}
