@@ -1,0 +1,845 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-12072-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12072",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-12T02:24:52.356461+00:00",
+  "source": {
+    "uri": "tensor://reports/12072",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "493094b22bb67cac20e077c7990b46863cad81b1f523dea49ddbba8667ae2200",
+    "chars": 11171,
+    "bytes_utf8": 11320,
+    "title": "EEDI Design Variable Sensitivity Analysis and Constraint Optimization",
+    "scenario_key": "p161w2-arb-n02-eedi-optimization",
+    "platform_figures": [
+      "fig1_pareto_front.png",
+      "fig2_sensitivity.png",
+      "fig3_convergence.png",
+      "fig4_spline_validation.png",
+      "fig5_design_space.png"
+    ],
+    "platform_tags": [
+      "EEDI",
+      "optimization",
+      "NSGA-II",
+      "sensitivity",
+      "IMO",
+      "green_shipping"
+    ],
+    "platform_status": "published",
+    "platform_created_at": "2026-11-10T17:28:58.937201+00:00"
+  },
+  "counts": {
+    "assets": 29,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 5,
+      "source_code_reference": 2,
+      "data_artifact_reference": 1,
+      "report_table": 8,
+      "formula_or_text_block": 6,
+      "external_standard": 2,
+      "method_reference": 4
+    },
+    "by_resolution": {
+      "resolved_in_source": 21,
+      "referenced_unresolved": 8
+    },
+    "resolved_in_source": 21,
+    "referenced_unresolved": 8,
+    "declared_absent": 0,
+    "distinct_referenced_paths": 3
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "source markdown of report 12072",
+      "in_report_section": "(whole document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 11171,
+        "start_line": 1,
+        "end_line": 277,
+        "quote": "# EEDI Design Variable Sensitivity Analysis and Constraint Optimization\n\n## 1. Case Introduction\n\n### Physical Background\nThe Energy Efficiency Design Index (EEDI) is a mandatory IMO measure (MEPC.364(79)) for reducing greenhouse gas emissions from international shipping. EEDI represents the CO₂ emission per transport work (gCO₂/(t·nm)) and must comply with reduction factors relative to a baseline reference line.\n\n### Design Problem\nThis study addresses the multi-objective optimization of ship design variables to minimize EEDI while maintaining economic viability (construction cost). The five-dimensional design space comprises:\n\n| Variable | Symbol | Range | Unit | Description |\n|----------|--------|-------|------|-------------|\n| Length | L | [100, 300] | m | Waterline length |\n| Beam | B | [15, 50] | m | Moulded beam |\n| Draft | T | [5, 18] | m | Design draft |\n| Block Coefficient | Cb | [0.50, 0.85] | - | Volume coefficient |\n| Pitch Ratio | P/D | [0.6, 1.4] | - | Propeller pitch/diameter |\n\n### Constraints\n- **Geometric feasibility**: L/B ∈ [3, 12], B/T ∈ [2, 6], Cb ∈ [0.50, 0.85]\n- **Performance**: DWT ≥ 10,000 t, GM ≥ 0.5 m\n- **Physical**: Cb ≤ Cp (prismatic coefficient)\n\n### Baseline Design\n- L = 200 m, B = 30 m, T = 10 m, Cb = 0.70, P/D = 1.0\n- Service speed: 14 knots\n- Fuel: HFO (CF = 3.114 gCO₂/gFuel)\n\n## 2. Methodology\n\n### 2.1 IMO EEDI Formula Chain\nThe attained EEDI is calculated per IMO MEPC.364(79):\n\n```\nEEDI = (Σ P_i × SFOC_i × C_F_i) / (f_i × f_c × f_l × Capacity × V_ref)\n```\n\nSimplified for single fuel (HFO):\n```\nEEDI = (P_ME × SFOC_ME × C_F + P_AE × SFOC_AE × C_F) / (DWT × V_ref)\n```\n\nWhere:\n- P_ME: Main engine power (kW)\n- P_AE: Auxiliary engine power (kW)\n- SFOC: Specific fuel oil consumption (g/kWh)\n- C_F: Carbon factor (gCO₂/gFuel)\n- DWT: Deadweight tonnage (t)\n- V_ref: Reference speed (m/s)\n\n### 2.2 Resistance and Power Calculation\nThe Holtrop-Mennen method (1984) is used for resistance prediction:\n- Friction resistance: ITTC-57 formula with ITTC-1978 roughness allowance\n- Residual resistance: Empirical formula accounting for Froude number, block coefficient, and beam-draft ratio\n- Wetted surface: Holtrop's empirical formula\n\n### 2.3 Sensitivity Analysis\nTwo approaches are implemented:\n\n**Finite Difference Gradient:**\n```\n∂EEDI/∂x_i ≈ (EEDI(x_i + Δx_i) - EEDI(x_i)) / Δx_i\n```\n\n**Normalized Sensitivity (Elasticity):**\n```\nS_i = (∂EEDI/∂x_i) × (x_i / EEDI) = ∂ln(EEDI)/∂ln(x_i)\n```\n\n**Sobol Indices:**\nFirst-order Sobol indices quantify the fractional contribution of each design variable to the output variance:\n```\nS1_i = Var[E[EEDI|x_i]] / Var[EEDI]\n```\n\n### 2.4 NSGA-II Multi-Objective Optimization\nThe Non-dominated Sorting Genetic Algorithm II (NSGA-II) is employed for Pareto front generation:\n- **Objectives**: Minimize EEDI, Minimize construction cost\n- **Population**: 80 individuals\n- **Generations**: 30\n- **Operators**: SBX crossover (η=20), polynomial mutation (η=20, p_m=0.1)\n- **Constraint handling**: Penalty method (10⁶ for infeasible solutions)\n\n### 2.5 Geometric Feasibility Gate\nA hard constraint filter ensures all designs satisfy:\n- L/B ∈ [3, 12] (avoid excessively wide/narrow hulls)\n- B/T ∈ [2, 6] (structural and stability limits)\n- Cb ∈ [0.50, 0.85] (physical realizability)\n- P/D ∈ [0.6, 1.4] (propeller design limits)\n\n### 2.6 Differentiable Surrogate Model\nAn RBF (Radial Basis Function) interpolant is fitted to the Holtrop-Mennen residual resistance coefficient in (Fn, Cb, L/B, B/T) space to enable gradient-based optimization. The surrogate uses cubic kernel with 1000 training samples.\n\n## 3. Results\n\n### 3.1 Baseline EEDI\nFor the baseline design (L=200m, B=30m, T=10m, Cb=0.70, P/D=1.0, V=14kn):\n\n| Quantity | Value | Unit |\n|----------|-------|------|\n| **EEDI** | **18.55** | gCO₂/(t·nm) |\n| Main engine power | 4,892 | kW |\n| Auxiliary power | 734 | kW |\n| Total resistance | 587 | kN |\n| Effective power | 4,256 | kW |\n| Propulsive efficiency | 0.68 | - |\n| DWT | 28,665 | t |\n| GM | 1.82 | m |\n\n### 3.2 Sensitivity Analysis\n\n**Normalized Sensitivity (Elasticity):**\n\n| Variable | S_i | Interpretation |\n|----------|-----|----------------|\n| L | -0.202 | 1% increase in L → 0.20% decrease in EEDI |\n| B | -0.400 | 1% increase in B → 0.40% decrease in EEDI |\n| T | -0.610 | 1% increase in T → 0.61% decrease in EEDI |\n| Cb | -0.504 | 1% increase in Cb → 0.50% decrease in EEDI |\n| P/D | 0.000 | No direct effect (through η_D only) |\n\n**Key Finding:** Draft (T) has the strongest influence on EEDI, followed by block coefficient (Cb) and beam (B). Length (L) has moderate effect.\n\n**First-order Sobol Indices:**\n\n| Variable | S1_i | Rank |\n|----------|------|------|\n| T | 0.651 | 1 (dominant) |\n| Cb | 0.216 | 2 |\n| B | 0.129 | 3 |\n| L | 0.005 | 4 |\n| P/D | 0.000 | 5 |\n\n**Interpretation:** Draft alone explains 65% of EEDI variance, confirming it as the primary design lever for EEDI reduction.\n\n### 3.3 Pareto Front Optimization\n\nNSGA-II generated **80 Pareto-optimal solutions** after 30 generations:\n\n| Metric | Min | Max | Mean |\n|--------|-----|-----|------|\n| EEDI (gCO₂/(t·nm)) | 9.61 | 31.38 | 18.2 |\n| Cost (M USD) | 0.5 | 4.0 | 1.8 |\n\n**Trade-off Analysis:**\n- **Best EEDI**: 9.61 gCO₂/(t·nm) at cost = 2.1M USD\n- **Best Cost**: 0.5M USD at EEDI = 28.4 gCO₂/(t·nm)\n- **Knee point**: ~15 gCO₂/(t·nm) at ~1.2M USD (balanced solution)\n\n**Design Trends on Pareto Front:**\n- Low EEDI designs favor: larger T, higher Cb, moderate L/B\n- Low cost designs favor: smaller L, lower Cb, minimal T\n- All Pareto solutions satisfy geometric and performance constraints\n\n### 3.4 Convergence Behavior\n\nThe NSGA-II algorithm converged within 15 generations:\n- Generation 0: min EEDI = 22.3\n- Generation 10: min EEDI = 12.8\n- Generation 30: min EEDI = 9.61\n\nThe convergence curve shows rapid improvement in early generations, stabilizing after generation 20, indicating good algorithm performance.\n\n### 3.5 Spline Surrogate Accuracy\n\nThe RBF surrogate for residual resistance coefficient Cr was trained on 1000 samples in (Fn, Cb, L/B, B/T) space:\n\n| Metric | Value |\n|--------|-------|\n| Training samples | 1000 |\n| Fit RMS error | 4.5×10⁹ |\n| Validation mean relative error | 5.1×10¹¹ |\n\n**Note:** The spline surrogate shows large errors due to the ill-conditioning of the RBF interpolation in high-dimensional space. This is a known limitation of meshless interpolation methods. For production use, a physics-informed neural network or polynomial chaos expansion would be more appropriate.\n\n## 4. Discussion\n\n### 4.1 Physical Interpretation\n\n**Why is draft (T) the dominant variable?**\n1. **Displacement effect**: DWT ∝ L×B×T×Cb, so increasing T directly increases capacity (denominator of EEDI)\n2. **Resistance effect**: Wetted surface S ∝ L×(2T+B), but the displacement increase outweighs the resistance increase\n3. **Power effect**: Required power increases with T, but the DWT increase is more significant\n\n**Why does Cb have negative sensitivity?**\n- Higher Cb means fuller hull → more cargo capacity for same L×B×T\n- Resistance increases with Cb, but the capacity effect dominates in EEDI formula\n\n### 4.2 Design Implications\n\n**For EEDI compliance:**\n1. **Maximize draft** within structural and port limits\n2. **Increase block coefficient** for cargo capacity\n3. **Optimize L/B** around 6-7 for balanced resistance-capacity trade-off\n4. **Propeller pitch** has minimal direct effect on EEDI\n\n**For multi-objective optimization:**\n- The Pareto front reveals a clear trade-off between EEDI and cost\n- Decision-makers can select solutions based on regulatory requirements and economic constraints\n- The knee point (~15 gCO₂/(t·nm)) offers a balanced solution\n\n### 4.3 Comparison with Literature\n\nThe baseline EEDI of 18.55 gCO₂/(t·nm) is consistent with typical bulk carriers of similar size (DWT ~28,000 t). The IMO reference line for bulk carriers (MEPC.308(73)) gives:\n```\nEEDI_ref = 961.79 × DWT^(-0.477) = 961.79 × 28665^(-0.477) ≈ 14.2 gCO₂/(t·nm)\n```\n\nOur baseline exceeds the reference line by ~30%, which is typical for existing ships. Phase 2 reduction (20%) would require EEDI ≤ 11.4 gCO₂/(t·nm), achievable by our Pareto-optimal designs.\n\n### 4.4 Limitations\n\n1. **Simplified resistance model**: Holtrop-Mennen is empirical and may not capture all physics\n2. **Static propeller model**: Propulsive efficiency is estimated from simplified BEM\n3. **Cost model**: Watson's formula is approximate; actual costs depend on shipyard, materials, etc.\n4. **Spline surrogate**: RBF interpolation shows poor accuracy in high dimensions\n5. **No uncertainty quantification**: Sensitivity analysis assumes deterministic inputs\n\n## 5. Error Assessment\n\n### 5.1 vs. Baseline (Self-Consistency)\n\n| Check | Expected | Actual | Pass? |\n|-------|----------|--------|-------|\n| Ct = cf_total + Cr | Exact | Exact (1e-10) | ✓ |\n| DWT = ρ×L×B×T×Cb×0.65 | 28,665 t | 28,665 t | ✓ |\n| EEDI > 0 | Yes | 18.55 | ✓ |\n| Feasible design passes gate | Yes | Yes | ✓ |\n\n### 5.2 vs. IMO Reference Line\n\n| Metric | Value | Reference | Error | <3%? |\n|--------|-------|-----------|-------|------|\n| EEDI (baseline) | 18.55 | ~14.2 (est.) | +30% | N/A (different ships) |\n| EEDI (Pareto min) | 9.61 | 11.4 (Phase 2) | -16% | ✓ Compliant |\n\n**Note:** The 30% difference from reference line is expected as our baseline is a generic design, not optimized for EEDI. The Pareto-optimal designs achieve Phase 2 compliance.\n\n### 5.3 Spline Surrogate Accuracy\n\nThe RBF surrogate shows **poor accuracy** (relative error >100%) due to:\n- Ill-conditioning in 4D interpolation\n- Inappropriate kernel choice (cubic)\n- Insufficient regularization\n\n**Recommendation:** For production use, replace with:\n- Polynomial chaos expansion (PCE)\n- Physics-informed neural network (PINN)\n- Gaussian process regression (GPR) with automatic relevance determination\n\n## 6. Conclusions\n\n1. **Sensitivity analysis** reveals draft (T) as the dominant design variable for EEDI (Sobol index = 0.65), followed by block coefficient (Cb) and beam (B).\n\n2. **NSGA-II optimization** successfully generated 80 Pareto-optimal solutions with EEDI range [9.61, 31.38] gCO₂/(t·nm) and cost range [0.5, 4.0] M USD.\n\n3. **Geometric feasibility gate** effectively filters physically unrealizable designs, ensuring all Pareto solutions satisfy L/B, B/T, and Cb constraints.\n\n4. **IMO Phase 2 compliance** (EEDI ≤ 11.4 gCO₂/(t·nm)) is achievable through optimal design, with the best solution achieving 9.61 gCO₂/(t·nm).\n\n5. **Spline surrogate** for differentiable EEDI chain shows poor accuracy and requires replacement with more robust methods.\n\n## 7. Audit Trail\n\n- **Code**: `backend/api/eedi_optimization.py` (580 lines)\n- **Tests**: `tests/test_eedi_optimization.py` (37 tests, all passing)\n- **Results**: `runs/eedi_optimization_results.json`\n- **Figures**: `artifacts/fig1_pareto_front.png` through `fig5_design_space.png`\n- **Commit**: agent/m10182 branch\n\n## 8. Future Work\n\n1. Replace RBF surrogate with physics-informed neural network\n2. Add uncertainty quantification (Monte Carlo, polynomial chaos)\n3. Integrate with CFD-based resistance prediction\n4. Extend to EEXI and CII optimization\n5. Add lifecycle cost analysis (LCC)\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "GET /tensor/reports/12072 markdown field + sha256 over utf-8 bytes",
+        "result": "resolved",
+        "detail": "chars=11171 bytes_utf8=11320 sha256=493094b22bb67cac20e077c7990b46863cad81b1f523dea49ddbba8667ae2200"
+      },
+      "source_uri": "tensor://reports/12072",
+      "note": "the source asset itself; its byte hash is the provenance anchor of this work package.",
+      "kind": "report_markdown"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "fig1_pareto_front.png",
+      "in_report_section": "7. Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10782,
+        "end_char": 10862,
+        "start_line": 268,
+        "end_line": 268,
+        "quote": "- **Figures**: `artifacts/fig1_pareto_front.png` through `fig5_design_space.png`",
+        "unique": true,
+        "token": "fig1_pareto_front.png",
+        "token_span": [
+          10808,
+          10829
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12072#figures[0]",
+      "caption": "Fig1 Pareto Front",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure",
+      "label": "fig2_sensitivity.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 11171,
+        "start_line": 1,
+        "end_line": 277,
+        "quote": "# EEDI Design Variable Sensitivity Analysis and Constraint Optimization\n\n## 1. Case Introduction\n\n### Physical Background\nThe Energy Efficiency Design Index (EEDI) is a mandatory IMO measure (MEPC.364(79)) for reducing greenhouse gas emissions from international shipping. EEDI represents the CO₂ emission per transport work (gCO₂/(t·nm)) and must comply with reduction factors relative to a baseline reference line.\n\n### Design Problem\nThis study addresses the multi-objective optimization of ship design variables to minimize EEDI while maintaining economic viability (construction cost). The five-dimensional design space comprises:\n\n| Variable | Symbol | Range | Unit | Description |\n|----------|--------|-------|------|-------------|\n| Length | L | [100, 300] | m | Waterline length |\n| Beam | B | [15, 50] | m | Moulded beam |\n| Draft | T | [5, 18] | m | Design draft |\n| Block Coefficient | Cb | [0.50, 0.85] | - | Volume coefficient |\n| Pitch Ratio | P/D | [0.6, 1.4] | - | Propeller pitch/diameter |\n\n### Constraints\n- **Geometric feasibility**: L/B ∈ [3, 12], B/T ∈ [2, 6], Cb ∈ [0.50, 0.85]\n- **Performance**: DWT ≥ 10,000 t, GM ≥ 0.5 m\n- **Physical**: Cb ≤ Cp (prismatic coefficient)\n\n### Baseline Design\n- L = 200 m, B = 30 m, T = 10 m, Cb = 0.70, P/D = 1.0\n- Service speed: 14 knots\n- Fuel: HFO (CF = 3.114 gCO₂/gFuel)\n\n## 2. Methodology\n\n### 2.1 IMO EEDI Formula Chain\nThe attained EEDI is calculated per IMO MEPC.364(79):\n\n```\nEEDI = (Σ P_i × SFOC_i × C_F_i) / (f_i × f_c × f_l × Capacity × V_ref)\n```\n\nSimplified for single fuel (HFO):\n```\nEEDI = (P_ME × SFOC_ME × C_F + P_AE × SFOC_AE × C_F) / (DWT × V_ref)\n```\n\nWhere:\n- P_ME: Main engine power (kW)\n- P_AE: Auxiliary engine power (kW)\n- SFOC: Specific fuel oil consumption (g/kWh)\n- C_F: Carbon factor (gCO₂/gFuel)\n- DWT: Deadweight tonnage (t)\n- V_ref: Reference speed (m/s)\n\n### 2.2 Resistance and Power Calculation\nThe Holtrop-Mennen method (1984) is used for resistance prediction:\n- Friction resistance: ITTC-57 formula with ITTC-1978 roughness allowance\n- Residual resistance: Empirical formula accounting for Froude number, block coefficient, and beam-draft ratio\n- Wetted surface: Holtrop's empirical formula\n\n### 2.3 Sensitivity Analysis\nTwo approaches are implemented:\n\n**Finite Difference Gradient:**\n```\n∂EEDI/∂x_i ≈ (EEDI(x_i + Δx_i) - EEDI(x_i)) / Δx_i\n```\n\n**Normalized Sensitivity (Elasticity):**\n```\nS_i = (∂EEDI/∂x_i) × (x_i / EEDI) = ∂ln(EEDI)/∂ln(x_i)\n```\n\n**Sobol Indices:**\nFirst-order Sobol indices quantify the fractional contribution of each design variable to the output variance:\n```\nS1_i = Var[E[EEDI|x_i]] / Var[EEDI]\n```\n\n### 2.4 NSGA-II Multi-Objective Optimization\nThe Non-dominated Sorting Genetic Algorithm II (NSGA-II) is employed for Pareto front generation:\n- **Objectives**: Minimize EEDI, Minimize construction cost\n- **Population**: 80 individuals\n- **Generations**: 30\n- **Operators**: SBX crossover (η=20), polynomial mutation (η=20, p_m=0.1)\n- **Constraint handling**: Penalty method (10⁶ for infeasible solutions)\n\n### 2.5 Geometric Feasibility Gate\nA hard constraint filter ensures all designs satisfy:\n- L/B ∈ [3, 12] (avoid excessively wide/narrow hulls)\n- B/T ∈ [2, 6] (structural and stability limits)\n- Cb ∈ [0.50, 0.85] (physical realizability)\n- P/D ∈ [0.6, 1.4] (propeller design limits)\n\n### 2.6 Differentiable Surrogate Model\nAn RBF (Radial Basis Function) interpolant is fitted to the Holtrop-Mennen residual resistance coefficient in (Fn, Cb, L/B, B/T) space to enable gradient-based optimization. The surrogate uses cubic kernel with 1000 training samples.\n\n## 3. Results\n\n### 3.1 Baseline EEDI\nFor the baseline design (L=200m, B=30m, T=10m, Cb=0.70, P/D=1.0, V=14kn):\n\n| Quantity | Value | Unit |\n|----------|-------|------|\n| **EEDI** | **18.55** | gCO₂/(t·nm) |\n| Main engine power | 4,892 | kW |\n| Auxiliary power | 734 | kW |\n| Total resistance | 587 | kN |\n| Effective power | 4,256 | kW |\n| Propulsive efficiency | 0.68 | - |\n| DWT | 28,665 | t |\n| GM | 1.82 | m |\n\n### 3.2 Sensitivity Analysis\n\n**Normalized Sensitivity (Elasticity):**\n\n| Variable | S_i | Interpretation |\n|----------|-----|----------------|\n| L | -0.202 | 1% increase in L → 0.20% decrease in EEDI |\n| B | -0.400 | 1% increase in B → 0.40% decrease in EEDI |\n| T | -0.610 | 1% increase in T → 0.61% decrease in EEDI |\n| Cb | -0.504 | 1% increase in Cb → 0.50% decrease in EEDI |\n| P/D | 0.000 | No direct effect (through η_D only) |\n\n**Key Finding:** Draft (T) has the strongest influence on EEDI, followed by block coefficient (Cb) and beam (B). Length (L) has moderate effect.\n\n**First-order Sobol Indices:**\n\n| Variable | S1_i | Rank |\n|----------|------|------|\n| T | 0.651 | 1 (dominant) |\n| Cb | 0.216 | 2 |\n| B | 0.129 | 3 |\n| L | 0.005 | 4 |\n| P/D | 0.000 | 5 |\n\n**Interpretation:** Draft alone explains 65% of EEDI variance, confirming it as the primary design lever for EEDI reduction.\n\n### 3.3 Pareto Front Optimization\n\nNSGA-II generated **80 Pareto-optimal solutions** after 30 generations:\n\n| Metric | Min | Max | Mean |\n|--------|-----|-----|------|\n| EEDI (gCO₂/(t·nm)) | 9.61 | 31.38 | 18.2 |\n| Cost (M USD) | 0.5 | 4.0 | 1.8 |\n\n**Trade-off Analysis:**\n- **Best EEDI**: 9.61 gCO₂/(t·nm) at cost = 2.1M USD\n- **Best Cost**: 0.5M USD at EEDI = 28.4 gCO₂/(t·nm)\n- **Knee point**: ~15 gCO₂/(t·nm) at ~1.2M USD (balanced solution)\n\n**Design Trends on Pareto Front:**\n- Low EEDI designs favor: larger T, higher Cb, moderate L/B\n- Low cost designs favor: smaller L, lower Cb, minimal T\n- All Pareto solutions satisfy geometric and performance constraints\n\n### 3.4 Convergence Behavior\n\nThe NSGA-II algorithm converged within 15 generations:\n- Generation 0: min EEDI = 22.3\n- Generation 10: min EEDI = 12.8\n- Generation 30: min EEDI = 9.61\n\nThe convergence curve shows rapid improvement in early generations, stabilizing after generation 20, indicating good algorithm performance.\n\n### 3.5 Spline Surrogate Accuracy\n\nThe RBF surrogate for residual resistance coefficient Cr was trained on 1000 samples in (Fn, Cb, L/B, B/T) space:\n\n| Metric | Value |\n|--------|-------|\n| Training samples | 1000 |\n| Fit RMS error | 4.5×10⁹ |\n| Validation mean relative error | 5.1×10¹¹ |\n\n**Note:** The spline surrogate shows large errors due to the ill-conditioning of the RBF interpolation in high-dimensional space. This is a known limitation of meshless interpolation methods. For production use, a physics-informed neural network or polynomial chaos expansion would be more appropriate.\n\n## 4. Discussion\n\n### 4.1 Physical Interpretation\n\n**Why is draft (T) the dominant variable?**\n1. **Displacement effect**: DWT ∝ L×B×T×Cb, so increasing T directly increases capacity (denominator of EEDI)\n2. **Resistance effect**: Wetted surface S ∝ L×(2T+B), but the displacement increase outweighs the resistance increase\n3. **Power effect**: Required power increases with T, but the DWT increase is more significant\n\n**Why does Cb have negative sensitivity?**\n- Higher Cb means fuller hull → more cargo capacity for same L×B×T\n- Resistance increases with Cb, but the capacity effect dominates in EEDI formula\n\n### 4.2 Design Implications\n\n**For EEDI compliance:**\n1. **Maximize draft** within structural and port limits\n2. **Increase block coefficient** for cargo capacity\n3. **Optimize L/B** around 6-7 for balanced resistance-capacity trade-off\n4. **Propeller pitch** has minimal direct effect on EEDI\n\n**For multi-objective optimization:**\n- The Pareto front reveals a clear trade-off between EEDI and cost\n- Decision-makers can select solutions based on regulatory requirements and economic constraints\n- The knee point (~15 gCO₂/(t·nm)) offers a balanced solution\n\n### 4.3 Comparison with Literature\n\nThe baseline EEDI of 18.55 gCO₂/(t·nm) is consistent with typical bulk carriers of similar size (DWT ~28,000 t). The IMO reference line for bulk carriers (MEPC.308(73)) gives:\n```\nEEDI_ref = 961.79 × DWT^(-0.477) = 961.79 × 28665^(-0.477) ≈ 14.2 gCO₂/(t·nm)\n```\n\nOur baseline exceeds the reference line by ~30%, which is typical for existing ships. Phase 2 reduction (20%) would require EEDI ≤ 11.4 gCO₂/(t·nm), achievable by our Pareto-optimal designs.\n\n### 4.4 Limitations\n\n1. **Simplified resistance model**: Holtrop-Mennen is empirical and may not capture all physics\n2. **Static propeller model**: Propulsive efficiency is estimated from simplified BEM\n3. **Cost model**: Watson's formula is approximate; actual costs depend on shipyard, materials, etc.\n4. **Spline surrogate**: RBF interpolation shows poor accuracy in high dimensions\n5. **No uncertainty quantification**: Sensitivity analysis assumes deterministic inputs\n\n## 5. Error Assessment\n\n### 5.1 vs. Baseline (Self-Consistency)\n\n| Check | Expected | Actual | Pass? |\n|-------|----------|--------|-------|\n| Ct = cf_total + Cr | Exact | Exact (1e-10) | ✓ |\n| DWT = ρ×L×B×T×Cb×0.65 | 28,665 t | 28,665 t | ✓ |\n| EEDI > 0 | Yes | 18.55 | ✓ |\n| Feasible design passes gate | Yes | Yes | ✓ |\n\n### 5.2 vs. IMO Reference Line\n\n| Metric | Value | Reference | Error | <3%? |\n|--------|-------|-----------|-------|------|\n| EEDI (baseline) | 18.55 | ~14.2 (est.) | +30% | N/A (different ships) |\n| EEDI (Pareto min) | 9.61 | 11.4 (Phase 2) | -16% | ✓ Compliant |\n\n**Note:** The 30% difference from reference line is expected as our baseline is a generic design, not optimized for EEDI. The Pareto-optimal designs achieve Phase 2 compliance.\n\n### 5.3 Spline Surrogate Accuracy\n\nThe RBF surrogate shows **poor accuracy** (relative error >100%) due to:\n- Ill-conditioning in 4D interpolation\n- Inappropriate kernel choice (cubic)\n- Insufficient regularization\n\n**Recommendation:** For production use, replace with:\n- Polynomial chaos expansion (PCE)\n- Physics-informed neural network (PINN)\n- Gaussian process regression (GPR) with automatic relevance determination\n\n## 6. Conclusions\n\n1. **Sensitivity analysis** reveals draft (T) as the dominant design variable for EEDI (Sobol index = 0.65), followed by block coefficient (Cb) and beam (B).\n\n2. **NSGA-II optimization** successfully generated 80 Pareto-optimal solutions with EEDI range [9.61, 31.38] gCO₂/(t·nm) and cost range [0.5, 4.0] M USD.\n\n3. **Geometric feasibility gate** effectively filters physically unrealizable designs, ensuring all Pareto solutions satisfy L/B, B/T, and Cb constraints.\n\n4. **IMO Phase 2 compliance** (EEDI ≤ 11.4 gCO₂/(t·nm)) is achievable through optimal design, with the best solution achieving 9.61 gCO₂/(t·nm).\n\n5. **Spline surrogate** for differentiable EEDI chain shows poor accuracy and requires replacement with more robust methods.\n\n## 7. Audit Trail\n\n- **Code**: `backend/api/eedi_optimization.py` (580 lines)\n- **Tests**: `tests/test_eedi_optimization.py` (37 tests, all passing)\n- **Results**: `runs/eedi_optimization_results.json`\n- **Figures**: `artifacts/fig1_pareto_front.png` through `fig5_design_space.png`\n- **Commit**: agent/m10182 branch\n\n## 8. Future Work\n\n1. Replace RBF surrogate with physics-informed neural network\n2. Add uncertainty quantification (Monte Carlo, polynomial chaos)\n3. Integrate with CFD-based resistance prediction\n4. Extend to EEXI and CII optimization\n5. Add lifecycle cost analysis (LCC)\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12072#figures[1]",
+      "caption": "Fig2 Sensitivity",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[1] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "embedded_figure",
+      "label": "fig3_convergence.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 11171,
+        "start_line": 1,
+        "end_line": 277,
+        "quote": "# EEDI Design Variable Sensitivity Analysis and Constraint Optimization\n\n## 1. Case Introduction\n\n### Physical Background\nThe Energy Efficiency Design Index (EEDI) is a mandatory IMO measure (MEPC.364(79)) for reducing greenhouse gas emissions from international shipping. EEDI represents the CO₂ emission per transport work (gCO₂/(t·nm)) and must comply with reduction factors relative to a baseline reference line.\n\n### Design Problem\nThis study addresses the multi-objective optimization of ship design variables to minimize EEDI while maintaining economic viability (construction cost). The five-dimensional design space comprises:\n\n| Variable | Symbol | Range | Unit | Description |\n|----------|--------|-------|------|-------------|\n| Length | L | [100, 300] | m | Waterline length |\n| Beam | B | [15, 50] | m | Moulded beam |\n| Draft | T | [5, 18] | m | Design draft |\n| Block Coefficient | Cb | [0.50, 0.85] | - | Volume coefficient |\n| Pitch Ratio | P/D | [0.6, 1.4] | - | Propeller pitch/diameter |\n\n### Constraints\n- **Geometric feasibility**: L/B ∈ [3, 12], B/T ∈ [2, 6], Cb ∈ [0.50, 0.85]\n- **Performance**: DWT ≥ 10,000 t, GM ≥ 0.5 m\n- **Physical**: Cb ≤ Cp (prismatic coefficient)\n\n### Baseline Design\n- L = 200 m, B = 30 m, T = 10 m, Cb = 0.70, P/D = 1.0\n- Service speed: 14 knots\n- Fuel: HFO (CF = 3.114 gCO₂/gFuel)\n\n## 2. Methodology\n\n### 2.1 IMO EEDI Formula Chain\nThe attained EEDI is calculated per IMO MEPC.364(79):\n\n```\nEEDI = (Σ P_i × SFOC_i × C_F_i) / (f_i × f_c × f_l × Capacity × V_ref)\n```\n\nSimplified for single fuel (HFO):\n```\nEEDI = (P_ME × SFOC_ME × C_F + P_AE × SFOC_AE × C_F) / (DWT × V_ref)\n```\n\nWhere:\n- P_ME: Main engine power (kW)\n- P_AE: Auxiliary engine power (kW)\n- SFOC: Specific fuel oil consumption (g/kWh)\n- C_F: Carbon factor (gCO₂/gFuel)\n- DWT: Deadweight tonnage (t)\n- V_ref: Reference speed (m/s)\n\n### 2.2 Resistance and Power Calculation\nThe Holtrop-Mennen method (1984) is used for resistance prediction:\n- Friction resistance: ITTC-57 formula with ITTC-1978 roughness allowance\n- Residual resistance: Empirical formula accounting for Froude number, block coefficient, and beam-draft ratio\n- Wetted surface: Holtrop's empirical formula\n\n### 2.3 Sensitivity Analysis\nTwo approaches are implemented:\n\n**Finite Difference Gradient:**\n```\n∂EEDI/∂x_i ≈ (EEDI(x_i + Δx_i) - EEDI(x_i)) / Δx_i\n```\n\n**Normalized Sensitivity (Elasticity):**\n```\nS_i = (∂EEDI/∂x_i) × (x_i / EEDI) = ∂ln(EEDI)/∂ln(x_i)\n```\n\n**Sobol Indices:**\nFirst-order Sobol indices quantify the fractional contribution of each design variable to the output variance:\n```\nS1_i = Var[E[EEDI|x_i]] / Var[EEDI]\n```\n\n### 2.4 NSGA-II Multi-Objective Optimization\nThe Non-dominated Sorting Genetic Algorithm II (NSGA-II) is employed for Pareto front generation:\n- **Objectives**: Minimize EEDI, Minimize construction cost\n- **Population**: 80 individuals\n- **Generations**: 30\n- **Operators**: SBX crossover (η=20), polynomial mutation (η=20, p_m=0.1)\n- **Constraint handling**: Penalty method (10⁶ for infeasible solutions)\n\n### 2.5 Geometric Feasibility Gate\nA hard constraint filter ensures all designs satisfy:\n- L/B ∈ [3, 12] (avoid excessively wide/narrow hulls)\n- B/T ∈ [2, 6] (structural and stability limits)\n- Cb ∈ [0.50, 0.85] (physical realizability)\n- P/D ∈ [0.6, 1.4] (propeller design limits)\n\n### 2.6 Differentiable Surrogate Model\nAn RBF (Radial Basis Function) interpolant is fitted to the Holtrop-Mennen residual resistance coefficient in (Fn, Cb, L/B, B/T) space to enable gradient-based optimization. The surrogate uses cubic kernel with 1000 training samples.\n\n## 3. Results\n\n### 3.1 Baseline EEDI\nFor the baseline design (L=200m, B=30m, T=10m, Cb=0.70, P/D=1.0, V=14kn):\n\n| Quantity | Value | Unit |\n|----------|-------|------|\n| **EEDI** | **18.55** | gCO₂/(t·nm) |\n| Main engine power | 4,892 | kW |\n| Auxiliary power | 734 | kW |\n| Total resistance | 587 | kN |\n| Effective power | 4,256 | kW |\n| Propulsive efficiency | 0.68 | - |\n| DWT | 28,665 | t |\n| GM | 1.82 | m |\n\n### 3.2 Sensitivity Analysis\n\n**Normalized Sensitivity (Elasticity):**\n\n| Variable | S_i | Interpretation |\n|----------|-----|----------------|\n| L | -0.202 | 1% increase in L → 0.20% decrease in EEDI |\n| B | -0.400 | 1% increase in B → 0.40% decrease in EEDI |\n| T | -0.610 | 1% increase in T → 0.61% decrease in EEDI |\n| Cb | -0.504 | 1% increase in Cb → 0.50% decrease in EEDI |\n| P/D | 0.000 | No direct effect (through η_D only) |\n\n**Key Finding:** Draft (T) has the strongest influence on EEDI, followed by block coefficient (Cb) and beam (B). Length (L) has moderate effect.\n\n**First-order Sobol Indices:**\n\n| Variable | S1_i | Rank |\n|----------|------|------|\n| T | 0.651 | 1 (dominant) |\n| Cb | 0.216 | 2 |\n| B | 0.129 | 3 |\n| L | 0.005 | 4 |\n| P/D | 0.000 | 5 |\n\n**Interpretation:** Draft alone explains 65% of EEDI variance, confirming it as the primary design lever for EEDI reduction.\n\n### 3.3 Pareto Front Optimization\n\nNSGA-II generated **80 Pareto-optimal solutions** after 30 generations:\n\n| Metric | Min | Max | Mean |\n|--------|-----|-----|------|\n| EEDI (gCO₂/(t·nm)) | 9.61 | 31.38 | 18.2 |\n| Cost (M USD) | 0.5 | 4.0 | 1.8 |\n\n**Trade-off Analysis:**\n- **Best EEDI**: 9.61 gCO₂/(t·nm) at cost = 2.1M USD\n- **Best Cost**: 0.5M USD at EEDI = 28.4 gCO₂/(t·nm)\n- **Knee point**: ~15 gCO₂/(t·nm) at ~1.2M USD (balanced solution)\n\n**Design Trends on Pareto Front:**\n- Low EEDI designs favor: larger T, higher Cb, moderate L/B\n- Low cost designs favor: smaller L, lower Cb, minimal T\n- All Pareto solutions satisfy geometric and performance constraints\n\n### 3.4 Convergence Behavior\n\nThe NSGA-II algorithm converged within 15 generations:\n- Generation 0: min EEDI = 22.3\n- Generation 10: min EEDI = 12.8\n- Generation 30: min EEDI = 9.61\n\nThe convergence curve shows rapid improvement in early generations, stabilizing after generation 20, indicating good algorithm performance.\n\n### 3.5 Spline Surrogate Accuracy\n\nThe RBF surrogate for residual resistance coefficient Cr was trained on 1000 samples in (Fn, Cb, L/B, B/T) space:\n\n| Metric | Value |\n|--------|-------|\n| Training samples | 1000 |\n| Fit RMS error | 4.5×10⁹ |\n| Validation mean relative error | 5.1×10¹¹ |\n\n**Note:** The spline surrogate shows large errors due to the ill-conditioning of the RBF interpolation in high-dimensional space. This is a known limitation of meshless interpolation methods. For production use, a physics-informed neural network or polynomial chaos expansion would be more appropriate.\n\n## 4. Discussion\n\n### 4.1 Physical Interpretation\n\n**Why is draft (T) the dominant variable?**\n1. **Displacement effect**: DWT ∝ L×B×T×Cb, so increasing T directly increases capacity (denominator of EEDI)\n2. **Resistance effect**: Wetted surface S ∝ L×(2T+B), but the displacement increase outweighs the resistance increase\n3. **Power effect**: Required power increases with T, but the DWT increase is more significant\n\n**Why does Cb have negative sensitivity?**\n- Higher Cb means fuller hull → more cargo capacity for same L×B×T\n- Resistance increases with Cb, but the capacity effect dominates in EEDI formula\n\n### 4.2 Design Implications\n\n**For EEDI compliance:**\n1. **Maximize draft** within structural and port limits\n2. **Increase block coefficient** for cargo capacity\n3. **Optimize L/B** around 6-7 for balanced resistance-capacity trade-off\n4. **Propeller pitch** has minimal direct effect on EEDI\n\n**For multi-objective optimization:**\n- The Pareto front reveals a clear trade-off between EEDI and cost\n- Decision-makers can select solutions based on regulatory requirements and economic constraints\n- The knee point (~15 gCO₂/(t·nm)) offers a balanced solution\n\n### 4.3 Comparison with Literature\n\nThe baseline EEDI of 18.55 gCO₂/(t·nm) is consistent with typical bulk carriers of similar size (DWT ~28,000 t). The IMO reference line for bulk carriers (MEPC.308(73)) gives:\n```\nEEDI_ref = 961.79 × DWT^(-0.477) = 961.79 × 28665^(-0.477) ≈ 14.2 gCO₂/(t·nm)\n```\n\nOur baseline exceeds the reference line by ~30%, which is typical for existing ships. Phase 2 reduction (20%) would require EEDI ≤ 11.4 gCO₂/(t·nm), achievable by our Pareto-optimal designs.\n\n### 4.4 Limitations\n\n1. **Simplified resistance model**: Holtrop-Mennen is empirical and may not capture all physics\n2. **Static propeller model**: Propulsive efficiency is estimated from simplified BEM\n3. **Cost model**: Watson's formula is approximate; actual costs depend on shipyard, materials, etc.\n4. **Spline surrogate**: RBF interpolation shows poor accuracy in high dimensions\n5. **No uncertainty quantification**: Sensitivity analysis assumes deterministic inputs\n\n## 5. Error Assessment\n\n### 5.1 vs. Baseline (Self-Consistency)\n\n| Check | Expected | Actual | Pass? |\n|-------|----------|--------|-------|\n| Ct = cf_total + Cr | Exact | Exact (1e-10) | ✓ |\n| DWT = ρ×L×B×T×Cb×0.65 | 28,665 t | 28,665 t | ✓ |\n| EEDI > 0 | Yes | 18.55 | ✓ |\n| Feasible design passes gate | Yes | Yes | ✓ |\n\n### 5.2 vs. IMO Reference Line\n\n| Metric | Value | Reference | Error | <3%? |\n|--------|-------|-----------|-------|------|\n| EEDI (baseline) | 18.55 | ~14.2 (est.) | +30% | N/A (different ships) |\n| EEDI (Pareto min) | 9.61 | 11.4 (Phase 2) | -16% | ✓ Compliant |\n\n**Note:** The 30% difference from reference line is expected as our baseline is a generic design, not optimized for EEDI. The Pareto-optimal designs achieve Phase 2 compliance.\n\n### 5.3 Spline Surrogate Accuracy\n\nThe RBF surrogate shows **poor accuracy** (relative error >100%) due to:\n- Ill-conditioning in 4D interpolation\n- Inappropriate kernel choice (cubic)\n- Insufficient regularization\n\n**Recommendation:** For production use, replace with:\n- Polynomial chaos expansion (PCE)\n- Physics-informed neural network (PINN)\n- Gaussian process regression (GPR) with automatic relevance determination\n\n## 6. Conclusions\n\n1. **Sensitivity analysis** reveals draft (T) as the dominant design variable for EEDI (Sobol index = 0.65), followed by block coefficient (Cb) and beam (B).\n\n2. **NSGA-II optimization** successfully generated 80 Pareto-optimal solutions with EEDI range [9.61, 31.38] gCO₂/(t·nm) and cost range [0.5, 4.0] M USD.\n\n3. **Geometric feasibility gate** effectively filters physically unrealizable designs, ensuring all Pareto solutions satisfy L/B, B/T, and Cb constraints.\n\n4. **IMO Phase 2 compliance** (EEDI ≤ 11.4 gCO₂/(t·nm)) is achievable through optimal design, with the best solution achieving 9.61 gCO₂/(t·nm).\n\n5. **Spline surrogate** for differentiable EEDI chain shows poor accuracy and requires replacement with more robust methods.\n\n## 7. Audit Trail\n\n- **Code**: `backend/api/eedi_optimization.py` (580 lines)\n- **Tests**: `tests/test_eedi_optimization.py` (37 tests, all passing)\n- **Results**: `runs/eedi_optimization_results.json`\n- **Figures**: `artifacts/fig1_pareto_front.png` through `fig5_design_space.png`\n- **Commit**: agent/m10182 branch\n\n## 8. Future Work\n\n1. Replace RBF surrogate with physics-informed neural network\n2. Add uncertainty quantification (Monte Carlo, polynomial chaos)\n3. Integrate with CFD-based resistance prediction\n4. Extend to EEXI and CII optimization\n5. Add lifecycle cost analysis (LCC)\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12072#figures[2]",
+      "caption": "Fig3 Convergence",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[2] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "embedded_figure",
+      "label": "fig4_spline_validation.png",
+      "in_report_section": "(record field figures)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 11171,
+        "start_line": 1,
+        "end_line": 277,
+        "quote": "# EEDI Design Variable Sensitivity Analysis and Constraint Optimization\n\n## 1. Case Introduction\n\n### Physical Background\nThe Energy Efficiency Design Index (EEDI) is a mandatory IMO measure (MEPC.364(79)) for reducing greenhouse gas emissions from international shipping. EEDI represents the CO₂ emission per transport work (gCO₂/(t·nm)) and must comply with reduction factors relative to a baseline reference line.\n\n### Design Problem\nThis study addresses the multi-objective optimization of ship design variables to minimize EEDI while maintaining economic viability (construction cost). The five-dimensional design space comprises:\n\n| Variable | Symbol | Range | Unit | Description |\n|----------|--------|-------|------|-------------|\n| Length | L | [100, 300] | m | Waterline length |\n| Beam | B | [15, 50] | m | Moulded beam |\n| Draft | T | [5, 18] | m | Design draft |\n| Block Coefficient | Cb | [0.50, 0.85] | - | Volume coefficient |\n| Pitch Ratio | P/D | [0.6, 1.4] | - | Propeller pitch/diameter |\n\n### Constraints\n- **Geometric feasibility**: L/B ∈ [3, 12], B/T ∈ [2, 6], Cb ∈ [0.50, 0.85]\n- **Performance**: DWT ≥ 10,000 t, GM ≥ 0.5 m\n- **Physical**: Cb ≤ Cp (prismatic coefficient)\n\n### Baseline Design\n- L = 200 m, B = 30 m, T = 10 m, Cb = 0.70, P/D = 1.0\n- Service speed: 14 knots\n- Fuel: HFO (CF = 3.114 gCO₂/gFuel)\n\n## 2. Methodology\n\n### 2.1 IMO EEDI Formula Chain\nThe attained EEDI is calculated per IMO MEPC.364(79):\n\n```\nEEDI = (Σ P_i × SFOC_i × C_F_i) / (f_i × f_c × f_l × Capacity × V_ref)\n```\n\nSimplified for single fuel (HFO):\n```\nEEDI = (P_ME × SFOC_ME × C_F + P_AE × SFOC_AE × C_F) / (DWT × V_ref)\n```\n\nWhere:\n- P_ME: Main engine power (kW)\n- P_AE: Auxiliary engine power (kW)\n- SFOC: Specific fuel oil consumption (g/kWh)\n- C_F: Carbon factor (gCO₂/gFuel)\n- DWT: Deadweight tonnage (t)\n- V_ref: Reference speed (m/s)\n\n### 2.2 Resistance and Power Calculation\nThe Holtrop-Mennen method (1984) is used for resistance prediction:\n- Friction resistance: ITTC-57 formula with ITTC-1978 roughness allowance\n- Residual resistance: Empirical formula accounting for Froude number, block coefficient, and beam-draft ratio\n- Wetted surface: Holtrop's empirical formula\n\n### 2.3 Sensitivity Analysis\nTwo approaches are implemented:\n\n**Finite Difference Gradient:**\n```\n∂EEDI/∂x_i ≈ (EEDI(x_i + Δx_i) - EEDI(x_i)) / Δx_i\n```\n\n**Normalized Sensitivity (Elasticity):**\n```\nS_i = (∂EEDI/∂x_i) × (x_i / EEDI) = ∂ln(EEDI)/∂ln(x_i)\n```\n\n**Sobol Indices:**\nFirst-order Sobol indices quantify the fractional contribution of each design variable to the output variance:\n```\nS1_i = Var[E[EEDI|x_i]] / Var[EEDI]\n```\n\n### 2.4 NSGA-II Multi-Objective Optimization\nThe Non-dominated Sorting Genetic Algorithm II (NSGA-II) is employed for Pareto front generation:\n- **Objectives**: Minimize EEDI, Minimize construction cost\n- **Population**: 80 individuals\n- **Generations**: 30\n- **Operators**: SBX crossover (η=20), polynomial mutation (η=20, p_m=0.1)\n- **Constraint handling**: Penalty method (10⁶ for infeasible solutions)\n\n### 2.5 Geometric Feasibility Gate\nA hard constraint filter ensures all designs satisfy:\n- L/B ∈ [3, 12] (avoid excessively wide/narrow hulls)\n- B/T ∈ [2, 6] (structural and stability limits)\n- Cb ∈ [0.50, 0.85] (physical realizability)\n- P/D ∈ [0.6, 1.4] (propeller design limits)\n\n### 2.6 Differentiable Surrogate Model\nAn RBF (Radial Basis Function) interpolant is fitted to the Holtrop-Mennen residual resistance coefficient in (Fn, Cb, L/B, B/T) space to enable gradient-based optimization. The surrogate uses cubic kernel with 1000 training samples.\n\n## 3. Results\n\n### 3.1 Baseline EEDI\nFor the baseline design (L=200m, B=30m, T=10m, Cb=0.70, P/D=1.0, V=14kn):\n\n| Quantity | Value | Unit |\n|----------|-------|------|\n| **EEDI** | **18.55** | gCO₂/(t·nm) |\n| Main engine power | 4,892 | kW |\n| Auxiliary power | 734 | kW |\n| Total resistance | 587 | kN |\n| Effective power | 4,256 | kW |\n| Propulsive efficiency | 0.68 | - |\n| DWT | 28,665 | t |\n| GM | 1.82 | m |\n\n### 3.2 Sensitivity Analysis\n\n**Normalized Sensitivity (Elasticity):**\n\n| Variable | S_i | Interpretation |\n|----------|-----|----------------|\n| L | -0.202 | 1% increase in L → 0.20% decrease in EEDI |\n| B | -0.400 | 1% increase in B → 0.40% decrease in EEDI |\n| T | -0.610 | 1% increase in T → 0.61% decrease in EEDI |\n| Cb | -0.504 | 1% increase in Cb → 0.50% decrease in EEDI |\n| P/D | 0.000 | No direct effect (through η_D only) |\n\n**Key Finding:** Draft (T) has the strongest influence on EEDI, followed by block coefficient (Cb) and beam (B). Length (L) has moderate effect.\n\n**First-order Sobol Indices:**\n\n| Variable | S1_i | Rank |\n|----------|------|------|\n| T | 0.651 | 1 (dominant) |\n| Cb | 0.216 | 2 |\n| B | 0.129 | 3 |\n| L | 0.005 | 4 |\n| P/D | 0.000 | 5 |\n\n**Interpretation:** Draft alone explains 65% of EEDI variance, confirming it as the primary design lever for EEDI reduction.\n\n### 3.3 Pareto Front Optimization\n\nNSGA-II generated **80 Pareto-optimal solutions** after 30 generations:\n\n| Metric | Min | Max | Mean |\n|--------|-----|-----|------|\n| EEDI (gCO₂/(t·nm)) | 9.61 | 31.38 | 18.2 |\n| Cost (M USD) | 0.5 | 4.0 | 1.8 |\n\n**Trade-off Analysis:**\n- **Best EEDI**: 9.61 gCO₂/(t·nm) at cost = 2.1M USD\n- **Best Cost**: 0.5M USD at EEDI = 28.4 gCO₂/(t·nm)\n- **Knee point**: ~15 gCO₂/(t·nm) at ~1.2M USD (balanced solution)\n\n**Design Trends on Pareto Front:**\n- Low EEDI designs favor: larger T, higher Cb, moderate L/B\n- Low cost designs favor: smaller L, lower Cb, minimal T\n- All Pareto solutions satisfy geometric and performance constraints\n\n### 3.4 Convergence Behavior\n\nThe NSGA-II algorithm converged within 15 generations:\n- Generation 0: min EEDI = 22.3\n- Generation 10: min EEDI = 12.8\n- Generation 30: min EEDI = 9.61\n\nThe convergence curve shows rapid improvement in early generations, stabilizing after generation 20, indicating good algorithm performance.\n\n### 3.5 Spline Surrogate Accuracy\n\nThe RBF surrogate for residual resistance coefficient Cr was trained on 1000 samples in (Fn, Cb, L/B, B/T) space:\n\n| Metric | Value |\n|--------|-------|\n| Training samples | 1000 |\n| Fit RMS error | 4.5×10⁹ |\n| Validation mean relative error | 5.1×10¹¹ |\n\n**Note:** The spline surrogate shows large errors due to the ill-conditioning of the RBF interpolation in high-dimensional space. This is a known limitation of meshless interpolation methods. For production use, a physics-informed neural network or polynomial chaos expansion would be more appropriate.\n\n## 4. Discussion\n\n### 4.1 Physical Interpretation\n\n**Why is draft (T) the dominant variable?**\n1. **Displacement effect**: DWT ∝ L×B×T×Cb, so increasing T directly increases capacity (denominator of EEDI)\n2. **Resistance effect**: Wetted surface S ∝ L×(2T+B), but the displacement increase outweighs the resistance increase\n3. **Power effect**: Required power increases with T, but the DWT increase is more significant\n\n**Why does Cb have negative sensitivity?**\n- Higher Cb means fuller hull → more cargo capacity for same L×B×T\n- Resistance increases with Cb, but the capacity effect dominates in EEDI formula\n\n### 4.2 Design Implications\n\n**For EEDI compliance:**\n1. **Maximize draft** within structural and port limits\n2. **Increase block coefficient** for cargo capacity\n3. **Optimize L/B** around 6-7 for balanced resistance-capacity trade-off\n4. **Propeller pitch** has minimal direct effect on EEDI\n\n**For multi-objective optimization:**\n- The Pareto front reveals a clear trade-off between EEDI and cost\n- Decision-makers can select solutions based on regulatory requirements and economic constraints\n- The knee point (~15 gCO₂/(t·nm)) offers a balanced solution\n\n### 4.3 Comparison with Literature\n\nThe baseline EEDI of 18.55 gCO₂/(t·nm) is consistent with typical bulk carriers of similar size (DWT ~28,000 t). The IMO reference line for bulk carriers (MEPC.308(73)) gives:\n```\nEEDI_ref = 961.79 × DWT^(-0.477) = 961.79 × 28665^(-0.477) ≈ 14.2 gCO₂/(t·nm)\n```\n\nOur baseline exceeds the reference line by ~30%, which is typical for existing ships. Phase 2 reduction (20%) would require EEDI ≤ 11.4 gCO₂/(t·nm), achievable by our Pareto-optimal designs.\n\n### 4.4 Limitations\n\n1. **Simplified resistance model**: Holtrop-Mennen is empirical and may not capture all physics\n2. **Static propeller model**: Propulsive efficiency is estimated from simplified BEM\n3. **Cost model**: Watson's formula is approximate; actual costs depend on shipyard, materials, etc.\n4. **Spline surrogate**: RBF interpolation shows poor accuracy in high dimensions\n5. **No uncertainty quantification**: Sensitivity analysis assumes deterministic inputs\n\n## 5. Error Assessment\n\n### 5.1 vs. Baseline (Self-Consistency)\n\n| Check | Expected | Actual | Pass? |\n|-------|----------|--------|-------|\n| Ct = cf_total + Cr | Exact | Exact (1e-10) | ✓ |\n| DWT = ρ×L×B×T×Cb×0.65 | 28,665 t | 28,665 t | ✓ |\n| EEDI > 0 | Yes | 18.55 | ✓ |\n| Feasible design passes gate | Yes | Yes | ✓ |\n\n### 5.2 vs. IMO Reference Line\n\n| Metric | Value | Reference | Error | <3%? |\n|--------|-------|-----------|-------|------|\n| EEDI (baseline) | 18.55 | ~14.2 (est.) | +30% | N/A (different ships) |\n| EEDI (Pareto min) | 9.61 | 11.4 (Phase 2) | -16% | ✓ Compliant |\n\n**Note:** The 30% difference from reference line is expected as our baseline is a generic design, not optimized for EEDI. The Pareto-optimal designs achieve Phase 2 compliance.\n\n### 5.3 Spline Surrogate Accuracy\n\nThe RBF surrogate shows **poor accuracy** (relative error >100%) due to:\n- Ill-conditioning in 4D interpolation\n- Inappropriate kernel choice (cubic)\n- Insufficient regularization\n\n**Recommendation:** For production use, replace with:\n- Polynomial chaos expansion (PCE)\n- Physics-informed neural network (PINN)\n- Gaussian process regression (GPR) with automatic relevance determination\n\n## 6. Conclusions\n\n1. **Sensitivity analysis** reveals draft (T) as the dominant design variable for EEDI (Sobol index = 0.65), followed by block coefficient (Cb) and beam (B).\n\n2. **NSGA-II optimization** successfully generated 80 Pareto-optimal solutions with EEDI range [9.61, 31.38] gCO₂/(t·nm) and cost range [0.5, 4.0] M USD.\n\n3. **Geometric feasibility gate** effectively filters physically unrealizable designs, ensuring all Pareto solutions satisfy L/B, B/T, and Cb constraints.\n\n4. **IMO Phase 2 compliance** (EEDI ≤ 11.4 gCO₂/(t·nm)) is achievable through optimal design, with the best solution achieving 9.61 gCO₂/(t·nm).\n\n5. **Spline surrogate** for differentiable EEDI chain shows poor accuracy and requires replacement with more robust methods.\n\n## 7. Audit Trail\n\n- **Code**: `backend/api/eedi_optimization.py` (580 lines)\n- **Tests**: `tests/test_eedi_optimization.py` (37 tests, all passing)\n- **Results**: `runs/eedi_optimization_results.json`\n- **Figures**: `artifacts/fig1_pareto_front.png` through `fig5_design_space.png`\n- **Commit**: agent/m10182 branch\n\n## 8. Future Work\n\n1. Replace RBF surrogate with physics-informed neural network\n2. Add uncertainty quantification (Monte Carlo, polynomial chaos)\n3. Integrate with CFD-based resistance prediction\n4. Extend to EEXI and CII optimization\n5. Add lifecycle cost analysis (LCC)\n",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[3] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12072#figures[3]",
+      "caption": "Fig4 Spline Validation",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[3] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "embedded_figure",
+      "label": "fig5_design_space.png",
+      "in_report_section": "7. Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10782,
+        "end_char": 10862,
+        "start_line": 268,
+        "end_line": 268,
+        "quote": "- **Figures**: `artifacts/fig1_pareto_front.png` through `fig5_design_space.png`",
+        "unique": true,
+        "token": "fig5_design_space.png",
+        "token_span": [
+          10840,
+          10861
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[4] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/12072#figures[4]",
+      "caption": "Fig5 Design Space",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[4] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "source_code_reference",
+      "label": "backend/api/eedi_optimization.py (markdown line 265)",
+      "in_report_section": "7. Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10599,
+        "end_char": 10657,
+        "start_line": 265,
+        "end_line": 265,
+        "quote": "- **Code**: `backend/api/eedi_optimization.py` (580 lines)",
+        "unique": true,
+        "token": "backend/api/eedi_optimization.py",
+        "token_span": [
+          10612,
+          10644
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "backend/api/eedi_optimization.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_eedi_optimization.py (markdown line 266)",
+      "in_report_section": "7. Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10658,
+        "end_char": 10728,
+        "start_line": 266,
+        "end_line": 266,
+        "quote": "- **Tests**: `tests/test_eedi_optimization.py` (37 tests, all passing)",
+        "unique": true,
+        "token": "tests/test_eedi_optimization.py",
+        "token_span": [
+          10672,
+          10703
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "tests/test_eedi_optimization.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "data_artifact_reference",
+      "label": "runs/eedi_optimization_results.json (markdown line 267)",
+      "in_report_section": "7. Audit Trail",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10729,
+        "end_char": 10781,
+        "start_line": 267,
+        "end_line": 267,
+        "quote": "- **Results**: `runs/eedi_optimization_results.json`",
+        "unique": true,
+        "token": "runs/eedi_optimization_results.json",
+        "token_span": [
+          10745,
+          10780
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "runs/eedi_optimization_results.json",
+      "origin": "inline_code",
+      "note": "data_artifact_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "data_artifact_reference"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "report_table",
+      "label": "table 1 @ lines 11-17",
+      "in_report_section": "Design Problem",
+      "locator": {
+        "method": "char_span",
+        "start_char": 637,
+        "end_char": 1008,
+        "start_line": 11,
+        "end_line": 17,
+        "quote": "| Variable | Symbol | Range | Unit | Description |\n|----------|--------|-------|------|-------------|\n| Length | L | [100, 300] | m | Waterline length |\n| Beam | B | [15, 50] | m | Moulded beam |\n| Draft | T | [5, 18] | m | Design draft |\n| Block Coefficient | Cb | [0.50, 0.85] | - | Volume coefficient |\n| Pitch Ratio | P/D | [0.6, 1.4] | - | Propeller pitch/diameter |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "7 rows x 5 columns"
+      },
+      "rows": 7,
+      "columns": 5,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "report_table",
+      "label": "table 2 @ lines 99-108",
+      "in_report_section": "3.1 Baseline EEDI",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3698,
+        "end_char": 3999,
+        "start_line": 99,
+        "end_line": 108,
+        "quote": "| Quantity | Value | Unit |\n|----------|-------|------|\n| **EEDI** | **18.55** | gCO₂/(t·nm) |\n| Main engine power | 4,892 | kW |\n| Auxiliary power | 734 | kW |\n| Total resistance | 587 | kN |\n| Effective power | 4,256 | kW |\n| Propulsive efficiency | 0.68 | - |\n| DWT | 28,665 | t |\n| GM | 1.82 | m |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "10 rows x 3 columns"
+      },
+      "rows": 10,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "report_table",
+      "label": "table 3 @ lines 114-120",
+      "in_report_section": "3.2 Sensitivity Analysis",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4073,
+        "end_char": 4436,
+        "start_line": 114,
+        "end_line": 120,
+        "quote": "| Variable | S_i | Interpretation |\n|----------|-----|----------------|\n| L | -0.202 | 1% increase in L → 0.20% decrease in EEDI |\n| B | -0.400 | 1% increase in B → 0.40% decrease in EEDI |\n| T | -0.610 | 1% increase in T → 0.61% decrease in EEDI |\n| Cb | -0.504 | 1% increase in Cb → 0.50% decrease in EEDI |\n| P/D | 0.000 | No direct effect (through η_D only) |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "7 rows x 3 columns"
+      },
+      "rows": 7,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "report_table",
+      "label": "table 4 @ lines 126-132",
+      "in_report_section": "3.2 Sensitivity Analysis",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4616,
+        "end_char": 4773,
+        "start_line": 126,
+        "end_line": 132,
+        "quote": "| Variable | S1_i | Rank |\n|----------|------|------|\n| T | 0.651 | 1 (dominant) |\n| Cb | 0.216 | 2 |\n| B | 0.129 | 3 |\n| L | 0.005 | 4 |\n| P/D | 0.000 | 5 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "7 rows x 3 columns"
+      },
+      "rows": 7,
+      "columns": 3,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "report_table",
+      "label": "table 5 @ lines 140-143",
+      "in_report_section": "3.3 Pareto Front Optimization",
+      "locator": {
+        "method": "char_span",
+        "start_char": 5009,
+        "end_char": 5148,
+        "start_line": 140,
+        "end_line": 143,
+        "quote": "| Metric | Min | Max | Mean |\n|--------|-----|-----|------|\n| EEDI (gCO₂/(t·nm)) | 9.61 | 31.38 | 18.2 |\n| Cost (M USD) | 0.5 | 4.0 | 1.8 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "4 rows x 4 columns"
+      },
+      "rows": 4,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "report_table",
+      "label": "table 6 @ lines 168-172",
+      "in_report_section": "3.5 Spline Surrogate Accuracy",
+      "locator": {
+        "method": "char_span",
+        "start_char": 6045,
+        "end_char": 6184,
+        "start_line": 168,
+        "end_line": 172,
+        "quote": "| Metric | Value |\n|--------|-------|\n| Training samples | 1000 |\n| Fit RMS error | 4.5×10⁹ |\n| Validation mean relative error | 5.1×10¹¹ |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "5 rows x 2 columns"
+      },
+      "rows": 5,
+      "columns": 2,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "report_table",
+      "label": "table 7 @ lines 223-228",
+      "in_report_section": "5.1 vs. Baseline (Self-Consistency)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8694,
+        "end_char": 8951,
+        "start_line": 223,
+        "end_line": 228,
+        "quote": "| Check | Expected | Actual | Pass? |\n|-------|----------|--------|-------|\n| Ct = cf_total + Cr | Exact | Exact (1e-10) | ✓ |\n| DWT = ρ×L×B×T×Cb×0.65 | 28,665 t | 28,665 t | ✓ |\n| EEDI > 0 | Yes | 18.55 | ✓ |\n| Feasible design passes gate | Yes | Yes | ✓ |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "6 rows x 4 columns"
+      },
+      "rows": 6,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "report_table",
+      "label": "table 8 @ lines 232-235",
+      "in_report_section": "5.2 vs. IMO Reference Line",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8985,
+        "end_char": 9217,
+        "start_line": 232,
+        "end_line": 235,
+        "quote": "| Metric | Value | Reference | Error | <3%? |\n|--------|-------|-----------|-------|------|\n| EEDI (baseline) | 18.55 | ~14.2 (est.) | +30% | N/A (different ships) |\n| EEDI (Pareto min) | 9.61 | 11.4 (Phase 2) | -16% | ✓ Compliant |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "4 rows x 5 columns"
+      },
+      "rows": 4,
+      "columns": 5,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "formula_or_text_block",
+      "label": "plain fence @ lines 34-36",
+      "in_report_section": "2.1 IMO EEDI Formula Chain",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1439,
+        "end_char": 1517,
+        "start_line": 34,
+        "end_line": 36,
+        "quote": "```\nEEDI = (Σ P_i × SFOC_i × C_F_i) / (f_i × f_c × f_l × Capacity × V_ref)\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "fenced code block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "1 line(s), language=plain, runnable=False"
+      },
+      "language": "plain",
+      "runnable": false,
+      "note": "formula/text block as written in the report; registered as structure only, its content is neither interpreted nor restated.",
+      "kind": "formula_or_text_block"
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "formula_or_text_block",
+      "label": "plain fence @ lines 39-41",
+      "in_report_section": "2.1 IMO EEDI Formula Chain",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1553,
+        "end_char": 1629,
+        "start_line": 39,
+        "end_line": 41,
+        "quote": "```\nEEDI = (P_ME × SFOC_ME × C_F + P_AE × SFOC_AE × C_F) / (DWT × V_ref)\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "fenced code block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "1 line(s), language=plain, runnable=False"
+      },
+      "language": "plain",
+      "runnable": false,
+      "note": "formula/text block as written in the report; registered as structure only, its content is neither interpreted nor restated.",
+      "kind": "formula_or_text_block"
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "formula_or_text_block",
+      "label": "plain fence @ lines 61-63",
+      "in_report_section": "2.3 Sensitivity Analysis",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2282,
+        "end_char": 2340,
+        "start_line": 61,
+        "end_line": 63,
+        "quote": "```\n∂EEDI/∂x_i ≈ (EEDI(x_i + Δx_i) - EEDI(x_i)) / Δx_i\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "fenced code block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "1 line(s), language=plain, runnable=False"
+      },
+      "language": "plain",
+      "runnable": false,
+      "note": "formula/text block as written in the report; registered as structure only, its content is neither interpreted nor restated.",
+      "kind": "formula_or_text_block"
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "formula_or_text_block",
+      "label": "plain fence @ lines 66-68",
+      "in_report_section": "2.3 Sensitivity Analysis",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2383,
+        "end_char": 2445,
+        "start_line": 66,
+        "end_line": 68,
+        "quote": "```\nS_i = (∂EEDI/∂x_i) × (x_i / EEDI) = ∂ln(EEDI)/∂ln(x_i)\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "fenced code block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "1 line(s), language=plain, runnable=False"
+      },
+      "language": "plain",
+      "runnable": false,
+      "note": "formula/text block as written in the report; registered as structure only, its content is neither interpreted nor restated.",
+      "kind": "formula_or_text_block"
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "formula_or_text_block",
+      "label": "plain fence @ lines 72-74",
+      "in_report_section": "2.3 Sensitivity Analysis",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2577,
+        "end_char": 2620,
+        "start_line": 72,
+        "end_line": 74,
+        "quote": "```\nS1_i = Var[E[EEDI|x_i]] / Var[EEDI]\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "fenced code block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "1 line(s), language=plain, runnable=False"
+      },
+      "language": "plain",
+      "runnable": false,
+      "note": "formula/text block as written in the report; registered as structure only, its content is neither interpreted nor restated.",
+      "kind": "formula_or_text_block"
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "formula_or_text_block",
+      "label": "plain fence @ lines 205-207",
+      "in_report_section": "4.3 Comparison with Literature",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7875,
+        "end_char": 7960,
+        "start_line": 205,
+        "end_line": 207,
+        "quote": "```\nEEDI_ref = 961.79 × DWT^(-0.477) = 961.79 × 28665^(-0.477) ≈ 14.2 gCO₂/(t·nm)\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "fenced code block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "1 line(s), language=plain, runnable=False"
+      },
+      "language": "plain",
+      "runnable": false,
+      "note": "formula/text block as written in the report; registered as structure only, its content is neither interpreted nor restated.",
+      "kind": "formula_or_text_block"
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "external_standard",
+      "label": "MEPC.364(79)",
+      "in_report_section": "Physical Background",
+      "locator": {
+        "method": "char_span",
+        "start_char": 192,
+        "end_char": 204,
+        "start_line": 6,
+        "end_line": 6,
+        "quote": "MEPC.364(79)",
+        "unique": false,
+        "context_line": "The Energy Efficiency Design Index (EEDI) is a mandatory IMO measure (MEPC.364(79)) for reducing greenhouse gas emissions from international shipping. EEDI represents the CO₂ emission per transport work (gCO₂/(t·nm)) and must comply with reduction factors relative to a baseline reference line."
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (first loose occurrence (no exact inline-code span found))",
+        "result": "resolved",
+        "detail": "occurs 2 time(s); pinned at line 6"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "external_standard"
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "external_standard",
+      "label": "MEPC.308(73)",
+      "in_report_section": "4.3 Comparison with Literature",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7854,
+        "end_char": 7866,
+        "start_line": 204,
+        "end_line": 204,
+        "quote": "MEPC.308(73)",
+        "unique": true,
+        "context_line": "The baseline EEDI of 18.55 gCO₂/(t·nm) is consistent with typical bulk carriers of similar size (DWT ~28,000 t). The IMO reference line for bulk carriers (MEPC.308(73)) gives:"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (first loose occurrence (no exact inline-code span found))",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 204"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "external_standard"
+    },
+    {
+      "asset_id": "A26",
+      "asset_class": "method_reference",
+      "label": "Holtrop-Mennen",
+      "in_report_section": "2.2 Resistance and Power Calculation",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1892,
+        "end_char": 1906,
+        "start_line": 52,
+        "end_line": 52,
+        "quote": "Holtrop-Mennen",
+        "unique": false,
+        "context_line": "The Holtrop-Mennen method (1984) is used for resistance prediction:"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (first loose occurrence (no exact inline-code span found))",
+        "result": "resolved",
+        "detail": "occurs 3 time(s); pinned at line 52"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "method_reference"
+    },
+    {
+      "asset_id": "A27",
+      "asset_class": "method_reference",
+      "label": "ITTC-57",
+      "in_report_section": "2.2 Resistance and Power Calculation",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1979,
+        "end_char": 1986,
+        "start_line": 53,
+        "end_line": 53,
+        "quote": "ITTC-57",
+        "unique": true,
+        "context_line": "- Friction resistance: ITTC-57 formula with ITTC-1978 roughness allowance"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (first loose occurrence (no exact inline-code span found))",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 53"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "method_reference"
+    },
+    {
+      "asset_id": "A28",
+      "asset_class": "method_reference",
+      "label": "ITTC-1978",
+      "in_report_section": "2.2 Resistance and Power Calculation",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2000,
+        "end_char": 2009,
+        "start_line": 53,
+        "end_line": 53,
+        "quote": "ITTC-1978",
+        "unique": true,
+        "context_line": "- Friction resistance: ITTC-57 formula with ITTC-1978 roughness allowance"
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (first loose occurrence (no exact inline-code span found))",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 53"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "method_reference"
+    },
+    {
+      "asset_id": "A29",
+      "asset_class": "method_reference",
+      "label": "Watson's formula",
+      "in_report_section": "4.4 Limitations",
+      "locator": {
+        "method": "char_span",
+        "start_char": 8376,
+        "end_char": 8392,
+        "start_line": 215,
+        "end_line": 215,
+        "quote": "Watson's formula",
+        "unique": true,
+        "context_line": "3. **Cost model**: Watson's formula is approximate; actual costs depend on shipyard, materials, etc."
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "token found verbatim in markdown (first loose occurrence (no exact inline-code span found))",
+        "result": "resolved",
+        "detail": "occurs 1 time(s); pinned at line 215"
+      },
+      "note": "interface surface registered for downstream work packages; no semantics extracted.",
+      "kind": "method_reference"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": {
+      "total_quotes": 29,
+      "quotes_unique_in_source": 27,
+      "repeated_quotes": [
+        "- **Figures**: `artifacts/fig1_pareto_front.png` through `fig5_design_space.png`"
+      ],
+      "note": "repeated short quotes are structural (identical table rows); each asset still carries its own char span."
+    },
+    "hash_recomputed_locally": "493094b22bb67cac20e077c7990b46863cad81b1f523dea49ddbba8667ae2200",
+    "hash_matches_contract": true,
+    "hash_alg": "sha256 over markdown encoded as utf-8",
+    "locator_scheme": "absolute character span in markdown, 1-based inclusive line numbers"
+  },
+  "identity_granularity": "File references are occurrence-level: identity is (path, markdown line), so a file cited twice yields two assets carrying their own quotes; counts.distinct_referenced_paths is the deduplicated view.",
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no `verified` marks (verification is platform-gated).",
+    "Referenced source paths belong to the producing repository; they are resolved strictly inside the TensorKnowledge delivery worktree, so cross-repository references stay referenced_unresolved by design.",
+    "Figures are inventoried from record.figures[] as-is; when png_base64 is empty the asset is metadata_only and no byte hash is claimed.",
+    "Table and code-fence assets record geometry (rows/columns/language) only; their content is not restated as knowledge.",
+    "Only path-like references, fenced/inline code paths, tables, figures and explicitly configured interface tokens are registered. Bare prose symbols (e.g. a rule table named in the text that lives in the producing repository) are deliberately NOT inferred - registering them would require assuming information the report does not pin to a file.",
+    "Outputs live under docs/kf/<package>/ because the push gate drops artifacts/** (see docs/ops), so registered artifacts are not silently filtered."
+  ],
+  "producer": {
+    "generator": "scripts/kf/kf01_register.py",
+    "contract_version": "1.0",
+    "fetched_via": "GET /api/v1/tensor/reports/12072"
+  }
+}
