@@ -1,0 +1,526 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-7545-01",
+  "task_type": "01-asset-registration",
+  "report_id": "7545",
+  "generated_at": "2026-11-12T01:27:49.903244+00:00",
+  "contract": {
+    "contract_version": "1.0",
+    "lane": "C",
+    "objective": {
+      "register_assets": true,
+      "classify_report_type": false
+    },
+    "source_hash_declared": "sha256:84010e0091071d5971888931b9d6b73fc3bba4f217dcd17ab739979fc1c5ae60",
+    "contract_chars": 3583,
+    "repo": "TensorKnowledge",
+    "status": "draft"
+  },
+  "source": {
+    "uri": "tensor://reports/7545",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "84010e0091071d5971888931b9d6b73fc3bba4f217dcd17ab739979fc1c5ae60",
+    "chars": 3583,
+    "bytes_utf8": 6333,
+    "title": "IN59-P2 冰层断裂与接触模型：五角色×七环 ABM 与理论/实现/实验三腿闭合",
+    "scenario_key": "ice_fracture_contact_abm",
+    "platform_figures": [
+      "fig1_stress_strain.png",
+      "fig2_blind_cards.png",
+      "fig3_six_dim.png",
+      "fig4_three_legs.png"
+    ],
+    "platform_tags": [
+      "ABM",
+      "DEM",
+      "parallel-bond",
+      "ice",
+      "fracture",
+      "IN59-P2"
+    ],
+    "report_mission_id": 6335,
+    "report_status": "published",
+    "report_created_at": "2026-11-07T22:21:05.989216+00:00",
+    "fetched_via": "GET /api/v1/tensor/reports/7545"
+  },
+  "counts": {
+    "assets": 18,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 4,
+      "data_artifact_reference": 8,
+      "source_code_reference": 2,
+      "directory_reference": 1,
+      "test_command_reference": 2
+    },
+    "by_resolution": {
+      "resolved_in_source": 1,
+      "declared_absent": 4,
+      "referenced_unresolved": 13
+    },
+    "resolved_in_source": 1,
+    "referenced_unresolved": 13,
+    "declared_absent": 4
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "报告 markdown 全文字节（source_uri 指向的主资产）",
+      "in_report_section": "（整篇）",
+      "uri": "tensor://reports/7545",
+      "source_field": "markdown",
+      "chars": 3583,
+      "bytes_utf8": 6333,
+      "sha256": "84010e0091071d5971888931b9d6b73fc3bba4f217dcd17ab739979fc1c5ae60",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 3583,
+        "start_line": 1,
+        "end_line": 96,
+        "quote": "# IN59-P2 冰层断裂与接触模型：五角色×七环 ABM 与理论/实现/实验三腿闭合",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(markdown utf-8 bytes) recomputed from GET /tensor/reports/7545",
+        "result": "resolved"
+      },
+      "note": "字节哈希与契约 source_hash 一致；本包只登记资产，不抽取、不改写。"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "fig1_stress_strain.png",
+      "in_report_section": "④ 结果图",
+      "uri": "tensor://reports/7545#figures[0]",
+      "caption": "单轴压缩与直接拉伸的加载曲线",
+      "sha256": null,
+      "bytes_utf8": null,
+      "locator": {
+        "method": "char_span",
+        "start_char": 2201,
+        "end_char": 2232,
+        "start_line": 61,
+        "end_line": 61,
+        "quote": "图 1：单轴压缩与直接拉伸的加载曲线（峰值与broken演化）",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "GET /tensor/reports/7545/figures/fig1_stress_strain.png byte probe",
+        "result": "absent"
+      },
+      "note": "图注在 markdown 内逐字可定位；平台 figures 元数据有 name/caption，但取值端点返回 http_404 {\"detail\":\"figure not found\"}，故无可哈希字节 → declared_absent（不臆造摘要）。"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "embedded_figure",
+      "label": "fig2_blind_cards.png",
+      "in_report_section": "④ 结果图",
+      "uri": "tensor://reports/7545#figures[1]",
+      "caption": "预测盲：封存预测 vs 实测（含tolerance gate）",
+      "sha256": null,
+      "bytes_utf8": null,
+      "locator": {
+        "method": "char_span",
+        "start_char": 2235,
+        "end_char": 2278,
+        "start_line": 62,
+        "end_line": 62,
+        "quote": "图 2：预测盲卡片——封存预测与实测的相对误差 vs sealed tolerance",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "GET /tensor/reports/7545/figures/fig2_blind_cards.png byte probe",
+        "result": "absent"
+      },
+      "note": "图注在 markdown 内逐字可定位；平台 figures 元数据有 name/caption，但取值端点返回 http_404 {\"detail\":\"figure not found\"}，故无可哈希字节 → declared_absent（不臆造摘要）。"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "embedded_figure",
+      "label": "fig3_six_dim.png",
+      "in_report_section": "④ 结果图",
+      "uri": "tensor://reports/7545#figures[2]",
+      "caption": "六维对照：实验组 vs 对照组",
+      "sha256": null,
+      "bytes_utf8": null,
+      "locator": {
+        "method": "char_span",
+        "start_char": 2281,
+        "end_char": 2305,
+        "start_line": 63,
+        "end_line": 63,
+        "quote": "图 3：六维对照（实验组 vs 对照组，对数轴）",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "GET /tensor/reports/7545/figures/fig3_six_dim.png byte probe",
+        "result": "absent"
+      },
+      "note": "图注在 markdown 内逐字可定位；平台 figures 元数据有 name/caption，但取值端点返回 http_404 {\"detail\":\"figure not found\"}，故无可哈希字节 → declared_absent（不臆造摘要）。"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "embedded_figure",
+      "label": "fig4_three_legs.png",
+      "in_report_section": "④ 结果图",
+      "uri": "tensor://reports/7545#figures[3]",
+      "caption": "三腿闭合误差与tolerance gate",
+      "sha256": null,
+      "bytes_utf8": null,
+      "locator": {
+        "method": "char_span",
+        "start_char": 2308,
+        "end_char": 2333,
+        "start_line": 64,
+        "end_line": 64,
+        "quote": "图 4：三腿闭合误差与tolerance gate",
+        "unique": true
+      },
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "GET /tensor/reports/7545/figures/fig4_three_legs.png byte probe",
+        "result": "absent"
+      },
+      "note": "图注在 markdown 内逐字可定位；平台 figures 元数据有 name/caption，但取值端点返回 http_404 {\"detail\":\"figure not found\"}，故无可哈希字节 → declared_absent（不臆造摘要）。"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "data_artifact_reference",
+      "label": "experiments.json:spec",
+      "path_reference": "experiments.json",
+      "pin": "spec",
+      "in_report_section": "① 案例介绍（物理背景 / 几何 / 参数表）",
+      "uri": "tensor://reports/7545#markdown:L9",
+      "locator": {
+        "method": "char_span",
+        "start_char": 386,
+        "end_char": 409,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "`experiments.json:spec`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "source_code_reference",
+      "label": "run_abm.py:KNOWLEDGE_PACKS",
+      "path_reference": "run_abm.py",
+      "pin": "KNOWLEDGE_PACKS",
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "uri": "tensor://reports/7545#markdown:L25",
+      "locator": {
+        "method": "char_span",
+        "start_char": 884,
+        "end_char": 912,
+        "start_line": 25,
+        "end_line": 25,
+        "quote": "`run_abm.py:KNOWLEDGE_PACKS`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "dem_bpm.py",
+      "path_reference": "dem_bpm.py",
+      "pin": null,
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "uri": "tensor://reports/7545#markdown:L29",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1107,
+        "end_char": 1119,
+        "start_line": 29,
+        "end_line": 29,
+        "quote": "`dem_bpm.py`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/IN59-P2/trace.jsonl",
+      "path_reference": "artifacts/IN59-P2/trace.jsonl",
+      "pin": null,
+      "in_report_section": "审计链",
+      "uri": "tensor://reports/7545#markdown:L92",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3273,
+        "end_char": 3304,
+        "start_line": 92,
+        "end_line": 92,
+        "quote": "`artifacts/IN59-P2/trace.jsonl`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/IN59-P2/blind_cards.json",
+      "path_reference": "artifacts/IN59-P2/blind_cards.json",
+      "pin": null,
+      "in_report_section": "审计链",
+      "uri": "tensor://reports/7545#markdown:L93",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3325,
+        "end_char": 3361,
+        "start_line": 93,
+        "end_line": 93,
+        "quote": "`artifacts/IN59-P2/blind_cards.json`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/IN59-P2/experiments.json",
+      "path_reference": "artifacts/IN59-P2/experiments.json",
+      "pin": null,
+      "in_report_section": "审计链",
+      "uri": "tensor://reports/7545#markdown:L94",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3384,
+        "end_char": 3420,
+        "start_line": 94,
+        "end_line": 94,
+        "quote": "`artifacts/IN59-P2/experiments.json`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "data_artifact_reference",
+      "label": "six_dim_table.json",
+      "path_reference": "six_dim_table.json",
+      "pin": null,
+      "in_report_section": "审计链",
+      "uri": "tensor://reports/7545#markdown:L94",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3424,
+        "end_char": 3444,
+        "start_line": 94,
+        "end_line": 94,
+        "quote": "`six_dim_table.json`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "data_artifact_reference",
+      "label": "three_leg.json",
+      "path_reference": "three_leg.json",
+      "pin": null,
+      "in_report_section": "审计链",
+      "uri": "tensor://reports/7545#markdown:L94",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3448,
+        "end_char": 3464,
+        "start_line": 94,
+        "end_line": 94,
+        "quote": "`three_leg.json`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "data_artifact_reference",
+      "label": "acceptance.json",
+      "path_reference": "acceptance.json",
+      "pin": null,
+      "in_report_section": "审计链",
+      "uri": "tensor://reports/7545#markdown:L94",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3468,
+        "end_char": 3485,
+        "start_line": 94,
+        "end_line": 94,
+        "quote": "`acceptance.json`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "data_artifact_reference",
+      "label": "control_arm.json",
+      "path_reference": "control_arm.json",
+      "pin": null,
+      "in_report_section": "审计链",
+      "uri": "tensor://reports/7545#markdown:L94",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3490,
+        "end_char": 3508,
+        "start_line": 94,
+        "end_line": 94,
+        "quote": "`control_arm.json`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "directory_reference",
+      "label": "tools/abm",
+      "path_reference": "tools/abm",
+      "pin": null,
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "uri": "tensor://reports/7545#markdown:L27",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1003,
+        "end_char": 1014,
+        "start_line": 27,
+        "end_line": 27,
+        "quote": "`tools/abm`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "报告引用的产物属于产生该报告的域仓/任务树（如 tools/abm、domains/ice_fracture_contact、artifacts/IN59-P2/*），不在 TensorKnowledge 检出内；按边界不跨仓拷贝、不臆造哈希。"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "test_command_reference",
+      "label": "pytest tests/abm domains/ice_fracture_contact/tests",
+      "path_reference": "pytest tests/abm domains/ice_fracture_contact/tests",
+      "pin": null,
+      "in_report_section": "② 怎么做的（方法 / 流程 / 工具链）",
+      "uri": "tensor://reports/7545#markdown:L33",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1396,
+        "end_char": 1449,
+        "start_line": 33,
+        "end_line": 33,
+        "quote": "`pytest tests/abm domains/ice_fracture_contact/tests`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "命令文本可逐字定位，但本包边界只登记资产、不执行测试；执行结论归报告作者，未在此复核。"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "test_command_reference",
+      "label": "pytest tests/abm domains/ice_fracture_contact/tests -q",
+      "path_reference": "pytest tests/abm domains/ice_fracture_contact/tests -q",
+      "pin": null,
+      "in_report_section": "审计链",
+      "uri": "tensor://reports/7545#markdown:L95",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3514,
+        "end_char": 3570,
+        "start_line": 95,
+        "end_line": 95,
+        "quote": "`pytest tests/abm domains/ice_fracture_contact/tests -q`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "worktree path + git index lookup inside m15597",
+        "result": "unresolved"
+      },
+      "note": "命令文本可逐字定位，但本包边界只登记资产、不执行测试；执行结论归报告作者，未在此复核。"
+    }
+  ],
+  "claims": [],
+  "claims_note": "objective 只含 register_assets（classify_report_type=false），契约 no_forced_claim_generation=true，故本包 claims 为空数组：空数组是合法完整结果，不造知识；任何抽取/核验留给下游工序与平台门。",
+  "integrity": {
+    "quote_uniqueness": {
+      "checked": 18,
+      "unique": 18,
+      "non_unique_ids": []
+    },
+    "hash_recomputed_locally": "84010e0091071d5971888931b9d6b73fc3bba4f217dcd17ab739979fc1c5ae60",
+    "hash_matches_contract": true,
+    "chars_matches_contract": true,
+    "hashed_bytes": "markdown encoded as utf-8"
+  },
+  "identity_granularity": "引用资产的标识是出现级（occurrence-level）：asset_id 绑定 (path_reference, markdown token)，因此同一命令在正文与审计链各出现一次会得到 A17/A18 两个资产，各自携带自己的逐字定位；去重视图见 counts.by_class 与 assets[*].path_reference。",
+  "limitations": [
+    "登记工序：不做文本抽取、不生成 claim、不标 verified（verification 由平台门计算）。",
+    "引用解析严格限定在 TensorKnowledge 检出内；域仓/任务树产物（tools/abm、dem_bpm.py、artifacts/IN59-P2/*）按边界登记为 referenced_unresolved，不跨仓猜测。",
+    "平台 figures 元数据 4 条 name/caption 全部登记；取值端点 404，无字节可哈希 → declared_absent。",
+    "本包不执行报告声称的 pytest 命令，测试通过性未在此复核（仅登记命令文本可定位）。"
+  ]
+}

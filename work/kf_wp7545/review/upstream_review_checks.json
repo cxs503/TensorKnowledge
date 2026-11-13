@@ -1,0 +1,620 @@
+{
+ "package_reviewed": "wp-7545-01",
+ "report_id": "7545",
+ "source_sha256": "sha256:84010e0091071d5971888931b9d6b73fc3bba4f217dcd17ab739979fc1c5ae60",
+ "checks": {
+  "V1_source_identity": {
+   "sha256": "sha256:84010e0091071d5971888931b9d6b73fc3bba4f217dcd17ab739979fc1c5ae60",
+   "matches_contract": true,
+   "chars": 3583,
+   "chars_declared": 3583,
+   "bytes_utf8": 6333,
+   "bytes_declared": 6333,
+   "pass": true
+  },
+  "V2_locators": {
+   "assets": 18,
+   "locator_mismatch": [
+    "A01"
+   ],
+   "non_unique": [],
+   "line_number_mismatch": [
+    "A01:end_line"
+   ],
+   "document_method_assets": 1,
+   "detail_document_method": [
+    {
+     "asset_id": "A01",
+     "resolution": "resolved_in_source",
+     "method": "document",
+     "span": [
+      0,
+      3583
+     ],
+     "quote_at_locator": false,
+     "quote_unique": true,
+     "quote_len": 44,
+     "quote_starts_at_span_start": true,
+     "start_line_recomputed": 1,
+     "start_line_declared": 1,
+     "end_line_recomputed": 95
+    }
+   ],
+   "pass": false
+  },
+  "V3_declared_absent": {
+   "probes": [
+    {
+     "asset_id": "A02",
+     "name": "fig1_stress_strain.png",
+     "probe_tensor_path": {
+      "url": "/tensor/reports/7545/figures/fig1_stress_strain.png",
+      "status": 404
+     },
+     "probe_api_v1_path": {
+      "url": "/api/v1/tensor/reports/7545/figures/fig1_stress_strain.png",
+      "status": 404
+     },
+     "on_disk": false
+    },
+    {
+     "asset_id": "A03",
+     "name": "fig2_blind_cards.png",
+     "probe_tensor_path": {
+      "url": "/tensor/reports/7545/figures/fig2_blind_cards.png",
+      "status": 404
+     },
+     "probe_api_v1_path": {
+      "url": "/api/v1/tensor/reports/7545/figures/fig2_blind_cards.png",
+      "status": 404
+     },
+     "on_disk": false
+    },
+    {
+     "asset_id": "A04",
+     "name": "fig3_six_dim.png",
+     "probe_tensor_path": {
+      "url": "/tensor/reports/7545/figures/fig3_six_dim.png",
+      "status": 404
+     },
+     "probe_api_v1_path": {
+      "url": "/api/v1/tensor/reports/7545/figures/fig3_six_dim.png",
+      "status": 404
+     },
+     "on_disk": false
+    },
+    {
+     "asset_id": "A05",
+     "name": "fig4_three_legs.png",
+     "probe_tensor_path": {
+      "url": "/tensor/reports/7545/figures/fig4_three_legs.png",
+      "status": 404
+     },
+     "probe_api_v1_path": {
+      "url": "/api/v1/tensor/reports/7545/figures/fig4_three_legs.png",
+      "status": 404
+     },
+     "on_disk": false
+    }
+   ],
+   "figure_storage_root": "/root/tensor-ecosystem/TensorPlatform/backend/uploads/tensor_reports",
+   "route_semantics": "GET /tensor/reports/{id}/figures/{name} -> FileResponse(FIGURE_DIR/id/name.png) else HTTPException 404 (backend/api/tensor_reports.py:217-229)",
+   "figures_absent_confirmed": true,
+   "invented_digests": [],
+   "pass": true
+  },
+  "V4_counts": {
+   "assets_actual": 18,
+   "assets_declared": 18,
+   "by_class_actual": {
+    "report_markdown": 1,
+    "embedded_figure": 4,
+    "data_artifact_reference": 8,
+    "source_code_reference": 2,
+    "directory_reference": 1,
+    "test_command_reference": 2
+   },
+   "by_class_declared": {
+    "report_markdown": 1,
+    "embedded_figure": 4,
+    "data_artifact_reference": 8,
+    "source_code_reference": 2,
+    "directory_reference": 1,
+    "test_command_reference": 2
+   },
+   "by_resolution_actual": {
+    "resolved_in_source": 1,
+    "declared_absent": 4,
+    "referenced_unresolved": 13
+   },
+   "by_resolution_declared": {
+    "resolved_in_source": 1,
+    "declared_absent": 4,
+    "referenced_unresolved": 13
+   },
+   "kf_result_asset_count": 18,
+   "pass": true
+  },
+  "V5_completeness": {
+   "backticked_tokens": 15,
+   "pathish_tokens": 13,
+   "pathish_unique": [
+    "acceptance.json",
+    "artifacts/IN59-P2/blind_cards.json",
+    "artifacts/IN59-P2/experiments.json",
+    "artifacts/IN59-P2/trace.jsonl",
+    "control_arm.json",
+    "dem_bpm.py",
+    "experiments.json:spec",
+    "pytest tests/abm domains/ice_fracture_contact/tests",
+    "pytest tests/abm domains/ice_fracture_contact/tests -q",
+    "run_abm.py:KNOWLEDGE_PACKS",
+    "six_dim_table.json",
+    "three_leg.json",
+    "tools/abm"
+   ],
+   "non_path_tokens_ignored": [
+    "GateSequence",
+    "a1cbed56e95153701a4d7b629990bf439c8742d948c0213e9e0ba4f59456f40e"
+   ],
+   "unregistered_pathish": [],
+   "pass": true
+  },
+  "V6_product_digest": {
+   "actual_sha256": "82bb6145f8a9f5ffd7acc0cbc1c45faecf118eafd8a8b45f4e7463d3cb350f4a",
+   "declared_sha256": "82bb6145f8a9f5ffd7acc0cbc1c45faecf118eafd8a8b45f4e7463d3cb350f4a",
+   "actual_bytes": 20697,
+   "declared_bytes": 20697,
+   "pass": true
+  },
+  "V7_figure_metadata": {
+   "platform_figures": [
+    {
+     "name": "fig1_stress_strain.png",
+     "caption": "单轴压缩与直接拉伸的加载曲线"
+    },
+    {
+     "name": "fig2_blind_cards.png",
+     "caption": "预测盲：封存预测 vs 实测（含tolerance gate）"
+    },
+    {
+     "name": "fig3_six_dim.png",
+     "caption": "六维对照：实验组 vs 对照组"
+    },
+    {
+     "name": "fig4_three_legs.png",
+     "caption": "三腿闭合误差与tolerance gate"
+    }
+   ],
+   "manifest_captions": [
+    {
+     "asset_id": "A02",
+     "label": "fig1_stress_strain.png",
+     "caption": "单轴压缩与直接拉伸的加载曲线"
+    },
+    {
+     "asset_id": "A03",
+     "label": "fig2_blind_cards.png",
+     "caption": "预测盲：封存预测 vs 实测（含tolerance gate）"
+    },
+    {
+     "asset_id": "A04",
+     "label": "fig3_six_dim.png",
+     "caption": "六维对照：实验组 vs 对照组"
+    },
+    {
+     "asset_id": "A05",
+     "label": "fig4_three_legs.png",
+     "caption": "三腿闭合误差与tolerance gate"
+    }
+   ],
+   "names_match_in_order": true,
+   "note": "fig[i] <-> 图 N correspondence is positional only (markdown carries no file names); captions differ in wording between platform metadata and the markdown caption line",
+   "pass": true
+  },
+  "V8_envelope_schema": {
+   "errors": [],
+   "pass": true
+  },
+  "V9_manifest_schema_reproducibility": {
+   "schema_file": "schemas/asset_manifest.v1.schema.json",
+   "pinned_package_id": "wp-448-01",
+   "pinned_report_id": "448",
+   "package_under_review": "wp-7545-01",
+   "report_under_review": "7545",
+   "rebound_schema_shipped_in_package": [],
+   "pass": false
+  },
+  "V10_prompt_independence": {
+   "jaccard_5gram_review_instructions_vs_producer_report": 0.011,
+   "threshold": 0.5,
+   "corpus": {
+    "path": "/root/tp-agent/work/m15597/docs/kf/wp-7545-01/REPORT.md",
+    "sha256": "sha256:3080a0e4b5eba69e5005501173e19afde71c82cf4c2e1e30ab8187cfccf43711",
+    "bytes": 13457
+   },
+   "status": "run",
+   "note": "producer prose is not part of the reviewer context and is not copied into this tree; it is touched only to compute this distance, and the distance is reported as a number",
+   "pass": true
+  },
+  "V11_unresolved_classification": {
+   "rows": [
+    {
+     "asset_id": "A06",
+     "path_reference": "experiments.json",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A07",
+     "path_reference": "run_abm.py",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A08",
+     "path_reference": "dem_bpm.py",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A09",
+     "path_reference": "artifacts/IN59-P2/trace.jsonl",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A10",
+     "path_reference": "artifacts/IN59-P2/blind_cards.json",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A11",
+     "path_reference": "artifacts/IN59-P2/experiments.json",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A12",
+     "path_reference": "six_dim_table.json",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A13",
+     "path_reference": "three_leg.json",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A14",
+     "path_reference": "acceptance.json",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A15",
+     "path_reference": "control_arm.json",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A16",
+     "path_reference": "tools/abm",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A17",
+     "path_reference": "pytest tests/abm domains/ice_fracture_contact/tests",
+     "present_in_tensor_knowledge": false
+    },
+    {
+     "asset_id": "A18",
+     "path_reference": "pytest tests/abm domains/ice_fracture_contact/tests -q",
+     "present_in_tensor_knowledge": false
+    }
+   ],
+   "pass": true,
+   "rule": "a referenced_unresolved asset must not exist inside the TensorKnowledge checkout; otherwise the correct resolution would be resolved_in_source"
+  }
+ },
+ "per_asset": [
+  {
+   "asset_id": "A01",
+   "resolution": "resolved_in_source",
+   "method": "document",
+   "span": [
+    0,
+    3583
+   ],
+   "quote_at_locator": false,
+   "quote_unique": true,
+   "quote_len": 44,
+   "quote_starts_at_span_start": true,
+   "start_line_recomputed": 1,
+   "start_line_declared": 1,
+   "end_line_recomputed": 95
+  },
+  {
+   "asset_id": "A02",
+   "resolution": "declared_absent",
+   "method": "char_span",
+   "span": [
+    2201,
+    2232
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 31,
+   "quote_starts_at_span_start": true,
+   "start_line_recomputed": 61,
+   "start_line_declared": 61,
+   "end_line_recomputed": 61
+  },
+  {
+   "asset_id": "A03",
+   "resolution": "declared_absent",
+   "method": "char_span",
+   "span": [
+    2235,
+    2278
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 43,
+   "quote_starts_at_span_start": true,
+   "start_line_recomputed": 62,
+   "start_line_declared": 62,
+   "end_line_recomputed": 62
+  },
+  {
+   "asset_id": "A04",
+   "resolution": "declared_absent",
+   "method": "char_span",
+   "span": [
+    2281,
+    2305
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 24,
+   "quote_starts_at_span_start": true,
+   "start_line_recomputed": 63,
+   "start_line_declared": 63,
+   "end_line_recomputed": 63
+  },
+  {
+   "asset_id": "A05",
+   "resolution": "declared_absent",
+   "method": "char_span",
+   "span": [
+    2308,
+    2333
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 25,
+   "quote_starts_at_span_start": true,
+   "start_line_recomputed": 64,
+   "start_line_declared": 64,
+   "end_line_recomputed": 64
+  },
+  {
+   "asset_id": "A06",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    386,
+    409
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 23,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 9,
+   "start_line_declared": 9,
+   "end_line_recomputed": 9
+  },
+  {
+   "asset_id": "A07",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    884,
+    912
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 28,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 25,
+   "start_line_declared": 25,
+   "end_line_recomputed": 25
+  },
+  {
+   "asset_id": "A08",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    1107,
+    1119
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 12,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 29,
+   "start_line_declared": 29,
+   "end_line_recomputed": 29
+  },
+  {
+   "asset_id": "A09",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    3273,
+    3304
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 31,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 92,
+   "start_line_declared": 92,
+   "end_line_recomputed": 92
+  },
+  {
+   "asset_id": "A10",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    3325,
+    3361
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 36,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 93,
+   "start_line_declared": 93,
+   "end_line_recomputed": 93
+  },
+  {
+   "asset_id": "A11",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    3384,
+    3420
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 36,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 94,
+   "start_line_declared": 94,
+   "end_line_recomputed": 94
+  },
+  {
+   "asset_id": "A12",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    3424,
+    3444
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 20,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 94,
+   "start_line_declared": 94,
+   "end_line_recomputed": 94
+  },
+  {
+   "asset_id": "A13",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    3448,
+    3464
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 16,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 94,
+   "start_line_declared": 94,
+   "end_line_recomputed": 94
+  },
+  {
+   "asset_id": "A14",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    3468,
+    3485
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 17,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 94,
+   "start_line_declared": 94,
+   "end_line_recomputed": 94
+  },
+  {
+   "asset_id": "A15",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    3490,
+    3508
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 18,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 94,
+   "start_line_declared": 94,
+   "end_line_recomputed": 94
+  },
+  {
+   "asset_id": "A16",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    1003,
+    1014
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 11,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 27,
+   "start_line_declared": 27,
+   "end_line_recomputed": 27
+  },
+  {
+   "asset_id": "A17",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    1396,
+    1449
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 53,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 33,
+   "start_line_declared": 33,
+   "end_line_recomputed": 33
+  },
+  {
+   "asset_id": "A18",
+   "resolution": "referenced_unresolved",
+   "method": "char_span",
+   "span": [
+    3514,
+    3570
+   ],
+   "quote_at_locator": true,
+   "quote_unique": true,
+   "quote_len": 56,
+   "quote_starts_at_span_start": true,
+   "quote_occurrences_in_source": 1,
+   "start_line_recomputed": 95,
+   "start_line_declared": 95,
+   "end_line_recomputed": 95
+  }
+ ],
+ "failed_checks": [
+  "V2_locators",
+  "V9_manifest_schema_reproducibility"
+ ],
+ "verdict": "needs-fix"
+}
