@@ -1,0 +1,473 @@
+{
+  "package_id": "wp-11930-01",
+  "task_type": "01-asset-registration",
+  "report_id": "11930",
+  "provenance": {
+    "source_hash": "sha256:5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+    "source_field": "markdown",
+    "producer": "agent/m15731 · scripts/kf_wp11930_register.py",
+    "emitted_at": "2026-11-12T02:20:50+00:00",
+    "notes": "markdown fetched via GET /api/v1/tensor/reports/11930; hash recomputed from bytes on disk"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-11930-01",
+      "task_type": "01-asset-registration",
+      "report_id": "11930",
+      "source": {
+        "uri": "tensor://reports/11930",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+        "chars": 13121,
+        "bytes_utf8": 22324,
+        "title": "BPM 微观参数三目标联合标定的可行性判定与可辨识性审计（P270W2C-N08）",
+        "scenario_key": "p270w2c-n08-bpm-calibration-feasibility",
+        "platform_figures": [
+          {
+            "name": "fig_response_surface.png",
+            "caption": "响应面切片：每列一个微观参数（单位立方体坐标），每行一个宏观响应（UCS / σc/σt / Weibull m）；绿色带为验收目标带。"
+          },
+          {
+            "name": "fig_jacobian.png",
+            "caption": "可辨识性审计：量纲一化 Jacobian dlog10(y)/du、参数相关矩阵（JᵀJ 归一化）与 Brun collinearity index。"
+          },
+          {
+            "name": "fig_pareto.png",
+            "caption": "代理响应面上的 NSGA-II 种群与 Pareto 前沿（三目标两两投影）；越界量 0 表示目标满足。"
+          },
+          {
+            "name": "fig_size_effect.png",
+            "caption": "Weibull 尺寸效应：参考 θ 的五厚度族与幂律拟合（虚线为留出厚度），右图为留出厚度外推误差。"
+          },
+          {
+            "name": "fig_brazilian.png",
+            "caption": "巴西圆盘中心主应力比 vs 应力平均区半径（三种点阵分辨率）与 Hondros −3.0 容差带；右图为比值读数历史。"
+          },
+          {
+            "name": "fig_ucs.png",
+            "caption": "参考 θ 的单轴压缩应力–应变迹（hold 末读数）与 AC6 负控 200 组随机 θ 的 UCS 分布。"
+          }
+        ],
+        "platform_tags": [
+          "DEM",
+          "BPM",
+          "calibration",
+          "identifiability",
+          "Weibull",
+          "Brazilian-test",
+          "NSGA-II",
+          "TensorDEM",
+          "P270W2C-N08"
+        ]
+      },
+      "counts": {
+        "assets": 14,
+        "by_class": {
+          "module": 1,
+          "script": 3,
+          "test": 1,
+          "data": 3,
+          "figure": 6
+        },
+        "by_resolution": {
+          "referenced_unresolved": 7,
+          "resolved_in_source": 6,
+          "declared_absent": 1
+        },
+        "resolved_in_source": 6,
+        "referenced_unresolved": 7,
+        "declared_absent": 1
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "module",
+          "label": "新增模块（本节点实现）",
+          "path_in_report": "src/tensordem/bpm_calibration_feasibility.py",
+          "in_report_section": "header",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              114,
+              158
+            ],
+            "start_char": 104,
+            "end_char": 159,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "**新增模块** `src/tensordem/bpm_calibration_feasibility.py`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "本工作树（TensorKnowledge 检出）内 os.path.exists(path)",
+            "result": "unresolved"
+          },
+          "note": "报告声明该工件属于 TensorDEM 仓（节点 P270W2C-N08 / 任务 m9756）；TensorKnowledge 检出内不存在，也未随报告携带字节，故只登记引用不复制，解析需回 source repo。"
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "script",
+          "label": "战役脚本 sample/analyze",
+          "path_in_report": "scripts/p270w2c_n08_feasibility.py",
+          "in_report_section": "header",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              172,
+              206
+            ],
+            "start_char": 162,
+            "end_char": 223,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "**战役脚本** `scripts/p270w2c_n08_feasibility.py`（sample/analyze）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "本工作树（TensorKnowledge 检出）内 os.path.exists(path)",
+            "result": "unresolved"
+          },
+          "note": "报告声明该工件属于 TensorDEM 仓（节点 P270W2C-N08 / 任务 m9756）；TensorKnowledge 检出内不存在，也未随报告携带字节，故只登记引用不复制，解析需回 source repo。"
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "script",
+          "label": "图渲染脚本",
+          "path_in_report": "scripts/p270w2c_n08_figures.py",
+          "in_report_section": "header",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              237,
+              267
+            ],
+            "start_char": 225,
+            "end_char": 268,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "**图/报告渲染** `scripts/p270w2c_n08_figures.py`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "本工作树（TensorKnowledge 检出）内 os.path.exists(path)",
+            "result": "unresolved"
+          },
+          "note": "报告声明该工件属于 TensorDEM 仓（节点 P270W2C-N08 / 任务 m9756）；TensorKnowledge 检出内不存在，也未随报告携带字节，故只登记引用不复制，解析需回 source repo。"
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "script",
+          "label": "报告渲染脚本",
+          "path_in_report": "scripts/p270w2c_n08_report.py",
+          "in_report_section": "header",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              270,
+              299
+            ],
+            "start_char": 269,
+            "end_char": 300,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "`scripts/p270w2c_n08_report.py`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "本工作树（TensorKnowledge 检出）内 os.path.exists(path)",
+            "result": "unresolved"
+          },
+          "note": "报告声明该工件属于 TensorDEM 仓（节点 P270W2C-N08 / 任务 m9756）；TensorKnowledge 检出内不存在，也未随报告携带字节，故只登记引用不复制，解析需回 source repo。"
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "test",
+          "label": "AC8 pytest 套件（42 项）",
+          "path_in_report": "tests/test_bpm_calibration_feasibility.py",
+          "in_report_section": "§0",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              1470,
+              1511
+            ],
+            "start_char": 1469,
+            "end_char": 1523,
+            "start_line": 18,
+            "end_line": 18,
+            "quote": "`tests/test_bpm_calibration_feasibility.py`（42 项，见 §6）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "本工作树（TensorKnowledge 检出）内 os.path.exists(path)",
+            "result": "unresolved"
+          },
+          "note": "报告声明该工件属于 TensorDEM 仓（节点 P270W2C-N08 / 任务 m9756）；TensorKnowledge 检出内不存在，也未随报告携带字节，故只登记引用不复制，解析需回 source repo。"
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "data",
+          "label": "逐任务原始记录（审计链第一层）",
+          "path_in_report": "runs/p270w2c_n08/records.jsonl",
+          "in_report_section": "header",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              313,
+              343
+            ],
+            "start_char": 303,
+            "end_char": 351,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "**原始数据** `runs/p270w2c_n08/records.jsonl`（逐任务记录）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "本工作树（TensorKnowledge 检出）内 os.path.exists(path)",
+            "result": "unresolved"
+          },
+          "note": "报告声明该工件属于 TensorDEM 仓（节点 P270W2C-N08 / 任务 m9756）；TensorKnowledge 检出内不存在，也未随报告携带字节，故只登记引用不复制，解析需回 source repo。"
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "data",
+          "label": "判据/数字来源（审计链第二层）",
+          "path_in_report": "artifacts/p270w2c_n08/report.json",
+          "in_report_section": "header",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              363,
+              396
+            ],
+            "start_char": 353,
+            "end_char": 409,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "**判据数字** `artifacts/p270w2c_n08/report.json`（本报告的唯一数字来源）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "本工作树（TensorKnowledge 检出）内 os.path.exists(path)",
+            "result": "unresolved"
+          },
+          "note": "报告声明该工件属于 TensorDEM 仓（节点 P270W2C-N08 / 任务 m9756）；TensorKnowledge 检出内不存在，也未随报告携带字节，故只登记引用不复制，解析需回 source repo。"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "figure",
+          "label": "图 1 响应面切片",
+          "path_in_report": "figures/p270w2c_n08/fig_response_surface.png",
+          "in_report_section": "§3.7",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              8885,
+              8929
+            ],
+            "start_char": 8865,
+            "end_char": 8930,
+            "start_line": 184,
+            "end_line": 184,
+            "quote": "![response surface](figures/p270w2c_n08/fig_response_surface.png)",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET /api/v1/tensor/reports/11930/figures/fig_response_surface.png (HTTP 200, image/png)",
+            "result": "resolved"
+          },
+          "note": "平台报告记录 figures[] 含该文件名与逐字 caption；PNG 字节可取回，bytes_utf8=101650，sha256=51110cf7696adcee081421d2a92605a7cce80808ca294b7901120c4cc4756eec（本地复算，供下游二次比对）。",
+          "platform_bytes": 101650,
+          "platform_sha256": "51110cf7696adcee081421d2a92605a7cce80808ca294b7901120c4cc4756eec"
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "figure",
+          "label": "图 2 可辨识性审计",
+          "path_in_report": "figures/p270w2c_n08/fig_jacobian.png",
+          "in_report_section": "§3.7",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              9062,
+              9098
+            ],
+            "start_char": 9043,
+            "end_char": 9099,
+            "start_line": 188,
+            "end_line": 188,
+            "quote": "![identifiability](figures/p270w2c_n08/fig_jacobian.png)",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET /api/v1/tensor/reports/11930/figures/fig_jacobian.png (HTTP 200, image/png)",
+            "result": "resolved"
+          },
+          "note": "平台报告记录 figures[] 含该文件名与逐字 caption；PNG 字节可取回，bytes_utf8=98897，sha256=412e3b536a4f35bdf37b52254700e12dcf766e51e3efdb497489481efcb97f28（本地复算，供下游二次比对）。",
+          "platform_bytes": 98897,
+          "platform_sha256": "412e3b536a4f35bdf37b52254700e12dcf766e51e3efdb497489481efcb97f28"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "figure",
+          "label": "图 3 NSGA-II 种群与 Pareto 前沿",
+          "path_in_report": "figures/p270w2c_n08/fig_pareto.png",
+          "in_report_section": "§3.7",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              9184,
+              9218
+            ],
+            "start_char": 9174,
+            "end_char": 9219,
+            "start_line": 192,
+            "end_line": 192,
+            "quote": "![pareto](figures/p270w2c_n08/fig_pareto.png)",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET /api/v1/tensor/reports/11930/figures/fig_pareto.png (HTTP 200, image/png)",
+            "result": "resolved"
+          },
+          "note": "平台报告记录 figures[] 含该文件名与逐字 caption；PNG 字节可取回，bytes_utf8=72532，sha256=8fe9f1a288cfa41ab23b1afbf52019d25b4088394977461772648efa173a247c（本地复算，供下游二次比对）。",
+          "platform_bytes": 72532,
+          "platform_sha256": "8fe9f1a288cfa41ab23b1afbf52019d25b4088394977461772648efa173a247c"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "figure",
+          "label": "图 4 Weibull 尺寸效应",
+          "path_in_report": "figures/p270w2c_n08/fig_size_effect.png",
+          "in_report_section": "§3.7",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              9339,
+              9378
+            ],
+            "start_char": 9324,
+            "end_char": 9379,
+            "start_line": 196,
+            "end_line": 196,
+            "quote": "![size effect](figures/p270w2c_n08/fig_size_effect.png)",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET /api/v1/tensor/reports/11930/figures/fig_size_effect.png (HTTP 200, image/png)",
+            "result": "resolved"
+          },
+          "note": "平台报告记录 figures[] 含该文件名与逐字 caption；PNG 字节可取回，bytes_utf8=74350，sha256=cc650deaa8c0878edeb662e262b1edd719d1aa18e8020908f58cb4ccf32dc743（本地复算，供下游二次比对）。",
+          "platform_bytes": 74350,
+          "platform_sha256": "cc650deaa8c0878edeb662e262b1edd719d1aa18e8020908f58cb4ccf32dc743"
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "figure",
+          "label": "图 5 巴西圆盘中心主应力比",
+          "path_in_report": "figures/p270w2c_n08/fig_brazilian.png",
+          "in_report_section": "§3.7",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              9450,
+              9487
+            ],
+            "start_char": 9437,
+            "end_char": 9488,
+            "start_line": 200,
+            "end_line": 200,
+            "quote": "![brazilian](figures/p270w2c_n08/fig_brazilian.png)",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET /api/v1/tensor/reports/11930/figures/fig_brazilian.png (HTTP 200, image/png)",
+            "result": "resolved"
+          },
+          "note": "平台报告记录 figures[] 含该文件名与逐字 caption；PNG 字节可取回，bytes_utf8=100699，sha256=52c4b300d8668a5b3c2588b2d0aefdd15de10606cb6a0893e3bb7505e90296f8（本地复算，供下游二次比对）。",
+          "platform_bytes": 100699,
+          "platform_sha256": "52c4b300d8668a5b3c2588b2d0aefdd15de10606cb6a0893e3bb7505e90296f8"
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "figure",
+          "label": "图 6 UCS 应力–应变迹与负控分布",
+          "path_in_report": "figures/p270w2c_n08/fig_ucs.png",
+          "in_report_section": "§3.7",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              9576,
+              9607
+            ],
+            "start_char": 9569,
+            "end_char": 9608,
+            "start_line": 204,
+            "end_line": 204,
+            "quote": "![ucs](figures/p270w2c_n08/fig_ucs.png)",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "GET /api/v1/tensor/reports/11930/figures/fig_ucs.png (HTTP 200, image/png)",
+            "result": "resolved"
+          },
+          "note": "平台报告记录 figures[] 含该文件名与逐字 caption；PNG 字节可取回，bytes_utf8=51010，sha256=a3f41eb663ea84ad0234d73a5c7c81613efc19a288eb4b6da11f5780e70fafd6（本地复算，供下游二次比对）。",
+          "platform_bytes": 51010,
+          "platform_sha256": "a3f41eb663ea84ad0234d73a5c7c81613efc19a288eb4b6da11f5780e70fafd6"
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "data",
+          "label": "voided-campaign raw JSONL",
+          "path_in_report": "n/a (declared absent)",
+          "in_report_section": "§4 · 注意点 条 1b",
+          "locator": {
+            "method": "char_span",
+            "seed_span": [
+              10316,
+              10333
+            ],
+            "start_char": 10316,
+            "end_char": 10333,
+            "start_line": 211,
+            "end_line": 211,
+            "quote": "原始 JSONL 因磁盘配额已清理",
+            "unique": true
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "报告正文显式声明缺失（逐字引文）",
+            "result": "absent"
+          },
+          "note": "报告自述因磁盘配额已清理；不作补造、不推断内容。"
+        }
+      ],
+      "claims": [],
+      "integrity": {
+        "quote_uniqueness": "all 14/14 locator quotes occur exactly once in the source markdown",
+        "all_quotes_unique": true,
+        "hash_recomputed_locally": "sha256:5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+        "hash_matches_contract": true,
+        "no_claims_by_design": "objective.classify_report_type=false; task_type=01 registers assets only",
+        "unresolved_assets_have_reason": true
+      }
+    }
+  },
+  "claims": []
+}
