@@ -1,0 +1,638 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-14041-01",
+  "task_type": "01-asset-registration",
+  "report_id": "14041",
+  "generated_at": "2026-11-12T03:02:47.702809+00:00",
+  "generator": "scripts/kf/wp14041_01_register.py",
+  "source": {
+    "uri": "tensor://reports/14041",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "4bc4b0b4cfb133914e8ff18a867690e903e952d20b7967e798c83cc6acfa5256",
+    "chars": 2990,
+    "bytes_utf8": 4684,
+    "title": "交差审计：m14683 GAP-FEM-ADAPTIVE → L4（TensorFEM 自适应网格）",
+    "scenario_key": "tensorfem-m14683-board-audit",
+    "platform_figures": [
+      {
+        "name": "audit_figures.png",
+        "caption": "左：复现的 L 形均匀/自适应收敛阶梯；右：m14683 验收表 ref-vs-got 相对误差与容差对照。"
+      }
+    ],
+    "platform_tags": [
+      "TensorFEM",
+      "audit",
+      "maturity-verdict",
+      "adaptive-refinement",
+      "ZZ-estimator",
+      "m14683"
+    ]
+  },
+  "counts": {
+    "assets": 27,
+    "by_class": {
+      "source_document": 1,
+      "section": 7,
+      "table": 1,
+      "embedded_figure": 1,
+      "file_reference": 14,
+      "artifact_brace_group": 1,
+      "figure_reference": 1,
+      "commit_reference": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 9,
+      "referenced_unresolved": 18
+    },
+    "resolved_in_source": 9,
+    "referenced_unresolved": 18,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "source_document",
+      "label": "report 14041 markdown (source_field=markdown, 2990 chars / 4684 bytes utf-8)",
+      "in_report_section": "(document head)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 2990,
+        "start_line": 1,
+        "end_line": 60,
+        "quote": "# 交差审计：m14683 GAP-FEM-ADAPTIVE（TensorFEM 自适应网格）→ 判级 L4",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "sha256(markdown.encode('utf-8')) == contract source_hash",
+        "result": "resolved"
+      },
+      "note": "The registered asset itself. quote pinned to the H1 title line; method=document covers the whole charset span 0..2990.",
+      "sha256": "4bc4b0b4cfb133914e8ff18a867690e903e952d20b7967e798c83cc6acfa5256",
+      "chars": 2990,
+      "bytes_utf8": 4684
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "section",
+      "label": "section heading ## ① 案例介绍",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 56,
+        "end_char": 65,
+        "start_line": 3,
+        "end_line": 3,
+        "quote": "## ① 案例介绍",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; body extent runs to the next heading of equal or higher level."
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "section",
+      "label": "section heading ## ② 怎么做的",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 399,
+        "end_char": 408,
+        "start_line": 11,
+        "end_line": 11,
+        "quote": "## ② 怎么做的",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; body extent runs to the next heading of equal or higher level."
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "section",
+      "label": "section heading ## ③ 计算结果（ref vs got，程序化生成）",
+      "in_report_section": "③ 计算结果（ref vs got，程序化生成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 979,
+        "end_char": 1006,
+        "start_line": 20,
+        "end_line": 20,
+        "quote": "## ③ 计算结果（ref vs got，程序化生成）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; body extent runs to the next heading of equal or higher level."
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "section",
+      "label": "section heading ## ④ 结果图",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1738,
+        "end_char": 1746,
+        "start_line": 36,
+        "end_line": 36,
+        "quote": "## ④ 结果图",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; body extent runs to the next heading of equal or higher level."
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "section",
+      "label": "section heading ## ⑤ 注意点 / 局限",
+      "in_report_section": "⑤ 注意点 / 局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1859,
+        "end_char": 1872,
+        "start_line": 40,
+        "end_line": 40,
+        "quote": "## ⑤ 注意点 / 局限",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; body extent runs to the next heading of equal or higher level."
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "section",
+      "label": "section heading ## ⑥ 误差判定（逐项，显式回答是否 <3%）",
+      "in_report_section": "⑥ 误差判定（逐项，显式回答是否 <3%）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2456,
+        "end_char": 2480,
+        "start_line": 49,
+        "end_line": 49,
+        "quote": "## ⑥ 误差判定（逐项，显式回答是否 <3%）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; body extent runs to the next heading of equal or higher level."
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "section",
+      "label": "section heading ## 判定",
+      "in_report_section": "判定",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2863,
+        "end_char": 2868,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "## 判定",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote",
+        "result": "resolved"
+      },
+      "note": "Heading line only; body extent runs to end of document."
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "table",
+      "label": "markdown table: quantity | reference | measured | rel. error | tolerance",
+      "in_report_section": "③ 计算结果（ref vs got，程序化生成）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1007,
+        "end_char": 1582,
+        "start_line": 21,
+        "end_line": 28,
+        "quote": "| quantity | reference | measured | rel. error | tolerance |\n|---|---|---|---|---|\n| Williams corner exponent lambda | 0.5444837368 | 0.5444837368 | 0.00 % | 0 |\n| uniform ladder global rate | -0.2722418684 | -0.2487655684 | 8.62 % | 15% |\n| uniform ladder tail rate (last 3 intervals) | -0.2722418684 | -0.2599424287 | 4.52 % | 15% |\n| adaptive ladder tail rate (last 6 intervals) | -0.5 | -0.4933364176 | 1.33 % | 15% |\n| ZZ effectivity, worst of all levels | 1 | 1.046718105 | 4.67 % | 20% |\n| final adaptive relative energy-norm error | 0 | 0.1266586332 | 12.67 % | 15% |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "md[start_char:end_char] == quote (header row .. last data row)",
+        "result": "resolved"
+      },
+      "note": "6 data rows, 5 columns (lines 21-28); geometry registered only, cell values not re-transcribed.",
+      "columns": [
+        "quantity",
+        "reference",
+        "measured",
+        "rel. error",
+        "tolerance"
+      ],
+      "rows": 6
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "embedded_figure",
+      "label": "platform figure audit_figures.png (record.figures[0], name+caption only, no png payload in record)",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1747,
+        "end_char": 1801,
+        "start_line": 37,
+        "end_line": 37,
+        "quote": "左：复现的 L 形收敛阶梯（均匀 vs 自适应）；右：验收表 ref-vs-got 相对误差与声明容差对照。",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "record.figures[0].name/caption present; markdown body line 37 describes the same two-panel figure",
+        "result": "unresolved"
+      },
+      "note": "record.figures stores name+caption only (no png_base64 payload), so no figure bytes/hash can be claimed; the body line is the verbatim locator."
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "file_reference",
+      "label": "artifacts/audit_m14683/repro_study.json (parameters source)",
+      "in_report_section": "① 案例介绍",
+      "locator": {
+        "method": "char_span",
+        "start_char": 183,
+        "end_char": 224,
+        "start_line": 5,
+        "end_line": 5,
+        "quote": "`artifacts/audit_m14683/repro_study.json`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote located verbatim; file lives in the m14683 worktree (TensorFEM repo), not in this worktree",
+        "result": "unresolved"
+      },
+      "note": "Report claims the file exists and is non-empty; existence is the report's claim, not re-verified here (cross-repo, out of scope)."
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "artifact_brace_group",
+      "label": "artifacts/adaptive_zz/{study.json,summary.md,benchmark_table.md,evidence.json} (4 members)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 447,
+        "end_char": 527,
+        "start_line": 12,
+        "end_line": 12,
+        "quote": "`artifacts/adaptive_zz/{study.json,summary.md,benchmark_table.md,evidence.json}`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "brace-group quote located verbatim; members: study.json, summary.md, benchmark_table.md, evidence.json",
+        "result": "unresolved"
+      },
+      "note": "Registered once as the brace group exactly as written in the report; members are not expanded into separate ids to avoid identity inflation."
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "file_reference",
+      "label": "runs/m14683_adaptive_zz/*.log (run logs, glob)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 532,
+        "end_char": 563,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "`runs/m14683_adaptive_zz/*.log`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "glob quote located verbatim; expansion not performed (files in m14683 worktree)",
+        "result": "unresolved"
+      },
+      "note": "Glob registered as written; member files not enumerated (no extraction)."
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "figure_reference",
+      "label": "5 张图 (five figures of the m14683 delivery)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 564,
+        "end_char": 568,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "5 张图",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "count phrase located verbatim; individual figure paths not named in the report",
+        "result": "unresolved"
+      },
+      "note": "The report names the count (5) but not the paths; no paths invented."
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "file_reference",
+      "label": "/tmp/repro_m14683 (independent reproduction sandbox)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 609,
+        "end_char": 628,
+        "start_line": 14,
+        "end_line": 14,
+        "quote": "`/tmp/repro_m14683`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote located verbatim; /tmp path is ephemeral by construction",
+        "result": "unresolved"
+      },
+      "note": "Ephemeral sandbox of the upstream audit; not resolvable by design."
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "file_reference",
+      "label": "adaptive_zz_study.py (reproduction driver)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 656,
+        "end_char": 678,
+        "start_line": 15,
+        "end_line": 15,
+        "quote": "`adaptive_zz_study.py`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote located verbatim; file in m14683 worktree",
+        "result": "unresolved"
+      },
+      "note": "Bare filename as written in the report."
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "file_reference",
+      "label": "repro_study.json (reproduction output)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 688,
+        "end_char": 706,
+        "start_line": 15,
+        "end_line": 15,
+        "quote": "`repro_study.json`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "backticked token located verbatim (distinct occurrence from A11's full path)",
+        "result": "unresolved"
+      },
+      "note": "Likely the same artifact as A11 (repro output); identity kept at occurrence level, no merge assumed."
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "file_reference",
+      "label": "adaptive_evidence_pack.py (evidence pack regenerator)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 707,
+        "end_char": 734,
+        "start_line": 15,
+        "end_line": 15,
+        "quote": "`adaptive_evidence_pack.py`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote located verbatim; file in m14683 worktree",
+        "result": "unresolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "file_reference",
+      "label": "evidence.json (regenerated by adaptive_evidence_pack.py)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 735,
+        "end_char": 752,
+        "start_line": 15,
+        "end_line": 15,
+        "quote": "重生成 evidence.json",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "phrase located verbatim; bare 'evidence.json' occurs 3x in the document, so the locator uses the unique phrase",
+        "result": "unresolved"
+      },
+      "note": "Bare token 'evidence.json' is non-unique; the surrounding phrase is the unique locator."
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "file_reference",
+      "label": "tests/test_adaptive_zz.py (15 passed per report)",
+      "in_report_section": "② 怎么做的",
+      "locator": {
+        "method": "char_span",
+        "start_char": 766,
+        "end_char": 800,
+        "start_line": 16,
+        "end_line": 16,
+        "quote": "`pytest tests/test_adaptive_zz.py`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote located verbatim; test file in m14683 worktree",
+        "result": "unresolved"
+      },
+      "note": "Test outcome (15 passed) is the report's claim, not re-run here."
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "file_reference",
+      "label": "scripts/audit_m14683_report.py (figure generator)",
+      "in_report_section": "④ 结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1806,
+        "end_char": 1838,
+        "start_line": 38,
+        "end_line": 38,
+        "quote": "`scripts/audit_m14683_report.py`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote located verbatim; file in m14683 worktree",
+        "result": "unresolved"
+      },
+      "note": "Producer of the report's figure per the report body."
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "file_reference",
+      "label": "src/tensorfem/__init__.py (public API gap)",
+      "in_report_section": "⑤ 注意点 / 局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1893,
+        "end_char": 1920,
+        "start_line": 41,
+        "end_line": 41,
+        "quote": "`src/tensorfem/__init__.py`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote located verbatim; file in m14683 worktree",
+        "result": "unresolved"
+      },
+      "note": "Cited for the medium-severity API export gap."
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "file_reference",
+      "label": "adaptive_1d.py:67 (module-level integration)",
+      "in_report_section": "⑤ 注意点 / 局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1993,
+        "end_char": 2012,
+        "start_line": 42,
+        "end_line": 42,
+        "quote": "`adaptive_1d.py:67`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote located verbatim; file in m14683 worktree",
+        "result": "unresolved"
+      },
+      "note": "Line-qualified reference as written."
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "file_reference",
+      "label": "adaptive_poisson_2d.py:65 (module-level integration)",
+      "in_report_section": "⑤ 注意点 / 局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2013,
+        "end_char": 2040,
+        "start_line": 42,
+        "end_line": 42,
+        "quote": "`adaptive_poisson_2d.py:65`",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "quote located verbatim; file in m14683 worktree",
+        "result": "unresolved"
+      },
+      "note": "Line-qualified reference as written."
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "file_reference",
+      "label": "benchmark_table row 5 (0.07% misread risk)",
+      "in_report_section": "⑤ 注意点 / 局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2195,
+        "end_char": 2216,
+        "start_line": 45,
+        "end_line": 45,
+        "quote": "benchmark_table 第 5 行",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "phrase located verbatim; refers to the benchmark_table.md registered in A12",
+        "result": "unresolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A26",
+      "asset_class": "file_reference",
+      "label": "summary (summary.md of the delivery)",
+      "in_report_section": "⑤ 注意点 / 局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2265,
+        "end_char": 2279,
+        "start_line": 45,
+        "end_line": 45,
+        "quote": "已在 summary 中体现",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "phrase located verbatim; refers to the summary.md member of A12",
+        "result": "unresolved"
+      },
+      "note": ""
+    },
+    {
+      "asset_id": "A27",
+      "asset_class": "commit_reference",
+      "label": "commits 330f1504 (parent, dirty=11) / 172895c7 (delivery) / d32fe045 (merge)",
+      "in_report_section": "⑤ 注意点 / 局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 2090,
+        "end_char": 2154,
+        "start_line": 43,
+        "end_line": 43,
+        "quote": "父提交 330f1504（生成于 commit 前，dirty=11），实际交付提交 172895c7（合并 d32fe045）",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "phrase located verbatim; commit objects not fetchable from this worktree",
+        "result": "unresolved"
+      },
+      "note": "Provenance imprecision noted by the report itself (manifest predates the delivery commit)."
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": "all 27 quotes occur exactly once in the source markdown (md.count(quote)==1 for every locator)",
+    "hash_recomputed_locally": "4bc4b0b4cfb133914e8ff18a867690e903e952d20b7967e798c83cc6acfa5256",
+    "hash_matches_contract": true
+  }
+}
