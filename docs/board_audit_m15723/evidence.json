@@ -1,0 +1,135 @@
+{
+  "verdict_id": 404,
+  "repo": "TensorKnowledge",
+  "scope": "m15723 KBM-TKC-DOC-SYNC",
+  "mission_id": 15908,
+  "claimed_level": 1,
+  "gate_state_at_audit": "pending",
+  "evidence": {
+    "entry": "/root/tp-agent/work/m15723/ke/export.py:462 (export_eval consumes STANDARD_LBM_BENCHMARKS; no new CLI entry — data extraction)",
+    "tests": [
+      "tests/test_ke_proto.py"
+    ],
+    "benchmark": "no registered case in tensor_benchmark_cases for anchor_slug=KBM-TKC-DOC-SYNC (0 rows; repo~Knowledge 0, anchor~KBM 0); mission judge = its own goal criteria (doc consistency + domain boundary); repro got==claim: import=4, degradation=0, pytest=30 passed (no numerical ref/got for this doc task)",
+    "repro_cmd": "python3 -c \"from ke.export import STANDARD_LBM_BENCHMARKS; print(len(STANDARD_LBM_BENCHMARKS))\" -> 4; degradation (file missing) -> 0; pytest tests/test_ke_proto.py -q -> 30 passed (all re-run by board-audit)",
+    "impl_files": [
+      "/root/tp-agent/work/m15723/ke/export.py:428-439 (_BENCHMARKS_DATA_FILE + _load_benchmarks + STANDARD_LBM_BENCHMARKS)",
+      "/root/tp-agent/work/m15723/data/eval_benchmarks.json (4 benchmark entries, knowledge asset not engine logic)",
+      "/root/tp-agent/work/m15723/docs/domain-boundary-audit-m15723.md (158 lines)",
+      "/root/tp-agent/work/m15723/README.md:13 (L1 status -> planned)",
+      "/root/tp-agent/work/m15723/docs/ke/proto.md:10-15 (PG sole authority)",
+      "/root/tp-agent/work/m15723/VISION.md:117 (S6 统计口径三分离)",
+      "/root/tp-agent/work/m15723/ROADMAP.md:14,45-66 (P0/P1/P2 reorder + m8802 acceptance path)"
+    ],
+    "run_artifacts": [
+      "/root/tp-agent/work/m15723/data/eval_benchmarks.json",
+      "/root/tp-agent/work/m15723/docs/domain-boundary-audit-m15723.md",
+      "/root/tp-agent/work/m15723/MISSION_COMPLETION_m15723.md",
+      "/root/tp-agent/work/m15723/report_m15723.json"
+    ],
+    "external_anchor": "no PR/commit (head_commit=None, branch=None); deliverables uncommitted in worktree; mission accepted by eco_admin",
+    "integration_callers": "none new: export_eval() (ke/export.py:462) still consumes STANDARD_LBM_BENCHMARKS; no platform caller added"
+  },
+  "gate_simulation": {
+    "gate_level": 1,
+    "why": [],
+    "outcome": "reopened (rework) — L1 < L2 maturity threshold; mechanism-driven, not audit走过场",
+    "note": "gate adjudicates after audit mission m15908 reaches succeeded; evidence all-keys present, pointers real, re-run zero-deviation"
+  },
+  "referee": {
+    "anchor_slug": "KBM-TKC-DOC-SYNC",
+    "registered_rows": [],
+    "registered_rows_count": 0,
+    "rows_for_repo_like_knowledge": 0,
+    "rows_for_anchor_like_kbm": 0,
+    "mission_status": "succeeded",
+    "mission_accepted": true,
+    "mission_decided_by": "eco_admin",
+    "criterion_in_mission_goal": "doc-implementation consistency + domain-boundary audit (5 sub-tasks, no numerical ref/got)",
+    "goal_excerpt": "【锚点=KBM-TKC-DOC-SYNC】【第1轮·任务榜】owner 校正令：文档-实现一致性修+领域边界审计（防文档工程病复发）。\n①状态对齐：README（L1 in-progress）vs ROADMAP（被动沉淀 planned）矛盾修正；proto.md SQLite 历史描述更新（backends.md 已定 PG 权威）；\n②ROADMAP 按 owner 新优先级表重排：P0=海量成果接入/知识编译器/多Agent治理/知识资产索引，P1=TP集成/缺口发现/知识演进，P2=物理AI出口/跨领域发现；\n③统计口径三分离全文档统一（原始记录/待评审KO/经治理知识对象）；\n④领域边界审计：knowledge/oss-lbm、knowledge/sediment、knowledge-map/ship-ocean-domain 是否违反 VISION 零领域语义硬编码原则——逐"
+  },
+  "repro": {
+    "import_count": {
+      "claimed": 4,
+      "got": 4,
+      "ok": true
+    },
+    "degradation_missing_file": {
+      "claimed": 0,
+      "got": 0,
+      "ok": true
+    },
+    "pytest_ke_proto": {
+      "claimed": "30 passed",
+      "got": "30 passed",
+      "ok": true
+    }
+  },
+  "judge": {
+    "readme_l1_planned": {
+      "ok": true,
+      "evidence": [
+        "13:| **L1 · 生产沉淀** | 被动沉淀（Agent 任务完成→四契约）+ 主动收集（OSS/文献扫描） | planned |"
+      ]
+    },
+    "proto_pg_authority": {
+      "ok": true,
+      "evidence": [
+        "10:**PostgreSQL 是唯一权威存储**（[backends.md](backends.md) 外评定谳）："
+      ]
+    },
+    "vision_s6_three_way": {
+      "ok": true,
+      "evidence": [
+        "117:## 6. 统计口径三分离（全文档统一）"
+      ]
+    },
+    "roadmap_p0_reordered": {
+      "ok": true,
+      "evidence": [
+        "14:## P0 · 海量成果接入 / 知识编译器 / 多 Agent 治理 / 知识资产索引"
+      ]
+    },
+    "roadmap_m8802_acceptance_path": {
+      "ok": true,
+      "evidence": [
+        "55:**验收路径**（m15723 补充）："
+      ]
+    },
+    "engine_lbm_terms_remaining": {
+      "count": 1,
+      "evidence": [
+        "ke/export.py:446:    calibration entries (GAP-LBM-MCMP-POISEUILLE)."
+      ],
+      "note": "residual LBM mentions are in comments/docstrings only; the hardcoded data list is gone (moved to data/eval_benchmarks.json).  The audit report's '引擎代码不再包含任何 LBM 领域词条' is slightly overstated."
+    },
+    "migration_failures_preexisting": {
+      "base_fail": 4,
+      "with_m15723_fail": 4,
+      "ok": true,
+      "note": "4 test_ke_migrate.py failures identical at base and with m15723 (stale fixtures, e.g. assert 369 == 257); not caused by this change"
+    }
+  },
+  "git_state": {
+    "m15723_commit_exists": false,
+    "head_equals_main": false,
+    "untracked_deliverables": [
+      "MISSION_COMPLETION_m15723.md",
+      "data/",
+      "docs/domain-boundary-audit-m15723.md",
+      "report_m15723.json"
+    ],
+    "modified": [
+      "README.md",
+      "ROADMAP.md",
+      "VISION.md",
+      "docs/ke/proto.md",
+      "ke/__pycache__/__init__.cpython-311.pyc",
+      "ke/__pycache__/queries.cpython-311.pyc",
+      "ke/__pycache__/store.cpython-311.pyc",
+      "ke/__pycache__/validate.cpython-311.pyc",
+      "ke/export.py"
+    ],
+    "note": "deliverables present on disk and verifiable, but NOT committed (no m15723 commit; branch HEAD == main HEAD).  Platform commits/pushes post-acceptance per owner 2026-10-30 rule."
+  }
+}
