@@ -1,0 +1,458 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-13278-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13278",
+  "source": {
+    "uri": "tensor://reports/13278",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "f9c336f0d77c618b2a03ff4dd4fbc7d04b0d78a16bb29406537cfac742dcc90f",
+    "chars": 1592,
+    "bytes_utf8": 2167,
+    "title": "TensorBEM bem_finite_depth 验证算例缺失图件补全",
+    "scenario_key": "bem_finite_depth_verification",
+    "platform_id": 13278,
+    "platform_mission_id": 13784,
+    "platform_status": "published",
+    "platform_figures": [],
+    "platform_tags": [
+      "TensorBEM",
+      "verification",
+      "artifact",
+      "bem_finite_depth"
+    ],
+    "contract_title": "TensorBEM bem_finite_depth 验证算例缺失图件补全",
+    "contract_chars": 1592,
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/13278",
+    "local_copy": "runs/wp-13278-01/report_13278.md"
+  },
+  "counts": {
+    "assets": 16,
+    "by_class": {
+      "document": 1,
+      "heading": 1,
+      "metadata_block": 1,
+      "edit_whitelist": 1,
+      "section": 1,
+      "external_file_ref": 1,
+      "external_dir_ref": 1,
+      "ci_evidence_ref": 1,
+      "external_code_ref": 1,
+      "figure_declaration": 1,
+      "repro_command": 1,
+      "execution_log": 1,
+      "figure_binary": 1,
+      "test_evidence": 1,
+      "statement": 1,
+      "limitation_set": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 11,
+      "referenced_unresolved": 5
+    },
+    "resolved_in_source": 11,
+    "referenced_unresolved": 5,
+    "declared_absent": 0
+  },
+  "coverage": {
+    "covered_chars": 1567,
+    "source_chars": 1592,
+    "pct": 98.43,
+    "method": "union of char_span locators (document locator excluded)"
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "document",
+      "label": "报告正文（markdown 全文，1592 字符）",
+      "in_report_section": "# TensorBEM 补全 bem_finite_depth 验证算例缺失的 4 张结果图",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 1592,
+        "start_line": 0,
+        "end_line": 52,
+        "quote": "# TensorBEM 补全 bem_finite_depth 验证算例缺失的 4 张结果图\n\n**任务**：m13784（selfstart·data 席） · **分支**：`agent/m13784` · **日期**：2026-11-11\n**仓**：TensorBEM\n**归仓理由**：求解器仓的验证算例工件补全（ECOSYSTEM-MAP：求解器→对应 Tensor* 库）\n\nEDIT_WHITELIST: benchmarks/verified/bem_finite_depth/figures/\n\n---\n\n## 1. 问题\n\n`tests/test_bem_finite_depth_anchors.py::test_case_artifacts_and_documentation_exist` 断言\n`benchmarks/verified/bem_finite_depth/figures/` 目录下至少有 4 张 PNG 图，但该目录从未入库，\n导致测试在 clean main 上必败。该问题在 PR#306（m8788）和 PR#312（m8799）的 CI 日志中均被记录为\n\"与本 PR 无关的既有失败\"，但一直未被修复。\n\n`src/tensorbem/benchmarks/bem_finite_depth_anchors.py` 的 `make_figures()` 函数可生成 4 张图：\n- `fig_energy_identities.png`：各工况的反射/透射能量守恒残差\n- `fig_kramers_kronig.png`：Ursell 解析阻尼与面板扫描的 KK 因果性对比\n- `fig_deep_water_limit.png`：有限深→无限深渐近收敛\n- `fig_section_matrix.png`：截面×深度×频率矩阵的附加质量/阻尼热力图\n\n## 2. 修复\n\n运行基准程序生成图：\n\n```bash\nPYTHONPATH=src python -m tensorbem.benchmarks.bem_finite_depth_anchors --stage merge\n```\n\n输出：\n```\nfigure -> benchmarks/verified/bem_finite_depth/figures/fig_energy_identities.png\nfigure -> benchmarks/verified/bem_finite_depth/figures/fig_kramers_kronig.png\nfigure -> benchmarks/verified/bem_finite_depth/figures/fig_deep_water_limit.png\nfigure -> benchmarks/verified/bem_finite_depth/figures/fig_section_matrix.png\n```\n\n## 3. 验证\n\n```\n$ PYTHONPATH=src python -m pytest tests/test_bem_finite_depth_anchors.py -v\n======================== 17 passed, 1 warning in 3.98s =========================\n```\n\n全部 17 条测试通过（此前 `test_case_artifacts_and_documentation_exist` 为唯一失败项）。\n\n## 4. 局限\n\n- 本单仅补全缺失工件，未修改任何求解器代码或测试逻辑。\n- 图的生成依赖 `result.json` 中的已有数据；若未来基准参数变更，需重新生成。\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 1592,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "整篇 markdown 即源资产本体；sha256 由 provenance/contract 双端复核一致"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "heading",
+      "label": "报告标题（markdown H1）",
+      "in_report_section": "# TensorBEM 补全 bem_finite_depth 验证算例缺失的 4 张结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 46,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "# TensorBEM 补全 bem_finite_depth 验证算例缺失的 4 张结果图",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 46,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "H1 与平台 title 字段措辞不同（title 为受控短名），此处二者都登记但不互相覆盖"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "metadata_block",
+      "label": "任务/分支/日期/仓/归仓理由 声明",
+      "in_report_section": "# TensorBEM 补全 bem_finite_depth 验证算例缺失的 4 张结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 48,
+        "end_char": 194,
+        "start_line": 2,
+        "end_line": 4,
+        "quote": "**任务**：m13784（selfstart·data 席） · **分支**：`agent/m13784` · **日期**：2026-11-11\n**仓**：TensorBEM\n**归仓理由**：求解器仓的验证算例工件补全（ECOSYSTEM-MAP：求解器→对应 Tensor* 库）",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 146,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "上游任务号 m13784、分支 agent/m13784、仓 TensorBEM 的唯一来源"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "edit_whitelist",
+      "label": "EDIT_WHITELIST 声明（仅 figures/ 目录）",
+      "in_report_section": "# TensorBEM 补全 bem_finite_depth 验证算例缺失的 4 张结果图",
+      "locator": {
+        "method": "char_span",
+        "start_char": 196,
+        "end_char": 257,
+        "start_line": 6,
+        "end_line": 6,
+        "quote": "EDIT_WHITELIST: benchmarks/verified/bem_finite_depth/figures/",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 61,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "写入边界的自证：本单只允许改该目录，与「未修改求解器代码」的自述互相印证"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "section",
+      "label": "§1 问题陈述",
+      "in_report_section": "## 1. 问题",
+      "locator": {
+        "method": "char_span",
+        "start_char": 264,
+        "end_char": 530,
+        "start_line": 10,
+        "end_line": 15,
+        "quote": "## 1. 问题\n\n`tests/test_bem_finite_depth_anchors.py::test_case_artifacts_and_documentation_exist` 断言\n`benchmarks/verified/bem_finite_depth/figures/` 目录下至少有 4 张 PNG 图，但该目录从未入库，\n导致测试在 clean main 上必败。该问题在 PR#306（m8788）和 PR#312（m8799）的 CI 日志中均被记录为\n\"与本 PR 无关的既有失败\"，但一直未被修复。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 266,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "失败断言+目录缺失+历史 CI 记录的整段上下文"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "external_file_ref",
+      "label": "失败测试文件 tests/test_bem_finite_depth_anchors.py::test_case_artifacts_and_documentation_exist",
+      "in_report_section": "## 1. 问题",
+      "locator": {
+        "method": "char_span",
+        "start_char": 274,
+        "end_char": 362,
+        "start_line": 12,
+        "end_line": 12,
+        "quote": "`tests/test_bem_finite_depth_anchors.py::test_case_artifacts_and_documentation_exist` 断言",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external_body_not_carried_by_report",
+        "result": "unresolved",
+        "detail": "报告只给出相对路径/编号，无 URL/DOI/commit/内容哈希；本工作树内不可解析",
+        "probe": {
+          "exists_on_host": true,
+          "probe_path": "/root/tp-agent/work/m13784/tests/test_bem_finite_depth_anchors.py",
+          "note": "只读存在性探测（不联网、不改外部树）；命中不代表报告已给出可解析地址"
+        }
+      },
+      "note": "报告只给仓库相对路径，无 URL/commit 锚；本工作树（TensorKnowledge）内不存在该文件"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "external_dir_ref",
+      "label": "被断言存在的图件目录 benchmarks/verified/bem_finite_depth/figures/（≥4 张 PNG）",
+      "in_report_section": "## 1. 问题",
+      "locator": {
+        "method": "char_span",
+        "start_char": 363,
+        "end_char": 437,
+        "start_line": 13,
+        "end_line": 13,
+        "quote": "`benchmarks/verified/bem_finite_depth/figures/` 目录下至少有 4 张 PNG 图，但该目录从未入库，",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external_body_not_carried_by_report",
+        "result": "unresolved",
+        "detail": "报告只给出相对路径/编号，无 URL/DOI/commit/内容哈希；本工作树内不可解析",
+        "probe": {
+          "exists_on_host": true,
+          "probe_path": "/root/tp-agent/work/m13784/benchmarks/verified/bem_finite_depth/figures",
+          "note": "只读存在性探测（不联网、不改外部树）；命中不代表报告已给出可解析地址"
+        }
+      },
+      "note": "目录本体不在报告内；「≥4 张」为断言阈值，不是实测计数"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "ci_evidence_ref",
+      "label": "历史 CI 记录 PR#306(m8788) / PR#312(m8799)",
+      "in_report_section": "## 1. 问题",
+      "locator": {
+        "method": "char_span",
+        "start_char": 438,
+        "end_char": 530,
+        "start_line": 14,
+        "end_line": 15,
+        "quote": "导致测试在 clean main 上必败。该问题在 PR#306（m8788）和 PR#312（m8799）的 CI 日志中均被记录为\n\"与本 PR 无关的既有失败\"，但一直未被修复。",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external_body_not_carried_by_report",
+        "result": "unresolved",
+        "detail": "报告只给出相对路径/编号，无 URL/DOI/commit/内容哈希；本工作树内不可解析"
+      },
+      "note": "无 PR URL / run id / 日志工件地址，报告侧不可解析；只能作为下游复核的检索线索"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "external_code_ref",
+      "label": "图件生成模块 src/tensorbem/benchmarks/bem_finite_depth_anchors.py 的 make_figures()",
+      "in_report_section": "## 1. 问题",
+      "locator": {
+        "method": "char_span",
+        "start_char": 532,
+        "end_char": 617,
+        "start_line": 17,
+        "end_line": 17,
+        "quote": "`src/tensorbem/benchmarks/bem_finite_depth_anchors.py` 的 `make_figures()` 函数可生成 4 张图：",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external_body_not_carried_by_report",
+        "result": "unresolved",
+        "detail": "报告只给出相对路径/编号，无 URL/DOI/commit/内容哈希；本工作树内不可解析",
+        "probe": {
+          "exists_on_host": true,
+          "probe_path": "/root/tp-agent/work/m13784/src/tensorbem/benchmarks/bem_finite_depth_anchors.py",
+          "note": "只读存在性探测（不联网、不改外部树）；命中不代表报告已给出可解析地址"
+        }
+      },
+      "note": "生成逻辑本体不在报告内；报告只声明存在该函数与其产物"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "figure_declaration",
+      "label": "4 张图件的名称-内容声明",
+      "in_report_section": "## 1. 问题",
+      "locator": {
+        "method": "char_span",
+        "start_char": 618,
+        "end_char": 807,
+        "start_line": 18,
+        "end_line": 21,
+        "quote": "- `fig_energy_identities.png`：各工况的反射/透射能量守恒残差\n- `fig_kramers_kronig.png`：Ursell 解析阻尼与面板扫描的 KK 因果性对比\n- `fig_deep_water_limit.png`：有限深→无限深渐近收敛\n- `fig_section_matrix.png`：截面×深度×频率矩阵的附加质量/阻尼热力图",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 189,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "四条声明的原文；图件二进制本体登记为 A13（未解析）"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "repro_command",
+      "label": "复跑命令（§2 bash 块）",
+      "in_report_section": "## 2. 修复",
+      "locator": {
+        "method": "char_span",
+        "start_char": 809,
+        "end_char": 927,
+        "start_line": 23,
+        "end_line": 29,
+        "quote": "## 2. 修复\n\n运行基准程序生成图：\n\n```bash\nPYTHONPATH=src python -m tensorbem.benchmarks.bem_finite_depth_anchors --stage merge\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 118,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "含 `--stage merge` 关键参数；命令未在本工序执行（属 TensorBEM 仓，越界）"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "execution_log",
+      "label": "生成输出日志（4 行 figure -> 路径）",
+      "in_report_section": "## 2. 修复",
+      "locator": {
+        "method": "char_span",
+        "start_char": 929,
+        "end_char": 1257,
+        "start_line": 31,
+        "end_line": 37,
+        "quote": "输出：\n```\nfigure -> benchmarks/verified/bem_finite_depth/figures/fig_energy_identities.png\nfigure -> benchmarks/verified/bem_finite_depth/figures/fig_kramers_kronig.png\nfigure -> benchmarks/verified/bem_finite_depth/figures/fig_deep_water_limit.png\nfigure -> benchmarks/verified/bem_finite_depth/figures/fig_section_matrix.png\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 328,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "上游粘贴的控制台输出；本工序仅登记不复跑，不视作已复现证据"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "figure_binary",
+      "label": "4 个 PNG 图件本体（fig_energy_identities / fig_kramers_kronig / fig_deep_water_limit / fig_section_matrix）",
+      "in_report_section": "## 2. 修复",
+      "locator": {
+        "method": "char_span",
+        "start_char": 937,
+        "end_char": 1017,
+        "start_line": 33,
+        "end_line": 33,
+        "quote": "figure -> benchmarks/verified/bem_finite_depth/figures/fig_energy_identities.png",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "external_body_not_carried_by_report",
+        "result": "unresolved",
+        "detail": "平台 figures 字段为空数组（0 条），报告未内嵌图件；仅有 A12 日志中的仓库相对路径",
+        "probe": {
+          "exists_on_host": true,
+          "probe_path": "/root/tp-agent/work/m13784/benchmarks/verified/bem_finite_depth/figures",
+          "note": "只读存在性探测（不联网、不改外部树）；命中不代表报告已给出可解析地址"
+        },
+        "platform_figures_count": 0
+      },
+      "note": "报告未内嵌任何图件（平台 figures 字段为空数组），也未给 sha256；仅 A12 日志给出相对路径。同目录另 3 条路径见 A12 第 34-36 行"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "test_evidence",
+      "label": "§3 验证块（pytest 命令 + 17 passed 汇总行）",
+      "in_report_section": "## 3. 验证",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1259,
+        "end_char": 1433,
+        "start_line": 39,
+        "end_line": 44,
+        "quote": "## 3. 验证\n\n```\n$ PYTHONPATH=src python -m pytest tests/test_bem_finite_depth_anchors.py -v\n======================== 17 passed, 1 warning in 3.98s =========================\n```",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 174,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "上游粘贴的测试摘要；无 junit/日志工件，逐条用例结果不可核 —— 只登记不回填"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "statement",
+      "label": "全通过断言（17 条，唯一历史失败项已修复）",
+      "in_report_section": "## 3. 验证",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1435,
+        "end_char": 1504,
+        "start_line": 46,
+        "end_line": 46,
+        "quote": "全部 17 条测试通过（此前 `test_case_artifacts_and_documentation_exist` 为唯一失败项）。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 69,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "属上游自述结论，登记为陈述而非已验证事实（verification 由平台门计算）"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "limitation_set",
+      "label": "§4 局限（2 条）",
+      "in_report_section": "## 4. 局限",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1506,
+        "end_char": 1591,
+        "start_line": 48,
+        "end_line": 51,
+        "quote": "## 4. 局限\n\n- 本单仅补全缺失工件，未修改任何求解器代码或测试逻辑。\n- 图的生成依赖 `result.json` 中的已有数据；若未来基准参数变更，需重新生成。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "char_span_in_source_markdown",
+        "result": "resolved",
+        "quote_len": 85,
+        "detail": "引文为源 markdown 的逐字切片，且 md.count(quote)==1"
+      },
+      "note": "含「仅补工件、未改求解器/测试」与「依赖 result.json 已有数据」两条边界"
+    }
+  ],
+  "claims": [],
+  "claims_note": "契约 objective.classify_report_type=false 且 notes 明确 claims 允许为空数组：本工序只登记资产定位，不做抽取；claim 抽取属下游工作包。",
+  "integrity": {
+    "quote_uniqueness": "all 15 char_span quotes verified unique substrings of the fetched markdown",
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "chars_matches_contract": true
+  }
+}
