@@ -1,0 +1,69 @@
+{
+  "package_id": "wp-10459-01",
+  "report_id": "10459",
+  "verdict": "PASS",
+  "failed": 0,
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "PASS",
+      "detail": "kf_result.json / asset_manifest.json (docs + artifacts) parsed"
+    },
+    {
+      "check": "schema_pass",
+      "result": "PASS",
+      "detail": "kf_result.v1 (Draft2020-12) + asset_manifest.v1 (Draft-07, report-bound consts rebound: properties.package_id.const: 'wp-448-01' -> 'wp-10459-01', properties.report_id.const: '448' -> '10459', properties.source.properties.uri.const: 'tensor://reports/448' -> 'tensor://reports/10459'); 0 error(s)"
+    },
+    {
+      "check": "docs_artifacts_byte_identical",
+      "result": "PASS",
+      "detail": "docs/kf mirror vs contract output file byte-identical"
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "PASS",
+      "detail": "fresh sha256=08c1a0cfb3f0db38...; contract=08c1a0cfb3f0db38...; provenance=08c1a0cfb3f0db38...; manifest=08c1a0cfb3f0db38...; chars=6431 (contract 6431); source=re-fetched from API"
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "PASS",
+      "detail": "29/29 quotes reproduce their char span verbatim in the re-fetched markdown and are unique"
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "PASS",
+      "detail": "29 asset_ids unique=True; 0 claim_ids unique=True"
+    },
+    {
+      "check": "counts_consistent",
+      "result": "PASS",
+      "detail": "sum(by_class)=29 sum(by_resolution)=29 assets=29 len(assets)=29"
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "PASS",
+      "detail": "envelope claims=0, manifest claims=0 -> vacuous pass (no claim generation by contract); objective.classify_report_type=false"
+    },
+    {
+      "check": "do_not_mark_claims_as_verified",
+      "result": "PASS",
+      "detail": "no claim has a verified status (no claims at all); no asset resolution/check string contains 'verified'"
+    },
+    {
+      "check": "do_not_invent_missing_information",
+      "result": "PASS",
+      "detail": "every one of the 29 assets carries a non-empty resolution_check.check and note (unresolved/absent targets are named as such, never given an invented address)"
+    },
+    {
+      "check": "preserve_uncertainty",
+      "result": "PASS",
+      "detail": "resolution and resolution_check.result agree on all assets; uncertainty/failure text kept verbatim in A23/A25/A26 (honest FAIL 0.661/0.000 preserved, not smoothed)"
+    },
+    {
+      "check": "scope_report_10459_only",
+      "result": "PASS",
+      "detail": "package_id=wp-10459-01 report_id=10459 source=tensor://reports/10459 (no other report touched by this package)"
+    }
+  ],
+  "note": "worker-side self check; the platform gate is authoritative"
+}
