@@ -1,0 +1,227 @@
+{
+  "base": "http://127.0.0.1:8002",
+  "requests": {
+    "P1_ship_24kn_as_declared": {
+      "request": {
+        "length": 230.0,
+        "beam": 32.2,
+        "draft": 10.8,
+        "displacement": 52030.0,
+        "cb": 0.6505,
+        "speed": 24.0,
+        "speed_unit": "kn",
+        "water_density": 1025.9,
+        "kinematic_viscosity": 1.1883e-06,
+        "wetted_surface": 9424.0
+      },
+      "response": {
+        "port": null,
+        "data": {
+          "reynolds_number": 2386330532.2128854,
+          "froude_number": 0.2599713368725882,
+          "wetted_surface": 9424.0,
+          "cf": 0.001378,
+          "dcf": 0.000271,
+          "cf_total": 0.001649,
+          "cr": 0.00128,
+          "ct": 0.002929,
+          "rf": 1182.94,
+          "rr": 943.79,
+          "rt": 2158.55,
+          "rdcf": 199.38,
+          "one_plus_k": 1.165031,
+          "cr_form": 0.000227,
+          "cr_wave": 0.001053,
+          "ks": 0.00015,
+          "assumptions": [
+            "Cm=0.9800 (缺省中剖面系数)",
+            "Cwp=0.76700 ((1+2Cb)/3)",
+            "ABT=0（无球鼻艏声明）→ c2=1, Rb=0",
+            "AT=0（无艉封板声明）→ c5=1, Rtr=0",
+            "附体湿面积=0 → Rapp=0",
+            "ks=150.0 µm (ITTC-78 等效砂粒粗糙度)"
+          ],
+          "pe": 26650.84,
+          "speed_ms": 12.346667,
+          "speed_unit": "kn",
+          "cb_from_dims": 0.650499,
+          "displacement_consistency_pct": 0.0002,
+          "method": "ITTC-57 摩擦线 + ITTC-78 ks 粗糙度补贴 + Holtrop-1982/1984 剩余阻力（(1+k) 形状因子 + 兴波回归 + 球鼻/艉封板/附体）"
+        }
+      }
+    },
+    "P2_model_Fr026_as_declared": {
+      "request": {
+        "length": 7.2786,
+        "beam": 1.019,
+        "draft": 0.3418,
+        "displacement": 1.6489,
+        "cb": 0.6505,
+        "speed": 2.1966,
+        "speed_unit": "m/s",
+        "water_density": 998.2,
+        "kinematic_viscosity": 1.004e-06,
+        "wetted_surface": 9.4376
+      },
+      "response": {
+        "port": null,
+        "data": {
+          "reynolds_number": 13435439.294117648,
+          "froude_number": 0.25999602900808005,
+          "wetted_surface": 9.44,
+          "cf": 0.002852,
+          "dcf": 0.002239,
+          "cf_total": 0.005091,
+          "cr": 0.001525,
+          "ct": 0.006616,
+          "rf": 0.08,
+          "rr": 0.03,
+          "rt": 0.15,
+          "rdcf": 0.05,
+          "one_plus_k": 1.165041,
+          "cr_form": 0.000471,
+          "cr_wave": 0.001054,
+          "ks": 0.00015,
+          "assumptions": [
+            "Cm=0.9800 (缺省中剖面系数)",
+            "Cwp=0.76700 ((1+2Cb)/3)",
+            "ABT=0（无球鼻艏声明）→ c2=1, Rb=0",
+            "AT=0（无艉封板声明）→ c5=1, Rtr=0",
+            "附体湿面积=0 → Rapp=0",
+            "ks=150.0 µm (ITTC-78 等效砂粒粗糙度)"
+          ],
+          "pe": 0.33,
+          "speed_ms": 2.1966,
+          "speed_unit": "m/s",
+          "cb_from_dims": 0.650429,
+          "displacement_consistency_pct": 0.0108,
+          "method": "ITTC-57 摩擦线 + ITTC-78 ks 粗糙度补贴 + Holtrop-1982/1984 剩余阻力（(1+k) 形状因子 + 兴波回归 + 球鼻/艉封板/附体）"
+        }
+      }
+    },
+    "P3_model_Fr026_ks0": {
+      "request": {
+        "length": 7.2786,
+        "beam": 1.019,
+        "draft": 0.3418,
+        "displacement": 1.6489,
+        "cb": 0.6505,
+        "speed": 2.1966,
+        "speed_unit": "m/s",
+        "water_density": 998.2,
+        "kinematic_viscosity": 1.004e-06,
+        "wetted_surface": 9.4376,
+        "ks": 0
+      },
+      "response": {
+        "port": null,
+        "data": {
+          "reynolds_number": 13435439.294117648,
+          "froude_number": 0.25999602900808005,
+          "wetted_surface": 9.44,
+          "cf": 0.002852,
+          "dcf": 0.0,
+          "cf_total": 0.002852,
+          "cr": 0.001525,
+          "ct": 0.004377,
+          "rf": 0.08,
+          "rr": 0.03,
+          "rt": 0.1,
+          "rdcf": 0.0,
+          "one_plus_k": 1.165041,
+          "cr_form": 0.000471,
+          "cr_wave": 0.001054,
+          "ks": 0.0,
+          "assumptions": [
+            "Cm=0.9800 (缺省中剖面系数)",
+            "Cwp=0.76700 ((1+2Cb)/3)",
+            "ABT=0（无球鼻艏声明）→ c2=1, Rb=0",
+            "AT=0（无艉封板声明）→ c5=1, Rtr=0",
+            "附体湿面积=0 → Rapp=0",
+            "ks=0.0 µm (ITTC-78 等效砂粒粗糙度)"
+          ],
+          "pe": 0.22,
+          "speed_ms": 2.1966,
+          "speed_unit": "m/s",
+          "cb_from_dims": 0.650429,
+          "displacement_consistency_pct": 0.0108,
+          "method": "ITTC-57 摩擦线 + ITTC-78 ks 粗糙度补贴 + Holtrop-1982/1984 剩余阻力（(1+k) 形状因子 + 兴波回归 + 球鼻/艉封板/附体）"
+        }
+      }
+    },
+    "P4_ship_24kn_ks0": {
+      "request": {
+        "length": 230.0,
+        "beam": 32.2,
+        "draft": 10.8,
+        "displacement": 52030.0,
+        "cb": 0.6505,
+        "speed": 24.0,
+        "speed_unit": "kn",
+        "water_density": 1025.9,
+        "kinematic_viscosity": 1.1883e-06,
+        "wetted_surface": 9424.0,
+        "ks": 0
+      },
+      "response": {
+        "port": null,
+        "data": {
+          "reynolds_number": 2386330532.2128854,
+          "froude_number": 0.2599713368725882,
+          "wetted_surface": 9424.0,
+          "cf": 0.001378,
+          "dcf": 0.0,
+          "cf_total": 0.001378,
+          "cr": 0.00128,
+          "ct": 0.002658,
+          "rf": 1182.94,
+          "rr": 943.79,
+          "rt": 1959.17,
+          "rdcf": 0.0,
+          "one_plus_k": 1.165031,
+          "cr_form": 0.000227,
+          "cr_wave": 0.001053,
+          "ks": 0.0,
+          "assumptions": [
+            "Cm=0.9800 (缺省中剖面系数)",
+            "Cwp=0.76700 ((1+2Cb)/3)",
+            "ABT=0（无球鼻艏声明）→ c2=1, Rb=0",
+            "AT=0（无艉封板声明）→ c5=1, Rtr=0",
+            "附体湿面积=0 → Rapp=0",
+            "ks=0.0 µm (ITTC-78 等效砂粒粗糙度)"
+          ],
+          "pe": 24189.17,
+          "speed_ms": 12.346667,
+          "speed_unit": "kn",
+          "cb_from_dims": 0.650499,
+          "displacement_consistency_pct": 0.0002,
+          "method": "ITTC-57 摩擦线 + ITTC-78 ks 粗糙度补贴 + Holtrop-1982/1984 剩余阻力（(1+k) 形状因子 + 兴波回归 + 球鼻/艉封板/附体）"
+        }
+      }
+    }
+  },
+  "derived": {
+    "q_model_N_per_C": 22727.5,
+    "q_ship_kN_per_C": 736902.4,
+    "model_R_TM_N_as_declared": 150.0,
+    "model_R_TM_N_ks0": 100.0,
+    "model_C_TM_as_declared": 0.0066,
+    "report_model_R_TM_N": 171.6,
+    "report_anchor_R_TM_N": 88.8,
+    "dev_live_model_vs_report_model_pct": -12.59,
+    "dev_live_model_vs_anchor_pct": 68.92,
+    "report_dev_vs_anchor_pct": 93.3,
+    "ship_R_T_kN_as_declared": 2158.55,
+    "ship_R_T_kN_ks0": 1959.17,
+    "report_ship_platform_kN": 4536.0,
+    "report_ship_simplified_kN": 7407.0,
+    "library_ship_R_T_kN": 1850.0,
+    "dev_live_ship_vs_library_pct": 16.68,
+    "report_dev_ship_vs_library_pct": 145.2,
+    "report_dev_simplified_vs_library_pct": 300.4,
+    "report_claimed_simplified_range_pct": [
+      283,
+      311
+    ]
+  }
+}
