@@ -1,0 +1,39 @@
+{
+  "id": 5716,
+  "title": "IN10-G1 · 冰区航行全流程总攻验收门：跨模型接口契约 + 16 项一致性断言 + 论文级验收报告",
+  "summary": "L1→A2→C3→D1→E1→B2 端到端链一条命令跑通（50.7 s），16/16 一致性断言通过：A2→D1 保守重映射冰量守恒 2.6e-14、方向探针 5.3e-5、船型单源注入后严格相等、同配置复现上游 A2/B2/D1 工件 0 偏差。4 项 honest 披露不通过并入库：MT Uikku 十工况 MAPE 36.2%、B2 板格 β=0.505 实为固支值（简支 0.287）、D1↔C3 冰中航速差 40–66%（GAP-INT-07）、B2 板格 20 年 Miner 利用率 67.6 不通过。TensorFEM Mindlin Q4 与闭式解 0.211% 一致的跨库数值绑定为 REAL，SIR failure_faces v2 只读消费做承载容量校核。",
+  "scenario_key": "ship.ice_navigation.campaign_gate",
+  "mission_id": 5004,
+  "stage": null,
+  "tags": [
+    "IN10-G1",
+    "ice-navigation",
+    "campaign-gate",
+    "contract",
+    "honest-fail",
+    "MT-Uikku",
+    "fatigue",
+    "A2-D1-regrid"
+  ],
+  "figures": [
+    {
+      "name": "fig2_contract_regrid.png",
+      "caption": "图1 · A2→D1 冰况参数传递契约：面积加权保守重映射（左：A2 直角网格源场；中：D1 经纬网运行冰图，红虚线为嵌入窗口；右：单元覆盖比）。冰量守恒误差 2.6e-14，方向探针斜率相对差 5.3e-5，覆盖 20.4% 域，窗口外为已声明的气候态填充。"
+    },
+    {
+      "name": "fig4_speed_profile.png",
+      "caption": "图2 · C3 航速剖面：按 D1 航线冰厚分箱的航段航速/交付功率，竖点线为设计点（A2 最不利 lead：h=0.91 m, C=0.81 → 4.50 kn, 3.57 MW, R_ice=464.7 kN）。"
+    },
+    {
+      "name": "fig6_fatigue.png",
+      "caption": "图3 · B2 冰带疲劳：三细节在 W9-93 DNVGL-C1 S-N 曲线上的位置，与 20 年 Miner 利用率。板格细节 D=67.6（远超 1，不通过），纵桁 1.7e-5、总纵强度 0.028 通过——上游只报纵桁 pass，本门逐细节如实披露。"
+    },
+    {
+      "name": "fig7_uikku_anchor.png",
+      "caption": "图4 · C1 阻力经验链 vs Hu & Zhou (2016) MT Uikku 十工况实冰锚：逐条对比与相对误差（红虚线 ±25% 预登记筛选线）。MAPE 36.2%、bias +20.3%、薄冰(<0.8 m) MAPE 55.5%，6/10 在 25% 内；论文自带的 Lindqvist/Jeong 列 MAPE 27.9%/22.2% 作对照。几何为平台代理船型、系数曾标定 → 证据等级 ANCHOR_COMPARISON。"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-07T02:16:53.268227+00:00"
+}
