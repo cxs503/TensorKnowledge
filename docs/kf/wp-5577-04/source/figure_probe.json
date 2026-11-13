@@ -1,0 +1,36 @@
+{
+  "experiment": "figure-bytes retrievability（正对照区分『生产者没传』与『平台不存』）",
+  "target_report_id": "5577",
+  "target_figures": [
+    {
+      "name": "fig1_resistance_spectrum.png",
+      "http_status": 404,
+      "bytes": 29,
+      "sha256": null
+    },
+    {
+      "name": "fig2_deviation_spectrum.png",
+      "http_status": 404,
+      "bytes": 29,
+      "sha256": null
+    },
+    {
+      "name": "fig3_evidence_chain.png",
+      "http_status": 404,
+      "bytes": 29,
+      "sha256": null
+    }
+  ],
+  "all_target_figures_404": true,
+  "positive_control": {
+    "report_id": "14965",
+    "name": "fig1_closure_residuals.png",
+    "http_status": 200,
+    "bytes": 70557,
+    "sha256_remote": "9995ecbf4d4c755073a476cf0bcf8be3d8784e265ab421e35fcb221e4e1876ef",
+    "sha256_local": "9995ecbf4d4c755073a476cf0bcf8be3d8784e265ab421e35fcb221e4e1876ef",
+    "identical": true
+  },
+  "probe_valid": true,
+  "conclusion": "平台端可取回图字节（正对照 sha256 一致），而 report-5577 三个声明图名全部 404 ⇒ 图字节从未随报告落库（生产者侧缺口），不是平台不存"
+}
