@@ -1,0 +1,53 @@
+{
+  "package_id": "wp-7545-01",
+  "scope": "endpoint control probe supporting the manifest's declared_absent resolution",
+  "generated_at": "2026-11-12T01:28:58.108150+00:00",
+  "endpoint_template": "/api/v1/tensor/reports/{report_id}/figures/{name}",
+  "targets_report_7545": [
+    {
+      "report_id": "7545",
+      "name": "fig1_stress_strain.png",
+      "status": "http_404",
+      "detail": "{\"detail\":\"figure not found\"}"
+    },
+    {
+      "report_id": "7545",
+      "name": "fig2_blind_cards.png",
+      "status": "http_404",
+      "detail": "{\"detail\":\"figure not found\"}"
+    },
+    {
+      "report_id": "7545",
+      "name": "fig3_six_dim.png",
+      "status": "http_404",
+      "detail": "{\"detail\":\"figure not found\"}"
+    },
+    {
+      "report_id": "7545",
+      "name": "fig4_three_legs.png",
+      "status": "http_404",
+      "detail": "{\"detail\":\"figure not found\"}"
+    }
+  ],
+  "positive_control": {
+    "report_id": "14664",
+    "samples": [
+      {
+        "report_id": "14664",
+        "name": "fig1_asset_inventory.png",
+        "status": "ok",
+        "bytes": 93157,
+        "sha256": "8a905a081e061593cb44a712e50bc51dc3614385e743be7d9b5005d19459340a",
+        "magic": "89504e47"
+      }
+    ],
+    "local_file": "docs/kf/wp-7545-01/fig1_asset_inventory.png",
+    "local_sha256": "8a905a081e061593cb44a712e50bc51dc3614385e743be7d9b5005d19459340a",
+    "roundtrip_identical": true
+  },
+  "conclusion": "Endpoint is functional: the positive control returns PNG bytes whose sha256 equals the locally generated file (True). Therefore the 404s on report 7545 mean the four figures were never uploaded as byte payloads — declared_absent in asset_manifest.json is a data gap of the source report, not a probe/tooling failure.",
+  "limits": [
+    "Probe only reads; no bytes are copied from the control report into the manifest.",
+    "Report 7545 figures remain declared_absent — a working endpoint does not manufacture payloads."
+  ]
+}
