@@ -1,0 +1,501 @@
+{
+ "package_id": "wp-895-04",
+ "task_type": "04-independent-review",
+ "report_id": "895",
+ "reviewed_package": "wp-895-01",
+ "reviewed_task_type": "01-asset-registration",
+ "reviewer": {
+  "id": "agent/m15817",
+  "reviewer_type": "agent",
+  "role": "red-team-reviewer"
+ },
+ "reviewed_at": "2026-11-12T03:10:00Z",
+ "policy_version": "ke-review-v0.1",
+ "provenance": {
+  "source_uri": "tensor://reports/895",
+  "source_field": "markdown",
+  "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39",
+  "reviewed_artifact": {
+   "path": "/root/tp-agent/work/m15521/runs/wp-895-01/result.json",
+   "sha256": "sha256:c25fe7cd73f7e5ae557ad7b181886ca0fe0252e844f1ee48aee77ccb78343ad0",
+   "package_id": "wp-895-01",
+   "producer": "agent/m15521"
+  },
+  "audit_tool": "runs/wp-895-04/audit_wp895_01.py",
+  "audit_output": "runs/wp-895-04/audit.json",
+  "producer": "agent/m15817",
+  "emitted_at": "2026-11-12T03:10:00Z"
+ },
+ "verdict": "pass",
+ "disposition": "approve-with-notes",
+ "verdict_scope": "判定对象是 wp-895-01（01-asset-registration）的登记忠实性：身份/结构/证据/附件四条轴全部重算通过，零 claim 合法。F1/F2 是**源报告内容**缺陷（对 wp-895-03 抽取构成 carry-forward 约束），F3–F5 是登记侧非阻断建议；均不改变\"该登记可进入下游\"的结论。",
+ "decisions_not_made": [
+  "未把任何断言标成平台已确认——该判定由平台门计算，本审核只给独立复算与判断。",
+  "未修改上游产物、未改写报告原文、未触碰其它 report_id。"
+ ],
+ "checks_performed": [
+  {
+   "id": "C01",
+   "axis": "identity",
+   "check": "sha256(markdown) == 契约 source_hash",
+   "method": "hashlib 独立重算原文快照",
+   "result": "PASS",
+   "detail": {
+    "recomputed": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39",
+    "contract": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+   }
+  },
+  {
+   "id": "C02",
+   "axis": "identity",
+   "check": "len(markdown) == 契约 chars=9459",
+   "method": "len()",
+   "result": "PASS",
+   "detail": {
+    "chars": 9459
+   }
+  },
+  {
+   "id": "C03",
+   "axis": "structural",
+   "check": "上游 result.json 过 kf_result.v1 schema",
+   "method": "jsonschema Draft202012Validator",
+   "result": "PASS",
+   "detail": {
+    "schema_errors": []
+   }
+  },
+  {
+   "id": "C04",
+   "axis": "structural",
+   "check": "上游产物无自封验证字段（S9）",
+   "method": "5 个字段名全文扫描",
+   "result": "PASS",
+   "detail": {
+    "scanned_self_seal_fields": 5,
+    "hit_total": 0,
+    "hit_fields": []
+   }
+  },
+  {
+   "id": "C05",
+   "axis": "structural",
+   "check": "零 claim 合法 + outputs 与契约 output 声明一致",
+   "method": "字段计数 + 契约比对",
+   "result": "PASS",
+   "detail": {
+    "claims": 0,
+    "manifest_claims": 0,
+    "declared_outputs": [
+     "asset_manifest.json"
+    ],
+    "zero_claim_note_present": true
+   }
+  },
+  {
+   "id": "C06",
+   "axis": "evidence",
+   "check": "7 条 artifact locator 在原文逐字可定位",
+   "method": "字节精确子串搜索，记录 offset",
+   "result": "PASS",
+   "detail": {
+    "n": 7,
+    "offsets": {
+     "criteria.json": 3376,
+     "history_elastic.csv": 8964,
+     "history_fracture.csv": 8964,
+     "contact_patch_sensitivity.json": 7790,
+     "impact_animation.gif": 6169,
+     "src/tensorphysics/ice/": 60,
+     "tests/test_ice_*.py": 8770
+    }
+   }
+  },
+  {
+   "id": "C07",
+   "axis": "coverage",
+   "check": "附件集合 vs 原文 §3.7 图清单",
+   "method": "正则抽 §3.7 表格行 + 集合差",
+   "result": "NOTE(F3)",
+   "detail": {
+    "body_figure_rows": 7,
+    "attachments": [
+     "fig1_dispersion.png",
+     "fig2_static_hetenyi.png",
+     "fig3_impact_history.png",
+     "fig4_fracture_fields.png",
+     "fig5_energy_ledger.png",
+     "fig6_supersonic_waves.png"
+    ],
+    "missing_from_attachments": [
+     "impact_animation.gif"
+    ],
+    "not_covered_at_all": []
+   }
+  },
+  {
+   "id": "C08",
+   "axis": "fidelity",
+   "check": "附件名/图注逐字等于平台 figures 元数据",
+   "method": "逐条字节比较",
+   "result": "PASS",
+   "detail": {
+    "all_in_record": true,
+    "captions_byte_identical": true
+   }
+  },
+  {
+   "id": "C09",
+   "axis": "physics",
+   "check": "判据 (a) 色散 ω / c_p / c_g 独立复算",
+   "method": "自写 ω²=(Dκ⁴+ρ_w g)/(ρ_i h+ρ_w/(κ tanh κH))，h=1.0 m 工况（原文标注）",
+   "result": "PASS",
+   "detail": {
+    "ω(k=2π/105.0256, h=1.0)": {
+     "recomputed": 1.0660707972969505,
+     "claimed": 1.06607,
+     "rel_err_pct": 7e-05
+    },
+    "c_p = ω/k": {
+     "recomputed": 17.819739456140542,
+     "claimed": 17.8197,
+     "rel_err_pct": 0.00022
+    },
+    "c_g = dω/dk": {
+     "recomputed": 26.96858802166251,
+     "claimed": 26.9958,
+     "rel_err_pct": 0.1008
+    }
+   }
+  },
+  {
+   "id": "C10",
+   "axis": "physics",
+   "check": "判据 (b) 静力锚：点载极限 + 高斯斑 Hankel 求积 + kei 首零点",
+   "method": "自写 1/(2π)∫p̂(κ)κdκ/(Dκ⁴+ρ_w g)、Pℓ_c²/8D、scipy kei 零点扫描",
+   "result": "PASS",
+   "detail": {
+    "w(0) 点载极限 Pℓ_c²/8D": {
+     "recomputed": 0.10305124470425633,
+     "claimed": 0.103051,
+     "rel_err_pct": 0.00024
+    },
+    "w(0) 高斯斑 σ=4 m（独立 Hankel 求积）": {
+     "recomputed": 0.09844079785569107,
+     "claimed": 0.098441,
+     "rel_err_pct": 0.00021
+    },
+    "零环半径 = kei 首零点·ℓ_c": {
+     "recomputed": 89.77803301385076,
+     "claimed": 89.778,
+     "rel_err_pct": 4e-05
+    }
+   }
+  },
+  {
+   "id": "C11",
+   "axis": "physics",
+   "check": "判据 (c) 压碎律 / 刚体封闭解 / 峰值面积压强 / 冲量-动量",
+   "method": "p=C·A^−0.5、A=2δtanα·h、F_peak=K^{2/3}((3/4)MV²)^{1/3}",
+   "result": "PASS（F2 见触发行口径）",
+   "detail": {
+    "刚体封闭解 F_peak": {
+     "recomputed": 4800322.607211074,
+     "claimed": 4800320.0,
+     "rel_err_pct": 5e-05
+    },
+    "压碎律复算 F(δ=2.730 m)": {
+     "recomputed": 4729552.7883329475,
+     "claimed": 4729340.0,
+     "rel_err_pct": 0.0045
+    },
+    "峰值压碎面积 A": {
+     "recomputed": 3.3089747895899344,
+     "claimed": 3.309,
+     "rel_err_pct": 0.00076
+    },
+    "峰值压碎压强 p": {
+     "recomputed": 1.4293106140343423,
+     "claimed": 1.429,
+     "rel_err_pct": 0.02174
+    },
+    "∫F dt vs M(V0−V_end)": {
+     "recomputed": 11803000.0,
+     "claimed": 11779000.0,
+     "rel_err_pct": 0.20375
+    }
+   }
+  },
+  {
+   "id": "C12",
+   "axis": "physics",
+   "check": "判据 (e) 能量账闭合",
+   "method": "压碎功+板能+阻尼 vs 释放动能",
+   "result": "PASS",
+   "detail": {
+    "residual_pct": 0.0278,
+    "claimed_total_residual": "0.027%"
+   }
+  },
+  {
+   "id": "C13",
+   "axis": "physics",
+   "check": "判据 (d) 环向裂纹半径 r/ℓ_c 与 σ₁/σ_f",
+   "method": "18.81/ℓ_c、0.915/0.70",
+   "result": "PASS",
+   "detail": {
+    "环向裂纹 r/ℓ_c": 0.8201883602569193,
+    "σ1/σ_f (触发时)": 1.3071428571428574
+   }
+  },
+  {
+   "id": "C14",
+   "axis": "physics",
+   "check": "断裂触发时刻的抽样栅格伪差",
+   "method": "σ∝√t 反解阈值穿越时刻",
+   "result": "FAIL_IN_SOURCE(F1)",
+   "detail": {
+    "claimed_s": 0.2,
+    "implied_s": 0.1171,
+    "rel_err_pct": 41.47
+   }
+  },
+  {
+   "id": "C15",
+   "axis": "physics",
+   "check": "触发瞬间 F↔δ 口径一致性",
+   "method": "压碎律反解 δ 与报告两列对照",
+   "result": "FAIL_IN_SOURCE(F2)",
+   "detail": {
+    "F_from_delta_MN": 1.5521,
+    "rel_err_pct": 2.5148
+   }
+  },
+  {
+   "id": "C16",
+   "axis": "honesty",
+   "check": "实验对标缺口是否被显式声明未达成",
+   "method": "原文 §4 逐字核对",
+   "result": "PASS（WITHHELD 明示，未粉饰）",
+   "detail": {
+    "quote_offset": 6879
+   }
+  }
+ ],
+ "checks_not_run": [
+  "未访问 TensorPhysics 仓 agent/m1138 分支的 artifacts/m1138（criteria.json、history_*.csv、6 PNG、GIF 字节）：报告\"全部由 criteria.json 程序化产出，零手抄\"这一**产出链声明本身**未经核实（NOT_RUN）；本轮复算用的是正文参数表，属对结论的间接独立验证，不等价于对产出链的核实。",
+  "未运行 `PYTHONPATH=src python -m pytest tests/test_ice_*.py -q`（宿主仓不可达）：\"36 用例全绿\"为 NOT_RUN，不视为通过。",
+  "判据 (c) 的实验对标（≤15%）仍为 WITHHELD：本审核同样无原始传感器/模型试验数据，不能替代该缺口。",
+  "未做 03 抽取语义审：上游包 claims=[]（01 工序不抽取），无语义可审；故本次\"语义忠实性\"= manifest 字段与原文/元数据的逐字一致性，已由 C06/C08 覆盖。",
+  "未复核报告的物理建模假设（势流准静态、Kirchhoff 小挠度、周期域）是否适用于具体船型：超出 01 工序范围，未评估（NOT_RUN）。"
+ ],
+ "independence_limitations": [
+  "审核者与生产者同为平台内 AI 会话（agent/m15817 vs agent/m15521），非同机构/非同模型的外部独立审；独立性由身份 token 与 canonical id 判定（scripts/ke_state_machine.is_independent），非人工评审。",
+  "审核上下文包含上游 result.json 的全部字段，其中 provenance.notes / asset_manifest.notes 属生产者自述（GATE-RULES M5 要求剥离的字段）。本报告的判定不依赖 notes：F1–F4 均由 audit_wp895_01.py 对原文/元数据的程序化重算独立推出；F5 与 notes 所述一致属于事后印证，不作为其来源。",
+  "复算所依据的解析式由审核者独立实现（未阅读生产者代码），若双方共享同一系统性建模错误（如附连质量假设），则本审核无法发现——这是\"同构审核\"的固有盲区。"
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "major",
+   "blocking_for": [
+    "wp-895-03"
+   ],
+   "non_blocking_for": [
+    "wp-895-01"
+   ],
+   "scope": "source_report",
+   "claim_ref": "§3.4 断裂触发时刻 t_c = 0.20 s",
+   "finding": "t_c=0.20 s 不是求解出的穿越时刻，而是**应力场抽样栅格**（每 20 步 = 0.2 s）上的首个超阈采样点：该采样点 σ₁ 已达阈值 1.31 倍。用报告自带的压碎律 F=p(A)·A 与 C=2.6 MPa·m^0.5（F∝δ^0.5）配等速推进，σ∝√t，反解得真穿越时刻≈0.117 s，相对 0.20 s 偏 41%。报告 §5 的不确定度预算只给接触斑敏感性 ±25%，未计入抽样栅格项。⇒ 若 03 工序把 0.20 s 原样提为知识断言，属超出原文支撑的精度声明。",
+   "evidence": [
+    {
+     "quote": "| 断裂触发时刻 t_c | **0.20 s** |",
+     "offset": 4902,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    },
+    {
+     "quote": "每 20 步由谱导数恢复下表面主应力场，取首个超阈时刻/位置",
+     "offset": 2921,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    },
+    {
+     "quote": "| 下表面峰值拉应力（触发时） | 0.915 MPa（σ_1/σ_f = 1.31） |",
+     "offset": 4967,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    },
+    {
+     "quote": "**结论：积分量（力/能量/挠度）对接触斑不敏感，局部应力峰值与裂纹时刻敏感 ⇒ 裂纹时刻应视为 ±25% 量级的不确定量**",
+     "offset": 7967,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    }
+   ],
+   "recompute": {
+    "t_c_claimed_s": 0.2,
+    "t_c_implied_by_threshold_s": 0.1171,
+    "rel_err_pct": 41.47,
+    "formula": "t_c≈t_s*(σ_f/σ₁)^2, σ∝√t（F∝δ^0.5, δ=V·t）"
+   },
+   "carry_forward_constraint": "03 抽取须写为「t_c ≈ 0.12–0.20 s（受 0.2 s 应力抽样栅格限制）」，不得给单值精确断言。"
+  },
+  {
+   "id": "F2",
+   "severity": "minor",
+   "blocking_for": [],
+   "scope": "source_report",
+   "claim_ref": "§3.4 触发时接触力 1.514 MN / 穿透 0.294 m",
+   "finding": "两列数据与报告自带压碎律不同口径：以 δ=0.294 m 代入 p=C·A^−0.5、A=2δtanα·h 得 1.5521 MN，与 1.514 MN 差 2.51%；而峰值行（δ=2.730 m → 4.7296 MN vs 4.72934 MN）只差 0.00%。说明触发行更可能报的是船体推进量 ξ 而非接触穿透 δ（δ=ξ−w≈0.280 m），原文未标注两列口径。",
+   "evidence": [
+    {
+     "quote": "| 触发时接触力 / 穿透 | 1.514 MN / 0.294 m |",
+     "offset": 4930,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    },
+    {
+     "quote": "| 耦合仿真峰值力（船体减速 + 冰盖让压） | **4.72934 MN**（比刚体解低 1.48%，物理上的柔性效应） |",
+     "offset": 4569,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    },
+    {
+     "quote": "| 碎冰压力-面积律 | p = C·A^(−0.5) | C = 2.6 MPa·m^0.5，p ∈ [0.1, 12] MPa | 经验压力-面积包络（Sanderson 1988 / Masterson & Frederking 1998 形式的系数） |",
+     "offset": 1298,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    },
+    {
+     "quote": "| 最大穿透量 δ_max | 2.730 m（冰面自身下沉 0.107 m） |",
+     "offset": 4674,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    }
+   ],
+   "recompute": {
+    "F_from_delta_0.294_MN": 1.5521,
+    "rel_err_pct": 2.5148,
+    "delta_implied_by_F_M": 0.2798
+   },
+   "carry_forward_constraint": "引用该行时须注口径（ξ 或 δ）；量级不受影响。"
+  },
+  {
+   "id": "F3",
+   "severity": "minor",
+   "blocking_for": [],
+   "scope": "upstream_package",
+   "claim_ref": "asset_manifest.attachments（6 项）",
+   "finding": "attachments 只登记平台 figures 元数据的 6 张 PNG，而原文 §3.7 图清单有 7 行（含 impact_animation.gif）。GIF 仅以 artifacts 条目出现（locator 可定位，覆盖在并集上完整），但只读 attachments 的下游工序会漏掉该图。建议 manifest 增加 `figure_rows_in_body` 计数或把 GIF 纳入 attachments。",
+   "evidence": [
+    {
+     "quote": "| `impact_animation.gif` | 冲击过程挠度/应力场动画（23 帧） |",
+     "offset": 6167,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    }
+   ],
+   "recompute": {
+    "body_figure_rows": 7,
+    "attachments": 6,
+    "body_figs_not_in_attachments": [
+     "impact_animation.gif"
+    ],
+    "body_figs_not_in_artifacts_either": []
+   },
+   "carry_forward_constraint": "无（并集覆盖完整）。"
+  },
+  {
+   "id": "F4",
+   "severity": "informational",
+   "blocking_for": [],
+   "scope": "upstream_package",
+   "claim_ref": "fig1_dispersion.png caption（英文图注，来自平台元数据）",
+   "finding": "图注断言的数字与正文同量但口径不同：caption 写 \"wavelength error 0.001%, group velocity error 0.00%\"，正文 §3.1 为 0.0011%/0.0038%（两位小数舍入后 0.00%）。图注属平台 figures 元数据而非正文，登记时未标注\"数字来自图注元数据\"，下游若按图注取数会得到 0.00% 的失真精度。",
+   "evidence": [
+    {
+     "quote": "| 角频率 ω（k=0.05983 1/m） | 1.066070 rad/s | 1.066088 rad/s | **0.0017%** |",
+     "offset": 3491,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    },
+    {
+     "quote": "| 群速度 c_g（波包能量质心） | 26.9958 m/s | 26.9948 m/s | **0.0038%** |",
+     "offset": 3663,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39",
+     "note": "caption 侧数字来自平台 figures 元数据（本报告 audit.json attachment_fidelity 段证明二者逐字来自元数据）"
+    }
+   ],
+   "recompute": {
+    "caption_tokens": [
+     "0.001",
+     "0.00"
+    ]
+   },
+   "carry_forward_constraint": "03 取数只取正文数字，不取图注。"
+  },
+  {
+   "id": "F5",
+   "severity": "informational",
+   "blocking_for": [],
+   "scope": "metadata",
+   "claim_ref": "title（平台记录 / asset_manifest.title）",
+   "finding": "平台记录 title 与原文 H1 有 2 字差异（H1 多了\"船首\"），manifest 取记录 title （契约字段）合法，但按 H1 做 join/grep 的下游会失配。建议 01 工序显式登记 h1_vs_record_title_diff 供机器检测（当前只写在自由文本 notes 里）。",
+   "evidence": [
+    {
+     "quote": "# W7-N10 冰盖对破冰船冲击的动态响应：弹性板-流体耦合 + 船首冲击时程 + 弯曲断裂判据 + 裂纹萌生位置",
+     "offset": 0,
+     "source_field": "markdown",
+     "source_hash": "sha256:31f6794efa547c7dc66c6b9d84edd509c977b7e1ffdf138023d880edbf166b39"
+    }
+   ],
+   "recompute": {
+    "h1_equals_record_title": false
+   },
+   "carry_forward_constraint": "无（不改变任何数值结论）。"
+  }
+ ],
+ "overstated_claims": [
+  {
+   "where": "§3.4 / §4 判据 (d)",
+   "as_written": "断裂触发时刻 t_c = 0.20 s",
+   "why_overstated": "0.20 s 是 0.2 s 抽样栅格的第一个超阈点（σ₁/σ_f=1.31），阈值穿越本身≈0.117 s（F1）"
+  },
+  {
+   "where": "§5 注意点 4",
+   "as_written": "裂纹时刻应视为 ±25% 量级的不确定量",
+   "why_overstated": "该预算只含接触斑敏感性，未含 0.2 s 应力抽样栅格（F1 显示该项量级更大）"
+  }
+ ],
+ "source_report_numbers_recomputed": {
+  "n_quantities": 25,
+  "n_within_1pct": 23,
+  "max_rel_err_pct_among_within_1pct": 0.28217,
+  "n_fail_1pct": 2,
+  "note": "除 F1/F2 两项口径问题外，报告的解析锚（色散/静力 Green 函数/刚体封闭解/能量账/裂纹半径）均可被独立解析式复算到 <0.3%，说明数字非手抄；但\"产出链由 criteria.json 程序化生成\"未被核实（见 checks_not_run）。"
+ },
+ "repro_cmd": "cd <worktree> && python3 runs/wp-895-04/fetch_source.py && python3 runs/wp-895-04/audit_wp895_01.py && python3 runs/wp-895-04/build_review.py",
+ "artifacts": [
+  "runs/wp-895-04/audit_wp895_01.py",
+  "runs/wp-895-04/audit.json",
+  "runs/wp-895-04/fetch_source.py",
+  "runs/wp-895-04/source_report_895.md",
+  "work/wp-895-04/review_report.json",
+  "work/wp-895-04/review_events.json",
+  "work/wp-895-04/kf_result.wp-895-04.json"
+ ],
+ "independence": {
+  "reviewer": "agent/m15817",
+  "producer_ids": [
+   "agent/m15521"
+  ],
+  "basis": "distinct-identity",
+  "rule": "scripts/ke_state_machine.is_independent：canonical id + 8 位十六进制 token 集合不交",
+  "ledger_state_after_fold": "approved",
+  "ledger_outcome_codes": [
+   "OK_APPROVED"
+  ]
+ }
+}
