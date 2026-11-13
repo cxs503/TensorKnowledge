@@ -1,0 +1,70 @@
+{
+  "package_id": "wp-10429-01",
+  "report_id": "10429",
+  "mode": "api",
+  "all_pass": true,
+  "failed": [],
+  "invocation": "python3 scripts/kf_wp10429_01_verify.py",
+  "checks": {
+    "source_hash_matches": {
+      "pass_": true,
+      "source": "GET http://127.0.0.1:8010/api/v1/tensor/reports/10429 (fresh)",
+      "recomputed_sha256": "6e48f09bc41ac354d46463f6f91ef5b6d34a1ffa7748dcf6a3083c4f6944be1d",
+      "contract_sha256": "6e48f09bc41ac354d46463f6f91ef5b6d34a1ffa7748dcf6a3083c4f6944be1d",
+      "chars": 7442,
+      "contract_chars": 7442,
+      "local_copy_identical": true,
+      "detail": "平台侧独立重算 sha256 与契约 source_hash 逐位相等，且与本地副本逐字节相同"
+    },
+    "valid_json": {
+      "pass_": true,
+      "manifest_bytes": 28503,
+      "envelope_bytes": 32141,
+      "durable_mirror_identical": {
+        "asset_manifest.json": true,
+        "kf_result.json": true
+      },
+      "detail": "两个 JSON 均可解析为对象；docs/kf/wp-10429-01/ 下的持久镜像与 artifacts|runs 逐字节相同"
+    },
+    "schema_pass": {
+      "pass_": true,
+      "validators": [
+        "schemas/asset_manifest.v1.wp-10429-01.schema.json",
+        "schemas/kf_result.v1.schema.json"
+      ],
+      "errors": [],
+      "error_count": 0,
+      "detail": "manifest 与信封分别过 包内固定 schema 与仓库 schemas/kf_result.v1.schema.json"
+    },
+    "source_locator_resolvable": {
+      "pass_": true,
+      "assets_checked": 22,
+      "failing": [],
+      "method": "逐一用 md[start_char:end_char] 切片与 quote 全等比较，并核对行区间与唯一性",
+      "detail": "char_span 定位器在新鲜源文上重解析，切片与登记 quote 逐字相同且全篇唯一"
+    },
+    "no_duplicate_ids": {
+      "pass_": true,
+      "duplicates": [],
+      "n_assets": 22,
+      "declared_count": 22,
+      "detail": "asset_id 集合与 assets 长度一致、无重复"
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass_": true,
+      "n_claims": 0,
+      "unbacked": [],
+      "vacuous": true,
+      "detail": "claims=[] 是契约允许的完整结果（objective.classify_report_type=false、notes 明确不做抽取）；该验收项在零 claim 情况下空真，不构造 claim 来凑数"
+    },
+    "envelope_links": {
+      "pass_": true,
+      "provenance_source_hash": "sha256:6e48f09bc41ac354d46463f6f91ef5b6d34a1ffa7748dcf6a3083c4f6944be1d",
+      "verification_status": "not_verified",
+      "outputs_keys": [
+        "asset_manifest.json"
+      ],
+      "detail": "信封 source_hash 与契约一致、outputs 内联 manifest 与独立文件资产数一致、未自标 verified"
+    }
+  }
+}
