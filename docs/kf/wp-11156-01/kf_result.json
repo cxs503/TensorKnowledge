@@ -1,0 +1,685 @@
+{
+ "package_id": "wp-11156-01",
+ "task_type": "01-asset-registration",
+ "report_id": "11156",
+ "provenance": {
+  "source_uri": "tensor://reports/11156",
+  "source_field": "markdown",
+  "source_hash": "sha256:4e34bdac8a446701f339014fec117feea5083ad4ef85543edae87ccb77806d77",
+  "producer": "agent/m15691",
+  "emitted_at": "2026-11-12T01:51:57+00:00",
+  "notes": "01-asset-registration only: markdown fetched live, sha256 recomputed over UTF-8 bytes and matched against the contract hash; 21 assets registered with verbatim locators; figure metadata registered as declared-only; claims intentionally empty; nothing marked verified."
+ },
+ "outputs": {
+  "asset_manifest.json": {
+   "manifest_version": "1.0",
+   "schema": "asset_manifest.v1",
+   "package_id": "wp-11156-01",
+   "task_type": "01-asset-registration",
+   "report_id": "11156",
+   "generated_at": "2026-11-12T01:51:57+00:00",
+   "generated_by": "agent/m15691",
+   "scope": {
+    "registers_assets_only": true,
+    "extracts_claims": false,
+    "classifies_report_type": false,
+    "marks_anything_verified": false,
+    "reports_touched": [
+     "11156"
+    ]
+   },
+   "contract": {
+    "source_uri": "tensor://reports/11156",
+    "source_field": "markdown",
+    "source_hash_declared": "sha256:4e34bdac8a446701f339014fec117feea5083ad4ef85543edae87ccb77806d77",
+    "chars_declared": 4478,
+    "title_declared": "DEM Parameter Auto-Calibration Framework: Bayesian Optimization + MCMC UQ",
+    "scenario_key_declared": "p284w3-n05-dem-auto-calibration"
+   },
+   "source": {
+    "uri": "tensor://reports/11156",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "4e34bdac8a446701f339014fec117feea5083ad4ef85543edae87ccb77806d77",
+    "hash_contract": "4e34bdac8a446701f339014fec117feea5083ad4ef85543edae87ccb77806d77",
+    "hash_matches_contract": true,
+    "hash_method": "sha256 over UTF-8 bytes of the markdown field",
+    "retrieved_via": "GET /api/v1/tensor/reports/11156 (Bearer token)",
+    "chars": 4478,
+    "chars_matches_contract": true,
+    "bytes_utf8": 4489,
+    "title": "DEM Parameter Auto-Calibration Framework: Bayesian Optimization + MCMC UQ",
+    "title_matches_contract": true,
+    "scenario_key": "p284w3-n05-dem-auto-calibration",
+    "platform_mission_id": 9416,
+    "platform_status": "published",
+    "platform_tags": [
+     "DEM",
+     "calibration",
+     "bayesian-optimization",
+     "MCMC",
+     "uncertainty-quantification",
+     "repose-angle",
+     "shear-box",
+     "compression"
+    ],
+    "line_count": 86,
+    "heading_count": 13,
+    "headings": [
+     "# DEM Parameter Auto-Calibration Framework",
+     "## 1. Physical Background",
+     "## 2. Method",
+     "### 2.1 Forward Problem",
+     "### 2.2 Inverse Problem: Bayesian Optimization",
+     "### 2.3 Uncertainty Quantification: MCMC",
+     "## 3. Results",
+     "### 3.1 Bayesian Optimization Convergence",
+     "### 3.2 MCMC Posterior Distribution",
+     "### 3.3 Material Presets",
+     "## 4. Acceptance Criteria",
+     "## 5. Limitations",
+     "## 6. Files"
+    ]
+   },
+   "counts": {
+    "assets": 21,
+    "by_kind": {
+     "source_markdown": 1,
+     "table": 2,
+     "parameter_preset": 3,
+     "referenced_path": 4,
+     "reported_quantity": 3,
+     "hash_anchor": 2,
+     "publish_anchor": 1,
+     "figure_metadata": 5
+    },
+    "by_resolution": {
+     "resolved_in_source": 9,
+     "referenced_unresolved": 4,
+     "declared_only": 8
+    },
+    "resolved_in_source": 9,
+    "referenced_unresolved": 4,
+    "declared_only": 8,
+    "claims": 0
+   },
+   "assets": [
+    {
+     "asset_id": "A01",
+     "kind": "source_markdown",
+     "label": "report 11156 markdown (hash-pinned source of record)",
+     "section": "document",
+     "resolution": "resolved_in_source",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "document",
+      "start_char": 0,
+      "end_char": 4478,
+      "start_line": 1,
+      "end_line": 86,
+      "quote": "# DEM Parameter Auto-Calibration Framework",
+      "quote_is_first_line_only": true,
+      "document_sha256": "4e34bdac8a446701f339014fec117feea5083ad4ef85543edae87ccb77806d77",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true,
+      "note": "document-level locator; quote is only the H1 line for readability"
+     },
+     "note": "sha256 recomputed live over UTF-8 bytes; equals the contract-declared hash. Hash equality is a mechanical identity check only."
+    },
+    {
+     "asset_id": "A02",
+     "kind": "table",
+     "label": "§2.1 forward-benchmark -> macroscopic-response mapping table",
+     "section": "2.1 Forward Problem",
+     "resolution": "resolved_in_source",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 952,
+      "end_char": 1292,
+      "start_line": 17,
+      "end_line": 21,
+      "quote": "| Benchmark | Input Parameters | Output |\n|-----------|-----------------|--------|\n| Angle of repose | mu, mu_r, e, kt/kn | Heap slope angle (degrees) |\n| Direct shear box | mu, mu_r, e, kt/kn | Internal friction angle phi (degrees), cohesion c (Pa) |\n| Uniaxial compression | mu, mu_r, e, kt/kn | Elastic modulus E (Pa), Poisson ratio nu |",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "table header + 3 data rows quoted verbatim; row count recorded in locator_stats",
+     "locator_stats": {
+      "data_rows": 3,
+      "header": "| Benchmark | Input Parameters | Output |"
+     }
+    },
+    {
+     "asset_id": "A03",
+     "kind": "table",
+     "label": "§4 acceptance-criteria table (targets + status wording)",
+     "section": "4. Acceptance Criteria",
+     "resolution": "resolved_in_source",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 2944,
+      "end_char": 3461,
+      "start_line": 60,
+      "end_line": 67,
+      "quote": "| Criterion | Target | Status |\n|-----------|--------|--------|\n| (a) Repose angle error < 5 degrees | < 5 degrees | Framework supports this |\n| (b) Shear phi error < 3 degrees, c error < 10% | < 3 degrees, < 10% | Framework supports this |\n| (c) Compression E error < 10% | < 10% | Framework supports this |\n| (d) BO convergence < 100 evals | < 100 | Verified (38 evals for test case) |\n| (e) UQ 95% CI contains true value | Yes | Verified with synthetic data |\n| (f) pytest >= 15 all green | >= 15 | 30 tests pass |",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "targets are registered as *declared*; the reported status column is quoted, not re-verified by this package (verification belongs to the platform gate)",
+     "locator_stats": {
+      "data_rows": 6,
+      "header": "| Criterion | Target | Status |"
+     }
+    },
+    {
+     "asset_id": "A04",
+     "kind": "parameter_preset",
+     "label": "material preset: glass beads (mu / mu_r / e ranges)",
+     "section": "3.3 Material Presets",
+     "resolution": "resolved_in_source",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 2704,
+      "end_char": 2777,
+      "start_line": 54,
+      "end_line": 54,
+      "quote": "- **Glass beads**: mu in [0.1, 0.5], mu_r in [0.0, 0.08], e in [0.5, 0.9]",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "verbatim bullet; the numeric ranges are the report's own values, not re-derived"
+    },
+    {
+     "asset_id": "A05",
+     "kind": "parameter_preset",
+     "label": "material preset: sand (mu / mu_r / e ranges)",
+     "section": "3.3 Material Presets",
+     "resolution": "resolved_in_source",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 2778,
+      "end_char": 2845,
+      "start_line": 55,
+      "end_line": 55,
+      "quote": "- **Sand**: mu in [0.3, 0.8], mu_r in [0.02, 0.12], e in [0.1, 0.5]",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "verbatim bullet; the numeric ranges are the report's own values, not re-derived"
+    },
+    {
+     "asset_id": "A06",
+     "kind": "parameter_preset",
+     "label": "material preset: gravel (mu / mu_r / e ranges)",
+     "section": "3.3 Material Presets",
+     "resolution": "resolved_in_source",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 2846,
+      "end_char": 2915,
+      "start_line": 56,
+      "end_line": 56,
+      "quote": "- **Gravel**: mu in [0.4, 0.8], mu_r in [0.05, 0.15], e in [0.1, 0.4]",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "verbatim bullet; the numeric ranges are the report's own values, not re-derived"
+    },
+    {
+     "asset_id": "A07",
+     "kind": "referenced_path",
+     "label": "file reference: main calibration framework",
+     "section": "6. Files",
+     "resolution": "referenced_unresolved",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 3975,
+      "end_char": 4076,
+      "start_line": 78,
+      "end_line": 78,
+      "quote": "- src/tensordem/auto_calibration.py - Main calibration framework (forward solver, BO, MCMC, pipeline)",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "path text quoted verbatim from §6; byte payload NOT available in this package -> existence was probed only against this worktree and is reported as-is",
+     "resolution_check": {
+      "check": "worktree_probe:src/tensordem/auto_calibration.py",
+      "result": "absent",
+      "searched_root": "TensorKnowledge worktree (this repo)",
+      "note": "report 11156 was produced in a TensorDEM-side worktree; the TensorKnowledge checkout is not expected to carry those bytes"
+     }
+    },
+    {
+     "asset_id": "A08",
+     "kind": "referenced_path",
+     "label": "file reference: 30-test pytest suite",
+     "section": "6. Files",
+     "resolution": "referenced_unresolved",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 4077,
+      "end_char": 4151,
+      "start_line": 79,
+      "end_line": 79,
+      "quote": "- tests/test_auto_calibration.py - 30 pytest tests covering all components",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "path text quoted verbatim from §6; byte payload NOT available in this package -> existence was probed only against this worktree and is reported as-is",
+     "resolution_check": {
+      "check": "worktree_probe:tests/test_auto_calibration.py",
+      "result": "absent",
+      "searched_root": "TensorKnowledge worktree (this repo)",
+      "note": "report 11156 was produced in a TensorDEM-side worktree; the TensorKnowledge checkout is not expected to carry those bytes"
+     }
+    },
+    {
+     "asset_id": "A09",
+     "kind": "referenced_path",
+     "label": "file reference: result figures (glob, no concrete filenames)",
+     "section": "6. Files",
+     "resolution": "referenced_unresolved",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 4152,
+      "end_char": 4189,
+      "start_line": 80,
+      "end_line": 80,
+      "quote": "- artifacts/fig*.png - Result figures",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "path text quoted verbatim from §6; byte payload NOT available in this package -> existence was probed only against this worktree and is reported as-is",
+     "resolution_check": {
+      "check": "worktree_probe:artifacts/fig*.png",
+      "result": "absent",
+      "searched_root": "TensorKnowledge worktree (this repo)",
+      "note": "report 11156 was produced in a TensorDEM-side worktree; the TensorKnowledge checkout is not expected to carry those bytes"
+     }
+    },
+    {
+     "asset_id": "A10",
+     "kind": "referenced_path",
+     "label": "file reference: calibration run results",
+     "section": "6. Files",
+     "resolution": "referenced_unresolved",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 4190,
+      "end_char": 4246,
+      "start_line": 81,
+      "end_line": 81,
+      "quote": "- runs/calibration_result.json - Calibration run results",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "path text quoted verbatim from §6; byte payload NOT available in this package -> existence was probed only against this worktree and is reported as-is",
+     "resolution_check": {
+      "check": "worktree_probe:runs/calibration_result.json",
+      "result": "absent",
+      "searched_root": "TensorKnowledge worktree (this repo)",
+      "note": "report 11156 was produced in a TensorDEM-side worktree; the TensorKnowledge checkout is not expected to carry those bytes"
+     }
+    },
+    {
+     "asset_id": "A11",
+     "kind": "reported_quantity",
+     "label": "BO convergence: 38 evaluations, objective < 0.01 (2D quadratic test)",
+     "section": "3.1 Bayesian Optimization Convergence",
+     "resolution": "resolved_in_source",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 2248,
+      "end_char": 2373,
+      "start_line": 44,
+      "end_line": 44,
+      "quote": "The BO framework converges to the optimum within 38 evaluations for a 2D quadratic test function, achieving objective < 0.01.",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "declared numeric result; not reproduced here (no extraction, no verification)"
+    },
+    {
+     "asset_id": "A12",
+     "kind": "reported_quantity",
+     "label": "MCMC input data: repose angle 25 deg +/- 3 deg",
+     "section": "3.2 MCMC Posterior Distribution",
+     "resolution": "resolved_in_source",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 2411,
+      "end_char": 2507,
+      "start_line": 47,
+      "end_line": 47,
+      "quote": "With experimental repose angle data (25 degrees +/- 3 degrees), the MCMC posterior for mu shows:",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "declared experimental datum; posterior mean/CI are described only qualitatively in §3.2 (no numbers) -> see observation O2"
+    },
+    {
+     "asset_id": "A13",
+     "kind": "reported_quantity",
+     "label": "pytest count: 30 tests",
+     "section": "4. Acceptance Criteria",
+     "resolution": "resolved_in_source",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 3407,
+      "end_char": 3461,
+      "start_line": 67,
+      "end_line": 67,
+      "quote": "| (f) pytest >= 15 all green | >= 15 | 30 tests pass |",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "declared test count (acceptance row (f)); suite not executed by this package"
+    },
+    {
+     "asset_id": "A14",
+     "kind": "hash_anchor",
+     "label": "publish anchor: ledger sha256 (declared)",
+     "section": "publish anchor line",
+     "resolution": "declared_only",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 4259,
+      "end_char": 4339,
+      "start_line": 86,
+      "end_line": 86,
+      "quote": "ledger sha256 `16685355b1c97e5a01daa492b9c1c05046b286b2b295773591dcd011a81861d0`",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "anchor is quoted verbatim but the referenced ledger bytes are outside this package -> hash NOT recomputed, NOT confirmed"
+    },
+    {
+     "asset_id": "A15",
+     "kind": "hash_anchor",
+     "label": "publish anchor: corpus sha256 (declared)",
+     "section": "publish anchor line",
+     "resolution": "declared_only",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 4342,
+      "end_char": 4422,
+      "start_line": 86,
+      "end_line": 86,
+      "quote": "corpus sha256 `4f09e8caa017ce8c1a54170aae734f78f98073ff2cac4ef7fcd23a224a07add9`",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "same status as A14: declared only, bytes unavailable -> hash NOT recomputed, NOT confirmed"
+    },
+    {
+     "asset_id": "A16",
+     "kind": "publish_anchor",
+     "label": "publish anchor: mission / branch / commit",
+     "section": "publish anchor line",
+     "resolution": "declared_only",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "char_span",
+      "start_char": 4425,
+      "end_char": 4476,
+      "start_line": 86,
+      "end_line": 86,
+      "quote": "mission 9437 / branch agent/m9437 · commit 89b3ec6f",
+      "unique": true,
+      "occurrences": 1,
+      "quote_verbatim": true
+     },
+     "note": "provenance pointers declared by the report; NOT resolved against any git repository by this package"
+    },
+    {
+     "asset_id": "A17",
+     "kind": "figure_metadata",
+     "label": "record figure metadata: fig1_family_size.png",
+     "section": "record.figures",
+     "resolution": "declared_only",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "record_figures_index",
+      "source_field": "record",
+      "record_index": 0,
+      "name": "fig1_family_size.png",
+      "quote": "判据族大小分布（对数轴）：冗余集中在少数族上，长尾是单例独立判据",
+      "resolvable_in_markdown": false,
+      "start_char": null,
+      "end_char": null,
+      "start_line": null,
+      "end_line": null,
+      "unique": true,
+      "occurrences": 1,
+      "note": "name/caption live in record.figures; the PNG payload is not carried by the record, so no image bytes and no image hash are claimed"
+     },
+     "note": "declared only: no payload, no hash, no visual check performed by this package",
+     "caption": "判据族大小分布（对数轴）：冗余集中在少数族上，长尾是单例独立判据",
+     "caption_topic_matches_report": false
+    },
+    {
+     "asset_id": "A18",
+     "kind": "figure_metadata",
+     "label": "record figure metadata: fig2_marginal_series.png",
+     "section": "record.figures",
+     "resolution": "declared_only",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "record_figures_index",
+      "source_field": "record",
+      "record_index": 1,
+      "name": "fig2_marginal_series.png",
+      "quote": "每新增节点的新增独立判据族 vs 判据实例数（plan_id 序）",
+      "resolvable_in_markdown": false,
+      "start_char": null,
+      "end_char": null,
+      "start_line": null,
+      "end_line": null,
+      "unique": true,
+      "occurrences": 1,
+      "note": "name/caption live in record.figures; the PNG payload is not carried by the record, so no image bytes and no image hash are claimed"
+     },
+     "note": "declared only: no payload, no hash, no visual check performed by this package",
+     "caption": "每新增节点的新增独立判据族 vs 判据实例数（plan_id 序）",
+     "caption_topic_matches_report": false
+    },
+    {
+     "asset_id": "A19",
+     "kind": "figure_metadata",
+     "label": "record figure metadata: fig3_kill_rates.png",
+     "section": "record.figures",
+     "resolution": "declared_only",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "record_figures_index",
+      "source_field": "record",
+      "record_index": 2,
+      "name": "fig3_kill_rates.png",
+      "quote": "独立族 / 冗余族杀伤率分布，标题含 Mann-Whitney p 与均值差",
+      "resolvable_in_markdown": false,
+      "start_char": null,
+      "end_char": null,
+      "start_line": null,
+      "end_line": null,
+      "unique": true,
+      "occurrences": 1,
+      "note": "name/caption live in record.figures; the PNG payload is not carried by the record, so no image bytes and no image hash are claimed"
+     },
+     "note": "declared only: no payload, no hash, no visual check performed by this package",
+     "caption": "独立族 / 冗余族杀伤率分布，标题含 Mann-Whitney p 与均值差",
+     "caption_topic_matches_report": false
+    },
+    {
+     "asset_id": "A20",
+     "kind": "figure_metadata",
+     "label": "record figure metadata: fig4_mutant_kinds.png",
+     "section": "record.figures",
+     "resolution": "declared_only",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "record_figures_index",
+      "source_field": "record",
+      "record_index": 3,
+      "name": "fig4_mutant_kinds.png",
+      "quote": "三种变异体（数值/单位/符号）的杀伤-存活结构（检出包络）",
+      "resolvable_in_markdown": false,
+      "start_char": null,
+      "end_char": null,
+      "start_line": null,
+      "end_line": null,
+      "unique": true,
+      "occurrences": 1,
+      "note": "name/caption live in record.figures; the PNG payload is not carried by the record, so no image bytes and no image hash are claimed"
+     },
+     "note": "declared only: no payload, no hash, no visual check performed by this package",
+     "caption": "三种变异体（数值/单位/符号）的杀伤-存活结构（检出包络）",
+     "caption_topic_matches_report": false
+    },
+    {
+     "asset_id": "A21",
+     "kind": "figure_metadata",
+     "label": "record figure metadata: fig5_per_criterion.png",
+     "section": "record.figures",
+     "resolution": "declared_only",
+     "verification_status": "not_performed",
+     "locator": {
+      "method": "record_figures_index",
+      "source_field": "record",
+      "record_index": 4,
+      "name": "fig5_per_criterion.png",
+      "quote": "尺寸匹配补充检验：逐条判据杀伤率分布（横线为均值）",
+      "resolvable_in_markdown": false,
+      "start_char": null,
+      "end_char": null,
+      "start_line": null,
+      "end_line": null,
+      "unique": true,
+      "occurrences": 1,
+      "note": "name/caption live in record.figures; the PNG payload is not carried by the record, so no image bytes and no image hash are claimed"
+     },
+     "note": "declared only: no payload, no hash, no visual check performed by this package",
+     "caption": "尺寸匹配补充检验：逐条判据杀伤率分布（横线为均值）",
+     "caption_topic_matches_report": false
+    }
+   ],
+   "observations": [
+    {
+     "observation_id": "O1",
+     "kind": "record_metadata_topic_mismatch",
+     "statement": "All 5 figure captions in record.figures discuss criterion-family kill rates / mutants, i.e. a different subject than DEM parameter calibration. Flagged, cause NOT inferred (do_not_invent_missing_information).",
+     "evidence": {
+      "record_field": "figures[].caption",
+      "quotes": [
+       "判据族大小分布（对数轴）：冗余集中在少数族上，长尾是单例独立判据",
+       "每新增节点的新增独立判据族 vs 判据实例数（plan_id 序）",
+       "独立族 / 冗余族杀伤率分布，标题含 Mann-Whitney p 与均值差",
+       "三种变异体（数值/单位/符号）的杀伤-存活结构（检出包络）",
+       "尺寸匹配补充检验：逐条判据杀伤率分布（横线为均值）"
+      ]
+     }
+    },
+    {
+     "observation_id": "O2",
+     "kind": "information_gap_in_source",
+     "statement": "§3.2 reports the MCMC posterior only qualitatively (no posterior mean, no CI numbers); §3.3/§4 numbers exist but posterior quantities do not. Registered as an explicit gap; nothing is filled in.",
+     "evidence": {
+      "quote": "- Posterior mean calibrated from prior",
+      "note": "quoted verbatim from §3.2"
+     }
+    },
+    {
+     "observation_id": "O3",
+     "kind": "provenance_pointer_discrepancy",
+     "statement": "Platform record mission_id=9416 while the markdown publish anchor reads 'mission 9437'. Both values registered verbatim; discrepancy left open.",
+     "evidence": {
+      "record_field": "mission_id",
+      "record_value": 9416,
+      "markdown_quote": "mission 9437 / branch agent/m9437",
+      "markdown_quote_commit": "commit 89b3ec6f"
+     }
+    },
+    {
+     "observation_id": "O4",
+     "kind": "unresolvable_scope",
+     "statement": "None of the four §6 file references (A07-A10) exists in the TensorKnowledge worktree, so the assets are registered as text locators only; no code/byte level check was possible in this package.",
+     "evidence": {
+      "asset_ids": [
+       "A07",
+       "A08",
+       "A09",
+       "A10"
+      ],
+      "probes": [
+       {
+        "check": "worktree_probe:src/tensordem/auto_calibration.py",
+        "result": "absent",
+        "searched_root": "TensorKnowledge worktree (this repo)",
+        "note": "report 11156 was produced in a TensorDEM-side worktree; the TensorKnowledge checkout is not expected to carry those bytes"
+       },
+       {
+        "check": "worktree_probe:tests/test_auto_calibration.py",
+        "result": "absent",
+        "searched_root": "TensorKnowledge worktree (this repo)",
+        "note": "report 11156 was produced in a TensorDEM-side worktree; the TensorKnowledge checkout is not expected to carry those bytes"
+       },
+       {
+        "check": "worktree_probe:artifacts/fig*.png",
+        "result": "absent",
+        "searched_root": "TensorKnowledge worktree (this repo)",
+        "note": "report 11156 was produced in a TensorDEM-side worktree; the TensorKnowledge checkout is not expected to carry those bytes"
+       },
+       {
+        "check": "worktree_probe:runs/calibration_result.json",
+        "result": "absent",
+        "searched_root": "TensorKnowledge worktree (this repo)",
+        "note": "report 11156 was produced in a TensorDEM-side worktree; the TensorKnowledge checkout is not expected to carry those bytes"
+       }
+      ]
+     }
+    }
+   ],
+   "claims": [],
+   "claims_note": "intentionally empty: package objective is asset registration only; no claim is generated, none is marked verified (verification stays with the platform gate)",
+   "integrity": {
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "quote_uniqueness": "checked per char_span locator (count==1)",
+    "md_span_locators": 16,
+    "record_locators": 5,
+    "quote_uniqueness_violations": [],
+    "quote_verbatim_violations": [],
+    "duplicate_asset_ids": [],
+    "all_claims_have_evidence_or_unresolved_status": true
+   }
+  }
+ },
+ "claims": []
+}

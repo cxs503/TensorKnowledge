@@ -1,0 +1,45 @@
+{
+ "id": 11156,
+ "title": "DEM Parameter Auto-Calibration Framework: Bayesian Optimization + MCMC UQ",
+ "scenario_key": "p284w3-n05-dem-auto-calibration",
+ "status": "published",
+ "tags": [
+  "DEM",
+  "calibration",
+  "bayesian-optimization",
+  "MCMC",
+  "uncertainty-quantification",
+  "repose-angle",
+  "shear-box",
+  "compression"
+ ],
+ "mission_id": 9416,
+ "created_by": 1,
+ "created_at": "2026-11-10T11:32:55.335237+00:00",
+ "stage": null,
+ "figures": [
+  {
+   "name": "fig1_family_size.png",
+   "caption": "判据族大小分布（对数轴）：冗余集中在少数族上，长尾是单例独立判据"
+  },
+  {
+   "name": "fig2_marginal_series.png",
+   "caption": "每新增节点的新增独立判据族 vs 判据实例数（plan_id 序）"
+  },
+  {
+   "name": "fig3_kill_rates.png",
+   "caption": "独立族 / 冗余族杀伤率分布，标题含 Mann-Whitney p 与均值差"
+  },
+  {
+   "name": "fig4_mutant_kinds.png",
+   "caption": "三种变异体（数值/单位/符号）的杀伤-存活结构（检出包络）"
+  },
+  {
+   "name": "fig5_per_criterion.png",
+   "caption": "尺寸匹配补充检验：逐条判据杀伤率分布（横线为均值）"
+  }
+ ],
+ "summary": "Implemented complete auto-calibration pipeline for DEM contact parameters using three benchmarks (repose angle, shear box, compression), Gaussian process surrogate with EI/UCB acquisition, and MCMC posterior sampling for uncertainty quantification. 30 pytest tests pass.",
+ "_retrieved_via": "GET /api/v1/tensor/reports/11156 (Bearer token)",
+ "_note": "record metadata snapshot for offline acceptance checks; the markdown field is snapshotted separately in source.md"
+}
