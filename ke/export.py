@@ -423,108 +423,20 @@ def _build_eval_entry(claim: dict, evidence_list: list[dict], conn: sqlite3.Conn
 
 
 
-# Standard LBM benchmark calibration entries (GAP-LBM-MCMP-POISEUILLE)
-# These are well-known validation cases for LBM implementations
-STANDARD_LBM_BENCHMARKS = [
-    {
-        "claim_id": "tkc:oss-lbm:lbmpy-ce-src",
-        "domain": "lattice-Boltzmann-method",
-        "input": {
-            "domain": "lattice-Boltzmann-method",
-            "system": "lbmpy",
-            "claim_type": "descriptive",
-            "conditions": ["Poiseuille flow", "2D channel", "Re=100"],
-            "geometry": {"type": "channel", "H": 32, "L": 128},
-            "boundary": {"inlet": "velocity", "outlet": "pressure", "walls": "bounce-back"},
-            "relaxation_time": 0.6,
-            "stencil": "D2Q9"
-        },
-        "expected": {
-            "claim_statement": "lbmpy implements Chapman-Enskog analysis that symbolically derives the macroscopic equations",
-            "max_velocity": 0.04,
-            "parabolic_profile_error": 0.001,
-            "convergence_order": 2
-        },
-        "tolerance": 0.03,
-        "tolerance_basis": "analytical Poiseuille solution",
-        "source_claim_id": "tkc:oss-lbm:lbmpy-ce-src",
-        "epistemic_status": "established",
-        "benchmark_name": "GAP-LBM-POISEUILLE-2D"
-    },
-    {
-        "claim_id": "tkc:oss-lbm:lbmpy-ce-src",
-        "domain": "lattice-Boltzmann-method",
-        "input": {
-            "domain": "lattice-Boltzmann-method",
-            "system": "lbmpy",
-            "claim_type": "descriptive",
-            "conditions": ["Couette flow", "2D channel", "Re=50"],
-            "geometry": {"type": "channel", "H": 64, "L": 64},
-            "boundary": {"top": "moving_wall", "bottom": "stationary_wall", "sides": "periodic"},
-            "relaxation_time": 0.8,
-            "stencil": "D2Q9"
-        },
-        "expected": {
-            "claim_statement": "lbmpy implements Chapman-Enskog analysis",
-            "velocity_profile": "linear",
-            "shear_stress_error": 0.002
-        },
-        "tolerance": 0.03,
-        "tolerance_basis": "analytical Couette solution",
-        "source_claim_id": "tkc:oss-lbm:lbmpy-ce-src",
-        "epistemic_status": "established",
-        "benchmark_name": "GAP-LBM-COUETTE-2D"
-    },
-    {
-        "claim_id": "tkc:oss-lbm:lettuce-bgk-src",
-        "domain": "lattice-Boltzmann-method",
-        "input": {
-            "domain": "lattice-Boltzmann-method",
-            "system": "lettuce",
-            "claim_type": "descriptive",
-            "conditions": ["Taylor-Green vortex", "2D periodic", "Re=100"],
-            "geometry": {"type": "periodic", "Lx": 64, "Ly": 64},
-            "initial_condition": "Taylor-Green vortex",
-            "relaxation_time": 0.52,
-            "stencil": "D2Q9"
-        },
-        "expected": {
-            "claim_statement": "lettuce BGKCollision is implemented as a plain Python __call__ returning torch.Tensor operations",
-            "kinetic_energy_decay_rate": 0.0156,
-            "enstrophy_peak_time": 1.5
-        },
-        "tolerance": 0.05,
-        "tolerance_basis": "analytical Taylor-Green decay",
-        "source_claim_id": "tkc:oss-lbm:lettuce-bgk-src",
-        "epistemic_status": "established",
-        "benchmark_name": "GAP-LBM-TAYLOR-GREEN"
-    },
-    {
-        "claim_id": "tkc:oss-lbm:pylbm-bfl-src",
-        "domain": "lattice-Boltzmann-method",
-        "input": {
-            "domain": "lattice-Boltzmann-method",
-            "system": "pylbm",
-            "claim_type": "descriptive",
-            "conditions": ["curved boundary", "cylinder flow", "Re=100"],
-            "geometry": {"type": "cylinder", "D": 20, "domain": [200, 100]},
-            "boundary": {"inlet": "velocity", "outlet": "pressure", "cylinder": "BFL"},
-            "relaxation_time": 0.6,
-            "stencil": "D2Q9"
-        },
-        "expected": {
-            "claim_statement": "pylbm implements the Bouzidi-Firdaouss-Lallemand (BFL01) interpolated bounce-back boundary condition",
-            "drag_coefficient": 1.2,
-            "strouhal_number": 0.165,
-            "boundary_order": 2
-        },
-        "tolerance": 0.05,
-        "tolerance_basis": "literature values for cylinder flow",
-        "source_claim_id": "tkc:oss-lbm:pylbm-bfl-src",
-        "epistemic_status": "established",
-        "benchmark_name": "MCMP-CYLINDER-DRAG"
-    },
-]
+# Domain-specific benchmark data loaded from external data file.
+# Zero domain semantics hardcoded in engine — domain data injected via configuration.
+# See data/eval_benchmarks.json for the actual benchmark definitions.
+_BENCHMARKS_DATA_FILE = Path(__file__).parent.parent / "data" / "eval_benchmarks.json"
+
+def _load_benchmarks() -> list[dict]:
+    """Load domain-specific benchmark entries from data file."""
+    if not _BENCHMARKS_DATA_FILE.exists():
+        return []
+    with open(_BENCHMARKS_DATA_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data.get("benchmarks", [])
+
+STANDARD_LBM_BENCHMARKS = _load_benchmarks()
 
 def export_eval(conn: sqlite3.Connection, pilot_dir: Path | None = None,
                 out_dir: Path | None = None) -> dict:
