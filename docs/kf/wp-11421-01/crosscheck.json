@@ -1,0 +1,351 @@
+{
+  "package_id": "wp-11421-01",
+  "report_id": "11421",
+  "scope": "arithmetic identities the report asserts over its own tables; parsed from source.md only",
+  "not_in_scope": [
+    "values that require the producer artifacts (results.json / spec.py / scripts) — A07/A09/A15 in the manifest",
+    "any re-run of the Monte Carlo / Sobol pipeline (samples are not in this record)",
+    "rule coefficients (WITHHELD, A21)"
+  ],
+  "checks": [
+    {
+      "check_id": "X1",
+      "what": "表1: rel_err == (implied_dwt_t - declared_dwt_t)/declared_dwt_t",
+      "verdict": "pass",
+      "severity_hint": "info",
+      "computed": {
+        "recomputed_rel_err": 0.0019200000000000727,
+        "reported_rel_err": 0.0019197
+      },
+      "stated_in_report": {
+        "displacement_t": 92130.5,
+        "declared_dwt_t": 80000.0
+      },
+      "evidence": [
+        {
+          "present": true,
+          "quote": "| rel_err | 0.0019197 |",
+          "start_char": 13631,
+          "occurrences": 1
+        }
+      ],
+      "note": "the geometry self-consistency gate the report bases C10 on"
+    },
+    {
+      "check_id": "X2",
+      "what": "表3: CV column == std/mean per row",
+      "verdict": "pass",
+      "severity_hint": "info",
+      "computed": {
+        "rows": {
+          "eexi_attained": {
+            "recomputed": 0.043865,
+            "reported": 0.0439
+          },
+          "cii_attained": {
+            "recomputed": 0.100309,
+            "reported": 0.1003
+          },
+          "eexi_required": {
+            "recomputed": 0.004772,
+            "reported": 0.0048
+          },
+          "cii_required": {
+            "recomputed": 0.006221,
+            "reported": 0.0062
+          },
+          "v_ref_kn": {
+            "recomputed": 0.03146,
+            "reported": 0.0315
+          }
+        },
+        "mismatched_rows": []
+      },
+      "stated_in_report": "CV column of 表3",
+      "evidence": [
+        {
+          "present": true,
+          "quote": "| eexi_attained | 3.54773 | 0.15562 | 0.0439 |",
+          "start_char": 14138,
+          "occurrences": 1
+        }
+      ],
+      "note": "tolerance = max(5e-4, 2% of CV) because CV is printed to 4 decimals"
+    },
+    {
+      "check_id": "X3",
+      "what": "表4: Σ row == column sums of the six group rows (tolerance 5e-4 = 6x rounding)",
+      "verdict": "pass",
+      "severity_hint": "info",
+      "computed": {
+        "recomputed": {
+          "S_exxi": 0.9861,
+          "S_T_exxi": 1.0007,
+          "S_cii": 0.9978999999999999,
+          "S_T_cii": 1.0006
+        },
+        "stated": {
+          "S_exxi": 0.986,
+          "S_T_exxi": 1.0007,
+          "S_cii": 0.9979,
+          "S_T_cii": 1.0006
+        },
+        "diff": {
+          "S_exxi": 0.0001,
+          "S_T_exxi": 0.0,
+          "S_cii": -0.0,
+          "S_T_cii": 0.0
+        }
+      },
+      "stated_in_report": "Σ row of 表4 (0.9860 / 1.0007 / 0.9979 / 1.0006)",
+      "evidence": [
+        {
+          "present": true,
+          "quote": "| Σ | 0.9860 | — | 1.0007 | 0.9979 | — | 1.0006 |",
+          "start_char": 15292,
+          "occurrences": 1
+        }
+      ],
+      "note": ""
+    },
+    {
+      "check_id": "X4",
+      "what": "§2.2 asserts the Jansen estimator 'satisfies S_i >= 0', but 表5 prints negative first-order indices (|value| < SE for every case -> estimator noise, not physics)",
+      "verdict": "fail",
+      "severity_hint": "low",
+      "computed": {
+        "n_negative_first_order": 6,
+        "negative_rows": [
+          {
+            "factor": "geom_L",
+            "column": "EEXI S_i",
+            "value": -0.0028,
+            "se": 0.006
+          },
+          {
+            "factor": "geom_B",
+            "column": "EEXI S_i",
+            "value": -0.0016,
+            "se": 0.0059
+          },
+          {
+            "factor": "eng_mcr",
+            "column": "CII S_i",
+            "value": -0.0004,
+            "se": 0.0081
+          },
+          {
+            "factor": "op_epl",
+            "column": "CII S_i",
+            "value": -0.0004,
+            "se": 0.0081
+          },
+          {
+            "factor": "op_port",
+            "column": "EEXI S_i",
+            "value": -0.0031,
+            "se": 0.006
+          },
+          {
+            "factor": "op_speed",
+            "column": "EEXI S_i",
+            "value": -0.0031,
+            "se": 0.006
+          }
+        ],
+        "all_within_one_se": true
+      },
+      "stated_in_report": "§2.2: '同样满足 `S_i ≥ 0`' vs 表5 negative S_i entries",
+      "evidence": [
+        {
+          "present": true,
+          "quote": "且同样满足 `S_i ≥ 0`",
+          "start_char": 4957,
+          "occurrences": 1
+        },
+        {
+          "present": true,
+          "quote": "| geom_L | geometry | -0.0028 | 0.0060 | 0.0003 | 0.0002 | 0.0081 | 0.0005 | +0.00080 | +0.00200 | +0.00067 |",
+          "start_char": 15526,
+          "occurrences": 1
+        }
+      ],
+      "note": "prose/estimator description is wrong, the Sobol numbers themselves are self-consistent (every negative lies inside one standard error) and no conclusion of the report changes; still must be fixed before this method line is quoted. downstream defect candidate: the prose statement about the estimator is wrong (Jansen's first-order estimator is not non-negative; only its total-effect form is). No value is recomputed here because the producer samples are not in this record."
+    },
+    {
+      "check_id": "X5",
+      "what": "§3.4(b) asserts analytic vs finite-difference c_i agree 'to < 5% on non-zero items'; 表5 has a row above that bound",
+      "verdict": "fail",
+      "severity_hint": "low",
+      "computed": {
+        "per_factor": {
+          "geom_L": {
+            "analytic": 0.0008,
+            "fd": 0.00067,
+            "rel_diff": 0.1625
+          },
+          "geom_B": {
+            "analytic": 0.00186,
+            "fd": 0.00185,
+            "rel_diff": 0.005376
+          },
+          "geom_T": {
+            "analytic": 0.00292,
+            "fd": 0.00293,
+            "rel_diff": 0.003425
+          },
+          "geom_Cb": {
+            "analytic": 0.00769,
+            "fd": 0.00772,
+            "rel_diff": 0.003901
+          },
+          "res_model": {
+            "analytic": 0.01998,
+            "fd": 0.01999,
+            "rel_diff": 0.000501
+          },
+          "prop_eta_d": {
+            "analytic": -0.01,
+            "fd": -0.00997,
+            "rel_diff": 0.003
+          },
+          "eng_mcr": {
+            "analytic": 0.02,
+            "fd": 0.02003,
+            "rel_diff": 0.0015
+          },
+          "eng_sfoc": {
+            "analytic": 0.02,
+            "fd": 0.02,
+            "rel_diff": 0.0
+          },
+          "wea_aw": {
+            "analytic": 0.01666,
+            "fd": 0.01658,
+            "rel_diff": 0.004802
+          },
+          "op_epl": {
+            "analytic": 0.01333,
+            "fd": 0.01337,
+            "rel_diff": 0.003001
+          },
+          "op_dwt": {
+            "analytic": -0.01,
+            "fd": -0.01,
+            "rel_diff": 0.0
+          }
+        },
+        "worst": {
+          "factor": "geom_L",
+          "rel_diff": 0.1625,
+          "abs_diff": 0.00013000000000000002
+        },
+        "n_rows_over_5pct": 1
+      },
+      "stated_in_report": "§3.4(b): '非零项相对差 < 5%' vs 表5 c_i(EEXI) / FD c_i(EEXI) columns",
+      "evidence": [
+        {
+          "present": true,
+          "quote": "非零项相对差 < 5%",
+          "start_char": 9154,
+          "occurrences": 1
+        }
+      ],
+      "note": "the offending row (geom_L) sits at the finite-difference quantization floor the report itself documents in §4.1, so the 16% is mostly noise; the defect is the unconditional wording of the 5% bound. downstream defect candidate: the 5% bound is violated by the smallest analytic sensitivity (geom_L), exactly where the finite-difference step 2σ is least informative. Either the bound or the row needs a caveat; the report is internally inconsistent as printed."
+    },
+    {
+      "check_id": "X6",
+      "what": "表6: σ(ε)/σ(1) == ε within the precision permitted by the printed σ quantum, and the printed relative-error column agrees with that same recomputation",
+      "verdict": "pass",
+      "severity_hint": "info",
+      "computed": {
+        "rows": {
+          "1": {
+            "eps": 1.0,
+            "sigma": 0.1548,
+            "ratio": 1.0,
+            "recomputed_rel_err_pct": 0.0,
+            "printed_rel_err_pct": 0.0,
+            "quantum_pct": 0.0323,
+            "within_quantum": true,
+            "printed_column_consistent": true
+          },
+          "0.1": {
+            "eps": 0.1,
+            "sigma": 0.0155,
+            "ratio": 0.10004,
+            "recomputed_rel_err_pct": 0.04,
+            "printed_rel_err_pct": 0.036,
+            "quantum_pct": 0.323,
+            "within_quantum": true,
+            "printed_column_consistent": true
+          },
+          "0.01": {
+            "eps": 0.01,
+            "sigma": 0.0015,
+            "ratio": 0.01001,
+            "recomputed_rel_err_pct": 0.1,
+            "printed_rel_err_pct": 0.125,
+            "quantum_pct": 3.23,
+            "within_quantum": true,
+            "printed_column_consistent": true
+          },
+          "0.001": {
+            "eps": 0.001,
+            "sigma": 0.0002,
+            "ratio": 0.001,
+            "recomputed_rel_err_pct": 0.0,
+            "printed_rel_err_pct": 0.069,
+            "quantum_pct": 32.2997,
+            "within_quantum": true,
+            "printed_column_consistent": true
+          }
+        },
+        "mismatched_rows": []
+      },
+      "stated_in_report": "表6 columns 3-5 (σ shrinkage is the σ→0 negative control C5)",
+      "evidence": [
+        {
+          "present": true,
+          "quote": "| 0.1 | 0.0155 | 0.10004 | 0.1 | 0.036% | 0.0850 | 0.9416 |",
+          "start_char": 9354,
+          "occurrences": 2
+        }
+      ],
+      "note": ""
+    },
+    {
+      "check_id": "X7",
+      "what": "§3.2: bolded ratio n/N reproduces the printed percentage",
+      "verdict": "pass",
+      "severity_hint": "info",
+      "computed": {
+        "n": 76999,
+        "N": 200000,
+        "recomputed_pct": 38.4995,
+        "printed_pct": 38.5
+      },
+      "stated_in_report": "§3.2 honest out-of-Holtrop-domain count",
+      "evidence": [
+        {
+          "present": true,
+          "quote": "Holtrop 回归域越界样本 **76999/200000**",
+          "start_char": 5912,
+          "occurrences": 1
+        }
+      ],
+      "note": ""
+    }
+  ],
+  "summary": {
+    "n_checks": 7,
+    "verdicts": {
+      "pass": 5,
+      "fail": 2
+    },
+    "findings": [
+      "X4",
+      "X5"
+    ]
+  }
+}

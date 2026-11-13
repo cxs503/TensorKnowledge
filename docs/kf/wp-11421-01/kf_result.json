@@ -1,0 +1,608 @@
+{
+  "package_id": "wp-11421-01",
+  "task_type": "01-asset-registration",
+  "report_id": "11421",
+  "provenance": {
+    "source_hash": "sha256:f85c29fe650365140152064807d90b2accdf43382f2222956470f3521e0a280a",
+    "source_field": "markdown",
+    "producer": "scripts/kf_wp11421_01_register.py",
+    "emitted_at": "2026-11-10T13:33:14.240943+00:00",
+    "notes": "asset registration only; no extraction, no claim verification; hash recomputed from the fetched markdown UTF-8 bytes"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "schema": "asset_manifest.v1",
+      "package_id": "wp-11421-01",
+      "task_type": "01-asset-registration",
+      "report_id": "11421",
+      "source": {
+        "uri": "tensor://reports/11421",
+        "field": "markdown",
+        "hash_alg": "sha256",
+        "hash": "f85c29fe650365140152064807d90b2accdf43382f2222956470f3521e0a280a",
+        "chars": 18542,
+        "bytes_utf8": 26405,
+        "title": "P270W1-N07 端到端不确定度传播：几何→阻力→推进→EEXI/CII 六因子分解（蒙特卡洛 + Sobol）",
+        "scenario_key": "ship_performance",
+        "platform_figures": [
+          "fig1_eexi_pdf.png",
+          "fig2_cii_pdf.png",
+          "fig3_sobol_groups.png",
+          "fig4_convergence.png",
+          "fig5_sigma_control.png",
+          "fig6_sensitivity.png"
+        ],
+        "platform_tags": [
+          "EEXI",
+          "CII",
+          "不确定度传播",
+          "蒙特卡洛",
+          "Sobol",
+          "green_shipping",
+          "Holtrop",
+          "defect_fix",
+          "P270W1-N07"
+        ]
+      },
+      "counts": {
+        "assets": 22,
+        "by_class": {
+          "figure": 6,
+          "artifact_path": 1,
+          "data_table": 4,
+          "source_code": 1,
+          "module": 2,
+          "api_function": 1,
+          "test": 2,
+          "config": 1,
+          "machine_criteria": 1,
+          "run_config": 1,
+          "result_field": 1,
+          "rule_reference": 1
+        },
+        "by_resolution": {
+          "resolved_in_source": 11,
+          "referenced_unresolved": 10,
+          "declared_absent": 1
+        },
+        "resolved_in_source": 11,
+        "referenced_unresolved": 10,
+        "declared_absent": 1
+      },
+      "assets": [
+        {
+          "asset_id": "A01",
+          "asset_class": "figure",
+          "label": "fig1_eexi_pdf.png — EEXI 达到值 PDF + 要求值竖线 + 5–95% 带 + 合规概率",
+          "in_report_section": "§3.5 图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 10232,
+            "end_char": 10293,
+            "start_line": 260,
+            "end_line": 260,
+            "quote": "`fig1_eexi_pdf.png` | EEXI 达到值 PDF + 要求值竖线 + 5–95% 带 + 合规概率 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "figures[] name match=True; GET figures/fig1_eexi_pdf.png -> HTTP 200, 35000 B, PNG magic=True",
+            "result": "resolved"
+          },
+          "note": "platform record figures[0]; name matched against figures[] of the report payload",
+          "payload": {
+            "probe": "GET /tensor/reports/<id>/figures/<name>",
+            "http_status": 200,
+            "bytes": 35000,
+            "content_type": "image/png",
+            "sha256": "4a0a017c83479d2433feba6d555045c220a63c0fd4ff1d033bf2b3ec4dbc5806",
+            "png_magic": true,
+            "fetched": true
+          }
+        },
+        {
+          "asset_id": "A02",
+          "asset_class": "figure",
+          "label": "fig2_cii_pdf.png — CII 同上（PDF/要求值/5–95% 带/合规概率）",
+          "in_report_section": "§3.5 图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 10296,
+            "end_char": 10325,
+            "start_line": 261,
+            "end_line": 261,
+            "quote": "`fig2_cii_pdf.png` | CII 同上 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "figures[] name match=True; GET figures/fig2_cii_pdf.png -> HTTP 200, 34172 B, PNG magic=True",
+            "result": "resolved"
+          },
+          "note": "platform record figures[1]; name match",
+          "payload": {
+            "probe": "GET /tensor/reports/<id>/figures/<name>",
+            "http_status": 200,
+            "bytes": 34172,
+            "content_type": "image/png",
+            "sha256": "da364aa95995095d3c68240e065a64305f590eafe85e0cc795e6085592f91504",
+            "png_magic": true,
+            "fetched": true
+          }
+        },
+        {
+          "asset_id": "A03",
+          "asset_class": "figure",
+          "label": "fig3_sobol_groups.png — 六因子组一阶/总效应 Sobol（EEXI、CII 双面板，带标准误）",
+          "in_report_section": "§3.5 图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 10328,
+            "end_char": 10391,
+            "start_line": 262,
+            "end_line": 262,
+            "quote": "`fig3_sobol_groups.png` | 六因子组一阶/总效应 Sobol（EEXI、CII 双面板，带标准误） |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "figures[] name match=True; GET figures/fig3_sobol_groups.png -> HTTP 200, 59347 B, PNG magic=True",
+            "result": "resolved"
+          },
+          "note": "platform record figures[2]; name match",
+          "payload": {
+            "probe": "GET /tensor/reports/<id>/figures/<name>",
+            "http_status": 200,
+            "bytes": 59347,
+            "content_type": "image/png",
+            "sha256": "1c586063596639415fe4c8425f03f61133689bca8811de7b7c90c7d517c60e4d",
+            "png_magic": true,
+            "fetched": true
+          }
+        },
+        {
+          "asset_id": "A04",
+          "asset_class": "figure",
+          "label": "fig4_convergence.png — 样本量收敛：σ 与合规概率 vs N",
+          "in_report_section": "§3.5 图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 10394,
+            "end_char": 10439,
+            "start_line": 263,
+            "end_line": 263,
+            "quote": "`fig4_convergence.png` | 样本量收敛：σ 与合规概率 vs N |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "figures[] name match=True; GET figures/fig4_convergence.png -> HTTP 200, 42898 B, PNG magic=True",
+            "result": "resolved"
+          },
+          "note": "platform record figures[3]; name match",
+          "payload": {
+            "probe": "GET /tensor/reports/<id>/figures/<name>",
+            "http_status": 200,
+            "bytes": 42898,
+            "content_type": "image/png",
+            "sha256": "62fe1b478b38596189d7da6a929803f0b5bd7dcc5df992c21e726cecbe3cf52a",
+            "png_magic": true,
+            "fetched": true
+          }
+        },
+        {
+          "asset_id": "A05",
+          "asset_class": "figure",
+          "label": "fig5_sigma_control.png — σ→0 负控：σ 比 vs ε + 概率阶跃",
+          "in_report_section": "§3.5 图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 10442,
+            "end_char": 10508,
+            "start_line": 264,
+            "end_line": 264,
+            "quote": "`fig5_sigma_control.png` | σ→0 负控：σ 比 vs ε（对数-对数，斜率 1 参考线）+ 概率阶跃 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "figures[] name match=True; GET figures/fig5_sigma_control.png -> HTTP 200, 61521 B, PNG magic=True",
+            "result": "resolved"
+          },
+          "note": "platform record figures[4]; name match",
+          "payload": {
+            "probe": "GET /tensor/reports/<id>/figures/<name>",
+            "http_status": 200,
+            "bytes": 61521,
+            "content_type": "image/png",
+            "sha256": "389eba0851bbedfd2a1886f556879f47a3919faba9ab753d00c19e2f3ea217fd",
+            "png_magic": true,
+            "fetched": true
+          }
+        },
+        {
+          "asset_id": "A06",
+          "asset_class": "figure",
+          "label": "fig6_sensitivity.png — 灵敏度结构：解析 δ 法 vs 有限差分 vs MC Sobol 三对照",
+          "in_report_section": "§3.5 图",
+          "locator": {
+            "method": "char_span",
+            "start_char": 10511,
+            "end_char": 10574,
+            "start_line": 265,
+            "end_line": 265,
+            "quote": "`fig6_sensitivity.png` | 灵敏度结构：解析 δ 法 vs 有限差分 vs MC Sobol 三对照 |",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "figures[] name match=True; GET figures/fig6_sensitivity.png -> HTTP 200, 54685 B, PNG magic=True",
+            "result": "resolved"
+          },
+          "note": "platform record figures[5]; name match",
+          "payload": {
+            "probe": "GET /tensor/reports/<id>/figures/<name>",
+            "http_status": 200,
+            "bytes": 54685,
+            "content_type": "image/png",
+            "sha256": "ca46f8cea7138f0e1c1f5ee5fd2e731cb5d39911c7e3894fc8dc763ac584ec75",
+            "png_magic": true,
+            "fetched": true
+          }
+        },
+        {
+          "asset_id": "A07",
+          "asset_class": "artifact_path",
+          "label": "artifacts/P270W1-N07/{results.json, tables.md, fig1..fig6} — 生产者工件目录",
+          "in_report_section": "§preamble 工件",
+          "locator": {
+            "method": "char_span",
+            "start_char": 236,
+            "end_char": 296,
+            "start_line": 5,
+            "end_line": 5,
+            "quote": "`artifacts/P270W1-N07/{results.json, tables.md, fig1..fig6}`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "declared path resolvable inside the report payload (markdown/figures/record)? -> no",
+            "result": "unresolved"
+          },
+          "note": "path declared in report; the files live in ship-performance-platform (producing repo), not in this report record -> not resolvable from tensor://reports/11421"
+        },
+        {
+          "asset_id": "A08",
+          "asset_class": "data_table",
+          "label": "附录 A · 数字表（声明为 artifacts/P270W1-N07/tables.md 原文）",
+          "in_report_section": "附录 A",
+          "locator": {
+            "method": "char_span",
+            "start_char": 13210,
+            "end_char": 13260,
+            "start_line": 331,
+            "end_line": 331,
+            "quote": "## 附录 A · 数字表（`artifacts/P270W1-N07/tables.md` 原文）",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "byte-identity check between appendix A and external tables.md possible? -> no",
+            "result": "unresolved"
+          },
+          "note": "appendix says it reproduces tables.md verbatim; the 8 tables ARE inline (see A16) but byte-identity with the外部 tables.md cannot be checked from this record -> unresolved"
+        },
+        {
+          "asset_id": "A09",
+          "asset_class": "source_code",
+          "label": "scripts/p270w1_n07_uncertainty.py — 生成全部数字的执行脚本",
+          "in_report_section": "§preamble 执行脚本",
+          "locator": {
+            "method": "char_span",
+            "start_char": 184,
+            "end_char": 228,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "**执行脚本**：`scripts/p270w1_n07_uncertainty.py`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "file attached/resolvable from record? -> no",
+            "result": "unresolved"
+          },
+          "note": "code pointer into ship-performance-platform; file not attached to the report record"
+        },
+        {
+          "asset_id": "A10",
+          "asset_class": "module",
+          "label": "backend/modules/green_uq/ — UQ 模块（mc/sobol/spec）",
+          "in_report_section": "§preamble 模块",
+          "locator": {
+            "method": "char_span",
+            "start_char": 156,
+            "end_char": 183,
+            "start_line": 4,
+            "end_line": 4,
+            "quote": "`backend/modules/green_uq/`",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "module sources attached/resolvable from record? -> no",
+            "result": "unresolved"
+          },
+          "note": "module pointer; source not attached to the record"
+        },
+        {
+          "asset_id": "A11",
+          "asset_class": "module",
+          "label": "backend/physics/holtrop — Holtrop-Mennen 唯一实现（R_T 求解器）",
+          "in_report_section": "§2.1 确定性链",
+          "locator": {
+            "method": "char_span",
+            "start_char": 2931,
+            "end_char": 2982,
+            "start_line": 74,
+            "end_line": 74,
+            "quote": "Holtrop-Mennen 唯一实现（backend/physics/holtrop）   [kN]",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "solver source attached/resolvable from record? -> no",
+            "result": "unresolved"
+          },
+          "note": "Holtrop implementation pointer; the regression coefficients themselves are not in the record"
+        },
+        {
+          "asset_id": "A12",
+          "asset_class": "api_function",
+          "label": "api/green_shipping: _gn_attained_index / _gn_attained_cii / _PowerChain / _gn_required_*",
+          "in_report_section": "§2.1 纪律 1",
+          "locator": {
+            "method": "char_span",
+            "start_char": 3681,
+            "end_char": 3762,
+            "start_line": 92,
+            "end_line": 92,
+            "quote": "`api/green_shipping` 的 `_gn_attained_index` / `_gn_attained_cii` / `_PowerChain`，",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "function bodies attached/resolvable from record? -> no",
+            "result": "unresolved"
+          },
+          "note": "rule-formula single source reused by this node (判据 C1 证明同输入相对差 < 1e-9); function bodies not in the record"
+        },
+        {
+          "asset_id": "A13",
+          "asset_class": "test",
+          "label": "test_chain.py::test_attained_index_unit_1852_fix — 1852 量纲回归测试",
+          "in_report_section": "§2.3 缺陷修复",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5288,
+            "end_char": 5372,
+            "start_line": 125,
+            "end_line": 125,
+            "quote": "`test_chain.py::test_attained_index_unit_1852_fix`，相对差 < 1e-12，旧/新比值 = 1852 ± 1e-9）。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "test file attached/resolvable from record? -> no",
+            "result": "unresolved"
+          },
+          "note": "regression test for the 1852 factor defect; test file not in the record"
+        },
+        {
+          "asset_id": "A14",
+          "asset_class": "test",
+          "label": "test_green_shipping.py — 原有 18 条断言（只断言 idx > 0）",
+          "in_report_section": "§2.3 缺陷修复",
+          "locator": {
+            "method": "char_span",
+            "start_char": 5457,
+            "end_char": 5513,
+            "start_line": 127,
+            "end_line": 127,
+            "quote": "原有 18 条 `test_green_shipping.py` 断言（只断言 `idx > 0`）全部仍通过。",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "test file attached/resolvable from record? -> no",
+            "result": "unresolved"
+          },
+          "note": "pre-existing test suite quoted by count only; file not in the record"
+        },
+        {
+          "asset_id": "A15",
+          "asset_class": "config",
+          "label": "green_uq spec.py — 13 成员六因子不确定度谱 + 逐因子 provenance",
+          "in_report_section": "§1.3 不确定度谱",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1767,
+            "end_char": 1785,
+            "start_line": 45,
+            "end_line": 45,
+            "quote": "出处（`spec.py` 逐条） |",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "spec.py attached/resolvable from record? -> no",
+            "result": "unresolved"
+          },
+          "note": "the 13-member spectrum table itself is inline (see A17); the spec.py provenance strings are not"
+        },
+        {
+          "asset_id": "A16",
+          "asset_class": "data_table",
+          "label": "附录 A 表1–表8 数字表（程序化生成，勿手改）",
+          "in_report_section": "附录 A",
+          "locator": {
+            "method": "char_span",
+            "start_char": 13262,
+            "end_char": 13289,
+            "start_line": 333,
+            "end_line": 333,
+            "quote": "# P270W1-N07 数字表（程序化生成，勿手改）",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table block present verbatim in markdown? -> yes",
+            "result": "resolved"
+          },
+          "note": "8 tables rendered inline in the appendix; each row is quotable from the markdown"
+        },
+        {
+          "asset_id": "A17",
+          "asset_class": "data_table",
+          "label": "§1.3 六因子不确定度谱（13 个成员，分布/1σ/作用位置）",
+          "in_report_section": "§1.3",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1713,
+            "end_char": 1737,
+            "start_line": 43,
+            "end_line": 43,
+            "quote": "### 1.3 六因子不确定度谱（13 个成员）",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table present verbatim in markdown? -> yes",
+            "result": "resolved"
+          },
+          "note": "inline Markdown table; 13 rows of (group, member, distribution, 1σ, action site)"
+        },
+        {
+          "asset_id": "A18",
+          "asset_class": "machine_criteria",
+          "label": "results.json -> criteria C1–C10 与 all_pass 判据块",
+          "in_report_section": "§preamble 机器判据 / 附录 A 表8",
+          "locator": {
+            "method": "char_span",
+            "start_char": 297,
+            "end_char": 373,
+            "start_line": 6,
+            "end_line": 6,
+            "quote": "**机器判据**：`artifacts/P270W1-N07/results.json → criteria`（C1–C10，含 `all_pass`）",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "criteria block present verbatim in markdown? -> yes",
+            "result": "resolved"
+          },
+          "note": "criteria block is reproduced inline as 表8 with all_pass = True; the producer-side results.json remains referenced_unresolved (A07)"
+        },
+        {
+          "asset_id": "A19",
+          "asset_class": "run_config",
+          "label": "运行配置（n_mc / n_sobol / n_anchor / n_convergence / seed / workers）",
+          "in_report_section": "附录 A 表头",
+          "locator": {
+            "method": "char_span",
+            "start_char": 13322,
+            "end_char": 13509,
+            "start_line": 336,
+            "end_line": 336,
+            "quote": "配置：{\"n_mc\": 200000, \"n_sobol\": 32768, \"n_sobol_small\": 32768, \"n_anchor\": 65536, \"n_convergence\": [10000, 30000, 100000, 300000], \"n_sigma_control\": 8000, \"seed\": 20270101, \"workers\": 24}",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "config line present verbatim in markdown? -> yes",
+            "result": "resolved"
+          },
+          "note": "seed and sample sizes are in the markdown -> the statistical results are re-runnable if the producer script (A09) is available"
+        },
+        {
+          "asset_id": "A20",
+          "asset_class": "result_field",
+          "label": "results.json.monte_carlo.numerics.out_of_holtrop_domain — Holtrop 域外推比例",
+          "in_report_section": "§4 注意点 5",
+          "locator": {
+            "method": "char_span",
+            "start_char": 11382,
+            "end_char": 11450,
+            "start_line": 285,
+            "end_line": 285,
+            "quote": "`monte_carlo.numerics.out_of_holtrop_domain`）。这是**边界外推**而非失效：`Cp` 只经",
+            "unique": true
+          },
+          "resolution": "referenced_unresolved",
+          "resolution_check": {
+            "check": "field value resolvable from record? -> no (field name only)",
+            "result": "unresolved"
+          },
+          "note": "only the field name is given; the numeric share is instead quoted in §3.2 (76999/200000)"
+        },
+        {
+          "asset_id": "A21",
+          "asset_class": "rule_reference",
+          "label": "MEPC.328(76) / MEPC.353(78) 规则系数原文（要求值来源）",
+          "in_report_section": "§1.2 要求值",
+          "locator": {
+            "method": "char_span",
+            "start_char": 1657,
+            "end_char": 1711,
+            "start_line": 41,
+            "end_line": 41,
+            "quote": "（`WITHHELD`：系数转录自 MEPC.328(76)/MEPC.353(78)，离线不可回读原文）。",
+            "unique": true
+          },
+          "resolution": "declared_absent",
+          "resolution_check": {
+            "check": "rule text attached/resolvable from record? -> no (declared WITHHELD)",
+            "result": "absent"
+          },
+          "note": "report itself declares WITHHELD: no offline copy of the rule text; consequently the required values cannot be independently recomputed from this record"
+        },
+        {
+          "asset_id": "A22",
+          "asset_class": "data_table",
+          "label": "§1.2 设计案例参数表（Kamsarmax 散货船 80 000 dwt）",
+          "in_report_section": "§1.2",
+          "locator": {
+            "method": "char_span",
+            "start_char": 890,
+            "end_char": 928,
+            "start_line": 26,
+            "end_line": 26,
+            "quote": "### 1.2 设计案例（Kamsarmax 散货船，80 000 dwt）",
+            "unique": true
+          },
+          "resolution": "resolved_in_source",
+          "resolution_check": {
+            "check": "table present verbatim in markdown? -> yes",
+            "result": "resolved"
+          },
+          "note": "inline parameter table (L,B,T,Cb,Cm,Cp,displacement,DWT,MCR,SFOC,C_F,efficiencies,service speed)"
+        }
+      ],
+      "claims": [],
+      "claims_note": "Empty by contract: objective.classify_report_type=false and objective.extract_claims is not declared. No claim was generated to fill a quota; no claim is marked verified.",
+      "integrity": {
+        "quote_uniqueness": true,
+        "hash_recomputed_locally": true,
+        "hash_matches_contract": true,
+        "duplicate_asset_ids": false,
+        "locators_all_resolvable": true
+      },
+      "limits": [
+        "Registration only. No numbers were re-derived; no statistic was recomputed from the producer artifacts (they are not in this record — see A07).",
+        "Figures are resolved by NAME against the platform record's figures[]; the PNG bytes were not inspected, so figure content is not attested.",
+        "Required values (EEXI_req / CII_req) depend on rule coefficients the report itself marks WITHHELD (A21); they are registered as declared_absent, not as verified inputs.",
+        "Appendix A claims to be tables.md verbatim; byte-identity to the外部 file cannot be checked from this record and is left unresolved (A08)."
+      ]
+    }
+  },
+  "claims": []
+}
