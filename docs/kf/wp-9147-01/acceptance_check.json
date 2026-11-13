@@ -1,0 +1,41 @@
+{
+  "package_id": "wp-9147-01",
+  "report_id": "9147",
+  "generated_at": "2026-11-12T01:35:34+00:00",
+  "schema_source": "docs/kf/wp-9147-01/asset_manifest.wp-9147-01.schema.json + schemas/kf_result.v1.schema.json",
+  "items": [
+    {
+      "item": "valid_json",
+      "pass": true,
+      "evidence": "json.loads OK on asset_manifest.json 与 kf_result.json"
+    },
+    {
+      "item": "schema_pass",
+      "pass": true,
+      "evidence": "asset_manifest 过 asset_manifest.wp-9147-01.schema.json（由仓内 asset_manifest.v1 派生）；信封过 schemas/kf_result.v1.schema.json（jsonschema.validate）"
+    },
+    {
+      "item": "source_locator_resolvable",
+      "pass": true,
+      "evidence": "12 个资产的引文全部按声明 [start_char,end_char) 逐字切回、唯一、行窗自洽；失败项=无"
+    },
+    {
+      "item": "source_hash_matches",
+      "pass": true,
+      "evidence": "sha256(source.md)=754d613193b8da48… 与 manifest.source.hash / 契约 754d6131… 及 provenance.source_hash 三方一致=True"
+    },
+    {
+      "item": "no_duplicate_ids",
+      "pass": true,
+      "evidence": "12 个 asset_id，去重后 12 个"
+    },
+    {
+      "item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "pass": true,
+      "evidence": "claims=[] （契约允许，本工序不抽取 claim）→ 该项**空真**成立，不等于证据完备性已被证明"
+    }
+  ],
+  "passed": 6,
+  "total": 6,
+  "all_pass": true
+}
