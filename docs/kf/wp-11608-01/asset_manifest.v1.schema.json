@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.wp-11608-01.schema.json",
+  "title": "asset_manifest.v1 pinned for KF work package wp-11608-01",
+  "description": "Local elaboration of schemas/asset_manifest.v1.schema.json (the repo's generic copy hard-pins package_id='wp-448-01', so it cannot validate any other package). This file pins the constants for wp-11608-01 and makes the acceptance item schema_pass a reproducible check. If the platform-side canonical schema differs, the platform gate wins and this artifact must be revised.",
+  "type": "object",
+  "required": ["schema", "package_id", "task_type", "report_id", "source", "counts", "assets", "claims", "integrity"],
+  "properties": {
+    "schema": {"const": "asset_manifest.v1"},
+    "package_id": {"const": "wp-11608-01"},
+    "task_type": {"const": "01-asset-registration"},
+    "report_id": {"const": "11608"},
+    "producer": {"type": "string"},
+    "emitted_at": {"type": "string"},
+    "source": {
+      "type": "object",
+      "required": ["uri", "field", "hash_alg", "hash", "chars", "bytes_utf8", "title", "scenario_key"],
+      "properties": {
+        "uri": {"const": "tensor://reports/11608"},
+        "field": {"const": "markdown"},
+        "hash_alg": {"const": "sha256"},
+        "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "chars": {"type": "integer", "minimum": 1},
+        "bytes_utf8": {"type": "integer", "minimum": 1},
+        "title": {"type": "string", "minLength": 1},
+        "scenario_key": {"type": "string", "minLength": 1},
+        "platform_figures": {"type": "array"},
+        "platform_tags": {"type": "array"}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["assets", "by_class", "by_resolution", "resolved_in_source", "referenced_unresolved", "declared_absent"],
+      "properties": {
+        "assets": {"type": "integer", "minimum": 1},
+        "by_class": {"type": "object"},
+        "by_resolution": {"type": "object"},
+        "resolved_in_source": {"type": "integer", "minimum": 0},
+        "referenced_unresolved": {"type": "integer", "minimum": 0},
+        "declared_absent": {"type": "integer", "minimum": 0},
+        "off_topic": {"type": "integer", "minimum": 0}
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["asset_id", "asset_class", "label", "in_report_section", "locator", "resolution", "resolution_check", "note"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^A[0-9]{2}$"},
+          "asset_class": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "in_report_section": {"type": "string", "minLength": 1},
+          "target": {"type": ["string", "null"]},
+          "locator_source": {"enum": ["markdown", "record"]},
+          "locator_semantics": {"enum": ["verbatim_asset_reference", "anchor_where_expected"]},
+          "record_name": {"type": "string"},
+          "record_caption": {"type": "string"},
+          "resolution": {"enum": ["resolved_in_source", "referenced_unresolved", "declared_absent"]},
+          "resolution_check": {
+            "type": "object",
+            "required": ["check", "result"],
+            "properties": {
+              "check": {"type": "string"},
+              "result": {"enum": ["resolved", "unresolved", "absent", "present"]}
+            }
+          },
+          "locator": {
+            "type": "object",
+            "required": ["method", "start_char", "end_char", "start_line", "end_line", "quote", "unique"],
+            "properties": {
+              "method": {"enum": ["char_span", "document"]},
+              "start_char": {"type": "integer", "minimum": 0},
+              "end_char": {"type": "integer", "minimum": 1},
+              "start_line": {"type": "integer", "minimum": 0},
+              "end_line": {"type": "integer", "minimum": 0},
+              "quote": {"type": "string", "minLength": 1},
+              "unique": {"type": "boolean"},
+              "occurrences": {"type": "integer", "minimum": 0}
+            }
+          },
+          "off_topic": {"type": "boolean"},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "Empty is legitimate for this package (objective.classify_report_type=false, register_assets only). Each claim, if any, must carry an evidence locator or an explicit unresolved status -- and must never be marked verified.",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "text"],
+        "anyOf": [{"required": ["evidence_locator"]}, {"required": ["status"]}],
+        "properties": {
+          "status": {"enum": ["supported", "partially-supported", "unresolved", "refuted"]}
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "required": ["quote_uniqueness", "hash_recomputed_locally", "hash_matches_contract"],
+      "properties": {
+        "quote_uniqueness": {"type": "boolean"},
+        "hash_recomputed_locally": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "hash_matches_contract": {"type": "boolean"},
+        "chars_matches_contract": {"type": "boolean"},
+        "duplicate_ids": {"type": "boolean"},
+        "non_unique_markdown_quotes": {"type": "array"},
+        "locator_quote_is_markdown_substring_for_all_assets": {"type": "boolean"}
+      }
+    }
+  }
+}
