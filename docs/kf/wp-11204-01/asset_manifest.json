@@ -1,0 +1,1188 @@
+{
+ "schema": "asset_manifest.v1",
+ "package_id": "wp-11204-01",
+ "task_type": "01-asset-registration",
+ "report_id": "11204",
+ "source": {
+  "uri": "tensor://reports/11204",
+  "field": "markdown",
+  "hash_alg": "sha256",
+  "hash": "d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86",
+  "hash_prefixed": "sha256:d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86",
+  "chars": 5999,
+  "bytes_utf8": 9428,
+  "title_markdown_h1": "FEM 弹塑性本构（von Mises J2）与 3D 混合模式 cohesive 单元：CT / 三点弯曲验证",
+  "title_record": "FEM 弹塑性本构(von Mises J2)与 3D 混合模式 cohesive 单元：CT / 三点弯曲验证",
+  "scenario_key": "p273w3-n01-fem-elastoplastic-cohesive",
+  "platform_tags": [
+   "FEM",
+   "elastoplasticity",
+   "J2",
+   "cohesive",
+   "mixed-mode",
+   "fracture",
+   "J-integral",
+   "ASTM E399",
+   "ASTM E1820",
+   "TensorPhysics"
+  ],
+  "platform_figures_declared": [
+   {
+    "name": "fig1_ct_field_and_seb_cohesive",
+    "caption": "CT sigma_yy field (J2 plane strain, P=45 kN) and SE(B) cohesive load-displacement"
+   },
+   {
+    "name": "fig2_mixed_mode_and_j2",
+    "caption": "mixed-mode I/II/III fracture energy vs extended BK law; J2 uniaxial response"
+   },
+   {
+    "name": "fig3_j_comparison_and_convergence",
+    "caption": "elastoplastic CT J (EDI vs ASTM E1820 eta-method) and J mesh convergence"
+   }
+  ],
+  "record_status": "published",
+  "record_mission_id": 9422
+ },
+ "counts": {
+  "assets": 27,
+  "by_class": {
+   "report_source_markdown": 1,
+   "record_metadata": 1,
+   "figure_file": 3,
+   "repo_path_reference": 3,
+   "module_reference": 1,
+   "source_code_path": 5,
+   "script_path": 2,
+   "test_path": 1,
+   "result_data_path": 2,
+   "symbol_reference": 1,
+   "parameter_reference": 1,
+   "provenance_pointer": 1,
+   "external_standard": 2,
+   "external_law": 1,
+   "node_identifier": 1,
+   "repro_command_block": 1
+  },
+  "by_resolution": {
+   "resolved_in_source": 6,
+   "referenced_unresolved": 21
+  },
+  "resolved_in_source": 6,
+  "referenced_unresolved": 21,
+  "declared_absent": 0
+ },
+ "assets": [
+  {
+   "asset_id": "A01",
+   "asset_class": "report_source_markdown",
+   "label": "report 11204 markdown (the registered asset itself)",
+   "in_report_section": "document",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 0,
+     "end_char": 58,
+     "start_line": 1,
+     "end_line": 1,
+     "quote": "# FEM 弹塑性本构（von Mises J2）与 3D 混合模式 cohesive 单元：CT / 三点弯曲验证",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 0,
+       "end_char": 58,
+       "start_line": 1,
+       "end_line": 1
+      }
+     ]
+    }
+   ],
+   "resolution": "resolved_in_source",
+   "resolution_basis": "bytes in hand and hashed; title line is also the markdown H1"
+  },
+  {
+   "asset_id": "A02",
+   "asset_class": "record_metadata",
+   "label": "platform record metadata (title/summary/scenario_key/tags/status)",
+   "in_report_section": "record",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.title",
+     "present": true
+    },
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.summary",
+     "present": true
+    },
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.scenario_key",
+     "present": true
+    },
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.tags",
+     "present": true
+    },
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.status",
+     "present": true
+    }
+   ],
+   "resolution": "resolved_in_source",
+   "resolution_basis": "record fields returned by GET /tensor/reports/11204 and stored in work/wp-11204-01/record.json"
+  },
+  {
+   "asset_id": "A03",
+   "asset_class": "figure_file",
+   "label": "fig1_ct_field_and_seb_cohesive (record figures[0], CT sigma_yy field + SE(B) cohesive curve)",
+   "in_report_section": "record.figures[0] + ④ 结果图",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.figures[0]",
+     "present": true
+    },
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 3958,
+     "end_char": 4036,
+     "start_line": 104,
+     "end_line": 104,
+     "quote": "![图1 CT 应力场与 SE(B) 粘聚区载荷-位移](figures/m9422/fig1_ct_field_and_seb_cohesive.png)",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 3958,
+       "end_char": 4036,
+       "start_line": 104,
+       "end_line": 104
+      }
+     ]
+    }
+   ],
+   "resolution": "resolved_in_source",
+   "resolution_basis": "PNG bytes served by the platform figure endpoint, sha256 recorded; linked from markdown ④",
+   "figure_bytes": {
+    "url_path": "/tensor/reports/11204/figures/fig1_ct_field_and_seb_cohesive",
+    "http_status_first": 200,
+    "http_status_second": 200,
+    "content_type": "image/png",
+    "bytes": 100641,
+    "sha256": "d3bc9cdb6cde95a0b16e0a99165bfac96baff4fcb61e9f6d9005c95a63f9e6c3",
+    "hash_stable_across_2_fetches": true,
+    "png_size": {
+     "width": 1725,
+     "height": 645
+    },
+    "extension_form_probe": {
+     "path": "/tensor/reports/11204/figures/fig1_ct_field_and_seb_cohesive.png",
+     "http_status": 404
+    }
+   }
+  },
+  {
+   "asset_id": "A04",
+   "asset_class": "figure_file",
+   "label": "fig2_mixed_mode_and_j2 (record figures[1], mixed-mode I/II/III energy vs extended BK; J2 uniaxial)",
+   "in_report_section": "record.figures[1] + ④ 结果图",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.figures[1]",
+     "present": true
+    },
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 4171,
+     "end_char": 4235,
+     "start_line": 110,
+     "end_line": 110,
+     "quote": "![图2 混合模式断裂能与 J2 单轴响应](figures/m9422/fig2_mixed_mode_and_j2.png)",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 4171,
+       "end_char": 4235,
+       "start_line": 110,
+       "end_line": 110
+      }
+     ]
+    }
+   ],
+   "resolution": "resolved_in_source",
+   "resolution_basis": "PNG bytes served by the platform figure endpoint, sha256 recorded; linked from markdown ④",
+   "figure_bytes": {
+    "url_path": "/tensor/reports/11204/figures/fig2_mixed_mode_and_j2",
+    "http_status_first": 200,
+    "http_status_second": 200,
+    "content_type": "image/png",
+    "bytes": 107051,
+    "sha256": "356910833e5f3abd1c7a5512171a6b30606355ab431e4d9f573c1ff10b21f750",
+    "hash_stable_across_2_fetches": true,
+    "png_size": {
+     "width": 1725,
+     "height": 645
+    },
+    "extension_form_probe": {
+     "path": "/tensor/reports/11204/figures/fig2_mixed_mode_and_j2.png",
+     "http_status": 404
+    }
+   }
+  },
+  {
+   "asset_id": "A05",
+   "asset_class": "figure_file",
+   "label": "fig3_j_comparison_and_convergence (record figures[2], CT J EDI vs E1820 eta; J convergence)",
+   "in_report_section": "record.figures[2] + ④ 结果图",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.figures[2]",
+     "present": true
+    },
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 4332,
+     "end_char": 4400,
+     "start_line": 115,
+     "end_line": 115,
+     "quote": "![图3 J 对比与网格收敛](figures/m9422/fig3_j_comparison_and_convergence.png)",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 4332,
+       "end_char": 4400,
+       "start_line": 115,
+       "end_line": 115
+      }
+     ]
+    }
+   ],
+   "resolution": "resolved_in_source",
+   "resolution_basis": "PNG bytes served by the platform figure endpoint, sha256 recorded; linked from markdown ④",
+   "figure_bytes": {
+    "url_path": "/tensor/reports/11204/figures/fig3_j_comparison_and_convergence",
+    "http_status_first": 200,
+    "http_status_second": 200,
+    "content_type": "image/png",
+    "bytes": 103794,
+    "sha256": "17996f7f2626586dc5fb7c4d3bf1a3407ba281d2ca7f09c10fc9bba81197cfb9",
+    "hash_stable_across_2_fetches": true,
+    "png_size": {
+     "width": 1725,
+     "height": 645
+    },
+    "extension_form_probe": {
+     "path": "/tensor/reports/11204/figures/fig3_j_comparison_and_convergence.png",
+     "http_status": 404
+    }
+   }
+  },
+  {
+   "asset_id": "A06",
+   "asset_class": "repo_path_reference",
+   "label": "figures/m9422/fig1_ct_field_and_seb_cohesive.png (in-repo figure path, TensorPhysics)",
+   "in_report_section": "④ 结果图",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 3987,
+     "end_char": 4035,
+     "start_line": 104,
+     "end_line": 104,
+     "quote": "figures/m9422/fig1_ct_field_and_seb_cohesive.png",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 3987,
+       "end_char": 4035,
+       "start_line": 104,
+       "end_line": 104
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "upstream writes figures under figures/m9422/ in the TensorPhysics worktree; that path is not in this TensorKnowledge checkout and no such path is served by the platform, so the path itself is registered but not byte-resolved"
+  },
+  {
+   "asset_id": "A07",
+   "asset_class": "repo_path_reference",
+   "label": "figures/m9422/fig2_mixed_mode_and_j2.png (in-repo figure path, TensorPhysics)",
+   "in_report_section": "④ 结果图",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 4194,
+     "end_char": 4234,
+     "start_line": 110,
+     "end_line": 110,
+     "quote": "figures/m9422/fig2_mixed_mode_and_j2.png",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 4194,
+       "end_char": 4234,
+       "start_line": 110,
+       "end_line": 110
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "same as A06"
+  },
+  {
+   "asset_id": "A08",
+   "asset_class": "repo_path_reference",
+   "label": "figures/m9422/fig3_j_comparison_and_convergence.png (in-repo figure path, TensorPhysics)",
+   "in_report_section": "④ 结果图",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 4348,
+     "end_char": 4399,
+     "start_line": 115,
+     "end_line": 115,
+     "quote": "figures/m9422/fig3_j_comparison_and_convergence.png",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 4348,
+       "end_char": 4399,
+       "start_line": 115,
+       "end_line": 115
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "same as A06"
+  },
+  {
+   "asset_id": "A09",
+   "asset_class": "module_reference",
+   "label": "src/tensorphysics/fem_nonlinear/ (module declared for this node)",
+   "in_report_section": "标题行",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 137,
+     "end_char": 169,
+     "start_line": 3,
+     "end_line": 3,
+     "quote": "src/tensorphysics/fem_nonlinear/",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 137,
+       "end_char": 169,
+       "start_line": 3,
+       "end_line": 3
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "module lives in the TensorPhysics repo; not present in this worktree, not served by the platform"
+  },
+  {
+   "asset_id": "A10",
+   "asset_class": "source_code_path",
+   "label": "j2_plasticity.py (J2 radial return + consistent tangent)",
+   "in_report_section": "② 1. 本构层",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 977,
+     "end_char": 995,
+     "start_line": 32,
+     "end_line": 32,
+     "quote": "`j2_plasticity.py`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 977,
+       "end_char": 995,
+       "start_line": 32,
+       "end_line": 32
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "source file owned by TensorPhysics; content not read or hashed here"
+  },
+  {
+   "asset_id": "A11",
+   "asset_class": "source_code_path",
+   "label": "cohesive3d.py (bilinear mixed-mode cohesive, extended BK)",
+   "in_report_section": "② 2. 界面层",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 1155,
+     "end_char": 1170,
+     "start_line": 35,
+     "end_line": 35,
+     "quote": "`cohesive3d.py`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 1155,
+       "end_char": 1170,
+       "start_line": 35,
+       "end_line": 35
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "source file owned by TensorPhysics; content not read or hashed here"
+  },
+  {
+   "asset_id": "A12",
+   "asset_class": "source_code_path",
+   "label": "plane_strain_fem.py (Q4 plane-strain Newton + EDI J)",
+   "in_report_section": "② 3. 求解层",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 1375,
+     "end_char": 1396,
+     "start_line": 39,
+     "end_line": 39,
+     "quote": "`plane_strain_fem.py`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 1375,
+       "end_char": 1396,
+       "start_line": 39,
+       "end_line": 39
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "source file owned by TensorPhysics; content not read or hashed here"
+  },
+  {
+   "asset_id": "A13",
+   "asset_class": "source_code_path",
+   "label": "anchors.py (ASTM E399/E1820 geometric + eta factors)",
+   "in_report_section": "② 4. 锚点层",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 1586,
+     "end_char": 1598,
+     "start_line": 43,
+     "end_line": 43,
+     "quote": "`anchors.py`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 1586,
+       "end_char": 1598,
+       "start_line": 43,
+       "end_line": 43
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "source file owned by TensorPhysics; content not read or hashed here"
+  },
+  {
+   "asset_id": "A14",
+   "asset_class": "source_code_path",
+   "label": "verification.py (acceptance criteria layer)",
+   "in_report_section": "② 5. 判据层",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 1711,
+     "end_char": 1728,
+     "start_line": 45,
+     "end_line": 45,
+     "quote": "`verification.py`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 1711,
+       "end_char": 1728,
+       "start_line": 45,
+       "end_line": 45
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "source file owned by TensorPhysics; content not read or hashed here"
+  },
+  {
+   "asset_id": "A15",
+   "asset_class": "script_path",
+   "label": "scripts/m9422_run_verification.py (one-shot number production)",
+   "in_report_section": "② 5. 判据层 / 附：可复现性",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 1732,
+     "end_char": 1765,
+     "start_line": 45,
+     "end_line": 45,
+     "quote": "scripts/m9422_run_verification.py",
+     "occurrences": 2,
+     "verbatim": true,
+     "unique": false,
+     "all_spans": [
+      {
+       "start_char": 1732,
+       "end_char": 1765,
+       "start_line": 45,
+       "end_line": 45
+      },
+      {
+       "start_char": 5732,
+       "end_char": 5765,
+       "start_line": 157,
+       "end_line": 157
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "script owned by TensorPhysics; not executed here"
+  },
+  {
+   "asset_id": "A16",
+   "asset_class": "script_path",
+   "label": "scripts/m9422_figures.py (criteria table + three figures)",
+   "in_report_section": "附：可复现性",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 5808,
+     "end_char": 5832,
+     "start_line": 158,
+     "end_line": 158,
+     "quote": "scripts/m9422_figures.py",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 5808,
+       "end_char": 5832,
+       "start_line": 158,
+       "end_line": 158
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "script owned by TensorPhysics; not executed here"
+  },
+  {
+   "asset_id": "A17",
+   "asset_class": "test_path",
+   "label": "tests/test_fem_elastoplastic_cohesive3d.py (40 tests incl. negative controls)",
+   "in_report_section": "附：可复现性",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 5873,
+     "end_char": 5915,
+     "start_line": 159,
+     "end_line": 159,
+     "quote": "tests/test_fem_elastoplastic_cohesive3d.py",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 5873,
+       "end_char": 5915,
+       "start_line": 159,
+       "end_line": 159
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "test file owned by TensorPhysics; the '(40 tests, 19 s green)' statement is upstream's, not re-run or re-verified by this package"
+  },
+  {
+   "asset_id": "A18",
+   "asset_class": "result_data_path",
+   "label": "artifacts/m9422/verification.json (all numbers of the report)",
+   "in_report_section": "② 5. 判据层",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 1780,
+     "end_char": 1815,
+     "start_line": 46,
+     "end_line": 46,
+     "quote": "`artifacts/m9422/verification.json`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 1780,
+       "end_char": 1815,
+       "start_line": 46,
+       "end_line": 46
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "probe of /tensor/artifacts/m9422/verification.json returned HTTP 404 and the path is absent from this worktree; the numeric payload behind every table in ③ was NOT re-read, so no number is independently confirmed here"
+  },
+  {
+   "asset_id": "A19",
+   "asset_class": "result_data_path",
+   "label": "artifacts/m9422/acceptance.json (machine gate verdicts)",
+   "in_report_section": "② 5. 判据层",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 1816,
+     "end_char": 1833,
+     "start_line": 46,
+     "end_line": 46,
+     "quote": "`acceptance.json`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 1816,
+       "end_char": 1833,
+       "start_line": 46,
+       "end_line": 46
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "probe of /tensor/artifacts/m9422/acceptance.json returned HTTP 404 and the path is absent from this worktree; the six PASS verdicts are upstream claims not re-checked here"
+  },
+  {
+   "asset_id": "A20",
+   "asset_class": "symbol_reference",
+   "label": "j_integral(symmetry_factor=2) (half-model EDI switch, documented condition)",
+   "in_report_section": "⑤ 1. 半模型 EDI 陷阱",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 4627,
+     "end_char": 4658,
+     "start_line": 124,
+     "end_line": 124,
+     "quote": "`j_integral(symmetry_factor=2)`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 4627,
+       "end_char": 4658,
+       "start_line": 124,
+       "end_line": 124
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "symbol referenced by name only; definition lives in plane_strain_fem.py in TensorPhysics and was not inspected"
+  },
+  {
+   "asset_id": "A21",
+   "asset_class": "parameter_reference",
+   "label": "crack_axis=1 (SE(B) crack growth along +y)",
+   "in_report_section": "⑤ 2. 裂纹扩展方向",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 4771,
+     "end_char": 4785,
+     "start_line": 127,
+     "end_line": 127,
+     "quote": "`crack_axis=1`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 4771,
+       "end_char": 4785,
+       "start_line": 127,
+       "end_line": 127
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "parameter name/value referenced only; implementation not inspected"
+  },
+  {
+   "asset_id": "A22",
+   "asset_class": "provenance_pointer",
+   "label": "producer repo/branch: TensorPhysics @ agent/m9422",
+   "in_report_section": "标题行",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.tags",
+     "present": true
+    },
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 107,
+     "end_char": 126,
+     "start_line": 3,
+     "end_line": 3,
+     "quote": "**仓** TensorPhysics",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 107,
+       "end_char": 126,
+       "start_line": 3,
+       "end_line": 3
+      }
+     ]
+    },
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 180,
+     "end_char": 193,
+     "start_line": 3,
+     "end_line": 3,
+     "quote": "`agent/m9422`",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 180,
+       "end_char": 193,
+       "start_line": 3,
+       "end_line": 3
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "registration records where the artefacts live; no commit id is given anywhere in the report or record, so the exact revision behind these numbers is NOT pinned by the source (see limitations L3)"
+  },
+  {
+   "asset_id": "A23",
+   "asset_class": "external_standard",
+   "label": "ASTM E399 (CT/SE(B) geometry + P_Q)",
+   "in_report_section": "① 几何与材料 / ② 4. / ③ 判据总表",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 474,
+     "end_char": 483,
+     "start_line": 15,
+     "end_line": 15,
+     "quote": "ASTM E399",
+     "occurrences": 3,
+     "verbatim": true,
+     "unique": false,
+     "all_spans": [
+      {
+       "start_char": 474,
+       "end_char": 483,
+       "start_line": 15,
+       "end_line": 15
+      },
+      {
+       "start_char": 1599,
+       "end_char": 1608,
+       "start_line": 43,
+       "end_line": 43
+      },
+      {
+       "start_char": 2537,
+       "end_char": 2546,
+       "start_line": 65,
+       "end_line": 65
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "normative document cited by label only; no clause text or copy is attached to the report record and no clause was read here"
+  },
+  {
+   "asset_id": "A24",
+   "asset_class": "external_standard",
+   "label": "ASTM E1820 (J-integral / eta-plasticity method)",
+   "in_report_section": "① 几何与材料 / ② 4. / ③ 判据总表",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 1649,
+     "end_char": 1659,
+     "start_line": 44,
+     "end_line": 44,
+     "quote": "ASTM E1820",
+     "occurrences": 3,
+     "verbatim": true,
+     "unique": false,
+     "all_spans": [
+      {
+       "start_char": 1649,
+       "end_char": 1659,
+       "start_line": 44,
+       "end_line": 44
+      },
+      {
+       "start_char": 2220,
+       "end_char": 2230,
+       "start_line": 57,
+       "end_line": 57
+      },
+      {
+       "start_char": 4423,
+       "end_char": 4433,
+       "start_line": 117,
+       "end_line": 117
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "same as A23: label-only citation, standard text not available in this package"
+  },
+  {
+   "asset_id": "A25",
+   "asset_class": "external_law",
+   "label": "extended Benzeggagh-Kenane (BK) mixed-mode criterion",
+   "in_report_section": "① 3D 混合模式 cohesive / ② 2. 界面层",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 419,
+     "end_char": 436,
+     "start_line": 13,
+     "end_line": 13,
+     "quote": "Benzeggagh-Kenane",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 419,
+       "end_char": 436,
+       "start_line": 13,
+       "end_line": 13
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "law named and its closed form written in ②, but the analytic reference values in ③ were not recomputed by this package (extraction/verification is out of scope)"
+  },
+  {
+   "asset_id": "A26",
+   "asset_class": "node_identifier",
+   "label": "node p273w3-n01-fem-elastoplastic-cohesive (scenario_key)",
+   "in_report_section": "标题行 / record.scenario_key",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "record_field",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "record",
+     "record_path": "record.scenario_key",
+     "present": true
+    },
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 67,
+     "end_char": 104,
+     "start_line": 3,
+     "end_line": 3,
+     "quote": "p273w3-n01-fem-elastoplastic-cohesive",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 67,
+       "end_char": 104,
+       "start_line": 3,
+       "end_line": 3
+      }
+     ]
+    }
+   ],
+   "resolution": "resolved_in_source",
+   "resolution_basis": "identifier is byte-identical in markdown and in the platform record scenario_key"
+  },
+  {
+   "asset_id": "A27",
+   "asset_class": "repro_command_block",
+   "label": "reproducibility code block of 附：可复现性 (3 commands)",
+   "in_report_section": "附：可复现性",
+   "producer_repo": "TensorPhysics",
+   "locators": [
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 5725,
+     "end_char": 5800,
+     "start_line": 157,
+     "end_line": 157,
+     "quote": "python scripts/m9422_run_verification.py   # 全部数字 -> artifacts/m9422/*.json",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 5725,
+       "end_char": 5800,
+       "start_line": 157,
+       "end_line": 157
+      }
+     ]
+    },
+    {
+     "kind": "markdown_char_span",
+     "source_uri": "tensor://reports/11204",
+     "source_field": "markdown",
+     "start_char": 5801,
+     "end_char": 5855,
+     "start_line": 158,
+     "end_line": 158,
+     "quote": "python scripts/m9422_figures.py            # 判据表 + 三张图",
+     "occurrences": 1,
+     "verbatim": true,
+     "unique": true,
+     "all_spans": [
+      {
+       "start_char": 5801,
+       "end_char": 5855,
+       "start_line": 158,
+       "end_line": 158
+      }
+     ]
+    }
+   ],
+   "resolution": "referenced_unresolved",
+   "resolution_basis": "commands target the TensorPhysics worktree; not executable from this TensorKnowledge checkout and not executed by this package"
+  }
+ ],
+ "claims": [],
+ "claims_policy": {
+  "claims": [],
+  "reason": "objective.register_assets=true and objective.classify_report_type=false; contract allows an empty array and forbids forced claim generation, so no claim is emitted and nothing from ③ is restated, re-derived or marked verified"
+ },
+ "integrity": {
+  "hash_recomputed_locally": true,
+  "hash_matches_contract": true,
+  "chars_match_contract": true,
+  "all_markdown_quotes_verbatim": true,
+  "all_primary_quotes_unique": false,
+  "multi_occurrence_quotes": [
+   {
+    "asset_id": "A15",
+    "quote": "scripts/m9422_run_verification.py",
+    "occurrences": 2,
+    "spans_enumerated": 2
+   },
+   {
+    "asset_id": "A23",
+    "quote": "ASTM E399",
+    "occurrences": 3,
+    "spans_enumerated": 3
+   },
+   {
+    "asset_id": "A24",
+    "quote": "ASTM E1820",
+    "occurrences": 3,
+    "spans_enumerated": 3
+   }
+  ],
+  "all_occurrence_spans_enumerated": true,
+  "asset_ids_unique": true,
+  "completeness_scanner_tokens": 16,
+  "completeness_scanner_uncovered": [],
+  "figure_hash_stable_across_refetch": true
+ },
+ "observations": [
+  {
+   "id": "obs-title-drift",
+   "observation": "record.title differs byte-wise from the markdown H1: record uses half-width parentheses '本构(von Mises J2)', H1 uses full-width '本构（von Mises J2）'",
+   "record_title": "FEM 弹塑性本构(von Mises J2)与 3D 混合模式 cohesive 单元：CT / 三点弯曲验证",
+   "markdown_h1": "FEM 弹塑性本构（von Mises J2）与 3D 混合模式 cohesive 单元：CT / 三点弯曲验证",
+   "impact": "downstream consumers must key on report_id, not on title equality"
+  },
+  {
+   "id": "obs-figure-endpoint-extensionless",
+   "observation": "figure bytes are served at /api/v1/tensor/reports/11204/figures/<name> (extensionless, HTTP 200, image/png); the same path with '.png' appended returns HTTP 404",
+   "impact": "prior packages that concluded 'figures are metadata-only' for this platform were probing the wrong URL shape; here figure bytes ARE resolvable and hashed (A03-A05). The '.png' 404 must not be read as 'figure missing'"
+  },
+  {
+   "id": "obs-mission-id",
+   "observation": "record.mission_id=9422 although the package contract declares mission_id: null",
+   "impact": "recorded as observed only; this package does not reconcile it"
+  },
+  {
+   "id": "obs-no-commit-id",
+   "observation": "the report names repo TensorPhysics and branch agent/m9422 but no commit SHA; neither record nor markdown pins a revision",
+   "impact": "the bytes behind A09-A19 cannot be tied to an immutable revision from the source alone"
+  },
+  {
+   "id": "obs-summary-truncated",
+   "observation": "record.summary ends mid-word ('... 6 项机器判据全部 PASS；p')",
+   "impact": "summary cannot be used as a self-contained evidence source; the markdown is the registration target"
+  }
+ ],
+ "limitations": [
+  "L1 registration only: no claim extraction, no numeric re-derivation, no report-type classification — those belong to downstream packages",
+  "L2 verification is deliberately left unset; the platform gate computes it, this package must not mark anything verified",
+  "L3 referenced implementation artefacts (A09-A19) live in the TensorPhysics repo at branch agent/m9422 with no commit SHA in the source; nothing was read, hashed or trusted from them",
+  "L4 the link between the markdown figure paths (A06-A08) and the record figure names (A03-A05) rests on identical basenames; the source never states the mapping, so it is recorded as a stated-dependency, not as a verbatim fact",
+  "L5 the six PASS verdicts and the 40-test/19 s claim in ③/附 are upstream statements; this package did not re-run them and marks them neither supported nor refuted",
+  "L6 external standards (A23/A24) and the BK law (A25) are label-cited; no clause text was available, so no clause-level claim is registered",
+  "L7 the three figure PNGs were hashed byte-wise (twice, stable), but their content was NOT audited: axes, plotted values and their agreement with the tables in section 3 of the report remain upstream statements"
+ ],
+ "probes_ref": "work/wp-11204-01/probes.json"
+}
