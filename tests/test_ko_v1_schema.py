@@ -129,6 +129,7 @@ def _l3(doc: dict | None = None, ticket_state: str = "confirmed", gate_level: in
         "verdict_at": "2026-11-12T01:00:00Z",
         "maturity_verdict_id": 286,
         "mission_id": 15461,
+        "subject_scope": "object",
     }
     # L3 需要三闸全绿证据
     doc["evidence"][0]["resolution"] = {
@@ -138,6 +139,8 @@ def _l3(doc: dict | None = None, ticket_state: str = "confirmed", gate_level: in
         "resolver_version": V.RESOLVER_VERSION,
         "resolved_at": "2026-11-12T00:30:00Z",
     }
+    # v1.1 G1：票必须绑定主体摘要（= content_sha256，attestation 不计入主体）
+    doc["verification"]["subject_sha256"] = V.content_sha256(doc)
     return _with_hash(doc)
 
 
