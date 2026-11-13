@@ -1,0 +1,377 @@
+{
+ "review_schema": "kf-independent-review.v1",
+ "package_id": "wp-946-04",
+ "task_type": "04-independent-review",
+ "report_id": "946",
+ "review_target": {
+  "package_id": "wp-946-01",
+  "task_type": "01-asset-registration",
+  "producer": "agent/m15522",
+  "deliverable_sha256": "sha256:02c195b3d10e437cad588d2aabbf007463dbdf0ed777a4e30c042bd681e46003",
+  "outputs_reviewed": [
+   "asset_manifest.json"
+  ]
+ },
+ "reviewer": {
+  "id": "agent/m15818",
+  "role": "red-team-reviewer",
+  "context": [
+   "report 946 markdown fetched independently from the platform report store",
+   "upstream deliverable work/wp-946-04/upstream/wp-946-01.kf_result.json"
+  ],
+  "excluded": [
+   "producer report.md",
+   "producer make_report.py narrative",
+   "producer build_asset_manifest.py / validate_asset_manifest.py implementations",
+   "producer's verbal explanation of its own work"
+  ],
+  "checker_limitations": [
+   "C04-C05 match quotes as substrings/slices of the markdown; they cannot detect a quote that is verbatim but semantically irrelevant to its asset (spot-read only, 6 assets)",
+   "C19 tokenises fenced spans and drops prose-embedded directory references, which is why the 'docs/ 判据文件' gap surfaces as note N4 rather than as a failed check"
+  ],
+  "independence_note": "all quotes/offsets/counts below were re-derived with a reviewer-written checker (work/wp-946-04/review_wp946_01.py); the producer's validators were not executed"
+ },
+ "verdict": "pass",
+ "decision": "approve",
+ "reviewed_at": "2026-11-12T02:42:51+00:00",
+ "policy_version": "kf-independent-review.v1",
+ "verdict_reason": "all blocking checks pass: provenance hash, verbatim locators, counts, scope and no-self-verification reproduce exactly",
+ "checks": [
+  {
+   "check_id": "C01",
+   "name": "provenance.source_hash == independently recomputed markdown hash",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "envelope": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552",
+    "manifest": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552",
+    "independent_recompute": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552",
+    "contract": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552"
+   }
+  },
+  {
+   "check_id": "C02",
+   "name": "chars (code points) match contract; both code-point and UTF-8 byte lengths disclosed",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "contract": 14281,
+    "independent_code_points": 14281,
+    "independent_utf8_bytes": 26523
+   }
+  },
+  {
+   "check_id": "C03",
+   "name": "title and scenario_key in manifest match the report record",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "record_title": "AI 原生基础设施演化图 v2（替代报告 941）：十方向 × 六准则可复算覆盖度审计",
+    "manifest_scenario": "ai-native-infra"
+   }
+  },
+  {
+   "check_id": "C04",
+   "name": "every markdown locator quote is a verbatim substring of the report markdown",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "markdown_locators": 25,
+    "failures": []
+   }
+  },
+  {
+   "check_id": "C05",
+   "name": "declared char offsets delimit exactly the quoted bytes; occurrence counts agree",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "offsets_compared": 25,
+    "offset_failures": [],
+    "occurrence_failures": []
+   }
+  },
+  {
+   "check_id": "C06",
+   "name": "every record locator value equals the live value in the report record",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "record_locators": 16,
+    "failures": []
+   }
+  },
+  {
+   "check_id": "C07",
+   "name": "manifest counts recompute exactly from the asset list",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "declared_total": 22,
+    "recomputed_total": 22,
+    "by_kind_match": true,
+    "statuses_recomputed": {
+     "resolvable": 2,
+     "unresolved": 20
+    },
+    "declared_by_status": {
+     "resolvable": 2,
+     "unresolved": 20
+    }
+   }
+  },
+  {
+   "check_id": "C08",
+   "name": "asset_ids are unique",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "n": 22,
+    "duplicates": []
+   }
+  },
+  {
+   "check_id": "C09",
+   "name": "every unresolved asset carries an explicit unresolved_reason",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "unresolved": 20,
+    "missing_reason": []
+   }
+  },
+  {
+   "check_id": "C10",
+   "name": "no asset is labelled verified and verification is declared as gate-computed",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "asset_statuses": [
+     "resolvable",
+     "unresolved"
+    ],
+    "verified_literal_hits": 0,
+    "verification_block": {
+     "performed": false,
+     "reason": "verification status is computed by the platform gate, never self-assigned"
+    }
+   }
+  },
+  {
+   "check_id": "C11",
+   "name": "deliverable touches report 946 only (no other report_id)",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "report_ids_in_deliverable": [
+     "946"
+    ],
+    "scope_block": {
+     "report_id": "946",
+     "reports_touched": [
+      "946"
+     ],
+     "other_reports_read_or_written": []
+    }
+   }
+  },
+  {
+   "check_id": "C12",
+   "name": "all markdown image references are registered as figure assets (1:1)",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "markdown_images": [
+     "artifacts/ai-native-infra-v1/figures/fig1_coverage_matrix.png",
+     "artifacts/ai-native-infra-v1/figures/fig2_seat_model_decoupling.png",
+     "artifacts/ai-native-infra-v1/figures/fig3_selfheal_evidence.png",
+     "artifacts/ai-native-infra-v1/figures/fig4_claim_grades.png"
+    ],
+    "registered_figures": [
+     "artifacts/ai-native-infra-v1/figures/fig1_coverage_matrix.png",
+     "artifacts/ai-native-infra-v1/figures/fig2_seat_model_decoupling.png",
+     "artifacts/ai-native-infra-v1/figures/fig3_selfheal_evidence.png",
+     "artifacts/ai-native-infra-v1/figures/fig4_claim_grades.png"
+    ],
+    "record_figures": [
+     "fig1_coverage_matrix",
+     "fig2_seat_model_decoupling",
+     "fig3_selfheal_evidence",
+     "fig4_claim_grades"
+    ]
+   }
+  },
+  {
+   "check_id": "C13",
+   "name": "claims array is empty (no extraction claimed by an asset-registration package)",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "claims_len": 0,
+    "extraction": {
+     "performed": false,
+     "reason": "contract objective is register_assets=true / classify_report_type=false; extraction and report-type classification belong to other work packages"
+    }
+   }
+  },
+  {
+   "check_id": "C14",
+   "name": "envelope validates against schemas/kf_result.v1.schema.json",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "error": null,
+    "validator": "jsonschema"
+   }
+  },
+  {
+   "check_id": "C15",
+   "name": "producer self-check numbers are re-derivable by the reviewer (self-check never taken on trust)",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "selfcheck_present": true,
+    "producer_markdown_locators": 25,
+    "reviewer_markdown_locators": 25,
+    "producer_record_locators": 16,
+    "reviewer_record_locators": 16,
+    "producer_counts": {
+     "total": 22,
+     "resolvable": 2,
+     "unresolved": 20
+    },
+    "reviewer_counts": {
+     "total": 22,
+     "resolvable": 2,
+     "unresolved": 20
+    }
+   }
+  },
+  {
+   "check_id": "C16",
+   "name": "manifest narrative footnotes (no fenced code block / truncated CSA URL / mission_id mismatch) are factually true",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "fenced_markers_in_markdown": 0,
+    "csa_url_as_written": "https://labs.cloudsecurityalliance.org/research/csa-research-note-nist-ai-agent-standards-regulatory-framewo",
+    "csa_url_truncated": true,
+    "record_mission_id": 1237,
+    "producer_note": "report 946 record.mission_id=1237 while the package contract declares mission_id: null; recorded as observed, not reconciled by this package"
+   }
+  },
+  {
+   "check_id": "C17",
+   "name": "resolvable/unresolved classification matches what the report store actually serves",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "resolvable": {
+     "ast-946-01": "source_document",
+     "ast-946-02": "record_metadata"
+    },
+    "allowed_kinds": [
+     "record_metadata",
+     "source_document"
+    ],
+    "mislabelled_resolvable": {},
+    "store_servable_but_unresolved": []
+   }
+  },
+  {
+   "check_id": "C18",
+   "name": "producer record snapshot hash (declared in content_ref) recomputes and its markdown equals the live report",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "declared": "sha256:118ee9eb9fa8a3d83cf09014bc964e46e4fe5de9f087a8d93555b9517aa0e001",
+    "checked_path": "/root/tp-agent/work/m15522",
+    "observed": "sha256:118ee9eb9fa8a3d83cf09014bc964e46e4fe5de9f087a8d93555b9517aa0e001",
+    "match": true,
+    "snapshot_markdown_sha256": "sha256:3ea029afd6df49a8d3e407e42df035654b58a7555f9678d657f5fdfc1fe35552",
+    "snapshot_markdown_matches_live_report": true
+   }
+  },
+  {
+   "check_id": "C19",
+   "name": "every path-like reference fenced in the markdown is registered as an asset or is a known equivalent form",
+   "status": "pass",
+   "blocking": true,
+   "detail": {
+    "path_like_tokens": 18,
+    "registered_names": [
+     "report_946_markdown",
+     "report_946_record",
+     "artifacts/ai-native-infra-v1/figures/fig1_coverage_matrix.png",
+     "artifacts/ai-native-infra-v1/figures/fig2_seat_model_decoupling.png",
+     "artifacts/ai-native-infra-v1/figures/fig3_selfheal_evidence.png",
+     "artifacts/ai-native-infra-v1/figures/fig4_claim_grades.png",
+     "artifacts/ai-native-infra-v1/",
+     "build_evidence.py",
+     "make_report.py",
+     "evidence.json",
+     "provenance_check.json",
+     "report941_original.md",
+     "artifacts/ai-native-infra-v1/figures/fig1..fig4*.png",
+     "${TENSOR_API_BASE}/tensor/missions",
+     "/root/tp-agent/fleet.json",
+     "/root/tp-agent/tp_autoheal.py",
+     "/var/log/tp-fleet/autoheal.log",
+     "/var/log/tp-fleet-supervisor.log",
+     "平台运营事件流/DISPOSITION_RULES.md",
+     "https://labs.cloudsecurityalliance.org/research/csa-research-note-nist-ai-agent-standards-regulatory-framewo",
+     "https://datatracker.ietf.org/doc/draft-daniel-ai-agent-internet-architecture/",
+     "TENSOR_AGENT_USER/PASS"
+    ],
+    "known_equivalents": {
+     "/root/tp-agent/work/m1237/artifacts/ai-native-infra-v1/build_evidence.py": "absolute-path variant of the registered relative build_evidence.py",
+     "http://127.0.0.1:8010/api/v1/tensor/missions": "literal form of the registered template ${TENSOR_API_BASE}/tensor/missions",
+     "http://127.0.0.1:8010/api/v1/tensor/missions（missions": "truncated literal form of the same endpoint"
+    },
+    "uncovered": []
+   }
+  }
+ ],
+ "blocking_failures": [],
+ "non_blocking_notes": [
+  {
+   "note_id": "N1",
+   "text": "20/22 assets are unresolved because report 946 stores figure references, not figure bytes, and the artefact worktree is outside the report store. This is a faithful registration, not a defect of the package, but it caps the usable evidence surface of downstream packages at the markdown text itself."
+  },
+  {
+   "note_id": "N2",
+   "text": "The registration makes no correctness claim about report 946's numbers (rubric scores, 31 REVIVE events, 33.0 s poll median). Reviewing those requires the referenced logs/API which are outside the report store; that check is explicitly not_run here, not passed."
+  },
+  {
+   "note_id": "N4",
+   "text": "Coverage gap found by this reviewer: C10's second cited source, the prose phrase '本工作树 docs/ 判据文件', is not registered as its own asset (only DISPOSITION_RULES.md is covered by ast-946-19). Non-blocking because the phrase names no concrete file, but a downstream package citing C10 has no locator for it."
+  },
+  {
+   "note_id": "N5",
+   "text": "ast-946-14 registers the endpoint in template form '${TENSOR_API_BASE}/tensor/missions' while the running text writes the literal 'http://127.0.0.1:8010/api/v1/tensor/missions'. Semantically equal, but a downstream consumer grepping the literal string will miss it."
+  },
+  {
+   "note_id": "N6",
+   "text": "The absolute-path variant '/root/tp-agent/work/m1237/artifacts/ai-native-infra-v1/build_evidence.py' (C7 row) is folded into the relative-name asset ast-946-08 rather than registered separately; deliberate de-duplication, disclosed here so the fold is auditable."
+  },
+  {
+   "note_id": "N3",
+   "text": "record.mission_id=1237 vs contract mission_id=null is disclosed by the producer rather than silently repaired; reconciliation belongs to the dispatch gate."
+  }
+ ],
+ "not_run": [
+  "existence/content check of external artefact paths (/root/tp-agent/work/m1237/artifacts/...) — outside both the report store and this worktree",
+  "re-execution of report 946's build_evidence.py / make_report.py (no such artefacts are resolvable from the report store)",
+  "figure byte integrity (PNG sha256 vs captions) — report store serves no figure bytes (HTTP 404 probed by producer, re-probed here)"
+ ],
+ "upstream_packages_completed": {
+  "required": [
+   "wp-946-01"
+  ],
+  "present": [
+   "wp-946-01"
+  ],
+  "status": "completed",
+  "evidence": "upstream kf_result.json validates against kf_result.v1.schema.json and its source_hash matches an independent recompute of the report markdown"
+ }
+}
