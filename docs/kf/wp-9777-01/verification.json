@@ -1,0 +1,114 @@
+{
+  "package_id": "wp-9777-01",
+  "report_id": "9777",
+  "checks": [
+    {
+      "check": "valid_json",
+      "result": "pass",
+      "detail": {
+        "manifest": "docs/kf/wp-9777-01/asset_manifest.json",
+        "envelope": "docs/kf/wp-9777-01/kf_result.json"
+      }
+    },
+    {
+      "check": "schema_pass",
+      "result": "pass",
+      "detail": {
+        "missing_keys": []
+      }
+    },
+    {
+      "check": "source_hash_matches",
+      "result": "pass",
+      "detail": {
+        "refetched_sha256": "sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7",
+        "contract_sha256": "sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7",
+        "manifest_sha256": "sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7",
+        "chars_live": 4341,
+        "chars_contract": 4341,
+        "local_copy_identical": true
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "result": "pass",
+      "detail": {
+        "assets_checked": 6,
+        "failures": [],
+        "method": "re-slice every locator out of the re-fetched markdown"
+      }
+    },
+    {
+      "check": "all_assets_span_within_source",
+      "result": "pass",
+      "detail": {
+        "source_chars": 4341
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "result": "pass",
+      "detail": {
+        "assets": 11,
+        "duplicates": []
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "result": "pass",
+      "detail": {
+        "claim_count": 0,
+        "unbacked": [],
+        "note": "claims=[] is permitted by the contract"
+      }
+    },
+    {
+      "check": "nothing_marked_verified",
+      "result": "pass",
+      "detail": {
+        "hits": [],
+        "note": "verification_status must stay not_verified"
+      }
+    },
+    {
+      "check": "artifact_hash_matches_envelope",
+      "result": "pass",
+      "detail": {
+        "file_sha256": "sha256:13ea418473b58590308c0cf085e6b5ef273407614256ae3d81b149fec9af7d3a",
+        "envelope_embedded_sha256": "",
+        "provenance_artifact_sha256": "sha256:13ea418473b58590308c0cf085e6b5ef273407614256ae3d81b149fec9af7d3a"
+      }
+    },
+    {
+      "check": "durable_mirror_identical",
+      "result": "pass",
+      "detail": {
+        "mirror": "docs/kf/wp-9777-01/asset_manifest.json",
+        "mirror_sha256": "sha256:d60bef2e75fe33925349e36a13da8c917969286c3c0ed4b331634b618e7ba65b",
+        "artifact_sha256": "",
+        "why": "push gate drops artifacts/** and runs/**; docs/ is committed"
+      }
+    },
+    {
+      "check": "envelope_source_hash_equals_manifest_hash",
+      "result": "pass",
+      "detail": {}
+    },
+    {
+      "check": "scope_single_report",
+      "result": "pass",
+      "detail": {
+        "report_ids": [
+          "9777"
+        ],
+        "envelope_report_id": "9777"
+      }
+    }
+  ],
+  "overall": "PASS",
+  "independence": {
+    "source": "markdown re-fetched by this process (fresh login), not read from the local copy only",
+    "limitation": "DSM solver code/tests and figure png files are outside this worktree; this package registers pointers only and does not execute or re-validate the physics"
+  },
+  "note": "not a platform gate result: verification_status stays not_verified"
+}

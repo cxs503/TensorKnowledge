@@ -1,0 +1,251 @@
+{
+  "package_id": "wp-9777-01",
+  "report_id": "9777",
+  "task_type": "01-asset-registration",
+  "source_uri": "tensor://reports/9777",
+  "source_hash": "sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7",
+  "source_chars": 4341,
+  "source_lines": 70,
+  "title": "精确 DSM Timoshenko 梁模态验收审计：7/7 判据 PASS、dsbeam 三处缺陷修复、m6117 6.28% 归因闭环",
+  "scenario_key": "structural-dynamics/dsm-beam-modal",
+  "mission_id": 8404,
+  "tags": [
+    "DSM",
+    "Timoshenko",
+    "Wittrick-Williams",
+    "modal",
+    "TensorFEM",
+    "m6117",
+    "acceptance-audit"
+  ],
+  "assets": [
+    {
+      "asset_id": "r9777:source-markdown",
+      "kind": "report_markdown",
+      "name": "report-9777-markdown",
+      "locator": {
+        "source_field": "markdown",
+        "line": 1
+      },
+      "source_uri": "tensor://reports/9777",
+      "media_type": "text/markdown",
+      "bytes": 6651,
+      "chars": 4341,
+      "lines": 70,
+      "sha256": "sha256:d5742ce0c54743d542de8bb36d79891a0cfe8997a1b6032827fa97df251dcbe7",
+      "hash_scope": "UTF-8 bytes of the markdown field as served by GET /api/v1/tensor/reports/9777",
+      "local_copy": "docs/kf/wp-9777-01/source/r9777.md",
+      "resolution": {
+        "status": "resolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9777"
+      },
+      "hash_matches_contract": true,
+      "chars_matches_contract": true
+    },
+    {
+      "asset_id": "r9777:figure:01",
+      "kind": "figure",
+      "name": "fig1_spectrum.png",
+      "caption": "图1 精确 DSM 两极限：(左) 细长梁 (βL)² 与 EB 常数重合；(右) 深梁剪切+转动惯量致频率下降",
+      "locator": {
+        "source_field": "figures[0]",
+        "line": null
+      },
+      "source_uri": "tensor://reports/9777",
+      "media_type": "unknown",
+      "bytes": 29,
+      "sha256": "",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9777/figures/fig1_spectrum.png"
+      },
+      "local_copy": ""
+    },
+    {
+      "asset_id": "r9777:figure:02",
+      "kind": "figure",
+      "name": "fig2_mode_shapes.png",
+      "caption": "图2 自由-自由 1–3 阶两场精确振型 w / ψ / 曲率（whipping 应力恢复用）",
+      "locator": {
+        "source_field": "figures[1]",
+        "line": null
+      },
+      "source_uri": "tensor://reports/9777",
+      "media_type": "unknown",
+      "bytes": 29,
+      "sha256": "",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9777/figures/fig2_mode_shapes.png"
+      },
+      "local_copy": ""
+    },
+    {
+      "asset_id": "r9777:figure:03",
+      "kind": "figure",
+      "name": "fig3_wittrick_williams.png",
+      "caption": "图3 J(ω) 阶梯 vs 独立根普查零点；红点线为元素极点（J 在极点不跳）",
+      "locator": {
+        "source_field": "figures[2]",
+        "line": null
+      },
+      "source_uri": "tensor://reports/9777",
+      "media_type": "unknown",
+      "bytes": 29,
+      "sha256": "",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9777/figures/fig3_wittrick_williams.png"
+      },
+      "local_copy": ""
+    },
+    {
+      "asset_id": "r9777:figure:04",
+      "kind": "figure",
+      "name": "fig4_m6117_attribution.png",
+      "caption": "图4 m6117 归因：左 1–4 阶对比，右 偏差分解 +0.027 % / −5.89 % / 6.28 %",
+      "locator": {
+        "source_field": "figures[3]",
+        "line": null
+      },
+      "source_uri": "tensor://reports/9777",
+      "media_type": "unknown",
+      "bytes": 29,
+      "sha256": "",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9777/figures/fig4_m6117_attribution.png"
+      },
+      "local_copy": ""
+    },
+    {
+      "asset_id": "r9777:figure:05",
+      "kind": "figure",
+      "name": "fig5_random_sweep.png",
+      "caption": "图5 100 组随机样本：闭式相对差 vs 细长度；频率随 L 单调下降",
+      "locator": {
+        "source_field": "figures[4]",
+        "line": null
+      },
+      "source_uri": "tensor://reports/9777",
+      "media_type": "unknown",
+      "bytes": 29,
+      "sha256": "",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "platform_api",
+        "via": "GET /tensor/reports/9777/figures/fig5_random_sweep.png"
+      },
+      "local_copy": ""
+    },
+    {
+      "asset_id": "r9777:ref:dsbeam.py:L19",
+      "kind": "source_code_reference",
+      "name": "dsbeam.py",
+      "locator": {
+        "line": 19,
+        "quote": "- **本单在 dsbeam.py 修三处缺陷**：(1) 删 `scipy.optimize.brentq` 改纯 Python Brent–Dekker（判据要求只依赖 math+numpy.linalg）；(2) 惯性容差由 1e-1"
+      },
+      "source_uri": "tensor://reports/9777",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge",
+        "same_basename_hits": []
+      }
+    },
+    {
+      "asset_id": "r9777:ref:artifacts_m8404_dsm_audit_acceptance.py:L20",
+      "kind": "source_code_reference",
+      "name": "artifacts/m8404_dsm/audit_acceptance.py",
+      "locator": {
+        "line": 20,
+        "quote": "- **工具链**：numpy+math，审计脚本 `artifacts/m8404_dsm/audit_acceptance.py` 把所有数字程序化写入 `results.json`（零手抄），pytest 36 条全绿。"
+      },
+      "source_uri": "tensor://reports/9777",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge",
+        "same_basename_hits": []
+      }
+    },
+    {
+      "asset_id": "r9777:ref:results.json:L20",
+      "kind": "data_artifact_reference",
+      "name": "results.json",
+      "locator": {
+        "line": 20,
+        "quote": "- **工具链**：numpy+math，审计脚本 `artifacts/m8404_dsm/audit_acceptance.py` 把所有数字程序化写入 `results.json`（零手抄），pytest 36 条全绿。"
+      },
+      "source_uri": "tensor://reports/9777",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge",
+        "same_basename_hits": []
+      }
+    },
+    {
+      "asset_id": "r9777:ref:results.json:L22",
+      "kind": "data_artifact_reference",
+      "name": "results.json",
+      "locator": {
+        "line": 22,
+        "quote": "## ③ 计算结果（全部来自 results.json）"
+      },
+      "source_uri": "tensor://reports/9777",
+      "resolution": {
+        "status": "unresolved",
+        "scope": "delivery_worktree",
+        "reason": "path not present in delivery worktree TensorKnowledge",
+        "same_basename_hits": []
+      }
+    },
+    {
+      "asset_id": "r9777:sym:scipy_optimize_brentq:L19",
+      "kind": "module_reference",
+      "name": "scipy.optimize.brentq",
+      "locator": {
+        "line": 19,
+        "quote": "- **本单在 dsbeam.py 修三处缺陷**：(1) 删 `scipy.optimize.brentq` 改纯 Python Brent–Dekker（判据要求只依赖 math+numpy.linalg）；(2) 惯性容差由 1e-1"
+      },
+      "source_uri": "tensor://reports/9777",
+      "resolution": {
+        "status": "declared_only",
+        "scope": "markdown_prose",
+        "reason": "module reference; not resolved in this worktree"
+      }
+    }
+  ],
+  "figure_probes": {
+    "fig1_spectrum.png": {
+      "http_status": 404,
+      "bytes": 29
+    },
+    "fig2_mode_shapes.png": {
+      "http_status": 404,
+      "bytes": 29
+    },
+    "fig3_wittrick_williams.png": {
+      "http_status": 404,
+      "bytes": 29
+    },
+    "fig4_m6117_attribution.png": {
+      "http_status": 404,
+      "bytes": 29
+    },
+    "fig5_random_sweep.png": {
+      "http_status": 404,
+      "bytes": 29
+    }
+  },
+  "figure_hashes": {},
+  "generated_at": "2026-11-13T10:24:06.726949+00:00",
+  "producer": "kf-worker/m17951"
+}
