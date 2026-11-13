@@ -80,8 +80,18 @@ def canonical_json(doc: Mapping[str, Any]) -> str:
 
 
 def content_sha256(doc: Mapping[str, Any]) -> str:
-    """对象内容哈希：排除 ``provenance.content_sha256`` 自身（避免自指）。"""
+    """对象内容哈希（= 被裁定主体摘要 subject digest）。
+
+    排除两块，理由各一条：
+      * ``provenance.content_sha256`` —— 自指字段，哈希不能包含自己；
+      * ``verification`` —— 验证单是**对主体的裁定**，不属于主体本身
+        （in-toto/SLSA 的 subject 与 attestation 分离、W3C VC 的 credentialSubject
+        与 proof 分离，v1.1 采用同一原则，见 docs/rci/methods-survey-v2.md §3）。
+        否则「票内摘要」与「含票摘要」互相指涉，无法收敛——这正是 v1 遗留的
+        隐性缺陷：L3 对象的 content_sha256 在晋级时被验证单污染。
+    """
     body = json.loads(json.dumps(doc))
+    body.pop("verification", None)
     prov = body.get("provenance")
     if isinstance(prov, dict):
         prov.pop("content_sha256", None)
@@ -223,6 +233,36 @@ def _ticket_ok(doc: Mapping[str, Any]) -> str | None:
         return f"verification.gate_level={level} < 2 (L0/L1 verdict is not a verification)"
     if not str(ver.get("verdict_by") or "").strip():
         return "verification.verdict_by missing (verdicts need an accountable reviewer)"
+
+    # v1.1 G1/G2：票必须绑定到**这张对象**，否则「任务级裁定」会被复用去背书任意断言。
+    digest = ver.get("subject_sha256")
+    prov = doc.get("provenance") or {}
+    object_digest = prov.get("content_sha256") or content_sha256(doc)
+    if digest:
+        if digest != object_digest:
+            return (
+                "verification.subject_sha256 does not bind this object "
+                f"({str(digest)[:12]}… != {str(object_digest)[:12]}…)"
+            )
+        scope = ver.get("subject_scope")
+        if scope not in (None, "object"):
+            return f"verification.subject_scope={scope!r} inconsistent with exact subject digest"
+        return None
+
+    # 无对象摘要 → 只允许「任务级裁定 + 显式枚举本对象」
+    ticket_mission = ver.get("mission_id")
+    object_mission = prov.get("mission_id")
+    enum = (ver.get("evidence_ref") or {}).get("knowledge_ids") or []
+    if ticket_mission is None or object_mission is None or ticket_mission != object_mission:
+        return (
+            "L3 ticket is unbound: need subject_sha256 (object-level verdict) or "
+            f"mission-scope match (ticket.mission_id={ticket_mission!r} vs object {object_mission!r})"
+        )
+    if str(doc.get("knowledge_id")) not in [str(x) for x in enum]:
+        return (
+            "mission-scope ticket must enumerate this knowledge_id in "
+            "verification.evidence_ref.knowledge_ids"
+        )
     return None
 
 
