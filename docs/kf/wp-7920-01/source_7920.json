@@ -1,0 +1,44 @@
+{
+  "id": 7920,
+  "title": "IN154-P4 混合推进能量管理（电池-柴油并联）验证：功率分配/峰值削减/负荷优化/能量平衡闭环",
+  "summary": "并联混合推进四案例全部机器判据通过：功率闭合 0（代数恒等）、峰值削减 std 降幅 69.66%、负荷优化 SFOC vs 凸优化解析解/DP 1.007%、SOC 轨迹 vs 纯库仑计数 0.401%、循环能量平衡 2.1e-08、油耗积分 0.758%、pytest 42 条。",
+  "scenario_key": "green_shipping.hybrid_propulsion_energy_management",
+  "mission_id": 6670,
+  "stage": null,
+  "tags": [
+    "IN154-P4",
+    "混合推进",
+    "能量管理",
+    "EMS",
+    "绿色航行",
+    "SOC",
+    "动态规划",
+    "peak-shaving"
+  ],
+  "figures": [
+    {
+      "name": "fig1_power_split_soc.png",
+      "caption": "24 h 混合营运循环功率分配与 SOC（等水平/滚动等水平 + 电池功率）"
+    },
+    {
+      "name": "fig2_peak_shaving.png",
+      "caption": "2 h 波浪扰动航段峰值削减时程与柴油功率标准差（判据 b：降幅 69.66%）"
+    },
+    {
+      "name": "fig3_load_optimization.png",
+      "caption": "负荷-SFOC 曲线与运行点 + 循环油耗 vs DP 全局最优"
+    },
+    {
+      "name": "fig4_battery_and_criteria.png",
+      "caption": "电池 SOC 三路对照（库仑计数/RK4/逐步精确积分）与六项判据实测"
+    },
+    {
+      "name": "fig5_efficiency_sensitivity.png",
+      "caption": "储能效率敏感性：η=1 vs 0.95 的循环节油"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-08T07:13:10.874356+00:00",
+  "markdown": "# 混合推进能量管理（电池-柴油并联）验证报告 — IN154-P4\n\n> 本文件由 `backend/modules/hybrid_propulsion/report_md.py` 从 `artifacts/hybrid_propulsion/results.json` 程序化生成，数字零手抄。\n\n**结论**：机器判据 (a)–(g) 全部通过。\n\n## ① 案例介绍（物理背景 / 参数 / 工况）\n\n并联混合推进的功率流为 `P_demand = P_diesel + P_batt`（`P_batt > 0` 放电、`< 0` 充电）。柴油机在高负荷区比油耗低、低负荷区急剧上翘；储能可以把尖峰与低谷削平，使机组更长时间落在高效区，代价是充放电往返损耗。本节点验证四件事：功率分配闭合、峰值削减、负荷优化（最小油耗）、能量平衡（SOC 守恒），补的是绿色航行链条里「混合推进能量管理」这一段能力缺口。\n\n**柴油机（中速四冲程机组）参数**\n\n| 参数 | 值 | 说明 |\n|---|---|---|\n| MCR | 2000 kW | 研究机型量级（中小型渡船/科考船） |\n| SFOC 最低点 | 195 g/kWh @ 75% MCR | 25% MCR 处 SFOC = 221.0 g/kWh |\n| 负荷敏感系数 k | 0.30 | 低负荷上翘强度（工程抛物线） |\n| 最小稳定负荷 | 20% MCR = 400 kW | 更低负荷停机/进电池 |\n| 燃油率凸性阈值 | 1000 kW | 解析式 (2/3)·x_opt·MCR |\n| 碳因子 | 3.206 gCO₂/g | MDO/MGO（绿色航行 CF 表） |\n\n**储能参数**（算法验证口径 η=1；工程口径 η=0.95，见 ⑤/图 5）\n\n| 参数 | 值 |\n|---|---|\n| 额定容量 | 1000 kWh |\n| SOC 窗口 | 0.30–0.90（可用 600 kWh） |\n| 充/放电功率上限 | 800 / 800 kW |\n| 标称电压 / OCV 斜率 | 700 V / 15 V per SOC（LFP 平坦中段） |\n\n**研究工况（合成、确定性、可复现；非实测营运剖面）**\n\n| 工况 | 时长 | 步长 | 平均需求 | 需求 std | 最低需求 | 平均负荷率 |\n|---|---|---|---|---|---|---|\n| transit_2h | 2.0 h | 60 s | 1606 kW | 102 kW | 1410 kW | 0.80 |\n| two_level | 2.0 h | 60 s | 1421 kW | 587 kW | 686 kW | 0.71 |\n| mixed_24h | 24.0 h | 60 s | 1309 kW | 538 kW | 380 kW | 0.65 |\n\n## ② 怎么做的（方法 / 流程 / 关键设置）\n\n**模型**\n\n1. 柴油机油耗：`g(x) = g_min·[1 + k·((x-x_opt)/x_opt)²]`，`x = P/MCR` 夹在 `[x_min, 1]`；`ṁ = g·P/1000` [kg/h]。解析二阶导 `ṁ''(P) = g_min·k/(x_opt²MCR²)·(6P - 4x_opt·MCR)` 给出凸/凹分界。\n2. 电池：集总库仑计数 + 仿射 OCV `V(SOC)=V_nom + k_v(SOC-0.5)`，`dSOC/dt = -(P·1000/V)·κ/Q`（放电 κ=1/η_d、充电 κ=η_c）。单步内解析积分（二次方程取物理根），故逐步更新是**分段常功率精确解**，不是显式欧拉。\n3. 能量账本恒等式：`net_electrical + roundtrip_loss + stored_change = 0`，三项分别由电能 / 效率 / SOC 终点独立算出，互校。\n\n**策略**\n\n- `baseline`：柴油机跟随需求，电池不动作（对照）。\n- `peak_shaving`：需求功率居中移动平均 + 直流偏移 λ，λ 二分使 `ΣP_batt = 0`。\n- `load_optimization`：等水平分配（KKT 解 λ*），逐点投影到「机组窗口 ∩ 电池功率 ∩ SOC 窗口」的可行交集，外层二分 λ 使末端 SOC 精确回到初值。\n- `load_optimization_soc_feedback`：λ + `g_soc·(SOC-SOC_0)` 的 ECMS 型 SOC 反馈。\n- `load_optimization_moving_horizon`：因果移动平均作为时变水平基准 + SOC 反馈（可在线实现）。\n- 参考解：SOC 网格 + 功率决策网格的**动态规划**（`reference.dp_optimal`），给出全局最优目标值，并对网格分辨率做灵敏度自证。\n\n**工具链**：numpy（向量化 DP/积分）、scipy（无——DP 自实现）、matplotlib（图件）、FastAPI（端点）、pytest（回归）。全部判据由 `pipeline.py` 一次跑完并落 JSON/CSV/PNG。\n\n## ③ 计算结果（数字表）\n\n**(a) 功率分配闭合**\n\n全部 15 组（策略 × 工况）闭合残差最坏值 `0.000e+00`（阈值 1%）。\n\n**(b) 峰值削减（2 h 波浪扰动航段）**\n\n| 窗口 | 步数 | std(P_diesel) [kW] | 相对基线降幅 |\n|---|---|---|---|\n| 1800 s | 30 | 31.00 | 69.66% |\n| 7200 s | 120 | 11.59 | 88.65% |\n\n基线 std = 102.20 kW。\n\n**(c) 负荷优化**\n\n- 解析锚（无约束等水平）：`P* = mean(P_demand)` = 1606.36 kW；解析 SFOC = 195.2941 g/kWh，EMS 达成 195.2941 g/kWh（相对误差 0.000000%）；油耗 627.425 vs 627.425 kg。\n\n| 工况 | DP 全局最优油耗 [kg] | DP 节油 | 策略 | 策略油耗 [kg] | 策略节油 | SFOC 相对 DP | 可行 |\n|---|---|---|---|---|---|---|---|\n| two_level | 556.14 | 2.97% | load_optimization | 560.89 | 2.15% | 0.901% | True |\n| two_level | 556.14 | 2.97% | load_optimization_soc_feedback | 559.98 | 2.31% | 0.736% | True |\n| two_level | 556.14 | 2.97% | load_optimization_moving_horizon | 557.69 | 2.70% | 0.325% | True |\n| mixed_24h | 6192.53 | 0.93% | load_optimization | 6255.08 | -0.07% | 1.007% | True |\n| mixed_24h | 6192.53 | 0.93% | load_optimization_soc_feedback | 6250.68 | -0.00% | 0.936% | True |\n| mixed_24h | 6192.53 | 0.93% | load_optimization_moving_horizon | 6248.02 | 0.04% | 0.893% | True |\n\nDP 网格灵敏度（数值误差自证）：\n\n| 工况 | 粗网格 | 细网格 | 目标值相对散布 |\n|---|---|---|---|\n| two_level | 81×101→556.05 kg, 161×201→556.14 kg | 0.017% |\n| mixed_24h | 81×101→6192.65 kg, 161×201→6192.53 kg | 0.002% |\n\n**(d) 电池模型（SOC 轨迹三路对照）**\n\n- vs 纯库仑计数（V≡V_nom）：0.4009%（阈值 2%）\n- vs RK4 细步参考（每步 20 子步）：0.000000%\n- 恒定功率闭式解自校：0.00e+00（SOC 绝对差）\n- 工况：300 kW(1 h 正弦)+120 kW(20 min 正弦), 2 h, dt=60 s，SOC 偏移 0.1243\n\n**(e) 能量平衡（理想电池判据口径）**\n\n全部 12 组最坏相对误差 `2.088e-08`（阈值 1%）。\n\n工程效率口径（η=0.95，two_level）：SOC 回初值误差 2.07e-10，净电能 -46.209 kWh = −往返损耗 46.209 kWh（符号/量级核对残差 2.08e-07 kWh）。\n\n**(f) 油耗积分**\n\n- 分段常功率 vs 1 s 细分积分：560.8906 vs 556.6718 kg，相对误差 0.7579%\n- 恒定 1500 kW / 2 h 离散 vs 解析：585.000000 vs 585.000000 kg，误差 0.00e+00\n\n**(g) pytest**：42 条通过（阈值 15）。\n\n## ④ 结果图\n\n![fig1_power_split_soc.png](artifacts/hybrid_propulsion/fig1_power_split_soc.png)\n\n**图 1** 24 h 混合营运循环的功率分配与 SOC：需求、等水平/滚动等水平柴油功率、电池功率与 SOC 轨迹（SOC 在窗口内往返并回到初值）。\n\n![fig2_peak_shaving.png](artifacts/hybrid_propulsion/fig2_peak_shaving.png)\n\n**图 2** 2 h 波浪扰动航段的峰值削减：时程对比 + 柴油功率标准差柱状（判据 (b) 要求降幅 > 50%）。\n\n![fig3_load_optimization.png](artifacts/hybrid_propulsion/fig3_load_optimization.png)\n\n**图 3** 负荷-SFOC 曲线与运行点（baseline 散布 vs 优化后收拢）+ 循环油耗与 DP 全局最优的柱状对比。\n\n![fig4_battery_and_criteria.png](artifacts/hybrid_propulsion/fig4_battery_and_criteria.png)\n\n**图 4** 电池 SOC 三路对照（纯库仑计数 / RK4 细步 / 逐步精确积分）与六项机器判据实测值（对数轴，红横线为阈值）。\n\n![fig5_efficiency_sensitivity.png](artifacts/hybrid_propulsion/fig5_efficiency_sensitivity.png)\n\n**图 5** 储能效率敏感性：理想 η=1 与工程 η=0.95 下的循环节油对比。\n\n## ⑤ 注意点（坑 / 局限 / 适用范围）\n\n1. **凸性只在部分区间成立**：`ṁ(P)` 的解析二阶导在 P < 1000 kW 时为负（凹）。因此「等水平最优」只在凸区严格成立，低负荷段必须用 DP 数值复核——本报告两者都给，不把解析结论直接当全局最优。\n2. **净电能为零 ≠ SOC 回初值（η<1）**：真实效率下往返损耗必然表现为净电能或 SOC 的净差额。本模块把两项都摊开（能量恒等式闭合到机器精度），判据 (e) 只在理想电池口径下打勾，工程口径给出损耗数字，不含糊。\n3. **小幅整平可能被往返损耗吃掉**：图 5 显示 2 h 小幅波动工况（需求 std 约 102 kW）在 η=0.95 下节油被损耗抵消甚至转负；只有负荷摆动大的工况（two_level）才有稳定正收益。这是混合推进选型的物理边界，不是算法缺陷。\n4. **长周期小电池工况策略仍逊于 DP**：24 h 混合循环里全局等水平策略几乎不节油（策略与基线的差额见表），DP 全局最优的节油也仅 0.93%；原因是该循环含数小时的低负荷港内段，储能可用能量不足以跨段搬运。要吃到这部分节能需要滚动时域/DP 级调度（列入后续）。\n5. **模型局限**：电池无温度/老化/倍率特性（集总库仑计数）；柴油机油耗为静态负荷-SFOC 曲线，无瞬态响应、最小启停与爬坡率约束；仅并联构型，不含串联/混联与PTO/PTI 轴带；工况为合成参数化循环，结论只在该参数邻域（约 1–2 MW 机组 + 0.5–1 MWh 储能）可信。\n6. **输入功率不计来源**：`P_demand` 由调用方给定（内置合成循环或用户序列），平台不对需求功率做阻力/推进推演，避免隐式耦合。\n\n## ⑥ 误差判定（逐项 vs 基准）\n\n| 判据 | 实测值 | 阈值 | 基准/参照 | 是否达标 |\n|---|---|---|---|---|\n| (a) 功率分配闭合 | 0.0000% | < 1% | 代数恒等式 P_demand=P_diesel+P_batt | 达标 |\n| (b) 峰值削减 std 降幅 | 69.66% | > 50% | baseline（电池不动作） | 达标 |\n| (c) 负荷优化 SFOC | 1.007% | < 5% | 凸优化解析解 P*=mean + DP 全局最优 | 达标 |\n| (d) SOC 轨迹 | 0.4009% | < 2% | 纯库仑计数积分解（V≡V_nom） | 达标 |\n| (e) 能量平衡 ∫P_batt dt | 0.000002% | < 1% | 闭式/逐步精确积分的净电能 | 达标 |\n| (f) 油耗积分 | 0.7579% | < 2% | 1 s 细分积分 + 恒定功率解析解 | 达标 |\n| (g) pytest 条数 | 42 | ≥ 15 | 本模块测试套件 | 达标 |\n\n**关键量是否 < 3%？** (c)(d)(e)(f) 四项最坏相对误差 1.0066%，满足 < 3% 的工程精度要求；(a) 为代数恒等式闭合（机器精度），(b) 为物理效果类指标（降幅越大越好），(g) 为测试计数。DP 与策略之间的油耗差在表 ③(c) 逐项列出，最大的那一格来自长周期小电池工况，已在 ⑤.4 说明原因。\n\n---\n\n**审计链**：`artifacts/hybrid_propulsion/results.json`（全部数值）、`timeseries_mixed_24h.csv`（24 h 时程，含 SOC/SFOC）、`report.json`（判据→数字→工件路径）、`fig1–fig5`（PNG，matplotlib 程序化生成）。复算命令：`cd backend && python -m modules.hybrid_propulsion.pipeline`。\n"
+}
