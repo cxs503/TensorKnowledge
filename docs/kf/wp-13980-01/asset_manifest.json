@@ -1,0 +1,1232 @@
+{
+  "schema": "asset_manifest.v1",
+  "manifest_version": "1.0",
+  "package_id": "wp-13980-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13980",
+  "lane": "C",
+  "generated_at": "2026-11-14T15:40:31Z",
+  "producer": "kf-worker/m20603",
+  "objective": {
+    "register_assets": true,
+    "classify_report_type": false,
+    "extraction_performed": false,
+    "claims_generated": false
+  },
+  "source": {
+    "report_id": "13980",
+    "source_uri": "tensor://reports/13980",
+    "source_field": "markdown",
+    "source_hash": "sha256:2e506d3c8285306a34dd397de133f8c48f6f02a604629adbc0c79eb81ce83ce6",
+    "hash_algo": "sha256",
+    "hash_match": true,
+    "chars": 8267,
+    "bytes_utf8": 11213,
+    "lines": 120,
+    "has_crlf": false,
+    "has_trailing_newline": true,
+    "line_counting": "logical lines = markdown.rstrip('\\n').split('\\n'); 1-based",
+    "fetched_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/13980",
+    "local_copy": "docs/kf/wp-13980-01/source_markdown.md",
+    "fetched_at": "2026-11-14T15:40:26Z",
+    "record_fields": {
+      "id": "13980",
+      "title": "A2-ICE-MODULES 第1轮：冰区端点 8×5 功能全扫（35 真跑 / 5 honest GAP，54 项基准 46 通过）",
+      "scenario_key": "ice_resistance",
+      "mission_id": "14895",
+      "status": "published",
+      "stage": null,
+      "created_at": "2026-11-11T12:25:19.160375+00:00",
+      "created_by": 1,
+      "tags": [
+        "A2-ICE-MODULES",
+        "ice",
+        "endpoint-sweep",
+        "coverage",
+        "m14895"
+      ],
+      "figures": [
+        {
+          "name": "fig1_ice_resistance.png",
+          "caption": "F1 冰阻力：Lindqvist/Riska/MT Uikku 三法交叉与模型形式离散带"
+        },
+        {
+          "name": "fig2_ice_maneuvering.png",
+          "caption": "F2 吊舱冰区回转：战术直径/稳态航速随冰厚（开阔水对照）"
+        },
+        {
+          "name": "fig3_ice_load_inversion.png",
+          "caption": "F4 冰载荷反演：真值 vs 反演峰值（2% 应变噪声，误差 0.35%）"
+        },
+        {
+          "name": "fig4_polaris.png",
+          "caption": "F5 POLARIS：assess RIV 与 IMO MSC.1/Circ.1519 矩阵逐条一致"
+        },
+        {
+          "name": "fig5_marine_icing.png",
+          "caption": "F6 海洋结冰率 vs 风速（IMO IS Code 6.35 mm/h 重结冰参考线）"
+        },
+        {
+          "name": "fig6_grease_envelope.png",
+          "caption": "F7 油脂冰操作包络：5 档功率的 φ_limit–V 边界"
+        },
+        {
+          "name": "fig7_ice_cii.png",
+          "caption": "F8 冰区 CII：观测/修正/要求值与评级迁移（φ 扫描）"
+        },
+        {
+          "name": "fig8_coverage.png",
+          "caption": "A2-ICE-MODULES 8×5 覆盖矩阵：35 OK / 5 honest GAP"
+        }
+      ],
+      "title_matches_contract": true,
+      "scenario_matches_contract": true
+    }
+  },
+  "counts": {
+    "assets": 28,
+    "by_class": {
+      "artifact_reference": 2,
+      "endpoint": 7,
+      "endpoint_declared_absent": 1,
+      "figure": 8,
+      "parameter_block": 1,
+      "script_reference": 4,
+      "source_document": 1,
+      "table": 4
+    },
+    "by_resolution": {
+      "declared_absent": 1,
+      "referenced_unresolved": 6,
+      "resolved_in_source": 21
+    },
+    "resolved_in_source": 21,
+    "metadata_only": 0,
+    "referenced_unresolved": 6,
+    "declared_absent": 1,
+    "claims": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "source_document",
+      "label": "tensor_reports[13980].markdown",
+      "in_report_section": "document",
+      "family": null,
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "document_bytes_pinned_locally",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 10,
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "## ① 案例与参数",
+        "quote_sha256": "d7325917c4dd2288cfdb63ed46870ec88d7ca24469fa3c1375b875bd104633d7",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "sha256": "2e506d3c8285306a34dd397de133f8c48f6f02a604629adbc0c79eb81ce83ce6",
+      "bytes_utf8": 11213,
+      "note": "verbatim markdown of report 13980; whole-document asset, quote = first line"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "figure",
+      "label": "fig1_ice_resistance.png",
+      "in_report_section": "④ 结果图",
+      "family": "F1_ice_resistance",
+      "family_label": "F1 冰阻力",
+      "caption": "F1 冰阻力：Lindqvist/Riska/MT Uikku 三法交叉与模型形式离散带",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "section_token_in_source + png_bytes_fetched",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7040,
+        "end_char": 7112,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "8 幅（见图注与内嵌 png）：F1 三法交叉、F2 回转、F3 反演、F4 POLARIS、F5 结冰率、F6 包络、F7 CII、覆盖矩阵。",
+        "quote_sha256": "f30ebde2b5250f3ed5d71ecac36c3d7fd12ee26b0cbd1f88c006322018619776",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "token": "F1 三法交叉",
+        "token_char_span": [
+          16,
+          23
+        ],
+        "token_sha256": "53d83c4461c2242afd54d67870ee343994ef419afd435c4212680697c2f15afa"
+      },
+      "platform_bytes": {
+        "endpoint": "/tensor/reports/13980/figures/fig1_ice_resistance.png",
+        "http_status": 200,
+        "bytes": 67289,
+        "sha256": "3eb8eb758f102e720ba83ac94fd84943c914dde00b516487d31a897f4380d350",
+        "fetched_at": "2026-11-14T15:40:26Z",
+        "bytes_committed": false
+      },
+      "labels": {
+        "section_label": "F1",
+        "caption_label": "F1"
+      },
+      "note": "figure bytes pinned by hash from the platform figures endpoint; the PNG itself is not committed (registration pins identity, not pixels)"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "figure",
+      "label": "fig2_ice_maneuvering.png",
+      "in_report_section": "④ 结果图",
+      "family": "F2_ice_maneuvering",
+      "family_label": "F2 冰区操纵(吊舱回转)",
+      "caption": "F2 吊舱冰区回转：战术直径/稳态航速随冰厚（开阔水对照）",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "section_token_in_source + png_bytes_fetched",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7040,
+        "end_char": 7112,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "8 幅（见图注与内嵌 png）：F1 三法交叉、F2 回转、F3 反演、F4 POLARIS、F5 结冰率、F6 包络、F7 CII、覆盖矩阵。",
+        "quote_sha256": "f30ebde2b5250f3ed5d71ecac36c3d7fd12ee26b0cbd1f88c006322018619776",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "token": "F2 回转",
+        "token_char_span": [
+          24,
+          29
+        ],
+        "token_sha256": "2d4566dbe72edf5518b8bc5cebd7cd18665b9e27caac3077e56322798c9d8e85"
+      },
+      "platform_bytes": {
+        "endpoint": "/tensor/reports/13980/figures/fig2_ice_maneuvering.png",
+        "http_status": 200,
+        "bytes": 57488,
+        "sha256": "de86c71fca70ac8652b4479cb1ea74d37909bb510f34d76a4204ed452aa870c2",
+        "fetched_at": "2026-11-14T15:40:26Z",
+        "bytes_committed": false
+      },
+      "labels": {
+        "section_label": "F2",
+        "caption_label": "F2"
+      },
+      "note": "figure bytes pinned by hash from the platform figures endpoint; the PNG itself is not committed (registration pins identity, not pixels)"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "figure",
+      "label": "fig3_ice_load_inversion.png",
+      "in_report_section": "④ 结果图",
+      "family": "F4_ice_load_inversion",
+      "family_label": "F4 冰载荷反演(砰击/冰激载荷)",
+      "caption": "F4 冰载荷反演：真值 vs 反演峰值（2% 应变噪声，误差 0.35%）",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "section_token_in_source + png_bytes_fetched",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7040,
+        "end_char": 7112,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "8 幅（见图注与内嵌 png）：F1 三法交叉、F2 回转、F3 反演、F4 POLARIS、F5 结冰率、F6 包络、F7 CII、覆盖矩阵。",
+        "quote_sha256": "f30ebde2b5250f3ed5d71ecac36c3d7fd12ee26b0cbd1f88c006322018619776",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "token": "F3 反演",
+        "token_char_span": [
+          30,
+          35
+        ],
+        "token_sha256": "07995c14bc9c8af30c03c1f086aecc6ff8bf896ec23dbf669fb2bafb52ce6ac8"
+      },
+      "platform_bytes": {
+        "endpoint": "/tensor/reports/13980/figures/fig3_ice_load_inversion.png",
+        "http_status": 200,
+        "bytes": 48256,
+        "sha256": "802a5f17d89ce9a8b85e212379c3b1b8c9f88db6a29879492d062629f370c511",
+        "fetched_at": "2026-11-14T15:40:26Z",
+        "bytes_committed": false
+      },
+      "labels": {
+        "section_label": "F3",
+        "caption_label": "F4"
+      },
+      "note": "figure bytes pinned by hash from the platform figures endpoint; the PNG itself is not committed (registration pins identity, not pixels)"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "figure",
+      "label": "fig4_polaris.png",
+      "in_report_section": "④ 结果图",
+      "family": "F5_polaris",
+      "family_label": "F5 极地操作限制 POLARIS",
+      "caption": "F5 POLARIS：assess RIV 与 IMO MSC.1/Circ.1519 矩阵逐条一致",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "section_token_in_source + png_bytes_fetched",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7040,
+        "end_char": 7112,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "8 幅（见图注与内嵌 png）：F1 三法交叉、F2 回转、F3 反演、F4 POLARIS、F5 结冰率、F6 包络、F7 CII、覆盖矩阵。",
+        "quote_sha256": "f30ebde2b5250f3ed5d71ecac36c3d7fd12ee26b0cbd1f88c006322018619776",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "token": "F4 POLARIS",
+        "token_char_span": [
+          36,
+          46
+        ],
+        "token_sha256": "b35256a3056cb6ff5468730fb891b0905a9656263da5ff7d0eb77bfd5cc4980b"
+      },
+      "platform_bytes": {
+        "endpoint": "/tensor/reports/13980/figures/fig4_polaris.png",
+        "http_status": 200,
+        "bytes": 38794,
+        "sha256": "05213abb0806b3986d410558f1adb8c74ee099eba8e9046b8199048c6e099fc5",
+        "fetched_at": "2026-11-14T15:40:26Z",
+        "bytes_committed": false
+      },
+      "labels": {
+        "section_label": "F4",
+        "caption_label": "F5"
+      },
+      "note": "figure bytes pinned by hash from the platform figures endpoint; the PNG itself is not committed (registration pins identity, not pixels)"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "figure",
+      "label": "fig5_marine_icing.png",
+      "in_report_section": "④ 结果图",
+      "family": "F6_marine_icing",
+      "family_label": "F6 海洋结冰稳性",
+      "caption": "F6 海洋结冰率 vs 风速（IMO IS Code 6.35 mm/h 重结冰参考线）",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "section_token_in_source + png_bytes_fetched",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7040,
+        "end_char": 7112,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "8 幅（见图注与内嵌 png）：F1 三法交叉、F2 回转、F3 反演、F4 POLARIS、F5 结冰率、F6 包络、F7 CII、覆盖矩阵。",
+        "quote_sha256": "f30ebde2b5250f3ed5d71ecac36c3d7fd12ee26b0cbd1f88c006322018619776",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "token": "F5 结冰率",
+        "token_char_span": [
+          47,
+          53
+        ],
+        "token_sha256": "a0922aa2f1318abc3ef684e544d32ddee881f918c22236e0b03bc499c8cf245e"
+      },
+      "platform_bytes": {
+        "endpoint": "/tensor/reports/13980/figures/fig5_marine_icing.png",
+        "http_status": 200,
+        "bytes": 53056,
+        "sha256": "fc5cec1c3e2756069ff03d46235f4b2c72f36f79e5145e7fe0217c5c6622b95f",
+        "fetched_at": "2026-11-14T15:40:26Z",
+        "bytes_committed": false
+      },
+      "labels": {
+        "section_label": "F5",
+        "caption_label": "F6"
+      },
+      "note": "figure bytes pinned by hash from the platform figures endpoint; the PNG itself is not committed (registration pins identity, not pixels)"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "figure",
+      "label": "fig6_grease_envelope.png",
+      "in_report_section": "④ 结果图",
+      "family": "F7_grease_ice",
+      "family_label": "F7 油脂冰操作包络",
+      "caption": "F7 油脂冰操作包络：5 档功率的 φ_limit–V 边界",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "section_token_in_source + png_bytes_fetched",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7040,
+        "end_char": 7112,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "8 幅（见图注与内嵌 png）：F1 三法交叉、F2 回转、F3 反演、F4 POLARIS、F5 结冰率、F6 包络、F7 CII、覆盖矩阵。",
+        "quote_sha256": "f30ebde2b5250f3ed5d71ecac36c3d7fd12ee26b0cbd1f88c006322018619776",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "token": "F6 包络",
+        "token_char_span": [
+          54,
+          59
+        ],
+        "token_sha256": "69ac5644d735dc9659011567be0538d018a2afdc34dc604ded820b288e9f853b"
+      },
+      "platform_bytes": {
+        "endpoint": "/tensor/reports/13980/figures/fig6_grease_envelope.png",
+        "http_status": 200,
+        "bytes": 75410,
+        "sha256": "d7316a5cf4322b4946ca159132eaa880b5e0897e61fc025c4d159815a99764ef",
+        "fetched_at": "2026-11-14T15:40:26Z",
+        "bytes_committed": false
+      },
+      "labels": {
+        "section_label": "F6",
+        "caption_label": "F7"
+      },
+      "note": "figure bytes pinned by hash from the platform figures endpoint; the PNG itself is not committed (registration pins identity, not pixels)"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "figure",
+      "label": "fig7_ice_cii.png",
+      "in_report_section": "④ 结果图",
+      "family": "F8_ice_cii",
+      "family_label": "F8 冰区 CII 修正",
+      "caption": "F8 冰区 CII：观测/修正/要求值与评级迁移（φ 扫描）",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "section_token_in_source + png_bytes_fetched",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7040,
+        "end_char": 7112,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "8 幅（见图注与内嵌 png）：F1 三法交叉、F2 回转、F3 反演、F4 POLARIS、F5 结冰率、F6 包络、F7 CII、覆盖矩阵。",
+        "quote_sha256": "f30ebde2b5250f3ed5d71ecac36c3d7fd12ee26b0cbd1f88c006322018619776",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "token": "F7 CII",
+        "token_char_span": [
+          60,
+          66
+        ],
+        "token_sha256": "cb01a9c158c68a554d2f60d4622c48b6d65f2f0af73b39c2a4d66928ba96d506"
+      },
+      "platform_bytes": {
+        "endpoint": "/tensor/reports/13980/figures/fig7_ice_cii.png",
+        "http_status": 200,
+        "bytes": 48110,
+        "sha256": "09d12437dcbb7018344626f5c4de790c15abc60b69d9b0315afd03d3418cd0ce",
+        "fetched_at": "2026-11-14T15:40:26Z",
+        "bytes_committed": false
+      },
+      "labels": {
+        "section_label": "F7",
+        "caption_label": "F8"
+      },
+      "note": "figure bytes pinned by hash from the platform figures endpoint; the PNG itself is not committed (registration pins identity, not pixels)"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "figure",
+      "label": "fig8_coverage.png",
+      "in_report_section": "④ 结果图",
+      "family": "coverage",
+      "family_label": "覆盖矩阵",
+      "caption": "A2-ICE-MODULES 8×5 覆盖矩阵：35 OK / 5 honest GAP",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "section_token_in_source + png_bytes_fetched",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7040,
+        "end_char": 7112,
+        "start_line": 97,
+        "end_line": 97,
+        "quote": "8 幅（见图注与内嵌 png）：F1 三法交叉、F2 回转、F3 反演、F4 POLARIS、F5 结冰率、F6 包络、F7 CII、覆盖矩阵。",
+        "quote_sha256": "f30ebde2b5250f3ed5d71ecac36c3d7fd12ee26b0cbd1f88c006322018619776",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "token": "覆盖矩阵",
+        "token_char_span": [
+          67,
+          71
+        ],
+        "token_sha256": "3fd332dccaae935d58c4bf16db184b01fb74033a01017ab7872dea85f2210345"
+      },
+      "platform_bytes": {
+        "endpoint": "/tensor/reports/13980/figures/fig8_coverage.png",
+        "http_status": 200,
+        "bytes": 31831,
+        "sha256": "0772181d49698ec6ae9c9569fe06fd98564f842d5662aa6e1f1078c0b8cc4e3f",
+        "fetched_at": "2026-11-14T15:40:26Z",
+        "bytes_committed": false
+      },
+      "labels": {
+        "section_label": null,
+        "caption_label": null
+      },
+      "note": "figure bytes pinned by hash from the platform figures endpoint; the PNG itself is not committed (registration pins identity, not pixels)"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "table",
+      "label": "coverage matrix (8 families x 5 conditions: 真跑/基准/GAP)",
+      "in_report_section": "③ 计算结果",
+      "family": null,
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "table_header_in_source",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 734,
+        "end_char": 773,
+        "start_line": 18,
+        "end_line": 18,
+        "quote": "| 族 | 冰区能力 | 端点 | 工况 | 真跑 | 基准通过 | 状态 |",
+        "quote_sha256": "17105d3e2e8d5a56a4675ec2759848f00ca7690f1f372c7e3a9763fa5d1d77b2",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "block_lines": [
+          18,
+          27
+        ]
+      },
+      "table_key": "coverage_matrix",
+      "note": "markdown table block; header line pinned, block extent lines 18-27"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "table",
+      "label": "per-condition core quantities under the coverage matrix",
+      "in_report_section": "③ 计算结果",
+      "family": null,
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "table_header_in_source",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1571,
+        "end_char": 1591,
+        "start_line": 31,
+        "end_line": 31,
+        "quote": "| 族 | 工况 | 核心量 | 值 |",
+        "quote_sha256": "a43a950bfa9b9ed3ae37b0bc0f27d947e5d3168b5bfd28bcb69d1d78d5c600e2",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "block_lines": [
+          31,
+          72
+        ]
+      },
+      "table_key": "core_quantities",
+      "note": "markdown table block; header line pinned, block extent lines 31-72"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "table",
+      "label": "benchmark table excerpt (54 scored items; full table in benchmarks.csv)",
+      "in_report_section": "③ 计算结果",
+      "family": null,
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "table_header_in_source",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 4448,
+        "end_char": 4499,
+        "start_line": 75,
+        "end_line": 75,
+        "quote": "family,quantity,ref,got,error,threshold,pass,anchor",
+        "quote_sha256": "eccb369ca3d4e586d28d7002dcce0db7faffaf0f4cb04c5d90c1dfb11ab8b942",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "block_lines": [
+          75,
+          94
+        ]
+      },
+      "table_key": "benchmark_excerpt",
+      "note": "markdown table block; header line pinned, block extent lines 75-94"
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "table",
+      "label": "§⑥ error judgement: key quantity vs baseline, <3% answered per item",
+      "in_report_section": "⑥ 误差判定",
+      "family": null,
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "table_header_in_source",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 7611,
+        "end_char": 7637,
+        "start_line": 109,
+        "end_line": 109,
+        "quote": "| 关键量 | 基准 | 误差 | 是否 <3% |",
+        "quote_sha256": "d44dd635672933e7c75fe079fd21884d688a5f4d81d519cbe0273ea2e1c349a4",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0,
+        "block_lines": [
+          109,
+          120
+        ]
+      },
+      "table_key": "error_judgement",
+      "note": "markdown table block; header line pinned, block extent lines 109-120"
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "parameter_block",
+      "label": "reference ship Baltic 1A 145 m principal particulars",
+      "in_report_section": "① 案例与参数",
+      "family": null,
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "parameter_line_in_source",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 146,
+        "end_char": 200,
+        "start_line": 4,
+        "end_line": 4,
+        "quote": "Lpp/Lwl/B/T/Cb = 145/148/21.5/7.2/0.75，排水体积 16834.5 m³",
+        "quote_sha256": "de10da04f55b6acb5571f5d3f544d06f485d940b857722e5e4de0558232c88be",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "note": "Lpp/Lwl/B/T/Cb = 145/148/21.5/7.2/0.75, displacement volume 16834.5 m3 (17255.4 t)"
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "endpoint",
+      "label": "/api/v1/ice-navigation/resistance",
+      "in_report_section": "③ 计算结果",
+      "family": "F1_ice_resistance",
+      "family_label": "F1 冰阻力",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "path_in_source + route_presence_probe",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 833,
+        "end_char": 866,
+        "start_line": 20,
+        "end_line": 20,
+        "quote": "/api/v1/ice-navigation/resistance",
+        "quote_sha256": "500d29aa1bdf20cfc7167be60f396ad8169ee957157d79aeb26188152c4e942c",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "route_probe": {
+        "url": "http://127.0.0.1:8002/api/v1/ice-navigation/resistance",
+        "method": "POST",
+        "body": "{}",
+        "probed_at": "2026-11-14T15:40:26Z",
+        "status": 422,
+        "route_present": true
+      },
+      "note": "endpoint path printed in the coverage matrix; route presence probed on the target platform (422/405/200 = present, 404 = absent)"
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "endpoint",
+      "label": "/api/v1/podded-ice-maneuvering/turning",
+      "in_report_section": "③ 计算结果",
+      "family": "F2_ice_maneuvering",
+      "family_label": "F2 冰区操纵(吊舱回转)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "path_in_source + route_presence_probe",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 933,
+        "end_char": 971,
+        "start_line": 21,
+        "end_line": 21,
+        "quote": "/api/v1/podded-ice-maneuvering/turning",
+        "quote_sha256": "518ab887aaa6fab431c0f7b28328824f6201b8af42f254fc0f826b9b6b578422",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "route_probe": {
+        "url": "http://127.0.0.1:8002/api/v1/podded-ice-maneuvering/turning",
+        "method": "POST",
+        "body": "{}",
+        "probed_at": "2026-11-14T15:40:26Z",
+        "status": 200,
+        "route_present": true
+      },
+      "note": "endpoint path printed in the coverage matrix; route presence probed on the target platform (422/405/200 = present, 404 = absent)"
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "endpoint",
+      "label": "/api/v1/calculations/ice-load-inversion",
+      "in_report_section": "③ 计算结果",
+      "family": "F4_ice_load_inversion",
+      "family_label": "F4 冰载荷反演(砰击/冰激载荷)",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "path_in_source + route_presence_probe",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1111,
+        "end_char": 1150,
+        "start_line": 23,
+        "end_line": 23,
+        "quote": "/api/v1/calculations/ice-load-inversion",
+        "quote_sha256": "c6f26818987b16f450b9ed776df6dbaa15c10c86f106251e3f49b83b3b25a08a",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "route_probe": {
+        "url": "http://127.0.0.1:8002/api/v1/calculations/ice-load-inversion",
+        "method": "POST",
+        "body": "{}",
+        "probed_at": "2026-11-14T15:40:29Z",
+        "status": 422,
+        "route_present": true
+      },
+      "note": "endpoint path printed in the coverage matrix; route presence probed on the target platform (422/405/200 = present, 404 = absent)"
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "endpoint",
+      "label": "/api/v1/polaris/assess",
+      "in_report_section": "③ 计算结果",
+      "family": "F5_polaris",
+      "family_label": "F5 极地操作限制 POLARIS",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "path_in_source + route_presence_probe",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1212,
+        "end_char": 1234,
+        "start_line": 24,
+        "end_line": 24,
+        "quote": "/api/v1/polaris/assess",
+        "quote_sha256": "9dbb545e6b9045a23e37be00547ba3cbf5bfa3dfe380b6aa1b8a1cda4064c822",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "route_probe": {
+        "url": "http://127.0.0.1:8002/api/v1/polaris/assess",
+        "method": "POST",
+        "body": "{}",
+        "probed_at": "2026-11-14T15:40:29Z",
+        "status": 422,
+        "route_present": true
+      },
+      "note": "endpoint path printed in the coverage matrix; route presence probed on the target platform (422/405/200 = present, 404 = absent)"
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "endpoint",
+      "label": "/api/v1/calculations/marine-icing-stability",
+      "in_report_section": "③ 计算结果",
+      "family": "F6_marine_icing",
+      "family_label": "F6 海洋结冰稳性",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "path_in_source + route_presence_probe",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1293,
+        "end_char": 1336,
+        "start_line": 25,
+        "end_line": 25,
+        "quote": "/api/v1/calculations/marine-icing-stability",
+        "quote_sha256": "5ba8a924e836efaaf81cbd059675906344e07181ac974e7322002421d8ef8941",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "route_probe": {
+        "url": "http://127.0.0.1:8002/api/v1/calculations/marine-icing-stability",
+        "method": "POST",
+        "body": "{}",
+        "probed_at": "2026-11-14T15:40:29Z",
+        "status": 422,
+        "route_present": true
+      },
+      "note": "endpoint path printed in the coverage matrix; route presence probed on the target platform (422/405/200 = present, 404 = absent)"
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "endpoint",
+      "label": "/api/v1/calculations/grease_ice_envelope",
+      "in_report_section": "③ 计算结果",
+      "family": "F7_grease_ice",
+      "family_label": "F7 油脂冰操作包络",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "path_in_source + route_presence_probe",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1394,
+        "end_char": 1434,
+        "start_line": 26,
+        "end_line": 26,
+        "quote": "/api/v1/calculations/grease_ice_envelope",
+        "quote_sha256": "50a2e5ec070eea5098fbdfdf1d580d1a305bda0e31d1071ee56ecb4a5e094ea6",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "route_probe": {
+        "url": "http://127.0.0.1:8002/api/v1/calculations/grease_ice_envelope",
+        "method": "POST",
+        "body": "{}",
+        "probed_at": "2026-11-14T15:40:29Z",
+        "status": 200,
+        "route_present": true
+      },
+      "note": "endpoint path printed in the coverage matrix; route presence probed on the target platform (422/405/200 = present, 404 = absent)"
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "endpoint",
+      "label": "/api/v1/calculations/cii-ice-correction",
+      "in_report_section": "③ 计算结果",
+      "family": "F8_ice_cii",
+      "family_label": "F8 冰区 CII 修正",
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "path_in_source + route_presence_probe",
+        "result": "resolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1491,
+        "end_char": 1530,
+        "start_line": 27,
+        "end_line": 27,
+        "quote": "/api/v1/calculations/cii-ice-correction",
+        "quote_sha256": "36955a710e4eff8c25ae36ad51e93c1ac79dbdcd2b11576de81b70246c7361fe",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "route_probe": {
+        "url": "http://127.0.0.1:8002/api/v1/calculations/cii-ice-correction",
+        "method": "POST",
+        "body": "{}",
+        "probed_at": "2026-11-14T15:40:31Z",
+        "status": 200,
+        "route_present": true
+      },
+      "note": "endpoint path printed in the coverage matrix; route presence probed on the target platform (422/405/200 = present, 404 = absent)"
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "endpoint_declared_absent",
+      "label": "ice-mooring endpoint (drift load / mooring load)",
+      "in_report_section": "③ 计算结果",
+      "family": "F3_ice_mooring",
+      "family_label": "F3 冰区系泊(冰漂移/系泊载荷)",
+      "resolution": "declared_absent",
+      "resolution_check": {
+        "check": "report_declares_endpoint=None + absence_probe",
+        "result": "absent"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 1002,
+        "end_char": 1066,
+        "start_line": 22,
+        "end_line": 22,
+        "quote": "| F3_ice_mooring | 冰区系泊(冰漂移/系泊载荷) | `None` | 5 | 0 | 0/0 | GAP |",
+        "quote_sha256": "b70a3a488eb5a07edd2874fc0683df85f72fe18c4375395074c33ba9f4c7dbdc",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "absence_probe": {
+        "probed_at": "2026-11-14T15:40:31Z",
+        "rule": "POST {} : 422/405/200 = route exists, 404 = route absent",
+        "candidates": [
+          {
+            "url": "http://127.0.0.1:8002/api/v1/ice-mooring/loads",
+            "method": "POST",
+            "body": "{}",
+            "probed_at": "2026-11-14T15:40:31Z",
+            "status": 404,
+            "route_present": false
+          },
+          {
+            "url": "http://127.0.0.1:8002/api/v1/calculations/ice-mooring",
+            "method": "POST",
+            "body": "{}",
+            "probed_at": "2026-11-14T15:40:31Z",
+            "status": 404,
+            "route_present": false
+          },
+          {
+            "url": "http://127.0.0.1:8002/api/v1/ice-mooring/drift-loads",
+            "method": "POST",
+            "body": "{}",
+            "probed_at": "2026-11-14T15:40:31Z",
+            "status": 404,
+            "route_present": false
+          },
+          {
+            "url": "http://127.0.0.1:8002/api/v1/calculations/ice-drift-mooring",
+            "method": "POST",
+            "body": "{}",
+            "probed_at": "2026-11-14T15:40:31Z",
+            "status": 404,
+            "route_present": false
+          },
+          {
+            "url": "http://127.0.0.1:8002/api/v1/ice-navigation/mooring-loads",
+            "method": "POST",
+            "body": "{}",
+            "probed_at": "2026-11-14T15:40:31Z",
+            "status": 404,
+            "route_present": false
+          }
+        ]
+      },
+      "note": "report row prints endpoint=None (5/5 conditions NOT_SUPPORTED); 5 candidate routes probed, so the gap is evidenced rather than asserted"
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "script_reference",
+      "label": "runs/ice_8x5/run_sweep.py",
+      "in_report_section": "② 方法与流程",
+      "family": null,
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "path_in_source + worktree_exists",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 257,
+        "end_char": 282,
+        "start_line": 8,
+        "end_line": 8,
+        "quote": "runs/ice_8x5/run_sweep.py",
+        "quote_sha256": "057e9e640cc6693dbb562e1544ace01d1050722467ad0838d0b7cfa0964ce52d",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "worktree_path": "runs/ice_8x5/run_sweep.py",
+      "worktree_exists": false,
+      "note": "path text resolved in the report; the script belongs to the report's mission run environment, not to the TensorKnowledge worktree, so no bytes are pinned"
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "script_reference",
+      "label": "cross_method.py",
+      "in_report_section": "② 方法与流程",
+      "family": null,
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "path_in_source + worktree_exists",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 306,
+        "end_char": 321,
+        "start_line": 8,
+        "end_line": 8,
+        "quote": "cross_method.py",
+        "quote_sha256": "5475e61d4f99e3080fe96dfa108f70e0006e8b1e991cb24ab762bd116b22859d",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "worktree_path": "cross_method.py",
+      "worktree_exists": false,
+      "note": "path text resolved in the report; the script belongs to the report's mission run environment, not to the TensorKnowledge worktree, so no bytes are pinned"
+    },
+    {
+      "asset_id": "A25",
+      "asset_class": "script_reference",
+      "label": "make_tables.py",
+      "in_report_section": "② 方法与流程",
+      "family": null,
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "path_in_source + worktree_exists",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 340,
+        "end_char": 354,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "make_tables.py",
+        "quote_sha256": "eb5d1c289d2a42e552e057c7de60eb713eca10b1ec3911460132565672a2e037",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "worktree_path": "make_tables.py",
+      "worktree_exists": false,
+      "note": "path text resolved in the report; the script belongs to the report's mission run environment, not to the TensorKnowledge worktree, so no bytes are pinned"
+    },
+    {
+      "asset_id": "A26",
+      "asset_class": "script_reference",
+      "label": "tests/test_ice_8x5_sweep.py",
+      "in_report_section": "② 方法与流程",
+      "family": null,
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "path_in_source + worktree_exists",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 431,
+        "end_char": 458,
+        "start_line": 10,
+        "end_line": 10,
+        "quote": "tests/test_ice_8x5_sweep.py",
+        "quote_sha256": "3f13d642329f5468f22e4add768b87e77400f13b581a6912ea4c24737229ca47",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "worktree_path": "tests/test_ice_8x5_sweep.py",
+      "worktree_exists": false,
+      "note": "path text resolved in the report; the script belongs to the report's mission run environment, not to the TensorKnowledge worktree, so no bytes are pinned"
+    },
+    {
+      "asset_id": "A27",
+      "asset_class": "artifact_reference",
+      "label": "results.csv",
+      "in_report_section": "③ 计算结果",
+      "family": null,
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "name_in_source + worktree_exists",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 370,
+        "end_char": 381,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "results.csv",
+        "quote_sha256": "fb6ea6b34482e0dfd54057f70eb173a0bafac6e74b49c4b33d253c52340d957e",
+        "unique": true,
+        "occurrences": 1,
+        "occurrence_index": 0
+      },
+      "worktree_path": "runs/ice_8x5/results.csv",
+      "worktree_exists": false,
+      "note": "programmatic output of the report's own sweep; not part of this repository, occurrences in source = 1"
+    },
+    {
+      "asset_id": "A28",
+      "asset_class": "artifact_reference",
+      "label": "benchmarks.csv",
+      "in_report_section": "③ 计算结果",
+      "family": null,
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "name_in_source + worktree_exists",
+        "result": "unresolved"
+      },
+      "locator": {
+        "method": "char_span",
+        "start_char": 384,
+        "end_char": 398,
+        "start_line": 9,
+        "end_line": 9,
+        "quote": "benchmarks.csv",
+        "quote_sha256": "123af5703dfd5a9a15711602758ddf2940296a55fa01535c66ec799e096a8658",
+        "unique": false,
+        "occurrences": 2,
+        "occurrence_index": 0
+      },
+      "worktree_path": "runs/ice_8x5/benchmarks.csv",
+      "worktree_exists": false,
+      "note": "programmatic output of the report's own sweep; not part of this repository, occurrences in source = 2"
+    }
+  ],
+  "figures": {
+    "items": [
+      {
+        "asset_id": "A02",
+        "name": "fig1_ice_resistance.png",
+        "family": "F1_ice_resistance",
+        "sha256": "3eb8eb758f102e720ba83ac94fd84943c914dde00b516487d31a897f4380d350",
+        "bytes": 67289,
+        "http_status": 200,
+        "section_label": "F1",
+        "caption_label": "F1"
+      },
+      {
+        "asset_id": "A03",
+        "name": "fig2_ice_maneuvering.png",
+        "family": "F2_ice_maneuvering",
+        "sha256": "de86c71fca70ac8652b4479cb1ea74d37909bb510f34d76a4204ed452aa870c2",
+        "bytes": 57488,
+        "http_status": 200,
+        "section_label": "F2",
+        "caption_label": "F2"
+      },
+      {
+        "asset_id": "A04",
+        "name": "fig3_ice_load_inversion.png",
+        "family": "F4_ice_load_inversion",
+        "sha256": "802a5f17d89ce9a8b85e212379c3b1b8c9f88db6a29879492d062629f370c511",
+        "bytes": 48256,
+        "http_status": 200,
+        "section_label": "F3",
+        "caption_label": "F4"
+      },
+      {
+        "asset_id": "A05",
+        "name": "fig4_polaris.png",
+        "family": "F5_polaris",
+        "sha256": "05213abb0806b3986d410558f1adb8c74ee099eba8e9046b8199048c6e099fc5",
+        "bytes": 38794,
+        "http_status": 200,
+        "section_label": "F4",
+        "caption_label": "F5"
+      },
+      {
+        "asset_id": "A06",
+        "name": "fig5_marine_icing.png",
+        "family": "F6_marine_icing",
+        "sha256": "fc5cec1c3e2756069ff03d46235f4b2c72f36f79e5145e7fe0217c5c6622b95f",
+        "bytes": 53056,
+        "http_status": 200,
+        "section_label": "F5",
+        "caption_label": "F6"
+      },
+      {
+        "asset_id": "A07",
+        "name": "fig6_grease_envelope.png",
+        "family": "F7_grease_ice",
+        "sha256": "d7316a5cf4322b4946ca159132eaa880b5e0897e61fc025c4d159815a99764ef",
+        "bytes": 75410,
+        "http_status": 200,
+        "section_label": "F6",
+        "caption_label": "F7"
+      },
+      {
+        "asset_id": "A08",
+        "name": "fig7_ice_cii.png",
+        "family": "F8_ice_cii",
+        "sha256": "09d12437dcbb7018344626f5c4de790c15abc60b69d9b0315afd03d3418cd0ce",
+        "bytes": 48110,
+        "http_status": 200,
+        "section_label": "F7",
+        "caption_label": "F8"
+      },
+      {
+        "asset_id": "A09",
+        "name": "fig8_coverage.png",
+        "family": "coverage",
+        "sha256": "0772181d49698ec6ae9c9569fe06fd98564f842d5662aa6e1f1078c0b8cc4e3f",
+        "bytes": 31831,
+        "http_status": 200,
+        "section_label": null,
+        "caption_label": null
+      }
+    ],
+    "label_alignment": {
+      "compared": 8,
+      "aligned": 3,
+      "mismatch": 5,
+      "note": "§④ numbers its own list F1..F7 sequentially while record captions keep family numbers (F3_ice_mooring is the honest GAP, so captions F4..F8 sit against section F3..F7). Family binding is made by caption semantics, not by figure number; the mismatch is recorded here rather than silently repaired in the source."
+    }
+  },
+  "claims": [],
+  "claims_empty_reason": "Task type is 01-asset-registration: this package pins source bytes and registers asset identity/locators only. objective.classify_report_type=false, objective.extraction_performed=false. Claim extraction is the 03-knowledge-extraction stage and independent review is the 04 stage, so an empty claims array is the complete result of this stage, not an omission.",
+  "observations": [
+    "Source identity holds: sha256 sha256:2e506d3c8285306a34dd397de133f8c48f6f02a604629adbc0c79eb81ce83ce6 recomputed from the committed copy (8267 chars / 11213 utf-8 bytes / 120 lines).",
+    "All 8 figures the platform record declares are registered and their PNG bytes were fetched and hashed from /tensor/reports/13980/figures/<name>.",
+    "§④ figure numbering and record caption numbering disagree for 5/8 figures (F3_ice_mooring is the honest GAP); family binding uses caption semantics and the mismatch is recorded, not repaired.",
+    "F3 ice-mooring is registered as declared_absent with 5 probed candidate routes.",
+    "6 referenced paths (mission-run scripts/artefacts) stay unresolved by design: they belong to the report's run environment, not to this repo.",
+    "No extraction and no verified marks: status stays draft for the platform gate."
+  ],
+  "integrity": {
+    "quote_uniqueness": {
+      "quotes_total": 28,
+      "quotes_unique": 27,
+      "quotes_multi_occurrence": 1,
+      "all_resolvable_by_occurrence_index": true
+    },
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true,
+    "chars_matches_contract": true,
+    "title_matches_contract": true,
+    "scenario_matches_contract": true,
+    "id_duplicates": [],
+    "id_count": 28,
+    "id_format_ok": true,
+    "report_scope": "single report: tensor://reports/13980; no other report id is registered by this package"
+  }
+}
