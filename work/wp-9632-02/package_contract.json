@@ -1,0 +1,48 @@
+{
+  "package_id": "wp-9632-02",
+  "task_type": "02-classification-parse",
+  "contract_version": "1.0",
+  "mission_id": null,
+  "lane": "B",
+  "input": {
+    "report_id": "9632",
+    "source_uri": "tensor://reports/9632",
+    "source_field": "markdown",
+    "source_hash": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+    "title": "IN101-N07 冰脊固结热力学：龙骨大孔隙再冻结与固结度-阻力耦合",
+    "scenario_key": "ice_ridge_consolidation",
+    "chars": 10749
+  },
+  "objective": {
+    "classify_report_type": true,
+    "register_assets": false
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true
+  },
+  "output": {
+    "classification.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_locator_resolvable": true,
+    "source_hash_matches": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true
+  },
+  "review": {
+    "required": false,
+    "independent_reviewer": false,
+    "reviewer_role": "document-analyst"
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "draft"
+  },
+  "notes": "给报告打类型/主题标签，给出判定依据的原文片段定位；不做抽取。 ｜分层=IN101-N07|ice_ridge_consolidation|l"
+}
