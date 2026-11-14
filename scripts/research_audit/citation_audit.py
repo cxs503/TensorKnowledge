@@ -85,8 +85,7 @@ def audit_markdown(path: str | Path) -> dict[str, Any]:
             "severity": severity,
             "summary": summary,
             "rationale": summary,
-            "evidence_refs": [evidence_ref],
-            "review_state": "unreviewed",
+                "review_state": "unreviewed",
             "limitations": ["This is a structural citation check, not a semantic source-support judgment."],
             "locator": {"line_numbers": line_numbers},
         })
