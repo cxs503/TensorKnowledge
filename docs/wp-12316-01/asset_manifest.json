@@ -1,0 +1,567 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-12316-01",
+  "task_type": "01-asset-registration",
+  "report_id": "12316",
+  "source": {
+    "uri": "tensor://reports/12316",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "65f8acb5dfe8a1d34dabae2a3d2225ef74b825201ecd9b7be7359b2d687cd34c",
+    "chars": 1805,
+    "bytes_utf8": 2662,
+    "title": "WP-12316-01: Matured Mission Deliverables — KF Pipeline Demonstration",
+    "scenario_key": "kf_pipeline_demo",
+    "platform_figures": [],
+    "platform_tags": [
+      "KF",
+      "asset-registration",
+      "pipeline-demo",
+      "matured-deliverables"
+    ]
+  },
+  "counts": {
+    "assets": 24,
+    "by_class": {
+      "source_document": 1,
+      "reference_table": 1,
+      "parameter_table": 1,
+      "code_module": 2,
+      "registration_script": 1,
+      "verification_script": 1,
+      "publish_script": 1,
+      "schema_file": 2,
+      "deliverable_artifact": 3,
+      "figure": 1,
+      "documentation": 1,
+      "repro_command_block": 1,
+      "test_file": 1,
+      "reference_standard": 1,
+      "reference_dataset": 1,
+      "comparison_table": 1,
+      "convergence_section": 1,
+      "worktree_path": 1,
+      "schema_pinned": 1,
+      "mission_ref": 1
+    },
+    "by_resolution": {
+      "resolved_in_source": 13,
+      "referenced_unresolved": 11
+    },
+    "resolved_in_source": 13,
+    "referenced_unresolved": 11,
+    "declared_absent": 0
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "source_document",
+      "label": "report.md（本包登记的源报告 markdown）",
+      "in_report_section": "## ① 问题与参考值出处",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 71,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "# WP-12316-01: Matured Mission Deliverables — KF Pipeline Demonstration",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Whole-document locator: span covers the entire pinned markdown."
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "reference_table",
+      "label": "§① 参考值表（C_T / C_F / 1+k）",
+      "in_report_section": "## ① 问题与参考值出处",
+      "locator": {
+        "method": "char_span",
+        "start_char": 276,
+        "end_char": 437,
+        "start_line": 8,
+        "end_line": 12,
+        "quote": "| 量 | 参考值 | 来源 |\n|---|---|---|\n| C_T (Re=3.0×10⁶) | 3.82×10⁻³ | ITTC-78 经验公式 |\n| C_F (Re=3.0×10⁶) | 2.96×10⁻³ | ITTC-1957 摩擦线 |\n| 形状因子 (1+k) | 1.29 | KVLCC2 基准 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Table embedded in source; registered by position."
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "parameter_table",
+      "label": "§③ 参数表（Re/Fr/L_pp/B/T/C_b）",
+      "in_report_section": "## ③ 参数表（无量纲数完整）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 879,
+        "end_char": 1021,
+        "start_line": 28,
+        "end_line": 35,
+        "quote": "| 参数 | 值 | 单位 |\n|---|---|---|\n| Re | 3.0×10⁶ | — |\n| Fr | 0.142 | — |\n| L_pp | 230 | m |\n| B | 32.2 | m |\n| T | 14.5 | m |\n| C_b | 0.810 | — |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Parameter table embedded in source."
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "code_module",
+      "label": "ke/store.py（知识引擎存储层）",
+      "in_report_section": "## ② 方法与实现（已完成的真实部分）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 489,
+        "end_char": 532,
+        "start_line": 18,
+        "end_line": 18,
+        "quote": "- `ke/store.py`：知识引擎存储层（REAL 能力，已在 ke/ 目录下）",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "ke/store.py exists in this worktree but is not part of this package's deliverables."
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "code_module",
+      "label": "ke/api.py（知识引擎 API 层）",
+      "in_report_section": "## ② 方法与实现（已完成的真实部分）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 533,
+        "end_char": 566,
+        "start_line": 19,
+        "end_line": 19,
+        "quote": "- `ke/api.py`：知识引擎 API 层（REAL 能力）",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "ke/api.py exists in this worktree but is not part of this package's deliverables."
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "registration_script",
+      "label": "scripts/kf_register_12316.py（本包新增资产登记脚本）",
+      "in_report_section": "## ② 方法与实现（已完成的真实部分）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1597,
+        "end_char": 1632,
+        "start_line": 63,
+        "end_line": 63,
+        "quote": "python scripts/kf_register_12316.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "Script being created by this package."
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "verification_script",
+      "label": "scripts/kf_verify_12316.py（本包新增独立验证脚本）",
+      "in_report_section": "## ② 方法与实现（已完成的真实部分）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1650,
+        "end_char": 1693,
+        "start_line": 66,
+        "end_line": 66,
+        "quote": "python scripts/kf_verify_12316.py --offline",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "Script being created by this package."
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "publish_script",
+      "label": "scripts/kf_publish_12316.py（本包新增发布脚本）",
+      "in_report_section": "## ② 方法与实现（已完成的真实部分）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1706,
+        "end_char": 1740,
+        "start_line": 69,
+        "end_line": 69,
+        "quote": "python scripts/kf_publish_12316.py",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "Script being created by this package."
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "schema_file",
+      "label": "schemas/asset_manifest.v1.schema.json（资产清单 schema）",
+      "in_report_section": "## ② 方法与实现（已完成的真实部分）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 757,
+        "end_char": 810,
+        "start_line": 23,
+        "end_line": 23,
+        "quote": "- `schemas/asset_manifest.v1.schema.json`：资产清单 schema",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "Schema file in worktree canonical location."
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "schema_file",
+      "label": "schemas/kf_result.v1.schema.json（结果信封 schema）",
+      "in_report_section": "## ② 方法与实现（已完成的真实部分）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 811,
+        "end_char": 859,
+        "start_line": 24,
+        "end_line": 24,
+        "quote": "- `schemas/kf_result.v1.schema.json`：结果信封 schema",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "Schema file in worktree canonical location."
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "deliverable_artifact",
+      "label": "asset_manifest.json（本包产出：资产清单）",
+      "in_report_section": "## ⑥ 失败模式与工件",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1294,
+        "end_char": 1354,
+        "start_line": 53,
+        "end_line": 53,
+        "quote": "| asset_manifest.json | resolved_in_source | 本包产出，24 项资产登记 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Primary deliverable of this package."
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "deliverable_artifact",
+      "label": "kf_result.wp-12316-01.json（本包产出：结果信封）",
+      "in_report_section": "## ⑥ 失败模式与工件",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1355,
+        "end_char": 1413,
+        "start_line": 54,
+        "end_line": 54,
+        "quote": "| kf_result.wp-12316-01.json | resolved_in_source | 结果信封 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Result envelope deliverable."
+    },
+    {
+      "asset_id": "A13",
+      "asset_class": "deliverable_artifact",
+      "label": "verification.json（本包产出：验证结果）",
+      "in_report_section": "## ⑥ 失败模式与工件",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1414,
+        "end_char": 1463,
+        "start_line": 55,
+        "end_line": 55,
+        "quote": "| verification.json | resolved_in_source | 验证结果 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Verification results deliverable."
+    },
+    {
+      "asset_id": "A14",
+      "asset_class": "figure",
+      "label": "fig1_registration_map.png（资产登记映射图）",
+      "in_report_section": "## ⑥ 失败模式与工件",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1464,
+        "end_char": 1524,
+        "start_line": 56,
+        "end_line": 56,
+        "quote": "| fig1_registration_map.png | resolved_in_source | 资产登记映射图 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Figure showing asset registration map."
+    },
+    {
+      "asset_id": "A15",
+      "asset_class": "documentation",
+      "label": "README.md（本包说明文档）",
+      "in_report_section": "## ⑥ 失败模式与工件",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1525,
+        "end_char": 1568,
+        "start_line": 57,
+        "end_line": 57,
+        "quote": "| README.md | resolved_in_source | 本包说明文档 |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Package documentation."
+    },
+    {
+      "asset_id": "A16",
+      "asset_class": "repro_command_block",
+      "label": "§7 复现命令块（4 段命令）",
+      "in_report_section": "## 7 复现",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1578,
+        "end_char": 1751,
+        "start_line": 60,
+        "end_line": 71,
+        "quote": "\n```bash\n# 1. 登记资产\npython scripts/kf_register_12316.py\n\n# 2. 独立验证（离线模式）\npython scripts/kf_verify_12316.py --offline\n\n# 3. 发布到平台\npython scripts/kf_publish_12316.py\n\n# 4. 运行测试",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Reproduction commands embedded in source."
+    },
+    {
+      "asset_id": "A17",
+      "asset_class": "test_file",
+      "label": "tests/test_kf_wp_12316_01.py（本包测试文件）",
+      "in_report_section": "## 7 复现",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1752,
+        "end_char": 1800,
+        "start_line": 72,
+        "end_line": 72,
+        "quote": "python -m pytest tests/test_kf_wp_12316_01.py -v",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "Test file being created by this package."
+    },
+    {
+      "asset_id": "A18",
+      "asset_class": "reference_standard",
+      "label": "ITTC 推荐程序 7.5-02-02-01.4（自航模型试验阻力分解）",
+      "in_report_section": "## ① 问题与参考值出处",
+      "locator": {
+        "method": "char_span",
+        "start_char": 197,
+        "end_char": 274,
+        "start_line": 6,
+        "end_line": 6,
+        "quote": "**参考值来源**：ITTC 推荐程序 7.5-02-02-01.4（自航模型试验阻力分解），以及 Tokyo 2015 研讨会 KVLCC2 基准数据。",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "External standard; not fetchable by this package."
+    },
+    {
+      "asset_id": "A19",
+      "asset_class": "reference_dataset",
+      "label": "Tokyo 2015 研讨会 KVLCC2 基准数据",
+      "in_report_section": "## ① 问题与参考值出处",
+      "locator": {
+        "method": "char_span",
+        "start_char": 197,
+        "end_char": 274,
+        "start_line": 6,
+        "end_line": 6,
+        "quote": "**参考值来源**：ITTC 推荐程序 7.5-02-02-01.4（自航模型试验阻力分解），以及 Tokyo 2015 研讨会 KVLCC2 基准数据。",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "External dataset; not fetchable by this package."
+    },
+    {
+      "asset_id": "A20",
+      "asset_class": "comparison_table",
+      "label": "§④ 对照表（ref vs got + 逐项误差）—— 留空",
+      "in_report_section": "## ④ 对照表",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1023,
+        "end_char": 1112,
+        "start_line": 37,
+        "end_line": 39,
+        "quote": "## ④ 对照表（ref vs got + 逐项误差）\n\n本包为 01-asset-registration 工序，不产生数值结果对照。对照表留空，由后续 03/04 工序填充。",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Table present but intentionally empty for task_type=01."
+    },
+    {
+      "asset_id": "A21",
+      "asset_class": "convergence_section",
+      "label": "§⑤ 收敛性/参数敏感性 —— 留待后续工序",
+      "in_report_section": "## ⑤ 收敛性/参数敏感性",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1114,
+        "end_char": 1128,
+        "start_line": 41,
+        "end_line": 41,
+        "quote": "## ⑤ 收敛性/参数敏感性",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Section present but deferred to later工序."
+    },
+    {
+      "asset_id": "A22",
+      "asset_class": "worktree_path",
+      "label": "docs/wp-12316-01/（本包工作目录）",
+      "in_report_section": "## ⑥ 失败模式与工件",
+      "locator": {
+        "method": "char_span",
+        "start_char": 1253,
+        "end_char": 1261,
+        "start_line": 49,
+        "end_line": 49,
+        "quote": "### 工件清单",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Package directory within the worktree."
+    },
+    {
+      "asset_id": "A23",
+      "asset_class": "schema_pinned",
+      "label": "asset_manifest.v1.schema.json（本包内嵌 schema 副本）",
+      "in_report_section": "## ② 方法与实现（已完成的真实部分）",
+      "locator": {
+        "method": "char_span",
+        "start_char": 757,
+        "end_char": 810,
+        "start_line": 23,
+        "end_line": 23,
+        "quote": "- `schemas/asset_manifest.v1.schema.json`：资产清单 schema",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "resolved"
+      },
+      "note": "Pinned copy of the schema for offline validation."
+    },
+    {
+      "asset_id": "A24",
+      "asset_class": "mission_ref",
+      "label": "任务锚 m20334（PR#262 重开）",
+      "in_report_section": "## ① 问题与参考值出处",
+      "locator": {
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 71,
+        "start_line": 0,
+        "end_line": 0,
+        "quote": "# WP-12316-01: Matured Mission Deliverables — KF Pipeline Demonstration",
+        "unique": true
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "anchor_lookup",
+        "result": "unresolved"
+      },
+      "note": "Mission reference; not a resolvable artifact."
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": true,
+    "hash_recomputed_locally": true,
+    "hash_matches_contract": true
+  }
+}
