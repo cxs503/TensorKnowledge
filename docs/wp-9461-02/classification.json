@@ -1,0 +1,1277 @@
+{
+  "schema": "kf-classification/v1",
+  "package_id": "wp-9461-02",
+  "task_type": "02-classification-parse",
+  "report_id": "9461",
+  "report_type": "experimental-validation",
+  "report_type_label_zh": "实验验证",
+  "report_type_alternatives": [
+    {
+      "report_type": "algorithm-implementation",
+      "rank": 2,
+      "confidence": "high",
+      "rejected_because": "the report validates rather than specifies an algorithm; no pseudocode/complexity analysis",
+      "evidence": [
+        {
+          "locator_id": "e01",
+          "locator_type": "char_offset",
+          "value": "chars[54:109) line 3",
+          "start_offset": 54,
+          "end_offset": 109,
+          "line": 3,
+          "quote": "**被测模块**：`backend/modules/green_navigation/eeoi_cii.py`",
+          "content_hash": "sha256:7c895a79b812239007e9591c066d6d68737e1a601d95ae4af1c20564d2aaa67c"
+        },
+        {
+          "locator_id": "e02",
+          "locator_type": "char_offset",
+          "value": "chars[197:243) line 5",
+          "start_offset": 197,
+          "end_offset": 243,
+          "line": 5,
+          "quote": "**测试**：`tests/test_eeoi_cii_m8189.py`（24 项，全绿）",
+          "content_hash": "sha256:7ac60830633aa73ec657277a0b654f591717dbd588a8dde29db534b0a7c38ea3"
+        }
+      ]
+    },
+    {
+      "report_type": "scientific-computation",
+      "rank": 3,
+      "confidence": "medium",
+      "rejected_because": "numerics are used as a check on a closed-form chain, not as the subject",
+      "evidence": [
+        {
+          "locator_id": "e08",
+          "locator_type": "char_offset",
+          "value": "chars[9742:9791) line 275",
+          "start_offset": 9742,
+          "end_offset": 9791,
+          "line": 275,
+          "quote": "非整周期工况 `P(t)=20000+4000·sin(2πt/37h) kW, T=240h`：",
+          "content_hash": "sha256:ef86cac15be9770241f0b8369b515637730598228f02cccbc564db5e8ac355c2"
+        }
+      ]
+    }
+  ],
+  "report_type_decision_rule": {
+    "primary": "argmax over (does the body state a pre-declared criterion set + per-criterion verdicts against a baseline?) — experimental-validation requires both; both present.",
+    "registry_signal_match_used_as_evidence": false,
+    "why_not": "all six registry types match 0 cardinal signals on this Chinese report (see registry_signal_probe); classification therefore rests on structural evidence."
+  },
+  "selected_skill_id": "xsk-experimental-validation",
+  "selected_skill_version": "0.1.0",
+  "selected_skill_lifecycle_state": "template-created",
+  "language": "zh",
+  "scenario_key": "green-navigation.eeoi_cii",
+  "topic_labels": [
+    {
+      "tag": "green-navigation",
+      "facet": "domain",
+      "basis": [
+        {
+          "locator_id": "e12",
+          "locator_type": "char_offset",
+          "value": "chars[476:509) line 17",
+          "start_offset": 476,
+          "end_offset": 509,
+          "line": 17,
+          "quote": "**CII/AER**（碳强度指标，MEPC.353(78) G1",
+          "content_hash": "sha256:df32414c0301e96cd5cf15794b56e5b455c26ae877a4e8ac408c9a7ff513027d"
+        }
+      ]
+    },
+    {
+      "tag": "green-navigation.eeoi_cii",
+      "facet": "scenario",
+      "basis": [
+        {
+          "locator_id": "e12",
+          "locator_type": "char_offset",
+          "value": "chars[476:509) line 17",
+          "start_offset": 476,
+          "end_offset": 509,
+          "line": 17,
+          "quote": "**CII/AER**（碳强度指标，MEPC.353(78) G1",
+          "content_hash": "sha256:df32414c0301e96cd5cf15794b56e5b455c26ae877a4e8ac408c9a7ff513027d"
+        },
+        {
+          "locator_id": "e11",
+          "locator_type": "char_offset",
+          "value": "chars[2646:2680) line 77",
+          "start_offset": 2646,
+          "end_offset": 2680,
+          "line": 77,
+          "quote": "`required_evidence_grade=WITHHELD`",
+          "content_hash": "sha256:9f6910358694b938130d1daf8b8e17acfdf3214e38ad3ee5dd755d5d6941c7d4"
+        }
+      ]
+    },
+    {
+      "tag": "metric:EEOI",
+      "facet": "metric",
+      "basis": [
+        {
+          "locator_id": "e17",
+          "locator_type": "char_offset",
+          "value": "chars[1731:1769) line 61",
+          "start_offset": 1731,
+          "end_offset": 1769,
+          "line": 61,
+          "quote": "| (a) 能量 | `trapz(power_kw, time_h)` |",
+          "content_hash": "sha256:cc7903b5f479813e15290be78e074b313903861741111c548a16d1886ec2fa9f"
+        }
+      ]
+    },
+    {
+      "tag": "metric:CII-AER",
+      "facet": "metric",
+      "basis": [
+        {
+          "locator_id": "e12",
+          "locator_type": "char_offset",
+          "value": "chars[476:509) line 17",
+          "start_offset": 476,
+          "end_offset": 509,
+          "line": 17,
+          "quote": "**CII/AER**（碳强度指标，MEPC.353(78) G1",
+          "content_hash": "sha256:df32414c0301e96cd5cf15794b56e5b455c26ae877a4e8ac408c9a7ff513027d"
+        },
+        {
+          "locator_id": "e13",
+          "locator_type": "char_offset",
+          "value": "chars[4255:4289) line 131",
+          "start_offset": 4255,
+          "end_offset": 4289,
+          "line": 131,
+          "quote": "### 3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+          "content_hash": "sha256:39aa459642a2c6651b6bd890e15db7bd8e8a756b16a658322e8dc833c31ec88f"
+        }
+      ]
+    },
+    {
+      "tag": "method:numerical-integration",
+      "facet": "method",
+      "basis": [
+        {
+          "locator_id": "e08",
+          "locator_type": "char_offset",
+          "value": "chars[9742:9791) line 275",
+          "start_offset": 9742,
+          "end_offset": 9791,
+          "line": 275,
+          "quote": "非整周期工况 `P(t)=20000+4000·sin(2πt/37h) kW, T=240h`：",
+          "content_hash": "sha256:ef86cac15be9770241f0b8369b515637730598228f02cccbc564db5e8ac355c2"
+        },
+        {
+          "locator_id": "e09",
+          "locator_type": "char_offset",
+          "value": "chars[10081:10119) line 285",
+          "start_offset": 10081,
+          "end_offset": 10119,
+          "line": 285,
+          "quote": "| 321 | 0.75 | 4846961.4 | 1.312e-05 |",
+          "content_hash": "sha256:5181d69f8b37cbc29efb02825e531d2b69c8aaad69daa631de4573033b61e316"
+        }
+      ]
+    },
+    {
+      "tag": "validation:internal-closed-form-only",
+      "facet": "evidence-caliber",
+      "basis": [
+        {
+          "locator_id": "e05",
+          "locator_type": "char_offset",
+          "value": "chars[8066:8143) line 236",
+          "start_offset": 8066,
+          "end_offset": 8143,
+          "line": 236,
+          "quote": "| A2 燃料消耗偏差 | 数值链 vs 闭式解 F=SFOC·P·T | 0.000e+00（+0.0000%） | < 1% | **PASS** |",
+          "content_hash": "sha256:d7cf75b2f1cdaefe2d14ba0369c7c0bc0e6c11eb2b2d590d4d63bda82438f24e"
+        },
+        {
+          "locator_id": "e15",
+          "locator_type": "char_offset",
+          "value": "chars[7793:7821) line 224",
+          "start_offset": 7793,
+          "end_offset": 7821,
+          "line": 224,
+          "quote": "IMO GHG Study 4 (2020) 基准未取得",
+          "content_hash": "sha256:6574968638fdfa04292677828098eef02dbfa2daafbff54294d9ee1b7a6fcda5"
+        },
+        {
+          "locator_id": "e06",
+          "locator_type": "char_offset",
+          "value": "chars[8780:8793) line 250",
+          "start_offset": 8780,
+          "end_offset": 8793,
+          "line": 250,
+          "quote": "**> 3%（不满足）**",
+          "content_hash": "sha256:d2a095d54084363c66af892ee1e8759977eeb6efc26bb5e83b91f849e0b4825c"
+        }
+      ]
+    },
+    {
+      "tag": "discipline:绿色航行",
+      "facet": "ship-engineering-discipline",
+      "basis": [
+        {
+          "locator_id": "e12",
+          "locator_type": "char_offset",
+          "value": "chars[476:509) line 17",
+          "start_offset": 476,
+          "end_offset": 509,
+          "line": 17,
+          "quote": "**CII/AER**（碳强度指标，MEPC.353(78) G1",
+          "content_hash": "sha256:df32414c0301e96cd5cf15794b56e5b455c26ae877a4e8ac408c9a7ff513027d"
+        }
+      ]
+    }
+  ],
+  "structure": {
+    "segmentation_method": "regex heading split on ^(#{1,3}) to next heading; char offsets over the UTF-8-decoded markdown (Python str offsets, i.e. code points)",
+    "total_chars": 10571,
+    "section_count": 22,
+    "sections": [
+      {
+        "section_id": "s01",
+        "level": 1,
+        "heading": "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）"
+        ],
+        "start_offset": 0,
+        "end_offset": 367,
+        "chars": 367,
+        "start_line": 1,
+        "end_line": 11
+      },
+      {
+        "section_id": "s02",
+        "level": 2,
+        "heading": "1 案例介绍",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍"
+        ],
+        "start_offset": 367,
+        "end_offset": 378,
+        "chars": 11,
+        "start_line": 11,
+        "end_line": 13
+      },
+      {
+        "section_id": "s03",
+        "level": 3,
+        "heading": "1.1 物理背景",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景"
+        ],
+        "start_offset": 378,
+        "end_offset": 997,
+        "chars": 619,
+        "start_line": 13,
+        "end_line": 32
+      },
+      {
+        "section_id": "s04",
+        "level": 3,
+        "heading": "1.2 几何与设计点（KVLCC2）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）"
+        ],
+        "start_offset": 997,
+        "end_offset": 1663,
+        "chars": 666,
+        "start_line": 32,
+        "end_line": 55
+      },
+      {
+        "section_id": "s05",
+        "level": 2,
+        "heading": "2 怎么做的",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "2 怎么做的"
+        ],
+        "start_offset": 1663,
+        "end_offset": 1674,
+        "chars": 11,
+        "start_line": 55,
+        "end_line": 57
+      },
+      {
+        "section_id": "s06",
+        "level": 3,
+        "heading": "2.1 方法链（全部纯函数、可标量复算）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）"
+        ],
+        "start_offset": 1674,
+        "end_offset": 2715,
+        "chars": 1041,
+        "start_line": 57,
+        "end_line": 79
+      },
+      {
+        "section_id": "s07",
+        "level": 3,
+        "heading": "2.2 工具链与可复现性",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性"
+        ],
+        "start_offset": 2715,
+        "end_offset": 3027,
+        "chars": 312,
+        "start_line": 79,
+        "end_line": 86
+      },
+      {
+        "section_id": "s08",
+        "level": 3,
+        "heading": "2.3 实验设计（预声明判据）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）"
+        ],
+        "start_offset": 3027,
+        "end_offset": 3378,
+        "chars": 351,
+        "start_line": 86,
+        "end_line": 99
+      },
+      {
+        "section_id": "s09",
+        "level": 2,
+        "heading": "3 计算结果",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "2 怎么做的",
+          "3 计算结果"
+        ],
+        "start_offset": 3378,
+        "end_offset": 3389,
+        "chars": 11,
+        "start_line": 99,
+        "end_line": 101
+      },
+      {
+        "section_id": "s10",
+        "level": 3,
+        "heading": "3.1 航次闭环（满载基准航次）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）"
+        ],
+        "start_offset": 3389,
+        "end_offset": 3827,
+        "chars": 438,
+        "start_line": 101,
+        "end_line": 113
+      },
+      {
+        "section_id": "s11",
+        "level": 3,
+        "heading": "3.2 往返航次（含压载段，EEOI 的唯一完整口径）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）",
+          "3.2 往返航次（含压载段，EEOI 的唯一完整口径）"
+        ],
+        "start_offset": 3827,
+        "end_offset": 4255,
+        "chars": 428,
+        "start_line": 113,
+        "end_line": 131
+      },
+      {
+        "section_id": "s12",
+        "level": 3,
+        "heading": "3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）",
+          "3.2 往返航次（含压载段，EEOI 的唯一完整口径）",
+          "3.3 年度 CII 与 A–E 评级（6 个往返航次/年）"
+        ],
+        "start_offset": 4255,
+        "end_offset": 4962,
+        "chars": 707,
+        "start_line": 131,
+        "end_line": 146
+      },
+      {
+        "section_id": "s13",
+        "level": 3,
+        "heading": "3.4 评级边界逐点校核（ratios 由 required 反推）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）",
+          "3.2 往返航次（含压载段，EEOI 的唯一完整口径）",
+          "3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+          "3.4 评级边界逐点校核（ratios 由 required 反推）"
+        ],
+        "start_offset": 4962,
+        "end_offset": 5572,
+        "chars": 610,
+        "start_line": 146,
+        "end_line": 164
+      },
+      {
+        "section_id": "s14",
+        "level": 3,
+        "heading": "3.5 航速灵敏度（定进距律 P ∝ V^k）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）",
+          "3.2 往返航次（含压载段，EEOI 的唯一完整口径）",
+          "3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+          "3.4 评级边界逐点校核（ratios 由 required 反推）",
+          "3.5 航速灵敏度（定进距律 P ∝ V^k）"
+        ],
+        "start_offset": 5572,
+        "end_offset": 6298,
+        "chars": 726,
+        "start_line": 164,
+        "end_line": 184
+      },
+      {
+        "section_id": "s15",
+        "level": 3,
+        "heading": "3.6 图",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）",
+          "3.2 往返航次（含压载段，EEOI 的唯一完整口径）",
+          "3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+          "3.4 评级边界逐点校核（ratios 由 required 反推）",
+          "3.5 航速灵敏度（定进距律 P ∝ V^k）",
+          "3.6 图"
+        ],
+        "start_offset": 6298,
+        "end_offset": 6855,
+        "chars": 557,
+        "start_line": 184,
+        "end_line": 205
+      },
+      {
+        "section_id": "s16",
+        "level": 2,
+        "heading": "4 注意点（踩过的坑与局限）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "2 怎么做的",
+          "3 计算结果",
+          "4 注意点（踩过的坑与局限）"
+        ],
+        "start_offset": 6855,
+        "end_offset": 7888,
+        "chars": 1033,
+        "start_line": 205,
+        "end_line": 229
+      },
+      {
+        "section_id": "s17",
+        "level": 2,
+        "heading": "5 误差判定",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "2 怎么做的",
+          "3 计算结果",
+          "4 注意点（踩过的坑与局限）",
+          "5 误差判定"
+        ],
+        "start_offset": 7888,
+        "end_offset": 7899,
+        "chars": 11,
+        "start_line": 229,
+        "end_line": 231
+      },
+      {
+        "section_id": "s18",
+        "level": 3,
+        "heading": "5.1 判据逐项",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）",
+          "3.2 往返航次（含压载段，EEOI 的唯一完整口径）",
+          "3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+          "3.4 评级边界逐点校核（ratios 由 required 反推）",
+          "3.5 航速灵敏度（定进距律 P ∝ V^k）",
+          "3.6 图",
+          "4 注意点（踩过的坑与局限）",
+          "5 误差判定",
+          "5.1 判据逐项"
+        ],
+        "start_offset": 7899,
+        "end_offset": 8507,
+        "chars": 608,
+        "start_line": 231,
+        "end_line": 243
+      },
+      {
+        "section_id": "s19",
+        "level": 3,
+        "heading": "5.2 是否 < 3%？（逐项显式回答）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）",
+          "3.2 往返航次（含压载段，EEOI 的唯一完整口径）",
+          "3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+          "3.4 评级边界逐点校核（ratios 由 required 反推）",
+          "3.5 航速灵敏度（定进距律 P ∝ V^k）",
+          "3.6 图",
+          "4 注意点（踩过的坑与局限）",
+          "5 误差判定",
+          "5.1 判据逐项",
+          "5.2 是否 < 3%？（逐项显式回答）"
+        ],
+        "start_offset": 8507,
+        "end_offset": 9015,
+        "chars": 508,
+        "start_line": 243,
+        "end_line": 256
+      },
+      {
+        "section_id": "s20",
+        "level": 3,
+        "heading": "5.3 honest 声明（未完成/不可验证部分）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）",
+          "3.2 往返航次（含压载段，EEOI 的唯一完整口径）",
+          "3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+          "3.4 评级边界逐点校核（ratios 由 required 反推）",
+          "3.5 航速灵敏度（定进距律 P ∝ V^k）",
+          "3.6 图",
+          "4 注意点（踩过的坑与局限）",
+          "5 误差判定",
+          "5.1 判据逐项",
+          "5.2 是否 < 3%？（逐项显式回答）",
+          "5.3 honest 声明（未完成/不可验证部分）"
+        ],
+        "start_offset": 9015,
+        "end_offset": 9715,
+        "chars": 700,
+        "start_line": 256,
+        "end_line": 273
+      },
+      {
+        "section_id": "s21",
+        "level": 3,
+        "heading": "5.4 数值积分收敛表（对照，含混叠陷阱）",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "1.1 物理背景",
+          "1.2 几何与设计点（KVLCC2）",
+          "2 怎么做的",
+          "2.1 方法链（全部纯函数、可标量复算）",
+          "2.2 工具链与可复现性",
+          "2.3 实验设计（预声明判据）",
+          "3 计算结果",
+          "3.1 航次闭环（满载基准航次）",
+          "3.2 往返航次（含压载段，EEOI 的唯一完整口径）",
+          "3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+          "3.4 评级边界逐点校核（ratios 由 required 反推）",
+          "3.5 航速灵敏度（定进距律 P ∝ V^k）",
+          "3.6 图",
+          "4 注意点（踩过的坑与局限）",
+          "5 误差判定",
+          "5.1 判据逐项",
+          "5.2 是否 < 3%？（逐项显式回答）",
+          "5.3 honest 声明（未完成/不可验证部分）",
+          "5.4 数值积分收敛表（对照，含混叠陷阱）"
+        ],
+        "start_offset": 9715,
+        "end_offset": 10215,
+        "chars": 500,
+        "start_line": 273,
+        "end_line": 295
+      },
+      {
+        "section_id": "s22",
+        "level": 2,
+        "heading": "6 结论",
+        "heading_path": [
+          "EEOI 与 CII 营运指标闭环验证（m8189 / 节点 p48w3-n09-eeoi-cii）",
+          "1 案例介绍",
+          "2 怎么做的",
+          "3 计算结果",
+          "4 注意点（踩过的坑与局限）",
+          "5 误差判定",
+          "6 结论"
+        ],
+        "start_offset": 10215,
+        "end_offset": 10571,
+        "chars": 356,
+        "start_line": 295,
+        "end_line": 305
+      }
+    ],
+    "machine_readable_appendix_present": false,
+    "note": "No fenced machine-readable block in the source; §3 tables are pipe tables only."
+  },
+  "registry_signal_probe": {
+    "registry_version": "1.0",
+    "method": "case-insensitive substring count of registry identify_signals in source markdown; 'citation density >= N per 1000 chars' evaluated as MEPC./Circ. token density",
+    "per_type": {
+      "literature-review": {
+        "skill_id": "xsk-literature-review",
+        "signals": [
+          {
+            "signal": "related work",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "state of the art",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "survey",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "bibliography",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "citation density >= 5 per 1000 chars",
+            "measured": 2.18,
+            "threshold": 5.0,
+            "hit": false
+          }
+        ],
+        "matched": 0
+      },
+      "scientific-computation": {
+        "skill_id": "xsk-scientific-computation",
+        "signals": [
+          {
+            "signal": "governing equations",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "discretisation",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "convergence study",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "mesh refinement",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "timing table",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          }
+        ],
+        "matched": 0
+      },
+      "algorithm-implementation": {
+        "skill_id": "xsk-algorithm-implementation",
+        "signals": [
+          {
+            "signal": "pseudocode",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "complexity",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "algorithm block",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "function signature",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "O(n",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          }
+        ],
+        "matched": 0
+      },
+      "software-engineering": {
+        "skill_id": "xsk-software-engineering",
+        "signals": [
+          {
+            "signal": "changed files",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "commit",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "interface",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "regression",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "API",
+            "measured": 2,
+            "threshold": 1,
+            "hit": true
+          }
+        ],
+        "matched": 1
+      },
+      "technical-proposal": {
+        "skill_id": "xsk-technical-proposal",
+        "signals": [
+          {
+            "signal": "proposal",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "design",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "roadmap",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "specification",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "plan",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          }
+        ],
+        "matched": 0
+      },
+      "experimental-validation": {
+        "skill_id": "xsk-experimental-validation",
+        "signals": [
+          {
+            "signal": "test matrix",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "facility",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "measurement uncertainty",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "validation case",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          },
+          {
+            "signal": "baseline comparison",
+            "measured": 0,
+            "threshold": 1,
+            "hit": false
+          }
+        ],
+        "matched": 0
+      }
+    },
+    "conclusion": "All six types match 0 of their cardinal signals on this Chinese-language report; only incidental English tokens appear (software-engineering: 'API' x2; literature-review: citation density 2.18 < 5.0). Registry signal matching is therefore inconclusive here and is NOT used as the deciding evidence."
+  },
+  "classification_assertions": [
+    {
+      "assertion_id": "c01",
+      "facet": "report_type.primary",
+      "assertion": "Report type is experimental-validation: the report validates an existing module against pre-declared acceptance criteria and analytic/external baselines.",
+      "confidence": "high",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e01",
+          "locator_type": "char_offset",
+          "value": "chars[54:109) line 3",
+          "start_offset": 54,
+          "end_offset": 109,
+          "line": 3,
+          "quote": "**被测模块**：`backend/modules/green_navigation/eeoi_cii.py`",
+          "content_hash": "sha256:7c895a79b812239007e9591c066d6d68737e1a601d95ae4af1c20564d2aaa67c"
+        },
+        {
+          "locator_id": "e03",
+          "locator_type": "char_offset",
+          "value": "chars[3048:3075) line 88",
+          "start_offset": 3048,
+          "end_offset": 3075,
+          "line": 88,
+          "quote": "判据在**看结果前**已按战役 metadata 固定",
+          "content_hash": "sha256:930bc376df4888ee4542e3dbae0a67e1a69a94a39a83ce4371bb2b00e9839d23"
+        },
+        {
+          "locator_id": "e04",
+          "locator_type": "char_offset",
+          "value": "chars[3106:3138) line 89",
+          "start_offset": 3106,
+          "end_offset": 3138,
+          "line": 89,
+          "quote": "A3 EEOI 偏差 < 15%；A4 评级与 IMO 阈值一致",
+          "content_hash": "sha256:e54e323677ebd6929a05bd004658d2d0e9cfc54dc599ecce2ac6f4d6ace5ddc7"
+        },
+        {
+          "locator_id": "e05",
+          "locator_type": "char_offset",
+          "value": "chars[8066:8143) line 236",
+          "start_offset": 8066,
+          "end_offset": 8143,
+          "line": 236,
+          "quote": "| A2 燃料消耗偏差 | 数值链 vs 闭式解 F=SFOC·P·T | 0.000e+00（+0.0000%） | < 1% | **PASS** |",
+          "content_hash": "sha256:d7cf75b2f1cdaefe2d14ba0369c7c0bc0e6c11eb2b2d590d4d63bda82438f24e"
+        }
+      ],
+      "rationale": "Object under test named (§被测模块), criteria fixed before looking at results, and per-criterion PASS/FAIL with explicit thresholds."
+    },
+    {
+      "assertion_id": "c02",
+      "facet": "report_type.secondary",
+      "assertion": "Secondary type is algorithm-implementation: the object is a pure-function implementation with a 24-case regression suite quoted by path.",
+      "confidence": "high",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e01",
+          "locator_type": "char_offset",
+          "value": "chars[54:109) line 3",
+          "start_offset": 54,
+          "end_offset": 109,
+          "line": 3,
+          "quote": "**被测模块**：`backend/modules/green_navigation/eeoi_cii.py`",
+          "content_hash": "sha256:7c895a79b812239007e9591c066d6d68737e1a601d95ae4af1c20564d2aaa67c"
+        },
+        {
+          "locator_id": "e02",
+          "locator_type": "char_offset",
+          "value": "chars[197:243) line 5",
+          "start_offset": 197,
+          "end_offset": 243,
+          "line": 5,
+          "quote": "**测试**：`tests/test_eeoi_cii_m8189.py`（24 项，全绿）",
+          "content_hash": "sha256:7ac60830633aa73ec657277a0b654f591717dbd588a8dde29db534b0a7c38ea3"
+        },
+        {
+          "locator_id": "e17",
+          "locator_type": "char_offset",
+          "value": "chars[1731:1769) line 61",
+          "start_offset": 1731,
+          "end_offset": 1769,
+          "line": 61,
+          "quote": "| (a) 能量 | `trapz(power_kw, time_h)` |",
+          "content_hash": "sha256:cc7903b5f479813e15290be78e074b313903861741111c548a16d1886ec2fa9f"
+        }
+      ],
+      "rationale": "Implementation file + test module named; method chain table lists the implemented functions and formulas without pseudocode or complexity analysis, so this stays secondary rather than primary."
+    },
+    {
+      "assertion_id": "c03",
+      "facet": "report_type.tertiary",
+      "assertion": "Tertiary type is scientific-computation: it contains a numerical-integration convergence table and an aliasing counter-example.",
+      "confidence": "medium",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e08",
+          "locator_type": "char_offset",
+          "value": "chars[9742:9791) line 275",
+          "start_offset": 9742,
+          "end_offset": 9791,
+          "line": 275,
+          "quote": "非整周期工况 `P(t)=20000+4000·sin(2πt/37h) kW, T=240h`：",
+          "content_hash": "sha256:ef86cac15be9770241f0b8369b515637730598228f02cccbc564db5e8ac355c2"
+        },
+        {
+          "locator_id": "e09",
+          "locator_type": "char_offset",
+          "value": "chars[10081:10119) line 285",
+          "start_offset": 10081,
+          "end_offset": 10119,
+          "line": 285,
+          "quote": "| 321 | 0.75 | 4846961.4 | 1.312e-05 |",
+          "content_hash": "sha256:5181d69f8b37cbc29efb02825e531d2b69c8aaad69daa631de4573033b61e316"
+        }
+      ],
+      "rationale": "Convergence of trapezoidal integration to O(h^2) plus a deliberately aliased case; this supports but does not carry the report, which is why it is tertiary."
+    },
+    {
+      "assertion_id": "c04",
+      "facet": "not_literature_review",
+      "assertion": "literature-review is rejected: no related-work/state-of-the-art section and no bibliography; IMO documents appear as regulation identifiers, not as reviewed works.",
+      "confidence": "high",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e12",
+          "locator_type": "char_offset",
+          "value": "chars[476:509) line 17",
+          "start_offset": 476,
+          "end_offset": 509,
+          "line": 17,
+          "quote": "**CII/AER**（碳强度指标，MEPC.353(78) G1",
+          "content_hash": "sha256:df32414c0301e96cd5cf15794b56e5b455c26ae877a4e8ac408c9a7ff513027d"
+        }
+      ],
+      "rationale": "Registry signals for literature-review measured 0 (except citation density 2.18 < 5.0)."
+    },
+    {
+      "assertion_id": "c05",
+      "facet": "not_technical_proposal",
+      "assertion": "technical-proposal is rejected: the report contains no roadmap/plan/specification for future work; it reports completed runs.",
+      "confidence": "medium",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e14",
+          "locator_type": "char_offset",
+          "value": "chars[2715:2731) line 79",
+          "start_offset": 2715,
+          "end_offset": 2731,
+          "line": 79,
+          "quote": "### 2.2 工具链与可复现性",
+          "content_hash": "sha256:58ccad0e5acf13ac49291acdc2c5c4308124a9b32158b9d5295c4f52f95dd0d5"
+        }
+      ],
+      "rationale": "§2.2 is a reproducibility record of commands already executed, not a plan."
+    },
+    {
+      "assertion_id": "c06",
+      "facet": "scenario_key",
+      "assertion": "Scenario is green-navigation.eeoi_cii (IMO EEOI/CII operational carbon-intensity metrics for a KVLCC2 tanker).",
+      "confidence": "high",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e12",
+          "locator_type": "char_offset",
+          "value": "chars[476:509) line 17",
+          "start_offset": 476,
+          "end_offset": 509,
+          "line": 17,
+          "quote": "**CII/AER**（碳强度指标，MEPC.353(78) G1",
+          "content_hash": "sha256:df32414c0301e96cd5cf15794b56e5b455c26ae877a4e8ac408c9a7ff513027d"
+        },
+        {
+          "locator_id": "e18",
+          "locator_type": "char_offset",
+          "value": "chars[1533:1560) line 49",
+          "start_offset": 1533,
+          "end_offset": 1560,
+          "line": 49,
+          "quote": "几何先验校验（平台纪律：先验 Cb/L/B 再算性能）",
+          "content_hash": "sha256:eabc636e2c528b594dc8827a8068daeed021507153acb6ef53fa02d034d7c6e8"
+        }
+      ],
+      "rationale": "Metrics defined per MEPC.1/Circ.684 and MEPC.353(78); geometry is KVLCC2 (tanker)."
+    },
+    {
+      "assertion_id": "c07",
+      "facet": "evidence_grading_in_source",
+      "assertion": "Source itself grades its evidence: physical chain REAL, rule coefficients (C_F / reference lines / Z / d-vector) WITHHELD.",
+      "confidence": "high",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e10",
+          "locator_type": "char_offset",
+          "value": "chars[244:268) line 6",
+          "start_offset": 244,
+          "end_offset": 268,
+          "line": 6,
+          "quote": "**证据分级**：物理链 `REAL`；规则系数",
+          "content_hash": "sha256:78b4832d36cbb985b670c99bcc0f003011f202141550610f99f270f00546bad8"
+        },
+        {
+          "locator_id": "e11",
+          "locator_type": "char_offset",
+          "value": "chars[2646:2680) line 77",
+          "start_offset": 2646,
+          "end_offset": 2680,
+          "line": 77,
+          "quote": "`required_evidence_grade=WITHHELD`",
+          "content_hash": "sha256:9f6910358694b938130d1daf8b8e17acfdf3214e38ad3ee5dd755d5d6941c7d4"
+        }
+      ],
+      "rationale": "Preserved as reported; this工序 does not re-verify or upgrade it."
+    },
+    {
+      "assertion_id": "c08",
+      "facet": "known_limitation:external_baseline",
+      "assertion": "Against the external MEPC.353(78) 2019 tanker reference line the deviation is +21.23%, i.e. > 3% (explicitly stated as NOT satisfied, WITHHELD caliber).",
+      "confidence": "high",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e07",
+          "locator_type": "char_offset",
+          "value": "chars[8766:8777) line 249",
+          "start_offset": 8766,
+          "end_offset": 8777,
+          "line": 249,
+          "quote": "偏离 +21.23%，",
+          "content_hash": "sha256:f45a1b6ba4158767aeb7e1d53ffc2958aeaf917f66285fcdfb6d54dfe6991a8f"
+        },
+        {
+          "locator_id": "e06",
+          "locator_type": "char_offset",
+          "value": "chars[8780:8793) line 250",
+          "start_offset": 8780,
+          "end_offset": 8793,
+          "line": 250,
+          "quote": "**> 3%（不满足）**",
+          "content_hash": "sha256:d2a095d54084363c66af892ee1e8759977eeb6efc26bb5e83b91f849e0b4825c"
+        }
+      ],
+      "rationale": "Recorded so downstream 03/04 does not read the internal PASS lines as external accuracy."
+    },
+    {
+      "assertion_id": "c09",
+      "facet": "known_limitation:external_benchmark_missing",
+      "assertion": "The planned IMO GHG Study 4 (2020) per-ship benchmark was not obtained; the source declares that node unfinished.",
+      "confidence": "high",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e15",
+          "locator_type": "char_offset",
+          "value": "chars[7793:7821) line 224",
+          "start_offset": 7793,
+          "end_offset": 7821,
+          "line": 224,
+          "quote": "IMO GHG Study 4 (2020) 基准未取得",
+          "content_hash": "sha256:6574968638fdfa04292677828098eef02dbfa2daafbff54294d9ee1b7a6fcda5"
+        }
+      ],
+      "rationale": "Explicit honest-FAIL statement in §4/§5.3."
+    },
+    {
+      "assertion_id": "c10",
+      "facet": "known_limitation:in_repo_api_disagreement",
+      "assertion": "The in-repo API endpoint still returns NOT_SUPPORTED for CII rating status; the report does not overturn that judgement.",
+      "confidence": "high",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e16",
+          "locator_type": "char_offset",
+          "value": "chars[9482:9527) line 267",
+          "start_offset": 9482,
+          "end_offset": 9527,
+          "line": 267,
+          "quote": "`_gn_cii_rating_status()` 仍返回 `NOT_SUPPORTED`",
+          "content_hash": "sha256:233998ad2cd8f087a45adc13e20a690448eeae844f12adf66d940523b7c877c0"
+        }
+      ],
+      "rationale": "Two calibers coexist by design: physical chain REAL vs rule transcription WITHHELD."
+    },
+    {
+      "assertion_id": "c11",
+      "facet": "structure:rating_table",
+      "assertion": "Annual CII/rating results for 2023-2027 are tabulated in §3.3 (six round trips per year).",
+      "confidence": "high",
+      "status": "supported",
+      "evidence": [
+        {
+          "locator_id": "e13",
+          "locator_type": "char_offset",
+          "value": "chars[4255:4289) line 131",
+          "start_offset": 4255,
+          "end_offset": 4289,
+          "line": 131,
+          "quote": "### 3.3 年度 CII 与 A–E 评级（6 个往返航次/年）",
+          "content_hash": "sha256:39aa459642a2c6651b6bd890e15db7bd8e8a756b16a658322e8dc833c31ec88f"
+        }
+      ],
+      "rationale": "Section segmentation anchor for downstream extraction."
+    },
+    {
+      "assertion_id": "c12",
+      "facet": "uncertainty:registry_signal_blindness",
+      "assertion": "The skill registry's identify_signals cannot discriminate this report: all six types score 0 on their cardinal signals (English-only templates vs Chinese report).",
+      "confidence": "high",
+      "status": "unresolved",
+      "evidence": [],
+      "rationale": "Measured, not assumed (see outputs.classification.json.registry_signal_probe). Unresolved because it is a registry gap, not a property of this report: fixing the registry is out of scope for this work package."
+    }
+  ],
+  "claims": [],
+  "claims_note": {
+    "extraction_performed": false,
+    "reason": "objective.classify_report_type=true, objective.register_assets=false, contract notes '不做抽取'; claim/evidence/provenance extraction belongs to工序 03.",
+    "consequence": "outputs.claims.json is intentionally absent from this package; the acceptance item 'all_claims_have_evidence_or_explicit_unresolved_status' is satisfied vacuously for claims[] and non-vacuously by classification_assertions[], where 11/12 assertions carry resolvable locators and 1 is explicitly 'unresolved'."
+  },
+  "provenance": {
+    "source_uri": "tensor://reports/9461",
+    "source_field": "markdown",
+    "source_hash": "sha256:c839141234f9b547f153399b3e09784457d55832f3449d16c7b5b21a278a92b1",
+    "source_hash_recomputed_locally": true,
+    "title": "EEOI 与 CII 营运指标闭环验证（节点 p48w3-n09-eeoi-cii · m8189）",
+    "scenario_key": "green-navigation.eeoi_cii",
+    "chars": 10571
+  },
+  "limitations": [
+    "Classification is a falsifiable hypothesis, not a verification: verification is computed by the platform gate.",
+    "Topic labels are derived from the source's own wording; no external regulation text was consulted.",
+    "The source's own evidence grading (REAL/WITHHELD) is preserved verbatim and not re-adjudicated.",
+    "The experimental-validation skill expects 'facility' and 'measurement uncertainty' signals; neither exists in this report (the source states 未做不确定性传播). Downstream 03 must record them as absent, not invent them."
+  ]
+}
