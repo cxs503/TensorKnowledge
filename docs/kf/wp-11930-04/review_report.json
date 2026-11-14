@@ -1,0 +1,793 @@
+{
+ "package_id": "wp-11930-04",
+ "task_type": "04-independent-review",
+ "report_id": "11930",
+ "review_type": "adversarial-independent-review",
+ "reviewed_package": "wp-11930-01",
+ "reviewed_artifacts": {
+  "report_markdown": {
+   "uri": "tensor://reports/11930",
+   "sha256": "sha256:5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+   "chars": 13121,
+   "bytes_utf8": 22324
+  },
+  "upstream_kf_result": {
+   "path": "docs/kf/wp-11930-01/kf_result.wp-11930-01.json",
+   "sha256": "sha256:52fa73beb02091ae628a19f5898a3c67031286d9f31c556713c65963317dc230"
+  }
+ },
+ "independence": {
+  "statement": "Reviewer fetched report 11930 markdown fresh from GET /api/v1/tensor/reports/11930 and read only that markdown plus the upstream wp-11930-01 asset manifest. No producer explanation, chat log, commit message or upstream narrative was consulted; the reviewer did not read the producer's scripts beyond their registration entries.",
+  "limitations": [
+   "The TensorDEM checkout (module, scripts, test suite, records.jsonl, artifacts report.json) is not present in this repository, so DEM physics, the 42-item pytest suite, the 747-task campaign, the NSGA-II run and the KE/work gate were NOT re-executed.",
+   "Six figure PNGs were byte-hashed against the manifest hashes but NOT visually compared against their caption claims.",
+   "Mathematics was re-derived from the numbers printed in the report, so any mistake shared between the report text and the underlying pipeline would not be caught by this review (no primary-source model audit)."
+  ]
+ },
+ "scope": [
+  "semantic fidelity of every recomputable number in the report (geometry, packing, Jacobian spectrum/cond/rank, correlation matrix, Brun index, Weibull power-law holdout, AC4b protocol refinement, AC5 stress-ratio deviations, AC6/AC7 percentages)",
+  "internal consistency of tables, verdicts and cross-references",
+  "claim–evidence binding and severity of overstatements",
+  "upstream asset-registration fidelity (hash, locators, counts, figure bytes)"
+ ],
+ "method": {
+  "tool": "work/wp-11930-04/verify_wp-11930-04.py (fresh fetch + 35-machine-check ledger)",
+  "ledger": "work/wp-11930-04/verify_wp-11930-04.json",
+  "summary": {
+   "total": 35,
+   "pass": 28,
+   "warn": 7,
+   "fail": 0
+  },
+  "quote_policy": "every quote in this review is a substring of the fresh markdown, stored with start/end char offsets (build_review.py asserts uniqueness)"
+ },
+ "checks_performed": [
+  {
+   "check": "R1.1_source_hash_fresh_vs_contract",
+   "expected": "sha256:5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+   "observed": "sha256:5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "R1.2_hash_vs_upstream_manifest",
+   "expected": "5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+   "observed": "sha256:5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "R1.3_chars",
+   "expected": 13121,
+   "observed": 13121,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "R1.4_bytes_utf8",
+   "expected": 22324,
+   "observed": 22324,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "R1.5_kf_reports_same_hash",
+   "expected": "sha256:5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+   "observed": "sha256:5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "R2.1_all_14_locators_span_exact_unique_path_token",
+   "expected": "14/14 exact",
+   "observed": "14/14 exact",
+   "result": "PASS",
+   "note": "[]"
+  },
+  {
+   "check": "R3.1_manifest_counts_recomputed",
+   "expected": {
+    "assets": 14,
+    "by_class": {
+     "module": 1,
+     "script": 3,
+     "test": 1,
+     "data": 3,
+     "figure": 6
+    },
+    "by_resolution": {
+     "referenced_unresolved": 7,
+     "resolved_in_source": 6,
+     "declared_absent": 1
+    }
+   },
+   "observed": {
+    "assets": 14,
+    "by_class": {
+     "module": 1,
+     "script": 3,
+     "test": 1,
+     "data": 3,
+     "figure": 6
+    },
+    "by_resolution": {
+     "referenced_unresolved": 7,
+     "resolved_in_source": 6,
+     "declared_absent": 1
+    }
+   },
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "R4.1_six_figure_assets_bytes_and_captions",
+   "expected": "6/6 HTTP200 png + sha256 + bytes + caption",
+   "observed": "6/6 verified",
+   "result": "PASS",
+   "note": "[{\"name\": \"fig_response_surface.png\", \"status\": 200, \"ctype\": \"image/png\", \"bytes\": 101650, \"sha256\": \"sha256:51110cf7696adcee081421d2a92605a7cce80808ca294b7901120c4cc4756eec\", \"manifest_bytes\": 101650, \"bytes_match\": true, \"sha_match\": true, \"caption_matches_record\": true}, {\"name\": \"fig_jacobian.png\", \"status\": 200, \"ctype\": \"image/png\", \"bytes\": 98897, \"sha256\": \"sha256:412e3b536a4f35bdf37b52254700e12dcf766e51e3efdb497489481efcb97f28\", \"manifest_bytes\": 98897, \"bytes_match\": true, \"sha_match\": true, \"caption_matches_record\": true}, {\"name\": \"fig_pareto.png\", \"status\": 200, \"ctype\": \"image/png\", \"bytes\": 72532, \"sha256\": \"sha256:8fe9f1a288cfa41ab23b1afbf52019d25b4088394977461772648efa173a247c\", \"manifest_bytes\": 72532, \"bytes_match\": true, \"sha_match\": true, \"caption_matches_record\": true}, {\"name\": \"fig_size_effect.png\", \"status\": 200, \"ctype\": \"image/png\", \"bytes\": 74350, \"sha256\": \"sha256:cc650deaa8c0878edeb662e262b1edd719d1aa18e8020908f58cb4ccf32dc743\", \"manifest_bytes\": 74350, \"bytes_match\": true, \"sha_match\": true, \"caption_matches_record\": true}, {\"name\": \"fig_brazilian.png\", \"status\": 200, \"ctype\": \"image/png\", \"bytes\": 100699, \"sha256\": \"sha256:52c4b300d8668a5b3c2588b2d0aefdd15de10606cb6a0893e3bb7505e90296f8\", \"manifest_bytes\": 100699, \"bytes_match\": true, \"sha_match\": true, \"caption_matches_record\": true}, {\"name\": \"fig_ucs.png\", \"status\": 200, \"ctype\": \"image/png\", \"bytes\": 51010, \"sha256\": \"sha256:a3f41eb663ea84ad0234d73a5c7c81613efc19a288eb4b6da11f5780e70fafd6\", \"manifest_bytes\": 51010, \"bytes_match\": true, \"sha_match\": true, \"caption_matches_record\": true}]"
+  },
+  {
+   "check": "N1.1_ucs_diameter_bounding_box",
+   "expected": 0.1,
+   "observed": 0.1,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N1.2_ucs_HD_three_conventions",
+   "expected": {
+    "gauge_over_extent_reported": 2.0,
+    "extent_over_extent": 2.25,
+    "c2c_over_c2c": 2.667
+   },
+   "observed": {
+    "gauge_over_extent_reported": 2.0,
+    "extent_over_extent": 2.25,
+    "c2c_over_c2c": 2.667
+   },
+   "result": "WARN",
+   "note": "报告 2.000 = 标距H(0.2)/物理D(0.1)；统一口径为 2.25（仍在 ASTM [1.5,2.5]）或 2.667（出带）。混用口径未声明 → AC1 UCS 子项 PASS 依赖口径"
+  },
+  {
+   "check": "N1.3_particle_count_4x4x9",
+   "expected": 144,
+   "observed": 144,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N1.4_number_density_1_over_spacing3",
+   "expected": 64000.0,
+   "observed": 63999.999999999985,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N1.5_packing_pi_over_6",
+   "expected": 0.5236,
+   "observed": 0.5236,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N1.6_brazil_D_over_t",
+   "expected": 1.75,
+   "observed": 1.75,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N1.7_tensile_HD_family",
+   "expected": [
+    0.5,
+    1.0,
+    2.0,
+    4.0,
+    8.0
+   ],
+   "observed": [
+    0.5,
+    1.0,
+    2.0,
+    4.0,
+    8.0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N2.1_singular_values",
+   "expected": [
+    5.848,
+    2.151,
+    0.645
+   ],
+   "observed": [
+    5.85,
+    2.148,
+    0.646
+   ],
+   "result": "PASS",
+   "note": "2-decimals published J 重算 5.8499/2.1483/0.6458；报告 5.848/2.151/0.645 在四舍五入内"
+  },
+  {
+   "check": "N2.2_cond_J",
+   "expected": 9.063,
+   "observed": 9.0588,
+   "result": "PASS",
+   "note": "由公开（2 位小数）J 重算 cond=9.0588，与 9.063 相对差 0.046%"
+  },
+  {
+   "check": "N2.3_rank_and_null_dim",
+   "expected": {
+    "rank": 3,
+    "null_dim": 3
+   },
+   "observed": {
+    "rank": 3,
+    "null_dim": 3
+   },
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N2.4_parameter_correlation_matrix_reproduced",
+   "expected": "≤0.005 on 24 published entries",
+   "observed": 0.0,
+   "result": "PASS",
+   "note": "JᵀJ 归一化重算与报告相关矩阵逐格一致（含 mu_s/mu_d 恒零列）"
+  },
+  {
+   "check": "N2.5_brun_gamma_pair_kc_kp",
+   "expected": 6.71,
+   "observed": {
+    "rho": 0.978,
+    "1/sqrt(1-rho^2)": 4.796,
+    "sqrt((1+rho)/(1-rho))": 9.486,
+    "1/sqrt(1-rho)": 6.745
+   },
+   "result": "WARN",
+   "note": "报告 γ=6.71 与公开 ρ=0.978 在两种标准定义下都对不上（4.80 / 9.49）；仅非标准 1/√(1−ρ) 给出 6.75 的量级。γ 定义未在报告声明 → 最坏参数对诊断不可独立复算。不改变 rank 3/6 的结构结论"
+  },
+  {
+   "check": "N2.6_full_column_gamma_inf",
+   "expected": "inf (structural rank deficiency)",
+   "observed": 100000000.0,
+   "result": "PASS",
+   "note": "3 观测量/6 参数、rank=3 → 任一列可被其余列精确线性表示 → R²=1 → γ=inf，与报告一致"
+  },
+  {
+   "check": "N3.1_powerlaw_prediction_t005",
+   "expected": {
+    "reported": 0.376,
+    "recomputed": 0.3753
+   },
+   "observed": 0.3753,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N3.2_powerlaw_prediction_t080",
+   "expected": {
+    "reported": 0.372,
+    "recomputed": 0.3713
+   },
+   "observed": 0.3713,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N3.3_holdout_relative_errors",
+   "expected": {
+    "t=0.05": "-5.4%",
+    "t=0.80": "+2.6%"
+   },
+   "observed": {
+    "t=0.05": "-5.5%",
+    "t=0.80": "+2.6%"
+   },
+   "result": "PASS",
+   "note": "由 (m=262.976, σ_ref=3.71e5) 与留出实测值重算"
+  },
+  {
+   "check": "N3.4_bootstrap_CI_width",
+   "expected": 721.537,
+   "observed": 721.537,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N3.5_local_m_column_values",
+   "expected": "local m should be O(10^2) like global m=262.976",
+   "observed": {
+    "published_local_m": [
+     0.08,
+     0.045
+    ],
+    "implied_m_if_1/local_m": [
+     12.5,
+     22.2
+    ],
+    "global_m": 262.976
+   },
+   "result": "WARN",
+   "note": "列名“局部 m”下的 0.080/0.045 与全局 m=262.976 差 3 个量级；数值符合局部指数 1/m（即 m≈12.5/22.2）。方向一致性只对指数符号敏感 → 结论不受影响，但列名/量纲必须更正"
+  },
+  {
+   "check": "N4.1_AC5_relative_errors_vs_hondros_-3",
+   "expected": [
+    [
+     -3.481,
+     16.0
+    ],
+    [
+     -4.18,
+     39.3
+    ],
+    [
+     -2.705,
+     9.8
+    ],
+    [
+     -6.906,
+     130.2
+    ],
+    [
+     -9.155,
+     205.2
+    ],
+    [
+     -26.642,
+     788.1
+    ]
+   ],
+   "observed": [
+    [
+     -3.481,
+     16.0
+    ],
+    [
+     -4.18,
+     39.3
+    ],
+    [
+     -2.705,
+     9.8
+    ],
+    [
+     -6.906,
+     130.2
+    ],
+    [
+     -9.155,
+     205.2
+    ],
+    [
+     -26.642,
+     788.1
+    ]
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N4.2_AC5_qualitative_phrase",
+   "expected": "9.8% relative difference",
+   "observed": "报告 §5 同一行写“差两个量级”",
+   "result": "WARN",
+   "note": "9.8%/788% 都不是两个量级（10^2）的差；同一行自相矛盾，属定量表述错误（不影响 honest FAIL 判定）"
+  },
+  {
+   "check": "N5.1_AC4b_ucs_refinement_deviations",
+   "expected": [
+    [
+     1.0098,
+     0.0
+    ],
+    [
+     0.8559,
+     -15.2
+    ],
+    [
+     0.6728,
+     -33.4
+    ]
+   ],
+   "observed": [
+    [
+     1.0098,
+     0.0
+    ],
+    [
+     0.8559,
+     -15.2
+    ],
+    [
+     0.6728,
+     -33.4
+    ]
+   ],
+   "result": "PASS",
+   "note": "1.0098 → 1.010 MPa 与 §3.3 的 UCS=1.010 一致"
+  },
+  {
+   "check": "N5.2_AC4b_t04_deviations",
+   "expected": [
+    [
+     0.3564,
+     0.0
+    ],
+    [
+     0.3557,
+     -0.2
+    ],
+    [
+     0.3832,
+     7.5
+    ]
+   ],
+   "observed": [
+    [
+     0.3564,
+     0.0
+    ],
+    [
+     0.3557,
+     -0.2
+    ],
+    [
+     0.3832,
+     7.5
+    ]
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N6.1_AC6_violation_count_integral",
+   "expected": "83.5% of 200 = integer count",
+   "observed": {
+    "167/200": 83.5,
+    "168/200": 84.0
+   },
+   "result": "PASS",
+   "note": "200 组样本下 83.5% 恰为 167/200，计数自洽；同时意味着 33/200 随机 θ 落进文献带"
+  },
+  {
+   "check": "N6.2_AC6_narrative",
+   "expected": "83.5% violating ⇒ 16.5% inside band",
+   "observed": "§2 条 7 表述“随机参数几乎不可能落进文献带”",
+   "result": "WARN",
+   "note": "16.5%（≈1/6）随机参数落入文献带，与“几乎不可能”不符；AC6 本身已如实记 FAIL，但该句把 FAIL 的负控说成强负控，属证据与论断不匹配"
+  },
+  {
+   "check": "N7.1_ke_ratio_gate_multiple",
+   "expected": "0.022/0.001 = 22",
+   "observed": 22.0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "N7.2_AC7_zero_difference_display",
+   "expected": "0.000 = 3 significant figures only",
+   "observed": "1.01e+06 / 1.01e+06 Pa",
+   "result": "WARN",
+   "note": "两值仅给到 3 位有效数字，“相对差 0.000”强于所展示的证据；应给至少 6 位或原始 Pa 整数"
+  },
+  {
+   "check": "N8.1_sigma_t_fitted_thicknesses_published",
+   "expected": "σ_t at t=0.1/0.2/0.4 (the fit inputs)",
+   "observed": "报告只给留出 t=0.05/0.80 两行",
+   "result": "WARN",
+   "note": "σc/σt=2.688 与 m=262.976 的拟合输入未公开 → 只能由 (m, σ_ref) 复算留出预测，无法从报告正文独立复算 2.688 与 262.976（可用 artifacts/p270w2c_n08/report.json 补，但该文件不在本仓）"
+  }
+ ],
+ "checks_not_run": [
+  "pytest tests/test_bpm_calibration_feasibility.py (42 items) — TensorDEM checkout absent",
+  "DEM campaign replay (747 tasks) and runs/p270w2c_n08/records.jsonl audit — asset referenced_unresolved",
+  "NSGA-II / surrogate LOO R² recomputation — artifacts/p270w2c_n08/report.json absent (also declared absent in report §4 item 1b for the JSONL)",
+  "KE/work quasi-static gate recomputation — raw traces absent",
+  "visual inspection of the six PNG figures",
+  "primary-source check against Schulson & Duval UCS band and Hondros solution — no文献 bytes in workspace"
+ ],
+ "key_verifications": [
+  {
+   "item": "source hash",
+   "result": "sha256:5adb132d…dbf325 == contract == upstream manifest (fresh fetch, 13121 chars / 22324 bytes)"
+  },
+  {
+   "item": "Jacobian spectrum from published J",
+   "claim_locator": {
+    "start_char": 4366,
+    "end_char": 4441,
+    "start_line": 75,
+    "quote": "- cond(J) = **9.063**；奇异值 5.848、2.151、0.645；rank(J) = 3/6，非零奇异值给出的结构零空间维数 3"
+   },
+   "result": "5.8499 / 2.1483 / 0.6458, cond=9.0588 vs published 9.063 (0.05% rounding), rank=3"
+  },
+  {
+   "item": "parameter correlation matrix",
+   "result": "24 published entries reproduced exactly from JᵀJ (max |Δ|=0.000); mu_s/mu_d columns identically zero as claimed"
+  },
+  {
+   "item": "Weibull holdout",
+   "result": "from (m=262.976, σ_ref=3.71e5): 0.3753 MPa @t=0.05 (pub 0.376), 0.3713 MPa @t=0.80 (pub 0.372); errors -5.5% / +2.6% (pub -5.4% / +2.6%)"
+  },
+  {
+   "item": "AC5 deviations",
+   "claim_locator": {
+    "start_char": 8409,
+    "end_char": 8482,
+    "start_line": 175,
+    "quote": "判定：PASS（容差 15%，按**中心区**读数判定）；但跨 9 个（分辨率 × 区域）配置的偏差范围 10–788%，**稳健性 FAIL**"
+   },
+   "result": "9.8 / 16.0 / 39.3 / 130.2 / 205.2 / 788.1% all recomputed exactly against Hondros −3.0"
+  },
+  {
+   "item": "AC4b protocol refinement",
+   "result": "0.8559 and 0.6728 MPa reproduce -15.2% / -33.4% vs 1.0098 MPa; t=0.4 m ±0.2% / +7.5%"
+  },
+  {
+   "item": "AC6 count",
+   "result": "83.5% of n=200 == 167/200 (integral); implies 33/200 inside band"
+  },
+  {
+   "item": "upstream locators",
+   "result": "14/14 span-exact, unique, path token inside quote"
+  },
+  {
+   "item": "upstream figures",
+   "result": "6/6 HTTP 200 image/png; sha256 and byte count equal manifest platform_sha256/platform_bytes; captions byte-identical to record figures[]"
+  }
+ ],
+ "verdicts": {
+  "upstream_package_wp-11930-01": {
+   "verdict": "pass",
+   "basis": "fresh hash == contract == manifest; 14/14 locators span-exact, unique, path token inside quote; counts recomputed; 6/6 figure bytes fetched from the platform match manifest platform_sha256/bytes and captions match the record figures[]."
+  },
+  "report_semantic_fidelity": {
+   "verdict": "needs-fix",
+   "basis": "all recomputable headline numbers reproduce (Jacobian spectrum/cond/rank, 24-entry correlation matrix exactly, power-law holdout predictions, AC5/AC4b deviations, CI width, packing/density/geometry), and the report's honest FAILs are consistent with its own numbers; but 7 findings (F1,F2,F3,F4,F5,F6,F10) require text/number corrections before the report can be cited."
+  },
+  "overall": "needs-fix"
+ },
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "major",
+   "blocking": false,
+   "scope": "§3.2 AC2 diagnostic: Brun collinearity index of the worst parameter pair",
+   "finding": "Published γ=6.71 for pair ['k_c','k_p'] is not reproducible from the published correlation ρ=0.978 under either standard definition: Brun γ=1/√(1−R²)=4.796, Belsley 2-column index √((1+ρ)/(1−ρ))=9.486. Only the non-standard 1/√(1−ρ)=6.745 lands near 6.71, which suggests a missing square / undeclared formula. The report never states the γ formula, so the 'worst pair' ranking is not independently auditable.",
+   "evidence_locator": {
+    "start_char": 4601,
+    "end_char": 4660,
+    "start_line": 77,
+    "quote": "最坏参数对 ['k_c', 'k_p']：Brun γ = 6.71，相关系数 0.978；全 6 列 γ = inf"
+   },
+   "reproduction": "verify_wp-11930-04.py N2.5: ρ recomputed from the published Jacobian JᵀJ (0.97802) → γ_brun=4.796, γ_belsley=9.486, 1/√(1−ρ)=6.745.",
+   "impact": "Does not change the structural conclusion: J has rank 3/6 (recomputed N2.3) and any column is exactly representable by the others → γ=inf for the full 6-column set (recomputed N2.6).",
+   "remedy": "State the Brun formula in the report (and in the code docstring) and republish γ for the pair; if the 1/√(1−ρ) form was used, fix the implementation."
+  },
+  {
+   "id": "F2",
+   "severity": "major",
+   "blocking": false,
+   "scope": "§3.4 AC4 table column '局部 m' and the direction-consistency sentence",
+   "finding": "The '局部 m' column reports 0.080 (t=0.05) and 0.045 (t=0.80), i.e. 3–4 orders of magnitude below the global m=262.976 fitted in the same paragraph. If read literally as Weibull moduli, the local values contradict the global fit and would falsify AC4; the numbers are only consistent with the local exponent 1/m (→ m≈12.5 / 22.2). The label/quantity is wrong or at least ambiguous, while AC4 PASS hinges on 'end m direction consistency'.",
+   "evidence_locator": {
+    "start_char": 7269,
+    "end_char": 7312,
+    "start_line": 144,
+    "quote": "端点局部 m：t=0.05 → 0.080、t=0.8 → 0.045，方向一致性 是"
+   },
+   "table_locator": {
+    "start_char": 7091,
+    "end_char": 7135,
+    "start_line": 141,
+    "quote": "| 0.05 | 0.397 | 0.376 | -5.4% | 0.080 | 是 |"
+   },
+   "reproduction": "verify_wp-11930-04.py N3.5: 0.080 vs global 262.976 → ratio 3287; 1/0.080=12.5, 1/0.045=22.2.",
+   "impact": "Direction consistency is a sign test on the local exponent, so the AC4 verdict survives; but a reader comparing 0.080 to 263 would conclude catastrophic heterogeneity that the report does not discuss.",
+   "remedy": "Rename the column to 'local exponent 1/m (local m in brackets)' or publish local m = 12.5 / 22.2 and explain the difference from the global fit."
+  },
+  {
+   "id": "F3",
+   "severity": "minor",
+   "blocking": false,
+   "scope": "§5 error table, Brazilian centre stress-ratio row",
+   "finding": "The same row states a 9.8% relative difference and then qualifies it as '差两个量级' (two orders of magnitude). 9.8% (and even the worst configuration, 788%) is not a two-order-of-magnitude gap; the qualitative clause contradicts the quantitative cell it annotates.",
+   "evidence_locator": {
+    "start_char": 12040,
+    "end_char": 12112,
+    "start_line": 233,
+    "quote": "| 巴西中心主应力比 | Hondros −3.0（解析）| 最优 -2.705（相对 9.8%）| 否（差两个量级，honest FAIL）|"
+   },
+   "reproduction": "verify_wp-11930-04.py N4.1 recomputes all six AC5 deviations (9.8/16.0/39.3/130.2/205.2/788.1%); none is 10².",
+   "impact": "Wording only; the honest FAIL verdict and §3.5 robustness FAIL are unaffected.",
+   "remedy": "Delete or correct the '差两个量级' clause (e.g. '定性不符：多配置下中心横向拉应力缺失')."
+  },
+  {
+   "id": "F4",
+   "severity": "major",
+   "blocking": false,
+   "scope": "§2 method item 7 (negative control) vs §3.6 measured result",
+   "finding": "The method text says the 200-random-θ control 'verifies that random parameters can hardly land in the literature band', but the measured violation ratio is 83.5%, i.e. 33/200 ≈ 16.5% (about one in six) random parameter sets DO land in [5,15] MPa. That is the opposite of 'almost impossible' and is precisely why AC6 is recorded FAIL.",
+   "evidence_locator": {
+    "start_char": 3982,
+    "end_char": 4022,
+    "start_line": 62,
+    "quote": "200 组随机 θ 只跑 UCS（AC6，验证“随机参数几乎不可能落进文献带”）"
+   },
+   "result_locator": {
+    "start_char": 1257,
+    "end_char": 1293,
+    "start_line": 16,
+    "quote": "违反比例 83.5%（n = 200；UCS 中位 2.546 MPa）"
+   },
+   "reproduction": "verify_wp-11930-04.py N6.1: 167/200=83.5% ⇒ 33/200=16.5% inside band; N6.2.",
+   "impact": "The FAIL is honestly recorded, but the method paragraph overstates the control's strength; downstream readers may cite the control as evidence the band is discriminative, which it is not.",
+   "remedy": "Rewrite §2 item 7 to 'quantifies how often random θ lands in the band (16.5%, n=200) — the control FAILED its ≥95% target'."
+  },
+  {
+   "id": "F5",
+   "severity": "minor",
+   "blocking": false,
+   "scope": "§0/§3.1 AC1 UCS aspect-ratio sub-item",
+   "finding": "H/D=2.000 mixes endpoints: H=0.2 m is the gauge (8 lattice spacings, centre-to-centre of the driven end layers) while D=0.1 m is the bounding-box diameter (3 spacings + 2 radii). Under uniform conventions the same lattice gives H/D=2.25 (extent/extent, still inside ASTM [1.5,2.5]) or 2.667 (centre-to-centre/centre-to-centre, outside the band). The convention is not stated, so the AC1 PASS is convention-dependent.",
+   "evidence_locator": {
+    "start_char": 4095,
+    "end_char": 4152,
+    "start_line": 68,
+    "quote": "UCS 试件：H/D = 2.000（ASTM D7012 带 [1.5, 2.5]）→ PASS，颗粒数 144"
+   },
+   "reproduction": "verify_wp-11930-04.py N1.1/N1.2 (D=3·0.025+2·0.0125=0.1; H_gauge=8·0.025=0.2; H_extent=0.225).",
+   "impact": "Verdict survives under the physical convention (2.25 ∈ [1.5,2.5]) but not under a pure centre-to-centre convention (2.667).",
+   "remedy": "State the convention explicitly and report both numbers (physical 2.25, gauge/D 2.00)."
+  },
+  {
+   "id": "F6",
+   "severity": "minor",
+   "blocking": false,
+   "scope": "§3.3/§3.4 numbers that cannot be re-derived from the report text",
+   "finding": "The fitted-thickness tensile strengths (t=0.1/0.2/0.4, the fit inputs) are never printed, so the published σc/σt=2.688 and m=262.976 cannot be recomputed from the report alone; only the two holdout predictions are reproducible from the published (m, σ_ref). The three-target feasibility matrix (AC3) therefore contains one number (2.688) with no in-report derivation.",
+   "evidence_locator": {
+    "start_char": 7182,
+    "end_char": 7268,
+    "start_line": 144,
+    "quote": "拟合得到 m = 262.976（bootstrap 95% CI [24.916, 746.453]，CI 宽度 721.537），σ_ref = 3.71e+05 Pa"
+   },
+   "recomputed_locator": {
+    "start_char": 792,
+    "end_char": 945,
+    "start_line": 13,
+    "quote": "| AC3 三分支可行性 | (a)/(b)/(c) 之一 + 证据 | 参考 θ 落 **分支 (c)**：UCS 1.010 MPa、σc/σt 2.688、m CI [24.916, 746.453] （伪真值 6.000）；33 个设计点分支计数 a/b/c = 0/0/33 | 见 §3.3 |"
+   },
+   "reproduction": "verify_wp-11930-04.py N3.1/N3.2 reproduce 0.3753 MPa and 0.3713 MPa at t=0.05/0.80 from (m, σ_ref); N8.1 records the missing fit inputs.",
+   "impact": "Fidelity of the holdout chain recomputes clean; the ratio target's provenance is not.",
+   "remedy": "Add the five-thickness σ_t table (fit inputs + repeats) to §3.4."
+  },
+  {
+   "id": "F7",
+   "severity": "informational",
+   "blocking": false,
+   "scope": "§0/§3.6 AC7 reproducibility",
+   "finding": "'relative difference 0.000' is asserted from two values printed to three significant figures (1.01e+06 Pa each); the displayed evidence cannot support an exact-zero claim (it only bounds the difference by ~1e-3 relative).",
+   "evidence_locator": {
+    "start_char": 8761,
+    "end_char": 8814,
+    "start_line": 180,
+    "quote": "两次独立进程 UCS = 1.01e+06 / 1.01e+06 Pa，相对差 0.000（门 1e-3）"
+   },
+   "reproduction": "Reading of the published precision; not a numerical contradiction.",
+   "impact": "Cosmetic, and the gate (1e-3) is comfortably met either way.",
+   "remedy": "Print at least 6 significant figures (or raw Pa integers) for the two runs."
+  },
+  {
+   "id": "F8",
+   "severity": "informational",
+   "blocking": false,
+   "scope": "review limitation inherited from upstream wp-11930-01",
+   "finding": "7/14 registered assets (module, 3 scripts, test suite, records.jsonl, artifacts report.json) are referenced_unresolved and live only in the TensorDEM checkout; 1 is declared absent. The 42-test suite, the 747-task campaign, the NSGA-II run and the KE/work gate therefore cannot be re-executed from this repo — they are reviewed for internal consistency only.",
+   "evidence_locator": null,
+   "reproduction": "docs/kf/wp-11930-01 asset_manifest counts.by_resolution {referenced_unresolved:7, resolved_in_source:6, declared_absent:1} (recomputed in R3.1).",
+   "impact": "Sets the ceiling of this review: no independent reproduction of DEM physics.",
+   "remedy": "None on the reviewer side; the upstream registration is correct to declare these unresolved."
+  },
+  {
+   "id": "F9",
+   "severity": "informational",
+   "blocking": false,
+   "scope": "§3.3 proxy accuracy table → use of the Pareto front as AC3 evidence",
+   "finding": "The quadratic surrogate for m has LOO R²=0.0904 (in-sample 0.8092), i.e. essentially no out-of-sample predictive power. The report discloses this and states the (c) branch rests on DEM design points plus the proxy only as direction evidence; downstream consumers must not quote frontier m values as calibrated.",
+   "evidence_locator": {
+    "start_char": 6590,
+    "end_char": 6636,
+    "start_line": 127,
+    "quote": "| m | 0.8092 | 0.0904 | 0.5689 | 26/28 | n/a |"
+   },
+   "reproduction": "Reported table read verbatim; not re-runnable (surrogate data absent).",
+   "impact": "Consistent with the report's own caveat (§4 item 7) — recorded so the caveat is not lost downstream.",
+   "remedy": "None required; keep the caveat in any derived KO."
+  },
+  {
+   "id": "F10",
+   "severity": "minor",
+   "blocking": false,
+   "scope": "§0 acceptance table, AC3 row",
+   "finding": "The AC3 verdict cell reads '见 §3.3' instead of PASS/FAIL, breaking the table's own per-AC verdict format. The content of §3.3 (branch (c) with evidence) satisfies AC3's stated criterion, so the intended verdict is PASS but is never stated.",
+   "evidence_locator": {
+    "start_char": 792,
+    "end_char": 945,
+    "start_line": 13,
+    "quote": "| AC3 三分支可行性 | (a)/(b)/(c) 之一 + 证据 | 参考 θ 落 **分支 (c)**：UCS 1.010 MPa、σc/σt 2.688、m CI [24.916, 746.453] （伪真值 6.000）；33 个设计点分支计数 a/b/c = 0/0/33 | 见 §3.3 |"
+   },
+   "reproduction": "Direct read of the §0 table.",
+   "impact": "Audit-traceability only.",
+   "remedy": "Write 'PASS（分支 (c) + 证据）' in the AC3 verdict cell."
+  }
+ ],
+ "overstated_claims": [
+  {
+   "claim": {
+    "start_char": 3982,
+    "end_char": 4022,
+    "start_line": 62,
+    "quote": "200 组随机 θ 只跑 UCS（AC6，验证“随机参数几乎不可能落进文献带”）"
+   },
+   "problem": "negative control described as showing random θ 'almost never' lands in the band; measured 16.5% do (AC6 itself FAILs)"
+  },
+  {
+   "claim": {
+    "start_char": 12040,
+    "end_char": 12112,
+    "start_line": 233,
+    "quote": "| 巴西中心主应力比 | Hondros −3.0（解析）| 最优 -2.705（相对 9.8%）| 否（差两个量级，honest FAIL）|"
+   },
+   "problem": "'差两个量级' contradicts the 9.8% in the same cell"
+  },
+  {
+   "claim": {
+    "start_char": 7269,
+    "end_char": 7312,
+    "start_line": 144,
+    "quote": "端点局部 m：t=0.05 → 0.080、t=0.8 → 0.045，方向一致性 是"
+   },
+   "problem": "'局部 m' values 0.080/0.045 are 1/m-like, not moduli comparable to m=262.976"
+  },
+  {
+   "claim": {
+    "start_char": 8761,
+    "end_char": 8814,
+    "start_line": 180,
+    "quote": "两次独立进程 UCS = 1.01e+06 / 1.01e+06 Pa，相对差 0.000（门 1e-3）"
+   },
+   "problem": "'相对差 0.000' exceeds the displayed 3-significant-figure precision"
+  },
+  {
+   "claim": {
+    "start_char": 4095,
+    "end_char": 4152,
+    "start_line": 68,
+    "quote": "UCS 试件：H/D = 2.000（ASTM D7012 带 [1.5, 2.5]）→ PASS，颗粒数 144"
+   },
+   "problem": "H/D=2.000 mixes gauge H with bounding-box D; uniform conventions give 2.25 or 2.667"
+  },
+  {
+   "claim": {
+    "start_char": 792,
+    "end_char": 945,
+    "start_line": 13,
+    "quote": "| AC3 三分支可行性 | (a)/(b)/(c) 之一 + 证据 | 参考 θ 落 **分支 (c)**：UCS 1.010 MPa、σc/σt 2.688、m CI [24.916, 746.453] （伪真值 6.000）；33 个设计点分支计数 a/b/c = 0/0/33 | 见 §3.3 |"
+   },
+   "problem": "AC3 verdict cell gives no PASS/FAIL"
+  }
+ ],
+ "disposition": {
+  "decision": "request-changes",
+  "label": "needs-fix",
+  "blocking_issues": [],
+  "rationale": "No finding invalidates the report's core conclusions (structural under-determination rank 3/6 with a 3-dim null space; branch (c) infeasibility; honest FAILs on AC5 robustness, AC6, AC7 quasi-static gate). All recomputable headline numbers reproduce. Seven corrections are required before the report is quoted downstream (major: F1 Brun index, F2 'local m' label, F4 negative-control narrative; minor: F3 wording, F5 UCS H/D convention, F6 unpublished fit inputs, F10 AC3 verdict cell); nothing warrants fail/reject. Upstream package wp-11930-01 passes every reviewer-side check.",
+  "not_marked_verified": "This review does not mark any claim as verified; it records reviewer-side checks only."
+ },
+ "repro_cmd": "bash work/wp-11930-04/repro.sh"
+}
