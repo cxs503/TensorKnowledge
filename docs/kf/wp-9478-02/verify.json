@@ -1,0 +1,72 @@
+{
+  "package_id": "wp-9478-02",
+  "report_id": "9478",
+  "checks": [
+    {
+      "check": "fresh fetch source_hash == contract",
+      "pass": true,
+      "detail": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+    },
+    {
+      "check": "fresh fetch chars == contract/declared",
+      "pass": true,
+      "detail": "chars=5748"
+    },
+    {
+      "check": "embedded locators resolve against freshly fetched bytes",
+      "pass": true,
+      "detail": "30/30 resolved; failing=[]"
+    },
+    {
+      "check": "no duplicate ids",
+      "pass": true,
+      "detail": "n=51"
+    },
+    {
+      "check": "every claim has evidence",
+      "pass": true,
+      "detail": "claims=13 unresolved=8"
+    },
+    {
+      "check": "kf_result.v1.schema.json",
+      "pass": true,
+      "detail": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/kf_result.v1.schema.json"
+    },
+    {
+      "check": "record figure assets vs body figure captions",
+      "pass": true,
+      "detail": "record=4 named, body=4 captions, named captions in body=0"
+    },
+    {
+      "check": "record tags name a solver the body never names",
+      "pass": true,
+      "detail": "record tags=['TensorFEM'], body TensorFEM=0, body TensorLBM=1"
+    }
+  ],
+  "all_pass": true,
+  "fresh_fetch": {
+    "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28",
+    "chars": 5748,
+    "record_title": "P153W2-N03: TensorFEM×TensorLBM FSI Strong Coupling — Turek-Hron FSI-2 + Flutter + Energy Conservation",
+    "record_mission_id": 8136,
+    "record_tags": [
+      "FSI",
+      "Turek-Hron",
+      "strong-coupling",
+      "Aitken",
+      "flutter",
+      "energy-conservation",
+      "TensorFEM"
+    ],
+    "record_figures_len": 4,
+    "record_figure_names": [
+      "fsi2_displacement_clcd",
+      "fsi2_energy",
+      "fsi2_flutter",
+      "fsi2_convergence"
+    ],
+    "body_fsi2_count": 0,
+    "body_tensorfem_count": 0,
+    "body_tensorlbm_count": 1
+  }
+}
