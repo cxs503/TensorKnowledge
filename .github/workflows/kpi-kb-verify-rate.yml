@@ -1,0 +1,43 @@
+name: KPI-KB-VERIFY-RATE meter (offline semantics + ref-vs-got bench)
+
+# 集成调用方（L3）：CI 消费计量器的 result/bench 判定，红了就是红了。
+# Tier B/C 需要 PostgreSQL —— 本 workflow 没有 PG，因此这两层在 CI 上是 not_run，
+# 由 Tier A（口径语义，离线）承担回归保护；活库复算走 runs/ 工件里的人肉/集群复算路径。
+
+on:
+  push:
+    paths:
+      - "tools/kpi_kb_verify_rate/**"
+      - "benchmarks/kpi_kb_verify_rate/**"
+      - "tests/test_kpi_kb_verify_rate.py"
+      - ".github/workflows/kpi-kb-verify-rate.yml"
+  pull_request:
+    paths:
+      - "tools/kpi_kb_verify_rate/**"
+      - "benchmarks/kpi_kb_verify_rate/**"
+      - "tests/test_kpi_kb_verify_rate.py"
+
+permissions:
+  contents: read
+
+jobs:
+  meter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test deps
+        run: python -m pip install pytest matplotlib
+      - name: Offline semantic self-test
+        run: python -m tools.kpi_kb_verify_rate selftest
+      - name: Unit + semantic regression
+        run: python -m pytest tests/test_kpi_kb_verify_rate.py -q
+      - name: ref-vs-got bench (Tier A always; B/C not_run without PG)
+        run: python -m tools.kpi_kb_verify_rate bench --out /tmp/kpi_bench
+      - name: Upload bench artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kpi-kb-verify-rate-bench
+          path: /tmp/kpi_bench

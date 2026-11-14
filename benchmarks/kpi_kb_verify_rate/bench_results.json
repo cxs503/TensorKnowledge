@@ -1,0 +1,182 @@
+{
+  "kpi": "KPI-KB-VERIFY-RATE",
+  "spec_sha256": "22ee258a5afb3444f29ddecf7c3b7e811569ce1997d07c156f9411db1b86c943",
+  "cases_file": "benchmarks/kpi_kb_verify_rate/cases.json",
+  "tier_a": [
+    {
+      "case": "mixed-10ko",
+      "tier": "A-definition",
+      "ref": {
+        "numerator": 1,
+        "denominator": 8,
+        "current": 0.125
+      },
+      "got": {
+        "numerator": 1,
+        "denominator": 8,
+        "current": 0.125
+      },
+      "tolerance": "exact (0)",
+      "abs_error": 0.0,
+      "pass": true
+    },
+    {
+      "case": "empty-db",
+      "tier": "A-definition",
+      "ref": {
+        "numerator": 0,
+        "denominator": 0,
+        "current": null
+      },
+      "got": {
+        "numerator": 0,
+        "denominator": 0,
+        "current": null
+      },
+      "tolerance": "exact (0)",
+      "abs_error": 0.0,
+      "pass": true
+    },
+    {
+      "case": "two-of-three",
+      "tier": "A-definition",
+      "ref": {
+        "numerator": 2,
+        "denominator": 3,
+        "current": 0.6666666666666666
+      },
+      "got": {
+        "numerator": 2,
+        "denominator": 3,
+        "current": 0.6666666666666666
+      },
+      "tolerance": "exact (0)",
+      "abs_error": 0.0,
+      "pass": true
+    }
+  ],
+  "tier_b": {
+    "tier": "B-live-sql",
+    "status": "run",
+    "scratch_db": "kpi_verify_rate_bench",
+    "cases": [
+      {
+        "case": "mixed-10ko",
+        "tier": "B-live-sql",
+        "ref": {
+          "numerator": 1,
+          "denominator": 8,
+          "current": 0.125,
+          "target_status": "NOT_CALIBRATED",
+          "top_gap_ids": [
+            "GAP-KO-DENOMINATOR-PROVENANCE"
+          ]
+        },
+        "got": {
+          "numerator": 1,
+          "denominator": 8,
+          "current": 0.125,
+          "target_status": "NOT_CALIBRATED",
+          "top_gap_ids": [
+            "GAP-KO-DENOMINATOR-PROVENANCE"
+          ]
+        },
+        "abs_error_numerator": 0,
+        "abs_error_denominator": 0,
+        "abs_error_current": 0.0,
+        "gaps_subset_expected": true,
+        "tolerance": "exact (0) on counts; 1e-12 on ratio",
+        "pass": true
+      },
+      {
+        "case": "empty-db",
+        "tier": "B-live-sql",
+        "ref": {
+          "numerator": 0,
+          "denominator": 0,
+          "current": null,
+          "target_status": "NOT_CALIBRATED",
+          "top_gap_ids": [
+            "GAP-KO-VERIFY-TICKET-ZERO",
+            "GAP-KPI-BENCH-REFEREE",
+            "GAP-PLATFORM-KO-SCOPE-VERDICT"
+          ]
+        },
+        "got": {
+          "numerator": 0,
+          "denominator": 0,
+          "current": null,
+          "target_status": "NOT_CALIBRATED",
+          "top_gap_ids": [
+            "GAP-KO-VERIFY-TICKET-ZERO",
+            "GAP-KPI-BENCH-REFEREE",
+            "GAP-PLATFORM-KO-SCOPE-VERDICT"
+          ]
+        },
+        "abs_error_numerator": 0,
+        "abs_error_denominator": 0,
+        "abs_error_current": null,
+        "gaps_subset_expected": true,
+        "tolerance": "exact (0) on counts; 1e-12 on ratio",
+        "pass": true
+      },
+      {
+        "case": "two-of-three",
+        "tier": "B-live-sql",
+        "ref": {
+          "numerator": 2,
+          "denominator": 3,
+          "current": 0.6666666666666666,
+          "target_status": "NOT_CALIBRATED",
+          "top_gap_ids": [
+            "GAP-KO-DENOMINATOR-PROVENANCE"
+          ]
+        },
+        "got": {
+          "numerator": 2,
+          "denominator": 3,
+          "current": 0.6666666666666666,
+          "target_status": "NOT_CALIBRATED",
+          "top_gap_ids": [
+            "GAP-KO-DENOMINATOR-PROVENANCE"
+          ]
+        },
+        "abs_error_numerator": 0,
+        "abs_error_denominator": 0,
+        "abs_error_current": 0.0,
+        "gaps_subset_expected": true,
+        "tolerance": "exact (0) on counts; 1e-12 on ratio",
+        "pass": true
+      }
+    ],
+    "pass": true
+  },
+  "tier_c": {
+    "tier": "C-live-dual-path",
+    "status": "run",
+    "ref": {
+      "numerator": 0,
+      "denominator": 5338,
+      "denominator_ids_equal_primary": true,
+      "numerator_ids_sample": []
+    },
+    "got": {
+      "numerator": 0,
+      "denominator": 5338
+    },
+    "abs_error_numerator": 0,
+    "abs_error_denominator": 0,
+    "tolerance": "exact (0) + 集合相等",
+    "pass": true
+  },
+  "snapshot_sha256": "348c9e05c8f2fa2769b9bdc06206938dcbd04cbda41c1662b6e3f09db67d64d6",
+  "summary": {
+    "tier_a_pass": true,
+    "tier_b_status": "run",
+    "tier_b_pass": true,
+    "tier_c_status": "run",
+    "tier_c_pass": true,
+    "all_run_checks_pass": true,
+    "note": "not_run 不是 pass：Tier B/C 需要本地 PG，缺失时本层未判"
+  }
+}
