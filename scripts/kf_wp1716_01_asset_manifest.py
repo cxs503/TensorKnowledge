@@ -164,8 +164,19 @@ def line_quote(md: str, needle: str) -> dict:
 
 
 def local_presence(relpath: str) -> dict:
+    """Probe one declared path inside this checkout, portably.
+
+    Only the repo-relative path and a tokenised root are recorded: embedding the
+    absolute host path made the *committed* manifest machine-specific, so the
+    offline rebuild was no longer byte-identical to the committed bytes as soon
+    as another checkout regenerated it.
+    """
     p = REPO_ROOT / relpath
-    return {"probed_at": f"worktree:{REPO_ROOT}", "exists": p.exists()}
+    return {
+        "probed_at": "worktree:<repo_root>",
+        "relpath": relpath,
+        "exists": p.exists(),
+    }
 
 
 # ------------------------------------------------------------------ assets --
@@ -552,6 +563,12 @@ def build(offline: bool) -> dict:
                 },
             ],
         },
+        "reproducibility": (
+            "the offline rebuild (--offline) is byte-stable and host-independent: "
+            "each worktree probe records a tokenised root (worktree:<repo_root>) "
+            "plus the repo-relative path, never an absolute host path, so every "
+            "checkout regenerates the identical manifest bytes"
+        ),
         "unresolved_summary": {},
     }
 
