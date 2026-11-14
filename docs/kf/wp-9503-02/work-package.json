@@ -1,0 +1,48 @@
+{
+  "package_id": "wp-9503-02",
+  "task_type": "02-classification-parse",
+  "contract_version": "1.0",
+  "mission_id": null,
+  "lane": "B",
+  "input": {
+    "report_id": "9503",
+    "source_uri": "tensor://reports/9503",
+    "source_field": "markdown",
+    "source_hash": "sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c",
+    "title": "EEXI attained 端到端闭合链路（Holtrop→推进功率→轴系效率→gCO₂/t·nm）+ 1852 倍量纲缺陷修复",
+    "scenario_key": "p73w2b-n02-eexi-closed-loop",
+    "chars": 8176
+  },
+  "objective": {
+    "classify_report_type": true,
+    "register_assets": false
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true
+  },
+  "output": {
+    "classification.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "source_locator_resolvable": true,
+    "source_hash_matches": true,
+    "no_duplicate_ids": true,
+    "all_claims_have_evidence_or_explicit_unresolved_status": true
+  },
+  "review": {
+    "required": false,
+    "independent_reviewer": false,
+    "reviewer_role": "document-analyst"
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "draft"
+  },
+  "notes": "给报告打类型/主题标签，给出判定依据的原文片段定位；不做抽取。 ｜分层=EEXI|p73w2b-n02-eexi-closed-loop|l"
+}
