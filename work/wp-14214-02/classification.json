@@ -1,0 +1,825 @@
+{
+  "package_id": "wp-14214-02",
+  "task_type": "02-classification-parse",
+  "contract_version": "1.0",
+  "report_id": "14214",
+  "source": {
+    "source_uri": "tensor://reports/14214",
+    "source_field": "markdown",
+    "source_hash": "sha256:edc85090268afe8220c9108650aed655c05b017bb1bb29cdfffa382b7d2d1af9",
+    "source_hash_recomputed": "sha256:edc85090268afe8220c9108650aed655c05b017bb1bb29cdfffa382b7d2d1af9",
+    "source_hash_matches": true,
+    "chars": 6258,
+    "utf8_bytes": 8770,
+    "transport": "api:/tensor/reports/14214",
+    "title": "W23 论文线：430 篇增量扫描 + 45 课题双轨重标 + research_plan 销项推进 63/73 + 成稿门四门→九门（放行2/阻断22）+ 10 单派发",
+    "scenario_key": "paper-line-w23"
+  },
+  "report_type": "technical-proposal",
+  "report_type_confidence": "medium",
+  "report_type_basis": "R1: argmax score=5 (technical-proposal)",
+  "report_type_weak_signal_only": false,
+  "report_type_margin": 5,
+  "type_candidates": [
+    "technical-proposal"
+  ],
+  "decision_rule": {
+    "rule_version": "v1-predeclared",
+    "primary_source": "extraction-skills/registry.json identify_signals (verbatim, case-insensitive substring)",
+    "registry_hit_weight": 2,
+    "proxy_hit_weight": 1,
+    "proxy_role": "cross_check_only",
+    "steps": [
+      "score[t] = 2*|distinct registry signals of t hit| + 1*|distinct proxy signals of t hit|",
+      "registry_supported[t] = |distinct registry signals of t hit| > 0",
+      "R1 winner = argmax(score) among registry_supported types",
+      "R2 if no type is registry_supported -> report_type = unclassified (no forced guess)",
+      "R3 if two types tie on score -> report_type = unclassified with both candidates listed",
+      "R4 confidence: high iff registry signals >=2 and margin >= 2; medium iff margin >= 1 and registry signals >= 1; else low",
+      "R5 a registry hit counts as standalone only if neither neighbour char is in [A-Za-z0-9_./-] (so mentions inside file names, paths and identifiers such as research_plan.md do not count); a type has 'strong' registry evidence only with >=2 standalone occurrences of some signal; a winner without strong registry evidence is capped at confidence=low"
+    ],
+    "rationale": "registry identify_signals are the only machine-declared type evidence; the local Chinese proxy set exists because the registry is English-only and the report is Chinese, and is used only as a cross-check / confidence depressant, never as the sole basis of a type decision."
+  },
+  "proxy_signal_set": {
+    "version": "proxy-zh-v1 (declared in this script)",
+    "signals": {
+      "literature-review": [
+        "文献",
+        "综述",
+        "相关工作",
+        "参考文献",
+        "引用"
+      ],
+      "scientific-computation": [
+        "控制方程",
+        "离散",
+        "收敛",
+        "网格",
+        "求解器",
+        "数值格式"
+      ],
+      "algorithm-implementation": [
+        "伪代码",
+        "复杂度",
+        "函数签名",
+        "算法实现",
+        "数据结构"
+      ],
+      "software-engineering": [
+        "提交",
+        "回归",
+        "接口",
+        "变更文件",
+        "测试文件",
+        "工具链"
+      ],
+      "technical-proposal": [
+        "计划",
+        "派单",
+        "路线",
+        "规范",
+        "立项",
+        "销项"
+      ],
+      "experimental-validation": [
+        "试验",
+        "基准",
+        "不确定度",
+        "验证工况",
+        "基线对比"
+      ]
+    }
+  },
+  "type_scores": [
+    {
+      "report_type": "literature-review",
+      "skill": {
+        "skill_id": "xsk-literature-review",
+        "skill_version": "0.1.0",
+        "lifecycle_state": "template-created"
+      },
+      "registry_signals": [],
+      "proxy_signals": [],
+      "registry_distinct": 0,
+      "proxy_distinct": 0,
+      "score": 0
+    },
+    {
+      "report_type": "scientific-computation",
+      "skill": {
+        "skill_id": "xsk-scientific-computation",
+        "skill_version": "0.1.0",
+        "lifecycle_state": "template-created"
+      },
+      "registry_signals": [],
+      "proxy_signals": [],
+      "registry_distinct": 0,
+      "proxy_distinct": 0,
+      "score": 0
+    },
+    {
+      "report_type": "algorithm-implementation",
+      "skill": {
+        "skill_id": "xsk-algorithm-implementation",
+        "skill_version": "0.1.0",
+        "lifecycle_state": "template-created"
+      },
+      "registry_signals": [],
+      "proxy_signals": [],
+      "registry_distinct": 0,
+      "proxy_distinct": 0,
+      "score": 0
+    },
+    {
+      "report_type": "software-engineering",
+      "skill": {
+        "skill_id": "xsk-software-engineering",
+        "skill_version": "0.1.0",
+        "lifecycle_state": "template-created"
+      },
+      "registry_signals": [],
+      "proxy_signals": [
+        {
+          "signal": "工具链",
+          "hits": 1,
+          "evidence": {
+            "locator_id": "sig-prox-software-engineering-工具链",
+            "locator_type": "markdown",
+            "quote": "工具链",
+            "start_offset": 538,
+            "end_offset": 541,
+            "occurrences": 1,
+            "all_start_offsets": [
+              538
+            ],
+            "content_hash": "sha256:4faf856ef0575587bfba33ba38225a41523a07d805fba2f2223b5bb31053a8b3",
+            "resolvable": true,
+            "note": "verbatim signal string"
+          }
+        }
+      ],
+      "registry_distinct": 0,
+      "proxy_distinct": 1,
+      "score": 1
+    },
+    {
+      "report_type": "technical-proposal",
+      "skill": {
+        "skill_id": "xsk-technical-proposal",
+        "skill_version": "0.1.0",
+        "lifecycle_state": "template-created"
+      },
+      "registry_signals": [
+        {
+          "signal": "plan",
+          "hits": 18,
+          "standalone_hits": 4,
+          "part_of_identifier": false,
+          "evidence": {
+            "locator_id": "sig-reg-technical-proposal-plan",
+            "locator_type": "markdown",
+            "quote": "重标、research_plan 销项推进与成稿门加固\n",
+            "start_offset": 23,
+            "end_offset": 51,
+            "occurrences": 1,
+            "all_start_offsets": [
+              23
+            ],
+            "content_hash": "sha256:d45eb443526af802ba984356da8fa68b243119f78e4c484fa5b8e7023a1e0144",
+            "resolvable": true,
+            "note": "±12 char window around first hit"
+          }
+        }
+      ],
+      "proxy_signals": [
+        {
+          "signal": "计划",
+          "hits": 7,
+          "evidence": {
+            "locator_id": "sig-prox-technical-proposal-计划",
+            "locator_type": "markdown",
+            "quote": "计划",
+            "start_offset": 1259,
+            "end_offset": 1261,
+            "occurrences": 7,
+            "all_start_offsets": [
+              1259,
+              1316,
+              1368,
+              4633,
+              4659,
+              5113,
+              5945
+            ],
+            "content_hash": "sha256:0f6b1949b093e35266991fbea7a832212d428e874cc0666634faf37f51d4c63b",
+            "resolvable": true,
+            "note": "verbatim signal string"
+          }
+        },
+        {
+          "signal": "派单",
+          "hits": 3,
+          "evidence": {
+            "locator_id": "sig-prox-technical-proposal-派单",
+            "locator_type": "markdown",
+            "quote": "派单",
+            "start_offset": 1083,
+            "end_offset": 1085,
+            "occurrences": 3,
+            "all_start_offsets": [
+              1083,
+              1719,
+              5144
+            ],
+            "content_hash": "sha256:612afa02e89258cc4ed36d56f6d3964ee195245edd01c67e0d21054f00759ffe",
+            "resolvable": true,
+            "note": "verbatim signal string"
+          }
+        },
+        {
+          "signal": "销项",
+          "hits": 11,
+          "evidence": {
+            "locator_id": "sig-prox-technical-proposal-销项",
+            "locator_type": "markdown",
+            "quote": "销项",
+            "start_offset": 40,
+            "end_offset": 42,
+            "occurrences": 11,
+            "all_start_offsets": [
+              40,
+              352,
+              882,
+              906,
+              1207,
+              1291,
+              1344,
+              4616,
+              4709,
+              5361,
+              5730
+            ],
+            "content_hash": "sha256:d6c2bc3f90b8b6f99ffe2abfbe5897fe2e9bb1f1ff76e51a6a18511f7139a907",
+            "resolvable": true,
+            "note": "verbatim signal string"
+          }
+        }
+      ],
+      "registry_distinct": 1,
+      "proxy_distinct": 3,
+      "score": 5
+    },
+    {
+      "report_type": "experimental-validation",
+      "skill": {
+        "skill_id": "xsk-experimental-validation",
+        "skill_version": "0.1.0",
+        "lifecycle_state": "template-created"
+      },
+      "registry_signals": [],
+      "proxy_signals": [
+        {
+          "signal": "基准",
+          "hits": 3,
+          "evidence": {
+            "locator_id": "sig-prox-experimental-validation-基准",
+            "locator_type": "markdown",
+            "quote": "基准",
+            "start_offset": 5228,
+            "end_offset": 5230,
+            "occurrences": 3,
+            "all_start_offsets": [
+              5228,
+              5241,
+              5571
+            ],
+            "content_hash": "sha256:7fcbcf170e1013b0b6203ff091d43cb8a1b6359dcf61fb9a0be19db5eb2ccbf9",
+            "resolvable": true,
+            "note": "verbatim signal string"
+          }
+        }
+      ],
+      "registry_distinct": 0,
+      "proxy_distinct": 1,
+      "score": 1
+    }
+  ],
+  "selected_skill": {
+    "skill_id": "xsk-technical-proposal",
+    "skill_version": "0.1.0",
+    "lifecycle_state": "template-created",
+    "selection_status": "tentative",
+    "note": "registry lifecycle_state=template-created for all six skills; no skill has a promoted representative report yet, so the pairing is tentative by construction."
+  },
+  "topic_tags": [
+    {
+      "tag_id": "topic-evidence-organising-wave",
+      "label": "证据组织波（非写作波）— 报告自我定位",
+      "evidence": [
+        {
+          "locator_id": "topic-evidence-organising-wave-ev",
+          "locator_type": "markdown",
+          "quote": "本波不是写作波而是**证据组织波**",
+          "start_offset": 250,
+          "end_offset": 268,
+          "occurrences": 1,
+          "all_start_offsets": [
+            250
+          ],
+          "content_hash": "sha256:7926a938b94cbfbe8a9352a83d23055d6c37943347b23f4d767ca8df71877e26",
+          "resolvable": true
+        }
+      ],
+      "status": "labelled"
+    },
+    {
+      "tag_id": "topic-incremental-scan-window",
+      "label": "增量窗口扫描（id 区间、冻结上界）",
+      "evidence": [
+        {
+          "locator_id": "topic-incremental-scan-window-ev",
+          "locator_type": "markdown",
+          "quote": "`id > 13481（W22 冻结上界，不重叠）且 id <= 14210（本波开工快照）`",
+          "start_offset": 121,
+          "end_offset": 168,
+          "occurrences": 1,
+          "all_start_offsets": [
+            121
+          ],
+          "content_hash": "sha256:d9cfbaa10051c257e486c25f2ebe48c956842d733b3b8cb581806e33f9f1d4d3",
+          "resolvable": true
+        }
+      ],
+      "status": "labelled"
+    },
+    {
+      "tag_id": "topic-dual-track-relabel",
+      "label": "45 课题双轨重标（external/internal）",
+      "evidence": [
+        {
+          "locator_id": "topic-dual-track-relabel-ev",
+          "locator_type": "markdown",
+          "quote": "**双轨重标**（`w23_tracks.py`）：45 课题逐条判 external/internal",
+          "start_offset": 754,
+          "end_offset": 806,
+          "occurrences": 1,
+          "all_start_offsets": [
+            754
+          ],
+          "content_hash": "sha256:7815aff1bce716520e84aacf9b7d95c71ea3cb0acdb8990c8dbe0f83da79f6fe",
+          "resolvable": true
+        }
+      ],
+      "status": "labelled"
+    },
+    {
+      "tag_id": "topic-research-plan-ledger",
+      "label": "research_plan 销项记账",
+      "evidence": [
+        {
+          "locator_id": "topic-research-plan-ledger-ev",
+          "locator_type": "markdown",
+          "quote": "任务销项 = 至少产出 1 篇报告（判据达标或 honest FAIL 均算）",
+          "start_offset": 904,
+          "end_offset": 943,
+          "occurrences": 1,
+          "all_start_offsets": [
+            904
+          ],
+          "content_hash": "sha256:09b7ad64f8dc35e875fe2a631b75990eba5b96aa8c2b20618851dfb510958f27",
+          "resolvable": true
+        }
+      ],
+      "status": "labelled"
+    },
+    {
+      "tag_id": "topic-draft-gate",
+      "label": "成稿门九门判决（放行/阻断）",
+      "evidence": [
+        {
+          "locator_id": "topic-draft-gate-ev",
+          "locator_type": "markdown",
+          "quote": "**成稿门判决**（九门全真才放行）",
+          "start_offset": 1437,
+          "end_offset": 1455,
+          "occurrences": 1,
+          "all_start_offsets": [
+            1437
+          ],
+          "content_hash": "sha256:ee6a88194413f69d7b0c94b1918adf44e2223dd64873b2f2a323ced61690640f",
+          "resolvable": true
+        }
+      ],
+      "status": "labelled"
+    },
+    {
+      "tag_id": "topic-dispatch-receipt",
+      "label": "派单回执（DB 回读）",
+      "evidence": [
+        {
+          "locator_id": "topic-dispatch-receipt-ev",
+          "locator_type": "markdown",
+          "quote": "**派单回执**（DB 回读）",
+          "start_offset": 1717,
+          "end_offset": 1732,
+          "occurrences": 1,
+          "all_start_offsets": [
+            1717
+          ],
+          "content_hash": "sha256:337648cd5b899eca48f324e35ce5a1d00e5b0bb0f72b10460a4200ba478b462c",
+          "resolvable": true
+        }
+      ],
+      "status": "labelled"
+    },
+    {
+      "tag_id": "topic-numeric-audit",
+      "label": "数字归属机检",
+      "evidence": [
+        {
+          "locator_id": "topic-numeric-audit-ev",
+          "locator_type": "markdown",
+          "quote": "数字归属机检：284 个数字 token 全部归类，锚行越界 token 0 个",
+          "start_offset": 3884,
+          "end_offset": 3924,
+          "occurrences": 1,
+          "all_start_offsets": [
+            3884
+          ],
+          "content_hash": "sha256:ff74a5b94e252538cfe33ce0f17f4e7e02b49cc3d94dd45052e60dabd5f58354",
+          "resolvable": true
+        }
+      ],
+      "status": "labelled"
+    },
+    {
+      "tag_id": "topic-honest-fail",
+      "label": "精度判定如实留痕（honest FAIL）",
+      "evidence": [
+        {
+          "locator_id": "topic-honest-fail-ev",
+          "locator_type": "markdown",
+          "quote": "**honest FAIL 留痕**：本波未产出任何领域精度量（本波不跑仿真）",
+          "start_offset": 5642,
+          "end_offset": 5681,
+          "occurrences": 1,
+          "all_start_offsets": [
+            5642
+          ],
+          "content_hash": "sha256:b6051a442e77c0a2fa4c880d43b301911eba5f8d3d34d7e1b8b1313a51d4fc64",
+          "resolvable": true
+        }
+      ],
+      "status": "labelled"
+    }
+  ],
+  "domain_tags": {
+    "declared_coverage": [
+      "resistance",
+      "propulsion",
+      "seakeeping",
+      "manoeuvrability",
+      "stability",
+      "structure",
+      "vibration-noise",
+      "green-shipping",
+      "ice-navigation"
+    ],
+    "evidence": [
+      {
+        "locator_id": "domain-nine-fields",
+        "locator_type": "markdown",
+        "quote": "学科域覆盖阻力/推进/耐波/操纵/稳性/结构/振动噪声/绿色航行/冰区九域。",
+        "start_offset": 355,
+        "end_offset": 393,
+        "occurrences": 1,
+        "all_start_offsets": [
+          355
+        ],
+        "content_hash": "sha256:ce122ea98b257242675fc86a6db561f6cdb54ea6931bfcdef5471fd8fcf94530",
+        "resolvable": true
+      }
+    ],
+    "status": "unresolved",
+    "reason": "九域覆盖是报告的自我声明；同文声明「本波不跑仿真」且无任何领域精度量，故本波不能为任一学科域提供实测/精度证据，域标签只作索引线索，不作能力证据。"
+  },
+  "scenario": {
+    "scenario_key": "paper-line-w23",
+    "evidence": [
+      {
+        "locator_id": "scenario-ev",
+        "locator_type": "markdown",
+        "quote": "**任务**：paper-mine-w23（首席研究员选题）· 仓 `TensorPapers` · 2026-11-11",
+        "start_offset": 52,
+        "end_offset": 113,
+        "occurrences": 1,
+        "all_start_offsets": [
+          52
+        ],
+        "content_hash": "sha256:7a1d3e331c231d131aa10475cc02dfe21e782b5b2bc5a9d7a0fa9787e25b47d5",
+        "resolvable": true
+      }
+    ],
+    "status": "labelled"
+  },
+  "structure": {
+    "chars": 6258,
+    "utf8_bytes": 8770,
+    "lines": 104,
+    "sections": [
+      {
+        "section_id": "sec-01",
+        "heading": "W23 论文生产线研究总结：增量证据、双轨重标、research_plan 销项推进与成稿门加固",
+        "level": 1,
+        "start_offset": 0,
+        "end_offset": 230,
+        "chars": 230,
+        "line": 1
+      },
+      {
+        "section_id": "sec-02",
+        "heading": "① 案例介绍（研究域与证据面）",
+        "level": 2,
+        "start_offset": 230,
+        "end_offset": 523,
+        "chars": 293,
+        "line": 6
+      },
+      {
+        "section_id": "sec-03",
+        "heading": "② 怎么做的（方法 / 工具链）",
+        "level": 2,
+        "start_offset": 523,
+        "end_offset": 1169,
+        "chars": 646,
+        "line": 17
+      },
+      {
+        "section_id": "sec-04",
+        "heading": "③ 计算结果（数字表，程序化注入）",
+        "level": 2,
+        "start_offset": 1169,
+        "end_offset": 3951,
+        "chars": 2782,
+        "line": 26
+      },
+      {
+        "section_id": "sec-05",
+        "heading": "④ 结果图",
+        "level": 2,
+        "start_offset": 3951,
+        "end_offset": 4593,
+        "chars": 642,
+        "line": 71
+      },
+      {
+        "section_id": "sec-06",
+        "heading": "⑤ 注意点（坑与局限）",
+        "level": 2,
+        "start_offset": 4593,
+        "end_offset": 5211,
+        "chars": 618,
+        "line": 79
+      },
+      {
+        "section_id": "sec-07",
+        "heading": "⑥ 误差判定（关键量 vs 基准）",
+        "level": 2,
+        "start_offset": 5211,
+        "end_offset": 5757,
+        "chars": 546,
+        "line": 87
+      },
+      {
+        "section_id": "sec-08",
+        "heading": "附：工具与工件",
+        "level": 2,
+        "start_offset": 5757,
+        "end_offset": 6258,
+        "chars": 501,
+        "line": 99
+      }
+    ],
+    "tables": [
+      {
+        "table_id": "tbl-01",
+        "line_start": 10,
+        "line_end": 15,
+        "header_cols": 2,
+        "header": [
+          "指标",
+          "数值"
+        ],
+        "data_rows": 4
+      },
+      {
+        "table_id": "tbl-02",
+        "line_start": 30,
+        "line_end": 35,
+        "header_cols": 4,
+        "header": [
+          "指标",
+          "W22",
+          "W23",
+          "变化"
+        ],
+        "data_rows": 4
+      },
+      {
+        "table_id": "tbl-03",
+        "line_start": 46,
+        "line_end": 67,
+        "header_cols": 5,
+        "header": [
+          "task_key",
+          "mission",
+          "状态",
+          "模型",
+          "repo"
+        ],
+        "data_rows": 20
+      },
+      {
+        "table_id": "tbl-04",
+        "line_start": 89,
+        "line_end": 95,
+        "header_cols": 4,
+        "header": [
+          "关键量",
+          "基准",
+          "结果",
+          "是否 <3%"
+        ],
+        "data_rows": 5
+      }
+    ],
+    "table_count": 4,
+    "fenced_block_count": 0,
+    "figure_references": [
+      {
+        "path": "papers/figures/w23_window_composition.png",
+        "start_offset": 3963,
+        "line": 73
+      },
+      {
+        "path": "papers/figures/w23_track_split.png",
+        "start_offset": 4087,
+        "line": 74
+      },
+      {
+        "path": "papers/figures/w23_plan_progress.png",
+        "start_offset": 4204,
+        "line": 75
+      },
+      {
+        "path": "papers/figures/w23_draft_gate.png",
+        "start_offset": 4337,
+        "line": 76
+      },
+      {
+        "path": "papers/figures/w23_artifact_presence.png",
+        "start_offset": 4457,
+        "line": 77
+      }
+    ],
+    "figure_reference_count": 5,
+    "code_tokens": [
+      "papers/tools/w23_figures.py",
+      "papers/tools/w23_{extract,anchors,plan,tracks,specs,payloads,dispatch,draftgate,planmd,figures,registry}.py",
+      "test_w23_artifacts.py",
+      "w23_anchors.py",
+      "w23_dispatch.py",
+      "w23_draftgate.py",
+      "w23_extract.py",
+      "w23_payloads.py",
+      "w23_plan.py",
+      "w23_planmd.py",
+      "w23_tracks.py"
+    ],
+    "code_token_count": 11
+  },
+  "claims": [],
+  "claims_note": "工序 02 不做抽取（objective.classify_report_type 仅此一项）；claims 保持空集，无 forced claim。",
+  "unresolved": [
+    {
+      "entry_id": "unres-01",
+      "issue": "成稿门阻断单数不一致：标题/摘要口径 22，正文 §③ 口径 23",
+      "evidence": [
+        {
+          "locator_id": "unres-01-title-ev",
+          "locator_type": "contract:input.title",
+          "quote": "W23 论文线：430 篇增量扫描 + 45 课题双轨重标 + research_plan 销项推进 63/73 + 成稿门四门→九门（放行2/阻断22）+ 10 单派发",
+          "content_hash": "sha256:1037030cfecdbc9f1d2a547e877c169f43f8599a53b3079b0984577634786ca9",
+          "resolvable_in": "contract (owner YAML input.title)",
+          "resolvable": true,
+          "note": "契约/平台记录标题口径：仅存在于 input.title，markdown 正文无此串"
+        },
+        {
+          "locator_id": "unres-01-body-ev",
+          "locator_type": "markdown",
+          "quote": "- 阻断 **23**；主要阻断门计数",
+          "start_offset": 1542,
+          "end_offset": 1561,
+          "occurrences": 1,
+          "all_start_offsets": [
+            1542
+          ],
+          "content_hash": "sha256:429c319d86cb5fb8bf6bbb5e8f1709012ee93e7a2e066ac3df384679a98027e4",
+          "resolvable": true,
+          "note": "§③ 成稿门判决节"
+        }
+      ],
+      "status": "unresolved",
+      "reason": "两个数字均为原文逐字；本工序只做分类解析，不核查门禁工件，无法判定哪个是终值，故如实挂 unresolved，交 03/04 工序或平台门核查。"
+    },
+    {
+      "entry_id": "unres-02",
+      "issue": "阻断总数为 23 时，分门阻断计数之和无法从本报告闭合",
+      "evidence": [
+        {
+          "locator_id": "unres-02-ev",
+          "locator_type": "markdown",
+          "quote": "G5e_anchor_task_not_fail=11、G5c_artifact_ratio_ge_0.5=8、G5a_pass_report_ge1=11、G5d_fail_not_dominant=8、G5b_pass_rows_ge3=8、G4_no_draft=9、G2_plan_closed=2",
+          "start_offset": 1562,
+          "end_offset": 1715,
+          "occurrences": 1,
+          "all_start_offsets": [
+            1562
+          ],
+          "content_hash": "sha256:d4ad9fbe9ad5cf3f0252d64735667697eb6b8369621e8475955c0ace3dd669af",
+          "resolvable": true
+        }
+      ],
+      "status": "unresolved",
+      "reason": "一门可阻断多单（多门计数之和大于单数）是可能解释，但报告未声明口径；本工序不臆断，保持 unresolved。"
+    },
+    {
+      "entry_id": "unres-03",
+      "issue": "图件 sha256_16 与论文级数值结论在本报告内不可复核",
+      "evidence": [
+        {
+          "locator_id": "unres-03-ev",
+          "locator_type": "markdown",
+          "quote": "`papers/figures/w23_window_composition.png`（sha256_16 `00a0936204e0b70d`",
+          "start_offset": 3963,
+          "end_offset": 4035,
+          "occurrences": 1,
+          "all_start_offsets": [
+            3963
+          ],
+          "content_hash": "sha256:a6657cdb8c3e4aff26ccfd9675ae83803199c42386cf1ab53789be3b36d7dc7f",
+          "resolvable": true
+        }
+      ],
+      "status": "unresolved",
+      "reason": "报告只给 sha256_16 前缀与图件路径，本工序按契约不读附件/外部仓，故图件完整性不在本包能力内，登记为 unresolved 而非通过。"
+    }
+  ],
+  "limitations": [
+    "registry identify_signals 为英文词表，本报告为中文正文：六型中仅 1 型有机械命中（technical-proposal）；该型唯一命中词 `plan` 共 18 次，其中独立（非文件名/标识符内）出现 4 次，其余落在 `research_plan*`/`w23_plan*.py`/`G2_plan_closed` 等工件名内部。按预声明规则 R4/R5，命中型数仅 1 < 2，故 confidence 封顶 medium，不能升到 high；其余五型 registry 命中 0，不得凭中文语感硬判。",
+    "本地中文代理信号集为**本工序声明的补充口径**（proxy-zh-v1），不在 registry 内，仅用于交叉检验与置信度下调，不作为类型判定的唯一依据。",
+    "本工序不做抽取：claims=[]；分类是可反驳假设，错分会由 03/04 工序以「claim 与原文类型不符」暴露。",
+    "所有 locator 均为逐字子串定位（start_offset/end_offset/content_hash），报告可能存在的措辞级不一致不被平滑。",
+    "没有把任何结论标成 verified：verification 由平台门计算。"
+  ],
+  "self_check_hint": "见 kf_result.json outputs.classification.json.self_check 与报告 ⑥ 自检表",
+  "acceptance_self_check": {
+    "valid_json": {
+      "pass": true,
+      "how": "json.dumps(...) round-trip of both artifacts"
+    },
+    "schema_pass": {
+      "pass": true,
+      "how": "jsonschema.validate against schemas/kf_result.v1.schema.json"
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "locators_checked": 20,
+      "locator_ids_unique": 20,
+      "locators_failed": 0,
+      "how": "md[start:start+len(quote)] == quote and sha256(quote) == content_hash"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "recomputed": "sha256:edc85090268afe8220c9108650aed655c05b017bb1bb29cdfffa382b7d2d1af9",
+      "contract": "sha256:edc85090268afe8220c9108650aed655c05b017bb1bb29cdfffa382b7d2d1af9",
+      "chars": 6258,
+      "contract_chars": 6258
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "ids": 40,
+      "duplicates": []
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "entries_without_evidence": [],
+      "note": "this package emits zero claim records (工序02 不做抽取); every labelled item carries an evidence locator or status=unresolved",
+      "claim_count": 0
+    }
+  },
+  "figure": {
+    "path": "work/wp-14214-02/figures/wp14214_02_signal_profile.png",
+    "kind": "diagnostic"
+  }
+}
