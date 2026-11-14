@@ -1,0 +1,71 @@
+{
+  "package_id": "wp-13494-01",
+  "report_id": "13494",
+  "schema": "published_check.v1",
+  "checked_at": "2026-11-14T14:33:34.052185+00:00",
+  "api": "GET /api/v1/tensor/reports/13494",
+  "record": {
+    "status": "published",
+    "title": "TensorDEM GPU 100K Gate — CPU Scaling & Correctness Verification",
+    "scenario_key": "p447w2-n03-dem-gpu-100k",
+    "mission_id": 14000,
+    "tags": [
+      "DEM",
+      "GPU",
+      "100k",
+      "cell-list",
+      "correctness",
+      "NOT_SUPPORTED"
+    ],
+    "figures": [
+      {
+        "name": "fig1_scaling",
+        "png_base64_bytes": 0
+      }
+    ],
+    "created_at": "2026-11-11T07:09:51.374482+00:00",
+    "markdown_chars": 12251,
+    "markdown_bytes_utf8": 12398,
+    "markdown_sha256": "ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe"
+  },
+  "checks": {
+    "report_is_published": {
+      "pass": true,
+      "detail": "GET /api/v1/tensor/reports/13494 -> status='published' (package registration assumes a published record)"
+    },
+    "source_hash_matches_live_record": {
+      "pass": true,
+      "detail": "live=ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe manifest=ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe contract=ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe"
+    },
+    "source_chars_match_live_record": {
+      "pass": true,
+      "detail": "live=12251 manifest=12251 contract=12251"
+    },
+    "title_matches_live_record": {
+      "pass": true,
+      "detail": "live='TensorDEM GPU 100K Gate — CPU Scaling & Correctness Verification' manifest='TensorDEM GPU 100K Gate — CPU Scaling & Correctness Verification'"
+    },
+    "scenario_key_matches_live_record": {
+      "pass": true,
+      "detail": "live='p447w2-n03-dem-gpu-100k' manifest='p447w2-n03-dem-gpu-100k'"
+    },
+    "figure_inventory_matches_live_record": {
+      "pass": true,
+      "detail": "live=['fig1_scaling'] manifest=['fig1_scaling']"
+    },
+    "manifest_hash_matches_envelope": {
+      "pass": true,
+      "detail": "recomputed=bd65c1dd08f6b0737eea410ea6e5cae625472c281865cd6c1ac5e9a111ab11b8 envelope=bd65c1dd08f6b0737eea410ea6e5cae625472c281865cd6c1ac5e9a111ab11b8"
+    },
+    "all_locators_resolve_in_live_source": {
+      "pass": true,
+      "detail": "re-resolved 12 locators against the live markdown; unresolvable=[]"
+    }
+  },
+  "all_pass": true,
+  "notes": [
+    "This is a *record* cross-check by the producer, not the authoritative verification: the platform gate recomputes the hashes itself.",
+    "Locators are absolute character offsets into the platform's own markdown, so the check above is exactly what the platform can redo without trusting this package.",
+    "A published record is a publication state, not a knowledge verdict: no claim is marked verified anywhere in this package."
+  ]
+}
