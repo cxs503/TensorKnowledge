@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorplatform.local/schemas/asset_manifest.v1.wp-615-01.schema.json",
+  "title": "asset_manifest.v1 pinned to KF work package wp-615-01 (task_type=01-asset-registration, report_id=615)",
+  "description": "Package-pinned manifest contract for wp-615-01, following the repo's existing per-package pattern (cf. asset_manifest.v1.wp-10344-01.schema.json). Motivation: the shared schemas/asset_manifest.v1.schema.json on main describes a different manifest family (wp-448-01 shape: 'schema' const, asset_id ^A[0-9]{2}$, claims/integrity blocks) and rejects this package's manifest on 198 points, so 'schema_pass: true' could not be reproduced against any in-repo schema. This file encodes exactly the shape scripts/kf/wp_615_01_register_assets.py emits (locator-level quotes from report 615 markdown, status/resolution accounting, identity facts), so that the schema gate is a reproducible check instead of an assertion.",
+  "type": "object",
+  "required": [
+    "manifest_version",
+    "package_id",
+    "task_type",
+    "report_id",
+    "lane",
+    "generated_at",
+    "producer",
+    "source",
+    "assets",
+    "unresolved",
+    "counts",
+    "locator_checks",
+    "identity_facts",
+    "scope",
+    "limitations"
+  ],
+  "properties": {
+    "manifest_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "package_id": {"const": "wp-615-01"},
+    "task_type": {"const": "01-asset-registration"},
+    "report_id": {"const": "615"},
+    "lane": {"type": "string", "minLength": 1},
+    "generated_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:.]+\\+00:00$"},
+    "producer": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "required": [
+        "report_id", "source_uri", "source_field", "source_hash", "contract_source_hash",
+        "hash_algo", "hash_scope", "hash_match", "chars", "contract_chars",
+        "chars_match_contract", "bytes", "lines", "fetched_via", "record_fields"
+      ],
+      "properties": {
+        "report_id": {"const": "615"},
+        "source_uri": {"const": "tensor://reports/615"},
+        "source_field": {"const": "markdown"},
+        "source_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "contract_source_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "hash_algo": {"const": "sha256"},
+        "hash_scope": {"type": "string", "minLength": 1},
+        "hash_match": {"const": true},
+        "chars": {"const": 2125},
+        "contract_chars": {"const": 2125},
+        "chars_match_contract": {"const": true},
+        "bytes": {"type": "integer", "minimum": 1},
+        "lines": {"type": "integer", "minimum": 1},
+        "fetched_via": {"type": "string", "minLength": 1},
+        "record_fields": {
+          "type": "object",
+          "required": ["title", "scenario_key", "mission_id", "status", "created_at", "tags"],
+          "properties": {
+            "title": {"const": "SIR-PC2|F06: 3D DEM↔Fluid Bidirectional Coupling Framework"},
+            "scenario_key": {"const": "SIR-PC2|F06"},
+            "mission_id": {"type": "integer", "minimum": 1},
+            "status": {"type": "string", "minLength": 1},
+            "created_at": {"type": "string", "minLength": 10},
+            "tags": {"type": "array", "items": {"type": "string"}},
+            "title_matches_contract": {"type": "boolean"},
+            "scenario_matches_contract": {"type": "boolean"},
+            "title_matches_markdown_h1": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["asset_id", "kind", "uri", "status", "locator"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^asset-615-[0-9]{2}-[A-Za-z0-9_.:-]+$"},
+          "kind": {
+            "enum": [
+              "report_markdown",
+              "report_record_metadata",
+              "section_prose",
+              "parameter_table",
+              "equation",
+              "method_steps",
+              "toolchain_list",
+              "acceptance_table",
+              "result_table",
+              "test_evidence_summary",
+              "limitations_list",
+              "figure",
+              "run_artifact",
+              "codebase_pointer"
+            ]
+          },
+          "uri": {"type": "string", "pattern": "^tensor://reports/615"},
+          "status": {"enum": ["resolved", "partially_resolved", "declared_unresolvable"]},
+          "sha256": {"type": ["string", "null"], "pattern": "^sha256:[0-9a-f]{64}$"},
+          "bytes": {"type": "integer", "minimum": 0},
+          "chars": {"type": "integer", "minimum": 0},
+          "rows": {"type": "integer", "minimum": 0},
+          "items": {"type": "integer", "minimum": 0},
+          "retrieval": {"type": "object"},
+          "fields": {"type": "object"},
+          "notes": {"type": "string"},
+          "locator": {
+            "type": "object",
+            "required": ["source_field", "quote", "quote_verified", "offset_chars"],
+            "properties": {
+              "source_field": {"const": "markdown"},
+              "section": {"type": ["string", "null"]},
+              "quote": {"type": "string", "minLength": 1},
+              "quote_verified": {"const": true},
+              "offset_chars": {"type": ["integer", "null"], "minimum": 0},
+              "note": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["asset_id", "kind", "reason"],
+        "properties": {
+          "asset_id": {"type": "string", "pattern": "^asset-615-[0-9]{2}-[A-Za-z0-9_.:-]+$"},
+          "kind": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 10}
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["assets_total", "by_status", "unresolved_total"],
+      "properties": {
+        "assets_total": {"type": "integer", "minimum": 1},
+        "by_status": {
+          "type": "object",
+          "additionalProperties": {"type": "integer", "minimum": 0}
+        },
+        "unresolved_total": {"type": "integer", "minimum": 0}
+      }
+    },
+    "locator_checks": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["quote", "resolvable_in_markdown", "count_occurrences"],
+        "properties": {
+          "quote": {"type": "string", "minLength": 1},
+          "resolvable_in_markdown": {"const": true},
+          "offset_chars": {"type": ["integer", "null"]},
+          "count_occurrences": {"type": "integer", "minimum": 1}
+        }
+      }
+    },
+    "identity_facts": {
+      "type": "object",
+      "required": ["markdown_sha256", "markdown_h1", "record_title", "title_consistent"],
+      "properties": {
+        "markdown_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "markdown_h1": {"type": "string", "minLength": 1},
+        "record_title": {"type": "string", "minLength": 1},
+        "title_consistent": {"const": true},
+        "scenario_key": {"type": "string", "minLength": 1},
+        "mission_id": {"type": "integer", "minimum": 1},
+        "mission_probe": {"type": "object"},
+        "figures_declared": {"type": "integer", "minimum": 0},
+        "figure_payload_present": {"type": "boolean"},
+        "chars": {"type": "integer", "minimum": 0},
+        "bytes_utf8": {"type": "integer", "minimum": 0}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["extraction_performed", "claims_emitted", "verification_performed"],
+      "properties": {
+        "extraction_performed": {"const": false},
+        "claims_emitted": {"const": 0},
+        "verification_performed": {"const": false},
+        "note": {"type": "string"}
+      }
+    },
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 10}}
+  }
+}

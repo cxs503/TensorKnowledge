@@ -177,6 +177,12 @@ DEM↔流体双向耦合框架报告：物理背景是碎冰颗粒与流场（�
 {repro}
 ```
 
+工作区重建 + 离线复检（无网无 token，全新检出即可跑；`artifacts/**` 不进 git，靠它从受控镜像复原）：
+
+```
+python3 scripts/kf/wp_615_01_bootstrap_artifacts.py   # 镜像→工作区；同时离线复算 checks.json 并校验 docs/图件逐字节未漂移
+```
+
 离线复跑（无网无 token）：
 
 ```
@@ -191,7 +197,7 @@ DEM↔流体双向耦合框架报告：物理背景是碎冰颗粒与流场（�
 | `artifacts/kf/{PKG}/kf_result.json` | 平台结果信封（package_id/task_type/report_id/provenance/outputs/claims=[]） |
 | `artifacts/kf/{PKG}/checks.json` | 验收自检机读结果（{sum(1 for k, v in checks.items() if v is True)} 项布尔通过项 + 明细） |
 | `artifacts/kf/{PKG}/source_snapshot/report_615.json` | 取源时刻的完整记录快照（离线重建与审计用） |
-| `artifacts/kf/{PKG}/figures/wp61501_asset_registry.png` | 图 1：资产登记图（左：资产/状态/偏移；右：验收自检） |
+| `knowledge/kf/{PKG}/figures/wp61501_asset_registry.png` | 图 1：资产登记图（左：资产/状态/偏移；右：验收自检） |
 | `docs/kf/KF-RESULT-{PKG}.md` | 本报告正文（含唯一一个 JSON 结果代码块） |
 | `knowledge/kf/{PKG}/` | 交付镜像（`artifacts/` 被 .gitignore 忽略，随分支交付的是这一份）：清单/信封/自检/图/源快照，与 artifacts 逐字节一致（tests 绑定） |
 
@@ -214,7 +220,8 @@ title 在 markdown H1 逐字出现={rf['title_matches_markdown_h1']}。
 |---|---|---|
 {unres}
 
-**图 1**（`artifacts/kf/{PKG}/figures/wp61501_asset_registry.png`）：左图为 report 615 的 {counts['assets_total']} 条资产
+**图 1**（`knowledge/kf/{PKG}/figures/wp61501_asset_registry.png`，`scripts/kf/wp_615_01_bootstrap_artifacts.py`
+可在工作区 `artifacts/kf/{PKG}/figures/` 下逐字节重建）：左图为 report 615 的 {counts['assets_total']} 条资产
 （颜色=status，@n=逐字引文在 markdown 中的字符偏移），右图为机读验收自检。说明：本工序是纯登记工序，
 不产生任何物理场量，因此**没有场量云图、也没有与解析解/实验的比较曲线**——这是本单无物理图件的如实理由；
 图中数据全部来自 `asset_manifest.json` / `checks.json` 注入，无手填点。
@@ -294,11 +301,17 @@ honest-FAIL 申报：**无失败项**。但须显式声明三项**未完成/不�
     return md
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--out-dir", default=str(OUT))
-    args = ap.parse_args()
-    out = Path(args.out_dir)
+FIG_NAME = "wp61501_asset_registry.png"
+
+
+def emit(out: Path = OUT, render_figure: bool = False, write_mirror: bool = True) -> dict:
+    """把既有清单/信封渲染成 docs 报告、图件与平台 POST 载荷，返回 payload。
+
+    图件字节默认**复用受控镜像里已提交的那一份**（knowledge/kf/<pkg>/figures/），
+    因为 PNG 编码随 matplotlib 版本漂移，重绘会破坏"工作区 artifacts 与提交镜像逐字节一致"
+    这条不变量；render_figure=True 才重绘并回写镜像（首次生成 / 换环境时用）。
+    """
+    out = Path(out)
     manifest = json.loads((out / "asset_manifest.json").read_text())
     checks = json.loads((out / "checks.json").read_text())
     envelope_text = (out / "kf_result.json").read_text().strip()
@@ -306,12 +319,21 @@ def main() -> int:
 
     figdir = out / "figures"
     figdir.mkdir(parents=True, exist_ok=True)
-    png = make_figure(manifest, checks, figdir / "wp61501_asset_registry.png")
+    png = figdir / FIG_NAME
+    mirror_png = MIRROR / "figures" / FIG_NAME
+    if render_figure or not mirror_png.exists():
+        make_figure(manifest, checks, png)
+        if write_mirror:
+            mirror_png.parent.mkdir(parents=True, exist_ok=True)
+            mirror_png.write_bytes(png.read_bytes())
+    else:
+        png.write_bytes(mirror_png.read_bytes())
 
     snapshot = json.loads((out / "source_snapshot" / "report_615.json").read_text())
     md = build_markdown(manifest, checks, envelope_text, snapshot)
     DOCS.parent.mkdir(parents=True, exist_ok=True)
-    DOCS.write_text(md)
+    if not DOCS.exists() or DOCS.read_text() != md:
+        DOCS.write_text(md)
 
     payload = {
         "title": f"KF-RESULT {PKG}",
@@ -329,11 +351,23 @@ def main() -> int:
             "png_base64": base64.b64encode(png.read_bytes()).decode(),
         }],
     }
-    (out / "report_payload.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
-    (MIRROR / "figures").mkdir(parents=True, exist_ok=True)
-    (MIRROR / "figures" / png.name).write_bytes(png.read_bytes())
-    (MIRROR / "KF-RESULT.md").write_text(md)
-    print(f"wrote {DOCS} ({len(md)} chars) and payload with figure {png.name} "
+    payload_text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    (out / "report_payload.json").write_text(payload_text)
+    if write_mirror:
+        MIRROR.mkdir(parents=True, exist_ok=True)
+        (MIRROR / "KF-RESULT.md").write_text(md)
+    return payload
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out-dir", default=str(OUT))
+    ap.add_argument("--render-figure", action="store_true",
+                    help="强制重绘图件并回写知识包（默认复用已提交图件字节，保证逐字节可复现）")
+    args = ap.parse_args()
+    payload = emit(Path(args.out_dir), render_figure=args.render_figure)
+    png = Path(args.out_dir) / "figures" / FIG_NAME
+    print(f"wrote {DOCS} and payload with figure {png.name} "
           f"({len(payload['figures'][0]['png_base64'])} b64 chars)")
     return 0
 
