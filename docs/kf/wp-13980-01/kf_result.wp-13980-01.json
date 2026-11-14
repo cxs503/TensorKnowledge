@@ -1,0 +1,214 @@
+{
+  "package_id": "wp-13980-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13980",
+  "schema_version": "kf_result.v1",
+  "verification_status": {
+    "status": "draft",
+    "note": "producer self-report only; verified levels are computed by the platform gate and are not claimed here"
+  },
+  "validation": [
+    {
+      "check": "source_field_is_markdown",
+      "result": "pass",
+      "detail": "source_field=markdown"
+    },
+    {
+      "check": "local_copy_hash_equals_source_hash",
+      "result": "pass",
+      "detail": "recomputed sha256:2e506d3c8285306a34dd397de133f8c48f6f02a604629adbc0c79eb81ce83ce6"
+    },
+    {
+      "check": "chars_match",
+      "result": "pass",
+      "detail": "chars=8267"
+    },
+    {
+      "check": "utf8_bytes_match",
+      "result": "pass",
+      "detail": "bytes_utf8=11213"
+    },
+    {
+      "check": "line_count_match",
+      "result": "pass",
+      "detail": "lines=120"
+    },
+    {
+      "check": "title_matches_contract",
+      "result": "pass",
+      "detail": "title=A2-ICE-MODULES 第1轮：冰区端点 8×5 功能全扫（35 …"
+    },
+    {
+      "check": "scenario_matches_contract",
+      "result": "pass",
+      "detail": "scenario_key=ice_resistance"
+    },
+    {
+      "check": "platform_status_published",
+      "result": "pass",
+      "detail": "status=published"
+    },
+    {
+      "check": "report_sections_present",
+      "result": "pass",
+      "detail": "§①–§⑥ all present in source"
+    },
+    {
+      "check": "declared_figures_registered",
+      "result": "pass",
+      "detail": "record=8, registered=8"
+    },
+    {
+      "check": "figure_bytes_fetched",
+      "result": "pass",
+      "detail": "8/8 HTTP 200"
+    },
+    {
+      "check": "figure_hashes_pinned",
+      "result": "pass",
+      "detail": "8/8 sha256 pinned"
+    },
+    {
+      "check": "caption_family_binding_one_to_one",
+      "result": "pass",
+      "detail": "8 distinct families for 8 figures"
+    },
+    {
+      "check": "locators_resolve_to_quote",
+      "result": "pass",
+      "detail": "28/28 char spans reproduce their quote"
+    },
+    {
+      "check": "locator_line_numbers",
+      "result": "pass",
+      "detail": "28/28 line numbers consistent"
+    },
+    {
+      "check": "figure_section_tokens_resolve",
+      "result": "pass",
+      "detail": "8/8 §④ tokens hit their own family"
+    },
+    {
+      "check": "asset_id_unique_and_format",
+      "result": "pass",
+      "detail": "28 ids, duplicates=[]"
+    },
+    {
+      "check": "counts_consistent",
+      "result": "pass",
+      "detail": "assets=28, by_resolution=28, by_class=28"
+    },
+    {
+      "check": "claims_empty_with_reason",
+      "result": "pass",
+      "detail": "claims=[] (registration only) + claims_empty_reason present"
+    },
+    {
+      "check": "endpoint_routes_present",
+      "result": "pass",
+      "detail": "7/7 routes answered non-404 (422 = route exists, body validated)"
+    },
+    {
+      "check": "mooring_absence_evidenced",
+      "result": "pass",
+      "detail": "5/5 candidate ice-mooring routes answered 404"
+    },
+    {
+      "check": "publish_roundtrip_identical",
+      "result": "pass",
+      "detail": "second fetch sha256 2e506d3c8285… equal=True"
+    },
+    {
+      "check": "manifest_schema_valid",
+      "result": "pass",
+      "detail": "schemas/asset_manifest.registration.v1.schema.json"
+    },
+    {
+      "check": "kf_result_schema_valid",
+      "result": "pass",
+      "detail": "schemas/kf_result.v1.schema.json"
+    },
+    {
+      "check": "figure_bytes_not_claimed_committed",
+      "result": "pass",
+      "detail": "figure PNGs are pinned by hash only; no PNG bytes are committed or claimed as committed"
+    },
+    {
+      "check": "doc_pins_source_hash",
+      "result": "pass",
+      "detail": "KF-RESULT document quotes 2e506d3c8285…"
+    }
+  ],
+  "repro_cmd": [
+    "python3 scripts/kf_fetch_13980.py",
+    "python3 -m pytest tests/kf/test_wp_13980_01.py -q"
+  ],
+  "provenance": {
+    "source_field": "markdown",
+    "source_hash": "sha256:2e506d3c8285306a34dd397de133f8c48f6f02a604629adbc0c79eb81ce83ce6",
+    "source_uri": "tensor://reports/13980",
+    "hash_algo": "sha256",
+    "title": "A2-ICE-MODULES 第1轮：冰区端点 8×5 功能全扫（35 真跑 / 5 honest GAP，54 项基准 46 通过）",
+    "scenario_key": "ice_resistance",
+    "platform_status": "published",
+    "mission_id": "14895",
+    "chars": 8267,
+    "bytes_utf8": 11213,
+    "lines": 120,
+    "local_copy": "docs/kf/wp-13980-01/source_markdown.md",
+    "producer": "kf-worker/m20603",
+    "emitted_at": "2026-11-14T15:40:31Z",
+    "lane": "C",
+    "generator": "scripts/kf_fetch_13980.py",
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/13980"
+  },
+  "outputs": {
+    "asset_manifest.json": {
+      "assets": 28,
+      "by_class": {
+        "artifact_reference": 2,
+        "endpoint": 7,
+        "endpoint_declared_absent": 1,
+        "figure": 8,
+        "parameter_block": 1,
+        "script_reference": 4,
+        "source_document": 1,
+        "table": 4
+      },
+      "by_resolution": {
+        "declared_absent": 1,
+        "referenced_unresolved": 6,
+        "resolved_in_source": 21
+      },
+      "sha256": "791a417bd907d667ed652ebc8c7a4ff0e516ef233ef26064372f95e0da281393"
+    },
+    "source_markdown.md": {
+      "chars": 8267,
+      "bytes_utf8": 11213,
+      "lines": 120,
+      "sha256": "sha256:2e506d3c8285306a34dd397de133f8c48f6f02a604629adbc0c79eb81ce83ce6"
+    },
+    "publish_roundtrip.json": {
+      "verdict": "IDENTICAL",
+      "hash_equal": true,
+      "sha256": "e04a99e6a318702c7463adc0c852ac340cc0d9f2f67a792ad9491ceea8901b47"
+    },
+    "verify_report.json": {
+      "checks_total": 26,
+      "checks_pass": 26,
+      "checks_skipped": 0,
+      "checks_fail": 0,
+      "sha256": "de9840b35d700660e715d9cf95b36451aa2dfb3ff6b508568487de0068bb07a3"
+    },
+    "fig1_asset_registration.png": {
+      "name": "fig1_asset_registration.png",
+      "bytes": 102779,
+      "sha256": "c8cff66a6028119097203d046a67454e8050eeb8dbd5322b60bbf4a48a8d9e00"
+    },
+    "KF-RESULT-wp-13980-01.md": {
+      "bytes": 16056,
+      "sha256": "798f0c5b32d40063f1093ec7f7d9f09ed289a24d5d2ba973a2ca6be37a4ea6e8"
+    }
+  },
+  "claims": []
+}
