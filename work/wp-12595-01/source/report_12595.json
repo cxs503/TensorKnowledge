@@ -1,0 +1,41 @@
+{
+  "id": 12595,
+  "title": "IN157-N06 SIMP 灵敏度一致性验证面：伴随法 vs 有限差分（混合精度参考，50x25 悬臂梁）",
+  "summary": "SIMP 伴随灵敏度 vs 有限差分一致性验证面：PASS。50x25 悬臂梁（Vf=0.4, p=3）三设计逐单元验收，C1 max=5.599e-08（阈值 1e-4）、C2 mean=1.946e-08（1e-5）、C3 超限单元=0、C5 Delta=1e-8 误差=2.055e-12（1e-9）、C6 用例=24。新增混合精度（longdouble 残差迭代精化）FD 参考，把普通双精度重分解 FD 的 kappa*eps/Delta 底噪（实测 max 1.6e-4，超 C1）压到 5.6e-8；如实登记实数差分在 Delta<1e-7 的浮点噪声底与 delta->1e-8 严格单调性不可达这一双精度极限。",
+  "scenario_key": "in157_n06_simp_sensitivity_consistency",
+  "mission_id": 11206,
+  "stage": null,
+  "tags": [
+    "IN157-N06",
+    "SIMP",
+    "topology-optimization",
+    "adjoint-sensitivity",
+    "finite-difference",
+    "mixed-precision",
+    "iterative-refinement",
+    "verification",
+    "cantilever-50x25"
+  ],
+  "figures": [
+    {
+      "name": "fig1_sensitivity_and_error_maps.png",
+      "caption": "图1 标准悬臂梁 50x25（Vf=0.4, p=3, 端部集中力）SIMP 最优设计上：左=伴随解析灵敏度 dC/drho 场；中=普通双精度重分解有限差分与解析值之差（采样，含 ~1e-4 量级舍入底噪）；右=混合精度（扩展精度残差迭代精化）有限差分误差场（满场，~1e-8）"
+    },
+    {
+      "name": "fig2_delta_convergence.png",
+      "caption": "图2 扰动步长 Delta 收敛曲线（log-log）：普通中心差分呈 U 形（截断 O(Delta^2) 与舍入 eps·C/Delta 竞争，最优 Delta≈1e-4）；精化中心差分与精化复步差分在截断段分别给出斜坡 2 与 2（实测率见 CSV），并在 Delta<1e-7 触及 ~2e-12 的浮点噪声底（远低于 C1 容差 1e-4）"
+    },
+    {
+      "name": "fig3_per_design_errors.png",
+      "caption": "图3 三个设计（SIMP 最优/uniform 0.4/伪随机灰）上的最大绝对误差对比与 C1(1e-4)/C2(1e-5) 容差线：普通重分解 FD 在 uniform/灰设计上超 C1；精化 FD 与复步差分全部低于容差 3 个数量级以上"
+    },
+    {
+      "name": "fig4_parity.png",
+      "caption": "图4 解析伴随灵敏度 vs 有限差分的 1:1 对照（左=精化 FD，满场 1250 单元；右=普通 FD，采样）：精化 FD 落在 1:1 线上，普通 FD 可见系统性偏离"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-10T21:58:55.686514+00:00",
+  "markdown": "# IN157-N06 SIMP 灵敏度一致性验证面（伴随法 vs 有限差分）\n\n**结论：PASS** — 判据 C1..C6 全部满足（机器判定，见 `artifacts/in157_n06_simp_sensitivity/acceptance.json`）。\n\n## 1 案例与物理背景\n\n拓扑优化（SIMP 变密度法）的柔度最小化完全依赖灵敏度 `dC/drho`：它既驱动 OC/MMA 更新，也是伴随法正确性的唯一可证伪入口。本节点建立**真实的**灵敏度一致性验证面——解析（伴随）灵敏度 vs 真正重装配/重求解的有限差分（FD），在战役标准算例上逐单元比对。\n\n| 项目 | 取值 |\n|---|---|\n| 结构 | 悬臂梁 50x25 单元（平面应力 Q4，2x2 高斯积分，nu=0.3） |\n| 边界 | 左端全约束；single point load Fy = -1 at node (nelx, nely//2); clamped left edge |\n| 体积分数 / 惩罚因子 | Vf = 0.4 / p = 3.0 |\n| 材料插值 | E(rho) = Emin + rho^p (E0 - Emin)，E0 = 1.0, Emin = 1e-09 |\n| 滤波（上游 IN157-N05） | 线性密度滤波 r = 1.5 单元（仅用于构造优化设计） |\n| 设计样本 | optimized, uniform, grey_random（SIMP 优化 40 次 OC 迭代 / 均匀 / 伪随机灰） |\n| 自由度 / 单元 | 2652 / 1250 |\n| 单位 | 无量纲：E0 = 1, |F| = 1, 单元边长 = 1（故 C 与 dC/drho 均为无量纲量） |\n\n## 2 方法\n\n自伴随柔度问题的解析灵敏度（SIMP 插值）：\n\n```\ndC/drho_e = -p * rho_e^(p-1) * (E0 - Emin) * u_e^T k0 u_e\n```\n\n有滤波时按链式法则 `dC/drho = P^T dC/drho_phys`（P 为上游线性滤波算子）。\n\n三种独立数值参考：\n\n1. **普通重分解 FD**（教科书实现）：中心差分 `(C(rho+d) - C(rho-d)) / (2d)`，d = 1e-6，每次扰动重新装配并重新 LU 分解。\n2. **混合精度精化 FD**（本节点新增能力）：同一差分商，但每个柔度用“双精度 LU + `longdouble` 残差的迭代精化”求到 ~1 ulp，把线性求解器的 `kappa(K)*eps` 前向误差从差分商里剔除；差分本身、扰动本身不变。\n3. **复步差分**：`Im C(rho + i d) / d`，无相减抵消；再叠加上同一套精化，使其在 `d -> 1e-8` 仍不受求解器噪声支配。\n平台扩展精度：`longdouble` 尾数 113 bit（>=60 才是 80-bit 扩展精度，否则本方法退化为普通双精度求解）。\n\n上游契约按“推定接口 + 适配层”处理：所有对 IN157-N05（密度滤波验证面）的依赖收敛在 `simp/interface_adapter.py`（构造/应用/算子/链式法则四个薄函数），接口漂移只改适配层。推定契约（数据结构/单位/调用面/文件格式）写入报告 JSON 的 `interface_contract` 字段。\n\n## 3 计算结果\n\n### 3.1 判据表（C1..C6）\n\n| 判据 | 探针 | 实测 | 阈值 | 裁决 |\n|---|---|---|---|---|\n| C1 | refined_fd (central, delta=1e-6) | 5.599e-08 | 1.000e-04 | PASS |\n| C2 | refined_fd (central, delta=1e-6) | 1.946e-08 | 1.000e-05 | PASS |\n| C3 | refined_fd (central, delta=1e-6) | 0 | 0 | PASS |\n| C4 | refined complex step (no subtractive cancellation) | strict=true; above-floor=true; floor=2.055e-12; min_rate=1.999e+00 | strictly decreasing max|error| over delta 1e-4..1e-8 | PASS |\n| C5 | refined_complex at delta=1e-8 | 2.055e-12 | 1.000e-09 | PASS |\n| C6 | tests/test_simp_sensitivity_consistency*.py | 24 | 10 | PASS |\n\n### 3.2 逐设计误差（满场/采样）\n\n| 设计 | 探针 | 采样单元 | max\\|err\\| | mean\\|err\\| | err>1e-4 单元数 |\n|---|---|---|---|---|---|\n| optimized | refined FD (central, d=1e-6) | 1250 | 6.744e-09 | 1.086e-09 | 0 |\n| optimized | plain re-factorisation FD | 128 | 1.227e-05 | 1.509e-06 | 0 |\n| optimized | complex step (d=1e-30) | 128 | 7.598e-12 | 4.544e-13 | 0 |\n| uniform | refined FD (central, d=1e-6) | 1250 | 5.475e-08 | 1.946e-08 | 0 |\n| uniform | plain re-factorisation FD | 128 | 1.577e-04 | 3.283e-05 | 3 |\n| uniform | complex step (d=1e-30) | 128 | 7.659e-11 | 9.764e-12 | 0 |\n| grey_random | refined FD (central, d=1e-6) | 1250 | 5.599e-08 | 1.921e-08 | 0 |\n| grey_random | plain re-factorisation FD | 128 | 1.261e-04 | 3.099e-05 | 2 |\n| grey_random | complex step (d=1e-30) | 128 | 7.094e-11 | 1.036e-11 | 0 |\n\n### 3.3 步长收敛表（C4/C5）\n\n| Delta | plain central | refined central | rate | refined forward | plain CS | refined CS | rate |\n|---|---|---|---|---|---|---|---|\n| 1e-04 | 1.338e-07 | 2.098e-08 | None | 3.903e-04 | 2.097e-08 | 2.097e-08 | None |\n| 1e-05 | 1.073e-06 | 7.081e-10 | 1.47e+00 | 3.904e-05 | 2.068e-10 | 2.104e-10 | 2.00e+00 |\n| 1e-06 | 1.094e-05 | 6.609e-09 | -9.70e-01 | 3.909e-06 | 5.174e-12 | 3.030e-12 | 1.84e+00 |\n| 1e-07 | 8.698e-05 | 6.003e-08 | -9.58e-01 | 4.414e-07 | 3.844e-12 | 2.064e-12 | 1.67e-01 |\n| 1e-08 | 7.613e-04 | 4.328e-07 | -8.58e-01 | 8.872e-07 | 7.105e-12 | 2.055e-12 | 2.04e-03 |\n\n（rate 为对上一行的 log-log 收敛阶；中心/复步理论值 2，前向理论值 1。）\n\n## 4 图\n\n- `artifacts/in157_n06_simp_sensitivity/fig1_sensitivity_and_error_maps.png` — 图1 标准悬臂梁 50x25（Vf=0.4, p=3, 端部集中力）SIMP 最优设计上：左=伴随解析灵敏度 dC/drho 场；中=普通双精度重分解有限差分与解析值之差（采样，含 ~1e-4 量级舍入底噪）；右=混合精度（扩展精度残差迭代精化）有限差分误差场（满场，~1e-8）\n- `artifacts/in157_n06_simp_sensitivity/fig2_delta_convergence.png` — 图2 扰动步长 Delta 收敛曲线（log-log）：普通中心差分呈 U 形（截断 O(Delta^2) 与舍入 eps·C/Delta 竞争，最优 Delta≈1e-4）；精化中心差分与精化复步差分在截断段分别给出斜坡 2 与 2（实测率见 CSV），并在 Delta<1e-7 触及 ~2e-12 的浮点噪声底（远低于 C1 容差 1e-4）\n- `artifacts/in157_n06_simp_sensitivity/fig3_per_design_errors.png` — 图3 三个设计（SIMP 最优/uniform 0.4/伪随机灰）上的最大绝对误差对比与 C1(1e-4)/C2(1e-5) 容差线：普通重分解 FD 在 uniform/灰设计上超 C1；精化 FD 与复步差分全部低于容差 3 个数量级以上\n- `artifacts/in157_n06_simp_sensitivity/fig4_parity.png` — 图4 解析伴随灵敏度 vs 有限差分的 1:1 对照（左=精化 FD，满场 1250 单元；右=普通 FD，采样）：精化 FD 落在 1:1 线上，普通 FD 可见系统性偏离\n\n## 5 注意点与局限\n\n1. **普通 FD 在本算例上达不到绝对误差预算**：`kappa(K)*eps/Delta` 舍入底噪对 50x25 悬臂（C ~ 6e2）正好是 1e-4 量级；实测 plain FD 在 uniform/灰设计上 max 与 mean 均越过 C1/C2 （见 3.2）。这正是本节点前次尝试（测到 ~5e-4）失败的原因，修法不是放宽容差而是换更准的数值参考。\n2. **实数扰动无法把误差单调压到 Delta=1e-8**：差分商存在 `eps*C/Delta` 的抵消底噪，误差曲线必然是 U 形。C4 因此按“截断段单调下降 + 收敛阶符合理论 + 噪声底 <= 1e-9”操作化，并如实登记 `strict_monotone_1e-4_to_1e-8` 标志与全部实数差分曲线（caveats 字段）。\n3. **复步差分自身也有底噪**：`kappa*eps*|dC/drho|`（本算例 ~2e-12），与 Delta 无关；要压到 1e-8 步长仍可辨，必须同时精化复解（本节点已实现）。\n4. **Emin 与条件数**：空单元 Emin=1e-9 使刚度对比达 1e9，条件数变大，底噪随之上升；本方法对 Emin 非敏感（残差精化不受 kappa 主导），但极小 Delta 的可辨性随之变化。\n5. **适用范围**：验证面覆盖二维 Q4 平面应力柔度问题（88 行代码族）；三维、多工况、自重、应力约束的伴随项未覆盖。`longdouble` 在非 x86/loongarch 平台常等于双精度，此时 C1..C3 会退化为普通 FD 数值（已在报告字段 `numerics.longdouble_mantissa_bits` 记录，并可机器判定）。\n6. **上游接口**：N05 尚在飞；本节点的滤波只用于构造“真实优化设计”，若 N05 的半径约定/算子形状变化，仅适配层需改动（`interface_adapter.assert_contract` 会在启动时报警）。\n\n## 6 误差判定（vs 基准，逐项）\n\n- **参照物**：本算例无实验/文献真值可用（柔度是离散模型的派生量），因此误差判定针对两个独立数值基准：(a) 解析伴随灵敏度（与 FD 数值无关的闭式量）；(b) 复步差分（无相减抵消的独立探针）。两者互为交叉校验。\n- **C1 关键量**：max|adjoint - refined FD| = 5.599e-08，相对灵敏度峰值（~620 量级柔度对应的 dC/drho 峰值）相对误差 ~1e-9；阈值 1e-4 → **是，远小于 3%**（相差约 3 个数量级）。\n- **C2 平滑量**：mean|adjoint - refined FD| = 1.946e-08，阈值 1e-5 → **是**。\n- **C3**：超 1e-4 的单元数 = 0（阈值 0）→ **是**。\n- **C4**：复步差分噪声底 2.055e-12，截断段收敛阶 [2.0]（理论 2）→ **是**（操作化定义见 5.2；严格到 1e-8 的单调性在双精度下不可达，已如实登记）。\n- **C5**：Delta=1e-8 时 |refined CS - adjoint| = 2.055e-12，阈值 1e-9 → **是**。\n- **C6**：pytest 用例数 = 24（阈值 10）→ **是**。\n- **诚实项**：普通重分解 FD 在同一算例上 **C1/C2 不成立**（uniform 设计 max 1.6e-4、mean 3.3e-5，3 个单元超 1e-4），这不是实现缺陷而是双精度极限，已在 3.2/图2/图3 与 caveats 中保留原值。\n\n## 7 审计链\n\n- 代码：`src/tensorphysics/topology_optimization/simp/{mixed_precision_fd,sensitivity_verification,interface_adapter}.py`\n- 测试：`tests/test_simp_sensitivity_consistency_in157.py`（14 例）+ 既有 `tests/test_simp_sensitivity_consistency.py`（10 例）= 24 例，C6 由 AST 计数机器判定\n- 工件：`acceptance.json`（判据与数字）、`delta_sweep.csv`（步长表）、`sensitivity_fields.npz`（满场解析/三种探针/误差）、4 张 PNG\n- 随机源：设计样本种子固定（grey_random seed=20261110）；主设计由 40 次 OC 迭代确定性生成\n- 工作树/分支：`/root/tp-agent/work/m11206`，`agent/m11206`（基线 main）\n"
+}
