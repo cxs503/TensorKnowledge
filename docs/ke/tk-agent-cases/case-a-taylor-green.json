@@ -1,0 +1,183 @@
+{
+  "schema": "tk-agent-case/1",
+  "case_id": "case-a-taylor-green",
+  "title": "Taylor-Green 涡衰减：知识卡上的精度主张能否被复现？",
+  "dimension_focus": "D2(类型) → 可复现数值：claim 的精度主张必须落到一条被记录的运行工件上",
+  "question": "LBM D2Q9 的 Taylor-Green 涡衰减验证里，能量衰减相对理论值的偏差是多少？是否满足 <3% 判据？",
+  "answer_summary": "复现运行（3 个分辨率）的能量衰减相对偏差全部 <3%：NX=32 -1.531%、NX=64 -0.383%、NX=128 -0.096%；L2(u_x) 实测收敛阶 2.002/2.003（二阶格式名义阶 2）。同一知识包内的 Poiseuille(BB) 端口算例达机器精度（L2=7.57e-16），而 IB-LBM Poiseuille 中心线偏差 -6.47% 超判据，必须排除在结论之外。",
+  "verdict": "pass_with_scope_exclusion",
+  "knowledge": {
+    "claim_id": "tkc:oss-lbm:kruger-taylor-green-decay",
+    "claim_statement": "Krüger 教科书 chapter13 实现 Taylor-Green 涡衰减验证：理论衰减率 2/t_d = 2ν(kx²+ky²) 对比拟合 d lnE/dt，实测误差 0.077%（<3%）。",
+    "epistemic_status": "established",
+    "domain": "lattice Boltzmann multiphase/multicomponent methods",
+    "evidence_ids": [
+      "tke:oss-lbm:kruger-tg-decay"
+    ],
+    "claim_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-taylor-green-decay.json",
+    "evidence_file": "knowledge/oss-lbm/evidence/tke-oss-lbm-kruger-tg-decay.json",
+    "source_citation": "lbm-principles-practice source code",
+    "source_locator": "chapter13/matlab/vortexdecay.m:102-127"
+  },
+  "retrieval": {
+    "ke_endpoints": [
+      "/query/by-domain?domain=lattice%20Boltzmann%20multiphase%2Fmulticomponent%20methods",
+      "/query/by-evidence-relation?relation=supports",
+      "/query/chain?claim_id=tkc:oss-lbm:kruger-taylor-green-decay",
+      "/query/claim-evidence?claim_id=tkc:oss-lbm:kruger-taylor-green-decay",
+      "/search?q=Taylor-Green"
+    ],
+    "filters_used": {
+      "domain": "lattice Boltzmann multiphase/multicomponent methods",
+      "kind": "claim",
+      "axis": "evidence",
+      "status": "established"
+    },
+    "expected_hits": 1
+  },
+  "measurements": [
+    {
+      "id": "tg_dev_nx32",
+      "label": "Taylor-Green 能量衰减相对偏差 NX=32",
+      "value": -1.531251699147856,
+      "unit": "pct",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "pointer": "/taylor_green/runs/0/E_rel_dev_pct"
+      },
+      "acceptance": {
+        "kind": "rel_err_pct_le",
+        "threshold": 3.0
+      },
+      "note": "E/E0 measured vs exp(-2t/t_d)"
+    },
+    {
+      "id": "tg_dev_nx64",
+      "label": "Taylor-Green 能量衰减相对偏差 NX=64",
+      "value": -0.3829919257303916,
+      "unit": "pct",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "pointer": "/taylor_green/runs/1/E_rel_dev_pct"
+      },
+      "acceptance": {
+        "kind": "rel_err_pct_le",
+        "threshold": 3.0
+      },
+      "note": ""
+    },
+    {
+      "id": "tg_dev_nx128",
+      "label": "Taylor-Green 能量衰减相对偏差 NX=128",
+      "value": -0.0957575272335034,
+      "unit": "pct",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "pointer": "/taylor_green/runs/2/E_rel_dev_pct"
+      },
+      "acceptance": {
+        "kind": "rel_err_pct_le",
+        "threshold": 3.0
+      },
+      "note": ""
+    },
+    {
+      "id": "tg_order_nx64",
+      "label": "L2(u_x) 收敛阶 32→64",
+      "value": 2.0018354230340614,
+      "unit": "1",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "pointer": "/taylor_green/runs/1/observed_order"
+      },
+      "acceptance": {
+        "kind": "order_ge",
+        "threshold": 1.8
+      },
+      "note": "二阶格式名义阶 2，实测拟合阶"
+    },
+    {
+      "id": "tg_order_nx128",
+      "label": "L2(u_x) 收敛阶 64→128",
+      "value": 2.0028317860615927,
+      "unit": "1",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "pointer": "/taylor_green/runs/2/observed_order"
+      },
+      "acceptance": {
+        "kind": "order_ge",
+        "threshold": 1.8
+      },
+      "note": ""
+    },
+    {
+      "id": "poiseuille_port_l2",
+      "label": "Poiseuille(BB) 剖面 L2 相对误差（本仓 NumPy 端口）",
+      "value": 7.568197295333972e-16,
+      "unit": "1",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/kruger_bench_results.json",
+        "pointer": "/runs/0/L2"
+      },
+      "acceptance": {
+        "kind": "machine_eps_le",
+        "threshold": 1e-12
+      },
+      "note": "tau 由 u_max 反解，稳态判据 |mean(u)/mean(u_old)-1|<1e-12"
+    },
+    {
+      "id": "ib_lbm_centreline_err",
+      "label": "IB-LBM Poiseuille 中心线速度相对误差",
+      "value": -6.472136152374046,
+      "unit": "pct",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "pointer": "/ib_lbm_poiseuille/centreline_error_pct"
+      },
+      "acceptance": {
+        "kind": "rel_err_pct_le",
+        "threshold": 3.0
+      },
+      "note": "沉浸边界算例：19x20 格分辨率过低，超出 3% 判据"
+    }
+  ],
+  "figures": [
+    {
+      "file": "fig-taylor-green.png",
+      "caption": "左：三分辨率能量衰减相对偏差 vs 3% 判据与教科书引用值；右：L2(u_x) 收敛（log-log，斜率→实测阶 2）。"
+    },
+    {
+      "file": "fig-poiseuille.png",
+      "caption": "左：Poiseuille(BB) 数值剖面与解析抛物线重合（L2~1e-16）；右：IB-LBM 算例中心线欠预测，作为出界样本登记。"
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "D2Q9 单相 Taylor-Green 涡，周期边界，E(t)/E(0)=exp(-2t/t_d)",
+      "指标：能量衰减率、L2(u_x) 收敛阶",
+      "判据来源：runs/oss-lbm-kruger-8676 记录的分辨率扫描"
+    ],
+    "out_of_scope": [
+      {
+        "measurement_ids": [
+          "ib_lbm_centreline_err"
+        ],
+        "reason": "IB-LBM（沉浸边界）Poiseuille 在 19x20 格上中心线欠预测 -6.47%，未过 3% 判据；本 case 不把它算作 Taylor-Green 的佐证，也不把它升级为「KB 已验证」结论。"
+      }
+    ],
+    "withheld": [
+      "高 Re / 三维 Taylor-Green 的精度主张：仓内无运行工件 → WITHHELD",
+      "其他指标（涡量极值、压力场）未记录基准 → WITHHELD"
+    ]
+  },
+  "agent_rules": [
+    "引用 claim 的数字时必须同时给出 run 工件路径 + JSON pointer。",
+    "claim 正文的教科书引用值不得当作本仓复现值使用（见 case-c）。",
+    "任一测量超判据时，必须显式列入 out_of_scope 并报告 honest-FAIL，不得静默取平均。"
+  ],
+  "known_gaps": [
+    "无三维/高 Re 复现数据",
+    "无压力场与涡量极值基准"
+  ]
+}

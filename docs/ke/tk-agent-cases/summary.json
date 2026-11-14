@@ -1,0 +1,118 @@
+{
+  "schema": "tk-agent-cases-summary/1",
+  "mission": 19445,
+  "generated_from": {
+    "runs": [
+      "runs/oss-lbm-kruger-8676/validation_summary.json",
+      "runs/oss-lbm-kruger-8676/kruger_bench_results.json"
+    ],
+    "package": "knowledge/oss-lbm",
+    "generator": "python tests/test_tk_agent_cases.py --regen"
+  },
+  "acceptance": {
+    "tolerance_pct": 3.0,
+    "basis": "平台精度标准：对标实验/参考值误差 >15% 不可接受；本项目收紧到 3%",
+    "machine_eps_threshold": 1e-12,
+    "convergence_order_floor": 1.8
+  },
+  "cases": [
+    {
+      "case_id": "case-a-taylor-green",
+      "file": "case-a-taylor-green.json",
+      "verdict": "pass_with_scope_exclusion",
+      "dimension_focus": "D2(类型) → 可复现数值：claim 的精度主张必须落到一条被记录的运行工件上",
+      "measurements": 7,
+      "failures": [
+        "ib_lbm_centreline_err"
+      ],
+      "figures": [
+        "fig-taylor-green.png",
+        "fig-poiseuille.png"
+      ]
+    },
+    {
+      "case_id": "case-b-provenance",
+      "file": "case-b-provenance.json",
+      "verdict": "structural_complete_liveness_withheld",
+      "dimension_focus": "D4(溯源定位) → 结构化完整性与活性的区分",
+      "measurements": 3,
+      "failures": [],
+      "figures": []
+    },
+    {
+      "case_id": "case-c-exactness-scope",
+      "file": "case-c-exactness-scope.json",
+      "verdict": "pass_with_granularity_constraint",
+      "dimension_focus": "D3(信任) × 精确性粒度：引用值 / 复现值 / 判据三层必须分开陈述",
+      "measurements": 4,
+      "failures": [],
+      "figures": [
+        "fig-exactness-scope.png"
+      ]
+    }
+  ],
+  "totals": {
+    "pass": 9,
+    "fail": 1,
+    "quoted": 1,
+    "match": 3
+  },
+  "exactness_classes": {
+    "machine_precision": [
+      "poiseuille_port_l2"
+    ],
+    "within_tolerance": [
+      "tg_dev_nx32",
+      "tg_dev_nx64",
+      "tg_dev_nx128",
+      "poiseuille_port_l2"
+    ],
+    "out_of_scope": [
+      "ib_lbm_centreline_err"
+    ],
+    "withheld": [
+      "high_Re_3d_taylor_green",
+      "pressure_field",
+      "external_source_liveness",
+      "asymptotic_precision_above_128"
+    ]
+  },
+  "retrieval_dimensions": [
+    {
+      "id": "D1",
+      "key": "domain",
+      "column": "claims.domain / knowledge_base.domain",
+      "surface": "GET /query/by-domain?domain=&exact=  |  GET /kb/search?domain="
+    },
+    {
+      "id": "D2",
+      "key": "ktype",
+      "column": "kind (claim/evidence/provenance/review) / knowledge_base.ktype",
+      "surface": "GET /ko?kind=  |  GET /kb/search?ktype="
+    },
+    {
+      "id": "D3",
+      "key": "status",
+      "column": "epistemic_status / review_status / publication_status / knowledge_base.status",
+      "surface": "GET /query/by-status?axis=&status=  |  GET /kb/search?status="
+    },
+    {
+      "id": "D4",
+      "key": "locator",
+      "column": "evidence.locator_* / provenance record",
+      "surface": "GET /query/chain?claim_id=  |  GET /query/claim-evidence?claim_id="
+    }
+  ],
+  "provenance_state": {
+    "structural": "complete",
+    "claim_level_records": 0,
+    "external_liveness": "withheld"
+  },
+  "honest_failures": [
+    {
+      "id": "ib_lbm_centreline_err",
+      "detail": "IB-LBM Poiseuille 中心线偏差 -6.47% > 3% → 明确排除，不参与 Taylor-Green 佐证"
+    }
+  ],
+  "one_line": "3 个 agent case，14 条可复算测量：9 过判据 / 1 出界（如实登记）/ 1 引用值 / 3 结构事实"
+}

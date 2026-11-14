@@ -1,0 +1,131 @@
+{
+  "schema": "tk-agent-case/1",
+  "case_id": "case-b-provenance",
+  "title": "溯源：这张卡引用的误差数字到底从哪来？链到哪一层为止？",
+  "dimension_focus": "D4(溯源定位) → 结构化完整性与活性的区分",
+  "question": "知识卡 tkc:oss-lbm:kruger-taylor-green-decay 的证据链是否结构完整？外部源定位符能否在本工作树内落地（liveness）？",
+  "answer_summary": "claim tkc:oss-lbm:kruger-taylor-green-decay → 1 条 supports 证据（tke:oss-lbm:kruger-tg-decay）→ 定位符 chapter13/matlab/vortexdecay.m:102-127（code-location，direct-quotation）。结构完整：无悬空 evidence_ref；但 claim 级 PROV 记录为 0（包内只有部分 claim 落 tkp），且上游仓库 lbm-principles-practice/code 未 vendor 进本工作树 → 活性=WITHHELD。",
+  "verdict": "structural_complete_liveness_withheld",
+  "knowledge": {
+    "claim_id": "tkc:oss-lbm:kruger-taylor-green-decay",
+    "claim_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-taylor-green-decay.json",
+    "evidence_ids": [
+      "tke:oss-lbm:kruger-tg-decay"
+    ],
+    "evidence_file": "knowledge/oss-lbm/evidence/tke-oss-lbm-kruger-tg-decay.json",
+    "evidence_relation": "supports",
+    "evidence_assessment_status": "unassessed",
+    "source_type": "other",
+    "source_citation": "lbm-principles-practice source code",
+    "locator_type": "code-location",
+    "locator_value": "chapter13/matlab/vortexdecay.m:102-127",
+    "extraction_method": "direct-quotation"
+  },
+  "retrieval": {
+    "ke_endpoints": [
+      "/query/chain?claim_id=tkc:oss-lbm:kruger-taylor-green-decay",
+      "/query/claim-evidence?claim_id=tkc:oss-lbm:kruger-taylor-green-decay",
+      "/query/stats"
+    ],
+    "filters_used": {
+      "kind": "provenance",
+      "claim_id": "tkc:oss-lbm:kruger-taylor-green-decay"
+    },
+    "expected_hits": 1
+  },
+  "measurements": [
+    {
+      "id": "tg_evidence_count",
+      "label": "claim 直连证据条数",
+      "value": 1,
+      "unit": "count",
+      "source": {
+        "ke_query": {
+          "op": "evidence_count",
+          "claim_id": "tkc:oss-lbm:kruger-taylor-green-decay",
+          "package": "knowledge/oss-lbm"
+        }
+      },
+      "acceptance": {
+        "kind": "exact_match",
+        "threshold": 1
+      },
+      "note": ""
+    },
+    {
+      "id": "tg_dangling_refs",
+      "label": "claim 悬空 evidence_ref 条数",
+      "value": 0,
+      "unit": "count",
+      "source": {
+        "ke_query": {
+          "op": "dangling_refs",
+          "claim_id": "tkc:oss-lbm:kruger-taylor-green-decay",
+          "package": "knowledge/oss-lbm"
+        }
+      },
+      "acceptance": {
+        "kind": "exact_match",
+        "threshold": 0
+      },
+      "note": "悬空引用必须显式可见，不能被静默吞掉"
+    },
+    {
+      "id": "tg_claim_level_prov",
+      "label": "claim 级 PROV 记录条数",
+      "value": 0,
+      "unit": "count",
+      "source": {
+        "ke_query": {
+          "op": "provenance_records",
+          "claim_id": "tkc:oss-lbm:kruger-taylor-green-decay",
+          "package": "knowledge/oss-lbm"
+        }
+      },
+      "acceptance": {
+        "kind": "exact_match",
+        "threshold": 0
+      },
+      "note": "0 = 本包只为部分 claim 落了 tkp 记录；lineage 只能主张到 citation 级"
+    }
+  ],
+  "figures": [],
+  "liveness": {
+    "external_source": {
+      "citation": "lbm-principles-practice source code",
+      "locator": "chapter13/matlab/vortexdecay.m:102-127",
+      "resolvable_in_worktree": false,
+      "reason": "上游 lbm-principles-practice/code 未 vendor 到 TensorKnowledge 工作树；仓内只有本仓复现运行（runs/oss-lbm-kruger-8676）"
+    },
+    "in_repo_artifacts": [
+      {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "role": "本仓复现运行记录（可落地）"
+      },
+      {
+        "path": "runs/oss-lbm-kruger-8676/kruger_bench_results.json",
+        "role": "NumPy 端口剖面/误差记录（可落地）"
+      }
+    ]
+  },
+  "scope": {
+    "in_scope": [
+      "claim→evidence→locator 的结构完整性（id 可解析、无悬空引用）",
+      "证据的抽取方式与评估状态（direct-quotation / unassessed）"
+    ],
+    "out_of_scope": [],
+    "withheld": [
+      "上游源码行的逐字活性校验（需 vendor 上游仓库或网络）",
+      "claim 级活动溯源（谁在何时抽取）：仓内缺 tkp 记录"
+    ]
+  },
+  "agent_rules": [
+    "只允许主张「结构完整 + 外部定位符已知」，禁止主张「已逐字核验上游源码」。",
+    "claim 级 PROV 缺失时必须报告缺口，不能用包级 provenance 冒充。",
+    "evidence assessment_status=unassessed 时，输出必须带未评估标签。"
+  ],
+  "known_gaps": [
+    "taylor-green claim 缺 claim 级 tkp 记录（包内 provenance 覆盖不全）",
+    "上游仓库未 vendor，locator 无法在本树内解析"
+  ]
+}
