@@ -21,6 +21,9 @@ import hashlib
 import importlib.util
 import json
 import re
+import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -172,6 +175,61 @@ def test_scope_is_single_report(manifest):
     ids = {manifest["report_id"]}
     ids |= {a["declared_uri"].split("#")[0] for a in manifest["assets"]}
     assert ids == {"1716", "tensor://reports/1716"}
+
+
+# ------------------------------------------------------- host independence --
+# A committed registration must not depend on *where* it was generated: the
+# manifest used to pin the absolute host worktree path inside every
+# `local_worktree_probe`, so a rebuild from any other checkout produced
+# different bytes and `test_regeneration_is_byte_stable` failed for everyone
+# except the machine that wrote it (regression repaired here).
+HOST_PATH_RE = re.compile(r"/root/|/home/|/Users/|[A-Za-z]:\\|work/m\d+")
+
+
+def test_committed_artifacts_carry_no_host_absolute_path():
+    for path in (MANIFEST, CHECKS, OUT / "source_metadata.json", SNAPSHOT):
+        hits = HOST_PATH_RE.findall(path.read_text(encoding="utf-8"))
+        assert not hits, f"{path.name} leaks a host path: {sorted(set(hits))}"
+
+
+def test_worktree_probe_is_path_independent(manifest):
+    probed = [
+        (a, a["resolution"]["local_worktree_probe"])
+        for a in manifest["assets"]
+        if "local_worktree_probe" in a.get("resolution", {})
+    ]
+    assert probed, "no worktree probe recorded"
+    for asset, probe in probed:
+        assert probe["probed_at"] == "worktree:<repo_root>"
+        assert probe["relpath"] == asset["declared_path"]
+        assert isinstance(probe["exists"], bool)
+
+
+def test_offline_rebuild_is_worktree_root_independent(tmp_path):
+    """Rebuild inside a *different* checkout root and demand identical bytes."""
+    other = tmp_path / "another-checkout"
+    pkg = other / "docs" / "kf" / "wp-1716-01"
+    (other / "scripts").mkdir(parents=True)
+    pkg.mkdir(parents=True)
+    shutil.copy2(SCRIPT, other / "scripts" / SCRIPT.name)
+    shutil.copy2(SNAPSHOT, pkg / SNAPSHOT.name)
+    shutil.copy2(OUT / "source_metadata.json", pkg / "source_metadata.json")
+
+    subprocess.run(
+        [sys.executable, str(other / "scripts" / SCRIPT.name), "--offline"],
+        cwd=other, check=True, capture_output=True,
+    )
+    rebuilt = (pkg / "asset_manifest.json").read_bytes()
+    assert rebuilt == MANIFEST.read_bytes(), "manifest depends on the checkout root"
+
+
+def test_committed_checks_pin_the_committed_manifest(manifest):
+    pinned = json.loads(CHECKS.read_text(encoding="utf-8"))["manifest"]["sha256"]
+    recomputed = "sha256:" + hashlib.sha256(MANIFEST.read_bytes()).hexdigest()
+    assert pinned == recomputed, "checks.json pins a stale manifest hash"
+    assert pinned == "sha256:" + hashlib.sha256(
+        json.dumps(manifest, ensure_ascii=False, indent=2).encode("utf-8") + b"\n"
+    ).hexdigest()
 
 
 # ------------------------------------------------------------ reproducibility --
