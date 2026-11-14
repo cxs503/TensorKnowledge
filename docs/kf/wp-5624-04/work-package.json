@@ -1,0 +1,50 @@
+{
+  "package_id": "wp-5624-04",
+  "task_type": "04-independent-review",
+  "version": "1.0.0",
+  "mission_id": "20805",
+  "input": {
+    "report_id": "5624",
+    "source_uri": "tensor://reports/5624",
+    "source_field": "markdown",
+    "source_hash": "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839",
+    "reviewed_package": {
+      "package_id": "wp-5624-01",
+      "claims_sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "evidence_sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "objective": {
+    "judge_semantic_fidelity": true
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true,
+    "reviewer_context_excludes_producer_explanation": true,
+    "review_prompt_not_copied_from_producer": true
+  },
+  "output": {
+    "review_report.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true,
+    "reviewer_independent": true
+  },
+  "review": {
+    "required": true,
+    "independent_reviewer": true,
+    "reviewer_role": "red-team-reviewer",
+    "sample_rate": 1.0
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "in-review",
+    "path": "docs/kf/wp-5624-04",
+    "notes": "Independent review of the process-01 registration package wp-5624-01 (report 5624, IN15-O5 artifact sha256 indexer). The reviewed package is a registration artefact: it ships no claims.json/evidence.json, so both reviewed_package digests identify the empty claim/evidence set (sha256('[]')) exactly as in the wp-623-04 precedent; the bytes actually reviewed are pinned by per-file sha256 in review_report.json -> reviewed_package.artifacts. No upstream work-package.json or gate report exists for wp-5624-01, so no 'completed' upstream status is declared here (input.upstream_packages is deliberately absent rather than asserted)."
+  },
+  "notes": "Reviewer binds only to the source markdown of report 5624 plus the shipped artefacts of wp-5624-01; the producer's self-check text is not used as evidence. Every review check is recomputed by docs/kf/wp-5624-04/verify_upstream.py against a hash-pinned snapshot of the source (docs/kf/wp-5624-04/source/report_5624.md) so the review can be replayed offline."
+}

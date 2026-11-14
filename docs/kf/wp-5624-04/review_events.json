@@ -1,0 +1,68 @@
+[
+  {
+    "id": "tkr:review:wp-5624-04",
+    "object_ref": "wp-5624-01",
+    "object_version": "1.0.0",
+    "decision": "approve",
+    "reviewer": {
+      "id": "agent/m20805",
+      "reviewer_type": "agent",
+      "role": "red-team-reviewer"
+    },
+    "reviewed_at": "2026-11-14T09:00:00+00:00",
+    "policy_version": "ke-review-v0.1",
+    "rationale": "Independent re-verification of wp-5624-01 against report 5624: 36/43 checks pass, 6 fail, 1 not run. Source hash, all 4 section digests, every locator and the registered count contradiction reproduce. Findings: F-03(minor); F-04(minor); F-02(minor); F-01(major); F-06(informational); F-05(minor). Nothing is marked verified by this review.",
+    "findings": [
+      {
+        "severity": "minor",
+        "finding": "F-03 locator_check reports 9/9 resolved, but two of the nine items (5624-ref-01 and 5624-ref-02) quote the same sentence, so distinct locator evidence is 8, not 9. Resolution is real for every item.",
+        "related_evidence_refs": [
+          "r5624:D3.locator_quotes_distinct"
+        ]
+      },
+      {
+        "severity": "minor",
+        "finding": "F-04 content_digests[1].occurrences is declared 1, but its 16-hex raw text is also a substring of the full 64-hex digest on line 25, so it occurs twice in the source. The declared prefix_of/prefix_consistent relation is correct.",
+        "related_evidence_refs": [
+          "r5624:D5.occurrence_counts"
+        ]
+      },
+      {
+        "severity": "minor",
+        "finding": "F-02 observations[0] presents 'three count calibers' in conflict, but the third one (116 index entries, line 29) is the arithmetic closure 102 + 14 mission artefacts, i.e. not a conflicting count; and its locator other_file_count_lines points at line 43, which states a sample size (20 files), not an inventory count. The observation is substantiated for the 0-vs-102 pair, overstated otherwise, and its third locator is mis-attributed.",
+        "related_evidence_refs": [
+          "r5624:F2.obs01_third_count_locator"
+        ]
+      },
+      {
+        "severity": "major",
+        "finding": "F-01 The report body states 0 files for each of the two artefact roots (line 7) and then 102 files / 6.45 MB for the same two roots (line 8), while the Fig.1 caption gives the split 94 + 8 = 102. Two of the three statements cannot both be true. The manifest registered this as unresolved observation 5624-obs-01 instead of choosing a number, which is the correct 01 behaviour, so the registration passes and only downstream inventory claims are blocked.",
+        "related_evidence_refs": [
+          "r5624:F5.body_inventory_counts_self_consistent"
+        ]
+      },
+      {
+        "severity": "informational",
+        "finding": "F-06 The package ships fig_acceptance.png while the record registers fig1_inventory/fig2_sizes/fig3_acceptance with no per-image digest, so the shipped PNG cannot be bound to any registered figure name or content.",
+        "related_evidence_refs": [
+          "r5624:G5.shipped_png_bound_to_registered_figure"
+        ]
+      },
+      {
+        "severity": "minor",
+        "finding": "F-05 boundary carries a field literally named verification_status (value 'none — 由平台门独立计算，本包不标 verified'). No verification is asserted, but the field name is exactly the one GATE-RULES S9 forbids in 03/04 products, so the envelope cannot be promoted into a 03 package unchanged.",
+        "related_evidence_refs": [
+          "r5624:H3.no_self_verification"
+        ]
+      }
+    ],
+    "conditions": [
+      "F-03: downstream 03 must qualify any claim that depends on this defect (nothing; reported coverage figure only).",
+      "F-04: downstream 03 must qualify any claim that depends on this defect (nothing; registration bookkeeping only).",
+      "F-02: downstream 03 must qualify any claim that depends on this defect (nothing; characterisation of the observed inconsistency only).",
+      "F-01: downstream 03 must qualify any claim that depends on this defect (any downstream claim that inventories '102 files / 6.45 MB').",
+      "F-06: downstream 03 must qualify any claim that depends on this defect (nothing; figure content is out of review scope).",
+      "F-05: downstream 03 must qualify any claim that depends on this defect (nothing today; blocks a 03 product that reuses this envelope)."
+    ]
+  }
+]
