@@ -4,7 +4,7 @@
 > 上游：`docs/rci/schema-v1.md`（S2a 对象定义）、`docs/rci/interface-spec.md`（三方接口）
 > 下游：`docs/rci-s2b-schema-revisions.md`（本轮测出的 v1.1 修订 R1–R6）
 > 工件（数字唯一来源）：`docs/rci-s2b-pilot200/metrics.json`、`full_frame_rates.json`、`sample_manifest.json`
-> 复现：`python3 scripts/rci_s2b_pilot.py`（约 4 s）+ `--full-frame`（约 44 s）；图 `docs/assets/rci/*.png`
+> 复现：`python3 scripts/rci_s2b_pilot.py`（本机约 3 s）+ `--full-frame`（本机约 29 s）；图 `docs/assets/rci/*.png`
 
 本报告只回答一个问题：**S2a 定的 ko/v1 对象，拿去装仓内已有的真实知识记录，装得进去吗？装不进去的地方卡在哪一条？** 答案用 200 条分层样本 + 10,071 条全样本枚举两套数字给出，不含估计。
 
@@ -14,7 +14,7 @@
 
 RCI（Research Claim Infrastructure）阶段 2a 交付了 ko/v1 对象定义与校验器（`scripts/validate_ko_v1.py`）。S2b 的任务是把这个 schema 拖到**已经存在的数据**上试一遍，用失败模式反过来修订 schema —— 而不是先改 schema 再找理由。
 
-试点总体（抽样框）**不是**造的：它是本仓 `knowledge/` 下已有的四份真实语料，去重后 10,071 条 claim、10,238 条 evidence：
+试点总体（抽样框）**不是**造的：它是本仓 `knowledge/` 下已有的四份真实语料，去重后 10,071 条 claim、10,107 条 evidence：
 
 | facet | 语料位置 | 去重 claim 数 | 主要 claim_type | 证据形态 |
 |---|---|---|---|---|
@@ -40,7 +40,7 @@ RCI（Research Claim Infrastructure）阶段 2a 交付了 ko/v1 对象定义与�
 
 流程五步，全部在 `scripts/rci_s2b_pilot.py` 里，无人工环节：
 
-1. **建抽样框** `build_frame()`：四份语料去重（同 id 取首次出现），evidence 按 id 建索引 → `10,071 claim / 10,238 evidence`。
+1. **建抽样框** `build_frame()`：四份语料去重（同 id 取首次出现），evidence 按 id 建索引 → `10,071 claim / 10,107 evidence`。
 2. **分层确定性抽样** `sample()`：每层保底 3 条（不足则全取），余量按层规模比例分配；层内按 `sha256(seed:claim_id)` 排序取前 n。**同输入必得同样本**（有测试守）。
 3. **映射适配器** `map_claim()`：源记录 → ko/v1 文档。映射规则全部显式、可审计，不允许「凑字段」：
    - `knowledge_id`：`tkc:<facet>:<slug>` → `ko:<facet>:<slug>`，slug 只做字符规范化（`[^a-z0-9._-] → -`）。
@@ -155,7 +155,7 @@ RQS = 0.30·schema_conformance + 0.25·evidence_traceability + 0.20·field_compl
 |---|---|---|
 | 分类型质量（strict v1 基线 vs projected v1.1） | `docs/assets/rci/ko_quality_by_type.png` | 红条 = 现状 schema 通过率（全 0），蓝条 = 按 R1–R6 修订后通过率；右侧标注该类型平均 RQS 与平均 E-TR。**这是一张基线对照图**：v1.0 是基线，v1.1 是干预。 |
 | review 字段准确率（v1.0 → v1.1） | `docs/assets/rci/review_field_accuracy.png` | 每个 review 字段两根条：v1.0 可派生率（红）与 v1.1 准确率（绿），标注 `v1.0→v1.1` 与不变量冲突数。`confidence.basis` 从 0% 跳到 83%，是 R2 的直接作用面。 |
-| RQS 分布 + E-TR 分布 + 逐维均值 | `docs/assets/rci/rqs_distribution.png` | 左：RQS 直方图（0.1 分箱，标均值/中位）；中：逐对象证据可追溯率分布（0/1 两峰 + 中间少量）；右：五维均值条形（不受权重影响）。 |
+| RQS 分布 + E-TR 分布 + 逐维均值 | `docs/assets/rci/rqs_distribution.png` | 左：RQS 直方图（0.1 分箱，标均值/中位）；中：逐对象证据可追溯率分布（只有两端：174 个对象 1.0、26 个对象 0.0，无中间值）；右：五维均值条形（不受权重影响）。 |
 
 无场量云图（纯文档/管线任务，无物理场）：本轮对象是知识记录而非流场/应力场，替代物是上面三张「分布/对照」图。若强行画云图会是无物理含义的伪图，故不做。
 
@@ -163,13 +163,13 @@ RQS = 0.30·schema_conformance + 0.25·evidence_traceability + 0.20·field_compl
 
 ## ⑤ 注意点（踩过的坑与适用范围）
 
-1. **仓内语料 0 条证据带 `report_id`。** 10,238 条 evidence 全为 locator 型（`code-location`/报告切片），`persistent_id` 用 `git:<repo>@<commit>` 钉扎。v1.0 的 `EvidenceRef` 把 `report_id` 列为必填 ⇒ **试点总体 10,071 条里 0 条能过 v1.0**。这不是映射实现差，是 schema 与既有语料形态不匹配；修法见 R1。
+1. **仓内语料 0 条证据带 `report_id`。** 10,107 条 evidence 全为 locator 型（`code-location`/报告切片），`persistent_id` 用 `git:<repo>@<commit>` 钉扎。v1.0 的 `EvidenceRef` 把 `report_id` 列为必填 ⇒ **试点总体 10,071 条里 0 条能过 v1.0**。这不是映射实现差，是 schema 与既有语料形态不匹配；修法见 R1。
 2. **`confidence.basis` 词表缺 code/dataset 档。** 88.05% 的对象证据是代码位置，v1.0 只能写 `unassessed`，等于把「我核过源码」这条信息丢掉。修法见 R2（加 `code_inspection`/`dataset_locator`）。
 3. **`artifact_ref` 的 `ref` 也是必填**，`kind:'none'` 不能省 `ref`。第一版适配器漏填导致 198/200 假失败 —— 这是适配器 bug，已在同轮修掉；记录在此提醒后续摄取管线别重犯。
 4. **`section.anchor` 字符集是硬约束**（`^[a-z0-9\u4e00-\u9fff][a-z0-9\u4e00-\u9fff-]*$`）；源定位符里带 `.py-30-31`、下划线会被拒。锚点必须单独规范化，不能复用 slug 规则。
 5. **样本份额 ≠ 总体份额。** 小层被保底放大：`unmapped` 在样本里占 2.0%，在总体里只有 4/10,071 = 0.04%。任何「占比」结论必须走权重，或直接看全样本枚举（`full_frame_rates.json`）。
 6. **review 字段「冲突 0」不代表数据干净**，只说明本轮的派生规则保守（从不派生 `high`、`basis` 只在有定位符时才给值），不变量从未触发。它是护栏，不是质量证明。
-7. **RQS 权重是约定的诊断系数**，不要把 0.95 读成「知识质量 95 分」。逐维均值才是可讨论的量：本轮 E-TR 维度均值 0.83 是真正的短板（缺口来自 12 条证据缺 quote）。
+7. **RQS 权重是约定的诊断系数**，不要把 0.95 读成「知识质量 95 分」。逐维均值才是可讨论的量：本轮 E-TR 维度均值 0.87（`metrics.json → rqs.dimension_means.evidence_traceability`）是真正的短板：200 个对象里 26 个 E-TR=0（其中 2 个对象本身无证据条目；其余 24 个对象名下的 25 条证据中，12 条 quote 不足 15 字符、13 条有哈希与 quote 但缺可解析定位——既无仓内引用路径、也无 commit 钉扎、也无 `@sha` 尾钉）。
 8. **适用范围**：本轮只覆盖「已有语料 → ko/v1」的**摄取侧**。平台验证回流（L3）、报告小节锚的真实解析（需 TP `tensor_reports` 正文导出）、`ko_relation` 关联网络三项未在本轮验证，见 §⑥ 与修订文档的「未测」清单。
 
 ---
@@ -192,7 +192,7 @@ RQS = 0.30·schema_conformance + 0.25·evidence_traceability + 0.20·field_compl
 
 - **物理精度线不适用**，已声明原因（无物理参考量）；替代基准是全样本枚举，可机裁。
 - **加权估计量全部 <3 pp**（0.00 / 0.00 / 1.39 / 0.00 pp），最大 1.39 pp。
-- **不加权样本值有 1 项超线**（R2 影响面 5.05 pp，因小层过量抽样）⇒ 200 条样本的**原始比率**不能直接当总体结论；要么加权，要么（推荐）直接跑全样本枚举 —— 本轮已跑，成本 44 s，没理由再用估计。
+- **不加权样本值有 1 项超线**（R2 影响面 5.05 pp，因小层过量抽样）⇒ 200 条样本的**原始比率**不能直接当总体结论；要么加权，要么（推荐）直接跑全样本枚举 —— 本轮已跑，成本 29 s（本机实测 28.6 s，n=10071），没理由再用估计。
 - **本轮所有通过率都是精确计数**（分子分母都在 `metrics.json`），不是模型拟合值，故无统计误差，只有抽样代表性误差（上表已量化）。
 
 **没做到的（honest 未完成项）**：
@@ -200,10 +200,3 @@ RQS = 0.30·schema_conformance + 0.25·evidence_traceability + 0.20·field_compl
 - `confidence.basis` 有 12 条证据缺 quote、5 条靠 R5 引文哈希兜底 —— 这些对象的 `unassessed` 是真实信息缺失，不是 bug，未强行填值。
 - 平台验证回流 / L3 通道、`tensor_reports` 正文小节锚的真实解析、`ko_relation` 网络构建：**未测**（需 TP 侧导出与 KE 服务常驻，接口就绪但本轮不跑）。
 - 修订 R1–R6 目前只是**内存投影 + 数字**，`schemas/` 落地与校验器改造留待评审后单独 PR（避免与在飞 schema 改动互相踩）。
-> 复现：`python3 scripts/rci_s2b_pilot.py`（本机约 4 s，写工件+出图）+ `--full-frame`（本机约 32 s）；图 `docs/assets/rci/*.png`
-试点总体（抽样框）**不是**造的：它是本仓 `knowledge/` 下已有的四份真实语料，去重后 10,071 条 claim、10,107 条 evidence 索引（evidence 文件内 raw 行 103,307，按 id 去重后建档）：
-1. **建抽样框** `build_frame()`：四份语料去重（同 id 取首次出现），evidence 按 id 建索引 → `10,071 claim / 10,107 evidence`。
-| RQS 分布 + E-TR 分布 + 逐维均值 | `docs/assets/rci/rqs_distribution.png` | 左：RQS 直方图（0.1 分箱，标均值/中位）；中：逐对象证据可追溯率分布（只有两端：174 个对象 1.0、26 个对象 0.0，无中间值）；右：五维均值条形（不受权重影响）。 |
-1. **仓内语料 0 条证据带 `report_id`。** 10,107 条 evidence 全为 locator 型（`code-location`/报告切片），`persistent_id` 用 `git:<repo>@<commit>` 钉扎。v1.0 的 `EvidenceRef` 把 `report_id` 列为必填 ⇒ **试点总体 10,071 条里 0 条能过 v1.0**。这不是映射实现差，是 schema 与既有语料形态不匹配；修法见 R1。
-7. **RQS 权重是约定的诊断系数**，不要把 0.95 读成「知识质量 95 分」。逐维均值才是可讨论的量：本轮 E-TR 维度均值 0.87（`metrics.json → rqs.dimension_means.evidence_traceability`）是真正的短板：200 个对象里 26 个 E-TR=0（其中 2 个对象本身无证据条目；其余 24 个对象名下的 25 条证据中，12 条 quote 不足 15 字符、13 条有哈希与 quote 但缺可解析定位——既无仓内引用路径、也无 commit 钉扎、也无 `@sha` 尾钉）。
-- **不加权样本值有 1 项超线**（R2 影响面 5.05 pp，因小层过量抽样）⇒ 200 条样本的**原始比率**不能直接当总体结论；要么加权，要么（推荐）直接跑全样本枚举 —— 本轮已跑，成本约 32 s（本机实测），没理由再用估计。
