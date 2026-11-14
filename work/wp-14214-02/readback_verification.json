@@ -1,0 +1,61 @@
+{
+  "package_id": "wp-14214-02",
+  "delivery_report_id": 18050,
+  "delivery_title": "KF-RESULT wp-14214-02",
+  "delivery_status": "published",
+  "checks": {
+    "published_markdown_byte_identical": {
+      "pass": true,
+      "chars": 40131
+    },
+    "single_json_block": {
+      "pass": true,
+      "count": 1
+    },
+    "payload_equals_kf_result": {
+      "pass": true
+    },
+    "figure_present": {
+      "pass": true,
+      "figures": [
+        "wp14214_02_signal_profile.png"
+      ]
+    },
+    "tag_kf_wp_present": {
+      "pass": true,
+      "tags": [
+        "kf-wp:wp-14214-02",
+        "02-classification-parse",
+        "report-14214",
+        "lane-B",
+        "TensorKnowledge",
+        "draft"
+      ]
+    },
+    "source_report_14214_unmodified": {
+      "pass": true,
+      "sha256": "edc85090268afe8220c9108650aed655c05b017bb1bb29cdfffa382b7d2d1af9"
+    },
+    "scope_single_report": {
+      "pass": true,
+      "report_id": "14214"
+    }
+  },
+  "all_pass": true,
+  "platform_qa": {
+    "qa_status": "rejected",
+    "passed": false,
+    "checks": {
+      "physics_statement": true,
+      "method": true,
+      "validation": false,
+      "figures": true,
+      "limitations": true,
+      "error_verdict": true
+    },
+    "issues": [
+      "missing_validation: 缺少验证/对标（需包含与基准/文献/解析解的比较，或声明无基准原因）"
+    ],
+    "note": "唯一失败项是可解释的误伤：M5 比较句判据扫到 kf_result payload 内原文小节标题「⑥ 误差判定（关键量 vs 基准）」（verbatim，不可改写）。正文所有比较句均已点名外部基准。"
+  }
+}
