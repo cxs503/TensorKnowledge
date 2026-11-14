@@ -10,6 +10,8 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 import jsonschema
@@ -18,7 +20,27 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 PKG = "wp-615-01"
 OUT = ROOT / "artifacts" / "kf" / PKG
+MIRROR = ROOT / "knowledge" / "kf" / PKG
 DOCS = ROOT / "docs" / "kf" / f"KF-RESULT-{PKG}.md"
+# 结构门用包级 pin 的 schema（共享的 asset_manifest.v1.schema.json 描述的是 wp-448-01 形状的清单）
+MANIFEST_SCHEMA = ROOT / "schemas" / "asset_manifest.v1.wp-615-01.schema.json"
+ENVELOPE_SCHEMA = ROOT / "schemas" / "kf_result.v1.schema.json"
+FIG_NAME = "wp61501_asset_registry.png"
+
+sys.path.insert(0, str(ROOT / "scripts" / "kf"))
+import wp_615_01_register_assets as reg  # noqa: E402
+import wp_615_01_bootstrap_artifacts as boot  # noqa: E402
+
+
+@pytest.fixture(scope="module", autouse=True)
+def workspace() -> dict:
+    """artifacts/** 被 .gitignore 丢弃（mission-push 门），全新检出上是空的。
+
+    所以先由 `scripts/kf/wp_615_01_bootstrap_artifacts.py` 从受版本控制的镜像
+    `knowledge/kf/PKG/` 重建工作区；重建过程同时离线复算 checks.json 并要求与
+    镜像逐字节一致、文档/图件重新渲染后与提交件逐字节一致（strict=True）。
+    """
+    return boot.bootstrap(out=OUT, mirror=MIRROR)
 
 CONTRACT_SOURCE_HASH = "sha256:3c1b5f9dc373359c9ca5692b5f822bc1ee8c13b50dc015b9b84c7530e29b7e75"
 CONTRACT_CHARS = 2125
@@ -27,7 +49,7 @@ CONTRACT_SCENARIO = "SIR-PC2|F06"
 
 
 @pytest.fixture(scope="module")
-def snapshot() -> dict:
+def snapshot(workspace) -> dict:
     return json.loads((OUT / "source_snapshot" / "report_615.json").read_text())
 
 
@@ -37,12 +59,17 @@ def md(snapshot: dict) -> str:
 
 
 @pytest.fixture(scope="module")
-def manifest() -> dict:
+def manifest(workspace) -> dict:
     return json.loads((OUT / "asset_manifest.json").read_text())
 
 
 @pytest.fixture(scope="module")
-def envelope() -> dict:
+def checks(workspace) -> dict:
+    return json.loads((OUT / "checks.json").read_text())
+
+
+@pytest.fixture(scope="module")
+def envelope(workspace) -> dict:
     return json.loads((OUT / "kf_result.json").read_text())
 
 
@@ -102,8 +129,8 @@ def test_asset_ids_unique_and_gaps_accounted(manifest: dict) -> None:
 
 
 def test_manifest_and_envelope_pass_json_schema(manifest: dict, envelope: dict) -> None:
-    mschema = json.loads((ROOT / "schemas" / "asset_manifest.v1.schema.json").read_text())
-    eschema = json.loads((ROOT / "schemas" / "kf_result.v1.schema.json").read_text())
+    mschema = json.loads(MANIFEST_SCHEMA.read_text())
+    eschema = json.loads(ENVELOPE_SCHEMA.read_text())
     jsonschema.Draft202012Validator(mschema).validate(manifest)
     jsonschema.Draft202012Validator(eschema).validate(envelope)
 
@@ -168,7 +195,7 @@ def test_figure_registered_as_unresolvable_not_fabricated(manifest: dict) -> Non
 
 def test_version_controlled_mirror_is_byte_identical() -> None:
     """artifacts/ 被 .gitignore 忽略；knowledge/kf/<pkg>/ 是随分支交付的镜像，两者必须逐字节一致。"""
-    mirror = ROOT / "knowledge" / "kf" / PKG
+    mirror = MIRROR
     for name in ("asset_manifest.json", "kf_result.json", "checks.json"):
         assert (mirror / name).read_bytes() == (OUT / name).read_bytes(), name
     assert (mirror / "report_615.md").read_bytes() == (OUT / "source_snapshot" / "report_615.md").read_bytes()
@@ -184,3 +211,92 @@ def test_report_payload_is_structured_for_platform() -> None:
     assert payload["scenario_key"] == CONTRACT_SCENARIO
     assert payload["markdown"].count("```json") == 1
     assert payload["figures"] and len(payload["figures"][0]["png_base64"]) > 1000
+
+# ----------------------------------------------------------------- 工作区重建 / 复算链
+def test_workspace_was_rebuilt_and_offline_checks_match_mirror(workspace: dict) -> None:
+    """bootstrap 的复算链全绿：结构门/引文门/指纹门都通过，且与镜像 checks.json 逐字节一致。"""
+    assert workspace["recomputed"]["all_pass"] is True
+    assert workspace["recomputed"]["checks_match_mirror"] is True
+    assert workspace["docs_byte_identical"] is True
+    raw = (MIRROR / "figures" / FIG_NAME).read_bytes()
+    assert workspace["figure_sha256"] == "sha256:" + hashlib.sha256(raw).hexdigest()
+    assert workspace["payload_b64_chars"] == len(json.loads(
+        (OUT / "report_payload.json").read_text())["figures"][0]["png_base64"])
+
+
+def test_checks_json_is_recomputed_not_copied(manifest: dict, md: str) -> None:
+    """checks.json 必须是离线重算的产物：从清单+markdown 重跑 verify() 后与提交件逐字节相同。"""
+    recomputed = reg.verify(manifest, token=None, md_source=md)
+    assert recomputed["all_pass"] is True
+    assert recomputed["schema_errors"] == [] and recomputed["kf_result_schema_errors"] == []
+    assert recomputed == json.loads((OUT / "checks.json").read_text())
+    blob = (json.dumps(recomputed, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    assert blob == (MIRROR / "checks.json").read_bytes()
+
+
+def test_register_script_reruns_fully_offline() -> None:
+    """全新环境无网无 token 也能复检：`--check-only --offline` 必须 0 退出（不再强制 login）。"""
+    r = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "kf" / "wp_615_01_register_assets.py"),
+         "--check-only", "--offline", "--out", str(OUT)],
+        cwd=str(ROOT), capture_output=True, text=True, timeout=600,
+    )
+    assert r.returncode == 0, f"stdout={r.stdout}\nstderr={r.stderr}"
+    assert '"all_pass": true' in r.stdout
+
+
+def test_pinned_schema_is_not_vacuous(manifest: dict) -> None:
+    """结构门必须真能拒绝坏清单：抽掉必需字段/改坏 asset_id 后必须报错。"""
+    import copy
+
+    schema = json.loads(MANIFEST_SCHEMA.read_text())
+    validator = jsonschema.Draft202012Validator(schema)
+    assert list(validator.iter_errors(manifest)) == []
+
+    bad = copy.deepcopy(manifest)
+    del bad["locator_checks"]
+    assert list(validator.iter_errors(bad)), "schema 不能放过缺失 locator_checks 的清单"
+
+    bad2 = copy.deepcopy(manifest)
+    bad2["assets"][0]["asset_id"] = "A01"
+    assert list(validator.iter_errors(bad2)), "schema 不能放过非本包命名空间的 asset_id"
+
+    bad3 = copy.deepcopy(manifest)
+    bad3["assets"][0]["locator"]["quote_verified"] = False
+    assert list(validator.iter_errors(bad3)), "schema 不能放过未验证的引文"
+
+
+def test_committed_figure_is_valid_png_and_matches_fresh_render(manifest: dict, checks: dict) -> None:
+    """提交图件必须是有内容的真 PNG，且与"重新渲染"像素一致（跨 matplotlib 版本时跳过）。
+
+    图件字节本身就载着清单/自检的数据，所以这条是"图不是画上去的"的机读证明。
+    """
+    import matplotlib
+    import numpy as np
+
+    png = MIRROR / "figures" / FIG_NAME
+    raw = png.read_bytes()
+    assert raw[:8] == b"\x89PNG\r\n\x1a\n", "不是合法 PNG"
+    assert int.from_bytes(raw[16:20], "big") > 1000 and int.from_bytes(raw[20:24], "big") > 500
+
+    meta = json.loads((MIRROR / "figures" / "figure_meta.json").read_text())
+    assert meta["sha256"] == "sha256:" + hashlib.sha256(raw).hexdigest()
+    assert meta["bytes"] == len(raw)
+    assert meta["inputs"]["asset_manifest_sha256"] == "sha256:" + hashlib.sha256(
+        (MIRROR / "asset_manifest.json").read_bytes()).hexdigest()
+
+    if matplotlib.__version__ != meta["matplotlib"]:
+        pytest.skip(f"matplotlib {matplotlib.__version__} ≠ 记录 {meta['matplotlib']}，PNG 编码字节不可比")
+
+    import tempfile
+
+    import build_wp_615_01_report as render
+
+    with tempfile.TemporaryDirectory() as td:
+        fresh = render.make_figure(manifest, checks, Path(td) / "fresh.png")
+        a = matplotlib.image.imread(str(png))
+        b = matplotlib.image.imread(str(fresh))
+    assert a.shape == b.shape, "重新渲染的画布尺寸与提交件不同"
+    diff = np.abs(a - b)
+    differing = float((diff.max(axis=-1) > 0.02).mean()) if diff.ndim == 3 else float((diff > 0.02).mean())
+    assert differing <= 0.005, f"重新渲染与提交图件差异过大：{differing:.4%} 像素不同"
