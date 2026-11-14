@@ -1,0 +1,78 @@
+[
+ {
+  "id": "tkr:package:wp-11930-01",
+  "object_ref": "tensor://packages/wp-11930-01",
+  "object_version": "sha256:52fa73beb02091ae628a19f5898a3c67031286d9f31c556713c65963317dc230",
+  "decision": "approve",
+  "reviewer": {
+   "id": "agent/m19840",
+   "reviewer_type": "agent",
+   "role": "red-team-reviewer"
+  },
+  "reviewed_at": "2026-11-12T04:20:00+00:00",
+  "policy_version": "kf-review/v1.0",
+  "rationale": "Asset registration recomputed from fresh bytes: hash/chars/bytes match contract, 14/14 locator spans exact and unique, counts recomputed, 6/6 figure assets return HTTP 200 image/png with manifest-matching sha256 and byte counts.",
+  "findings": [
+   {
+    "severity": "informational",
+    "finding": "7/14 assets are referenced_unresolved and 1 declared_absent — correct declarations; they cap what an independent review can re-execute."
+   }
+  ]
+ },
+ {
+  "id": "tkr:report:11930",
+  "object_ref": "tensor://reports/11930",
+  "object_version": "sha256:5adb132dcf96ba20285065cd2c5b1d6e73a1ca6c99b20cee90e0fb74e2dbf325",
+  "decision": "request-changes",
+  "reviewer": {
+   "id": "agent/m19840",
+   "reviewer_type": "agent",
+   "role": "red-team-reviewer"
+  },
+  "reviewed_at": "2026-11-12T04:20:00+00:00",
+  "policy_version": "kf-review/v1.0",
+  "rationale": "Semantic fidelity: all recomputable headline numbers reproduce and the honest FAILs are internally consistent, but the Brun index is unreproducible as published, the 'local m' column is mislabelled by 3 orders of magnitude, the AC5 error row contradicts itself, the AC6 negative-control narrative overstates an 83.5% result, the UCS H/D mixes conventions, and the AC3 verdict cell omits PASS/FAIL.",
+  "findings": [
+   {
+    "severity": "major",
+    "finding": "F1: Published γ=6.71 for pair ['k_c','k_p'] is not reproducible from the published correlation ρ=0.978 under either standard definition: Brun γ=1/√(1−R²)=4.796, Belsley 2-column index √((1+ρ)/(1−ρ))=9.486. Only the non-standard 1/√(1−ρ)=6.745 lands near 6.71, which suggests a missing square / undeclared formula. The report never states the γ formula, so the 'worst pair' ranking is not independently auditable."
+   },
+   {
+    "severity": "major",
+    "finding": "F2: The '局部 m' column reports 0.080 (t=0.05) and 0.045 (t=0.80), i.e. 3–4 orders of magnitude below the global m=262.976 fitted in the same paragraph. If read literally as Weibull moduli, the local values contradict the global fit and would falsify AC4; the numbers are only consistent with the local exponent 1/m (→ m≈12.5 / 22.2). The label/quantity is wrong or at least ambiguous, while AC4 PASS hinges on 'end m direction consistency'."
+   },
+   {
+    "severity": "minor",
+    "finding": "F3: The same row states a 9.8% relative difference and then qualifies it as '差两个量级' (two orders of magnitude). 9.8% (and even the worst configuration, 788%) is not a two-order-of-magnitude gap; the qualitative clause contradicts the quantitative cell it annotates."
+   },
+   {
+    "severity": "major",
+    "finding": "F4: The method text says the 200-random-θ control 'verifies that random parameters can hardly land in the literature band', but the measured violation ratio is 83.5%, i.e. 33/200 ≈ 16.5% (about one in six) random parameter sets DO land in [5,15] MPa. That is the opposite of 'almost impossible' and is precisely why AC6 is recorded FAIL."
+   },
+   {
+    "severity": "minor",
+    "finding": "F5: H/D=2.000 mixes endpoints: H=0.2 m is the gauge (8 lattice spacings, centre-to-centre of the driven end layers) while D=0.1 m is the bounding-box diameter (3 spacings + 2 radii). Under uniform conventions the same lattice gives H/D=2.25 (extent/extent, still inside ASTM [1.5,2.5]) or 2.667 (centre-to-centre/centre-to-centre, outside the band). The convention is not stated, so the AC1 PASS is convention-dependent."
+   },
+   {
+    "severity": "minor",
+    "finding": "F6: The fitted-thickness tensile strengths (t=0.1/0.2/0.4, the fit inputs) are never printed, so the published σc/σt=2.688 and m=262.976 cannot be recomputed from the report alone; only the two holdout predictions are reproducible from the published (m, σ_ref). The three-target feasibility matrix (AC3) therefore contains one number (2.688) with no in-report derivation."
+   },
+   {
+    "severity": "informational",
+    "finding": "F7: 'relative difference 0.000' is asserted from two values printed to three significant figures (1.01e+06 Pa each); the displayed evidence cannot support an exact-zero claim (it only bounds the difference by ~1e-3 relative)."
+   },
+   {
+    "severity": "informational",
+    "finding": "F8: 7/14 registered assets (module, 3 scripts, test suite, records.jsonl, artifacts report.json) are referenced_unresolved and live only in the TensorDEM checkout; 1 is declared absent. The 42-test suite, the 747-task campaign, the NSGA-II run and the KE/work gate therefore cannot be re-executed from this repo — they are reviewed for internal consistency only."
+   },
+   {
+    "severity": "informational",
+    "finding": "F9: The quadratic surrogate for m has LOO R²=0.0904 (in-sample 0.8092), i.e. essentially no out-of-sample predictive power. The report discloses this and states the (c) branch rests on DEM design points plus the proxy only as direction evidence; downstream consumers must not quote frontier m values as calibrated."
+   },
+   {
+    "severity": "minor",
+    "finding": "F10: The AC3 verdict cell reads '见 §3.3' instead of PASS/FAIL, breaking the table's own per-AC verdict format. The content of §3.3 (branch (c) with evidence) satisfies AC3's stated criterion, so the intended verdict is PASS but is never stated."
+   }
+  ]
+ }
+]
