@@ -16,7 +16,11 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 PKG = "wp-5624-01"
-OUT = ROOT / "artifacts" / "kf" / PKG
+ARTIFACTS_OUT = ROOT / "artifacts" / "kf" / PKG
+DOCS_OUT = ROOT / "docs" / "kf" / PKG
+# artifacts/ 被 .gitignore 排除（见 .gitignore），所以干净检出里只有已提交的 docs/ 镜像。
+# 优先用运行期产物，缺失时回退到镜像，否则本套件在裸检出中全红（wp-5624-04 F-C13）。
+OUT = ARTIFACTS_OUT if (ARTIFACTS_OUT / "kf_result.json").is_file() else DOCS_OUT
 CONTRACT_HASH = (
     "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839"
 )
