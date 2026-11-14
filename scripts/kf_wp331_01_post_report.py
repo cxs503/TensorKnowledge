@@ -21,7 +21,7 @@ PACKAGE_ID = "wp-331-01"
 REPORT_ID = "331"
 TITLE = f"KF-RESULT {PACKAGE_ID}"
 TAG = f"kf-wp:{PACKAGE_ID}"
-MISSION_ID = 15506
+MISSION_ID = 19471
 _JSON_BLOCK = re.compile(r"```json\s*\n(.*?)```", re.S)
 
 

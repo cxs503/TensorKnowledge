@@ -148,10 +148,12 @@ def test_every_asset_has_status_and_unresolved_have_reason(manifest):
 
 
 def test_no_claim_is_marked_verified(manifest, envelope):
-    """verification 由平台门计算：本工序不得产出任何 verified 状态。"""
-    assert envelope.get("claims") == []
-    for c in envelope.get("claims") or []:
-        assert c.get("status") != "verified"
+    """verification 由平台门计算：本工序不得产出任何 verified 状态。
+
+    schema v1 不允许 01 工序信封顶层出现 claims 键（claims 属于 03 工序的
+    outputs.claims.json）。因此只检查 manifest.scope 确认未做抽取。
+    """
+    assert "claims" not in envelope, "01-asset-registration envelope must not carry top-level claims"
     assert manifest["scope"]["extraction_performed"] is False
     assert manifest["scope"]["claims_emitted"] == 0
 
