@@ -1,0 +1,645 @@
+{
+  "package_id": "wp-11180-04",
+  "task_type": "04-independent-review",
+  "report_id": "11180",
+  "reviewed_package": "wp-11180-01",
+  "reviewer_role": "red-team-reviewer",
+  "generated_at": null,
+  "source": {
+    "uri": "tensor://reports/11180",
+    "field": "markdown",
+    "sha256": "sha256:9adfdac400ff0e205a17c20a761625acca0acf0e55f9ff477bf2c1c5c8bf3292",
+    "contract_sha256": "sha256:9adfdac400ff0e205a17c20a761625acca0acf0e55f9ff477bf2c1c5c8bf3292",
+    "characters": 490,
+    "utf8_bytes": 670,
+    "lines": 22,
+    "h1": "# EEXI Attained 闭合链路精度传递验证",
+    "snapshot": "docs/kf/wp-11180-04/source/report_11180.md"
+  },
+  "quote_binding": {
+    "goal": {
+      "quote": "将 EEXI attained 能力从 WITHHELD(99.9%误差) 推进到 REAL(<15%误差)",
+      "found": true,
+      "start_char": 34,
+      "end_char": 88,
+      "unique": true,
+      "line": 4
+    },
+    "method": {
+      "quote": "建立端到端同源链路：Holtrop 阻力 → BEMT 推进 → EEXI attained",
+      "found": true,
+      "start_char": 96,
+      "end_char": 142,
+      "unique": true,
+      "line": 7
+    },
+    "errors_line": {
+      "quote": "- 三船对标误差: 12.1% / 7.0% / 1.0% (均 <15%)",
+      "found": true,
+      "start_char": 150,
+      "end_char": 188,
+      "unique": true,
+      "line": 10
+    },
+    "same_source": {
+      "quote": "- 链路同源: grep 验证 4 处调用",
+      "found": true,
+      "start_char": 189,
+      "end_char": 210,
+      "unique": true,
+      "line": 11
+    },
+    "sensitivity": {
+      "quote": "- 敏感度分析: V_ref 主导 (57.1%)",
+      "found": true,
+      "start_char": 211,
+      "end_char": 236,
+      "unique": true,
+      "line": 12
+    },
+    "degenerate": {
+      "quote": "- 退化一致性: 验证通过",
+      "found": true,
+      "start_char": 237,
+      "end_char": 250,
+      "unique": true,
+      "line": 13
+    },
+    "asset_impl": {
+      "quote": "backend/api/green_shipping.py::_gn_eexi_from_physics()",
+      "found": true,
+      "start_char": 264,
+      "end_char": 318,
+      "unique": true,
+      "line": 16
+    },
+    "asset_test": {
+      "quote": "backend/tests/test_eexi_chain_p74n02.py",
+      "found": true,
+      "start_char": 325,
+      "end_char": 364,
+      "unique": true,
+      "line": 17
+    },
+    "asset_json": {
+      "quote": "artifacts/eexi_verification.json",
+      "found": true,
+      "start_char": 371,
+      "end_char": 403,
+      "unique": true,
+      "line": 18
+    },
+    "asset_doc": {
+      "quote": "docs/eexi_verification_report_p74n02.md",
+      "found": true,
+      "start_char": 410,
+      "end_char": 449,
+      "unique": true,
+      "line": 19
+    },
+    "conclusion": {
+      "quote": "EEXI attained 能力: WITHHELD → REAL",
+      "found": true,
+      "start_char": 457,
+      "end_char": 490,
+      "unique": true,
+      "line": 22
+    }
+  },
+  "upstream": {
+    "envelope_package_id": "wp-11180-01",
+    "provenance": {
+      "source_hash": "sha256:9adfdac400ff0e205a17c20a761625acca0acf0e55f9ff477bf2c1c5c8bf3292",
+      "source_field": "markdown",
+      "producer": "agent/m15692",
+      "emitted_at": "2026-11-12T01:52:00+00:00",
+      "notes": "Asset registration for EEXI attained verification report. 4 assets identified in 产物 section, all referenced_unresolved (external to this worktree)."
+    },
+    "counts": {
+      "assets": 4,
+      "by_class": {
+        "implementation": 1,
+        "test": 1,
+        "verification_artifact": 1,
+        "report": 1
+      },
+      "by_resolution": {
+        "referenced_unresolved": 4
+      },
+      "resolved_in_source": 0,
+      "referenced_unresolved": 4,
+      "declared_absent": 0
+    },
+    "asset_spans": [
+      {
+        "asset_id": "A01",
+        "declared_span": [
+          264,
+          318
+        ],
+        "recomputed": "backend/api/green_shipping.py::_gn_eexi_from_physics()",
+        "byte_exact": true,
+        "unique": true,
+        "resolution": "referenced_unresolved",
+        "resolution_reproduced": true
+      },
+      {
+        "asset_id": "A02",
+        "declared_span": [
+          325,
+          364
+        ],
+        "recomputed": "backend/tests/test_eexi_chain_p74n02.py",
+        "byte_exact": true,
+        "unique": true,
+        "resolution": "referenced_unresolved",
+        "resolution_reproduced": true
+      },
+      {
+        "asset_id": "A03",
+        "declared_span": [
+          371,
+          403
+        ],
+        "recomputed": "artifacts/eexi_verification.json",
+        "byte_exact": true,
+        "unique": true,
+        "resolution": "referenced_unresolved",
+        "resolution_reproduced": true
+      },
+      {
+        "asset_id": "A04",
+        "declared_span": [
+          410,
+          449
+        ],
+        "recomputed": "docs/eexi_verification_report_p74n02.md",
+        "byte_exact": true,
+        "unique": true,
+        "resolution": "referenced_unresolved",
+        "resolution_reproduced": true
+      }
+    ],
+    "schema_deviations": [
+      {
+        "kind": "additional_property",
+        "keys": [
+          "claims"
+        ]
+      },
+      {
+        "kind": "additional_property",
+        "path": "provenance",
+        "keys": [
+          "emitted_at",
+          "notes",
+          "producer"
+        ]
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "name": "source_hash_recompute",
+      "status": "pass",
+      "method": "sha256 over the UTF-8 bytes of the markdown, no newline normalisation",
+      "detail": {
+        "computed": "sha256:9adfdac400ff0e205a17c20a761625acca0acf0e55f9ff477bf2c1c5c8bf3292",
+        "contract": "sha256:9adfdac400ff0e205a17c20a761625acca0acf0e55f9ff477bf2c1c5c8bf3292",
+        "equal": true
+      },
+      "evidence": []
+    },
+    {
+      "id": "C2",
+      "name": "source_size_and_shape",
+      "status": "pass",
+      "method": "recomputed char/byte/line counts and the H1 title",
+      "detail": {
+        "characters": 490,
+        "utf8_bytes": 670,
+        "lines": 22,
+        "h1": "# EEXI Attained 闭合链路精度传递验证",
+        "contract_chars": 490,
+        "title_in_h1": true
+      },
+      "evidence": []
+    },
+    {
+      "id": "C3",
+      "name": "live_api_equals_snapshot",
+      "status": "pass",
+      "method": "GET /tensor/reports/11180 -> sha256(markdown) vs the pinned snapshot",
+      "detail": {
+        "live": "sha256:9adfdac400ff0e205a17c20a761625acca0acf0e55f9ff477bf2c1c5c8bf3292",
+        "snapshot": "sha256:9adfdac400ff0e205a17c20a761625acca0acf0e55f9ff477bf2c1c5c8bf3292",
+        "equal": true,
+        "source_url": "http://127.0.0.1:8010/api/v1/tensor/reports/11180"
+      },
+      "evidence": []
+    },
+    {
+      "id": "C4",
+      "name": "quote_binding_zero_handcopy",
+      "status": "pass",
+      "method": "every quote used by the review is located by str.find in the source bytes",
+      "detail": {
+        "quotes": 11,
+        "found": 11,
+        "all_unique": true
+      },
+      "evidence": [
+        {
+          "quote": "将 EEXI attained 能力从 WITHHELD(99.9%误差) 推进到 REAL(<15%误差)",
+          "char_span": [
+            34,
+            88
+          ],
+          "line": 4
+        },
+        {
+          "quote": "建立端到端同源链路：Holtrop 阻力 → BEMT 推进 → EEXI attained",
+          "char_span": [
+            96,
+            142
+          ],
+          "line": 7
+        },
+        {
+          "quote": "- 三船对标误差: 12.1% / 7.0% / 1.0% (均 <15%)",
+          "char_span": [
+            150,
+            188
+          ],
+          "line": 10
+        },
+        {
+          "quote": "- 链路同源: grep 验证 4 处调用",
+          "char_span": [
+            189,
+            210
+          ],
+          "line": 11
+        },
+        {
+          "quote": "- 敏感度分析: V_ref 主导 (57.1%)",
+          "char_span": [
+            211,
+            236
+          ],
+          "line": 12
+        },
+        {
+          "quote": "- 退化一致性: 验证通过",
+          "char_span": [
+            237,
+            250
+          ],
+          "line": 13
+        },
+        {
+          "quote": "backend/api/green_shipping.py::_gn_eexi_from_physics()",
+          "char_span": [
+            264,
+            318
+          ],
+          "line": 16
+        },
+        {
+          "quote": "backend/tests/test_eexi_chain_p74n02.py",
+          "char_span": [
+            325,
+            364
+          ],
+          "line": 17
+        },
+        {
+          "quote": "artifacts/eexi_verification.json",
+          "char_span": [
+            371,
+            403
+          ],
+          "line": 18
+        },
+        {
+          "quote": "docs/eexi_verification_report_p74n02.md",
+          "char_span": [
+            410,
+            449
+          ],
+          "line": 19
+        },
+        {
+          "quote": "EEXI attained 能力: WITHHELD → REAL",
+          "char_span": [
+            457,
+            490
+          ],
+          "line": 22
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "name": "upstream_package_present",
+      "status": "pass",
+      "method": "locate wp-11180-01's submitted envelope; require exactly one json block",
+      "detail": {
+        "doc": "docs/report_wp11180_01.md",
+        "json_blocks": 1,
+        "package_id": "wp-11180-01",
+        "task_type": "01-asset-registration",
+        "report_id": "11180",
+        "declared_assets": 4
+      },
+      "evidence": []
+    },
+    {
+      "id": "C6",
+      "name": "upstream_asset_spans_reproduce",
+      "status": "pass",
+      "method": "slice the source markdown at each declared char_span and compare byte-for-byte",
+      "detail": {
+        "assets": 4,
+        "byte_exact": 4,
+        "unique": 4
+      },
+      "evidence": [
+        {
+          "asset_id": "A01",
+          "declared_span": [
+            264,
+            318
+          ],
+          "recomputed": "backend/api/green_shipping.py::_gn_eexi_from_physics()",
+          "byte_exact": true,
+          "unique": true,
+          "resolution": "referenced_unresolved",
+          "resolution_reproduced": true
+        },
+        {
+          "asset_id": "A02",
+          "declared_span": [
+            325,
+            364
+          ],
+          "recomputed": "backend/tests/test_eexi_chain_p74n02.py",
+          "byte_exact": true,
+          "unique": true,
+          "resolution": "referenced_unresolved",
+          "resolution_reproduced": true
+        },
+        {
+          "asset_id": "A03",
+          "declared_span": [
+            371,
+            403
+          ],
+          "recomputed": "artifacts/eexi_verification.json",
+          "byte_exact": true,
+          "unique": true,
+          "resolution": "referenced_unresolved",
+          "resolution_reproduced": true
+        },
+        {
+          "asset_id": "A04",
+          "declared_span": [
+            410,
+            449
+          ],
+          "recomputed": "docs/eexi_verification_report_p74n02.md",
+          "byte_exact": true,
+          "unique": true,
+          "resolution": "referenced_unresolved",
+          "resolution_reproduced": true
+        }
+      ]
+    },
+    {
+      "id": "C7",
+      "name": "upstream_resolution_claim_reproduced",
+      "status": "pass",
+      "method": "os.path.exists() for every quoted asset path inside this worktree",
+      "detail": {
+        "declared": "referenced_unresolved",
+        "reproduced_unresolved": 4,
+        "assets": 4,
+        "consequence": "no upstream artifact is reachable to re-derive the reported errors"
+      },
+      "evidence": [
+        {
+          "asset_id": "A01",
+          "path_quoted": "backend/api/green_shipping.py::_gn_eexi_from_physics()",
+          "exists_in_worktree": false
+        },
+        {
+          "asset_id": "A02",
+          "path_quoted": "backend/tests/test_eexi_chain_p74n02.py",
+          "exists_in_worktree": false
+        },
+        {
+          "asset_id": "A03",
+          "path_quoted": "artifacts/eexi_verification.json",
+          "exists_in_worktree": false
+        },
+        {
+          "asset_id": "A04",
+          "path_quoted": "docs/eexi_verification_report_p74n02.md",
+          "exists_in_worktree": false
+        }
+      ]
+    },
+    {
+      "id": "C8",
+      "name": "upstream_envelope_schema_strict",
+      "status": "fail",
+      "method": "constraints of schemas/kf_result.v1.schema.json applied to the submitted envelope",
+      "detail": {
+        "deviations": [
+          {
+            "kind": "additional_property",
+            "keys": [
+              "claims"
+            ]
+          },
+          {
+            "kind": "additional_property",
+            "path": "provenance",
+            "keys": [
+              "emitted_at",
+              "notes",
+              "producer"
+            ]
+          }
+        ]
+      },
+      "evidence": []
+    },
+    {
+      "id": "C9",
+      "name": "headline_numbers_internal_arithmetic",
+      "status": "pass",
+      "method": "parse the three errors out of the located quote; test the report's own '均 <15%'",
+      "detail": {
+        "errors_pct": [
+          12.1,
+          7.0,
+          1.0
+        ],
+        "max": 12.1,
+        "mean": 6.7,
+        "claim_all_below_15": true,
+        "all_below_3": false,
+        "n_below_3": 1
+      },
+      "evidence": []
+    },
+    {
+      "id": "C10",
+      "name": "explicit_3pct_error_judgement",
+      "status": "fail",
+      "method": "substring scan for an explicit <3% verdict (platform report discipline element 6)",
+      "detail": {
+        "'3%' in markdown": false,
+        "thresholds_stated": [
+          "<15%",
+          "<15%"
+        ]
+      },
+      "evidence": []
+    },
+    {
+      "id": "C11",
+      "name": "per_ship_traceability",
+      "status": "fail",
+      "method": "scan for per-ship geometry / absolute EEXI / reference-value fields needed to recompute a % error",
+      "detail": {
+        "fields_present": [],
+        "fields_missing": [
+          "Cb",
+          "L/B",
+          "B/T",
+          "gCO2",
+          "MCR",
+          "SFC",
+          "capacity",
+          "reference",
+          "对标船名"
+        ],
+        "absolute_eexi_value_present": false,
+        "reference_value_present": false
+      },
+      "evidence": []
+    },
+    {
+      "id": "C12",
+      "name": "sensitivity_decomposition",
+      "status": "fail",
+      "method": "count independently reported sensitivity contributions; require a closed decomposition",
+      "detail": {
+        "contributions_reported": [
+          "57.1"
+        ],
+        "sum_pct": 57.1,
+        "residual_undecomposed_pct": 42.9,
+        "method_stated": false
+      },
+      "evidence": []
+    },
+    {
+      "id": "C13",
+      "name": "same_source_chain_evidence",
+      "status": "fail",
+      "method": "look for file:line call sites / numeric equality tolerance behind the 'grep 4 calls' claim",
+      "detail": {
+        "claim": "- 链路同源: grep 验证 4 处调用",
+        "file_line_locators": [],
+        "numeric_equality_tolerance": false,
+        "call_sites_enumerated": 0
+      },
+      "evidence": []
+    },
+    {
+      "id": "C14",
+      "name": "degenerate_limit_definition",
+      "status": "fail",
+      "method": "require a stated degenerate limit and tolerance behind '退化一致性: 验证通过'",
+      "detail": {
+        "claim": "- 退化一致性: 验证通过",
+        "limit_defined": false,
+        "tolerance_stated": false
+      },
+      "evidence": []
+    },
+    {
+      "id": "C15",
+      "name": "prior_state_basis",
+      "status": "not_run",
+      "method": "look for the reference behind 'WITHHELD(99.9%误差)'",
+      "detail": {
+        "claim": "将 EEXI attained 能力从 WITHHELD(99.9%误差) 推进到 REAL(<15%误差)",
+        "reference_or_dataset_in_report": false,
+        "note": "report 11180 states the prior 99.9% figure without any reference value; not re-derivable from 490 chars"
+      },
+      "evidence": []
+    },
+    {
+      "id": "C16",
+      "name": "grade_claim_independently_recomputable",
+      "status": "fail",
+      "method": "attempt independent reproduction: platform capability ledger + EEXI endpoints + the quoted verification artifact",
+      "detail": {
+        "capability_ledger": "not reachable from this worktree (/root/ship-performance-platform-incoming/.../capabilities.json missing)",
+        "eexi_endpoints_probed": [
+          "calculations/eexi -> 404",
+          "green-shipping/eexi/attained -> 404",
+          "openapi.json -> 404"
+        ],
+        "verification_artifact_reachable": false,
+        "verdict": "the WITHHELD->REAL grade cannot be recomputed by this reviewer"
+      },
+      "evidence": []
+    },
+    {
+      "id": "C17",
+      "name": "source_report_structure_vs_platform_discipline",
+      "status": "fail",
+      "method": "section-header inventory vs the platform's 6-element report discipline",
+      "detail": {
+        "headers": [
+          "EEXI Attained 闭合链路精度传递验证",
+          "目标",
+          "方法",
+          "结果",
+          "产物",
+          "结论"
+        ],
+        "element2_method": true,
+        "element3_results": true,
+        "element4_figures": false,
+        "element5_caveats": false,
+        "element6_error_verdict": false
+      },
+      "evidence": []
+    },
+    {
+      "id": "C18",
+      "name": "reviewer_marks_nothing_verified",
+      "status": "pass",
+      "method": "assert the review output never asserts verification (platform gate owns it)",
+      "detail": {
+        "reviewer_role": "red-team-reviewer",
+        "claims_marked_verified": 0,
+        "note": "constraint do_not_mark_claims_as_verified honoured by construction"
+      },
+      "evidence": []
+    }
+  ],
+  "counts": {
+    "pass": 9,
+    "fail": 8,
+    "not_run": 1
+  },
+  "figure": "docs/kf/wp-11180-04/fig_review_checks.png"
+}
