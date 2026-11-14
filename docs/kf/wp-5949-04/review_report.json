@@ -1,0 +1,784 @@
+{
+ "review_id": "wp-5949-04",
+ "package_id": "wp-5949-04",
+ "task_type": "04-independent-review",
+ "report_id": "5949",
+ "contract_version": "1.0",
+ "review_type": "04-independent-review",
+ "review_report_version": "1.0.0",
+ "reviewed_at": "2026-11-15",
+ "report_title": "IN25-T2 多样性引擎：40 席氏族矩阵 + 盲预测锁 + 同族查重门（4 族 × 5 框架 × 2 角色）",
+ "provenance": {
+  "source_uri": "tensor://reports/5949",
+  "source_field": "markdown",
+  "source_hash": "sha256:c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002",
+  "source_hash_matches": true,
+  "chars": 12605,
+  "bytes_utf8": 17867,
+  "scenario_key": "IN25-T2-diversity-engine",
+  "frozen_copy": "docs/kf/wp-5949-04/source_5949.md"
+ },
+ "reviewer": {
+  "identity": "agent/m21058",
+  "role": "red-team-reviewer",
+  "producer_identity": "not recorded in TensorKnowledge: report 5949 carries no 01-envelope producer field, and wp-5949-01 is anonymous in this repo",
+  "upstream_package": "wp-5949-01",
+  "independence": {
+   "independent": true,
+   "reviewer_is_producer": false,
+   "context_inputs": [
+    "report 5949 markdown (byte-frozen copy, sha256 re-verified)",
+    "upstream wp-5949-01 kf_result.json / asset_manifest.json (pin only)",
+    "work/wp-5949-04/review_checks.py (reviewer-authored check code)"
+   ],
+   "context_excludes_producer_explanation": true,
+   "producer_explanation_available": false,
+   "review_prompt_authored_by_reviewer": true,
+   "review_prompt_copied_from_producer": false,
+   "note": "审核问题清单自拟：源哈希绑定、席位/边际算术、盲表逐行包含性、宽度统计、零模型敏感性（二项检验）、机制命中计数下界、账本完备性、相似度分离度、人口表、§⑥ 误差行。未向生产者索取解释，也未读取 TensorPlatform 侧实现。"
+  }
+ },
+ "reviewed_package": {
+  "package_id": "wp-5949-01",
+  "task_type": "01-asset-registration",
+  "artifacts_used": {
+   "docs/kf/wp-5949-04/source_5949.md": "sha256:c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002",
+   "docs/kf/wp-5949-01/kf_result.json": "sha256:496c733c8589134e8aa2b0a3e6f93bdf1b4b99dd7e48cf7d2781893006ece06c",
+   "docs/kf/wp-5949-01/asset_manifest.json": "sha256:3c5564ea75d0988de761c7abca2ead5b259ff83a69333a2e369b8d81d449727e"
+  },
+  "upstream_packages_completed": true,
+  "upstream_pinned_hash_matches": true,
+  "note": "report 5949 只登记了 01（资产登记，23 资产，0 claim）；本单审核对象为报告正文 + 该 01 pin。报告所述 TensorPlatform 工件（artifacts/in25_t2/*、tools/diversity/*）不在本仓，未凭记忆补读。"
+ },
+ "scope": {
+  "reviewed_artifacts": [
+   "report 5949 markdown（12605 chars，sha256 逐字重算）",
+   "wp-5949-01 kf_result.json / asset_manifest.json（上游登记 pin）",
+   "§③ 判据总表 8 行、氏族覆盖矩阵 4×5、相似度分离度表 5 行、机制命中表 5 行、门账本 24 行、人口表 4 行、盲预测表 40 行、§⑥ 误差表 6 行"
+  ],
+  "checks_performed": [
+   "19 项程序化检查（11 pass / 5 fail / 3 unverifiable），全部锚点逐字校验",
+   "recomputed sha256:c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002 chars=12605 bytes=17867",
+   "coverage matrix parsed from the report's own grid; every margin and role total recomputed from cell counts",
+   "盲表 40 行逐行区间包含性重算 + 二项检验（两个零模型）",
+   "账本 24 行解析：机制命中计数下界、语料覆盖缺口、独立/克隆行构成"
+  ],
+  "checks_not_run": [
+   "锁复算 / 篡改检出 / 先跑后锁拒锁：需 artifacts/in25_t2/prereg_lock.json，本仓无（C15）",
+   "时间序门（recorded_utc > locked_utc）：正文未印任何时间戳（C15）",
+   "pytest 22 passed：需 tests/test_diversity_engine.py，本仓无（C15）",
+   "roster 现场模型清单实测（GET /v1/models）：审核期不复跑平台现场状态，采信冻结文本",
+   "相似度算法本体（normalize / skeleton / number）重实现：不做，避免以审阅者实现替换被审对象"
+  ],
+  "out_of_scope": [
+   "报告是否应在 TensorPlatform 仓发布（仓归属问题，不在 04 工序）",
+   "IN25-T3 真实锦标赛结果（报告中明确尚未发生）"
+  ]
+ },
+ "checks": [
+  {
+   "check_id": "C1_source_binding",
+   "title": "frozen markdown sha256 / chars / bytes == work-package contract pin",
+   "status": "pass",
+   "declared": {
+    "sha256": "c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002",
+    "chars": 12605,
+    "bytes_utf8": 17867
+   },
+   "recomputed": {
+    "sha256": "c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002",
+    "chars": 12605,
+    "bytes_utf8": 17867,
+    "frozen_file_bytes": 17867
+   },
+   "detail": "recomputed sha256:c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002 chars=12605 bytes=17867",
+   "anchor_line": 1
+  },
+  {
+   "check_id": "C2_upstream_pin",
+   "title": "upstream wp-5949-01 registration pins the same source bytes",
+   "status": "pass",
+   "declared": {
+    "package_id": "wp-5949-01",
+    "source_hash": "sha256:c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002"
+   },
+   "recomputed": {
+    "package_id": "wp-5949-01",
+    "task_type": "01-asset-registration",
+    "report_id": "5949",
+    "kf_result_hash": "c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002",
+    "asset_manifest_hash": "c4a082137e7667e9510c08c30ce681c563df072c4bc7c2cb7456e26b2cf20002",
+    "asset_count": 23
+   },
+   "detail": "upstream package exists, is 01-asset-registration, and pins identical source bytes; the review reads only that pin plus the frozen markdown",
+   "anchor_line": 9
+  },
+  {
+   "check_id": "C3_seat_arithmetic",
+   "title": "40 seats = 4 families x 5 frameworks x 2 roles; 20 cells, margins 10/8, roles 20/20",
+   "status": "pass",
+   "declared": {
+    "seats": 40,
+    "cells": 20,
+    "roles": "attacker 20 / breaker 20",
+    "margins": "family 10, framework 8"
+   },
+   "recomputed": {
+    "seats": 40,
+    "cells": 20,
+    "families": 4,
+    "frameworks": 5,
+    "roles": {
+     "attacker": 20,
+     "breaker": 20
+    },
+    "cells_with_exactly_1_attacker_1_breaker": 20,
+    "margins_consistent": true
+   },
+   "detail": "coverage matrix parsed from the report's own grid; every margin and role total recomputed from cell counts",
+   "anchor_line": 66
+  },
+  {
+   "check_id": "C4_blind_grid_composition",
+   "title": "blind-scoring table holds one row per seat (40 = 4x10 families, 5x8 frameworks)",
+   "status": "pass",
+   "declared": {
+    "rows": 40,
+    "per_family": 10,
+    "per_framework": 8,
+    "per_role": 20
+   },
+   "recomputed": {
+    "rows": 40,
+    "per_family": {
+     "deepseek": 10,
+     "qwen": 10,
+     "minimax": 10,
+     "glm": 10
+    },
+    "per_framework": {
+     "direct": 8,
+     "inverse": 8,
+     "limits": 8,
+     "failure": 8,
+     "orthogonal": 8
+    },
+    "per_role": {
+     "attacker": 20,
+     "breaker": 20
+    }
+   },
+   "detail": "row identity parsed from the seat id (IN25-T2/<family>/<framework>/<role>)",
+   "anchor_line": 148
+  },
+  {
+   "check_id": "C5_hit_recount",
+   "title": "declared per-seat verdicts == interval containment, recomputed row by row",
+   "status": "fail",
+   "declared": {
+    "declared_hits": 7
+   },
+   "recomputed": {
+    "recomputed_hits": 8,
+    "rows": 40,
+    "flipped_rows": [
+     {
+      "seat": "IN25-T2/qwen/direct/breaker",
+      "value": 0.6095,
+      "interval": [
+       0.39,
+       0.61
+      ],
+      "declared": "未中",
+      "contains_value": true,
+      "distance_to_nearest_bound": 0.0005
+     }
+    ]
+   },
+   "detail": "a flip is either a display-precision artefact (interval printed at 2 dp) or a scoring bug; the frozen text alone cannot separate the two",
+   "anchor_line": 148
+  },
+  {
+   "check_id": "C6_hit_rate",
+   "title": "hit_rate == declared_hits / 40",
+   "status": "fail",
+   "declared": {
+    "hit_rate": 0.175
+   },
+   "recomputed": {
+    "hit_rate": 0.2,
+    "hits": 8,
+    "rows": 40,
+    "declared_rate_on_declared_hits": 0.175
+   },
+   "detail": "the declared rate is consistent with the declared hit count but not with the printed intervals (C5), so it is not reproducible from the frozen text",
+   "anchor_line": 149
+  },
+  {
+   "check_id": "C7_width_statistics",
+   "title": "median / mean interval width recomputed from the printed bounds",
+   "status": "pass",
+   "declared": {
+    "median_width": 0.13705000000000003,
+    "mean_width_baseline": 0.1576
+   },
+   "recomputed": {
+    "median_width": 0.135,
+    "mean_width": 0.1575,
+    "min_width": 0.1,
+    "max_width": 0.22,
+    "median_gap": -0.00205,
+    "mean_gap": -0.0001
+   },
+   "detail": "mean reproduces to 1e-4 (rounding); the median differs by 2.05e-3, i.e. inside the 5e-3 envelope that 2-dp bounds can explain but not inside the printed 1e-14-level precision of the declared value",
+   "anchor_line": 240
+  },
+  {
+   "check_id": "C8_null_model_sensitivity",
+   "title": "'hit rate ~ no-information baseline': is the conclusion robust to the null model?",
+   "status": "pass",
+   "declared": {
+    "claim": "命中率与无信息基线同量级属预期（恰好说明流程无泄漏）",
+    "baseline": 0.1576
+   },
+   "recomputed": {
+    "observed_hits": 8,
+    "n": 40,
+    "observed_rate": 0.2,
+    "null_A_uniform_0_1": {
+     "p0": 0.1575,
+     "expected_hits": 6.3,
+     "p_value_ge_observed": 0.2889
+    },
+    "null_B_uniform_in_observed_band": {
+     "band": [
+      0.5313,
+      0.7183
+     ],
+     "band_width": 0.187,
+     "p0": 0.203209,
+     "expected_hits": 8.128,
+     "p_value_ge_observed": 0.5827
+    },
+    "alpha_0_05_critical_hits": 11,
+    "power_to_detect_p_0_30": 0.691,
+    "first_clause_holds_under_both_nulls": true,
+    "second_clause_is_a_non_sequitur": true
+   },
+   "detail": "the quantitative clause ('same magnitude as chance') survives both null models (p=0.29 under U(0,1), p=0.58 under U(band); n=40, alpha=0.05 critical 11 hits, power 0.69 at p=0.30).  The inferential clause ('therefore no leakage') does not follow: not rejecting a null is not evidence for it, and a synthetic dry-run whose results derive from the same seeds cannot test leakage at all (report §⑤-5 says so itself).  Reported as an overstated inference, not as a numeric error",
+   "anchor_line": 240
+  },
+  {
+   "check_id": "C9_mechanism_hit_counts",
+   "title": "per-mechanism hit counts over the 24 clone pairs (n=24)",
+   "status": "unverifiable",
+   "declared": {
+    "CLONE_CONTAINMENT": 24,
+    "CLONE_LEXICAL": 15,
+    "CLONE_SKELETON": 18,
+    "RETUNE_ONLY": 9,
+    "SAME_CLADE_REPEAT": 24
+   },
+   "recomputed": {
+    "visible_clone_rows": 19,
+    "visible_mechanism_hits": {
+     "CLONE_CONTAINMENT": 19,
+     "CLONE_LEXICAL": 12,
+     "CLONE_SKELETON": 15,
+     "RETUNE_ONLY": 8,
+     "SAME_CLADE_REPEAT": 19
+    },
+    "declared_total_clone_pairs": 24,
+    "coverage_of_corpus": 0.7917
+   },
+   "detail": "only triggering paths are printed, so non-hits are invisible: the visible subset bounds each declared count from below (consistent) but cannot confirm it",
+   "anchor_line": 101
+  },
+  {
+   "check_id": "C10_ledger_composition",
+   "title": "ledger covers the claimed corpus: 'first 24 rows' vs '24/24 clones rejected'",
+   "status": "unverifiable",
+   "declared": {
+    "end_to_end": "24/24 拒",
+    "rows_shown": 24,
+    "corpus": "6 method cards x 4 clone variants"
+   },
+   "recomputed": {
+    "rows": 24,
+    "independent_rows": 5,
+    "clone_rows": 19,
+    "method_cards_present": [
+     "M1",
+     "M2",
+     "M3",
+     "M4",
+     "M5"
+    ],
+    "method_cards_in_population": 6,
+    "rows_missing_to_cover_corpus": [
+     "M5-c4",
+     "M6",
+     "M6-c1",
+     "M6-c2",
+     "M6-c3",
+     "M6-c4"
+    ],
+    "all_shown_clones_rejected": true,
+    "all_shown_independent_accepted": true
+   },
+   "detail": "the label '前 24 条（按提交顺序）' is honest, but 19 of the 24 clone pairs are visible: '24/24 rejected' is consistent with, not established by, the printed ledger",
+   "anchor_line": 107
+  },
+  {
+   "check_id": "C11_similarity_table_consistency",
+   "title": "separation table vs printed per-pair similarity values vs threshold 0.72",
+   "status": "pass",
+   "declared": {
+    "clone_skeleton_min": 0.6308,
+    "clone_skeleton_median": 0.9123,
+    "independent_skeleton_max": 0.0412,
+    "independent_same_clade_max": 0.0111,
+    "threshold": 0.72
+   },
+   "recomputed": {
+    "printed_skeleton_hits": 15,
+    "min_printed_skeleton_hit": 0.77,
+    "min_printed_same_clade": 0.63,
+    "all_printed_skeleton_hits_above_declared_min": true,
+    "declared_min_traceable_to_printed_row": false,
+    "same_clade_max_le_overall_max": true,
+    "threshold_separates_declared_max_and_min": true,
+    "skeleton_min_below_threshold_needs_other_paths": true
+   },
+   "detail": "table is internally consistent; the declared minimum 0.6308 belongs to a pair whose skeleton path did not trigger, and non-triggering values are not printed, so that one number is not traceable to a row (traceability, not contradiction)",
+   "anchor_line": 92
+  },
+  {
+   "check_id": "C12_paraphrase_lexical_claim",
+   "title": "'paraphrase surface Jaccard is only 0.77 (<0.80 threshold)' vs printed ledger values",
+   "status": "fail",
+   "declared": {
+    "claim": "表层 Jaccard 对同义改写只有 0.77（<0.80 阈值）"
+   },
+   "recomputed": {
+    "visible_paraphrase_rows": [
+     {
+      "candidate": "M1-c2",
+      "lexical": null
+     },
+     {
+      "candidate": "M2-c2",
+      "lexical": 0.82
+     },
+     {
+      "candidate": "M3-c2",
+      "lexical": null
+     },
+     {
+      "candidate": "M4-c2",
+      "lexical": 0.84
+     },
+     {
+      "candidate": "M5-c2",
+      "lexical": null
+     }
+    ],
+    "rows_at_or_above_0_80": [
+     {
+      "candidate": "M2-c2",
+      "lexical": 0.82
+     },
+     {
+      "candidate": "M4-c2",
+      "lexical": 0.84
+     }
+    ]
+   },
+   "detail": "the narrative generalises one paraphrase pair to all paraphrase pairs; the printed ledger contains paraphrase rows at 0.82 and 0.84 that DO cross the lexical path, which is why CLONE_LEXICAL fires 15 times rather than on verbatim clones alone",
+   "anchor_line": 213
+  },
+  {
+   "check_id": "C13_population_table",
+   "title": "population shares and 'top-two families share' recomputed from n=6",
+   "status": "pass",
+   "declared": {
+    "n": 6,
+    "shares": {
+     "deepseek": 0.3333,
+     "glm": 0.1667,
+     "minimax": 0.1667,
+     "qwen": 0.3333
+    },
+    "top2_share": 0.6666
+   },
+   "recomputed": {
+    "n": 6,
+    "shares": {
+     "deepseek": 0.333333,
+     "glm": 0.166667,
+     "minimax": 0.166667,
+     "qwen": 0.333333
+    },
+    "top2_share": 0.666667,
+    "top2_gap": -6.7e-05,
+    "clade_cap": 0.6,
+    "max_share_below_cap": true
+   },
+   "detail": "shares reproduce exactly; the top-two figure is truncated (0.6666 vs 0.6667, 1e-4) and the population never approaches CLADE_SHARE_CAP=0.6, so the cap is untested by this corpus",
+   "anchor_line": 145
+  },
+  {
+   "check_id": "C14_section6_error_row",
+   "title": "section-6 row '0.175 vs baseline 0.1576 -> +0.017 / 11.0%' arithmetic",
+   "status": "pass",
+   "declared": {
+    "diff": 0.017,
+    "relative_pct": 11.0
+   },
+   "recomputed": {
+    "diff_from_declared_inputs": 0.0174,
+    "relative_pct_from_declared_inputs": 11.0406,
+    "with_recomputed_hit_rate": {
+     "rate": 0.2,
+     "diff": 0.0424,
+     "relative_pct": 26.9036
+    }
+   },
+   "detail": "arithmetic is right for the declared inputs, but the inputs inherit C5/C6: the row is self-consistent and still not reproducible (and it is declared 不适用, which is the correct call for a synthetic dry-run)",
+   "anchor_line": 240
+  },
+  {
+   "check_id": "C15_withheld_artifacts",
+   "title": "declared artifact snapshots / lock assertions / pytest count resolvable?",
+   "status": "unverifiable",
+   "declared": {
+    "declared_sha256_prefixes": 6,
+    "lock_assertions": 3,
+    "pytest_passed": 22
+   },
+   "recomputed": {
+    "resolvable_in_this_repo": 0,
+    "reason": "artifacts/in25_t2/*, tools/diversity/*, tests/test_diversity_engine.py and blind_scores.json live in TensorPlatform, not in TensorKnowledge",
+    "prefix_hex_chars": [
+     16
+    ],
+    "tamper_and_time_order_evidence_in_text": false,
+    "timestamps_in_blind_table": false
+   },
+   "detail": "16-hex prefixes cannot bind 256-bit digests; the tamper/time-order assertions and '22 passed' have no printed evidence, so they are WITHHELD rather than accepted",
+   "anchor_line": 71
+  },
+  {
+   "check_id": "C16_physics_baseline_applicability",
+   "title": "report claims zero physical quantity -> 15%/3% physical criterion not applicable",
+   "status": "pass",
+   "declared": {
+    "claim": "本节点是**进程/纪律机器**，不产生任何物理量（零平台域语义）"
+   },
+   "recomputed": {
+    "physical_quantities_found": 0,
+    "section6_rows": 6,
+    "section6_rows_answered": 6,
+    "explicit_not_applicable_rows": 2,
+    "process_metrics_errors_zero": true
+   },
+   "detail": "spot check: every numeric row of section 6 is a decision metric (coverage, reject rate, FPR, hash equality, collisions, hit rate), none is a physical observable; the report's 'not applicable' answers are the correct call",
+   "anchor_line": 242
+  },
+  {
+   "check_id": "C17_scope_single_report",
+   "title": "review surface is report 5949 only",
+   "status": "pass",
+   "declared": {
+    "report_ids": [
+     "5949"
+    ]
+   },
+   "recomputed": {
+    "report_ids_in_text": [],
+    "self_reference_in_text": false,
+    "scope_pin_source": "docs/kf/wp-5949-01/kf_result.json report_id"
+   },
+   "detail": "the frozen text carries no self-reference to a report id, so scope is established by the upstream pin (C2) rather than by the text: no other report_id is read",
+   "anchor_line": 1
+  },
+  {
+   "check_id": "C18_fpr_confidence_bound",
+   "title": "'FPR 0.00' as gate evidence over n=15 independent pairs",
+   "status": "fail",
+   "declared": {
+    "criterion_row": "语料 TPR 1.00 / FPR 0.00；端到端 24/24 拒；fail-closed 负例 3/3 拒",
+    "independent_pairs": 15
+   },
+   "recomputed": {
+    "fpr_point_estimate": 0.0,
+    "wilson_95_upper": 0.2039,
+    "rule_of_three_upper": 0.2,
+    "min_detectable_fpr_at_n15": 0.2
+   },
+   "detail": "0/15 的点估计写成 0.00 会让人读成「零误拒率已证」；实际 95% 上界约 0.20。门限判据据此仍可通过（独立对最大骨架相似度 0.0412 距阈值 0.72 很远），但『0.00』应写成区间或标注样本量",
+   "anchor_line": 72
+  },
+  {
+   "check_id": "C19_single_path_sufficiency",
+   "title": "'one similarity alone would leak' vs the report's own per-mechanism hit table",
+   "status": "fail",
+   "declared": {
+    "claim": "单靠一种相似度会漏——这是多路或门存在的理由（§④）",
+    "clone_pairs": 24
+   },
+   "recomputed": {
+    "best_single_path": "CLONE_CONTAINMENT",
+    "best_single_path_hits": 24,
+    "clone_pairs_covered": 1.0,
+    "mechanisms_with_full_coverage": [
+     "CLONE_CONTAINMENT",
+     "SAME_CLADE_REPEAT"
+    ],
+    "claim_supported_for_skeleton_path_only": true
+   },
+   "detail": "CLONE_CONTAINMENT 单独即命中 24/24 克隆对，故在本语料上「单路必漏」不成立；成立的只是「0.72 骨架单路会漏 6 对（18/24）」。§④ 的措辞应限定到骨架路径，或说明真实语料上包含度的 FPR 未测",
+   "anchor_line": 101
+  }
+ ],
+ "checks_summary": {
+  "n_checks": 19,
+  "n_pass": 11,
+  "n_fail": 5,
+  "n_unverifiable": 3,
+  "failed": [
+   "C5_hit_recount",
+   "C6_hit_rate",
+   "C12_paraphrase_lexical_claim",
+   "C18_fpr_confidence_bound",
+   "C19_single_path_sufficiency"
+  ],
+  "unverifiable": [
+   "C9_mechanism_hit_counts",
+   "C10_ledger_composition",
+   "C15_withheld_artifacts"
+  ]
+ },
+ "findings": [
+  {
+   "finding_id": "F1",
+   "severity": "medium",
+   "blocking": false,
+   "category": "not_reproducible",
+   "title": "盲预测命中数与 hit_rate 不能从印出的区间复算（1/40 行翻转，0.175 → 0.200）",
+   "detail": "逐行重算 40 条区间包含：重算命中 8 条，报告声明 7 条。唯一翻转行 IN25-T2/qwen/direct/breaker：实测 0.6095 落在区间 [0.39, 0.61] 内（距最近端点 0.0005），报告却记「未中」。因此 hit_rate 声明 0.175 与重算 0.2 不一致。翻转可能来自区间按 2 位小数印出（真值上界 ≥0.6095 但显示 0.61）——那样报告数字无错、只是不可核验；也可能来自计分用开区间或一次性错误。冻结文本不足以区分这两种解释，故记为可核验性 finding 而非 defect。",
+   "anchor": "**盲预测计分（合成 dry-run）**：40 条结果，区间命中 7 条",
+   "anchor_line": 148,
+   "impact": "影响 §③ 判据表与 §⑥ 误差表两处头条数字（命中 7 条 / 0.175 / 相对基线 11.0%）；不影响任何门（矩阵覆盖、拒绝率、碰撞数、锁复算的一致性判定都不依赖该数），也不影响报告已声明的「合成 dry-run 不作能力证据」。",
+   "recommended_fix": "区间端点与实测值印到 4 位小数（或在 §③ 注明端点舍入与开/闭区间约定）；命中率按未舍入内部值计分，并同时给出用印出值复算的结果。",
+   "evidence_check_ids": [
+    "C5_hit_recount",
+    "C6_hit_rate"
+   ]
+  },
+  {
+   "finding_id": "F2",
+   "severity": "low",
+   "blocking": false,
+   "category": "overstated_claim",
+   "title": "「命中率≈基线 ⇒ 恰好说明流程无泄漏」是不可推出的结论（不拒绝≠证明；合成 dry-run 根本上不可检验泄漏）",
+   "detail": "定量部分站得住：实测 8/40 在两个零模型下都不显著——零模型 A（结果 ~ U(0,1)，p0=0.1575，期望 6.3 条）P(X≥实测)=0.2889；零模型 B（结果 ~ U(实测值带 [0.5313, 0.7183]，p0=0.203209，期望 8.128 条）P(X≥实测)=0.5827。该检验也不是功效不足：α=5% 的临界值为 11 条，对 p=0.30（约 2× 基线）的功效 0.691。不成立的是**推断**：不拒绝原假设不是原假设成立的证据；而且本 dry-run 的「结果」由种子确定性合成（§⑤-5 synthetic:true），预测与结果同源，无论命中率高低都无法检验泄漏。应删掉「恰好说明流程无泄漏」，或改写为「本 dry-run 不具备检验泄漏的能力」。",
+   "anchor": "命中率与无信息基线同量级属预期（恰好说明流程无泄漏）；真实命中率待 T3",
+   "anchor_line": 240,
+   "impact": "只影响这一句推断，不影响任何判据门；报告整体仍把 dry-run 定位为流程打通（§⑤-5），故这是措辞层面的越界，而非结论造假。",
+   "recommended_fix": "给出零模型定义、p 值与功效（或直接声明该检验不可用于泄漏判定），并删除「恰好说明流程无泄漏」。",
+   "evidence_check_ids": [
+    "C8_null_model_sensitivity",
+    "C14_section6_error_row"
+   ]
+  },
+  {
+   "finding_id": "F3",
+   "severity": "low",
+   "blocking": false,
+   "category": "internal_inconsistency",
+   "title": "§⑤-2「同义改写表层 Jaccard 只有 0.77」与账本里 2 条改写克隆 0.82/0.84 冲突",
+   "detail": "账本可见的 5 条 clone:paraphrase 行中，M2-c2 CLONE_LEXICAL=0.82、M4-c2 CLONE_LEXICAL=0.84 均 ≥0.80 阈值并触发词面路径；这与「只有 0.77（<0.80）」的普适表述矛盾。实际数据支持的是「部分改写被词面路径漏掉、由骨架路径兜住」，而不是「改写一律低于词面阈值」。",
+   "anchor": "表层 Jaccard 对同义改写只有 0.77（<0.80 阈值）",
+   "anchor_line": 213,
+   "impact": "叙述层不一致；CLONE_LEXICAL 的计数方向与账本一致（若改写全低于阈值，该计数只能来自逐字克隆 6 条）。",
+   "recommended_fix": "把「只有 0.77」限定为该对（或给出中位数），并说明 M2-c2/M4-c2 这类改写由词面路径独立命中。",
+   "evidence_check_ids": [
+    "C12_paraphrase_lexical_claim",
+    "C9_mechanism_hit_counts"
+   ]
+  },
+  {
+   "finding_id": "F4",
+   "severity": "low",
+   "blocking": false,
+   "category": "unverifiable_setup",
+   "title": "关键证据在本仓不可解：24/24 拒只见 19 行、6 个 16 位哈希前缀、锁/时序/22 passed 无纸面证据",
+   "detail": "账本 24 行 = 独立 5 + 克隆 19；语料为 6 卡 × 4 变体 = 24 克隆对，故 ['M5-c4', 'M6', 'M6-c1', 'M6-c2', 'M6-c3', 'M6-c4'] 未印出（含整个 M6 组）。各机制计数只能自下界核对：CLONE_CONTAINMENT 可见 19 ≤ 声明 24、CLONE_LEXICAL 可见 12 ≤ 声明 15、CLONE_SKELETON 可见 15 ≤ 声明 18、RETUNE_ONLY 可见 8 ≤ 声明 9、SAME_CLADE_REPEAT 可见 19 ≤ 声明 24（一致但不可确证）。声明的 6 个工件快照哈希只有 [16] 位十六进制（<64），不足以绑定 256 bit；「篡改检出 ✅」「时间序检查 ✅」「pytest 22 passed」在正文中无时间戳、无输出可核；其工件（artifacts/in25_t2/*、tools/diversity/*）不在 TensorKnowledge 工作树内。",
+   "anchor": "| 盲预测锁定工件 | lock_hash `1b96a171b6000fb9…`，40 条预测，复算 ✅，篡改检出 ✅，先跑后锁被拒 ✅ | 三项全真 | ✅ |",
+   "anchor_line": 71,
+   "impact": "影响判据的「可核验性」而非「正确性」：TPR/FPR、锁校验、pytest 计数在源仓可验，在本仓只能记 WITHHELD。",
+   "recommended_fix": "正文给出 64 位完整哈希与锁时间戳（locked_utc / recorded_utc 各 40 条）；账本印全 30 条提交或附台账工件哈希。",
+   "evidence_check_ids": [
+    "C9_mechanism_hit_counts",
+    "C10_ledger_composition",
+    "C15_withheld_artifacts"
+   ]
+  },
+  {
+   "finding_id": "F5",
+   "severity": "info",
+   "blocking": false,
+   "category": "traceability",
+   "title": "两个声明统计量无法追溯到印出的行：中位区间宽 0.13705、克隆骨架最小 0.6308",
+   "detail": "由印出的 2 位小数端点重算中位宽度 = 0.135，声明 0.13705000000000003，差 -0.00205（在 5e-3 舍入包络内；但 0.13705 不是 0.005 的整数倍，说明它来自未舍入内部值）。克隆骨架最小 0.6308 亦无对应印出行：可见 CLONE_SKELETON 触发值最小 0.77，未触发路径的相似度不印出（同族最小值 0.63 属 SAME_CLADE_REPEAT，不是同一度量）。两者都自洽、都无法逐行核。",
+   "anchor": "无信息基线=平均区间宽度 0.1576",
+   "anchor_line": 240,
+   "impact": "不影响门限分离结论（独立 max 0.0412 → 克隆中位 0.9123，阈值 0.72 分隔两个数量级）。",
+   "recommended_fix": "账本行内同时印出未触发的骨架分（或附 similarity_matrix.json 的 64 位哈希）。",
+   "evidence_check_ids": [
+    "C7_width_statistics",
+    "C11_similarity_table_consistency"
+   ]
+  },
+  {
+   "finding_id": "F6",
+   "severity": "info",
+   "blocking": false,
+   "category": "presentation",
+   "title": "人口表两处口径细节：前两族占比截断为 0.6666；CLADE_SHARE_CAP=0.6 未被本语料检验",
+   "detail": "前两族占比声明 0.6666，重算 0.666667（差 -6.7e-05，截断而非四舍五入）。已收方案最大族占比 0.333333，离 0.6 上限很远，故人口约束在本语料上是零命中路径（报告 §⑤-4 亦自述为刻意约束，未夸大）。",
+   "anchor": "前两族占比 0.6666，已收方案最大两两骨架相似度 0.0412",
+   "anchor_line": 145,
+   "impact": "纯呈现；不影响任何判据。",
+   "recommended_fix": "改为 0.6667（四舍五入），并标注该上限在本轮无触发。",
+   "evidence_check_ids": [
+    "C13_population_table"
+   ]
+  },
+  {
+   "finding_id": "F7",
+   "severity": "low",
+   "blocking": false,
+   "category": "evidence_strength",
+   "title": "门的证据强度：FPR「0.00」只是 0/15 的点估计（95% 上界约 0.20）；且包含度单路即命中 24/24，「单路必漏」只对骨架路成立",
+   "detail": "判据行把 TPR 1.00 / FPR 0.00 并列为门的证据：FPR 的分母是 15 个独立对，0/15 的 Wilson 95% 上界 0.2039（三项法则 0.2），写成 0.00 会被读成「零误拒已证」。另一侧：机制命中表里 CLONE_CONTAINMENT 24/24，即在本语料上**单路即可全覆盖**；§④「单靠一种相似度会漏——这是多路或门存在的理由」只被骨架路径（18/24）支持，整体或多路冗余性未被语料检验（真实语料上包含度的 FPR 未测）。",
+   "anchor": "语料 TPR 1.00 / FPR 0.00；端到端 24/24 拒；fail-closed 负例 3/3 拒",
+   "anchor_line": 72,
+   "impact": "不影响「克隆 MUST 拒」这一门限结论（独立对最大骨架相似度 0.0412 距阈值 0.72 极远）；影响的是把门的能力说成已量化这件事。",
+   "recommended_fix": "TPR/FPR 写成区间并注明 n（如 FPR ≤0.20 @95%, n=15）；§④ 改为「0.72 骨架单路会漏 6/24，故需包含度等旁路」，并说明各旁路在真实语料上的 FPR 待测。",
+   "evidence_check_ids": [
+    "C18_fpr_confidence_bound",
+    "C19_single_path_sufficiency",
+    "C9_mechanism_hit_counts"
+   ]
+  }
+ ],
+ "finding_counts": {
+  "blocking": 0,
+  "non_blocking": 7,
+  "by_severity": {
+   "critical": 0,
+   "high": 0,
+   "medium": 1,
+   "low": 4,
+   "info": 2
+  }
+ },
+ "semantic_fidelity": {
+  "verdict": "faithful_with_notes",
+  "reproduced": {
+   "seat_arithmetic": "40 = 4×5×2；20 格、族边际 10、框架边际 8、角色 20/20 全部复现",
+   "blind_rows": "40/40 行，族/框架/角色边际与覆盖率矩阵一致",
+   "population_table": "n=6、各族占比、前两族占比复现（差 ≤6.7e-5）",
+   "section6_row_arithmetic": "0.175−0.1576=0.0174、11.0406% 复现",
+   "similarity_separation": "独立 max 0.0412 ≪ 阈值 0.72 ≤ 克隆中位 0.9123，表内自洽",
+   "error_table_not_applicable": "§⑥ 6 行全部作答，2 处显式「不适用」并给出理由（合成 dry-run 无物理基准）"
+  },
+  "not_reproducible": [
+   "盲预测命中数 / 命中率（F1：1 行翻转，0.175 vs 0.200）",
+   "锁复算、篡改检出、时序门、pytest 计数、16 位哈希前缀（F4）",
+   "中位区间宽 0.13705、克隆骨架最小 0.6308 的逐行来源（F5）"
+  ],
+  "honesty_assessment": "未发现粉饰：报告主动写明 6 个 16 位截断哈希、synthetic dry-run、族上限会误伤、阈值在自造语料上定、CJK 非真分词、命中率不作能力结论、物理判据不适用。唯一把「无证据」写成「有证据」的是 F2 的无泄漏推断；F1 属可核验性缺陷而非隐瞒。"
+ },
+ "overstated_claims": [
+  {
+   "claim": "命中率与无信息基线同量级属预期（恰好说明流程无泄漏）",
+   "problem": "不拒绝原假设不是原假设成立的证据；且合成 dry-run 的预测与结果同源，该检验对泄漏根本无判别力（两个零模型下均不显著，p=0.29 / 0.58）。",
+   "finding_id": "F2"
+  },
+  {
+   "claim": "语料 TPR 1.00 / FPR 0.00（作为门的证据强度）",
+   "problem": "FPR=0 是 0/15 的点估计，Wilson 95% 上界约 0.20；n=15 不支持 0.00 的点值口径。",
+   "finding_id": "F7"
+  },
+  {
+   "claim": "单靠一种相似度会漏——这是多路或门存在的理由",
+   "problem": "机制命中表显示 CLONE_CONTAINMENT 单路已命中 24/24；该断言只对 0.72 骨架单路成立。",
+   "finding_id": "F7"
+  }
+ ],
+ "decision": {
+  "verdict": "approve_with_notes",
+  "blocking_findings": 0,
+  "rationale": "19 项检查中 11 项通过：报告的算术骨架（席位、边际、人口、分离度、§⑥ 口径）可复算；两处头条统计量（命中数 / 命中率）因印出精度不足而不可复算，一处推断（无泄漏）不被数据支持。均不影响本节点已声明的「合成 dry-run 不作能力证据」，故不阻断，需按 remediation 改正文可核验性与措辞。",
+  "publication_effect": "评审结论不改报告正文、不写 verification 字段；needs-fix 由报告方在下一修订处理。"
+ },
+ "remediation": [
+  {
+   "finding_id": "F1",
+   "severity": "medium",
+   "fix": "区间端点与实测值印到 4 位小数（或在 §③ 注明端点舍入与开/闭区间约定）；命中率按未舍入内部值计分，并同时给出用印出值复算的结果。"
+  },
+  {
+   "finding_id": "F2",
+   "severity": "low",
+   "fix": "给出零模型定义、p 值与功效（或直接声明该检验不可用于泄漏判定），并删除「恰好说明流程无泄漏」。"
+  },
+  {
+   "finding_id": "F3",
+   "severity": "low",
+   "fix": "把「只有 0.77」限定为该对（或给出中位数），并说明 M2-c2/M4-c2 这类改写由词面路径独立命中。"
+  },
+  {
+   "finding_id": "F4",
+   "severity": "low",
+   "fix": "正文给出 64 位完整哈希与锁时间戳（locked_utc / recorded_utc 各 40 条）；账本印全 30 条提交或附台账工件哈希。"
+  },
+  {
+   "finding_id": "F5",
+   "severity": "info",
+   "fix": "账本行内同时印出未触发的骨架分（或附 similarity_matrix.json 的 64 位哈希）。"
+  },
+  {
+   "finding_id": "F6",
+   "severity": "info",
+   "fix": "改为 0.6667（四舍五入），并标注该上限在本轮无触发。"
+  },
+  {
+   "finding_id": "F7",
+   "severity": "low",
+   "fix": "TPR/FPR 写成区间并注明 n（如 FPR ≤0.20 @95%, n=15）；§④ 改为「0.72 骨架单路会漏 6/24，故需包含度等旁路」，并说明各旁路在真实语料上的 FPR 待测。"
+  }
+ ],
+ "independence_limitations": [
+  "单审阅人（无第二独立审阅人交叉签核）；本单自身不满足双人意义上的独立复核。",
+  "无法执行被审代码：artifacts/in25_t2/*、tools/diversity/* 在 TensorPlatform，本仓只有冻结文本，因此「锁复算 / 篡改检出 / 时序门 / pytest」只能记 WITHHELD。",
+  "未重实现相似度算法：任何重实现都会引入审阅者口径，故只核对印出数值与判定门的一致性。",
+  "复核对象是 2026-11-07 生成时刻的冻结字节；平台侧后续修订不在本单范围。"
+ ],
+ "acceptance_selfcheck": {
+  "valid_json": true,
+  "reviewer_independent": true,
+  "every_finding_cites_checks": true,
+  "every_failed_or_unverifiable_check_claimed": true,
+  "no_verification_field_written": true,
+  "no_claim_marked_verified": true
+ },
+ "figure": {
+  "path": "docs/kf/wp-5949-04/figures/wp-5949-04_checks.png",
+  "caption": "三面板复核图：(a) 40 条盲预测区间 vs 实测值带与翻转行；(b) 两个零模型下的期望命中与实测；(c) 机制命中计数 声明值 vs 可核下界。"
+ },
+ "repro_cmd": "python3 work/wp-5949-04/review_checks.py && python3 work/wp-5949-04/build_review.py && python3 -m pytest tests/test_kf_wp5949_review.py -q"
+}
