@@ -1,0 +1,92 @@
+{
+ "package_id": "wp-444-04",
+ "object": "wp-444-01",
+ "policy_version": "ke-review-v0.1",
+ "producer_ids": [
+  "agent/m15508 (TensorKnowledge) · package wp-444-01"
+ ],
+ "system_transitions": [
+  {
+   "id": "kf444-04:submit",
+   "from": "draft",
+   "to": "in-review",
+   "policy_version": "ke-review-v0.1",
+   "by": "platform-task-completion",
+   "at": "2026-11-14T02:03:15+00:00",
+   "note": "task completion moves the package into review; deliberately not a review decision, so it is kept out of `events`"
+  }
+ ],
+ "events": [
+  {
+   "id": "kf444-04:review-1",
+   "decision": "approve",
+   "policy_version": "ke-review-v0.1",
+   "reviewer": {
+    "id": "agent/m19690 (TensorKnowledge) · package wp-444-04 · red-team-reviewer",
+    "reviewer_type": "agent"
+   },
+   "reviewed_at": "2026-11-14T02:03:15+00:00",
+   "findings": [
+    {
+     "id": "F-01",
+     "severity": "medium",
+     "blocking": false,
+     "title": "three of the five markdown-pinned quotes in the upstream evidence table are reflowed, not byte-verbatim"
+    },
+    {
+     "id": "F-02",
+     "severity": "medium",
+     "blocking": false,
+     "title": "the envelope printed in the upstream result document does not validate against schemas/kf_result.v1"
+    },
+    {
+     "id": "F-03",
+     "severity": "high",
+     "blocking": false,
+     "title": "§6 ITTC-1957 baseline is 4.16% away from the formula the report names"
+    },
+    {
+     "id": "F-04",
+     "severity": "high",
+     "blocking": false,
+     "title": "§6 Prandtl-Schlichting baseline is 5.47% away from the formula the report names"
+    },
+    {
+     "id": "F-05",
+     "severity": "medium",
+     "blocking": false,
+     "title": "the two §6 friction baselines are ordered the wrong way round at Re=1e8"
+    },
+    {
+     "id": "F-06",
+     "severity": "medium",
+     "blocking": false,
+     "title": "§6 Holtrop-Mennen 1+k is under-determined and sits outside the standard formula's envelope for Cb=0.6"
+    },
+    {
+     "id": "F-07",
+     "severity": "low",
+     "blocking": false,
+     "title": "the one fully reproduced baseline sits at the edge of its own validity range"
+    },
+    {
+     "id": "F-08",
+     "severity": "info",
+     "blocking": false,
+     "title": "the universal 0.0% deviation is disclosed self-consistency, not validation"
+    }
+   ],
+   "review_report": "docs/kf/wp-444-04/review_report.json",
+   "disposition": "approve-with-notes",
+   "note": "approve with non-blocking findings; no claim is marked verified by this event, and report 444 §6 is escalated, not endorsed",
+   "independence_basis": "distinct-identity"
+  }
+ ],
+ "fold": {
+  "state": "approved",
+  "outcome_codes": [
+   "OK_APPROVED"
+  ],
+  "independence_basis": "distinct-identity"
+ }
+}
