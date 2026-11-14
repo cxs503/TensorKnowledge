@@ -1,0 +1,115 @@
+{
+  "package_id": "wp-6607-04",
+  "task_type": "04-independent-review",
+  "report_id": "6607",
+  "contract_version": "1.0",
+  "schema_version": "kf_result.v1",
+  "repro_cmd": [
+    "python3 scripts/kf/review_wp_6607_04.py --offline",
+    "pytest -q tests/test_wp_6607_04_review.py"
+  ],
+  "validation": {
+    "verdict": "pass-with-notes",
+    "disposition": "approve with notes",
+    "severity_counts": {
+      "high": 0,
+      "medium": 3,
+      "low": 3,
+      "blocking": 0,
+      "total": 6
+    },
+    "blocking_findings": [],
+    "recompute_entries": 42,
+    "recompute_status_counts": {
+      "pass": 26,
+      "fail": 6,
+      "derived": 3,
+      "not_recomputable": 5,
+      "withheld": 2
+    },
+    "finding_count": 6,
+    "checks_not_run": 5,
+    "publication_state": "awaiting_pr_merge",
+    "publication_note": "本包不自称已发布；published.json 由平台门在合并时写入（pr-gate 记账）。",
+    "claims_verified_by_producer": false,
+    "invariants": [
+      "每个打印数字来自 recompute.json",
+      "每条复算输入带 1-based 行号，引文是该行的逐字切片",
+      "每个检测器都能在篡改快照上停止触发（负对照）",
+      "判定与发现台账一致：无 blocking 时不得印 request changes",
+      "未执行/不可复算项不得计入通过",
+      "不自称已验证、不自称已发布"
+    ],
+    "tests": "pytest -q tests/test_wp_6607_04_review.py"
+  },
+  "provenance": {
+    "source_field": "markdown",
+    "source_hash": "sha256:b228e4f68599218d82dcedc7ca4166e0cc5250f9fbe34f611e86bc651a6231c1",
+    "source_hash_matches": true,
+    "source_uri": "tensor://reports/6607",
+    "retrieved_via": "GET <TENSOR_API_BASE>/tensor/reports/6607 (auth: platform login)",
+    "retrieved_at": "2026-11-14T21:08:38+00:00",
+    "chars": 7642,
+    "lines": 136,
+    "title": "jamming 体积分数重锁：FIRE/CG 能量极小 + 双周期 + 有限尺寸标度（IN32-N02）",
+    "scenario_key": "dem-granular-jamming",
+    "hash_algo": "sha256",
+    "generator": "scripts/kf/review_wp_6607_04.py",
+    "reviewed_package": "wp-6607-01",
+    "progress_report": {
+      "mission_id": 20946,
+      "report_id": 18983,
+      "title": "wp-6607-04 · 报告 6607（2D 颗粒 jamming 体积分数重锁）的独立复核"
+    }
+  },
+  "outputs": {
+    "source_6607.md": {
+      "path": "docs/kf/wp-6607-04/source_6607.md",
+      "sha256": "sha256:b228e4f68599218d82dcedc7ca4166e0cc5250f9fbe34f611e86bc651a6231c1",
+      "chars": 7642,
+      "bytes": 11166,
+      "lines": 136,
+      "role": "钉扎的快照（逐字节等于取回的 markdown，用于离线重建与哈希复核）"
+    },
+    "recompute.json": {
+      "path": "docs/kf/wp-6607-04/recompute.json",
+      "entries": 42,
+      "status_counts": {
+        "pass": 26,
+        "fail": 6,
+        "derived": 3,
+        "not_recomputable": 5,
+        "withheld": 2
+      },
+      "role": "复算台账：每条含公式/引文(带 1-based 行号)/复算值/报告值/相对差/状态",
+      "sha256": "866a41ccedcff2a9c9d2d2b0fb6806f4c13dcf0d2a6fca9e0e8d6320f885a08d",
+      "bytes": 33814
+    },
+    "review_report.json": {
+      "path": "docs/kf/wp-6607-04/review_report.json",
+      "verdict": "pass-with-notes",
+      "findings": 6,
+      "role": "复核结论：判定/发现（含复现路径）/被证成主张/未执行检查/独立性限制",
+      "sha256": "18a9b004276c61506d0ec919a8a49084dbf5a64823a4f6741aed5d43bda9e0a0",
+      "bytes": 24142
+    },
+    "report_markdown.md": {
+      "path": "docs/kf/wp-6607-04/report_markdown.md",
+      "role": "复核报告正文（全部数字由 recompute.json 渲染，零手抄）",
+      "sha256": "d3c3b17cc53f592d67e755d8da054567d7cc4b6dae45546d1de99155b0a6f95b",
+      "bytes": 18882
+    },
+    "figures/wp-6607-04.png": {
+      "path": "docs/kf/wp-6607-04/figures/wp-6607-04.png",
+      "role": "图 1：四协议 phi_J(N) + FSS 拟合 + 文献锚带；复算台账相对差与状态矩阵",
+      "sha256": "558d1f82885e022ea8c360b8ead683aa58d362c5d2db712d560c7d90b8c7ac4b",
+      "bytes": 143825
+    },
+    "README.md": {
+      "path": "docs/kf/wp-6607-04/README.md",
+      "role": "本包摘要：判定/台账计数/交付物哈希表/复现/边界/与初版 PR#332 的差异/热文件声明",
+      "sha256": "f7b4792a3f8e343cb3f85ae503f17dd30fd9085d809a401041173597e36cfd0a",
+      "bytes": 4216
+    }
+  }
+}

@@ -1,0 +1,673 @@
+{
+  "reviewer_role": "red-team-reviewer",
+  "package_id": "wp-6607-04",
+  "reviewed_package": "wp-6607-01",
+  "reviewed_report_id": "6607",
+  "reviewed_source_hash": "sha256:b228e4f68599218d82dcedc7ca4166e0cc5250f9fbe34f611e86bc651a6231c1",
+  "source": {
+    "title": "jamming 体积分数重锁：FIRE/CG 能量极小 + 双周期 + 有限尺寸标度（IN32-N02）",
+    "scenario_key": "dem-granular-jamming",
+    "source_field": "markdown",
+    "chars": 7642,
+    "lines": 136,
+    "fetched_at": "2026-11-14T21:08:38+00:00",
+    "fetched_via": "GET <TENSOR_API_BASE>/tensor/reports/6607 (auth: platform login)"
+  },
+  "verdict": "pass-with-notes",
+  "disposition": "approve with notes",
+  "judge_semantic_fidelity": true,
+  "semantic_fidelity": {
+    "outcome": "quantitatively honest, three overstated sentences, no fabricated number",
+    "numbers_fabricated": false,
+    "summary": "报告印出的每一个可复算量都能由它自己印出的输入重算：phi_J(inf) 复现到 1e-6 相对、FIRE 的四元组互相闭合到逐位、误差栏 6 行全部对得上复算。没有发现凭空捏造的数字；问题集中在三处「一致/稳定」的措辞低估了 1.3–3.2 倍（F1）、淬火臂 nu 印成扫描上界（F2）、判据 c 的口径与执行不一致（F3）。报告对自己 3 条 FAIL（d/e/f）以及判据 a 的包络口径做了明确披露，属 honest FAIL。"
+  },
+  "severity_counts": {
+    "high": 0,
+    "medium": 3,
+    "low": 3,
+    "blocking": 0,
+    "total": 6
+  },
+  "blocking_findings": [],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "medium",
+      "blocking": false,
+      "title": "三处「两臂一致 / 稳定」的印出量都低估了 1.3–3.2 倍，其中 0.0015 被自己的表否证",
+      "category": "overstated_claim",
+      "claim": {
+        "quote": "两条曲线在每个 N 上的差 ≤ 0.0015，种子离散 0.12–0.31%。",
+        "line": 46
+      },
+      "recompute_ids": [
+        "R5_QUASI_GAP_PER_N",
+        "R6_QUASI_GAP_AT_PHI_INF",
+        "R7_QUASI_PLATEAU_SPREAD"
+      ],
+      "observed": "同一张表里两条准静态臂的最大逐 N 差是 0.0020（N=2048），外推值差 0.0034，N>=1024 平台段展宽 1.3e-3 / 1.6e-3 —— 相对 0.0015 / 0.0015 / 5e-4 分别是 1.3x / 2.3x / 3.2x",
+      "expected": "三句应改成它们自己的数字：逐 N <= 0.0020、外推差 0.0034、平台段 1.6e-3",
+      "verdict_impact": "none（判据 e 的 FAIL、以及「失败定位在淬火臂」这一定性都不变：0.0034 远小于 0.01，更远小于 0.0901）",
+      "remediation": "把三处改写为可复算的印刷值，或统一改述为「准静态臂分歧 <= 0.0034（判据容差的 34%）」"
+    },
+    {
+      "id": "F2",
+      "severity": "medium",
+      "blocking": false,
+      "title": "两条淬火臂的 nu=2.51 是拟合扫描的上界，被当成估计值印出（且未标注该臂不适用 FSS）",
+      "category": "parameter_at_boundary",
+      "claim": {
+        "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+        "line": 43
+      },
+      "recompute_ids": [
+        "R25_QUENCH_NU_IS_SCAN_CAP"
+      ],
+      "observed": "rsa_direct R2(2.51)=0.7360 -> R2(8)=0.7798 ; fire_from_rsa R2(2.51)=0.8416 -> R2(8)=0.8779：两条不同曲线的 R2 在 nu 增大方向仍在上升，且两者印出同一个 nu=2.51",
+      "expected": "若扫描上界是 2.5，应印成 nu >= 2.51（截断）或直接印 n/a：报告第 3 节自己说这两臂未落到能量极小态，FSS 形式对它们没有物理含义",
+      "verdict_impact": "none（判据 g 只约束准静态臂的 nu，2.51 不参与任何 PASS/FAIL）",
+      "remediation": "淬火臂一栏的拟合参数标为 n/a（非能量极小态）或注明扫描上界；判据 g 保持只对 growth/decompression 生效"
+    },
+    {
+      "id": "F3",
+      "severity": "medium",
+      "blocking": false,
+      "title": "判据 c 写出的口径（N>=2048）不可识别，实际执行的是 5 点全窗拟合",
+      "category": "criterion_not_executed",
+      "claim": {
+        "quote": "| c_frictionless_phi_j_infinite | phi_J(N->inf) from N>=2048 must lie in 0.84 +- 0.01 |",
+        "line": 82
+      },
+      "recompute_ids": [
+        "R14_CRIT_C_LITERAL_WINDOW",
+        "R15_CRIT_C_BAND_GROWTH",
+        "R15_CRIT_C_BAND_DECOMPRESSION"
+      ],
+      "observed": "growth phi_inf in [0.8449, 0.8475]; decompression in [0.8459, 0.8470]（3 点 3 参被精确穿过，phi_inf 随 nu 漂移）",
+      "expected": "报告印出的 0.8454 只能由 N=256..4096 的 5 点拟合得到；写出的口径与实际口径不一致",
+      "verdict_impact": "none（两支外推都落在 0.84±0.01 内，且 R14 的整个区间 0.8449–0.8475 仍在内）",
+      "remediation": "判据 c 改写为「5 点（N=256..4096）FSS 外推落在 0.84±0.01 内」，或对 N>=2048 只做「不外推、直接比较 N=4096 值 0.8440」的检查"
+    },
+    {
+      "id": "F4",
+      "severity": "low",
+      "blocking": false,
+      "title": "「phi_J 随 N 下降」对 rsa_direct 不成立（N=512 处微升）",
+      "category": "imprecise_statement",
+      "claim": {
+        "quote": "两个瞬时淬火臂则相反：φ_J 随 N **下降**（0.8377 → 0.8280 / 0.7995）",
+        "line": 47
+      },
+      "recompute_ids": [
+        "R26_RSA_DIRECT_MONOTONE"
+      ],
+      "observed": "rsa_direct: 0.8377, 0.8378, 0.8377, 0.8317, 0.8280 —— 只在 N>=1024 后单调",
+      "expected": "「N>=1024 之后随 N 下降」；fire_from_rsa 才是严格单调",
+      "verdict_impact": "none",
+      "remediation": "把该句限定到 N>=1024 或指明只有 fire_from_rsa 严格单调"
+    },
+    {
+      "id": "F5",
+      "severity": "low",
+      "blocking": false,
+      "title": "「最大相对抬升 0.94」被称作「微小抬升」，与字面值 94% 自相矛盾且归一定义缺失",
+      "category": "undefined_metric",
+      "claim": {
+        "quote": "接受步有微小抬升（最大相对抬升 0.94）",
+        "line": 93
+      },
+      "recompute_ids": [
+        "N1_ACCEPTED_STEP_FRACTION",
+        "N2_MAX_RELATIVE_INCREASE"
+      ],
+      "observed": "max_relative_increase = 0.94（无单位说明）；若为相对量即 94% 的抬升",
+      "expected": "印出该量的定义与归一化（例如 |F| 的增量相对 eps 容差，或相对该步初值）",
+      "verdict_impact": "none（判据 a 的 PASS 走的是包络口径，报告已声明逐帧严格口径未达成）",
+      "remediation": "给出 max_relative_increase 的公式与单位；若确为 94%，删去「微小」"
+    },
+    {
+      "id": "F6",
+      "severity": "low",
+      "blocking": false,
+      "title": "泄压臂的锚窗 PASS 只剩 12% 余量，与报告自述的外推地板敏感性同量级，但未传播进判据",
+      "category": "sensitivity_not_propagated",
+      "claim": {
+        "quote": "| c_frictionless_phi_j_infinite | phi_J(N->inf) from N>=2048 must lie in 0.84 +- 0.01 |",
+        "line": 82
+      },
+      "recompute_ids": [
+        "R15_CRIT_C_BAND_GROWTH",
+        "R15_CRIT_C_BAND_DECOMPRESSION",
+        "N6_FLOOR_BAND"
+      ],
+      "observed": "growth 偏差 0.0054（容差的 54%），decompression 偏差 0.0088（容差的 88%，余量 0.0012）；而 5.7 自述 P(phi) 外推地板带是 0.0017–0.0026",
+      "expected": "判据 c 的 PASS 应带上「外推方法系统不确定度 0.002 量级」的注记，或给出把地板带传播进来之后的区间结论",
+      "verdict_impact": "none（growth 臂余量充足；两臂同向偏高，不改变 PASS 但改变可信度的表述）",
+      "remediation": "在判据 c 行加一条「±0.002 外推系统项」并说明它不改变判定"
+    }
+  ],
+  "corroborated_claims": [
+    {
+      "id": "K1",
+      "claim": "phi_J(inf)（growth）= 0.8454 可由第 3 节的 5 点表重算",
+      "recompute_ids": [
+        "R8_FIT_PHI_INF_GROWTH"
+      ],
+      "detail": "变量投影复算 0.845437（相对差 4.4e-05）；nu/R2 一并复现到平坦带内"
+    },
+    {
+      "id": "K2",
+      "claim": "phi_J(inf)（decompression）= 0.8488 可重算",
+      "recompute_ids": [
+        "R13_FIT_PHI_INF_DECOMP"
+      ],
+      "detail": "复算 0.848981"
+    },
+    {
+      "id": "K3",
+      "claim": "FIRE 的 eps0/eps、fmax0/fmax、fmax_reduction 三者互相闭合",
+      "recompute_ids": [
+        "R20_FIRE_REDUCTION",
+        "R21_FIRE_DIMENSIONLESS_IDENTITY"
+      ],
+      "detail": "两个独立比与印刷的 566676030960.9052 逐位相同，无量纲化常数一致到 1e-15 -> 判据 a 的这组数不是拼出来的"
+    },
+    {
+      "id": "K4",
+      "claim": "判据 a/b/d/e/f/h/i 的判定与它们自己印出的 measured 一致",
+      "recompute_ids": [
+        "R16_CRIT_E_MAX_MINUS_MIN",
+        "R17_CRIT_F_THRESHOLD",
+        "R18_CRIT_D_NULL",
+        "R19_CRITERIA_TALLY"
+      ],
+      "detail": "6 PASS / 3 FAIL 与摘要「9 条判据中 6 条通过」逐项对齐；e 的 0.0901 与 f 的 1.2382% 都确实越过各自阈值"
+    },
+    {
+      "id": "K5",
+      "claim": "双周期判据 b 的两个残差与负对照自洽",
+      "recompute_ids": [
+        "R22_VIRIAL_THRESHOLDS",
+        "R23_NEG_CONTROL_SQRT2"
+      ],
+      "detail": "负对照 1.4142e-3 = sqrt(2)*1e-3，与「破坏 1e-3||W||」一致到 1e-12 -> 检测器有牙"
+    },
+    {
+      "id": "K6",
+      "claim": "第 6 节「是否 <3%」一栏没有粉饰",
+      "recompute_ids": [
+        "R27_1_VIRIAL",
+        "R27_2_SEC6_ROW",
+        "R27_3_SEC6_ROW",
+        "R27_4_SEC6_ROW",
+        "R27_5_SEC6_ROW",
+        "R27_6_SEC6_ROW",
+        "R28_SEC6_HONESTY_TALLY"
+      ],
+      "detail": "6 行逐行重算：4 行判「是」、2 行（z +5.25%、m5079 -5.91%）判「否」，复算全部支持该栏"
+    },
+    {
+      "id": "K7",
+      "claim": "「16 倍 N 只增长 0.0036 / 0.0040」精确复现",
+      "recompute_ids": [
+        "R3_GROWTH_16X",
+        "R3_DECOMPRESSION_16X"
+      ],
+      "detail": "0.8440-0.8404 与 0.8455-0.8415 与印出值一致到 4 位小数"
+    }
+  ],
+  "criterion_execution": [
+    {
+      "criterion": "a",
+      "name": "fire_convergence",
+      "report_verdict": "PASS",
+      "review_entry": "R20_FIRE_REDUCTION",
+      "review_note": "数值自洽；逐帧执行未重放（N1/N3）"
+    },
+    {
+      "criterion": "b",
+      "name": "double_periodic_virial",
+      "report_verdict": "PASS",
+      "review_entry": "R22_VIRIAL_THRESHOLDS",
+      "review_note": "阈值比较与负对照自洽；引擎复算未重放（N3）"
+    },
+    {
+      "criterion": "c",
+      "name": "frictionless_phi_j_infinite",
+      "report_verdict": "PASS",
+      "review_entry": "R14_CRIT_C_LITERAL_WINDOW",
+      "review_note": "写出的口径不可识别（F3）；两支外推仍在锚窗内"
+    },
+    {
+      "criterion": "d",
+      "name": "frictional_phi_j",
+      "report_verdict": "FAIL",
+      "review_entry": "R18_CRIT_D_NULL",
+      "review_note": "measured=null -> FAIL 自洽；摩擦臂未交付"
+    },
+    {
+      "criterion": "e",
+      "name": "protocol_independence",
+      "report_verdict": "FAIL",
+      "review_entry": "R16_CRIT_E_MAX_MINUS_MIN",
+      "review_note": "0.0901 与印出一致；「只差 0.0015」被 R6 更正（F1）"
+    },
+    {
+      "criterion": "f",
+      "name": "seed_sensitivity",
+      "report_verdict": "FAIL",
+      "review_entry": "R17_CRIT_F_THRESHOLD",
+      "review_note": "1.2382% vs 1% 阈值复算一致"
+    },
+    {
+      "criterion": "g",
+      "name": "finite_size_scaling",
+      "report_verdict": "PASS",
+      "review_entry": "R8_FIT_PHI_INF_GROWTH",
+      "review_note": "拟合复现；R2>0.98 一支鉴别力弱（R12 假数据 16%% 也能过），nu 一支有效"
+    },
+    {
+      "criterion": "h",
+      "name": "m5079_comparison",
+      "report_verdict": "PASS",
+      "review_entry": "N3_UPSTREAM_ARTIFACTS",
+      "review_note": "印刷的 m5079 压力列 9 行与 measured.n_rows=9 一致；压力值本身需上游（N3）"
+    },
+    {
+      "criterion": "i",
+      "name": "tests_with_negative_controls",
+      "report_verdict": "PASS",
+      "review_entry": "N4_PYTEST_COUNTS",
+      "review_note": "用例数按自述登记；未执行（N4）"
+    }
+  ],
+  "recompute_index": {
+    "T1_PHI_TABLE_PARSE": {
+      "value": "5 rows x 4 protocols",
+      "reported": null,
+      "unit": "-",
+      "status": "derived",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R1_GROWTH_MONOTONE": {
+      "value": "true",
+      "reported": "单调",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R1_DECOMPRESSION_MONOTONE": {
+      "value": "true",
+      "reported": "单调",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R3_GROWTH_16X": {
+      "value": "0.0036",
+      "reported": "0.0036",
+      "unit": "φ_J",
+      "status": "pass",
+      "rel_diff_pct": -1.758816857587596e-12,
+      "verdict_impact": "none"
+    },
+    "R3_DECOMPRESSION_16X": {
+      "value": "0.0040",
+      "reported": "0.0040",
+      "unit": "φ_J",
+      "status": "pass",
+      "rel_diff_pct": 8.673617379884035e-14,
+      "verdict_impact": "none"
+    },
+    "R5_QUASI_GAP_PER_N": {
+      "value": "0.0020",
+      "reported": "0.0015",
+      "unit": "φ_J",
+      "status": "fail",
+      "rel_diff_pct": 33.33333333333345,
+      "verdict_impact": "none"
+    },
+    "R6_QUASI_GAP_AT_PHI_INF": {
+      "value": "0.0034",
+      "reported": "0.0015",
+      "unit": "φ_J",
+      "status": "fail",
+      "rel_diff_pct": 126.66666666666391,
+      "verdict_impact": "none"
+    },
+    "R7_QUASI_PLATEAU_SPREAD": {
+      "value": "0.0016",
+      "reported": "0.0005",
+      "unit": "φ_J",
+      "status": "fail",
+      "rel_diff_pct": 220.00000000000915,
+      "verdict_impact": "none"
+    },
+    "R8_FIT_PHI_INF_GROWTH": {
+      "value": "0.845437",
+      "reported": "0.8454",
+      "unit": "φ_J",
+      "status": "pass",
+      "rel_diff_pct": 0.0043990657112608685,
+      "verdict_impact": "none"
+    },
+    "R9_FIT_NU_GROWTH": {
+      "value": "1.1975",
+      "reported": "1.21",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": -1.0368045762307343,
+      "verdict_impact": "none"
+    },
+    "R10_NU_PROFILE_WIDTH": {
+      "value": "SSR<=1.05x: nu in [1.03, 1.43] ; SSR<=1.50x: nu in [0.78, 2.42] ; SSR<=4.00x: nu in [0.49, 6.00]",
+      "reported": null,
+      "unit": "-",
+      "status": "derived",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R11_FIT_R2_GROWTH": {
+      "value": "0.987771",
+      "reported": "0.990",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": -0.22513846002617668,
+      "verdict_impact": "none"
+    },
+    "R12_R2_ARM_NULL_CONTROL": {
+      "value": "32/200 monotone decoys, 3/200 pure-noise decoys",
+      "reported": null,
+      "unit": "-",
+      "status": "derived",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R13_FIT_PHI_INF_DECOMP": {
+      "value": "0.848981",
+      "reported": "0.8488",
+      "unit": "φ_J",
+      "status": "pass",
+      "rel_diff_pct": 0.02136474926329545,
+      "verdict_impact": "none"
+    },
+    "R14_CRIT_C_LITERAL_WINDOW": {
+      "value": "growth phi_inf in [0.8449, 0.8475]; decompression in [0.8459, 0.8470]",
+      "reported": "0.8454",
+      "unit": "φ_J",
+      "status": "fail",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R15_CRIT_C_BAND_GROWTH": {
+      "value": "true",
+      "reported": "PASS",
+      "unit": "φ_J",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R15_CRIT_C_BAND_DECOMPRESSION": {
+      "value": "true",
+      "reported": "PASS",
+      "unit": "φ_J",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R16_CRIT_E_MAX_MINUS_MIN": {
+      "value": "0.090100",
+      "reported": "0.090096",
+      "unit": "φ_J",
+      "status": "pass",
+      "rel_diff_pct": 0.0040977353498072135,
+      "verdict_impact": "none"
+    },
+    "R17_CRIT_F_THRESHOLD": {
+      "value": "1.2382%",
+      "reported": "1",
+      "unit": "%",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R18_CRIT_D_NULL": {
+      "value": "null",
+      "reported": "FAIL",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R19_CRITERIA_TALLY": {
+      "value": "6 PASS / 3 FAIL of 9",
+      "reported": "6 条通过",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R20_FIRE_REDUCTION": {
+      "value": "5.666760e+11",
+      "reported": "5.666760e+11",
+      "unit": "x",
+      "status": "pass",
+      "rel_diff_pct": 0.0,
+      "verdict_impact": "none"
+    },
+    "R21_FIRE_DIMENSIONLESS_IDENTITY": {
+      "value": "0.045855870941923",
+      "reported": "0.045855870941923",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": 0.0,
+      "verdict_impact": "none"
+    },
+    "R22_VIRIAL_THRESHOLDS": {
+      "value": "1.849870483311284e-11 < 1e-10 and 7.83612936479418e-18 < 1e-12",
+      "reported": "PASS",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R23_NEG_CONTROL_SQRT2": {
+      "value": "1.4142135623731e-03",
+      "reported": "0.0014142135579266247",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": 3.144129477896859e-07,
+      "verdict_impact": "none"
+    },
+    "R24_RESIDUAL_LINEARITY": {
+      "value": "0.9654",
+      "reported": "线性",
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R25_QUENCH_NU_IS_SCAN_CAP": {
+      "value": "rsa_direct R2(2.51)=0.7360 -> R2(8)=0.7798 ; fire_from_rsa R2(2.51)=0.8416 -> R2(8)=0.8779",
+      "reported": "2.51",
+      "unit": "-",
+      "status": "fail",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R26_RSA_DIRECT_MONOTONE": {
+      "value": "false",
+      "reported": "下降",
+      "unit": "-",
+      "status": "fail",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R27_1_SEC6_ROW": {
+      "value": "+0.64%",
+      "reported": "+0.64%",
+      "unit": "%",
+      "status": "pass",
+      "rel_diff_pct": 0.6428571428571513,
+      "verdict_impact": "none"
+    },
+    "R27_2_SEC6_ROW": {
+      "value": "+1.05%",
+      "reported": "+1.05%",
+      "unit": "%",
+      "status": "pass",
+      "rel_diff_pct": 1.0476190476190512,
+      "verdict_impact": "none"
+    },
+    "R27_3_SEC6_ROW": {
+      "value": "+0.48%",
+      "reported": "+0.48%",
+      "unit": "%",
+      "status": "pass",
+      "rel_diff_pct": 0.4761904761904766,
+      "verdict_impact": "none"
+    },
+    "R27_4_SEC6_ROW": {
+      "value": "+5.25%",
+      "reported": "+5.2%",
+      "unit": "%",
+      "status": "pass",
+      "rel_diff_pct": 5.249999999999999,
+      "verdict_impact": "none"
+    },
+    "R27_5_VIRIAL": {
+      "value": "1.850e-11",
+      "reported": "绝对值",
+      "unit": "%",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "R27_6_SEC6_ROW": {
+      "value": "-5.92%",
+      "reported": "−5.9%",
+      "unit": "%",
+      "status": "pass",
+      "rel_diff_pct": -5.916666666666663,
+      "verdict_impact": "none"
+    },
+    "R28_SEC6_HONESTY_TALLY": {
+      "value": "6/6 consistent",
+      "reported": null,
+      "unit": "-",
+      "status": "pass",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "N1_ACCEPTED_STEP_FRACTION": {
+      "value": null,
+      "reported": "47",
+      "unit": "%",
+      "status": "not_recomputable",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "N2_MAX_RELATIVE_INCREASE": {
+      "value": null,
+      "reported": "0.94",
+      "unit": "-",
+      "status": "not_recomputable",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "N3_UPSTREAM_ARTIFACTS": {
+      "value": null,
+      "reported": null,
+      "unit": "-",
+      "status": "not_recomputable",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "N4_PYTEST_COUNTS": {
+      "value": null,
+      "reported": "29",
+      "unit": "cases",
+      "status": "not_recomputable",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "N5_LITERATURE_ANCHOR": {
+      "value": null,
+      "reported": "0.84",
+      "unit": "φ_J",
+      "status": "withheld",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "N6_FLOOR_BAND": {
+      "value": null,
+      "reported": "0.0017",
+      "unit": "φ_J",
+      "status": "not_recomputable",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    },
+    "N7_FIGURE_BYTES": {
+      "value": null,
+      "reported": null,
+      "unit": "-",
+      "status": "withheld",
+      "rel_diff_pct": null,
+      "verdict_impact": "none"
+    }
+  },
+  "recompute_status_counts": {
+    "pass": 26,
+    "fail": 6,
+    "derived": 3,
+    "not_recomputable": 5,
+    "withheld": 2
+  },
+  "checks_not_run": [
+    {
+      "check": "上游 TensorDEM 执行层（判据 a/b/e/f/h/i 的运行记录）",
+      "why": "报告引用的 artifacts/jamming_protocol/jamming_protocol.json、benchmarks/jamming_*.py、src/tensordem/granular2d/minimizer.py 在 TensorKnowledge 仓内不存在（跨仓路径）。",
+      "state": "NOT_RUN",
+      "impact": "16 条断言里凡需要逐帧历史/原始 P(phi) 序列/压力曲线的，都只核对了「印出的数是否自洽」，没有重放执行；判据 a 的 47%、0.94 一律未复算。"
+    },
+    {
+      "check": "pytest 29 个用例 / 5 个负对照（判据 i）",
+      "why": "tests/test_granular2d_energy_minimization.py 属 TensorDEM 仓。",
+      "state": "NOT_RUN",
+      "impact": "判据 i 的 PASS 按报告自述登记，本包不构成执行证据。"
+    },
+    {
+      "check": "报告图（pressure_vs_phi / phi_j_vs_N / residual_history）的图内数据",
+      "why": "平台报告记录只带图名与图注，无 PNG 字节。",
+      "state": "WITHHELD",
+      "impact": "图与表是否一致未核；本包只核表。"
+    },
+    {
+      "check": "文献锚 0.84 ± 0.01（O'Hern et al., PRL 91, 075501 (2003)）",
+      "why": "本仓库无该文献副本，复核方未独立取数。",
+      "state": "WITHHELD",
+      "impact": "所有「落在锚窗内」的判定沿用报告的锚值；锚若移动，判据 c 的读数随之移动。"
+    },
+    {
+      "check": "P(phi) 三点外推与地板敏感性（phi_j_floor_band）",
+      "why": "只印出结论区间 0.0017–0.0026，未印出 P(phi) 序列与地板取值。",
+      "state": "NOT_RECONSTRUCTABLE",
+      "impact": "F6 只能定性指出其量级与判据 c 的余量相当。"
+    }
+  ],
+  "independence_limitations": [
+    "只有报告 markdown 的字节；TensorDEM 的运行工件、源码、P(phi) 原始序列、图像字节都不在本仓库。",
+    "复算的输入面只有第 3 节的 4 dp 均值表和判据表里印出的 JSON，因此 nu 只能复现到亚百分点、R2 只能复现到 1e-3 绝对量级——这是印刷精度的下限，不是拟合实现的分歧。",
+    "凡需要上游产物的断言（判据 a/b/e/f/h/i 的执行层、29 个用例、图内数据）一律登记 NOT_RUN/WITHHELD，不按「未发现问题」升级为通过。",
+    "复核方未修改上游任何文件，也未把任何上游结论标记为已验证；published.json 由平台门在合并时写入。"
+  ],
+  "figure": {
+    "path": "docs/kf/wp-6607-04/figures/wp-6607-04.png",
+    "caption": "左：四协议 phi_J(N) 与准静态两臂的 FSS 拟合曲线 + 文献锚带 0.84±0.01；右：复算台账的相对差（|rel|，%）与状态矩阵。"
+  },
+  "generator": "scripts/kf/review_wp_6607_04.py",
+  "generated_at": "2026-11-14T21:08:38+00:00"
+}

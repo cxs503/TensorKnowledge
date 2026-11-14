@@ -1,0 +1,933 @@
+{
+  "package_id": "wp-6607-04",
+  "reviewed_report_id": "6607",
+  "reviewed_source_hash": "sha256:b228e4f68599218d82dcedc7ca4166e0cc5250f9fbe34f611e86bc651a6231c1",
+  "source": {
+    "chars": 7642,
+    "lines": 136,
+    "source_field": "markdown",
+    "pinned_at": "2026-11-14T21:08:38+00:00"
+  },
+  "status_vocabulary": {
+    "pass": "复算与印出一致（含印刷精度内）",
+    "fail": "印出的断言/参数被报告自己的数或自己写出的口径否证",
+    "derived": "复核方派生量，无对应印刷值（含负对照）",
+    "not_recomputable": "需上游产物，本仓库不可得",
+    "withheld": "缺文献/图像字节，暂不判定"
+  },
+  "status_counts": {
+    "pass": 26,
+    "fail": 6,
+    "derived": 3,
+    "not_recomputable": 5,
+    "withheld": 2
+  },
+  "entries": [
+    {
+      "id": "T1_PHI_TABLE_PARSE",
+      "kind": "derived",
+      "formula": "parse the chapter-3 mean±s.e.m. table: 5 N-rows x 4 protocol columns",
+      "inputs": [
+        {
+          "quote": "| 256 | 0.8404 ± 0.0008 | 0.8415 ± 0.0006 | 0.8377 ± 0.0017 | 0.8377 ± 0.0008 |",
+          "line": 38
+        }
+      ],
+      "value": "5 rows x 4 protocols",
+      "reported": null,
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "derived",
+      "note": "这是全部复算的唯一输入面：本包不引入任何报告之外的 φ_J 数值。",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R1_GROWTH_MONOTONE",
+      "kind": "invariant",
+      "formula": "all(phi[N_{i+1}] > phi[N_i]) for N=256..4096",
+      "inputs": [
+        {
+          "quote": "两个准静态协议（充气 / 泄压）**随 N 单调且稳定**：16 倍 N 只增长 0.0036 / 0.0040",
+          "line": 45
+        }
+      ],
+      "value": "true",
+      "reported": "单调",
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "pass",
+      "note": "growth: 0.8404 -> 0.8418 -> 0.8427 -> 0.8431 -> 0.8440",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R1_DECOMPRESSION_MONOTONE",
+      "kind": "invariant",
+      "formula": "all(phi[N_{i+1}] > phi[N_i]) for N=256..4096",
+      "inputs": [
+        {
+          "quote": "两个准静态协议（充气 / 泄压）**随 N 单调且稳定**：16 倍 N 只增长 0.0036 / 0.0040",
+          "line": 45
+        }
+      ],
+      "value": "true",
+      "reported": "单调",
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "pass",
+      "note": "decompression: 0.8415 -> 0.8427 -> 0.8439 -> 0.8451 -> 0.8455",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R3_GROWTH_16X",
+      "kind": "arithmetic",
+      "formula": "phi(N=4096) - phi(N=256)",
+      "inputs": [
+        {
+          "quote": "两个准静态协议（充气 / 泄压）**随 N 单调且稳定**：16 倍 N 只增长 0.0036 / 0.0040",
+          "line": 45
+        }
+      ],
+      "value": "0.0036",
+      "reported": "0.0036",
+      "unit": "φ_J",
+      "rel_diff_pct": -1.758816857587596e-12,
+      "tol": "5e-5 abs (4 dp printout)",
+      "status": "pass",
+      "note": "",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R3_DECOMPRESSION_16X",
+      "kind": "arithmetic",
+      "formula": "phi(N=4096) - phi(N=256)",
+      "inputs": [
+        {
+          "quote": "两个准静态协议（充气 / 泄压）**随 N 单调且稳定**：16 倍 N 只增长 0.0036 / 0.0040",
+          "line": 45
+        }
+      ],
+      "value": "0.0040",
+      "reported": "0.0040",
+      "unit": "φ_J",
+      "rel_diff_pct": 8.673617379884035e-14,
+      "tol": "5e-5 abs (4 dp printout)",
+      "status": "pass",
+      "note": "",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R5_QUASI_GAP_PER_N",
+      "kind": "invariant",
+      "formula": "max_N |phi_decompression(N) - phi_growth(N)|",
+      "inputs": [
+        {
+          "quote": "两条曲线在每个 N 上的差 ≤ 0.0015，种子离散 0.12–0.31%。",
+          "line": 46
+        }
+      ],
+      "value": "0.0020",
+      "reported": "0.0015",
+      "unit": "φ_J",
+      "rel_diff_pct": 33.33333333333345,
+      "tol": "the printed bound is the assertion",
+      "status": "fail",
+      "note": "最大差在 N=2048：0.8451 vs 0.8431 -> 0.0020 > 0.0015（本行判「≤0.0015」这条断言，不是判据 e）",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R6_QUASI_GAP_AT_PHI_INF",
+      "kind": "arithmetic",
+      "formula": "phi_inf(decompression) - phi_inf(growth), both as printed on the phi_J(inf) row",
+      "inputs": [
+        {
+          "quote": "**判据 e 失败（0.090）**：失败被定位在两个瞬时淬火臂，而两个准静态协议之间只差 0.0015",
+          "line": 98
+        },
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        }
+      ],
+      "value": "0.0034",
+      "reported": "0.0015",
+      "unit": "φ_J",
+      "rel_diff_pct": 126.66666666666391,
+      "tol": "the printed bound is the assertion",
+      "status": "fail",
+      "note": "外推值差 0.0034，是「0.0015」的 2.3 倍；方向一致地低估两臂分歧，但远小于判据 e 的 0.01 容差",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R7_QUASI_PLATEAU_SPREAD",
+      "kind": "invariant",
+      "formula": "max over the quasi-static protocols of (max - min) phi for N in {1024,2048,4096}",
+      "inputs": [
+        {
+          "quote": "其 φ_J 随 N 单调漂移，而准静态臂稳定到 5e-4",
+          "line": 99
+        }
+      ],
+      "value": "0.0016",
+      "reported": "0.0005",
+      "unit": "φ_J",
+      "rel_diff_pct": 220.00000000000915,
+      "tol": "the printed bound is the assertion",
+      "status": "fail",
+      "note": "平台段整体 1.3e-3/1.6e-3；只有最后一跳是 4e-4",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R8_FIT_PHI_INF_GROWTH",
+      "kind": "fit",
+      "formula": "phi(N) = phi_inf - c N^(-1/(2 nu)), variable projection over nu, 5 points",
+      "inputs": [
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        },
+        {
+          "quote": "| g_finite_size_scaling | phi_J(N) = phi_inf - c N^{-1/(2 nu)}: R^2 > 0.98 and nu in [0.5, 1.5] |",
+          "line": 86
+        }
+      ],
+      "value": "0.845437",
+      "reported": "0.8454",
+      "unit": "φ_J",
+      "rel_diff_pct": 0.0043990657112608685,
+      "tol": "1 rel%",
+      "status": "pass",
+      "note": "外推值复现到 4.4e-05（相对）；同一次拟合给 nu=1.1975, R2=0.987771",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R9_FIT_NU_GROWTH",
+      "kind": "fit",
+      "formula": "nu at the SSR minimum of the same fit",
+      "inputs": [
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        }
+      ],
+      "value": "1.1975",
+      "reported": "1.21",
+      "unit": "-",
+      "rel_diff_pct": -1.0368045762307343,
+      "tol": "2 rel%",
+      "status": "pass",
+      "note": "4 dp 表格舍入下 SSR 对 nu 极平（见 R10），nu 只复现到亚百分点",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R10_NU_PROFILE_WIDTH",
+      "kind": "derived",
+      "formula": "nu range where SSR(nu) <= k*SSR_min, growth column",
+      "inputs": [
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        }
+      ],
+      "value": "SSR<=1.05x: nu in [1.03, 1.43] ; SSR<=1.50x: nu in [0.78, 2.42] ; SSR<=4.00x: nu in [0.49, 6.00]",
+      "reported": null,
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "derived",
+      "note": "判据 g 的 nu in [0.5,1.5] 相比这条平台带过窄：1.5xSSR 平台已含 nu=2.42；报告 5.7 的 bootstrap ±0.01 只反映种子噪声、不含 c-nu 退化",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R11_FIT_R2_GROWTH",
+      "kind": "fit",
+      "formula": "R2 = 1 - SSR/SST of the same 5-point fit",
+      "inputs": [
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        },
+        {
+          "quote": "| g_finite_size_scaling | phi_J(N) = phi_inf - c N^{-1/(2 nu)}: R^2 > 0.98 and nu in [0.5, 1.5] |",
+          "line": 86
+        }
+      ],
+      "value": "0.987771",
+      "reported": "0.990",
+      "unit": "-",
+      "rel_diff_pct": -0.22513846002617668,
+      "tol": "5e-3 abs",
+      "status": "pass",
+      "note": "差值 2.2e-03（绝对）；5 点 3 参下 R2 本身接近恒真，见 R12",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R12_R2_ARM_NULL_CONTROL",
+      "kind": "negative_control",
+      "formula": "share of 200 seeded monotone decoys (0.84 + 1e-3*j + 2e-3*U) whose 5-point FSS fit gives R2 > 0.98",
+      "inputs": [
+        {
+          "quote": "| g_finite_size_scaling | phi_J(N) = phi_inf - c N^{-1/(2 nu)}: R^2 > 0.98 and nu in [0.5, 1.5] |",
+          "line": 86
+        }
+      ],
+      "value": "32/200 monotone decoys, 3/200 pure-noise decoys",
+      "reported": null,
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "derived",
+      "note": "R2>0.98 这一支只拒绝无结构数据（纯噪声 3/200 通过），却放过 32/200 的单调漂移假数据（5 点 3 参，S 形曲线几乎必然贴合）；判据 g 的实际鉴别力来自 nu 区间那一支",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R13_FIT_PHI_INF_DECOMP",
+      "kind": "fit",
+      "formula": "same fit on the decompression column",
+      "inputs": [
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        }
+      ],
+      "value": "0.848981",
+      "reported": "0.8488",
+      "unit": "φ_J",
+      "rel_diff_pct": 0.02136474926329545,
+      "tol": "1 rel%",
+      "status": "pass",
+      "note": "同一次拟合给 nu=1.7153（报告 1.65）、R2=0.992009（报告 0.993），全部落在 R10 的平坦带内",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R14_CRIT_C_LITERAL_WINDOW",
+      "kind": "criterion_execution",
+      "formula": "criterion c executed literally: fit on N>=2048 only (3 points, 3 parameters => exact interpolation, so phi_inf is defined only once nu is fixed; read off over nu in [0.5, 1.5])",
+      "inputs": [
+        {
+          "quote": "| c_frictionless_phi_j_infinite | phi_J(N->inf) from N>=2048 must lie in 0.84 +- 0.01 |",
+          "line": 82
+        },
+        {
+          "quote": "| g_finite_size_scaling | phi_J(N) = phi_inf - c N^{-1/(2 nu)}: R^2 > 0.98 and nu in [0.5, 1.5] |",
+          "line": 86
+        }
+      ],
+      "value": "growth phi_inf in [0.8449, 0.8475]; decompression in [0.8459, 0.8470]",
+      "reported": "0.8454",
+      "unit": "φ_J",
+      "rel_diff_pct": null,
+      "tol": "0.01 abs to the 0.84 anchor",
+      "status": "fail",
+      "note": "按写出的口径（N>=2048）3 点 3 参被精确穿过，phi_inf 不可辨识（随 nu 漂移）；报告的 0.8454 来自 5 点全窗拟合（N=256..4096）＝写出的口径 != 执行的口径。但两支外推都落在 0.84±0.01 内 -> 结论对口径不敏感",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R15_CRIT_C_BAND_GROWTH",
+      "kind": "criterion_execution",
+      "formula": "|phi_inf - 0.84| <= 0.01",
+      "inputs": [
+        {
+          "quote": "| c_frictionless_phi_j_infinite | phi_J(N->inf) from N>=2048 must lie in 0.84 +- 0.01 |",
+          "line": 82
+        },
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        }
+      ],
+      "value": "true",
+      "reported": "PASS",
+      "unit": "φ_J",
+      "rel_diff_pct": null,
+      "tol": "0.01 abs",
+      "status": "pass",
+      "note": "growth 偏差 0.0054 = 容差的 54%",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R15_CRIT_C_BAND_DECOMPRESSION",
+      "kind": "criterion_execution",
+      "formula": "|phi_inf - 0.84| <= 0.01",
+      "inputs": [
+        {
+          "quote": "| c_frictionless_phi_j_infinite | phi_J(N->inf) from N>=2048 must lie in 0.84 +- 0.01 |",
+          "line": 82
+        },
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        }
+      ],
+      "value": "true",
+      "reported": "PASS",
+      "unit": "φ_J",
+      "rel_diff_pct": null,
+      "tol": "0.01 abs",
+      "status": "pass",
+      "note": "decompression 偏差 0.0088 = 容差的 88%",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R16_CRIT_E_MAX_MINUS_MIN",
+      "kind": "arithmetic",
+      "formula": "max_p phi_inf(p) - min_p phi_inf(p) over the four protocols",
+      "inputs": [
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        },
+        {
+          "quote": "| e_protocol_independence | four protocols must agree on phi_J within 0.01 |",
+          "line": 84
+        }
+      ],
+      "value": "0.090100",
+      "reported": "0.090096",
+      "unit": "φ_J",
+      "rel_diff_pct": 0.0040977353498072135,
+      "tol": "1e-2 rel",
+      "status": "pass",
+      "note": "0.0901 远大于 0.01 -> 判据 e 的 FAIL 自洽；失败侧是两条淬火臂（F1 更正的是「只差 0.0015」这句话，不是判据 e）",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R17_CRIT_F_THRESHOLD",
+      "kind": "criterion_execution",
+      "formula": "max_seed_dispersion_percent <= 1 %",
+      "inputs": [
+        {
+          "quote": "| f_seed_sensitivity | per-configuration phi_c dispersion across seeds < 1% |",
+          "line": 85
+        },
+        {
+          "quote": "| f_seed_sensitivity | per-configuration phi_c dispersion across seeds < 1% | `{\"max_seed_dispersion_percent\": 1.2381926132390524, \"per_config\": {\"decompression|mu=0.0|N=256\": 0.212, \"decompression|mu=0.0|N=512\": 0.1234, \"decompression|mu=0.0|N=1024\": 0.2466, \"decompression|mu=0.0|N=2048\": 0.211…` | **FAIL** |",
+          "line": 85
+        }
+      ],
+      "value": "1.2382%",
+      "reported": "1",
+      "unit": "%",
+      "rel_diff_pct": null,
+      "tol": "1 %",
+      "status": "pass",
+      "note": "印刷值 1.2382% 与阈值 1% 的比较复算一致 -> 报告给出的 FAIL 自洽",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R18_CRIT_D_NULL",
+      "kind": "criterion_execution",
+      "formula": "measured phi_inf(mu=0.5) is null => criterion d cannot be PASS",
+      "inputs": [
+        {
+          "quote": "| d_frictional_phi_j | mu=0.5 must give phi_J in [0.80, 0.84] |",
+          "line": 83
+        }
+      ],
+      "value": "null",
+      "reported": "FAIL",
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "pass",
+      "note": "measured 为 null 时 FAIL 是唯一自洽读法；5.3 也明说「不给出任何摩擦 φ_J 数值」",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R19_CRITERIA_TALLY",
+      "kind": "arithmetic",
+      "formula": "count PASS/FAIL in the nine-row criterion table",
+      "inputs": [
+        {
+          "quote": "| a_fire_convergence | FIRE residual reduction per stage must be >= 1e6;",
+          "line": 80
+        },
+        {
+          "quote": "| b_double_periodic_virial | |Virial + image| / |Virial| < 1e-10 and raw stress asymmetry < 1e-12",
+          "line": 81
+        }
+      ],
+      "value": "6 PASS / 3 FAIL of 9",
+      "reported": "6 条通过",
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "pass",
+      "note": "与报告 record 的 summary「9 条判据中 6 条通过」对齐（该句不在 markdown 内）：PASS=a,b,c,g,h,i",
+      "verdict_impact": "none",
+      "reported_origin": "record"
+    },
+    {
+      "id": "R20_FIRE_REDUCTION",
+      "kind": "consistency",
+      "formula": "eps0/eps and fmax0/fmax vs the printed fmax_reduction; reduction must also be >= 1e6",
+      "inputs": [
+        {
+          "quote": "| a_fire_convergence | FIRE residual reduction per stage must be >= 1e6;",
+          "line": 80
+        }
+      ],
+      "value": "5.666760e+11",
+      "reported": "5.666760e+11",
+      "unit": "x",
+      "rel_diff_pct": 0.0,
+      "tol": "1e-9 rel",
+      "status": "pass",
+      "note": "两个独立比 eps0/eps=5.666760309609e+11、fmax0/fmax=5.666760309609e+11 与印刷的 reduction 逐位相同",
+      "verdict_impact": "none",
+      "reported_origin": "derived"
+    },
+    {
+      "id": "R21_FIRE_DIMENSIONLESS_IDENTITY",
+      "kind": "consistency",
+      "formula": "r_bar/E0 implied by (eps0, fmax0) must equal the one implied by (eps, fmax)",
+      "inputs": [
+        {
+          "quote": "| a_fire_convergence | FIRE residual reduction per stage must be >= 1e6;",
+          "line": 80
+        }
+      ],
+      "value": "0.045855870941923",
+      "reported": "0.045855870941923",
+      "unit": "-",
+      "rel_diff_pct": 0.0,
+      "tol": "1e-8 rel",
+      "status": "pass",
+      "note": "同一组无量纲化常数贯穿全程 -> 这些数不是各写各的，而是同一次运行派生",
+      "verdict_impact": "none",
+      "reported_origin": "derived"
+    },
+    {
+      "id": "R22_VIRIAL_THRESHOLDS",
+      "kind": "criterion_execution",
+      "formula": "virial_identity_rel < 1e-10 and stress_symmetry_rel < 1e-12",
+      "inputs": [
+        {
+          "quote": "| b_double_periodic_virial | |Virial + image| / |Virial| < 1e-10 and raw stress asymmetry < 1e-12",
+          "line": 81
+        },
+        {
+          "quote": "φ=0.86、N=192、ε=9.7e-14 的极小态：周期 virial 恒等式 `‖W+W_image‖/‖W‖ = 1.85e-11`",
+          "line": 71
+        }
+      ],
+      "value": "1.849870483311284e-11 < 1e-10 and 7.83612936479418e-18 < 1e-12",
+      "reported": "PASS",
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "pass",
+      "note": "阈值比较可直接由印出的两个数完成；数值本身需上游引擎（见 N3）",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R23_NEG_CONTROL_SQRT2",
+      "kind": "consistency",
+      "formula": "negative_control_without_image_rel vs 1e-3*sqrt(2) (1e-3||W|| broken in two components)",
+      "inputs": [
+        {
+          "quote": "| b_double_periodic_virial | |Virial + image| / |Virial| < 1e-10 and raw stress asymmetry < 1e-12",
+          "line": 81
+        }
+      ],
+      "value": "1.4142135623731e-03",
+      "reported": "0.0014142135579266247",
+      "unit": "-",
+      "rel_diff_pct": 3.144129477896859e-07,
+      "tol": "1e-6 rel",
+      "status": "pass",
+      "note": "与印出值一致到 4.4e-12 -> 负对照的破坏幅度确实是 1e-3||W||（判据 b 的检测器在破坏输入上真会响）",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R24_RESIDUAL_LINEARITY",
+      "kind": "arithmetic",
+      "formula": "log10(1.06e-4 / 1.85e-11) / log10(1e-6 / 1e-13)   (1.0 = strictly linear in epsilon)",
+      "inputs": [
+        {
+          "quote": "恒等式残差随极小化容差线性下降（ε=1e-6 时 1.06e-4 → ε=1e-13 时 1.85e-11）",
+          "line": 74
+        }
+      ],
+      "value": "0.9654",
+      "reported": "线性",
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": "5 rel% to slope 1",
+      "status": "pass",
+      "note": "斜率 0.965，与「线性」相容到 3.5%",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R25_QUENCH_NU_IS_SCAN_CAP",
+      "kind": "fit",
+      "formula": "R2(nu) of the FSS form on the two quench columns at nu = 2.51, 4, 6, 8",
+      "inputs": [
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        },
+        {
+          "quote": "两个瞬时淬火臂则相反：φ_J 随 N **下降**（0.8377 → 0.8280 / 0.7995）",
+          "line": 47
+        }
+      ],
+      "value": "rsa_direct R2(2.51)=0.7360 -> R2(8)=0.7798 ; fire_from_rsa R2(2.51)=0.8416 -> R2(8)=0.8779",
+      "reported": "2.51",
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "fail",
+      "note": "两条不同曲线印出同一个 nu=2.51，且 R2 沿 nu 增大仍在升 -> 2.51 是拟合扫描上界而不是估计值；报告自己也说这两臂不是能量极小态，对它们引用 FSS 指数本就无物理含义",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R26_RSA_DIRECT_MONOTONE",
+      "kind": "invariant",
+      "formula": "all(phi[N_{i+1}] < phi[N_i]) on the rsa_direct column",
+      "inputs": [
+        {
+          "quote": "两个瞬时淬火臂则相反：φ_J 随 N **下降**（0.8377 → 0.8280 / 0.7995）",
+          "line": 47
+        }
+      ],
+      "value": "false",
+      "reported": "下降",
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "fail",
+      "note": "rsa_direct 在 N=512 处微升（0.8377 -> 0.8378），只在 N>=1024 之后单调；fire_from_rsa 严格单调",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "R27_1_SEC6_ROW",
+      "kind": "arithmetic",
+      "formula": "100*(work - base)/base computed from the error-table row itself, then check the printed <3% column",
+      "inputs": [
+        {
+          "quote": "| 无摩擦 φ_J(∞)（充气） | 0.84（文献锚） | 0.8454 | +0.64% | **是** |",
+          "line": 116
+        }
+      ],
+      "value": "+0.64%",
+      "reported": "+0.64%",
+      "unit": "%",
+      "rel_diff_pct": 0.6428571428571513,
+      "tol": "0.05 pp (half-ulp of a 1-decimal printout) / <3% column",
+      "status": "pass",
+      "note": "基准 +0.84、本工作 +0.8454 -> +0.64%；印出的「是否<3%」= '**是**' 自洽",
+      "verdict_impact": "none",
+      "reported_origin": "printout",
+      "printed_verdict": "**是**",
+      "base": "0.84（文献锚）",
+      "work": "0.8454"
+    },
+    {
+      "id": "R27_2_SEC6_ROW",
+      "kind": "arithmetic",
+      "formula": "100*(work - base)/base computed from the error-table row itself, then check the printed <3% column",
+      "inputs": [
+        {
+          "quote": "| 无摩擦 φ_J(∞)（泄压） | 0.84 | 0.8488 | +1.05% | **是** |",
+          "line": 117
+        }
+      ],
+      "value": "+1.05%",
+      "reported": "+1.05%",
+      "unit": "%",
+      "rel_diff_pct": 1.0476190476190512,
+      "tol": "0.05 pp (half-ulp of a 1-decimal printout) / <3% column",
+      "status": "pass",
+      "note": "基准 +0.84、本工作 +0.8488 -> +1.05%；印出的「是否<3%」= '**是**' 自洽",
+      "verdict_impact": "none",
+      "reported_origin": "printout",
+      "printed_verdict": "**是**",
+      "base": "0.84",
+      "work": "0.8488"
+    },
+    {
+      "id": "R27_3_SEC6_ROW",
+      "kind": "arithmetic",
+      "formula": "100*(work - base)/base computed from the error-table row itself, then check the printed <3% column",
+      "inputs": [
+        {
+          "quote": "| 无摩擦 φ_J（N=4096 直接值） | 0.84 | 0.8440 | +0.48% | **是** |",
+          "line": 118
+        }
+      ],
+      "value": "+0.48%",
+      "reported": "+0.48%",
+      "unit": "%",
+      "rel_diff_pct": 0.4761904761904766,
+      "tol": "0.05 pp (half-ulp of a 1-decimal printout) / <3% column",
+      "status": "pass",
+      "note": "基准 +0.84、本工作 +0.844 -> +0.48%；印出的「是否<3%」= '**是**' 自洽",
+      "verdict_impact": "none",
+      "reported_origin": "printout",
+      "printed_verdict": "**是**",
+      "base": "0.84",
+      "work": "0.8440"
+    },
+    {
+      "id": "R27_4_SEC6_ROW",
+      "kind": "arithmetic",
+      "formula": "100*(work - base)/base computed from the error-table row itself, then check the printed <3% column",
+      "inputs": [
+        {
+          "quote": "| 配位数 z（φ=0.85，无摩擦等静定） | 4.0 | 4.21 | +5.2% | 否（有限尺寸/接触定义差异，见 §3.1） |",
+          "line": 119
+        }
+      ],
+      "value": "+5.25%",
+      "reported": "+5.2%",
+      "unit": "%",
+      "rel_diff_pct": 5.249999999999999,
+      "tol": "0.05 pp (half-ulp of a 1-decimal printout) / <3% column",
+      "status": "pass",
+      "note": "基准 +4、本工作 +4.21 -> +5.25%；印出的「是否<3%」= '否（有限尺寸/接触定义差异，见 §3.1）' 自洽",
+      "verdict_impact": "none",
+      "reported_origin": "printout",
+      "printed_verdict": "否（有限尺寸/接触定义差异，见 §3.1）",
+      "base": "4.0",
+      "work": "4.21"
+    },
+    {
+      "id": "R27_5_VIRIAL",
+      "kind": "arithmetic",
+      "formula": "100*(work - base)/base computed from the error-table row itself, then check the printed <3% column",
+      "inputs": [
+        {
+          "quote": "| 周期 virial 恒等式 | 0 | 1.85e-11 | 绝对值 | **是** |",
+          "line": 120
+        }
+      ],
+      "value": "1.850e-11",
+      "reported": "绝对值",
+      "unit": "%",
+      "rel_diff_pct": null,
+      "tol": "0.05 pp (half-ulp of a 1-decimal printout) / <3% column",
+      "status": "pass",
+      "note": "基准 +0、本工作 +1.85e-11 -> absolute (base 0)；印出的「是否<3%」= '**是**' 自洽",
+      "verdict_impact": "none",
+      "reported_origin": "printout",
+      "printed_verdict": "**是**",
+      "base": "0",
+      "work": "1.85e-11"
+    },
+    {
+      "id": "R27_6_SEC6_ROW",
+      "kind": "arithmetic",
+      "formula": "100*(work - base)/base computed from the error-table row itself, then check the printed <3% column",
+      "inputs": [
+        {
+          "quote": "| m5079 的 φ_J（同体系、有壁、阻尼淬火） | 0.84 | 0.7903 | −5.9% | 否（m5079 未通过；本节点正是重锁） |",
+          "line": 121
+        }
+      ],
+      "value": "-5.92%",
+      "reported": "−5.9%",
+      "unit": "%",
+      "rel_diff_pct": -5.916666666666663,
+      "tol": "0.05 pp (half-ulp of a 1-decimal printout) / <3% column",
+      "status": "pass",
+      "note": "基准 +0.84、本工作 +0.7903 -> -5.92%；印出的「是否<3%」= '否（m5079 未通过；本节点正是重锁）' 自洽",
+      "verdict_impact": "none",
+      "reported_origin": "printout",
+      "printed_verdict": "否（m5079 未通过；本节点正是重锁）",
+      "base": "0.84",
+      "work": "0.7903"
+    },
+    {
+      "id": "R28_SEC6_HONESTY_TALLY",
+      "kind": "invariant",
+      "formula": "count of error-table rows whose <3% column agrees with |recomputed error| < 3%",
+      "inputs": [
+        {
+          "quote": "| 无摩擦 φ_J(∞)（充气） | 0.84（文献锚） | 0.8454 | +0.64% | **是** |",
+          "line": 116
+        },
+        {
+          "quote": "| 配位数 z（φ=0.85，无摩擦等静定） | 4.0 | 4.21 | +5.2% | 否（有限尺寸/接触定义差异，见 §3.1） |",
+          "line": 119
+        }
+      ],
+      "value": "6/6 consistent",
+      "reported": null,
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "pass",
+      "note": "4 行判「是」（0.64/1.05/0.48/绝对量）、2 行判「否」（z 5.25%、m5079 -5.91%）——报告在误差栏没有粉饰",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "N1_ACCEPTED_STEP_FRACTION",
+      "kind": "not_recomputable",
+      "formula": "share of accepted FIRE steps that raised max|F| (reported 47%)",
+      "inputs": [
+        {
+          "quote": "接受步有微小抬升（最大相对抬升 0.94）",
+          "line": 93
+        }
+      ],
+      "value": null,
+      "reported": "47",
+      "unit": "%",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "not_recomputable",
+      "note": "逐帧历史不在本仓库（见 N3），只能登记",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "N2_MAX_RELATIVE_INCREASE",
+      "kind": "not_recomputable",
+      "formula": "max_relative_increase of max|F| on accepted steps (printed 0.94, called 微小抬升)",
+      "inputs": [
+        {
+          "quote": "接受步有微小抬升（最大相对抬升 0.94）",
+          "line": 93
+        }
+      ],
+      "value": null,
+      "reported": "0.94",
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "not_recomputable",
+      "note": "0.94 若按字面是 94% 的相对抬升，与「微小抬升」自相矛盾；归一定义未印出 -> 不可复算",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "N3_UPSTREAM_ARTIFACTS",
+      "kind": "not_recomputable",
+      "formula": "TensorDEM run artifacts (artifacts/jamming_protocol/jamming_protocol.json, benchmarks/jamming_*.py, src/tensordem/granular2d/minimizer.py)",
+      "inputs": [
+        {
+          "quote": "| 256 | 0.8404 ± 0.0008 | 0.8415 ± 0.0006 | 0.8377 ± 0.0017 | 0.8377 ± 0.0008 |",
+          "line": 38
+        }
+      ],
+      "value": null,
+      "reported": null,
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "not_recomputable",
+      "note": "这些路径不在 TensorKnowledge 仓库内；判据 a/b/d/e/f/h/i 的执行层一律未重放",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "N4_PYTEST_COUNTS",
+      "kind": "not_recomputable",
+      "formula": "pytest count claimed by criterion i (29 test functions / 5 negative controls)",
+      "inputs": [
+        {
+          "quote": "| a_fire_convergence | FIRE residual reduction per stage must be >= 1e6;",
+          "line": 80
+        }
+      ],
+      "value": null,
+      "reported": "29",
+      "unit": "cases",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "not_recomputable",
+      "note": "tests/test_granular2d_energy_minimization.py 属 TensorDEM 仓，本包不能执行",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "N5_LITERATURE_ANCHOR",
+      "kind": "withheld",
+      "formula": "literature anchor phi_J = 0.84 +- 0.01 (O'Hern, Langer, Liu & Nagel, PRL 91, 075501 (2003))",
+      "inputs": [
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        }
+      ],
+      "value": null,
+      "reported": "0.84",
+      "unit": "φ_J",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "withheld",
+      "note": "本仓库无该文献副本；复核方按公认 2D 双分散无摩擦圆盘值接受该锚，但未独立核验",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "N6_FLOOR_BAND",
+      "kind": "not_recomputable",
+      "formula": "phi_j_floor_band = 0.0017-0.0026 (P(phi) extrapolation floor sensitivity, growth arm)",
+      "inputs": [
+        {
+          "quote": "其 φ_J 随 N 单调漂移，而准静态臂稳定到 5e-4",
+          "line": 99
+        }
+      ],
+      "value": null,
+      "reported": "0.0017",
+      "unit": "φ_J",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "not_recomputable",
+      "note": "地板敏感性只在 5.7 一句话里，无原始 P(phi) 序列 -> 不可复算；它与 R15 的余量（容差的 12%）同量级，见 F6",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    },
+    {
+      "id": "N7_FIGURE_BYTES",
+      "kind": "withheld",
+      "formula": "report figures pressure_vs_phi.png / phi_j_vs_N.png / residual_history.png",
+      "inputs": [
+        {
+          "quote": "| **φ_J(∞)** | 0.8454 (ν=1.21, R²=0.990) | 0.8488 (ν=1.65, R²=0.993) | 0.8165 (ν=2.51, R²=0.724) | 0.7587 (ν=2.51, R²=0.834) |",
+          "line": 43
+        }
+      ],
+      "value": null,
+      "reported": null,
+      "unit": "-",
+      "rel_diff_pct": null,
+      "tol": null,
+      "status": "withheld",
+      "note": "平台报告记录里只有图名与图注、无 PNG 字节 -> 图内数据未复核",
+      "verdict_impact": "none",
+      "reported_origin": "printout"
+    }
+  ]
+}
