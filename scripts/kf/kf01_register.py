@@ -67,6 +67,29 @@ PRESETS = {
             "   5 个图名亦未出现在正文中，其定位器如实退化为整文档跨度（method=document）。",
         ],
     },
+    "wp-12724-01": {
+        "package_id": "wp-12724-01",
+        "report_id": "12724",
+        "expected_hash": "c8c552fa8e470d9b7180aada951c667ad6c6c76ac3ade5a7b123d687a6339f5e",
+        "expected_chars": 7373,
+        "title": "IL70-N08 冰区航线气象导航优化成熟化：Lindqvist 冰阻力场 × 预报冰情 × Dijkstra/A* 图搜索（5/5 判据通过）",
+        "scenario_key": "ice_route_optimization",
+        "mission_id": 20442,
+        "out_dir": "docs/kf/wp-12724-01",
+        # the report names its route endpoint without a file extension: the deterministic path
+        # scan cannot see it, so the package declares it (package config, not tool hard-coding)
+        "declared_tokens": {"api_endpoint": ["/ice-navigation/route"]},
+        # every referenced path belongs to the producing repo; the 4 record figures carry no bytes
+        "producing_repo": "ship-performance-platform",
+        "cross_repo_note": [
+            "4. **跨仓引用不可解析**：报告引用的 `backend/api/ice/route_optimization.py`、"
+            "`backend/api/ice/route_scenarios.py`、`backend/tests/ice/test_route_optimization.py`、",
+            "   `backend/tests/make_ice_route_artifacts.py`、`artifacts/ice_route/metrics.json` 与 4 张 "
+            "`artifacts/ice_route/fig*.png` 均属产出仓 ship-performance-platform 仓，",
+            "   本工作树（TensorKnowledge）内不存在 → 全部 `referenced_unresolved`，并在 `resolution_check.detail` "
+            "写明原因，不做「大概存在」的推断。",
+        ],
+    },
 }
 
 BASE = os.environ["TENSOR_API_BASE"].rstrip("/")
