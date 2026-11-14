@@ -1,0 +1,78 @@
+{
+  "package_id": "wp-13494-01",
+  "report_id": "13494",
+  "schema": "determinism.v1",
+  "checked_at": "2026-11-14T14:33:33.644135+00:00",
+  "claim": "重建即同内容：两次独立构建在去掉两处时间戳后逐字段一致，图为逐字节一致。",
+  "method": {
+    "builds": 2,
+    "isolation": "each run re-logs in and re-fetches GET /api/v1/tensor/reports/13494, then builds into its own fresh temp directory; the second run does not read the first",
+    "hash_gate": "both runs must reproduce contract source_hash sha256:ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe (else build() aborts)",
+    "canonicalisation": "json.dumps(sort_keys=True, separators=(',',':'), ensure_ascii=False) -> sha256",
+    "excluded_volatile_fields": {
+      "asset_manifest.json": [
+        "generated_at"
+      ],
+      "kf_result.json": [
+        "provenance.emitted_at",
+        "outputs.asset_manifest.json.sha256"
+      ]
+    },
+    "normalised_fields": {
+      "kf_result.outputs.asset_manifest.json.path": "rewritten to docs/kf/wp-13494-01/asset_manifest.json: each determinism run builds into its own temp directory by design; the committed run's value is asserted separately by verification.json::manifest_hash_matches_envelope and published_check.json"
+    },
+    "figure_comparison": "PNG bytes compared directly (no canonicalisation, no metadata stripping)"
+  },
+  "source": {
+    "report_id": "13494",
+    "sha256": "ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe",
+    "chars": 12251
+  },
+  "runs": [
+    {
+      "run": "A",
+      "asset_manifest_bytes_sha256": "b3583ab049c278434b17fdff08d05c543a6ccd4a8fde58f621d7473d14d2d003",
+      "asset_manifest_canonical_sha256": "92911680054b76e9acfeba82c9f36ceff53ae50e3246bb68b67d21050335294f",
+      "kf_result_canonical_sha256": "abf7ed176a18c120bdaef8d7b48595bbb7ae09ac31a68bacd174b1a4849f6e22",
+      "figure_bytes_sha256": "5cd6dd7e43dd47067f55949debf47755a6db0f5bd6f9df33683de55dc7e46a81",
+      "asset_count": 12,
+      "generated_at": "2026-11-14T14:33:31.609131+00:00",
+      "emitted_at": "2026-11-14T14:33:32.012211+00:00"
+    },
+    {
+      "run": "B",
+      "asset_manifest_bytes_sha256": "2972db6d3776e2877d4e355a0122291d4378c6ac0a5d3f52385ebc50590a82e6",
+      "asset_manifest_canonical_sha256": "92911680054b76e9acfeba82c9f36ceff53ae50e3246bb68b67d21050335294f",
+      "kf_result_canonical_sha256": "abf7ed176a18c120bdaef8d7b48595bbb7ae09ac31a68bacd174b1a4849f6e22",
+      "figure_bytes_sha256": "5cd6dd7e43dd47067f55949debf47755a6db0f5bd6f9df33683de55dc7e46a81",
+      "asset_count": 12,
+      "generated_at": "2026-11-14T14:33:32.837217+00:00",
+      "emitted_at": "2026-11-14T14:33:33.244373+00:00"
+    }
+  ],
+  "invariants": {
+    "asset_manifest_canonical_identical": true,
+    "kf_result_canonical_identical": true,
+    "figure_bytes_identical": true,
+    "asset_count_identical": true
+  },
+  "expected_differences": {
+    "asset_manifest_raw_bytes_identical": false,
+    "reason": "raw bytes carry each run's build clock (generated_at) and therefore also the envelope's digest of them; both are listed in method.excluded_volatile_fields and compared after removal"
+  },
+  "all_identical": true,
+  "verdict": "deterministic: identical canonical content and byte-identical figure",
+  "environment": {
+    "python": "3.11.6",
+    "platform": "Linux-6.6.52-1.7.lns23.loongarch64-loongarch64-with-glibc2.38",
+    "machine": "loongarch64",
+    "matplotlib": "3.10.8",
+    "numpy": "1.26.4",
+    "jsonschema": "4.26.0"
+  },
+  "limitations": [
+    "Raw output bytes are deliberately NOT identical: every run records its own build clock (asset_manifest.generated_at, kf_result.provenance.emitted_at). Those two fields are named above and removed before hashing; no other field may drift.",
+    "Determinism is asserted for one machine/toolchain (see environment); cross-platform byte equality of matplotlib-rendered PNG is out of scope.",
+    "The scan itself has no randomness (no sampling, no dict-order dependence): asset order is document order, so identical content also means identical asset_id -> span mapping."
+  ]
+}
