@@ -1,0 +1,57 @@
+{
+  "report_id": 18778,
+  "title": "KF-RESULT wp-3076-04",
+  "mission_id": 15826,
+  "scenario_key": "paper-line-provenance-gate",
+  "tags": [
+    "kf-wp:wp-3076-04",
+    "kf-results",
+    "independent-review",
+    "paper-production",
+    "provenance-gate",
+    "adversarial-review",
+    "needs-fix"
+  ],
+  "published_at": "2026-11-14T16:40:18.763756+00:00",
+  "markdown": {
+    "local_sha256": "07a846ec6ba077d95d1bd1cfd9540fe1d07a4e00e44e438ecc18c1b9c89b253f",
+    "chars": 38727,
+    "json_blocks": 1,
+    "fetched_status": 200,
+    "fetched_sha256": "07a846ec6ba077d95d1bd1cfd9540fe1d07a4e00e44e438ecc18c1b9c89b253f",
+    "byte_equal": true
+  },
+  "figure": {
+    "name": "fig_deviation_boundary.png",
+    "local_bytes": 120227,
+    "local_sha256": "e401cb6f78f67c04e84a6948fccc93a877cbad2d618b01295be3e449b818fb25",
+    "http_status": 200,
+    "fetched_sha256": "e401cb6f78f67c04e84a6948fccc93a877cbad2d618b01295be3e449b818fb25",
+    "byte_equal": true
+  },
+  "checks": {
+    "markdown_roundtrip": true,
+    "single_json_block": true,
+    "figure_endpoint_200": true
+  },
+  "superseded_reports": [
+    {
+      "report_id": 14946,
+      "superseded_by": 14953,
+      "reason": "first publication; body lacked the explicit 误差判定(<3%) table required by report discipline, had unescaped \"|\" inside table cells, and a quote-cell fence collision"
+    },
+    {
+      "report_id": 14953,
+      "superseded_by": 14956,
+      "reason": "outputs moved from the artifacts/ path to docs/wp-3076-04/ in the self-check text"
+    },
+    {
+      "report_id": 14956,
+      "superseded_by": 18778,
+      "reason": "re-land after the original PR was closed: reviewer prompt and platform-record metadata folded into the body (appendices A/C) and the fetch/build/publish scripts dropped to meet the 10-file unit; no finding, number or decision changed"
+    }
+  ],
+  "superseded_note": "only the report named in report_id is the deliverable of this work package; earlier ids are kept for audit (reports are immutable: PUT/PATCH/DELETE all return 405)",
+  "known_cosmetics": "markdown tables in the delivered body escape \"|\" inside cells and use a spaced double-backtick fence for quotes that themselves contain a backtick; the JSON result envelope is unaffected by rendering",
+  "verdict": "PASS"
+}
