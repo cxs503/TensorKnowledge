@@ -107,6 +107,10 @@ def test_repository_demo_bundle_has_valid_provenance_but_is_unreviewed():
         repo_root / "knowledge/kbm/demo-sample/extract/evidence",
         repo_root,
     )
-    assert report["overall_status"] == "inconclusive"
+    assert report["overall_status"] == "failed"
     assert report["counts"] == {"claims": 6, "evidence": 6, "pending_review": 6}
-    assert all(check["state"] == "passed" for check in report["checks"])
+    states = {check["check_id"]: check["state"] for check in report["checks"]}
+    assert states["source_locator_integrity"] == "passed"
+    assert states["review_relation_consistency"] == "passed"
+    assert states["bidirectional_references"] == "failed"
+    assert any(f["check_id"] == "evidence_without_claim" for f in report["findings"])
