@@ -1,0 +1,141 @@
+{
+  "package_id": "wp-12028-01",
+  "report_id": "12028",
+  "verified_by": "worker self-check (NOT the platform gate; status stays draft)",
+  "checked_at": "2026-11-14T01:40:57+00:00",
+  "mode": "online",
+  "summary": {
+    "total": 9,
+    "pass": 9,
+    "fail": 0,
+    "all_pass": true
+  },
+  "checks": [
+    {
+      "check": "valid_json",
+      "status": "PASS",
+      "mode": "offline",
+      "detail": {
+        "envelope": "docs/kf/wp-12028-01/kf_result.json",
+        "manifest": "docs/kf/wp-12028-01/asset_manifest.json"
+      }
+    },
+    {
+      "check": "schema_pass",
+      "status": "PASS",
+      "mode": "offline",
+      "detail": {
+        "schema": "schemas/kf_result.v1.schema.json",
+        "error": null,
+        "envelope_keys": [
+          "contract_version",
+          "outputs",
+          "package_id",
+          "provenance",
+          "report_id",
+          "task_type"
+        ]
+      }
+    },
+    {
+      "check": "contract_alignment",
+      "status": "PASS",
+      "mode": "offline",
+      "detail": {
+        "package_id": true,
+        "task_type": true,
+        "report_id": true,
+        "manifest_package_id": true,
+        "manifest_report_id": true,
+        "reports_touched_is_single_12028": true,
+        "declared_output_present": true
+      }
+    },
+    {
+      "check": "source_hash_matches",
+      "status": "PASS",
+      "mode": "online",
+      "detail": {
+        "recomputed": "sha256:69846e9d0680b8a1c5db5c607b9a5bf4a0ba2e6103b1d193a6a5d5e83e0ec29f",
+        "provenance_source_hash": "sha256:69846e9d0680b8a1c5db5c607b9a5bf4a0ba2e6103b1d193a6a5d5e83e0ec29f",
+        "manifest_sha256": "sha256:69846e9d0680b8a1c5db5c607b9a5bf4a0ba2e6103b1d193a6a5d5e83e0ec29f",
+        "chars": 8377,
+        "matches_provenance": true,
+        "matches_manifest": true,
+        "recomputed_from": "GET /api/v1/tensor/reports/12028 (Bearer token)",
+        "contract_declared": "sha256:69846e9d0680b8a1c5db5c607b9a5bf4a0ba2e6103b1d193a6a5d5e83e0ec29f",
+        "chars_expected": 8377,
+        "bytes_utf8": 12408
+      }
+    },
+    {
+      "check": "source_locator_resolvable",
+      "status": "PASS",
+      "mode": "offline",
+      "detail": {
+        "asset_locators_checked": 65,
+        "observation_evidence_checked": 11,
+        "failures": []
+      }
+    },
+    {
+      "check": "no_duplicate_ids",
+      "status": "PASS",
+      "mode": "offline",
+      "detail": {
+        "asset_ids": 56,
+        "asset_ids_unique": true,
+        "observation_ids": 7,
+        "observation_ids_unique": true,
+        "claim_ids": 0,
+        "claim_ids_unique": true,
+        "all_unique": true
+      }
+    },
+    {
+      "check": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "status": "PASS",
+      "mode": "offline",
+      "detail": {
+        "claims": 0,
+        "envelope_carries_claims": false,
+        "empty_claims_allowed_by_contract_notes": true,
+        "reason_recorded": true,
+        "defects": []
+      }
+    },
+    {
+      "check": "structural_invariants",
+      "status": "PASS",
+      "mode": "offline",
+      "detail": {
+        "counts_match_assets": true,
+        "resolved_count_matches": true,
+        "unresolved_count_matches": true,
+        "unresolved_have_reason": true,
+        "scope_no_claim_extraction": true,
+        "scope_no_classification": true,
+        "scope_no_verified_flag": true,
+        "no_asset_marked_verified": true,
+        "no_truthy_verified_flag": true,
+        "claims_policy_reason_present": true
+      }
+    },
+    {
+      "check": "figure_payloads_live_sha256",
+      "status": "PASS",
+      "mode": "online",
+      "detail": {
+        "mode": "online",
+        "figures_checked": 4,
+        "sha256": {
+          "fig1_circulation_interaction.png": "sha256:c5a0bdd0f9311423dc6728981e22b91574e9fe03d863d5dc6498d4400900559c",
+          "fig2_performance_curves.png": "sha256:68cb38dec163a2defd28e87ed4a74b1596c8ac20b055b81cb34286e7124a85c6",
+          "fig3_pressure_interference.png": "sha256:bd9160a201dfdffd6f7bb9ec64995fdc0e46cdf936a419ce0db70f53095f1277",
+          "fig4_torque_convergence.png": "sha256:9f875c9c8a6e34ad800cddc558173557c3e737b59328431fe0d72da7efb5ce89"
+        },
+        "defects": []
+      }
+    }
+  ]
+}
