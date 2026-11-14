@@ -1,0 +1,195 @@
+{
+ "reviewer": "agent/m19809 · red-team-reviewer (wp-11349-04)",
+ "reviewed_package": "wp-11349-01",
+ "reviewed_artifacts": {
+  "asset_manifest.json": {
+   "sha256": "0663bcdcc8460ef216096cb11a3f6a67ef9122c51883a909fa1b116e79e01c42",
+   "schema": "asset_manifest.v1"
+  },
+  "kf_result.json": {
+   "sha256": "21155502045b04b1a8fa0fd3b0427183c700e4ece1fe60fd8b86eb35a20854e6"
+  },
+  "published_report_id": 14789,
+  "source_markdown_sha256": "sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80"
+ },
+ "verdict": "needs-fix",
+ "checks_total": 18,
+ "checks_passed": 17,
+ "checks": [
+  {
+   "id": "C01",
+   "check": "source_hash 契约一致性",
+   "result": "pass",
+   "detail": "recomputed=sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80 contract=sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80"
+  },
+  {
+   "id": "C02",
+   "check": "asset_manifest.source.hash 与重算一致",
+   "result": "pass",
+   "detail": "manifest=e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80 recomputed=sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80"
+  },
+  {
+   "id": "C03",
+   "check": "asset_manifest.source.chars/bytes 与实测一致",
+   "result": "pass",
+   "detail": "declared chars=1029 bytes=1657 | measured chars=1029 bytes=1657"
+  },
+  {
+   "id": "C04a",
+   "check": "locator.quote 在源 markdown 中唯一",
+   "result": "pass",
+   "detail": "非唯一项=[]"
+  },
+  {
+   "id": "C04b",
+   "check": "locator.char_span 切片 == quote",
+   "result": "pass",
+   "detail": "失配项=[]"
+  },
+  {
+   "id": "C04c",
+   "check": "locator.start_line/end_line 覆盖 quote",
+   "result": "pass",
+   "detail": "失配项=[]"
+  },
+  {
+   "id": "C05",
+   "check": "in_report_section 均为源文档真实标题",
+   "result": "pass",
+   "detail": "失配项=[] | 源标题=['P266W1-N10 补记：能力台账路由接线缺陷修复', '修复', '发现的缺陷（可复现）', '局限']"
+  },
+  {
+   "id": "C06",
+   "check": "counts 与 assets 明细自洽",
+   "result": "pass",
+   "detail": "declared={\"assets\": 11, \"by_class\": {\"report_document\": 1, \"source_file\": 2, \"source_symbol\": 2, \"api_endpoint\": 3, \"test_case\": 1, \"cross_report_reference\": 1, \"evidence_table\": 1}, \"by_resolution\": {\"resolved_in_source\": 2, \"referenced_unresolved\": 9}} | recomputed assets=11 by_class={'report_document': 1, 'source_file': 2, 'source_symbol': 2, 'api_endpoint': 3, 'test_case': 1, 'cross_report_reference': 1, 'evidence_table': 1} by_resolution={'resolved_in_source': 2, 'referenced_unresolved': 9}"
+  },
+  {
+   "id": "C07",
+   "check": "asset_id 唯一",
+   "result": "pass",
+   "detail": "ids=['A00', 'A01', 'A02', 'A03', 'A04', 'A05', 'A06', 'A07', 'A08', 'A09', 'A10']"
+  },
+  {
+   "id": "C08",
+   "check": "kf_result.outputs['asset_manifest.json'] == 磁盘 manifest",
+   "result": "pass",
+   "detail": "envelope keys=['asset_manifest.json']"
+  },
+  {
+   "id": "C09",
+   "check": "kf_result 通过 schemas/kf_result.v1.schema.json",
+   "result": "fail",
+   "detail": "errors=2 []:Additional properties are not allowed ('claims' was unexpected) ; ['provenance']:Additional properties are not allowed ('emitted_at', 'notes', 'producer' were unexpected)"
+  },
+  {
+   "id": "C10",
+   "check": "asset_manifest 通过包内 pinned schema",
+   "result": "pass",
+   "detail": "errors=0"
+  },
+  {
+   "id": "C11",
+   "check": "被审产物未自我打 verified 戳",
+   "result": "pass",
+   "detail": "manifest.integrity.verified=False verification_stamp=None"
+  },
+  {
+   "id": "C12",
+   "check": "上游自报 artifact_sha256 与磁盘实测一致",
+   "result": "pass",
+   "detail": "declared manifest=0663bcdcc8460ef216096cb11a3f6a67ef9122c51883a909fa1b116e79e01c42 measured=0663bcdcc8460ef216096cb11a3f6a67ef9122c51883a909fa1b116e79e01c42 | declared kf=21155502045b04b1a8fa0fd3b0427183c700e4ece1fe60fd8b86eb35a20854e6 measured=21155502045b04b1a8fa0fd3b0427183c700e4ece1fe60fd8b86eb35a20854e6"
+  },
+  {
+   "id": "C13",
+   "check": "上游 KF-RESULT 报告已发布（id/tag 自洽）",
+   "result": "pass",
+   "detail": "id=14789 title=KF-RESULT wp-11349-01 status=published"
+  },
+  {
+   "id": "C14",
+   "check": "上游落盘快照字节 == 平台正文重算",
+   "result": "pass",
+   "detail": "snapshot=docs/kf/wp-11349-01/source/report_11349.md"
+  },
+  {
+   "id": "C15",
+   "check": "referenced_unresolved 的仓内路径确实不可达",
+   "result": "pass",
+   "detail": "probed={\"A01\": {\"path\": \"backend/api/capability_audit.py\", \"in_worktree\": false}, \"A02\": {\"path\": \"backend/main.py\", \"in_worktree\": false}, \"A08\": {\"path\": \"test_capability_semantics_api.py\", \"in_worktree\": false}} bad=[]"
+  },
+  {
+   "id": "C16",
+   "check": "报告“21 能力”与当前端点 total_capabilities 一致",
+   "result": "pass",
+   "detail": "endpoint total_capabilities=21"
+  }
+ ],
+ "findings": [
+  {
+   "id": "F-C09",
+   "severity": "major",
+   "check": "kf_result 通过 schemas/kf_result.v1.schema.json",
+   "detail": "errors=2 []:Additional properties are not allowed ('claims' was unexpected) ; ['provenance']:Additional properties are not allowed ('emitted_at', 'notes', 'producer' were unexpected)"
+  }
+ ],
+ "checks_not_run": [
+  "backend/tests/test_capability_semantics_api.py 未执行：该测试属 TensorPlatform 仓，本工作树（TensorKnowledge）无此文件",
+  "2026-11-10 时点线上 404 无法回溯重放：本次只观测当前时点状态（见 live_probe）",
+  "未解引用 report_id=11344（产线边界：只碰 11349）"
+ ],
+ "live_probe": {
+  "probed_at_utc": "2026-11-14T05:05:00Z",
+  "base": "http://127.0.0.1:8010/api/v1",
+  "audit": {
+   "path": "/tensor/capabilities/audit",
+   "http_no_token": 401,
+   "http_with_token": 200,
+   "payload_sha256_file": "runs/wp-11349-04/probe_audit_live.json",
+   "payload": {
+    "data": {
+     "total_capabilities": 21,
+     "schema_version": "2.0"
+    }
+   }
+  },
+  "audit_summary": {
+   "path": "/tensor/capabilities/audit/summary",
+   "http_no_token": 401,
+   "http_with_token": 200
+  },
+  "semantics": {
+   "path": "/tensor/capabilities/semantics",
+   "http_no_token": 401,
+   "http_with_token": 503,
+   "detail": "工件缺失: /root/tensor-ecosystem/TensorPlatform/artifacts/capability_semantics/semantic_layers.json；请先运行 `python3 -m tools.capability_semantics --figures --doc`",
+   "payload_sha256_file": "runs/wp-11349-04/probe_semantics_live.json"
+  },
+  "note": "探针只代表当前时点；报告所载 401/404 为 2026-11-10 时点状态，无法回溯重放"
+ },
+ "reported_facts_cross_checked": [
+  {
+   "fact_in_source": "21 能力证据等级矩阵",
+   "source_quote": "21 能力证据等级矩阵端点",
+   "independent_check": "GET /api/v1/tensor/capabilities/audit 当前返回 data.total_capabilities=21（schema_version=2.0）",
+   "result": "corroborated"
+  },
+  {
+   "fact_in_source": "带 token 探针为 404",
+   "source_quote": "**404 Not Found**",
+   "independent_check": "当前时点同一路径带 token 返回 200（audit 与 /audit/summary 均 200）；报告所载为 2026-11-10 时点状态，不可回溯重放",
+   "result": "not_reproducible_now"
+  },
+  {
+   "fact_in_source": "semantics 端点 404（分支未部署）",
+   "source_quote": "404（新端点，分支未部署，符合预期）",
+   "independent_check": "当前时点返回 503，detail=工件缺失 artifacts/capability_semantics/semantic_layers.json——路由已挂上但工件未生成",
+   "result": "changed_state"
+  }
+ ],
+ "independence_limitations": [
+  "被审包与本次审核由同一模型族产出，方法学独立性有限；用可重算的机器判据（哈希/切片/schema）替代人审主观判断",
+  "线上探针只代表当前时点，不能回证或否证报告所载 2026-11-10 的 404 状态"
+ ],
+ "source_markdown": "# P266W1-N10 补记：能力台账路由接线缺陷修复\n\n## 发现的缺陷（可复现）\n\n`backend/api/capability_audit.py`（21 能力证据等级矩阵端点，`GET /tensor/capabilities/audit`\n与 `/audit/summary`）在仓内完整存在，但 `backend/main.py` **从未 include 该 router** →\n线上该路径恒 404。\n\n复现探针（带 JWT 打 :8010，2026-11-10）：\n\n| 请求 | 结果 |\n|---|---|\n| `GET /api/v1/tensor/capabilities/audit`（无 token） | 401（auth 中间件先于路由） |\n| `GET /api/v1/tensor/capabilities/audit`（带 token） | **404 Not Found** |\n| `GET /api/v1/tensor/capabilities/semantics`（带 token） | 404（新端点，分支未部署，符合预期） |\n\n无 token 时返回 401 而非 404，说明鉴权中间件先于路由匹配——所以**只看 401 会漏掉这个缺陷**，\n必须带 token 探针才能区分「路由存在但需鉴权」与「路由根本不存在」。这是本单踩到的第二个坑。\n\n## 修复\n\n`backend/main.py` 按既有模式（try/except + 失败不拖垮主应用）挂载\n`api.capability_audit.router`，与本次新建的 `api.capability_semantics.router` 并列在\n`/api/v1/tensor/capabilities/*` 下。\n\n接线回归（源码级，防止再次静默丢失）：`backend/tests/test_capability_semantics_api.py::test_routers_wired_in_main_and_route_shapes`\n断言 main.py 含两处 include，且两个 router 的路径形状正确（10 项测试全绿）。\n\n## 局限\n\n修复只在**本分支生效**；线上 :8010 需合并 + 重启后才会出现该端点（本次未重启服务、未 push）。\n补记不改变主报告（id=11344）的任何判据数字。\n"
+}
