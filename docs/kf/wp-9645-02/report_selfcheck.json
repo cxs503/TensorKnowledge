@@ -1,0 +1,45 @@
+{
+  "package_id": "wp-9645-02",
+  "checks": [
+    {
+      "acceptance_item": "valid_json",
+      "pass": true,
+      "detail": "classification.json / kf_result.json 由 json.dump 生成并可回读解析。"
+    },
+    {
+      "acceptance_item": "schema_pass",
+      "pass": true,
+      "detail": "按 schemas/kf_result.v1.schema.json 的 required/type/enum/pattern/additionalProperties 子集校验：无违规"
+    },
+    {
+      "acceptance_item": "source_locator_resolvable",
+      "pass": true,
+      "detail": "34 条定位器逐条按 char/byte 偏移回切原文并比对 quote 与 content_hash；失败项=无"
+    },
+    {
+      "acceptance_item": "source_hash_matches",
+      "pass": true,
+      "detail": "重算 sha256:a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00，契约值 sha256:a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00"
+    },
+    {
+      "acceptance_item": "no_duplicate_ids",
+      "pass": true,
+      "detail": "claims 10/10 unique；locators 34/34 unique"
+    },
+    {
+      "acceptance_item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "pass": true,
+      "detail": "supported 均带已解析 locator；unresolved 均带 unresolved_reason；缺证据=无 悬空引用=无 缺理由=无"
+    }
+  ],
+  "all_pass": true,
+  "counts": {
+    "evidence_locators": 34,
+    "claims": 10,
+    "claims_supported": 8,
+    "claims_unresolved": 2,
+    "unresolved_items": 3,
+    "segments": 8,
+    "topic_tags": 9
+  }
+}
