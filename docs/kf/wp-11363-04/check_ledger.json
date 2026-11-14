@@ -1,0 +1,761 @@
+{
+ "package_id": "wp-11363-04",
+ "reviewed_package_id": "wp-11363-01",
+ "report_id": "11363",
+ "checks": {
+  "C1_source_identity": {
+   "status": "pass",
+   "detail": "live recompute vs manifest.source vs contract: hash=sha256:346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23 chars=6902 bytes=9618 lines=124",
+   "recomputed": {
+    "sha256": "sha256:346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23",
+    "chars": 6902,
+    "bytes": 9618,
+    "lines": 124,
+    "has_crlf": false,
+    "has_trailing_newline": true
+   }
+  },
+  "C2_report_identity": {
+   "status": "pass",
+   "detail": "live record title/scenario == manifest.record_fields; package_id/task_type/report_id consistent between envelope and manifest"
+  },
+  "C3_locator_resolution": {
+   "status": "pass",
+   "detail": "25/25 asset locators re-resolved byte-exact against the live markdown (slice==quote, line, global occurrence count, token-in-quote)",
+   "failures": [],
+   "per_asset": [
+    {
+     "asset_id": "r11363:source-markdown",
+     "ok": true,
+     "line": 1,
+     "reasons": [],
+     "label": "report-11363-markdown",
+     "kind": "report_markdown"
+    },
+    {
+     "asset_id": "r11363:figure:01",
+     "ok": true,
+     "line": 87,
+     "reasons": [],
+     "label": "fig1_per_device_savings.png",
+     "kind": "embedded_figure"
+    },
+    {
+     "asset_id": "r11363:figure:02",
+     "ok": true,
+     "line": 88,
+     "reasons": [],
+     "label": "fig2_combined_vs_sum.png",
+     "kind": "embedded_figure"
+    },
+    {
+     "asset_id": "r11363:figure:03",
+     "ok": true,
+     "line": 89,
+     "reasons": [],
+     "label": "fig3_selfprop_coupling.png",
+     "kind": "embedded_figure"
+    },
+    {
+     "asset_id": "r11363:figure:04",
+     "ok": true,
+     "line": 90,
+     "reasons": [],
+     "label": "fig4_benchmark.png",
+     "kind": "embedded_figure"
+    },
+    {
+     "asset_id": "r11363:ref:01",
+     "ok": true,
+     "line": 3,
+     "reasons": [],
+     "label": "backend/physics/esd/",
+     "kind": "source_directory_reference"
+    },
+    {
+     "asset_id": "r11363:ref:02",
+     "ok": true,
+     "line": 19,
+     "reasons": [],
+     "label": "physics/esd/devices.py",
+     "kind": "source_code_reference"
+    },
+    {
+     "asset_id": "r11363:ref:03",
+     "ok": true,
+     "line": 19,
+     "reasons": [],
+     "label": "DEVICE_SPECS",
+     "kind": "symbol_reference"
+    },
+    {
+     "asset_id": "r11363:ref:04",
+     "ok": true,
+     "line": 20,
+     "reasons": [],
+     "label": "selfprop.py",
+     "kind": "source_code_reference"
+    },
+    {
+     "asset_id": "r11363:ref:05",
+     "ok": true,
+     "line": 20,
+     "reasons": [],
+     "label": "modules.propeller_bemt.bem_point",
+     "kind": "symbol_reference"
+    },
+    {
+     "asset_id": "r11363:ref:06",
+     "ok": true,
+     "line": 20,
+     "reasons": [],
+     "label": "solve_n_for_thrust",
+     "kind": "symbol_reference"
+    },
+    {
+     "asset_id": "r11363:ref:07",
+     "ok": true,
+     "line": 22,
+     "reasons": [],
+     "label": "energy_upper_bound.satisfied",
+     "kind": "symbol_reference"
+    },
+    {
+     "asset_id": "r11363:ref:08",
+     "ok": true,
+     "line": 23,
+     "reasons": [],
+     "label": "tools/gen_esd_artifacts.py",
+     "kind": "source_code_reference"
+    },
+    {
+     "asset_id": "r11363:ref:09",
+     "ok": true,
+     "line": 119,
+     "reasons": [],
+     "label": "artifacts/esd/",
+     "kind": "source_directory_reference"
+    },
+    {
+     "asset_id": "r11363:ref:10",
+     "ok": true,
+     "line": 120,
+     "reasons": [],
+     "label": "artifacts/esd/manifest.json",
+     "kind": "data_artifact_reference"
+    },
+    {
+     "asset_id": "r11363:ref:11",
+     "ok": true,
+     "line": 121,
+     "reasons": [],
+     "label": "test_golden_grid_reproducible",
+     "kind": "symbol_reference"
+    },
+    {
+     "asset_id": "r11363:ref:12",
+     "ok": true,
+     "line": 122,
+     "reasons": [],
+     "label": "tests/test_esd_energy_upper_bound.py",
+     "kind": "source_code_reference"
+    },
+    {
+     "asset_id": "r11363:ref:13",
+     "ok": true,
+     "line": 122,
+     "reasons": [],
+     "label": "test_esd_devices.py",
+     "kind": "source_code_reference"
+    },
+    {
+     "asset_id": "r11363:ref:14",
+     "ok": true,
+     "line": 122,
+     "reasons": [],
+     "label": "test_esd_benchmark.py",
+     "kind": "source_code_reference"
+    },
+    {
+     "asset_id": "r11363:ref:15",
+     "ok": true,
+     "line": 122,
+     "reasons": [],
+     "label": "test_esd_api.py",
+     "kind": "source_code_reference"
+    },
+    {
+     "asset_id": "r11363:ref:16",
+     "ok": true,
+     "line": 122,
+     "reasons": [],
+     "label": "test_esd_regression.py",
+     "kind": "source_code_reference"
+    },
+    {
+     "asset_id": "r11363:ref:17",
+     "ok": true,
+     "line": 123,
+     "reasons": [],
+     "label": "docs/ESD_ENERGY_SAVING.md",
+     "kind": "document_reference"
+    },
+    {
+     "asset_id": "r11363:ref:18",
+     "ok": true,
+     "line": 124,
+     "reasons": [],
+     "label": "propulsion.esd_energy_saving = REAL",
+     "kind": "capability_declaration_reference"
+    },
+    {
+     "asset_id": "r11363:ref:19",
+     "ok": true,
+     "line": 124,
+     "reasons": [],
+     "label": "artifacts/esd/capability_delta.json",
+     "kind": "data_artifact_reference"
+    },
+    {
+     "asset_id": "r11363:ref:upstream-resistance",
+     "ok": true,
+     "line": 15,
+     "reasons": [],
+     "label": "Holtrop-1984 resistance kernel feeding R_T",
+     "kind": "upstream_dependency_reference"
+    }
+   ]
+  },
+  "C4_counts_recompute": {
+   "status": "pass",
+   "detail": "assets_total/histogram/by_status/locators/claims recomputed from the assets array: assert(assets_total=25, histogram==True, by_status==True, sum==total)"
+  },
+  "C5_id_integrity": {
+   "status": "pass",
+   "detail": "25 ids, 25 unique, pattern r11363:* ok=True"
+  },
+  "C6_bundle_consistency": {
+   "status": "pass",
+   "detail": "quote re-resolved at line 119; enumerated members expand to 10 files (list length 7, one entry being a '4 png' group) == member_file_count 10; the report's own '（10 文件）' phrase re-resolved at line 10",
+   "list_length": 7,
+   "count_phrase": true,
+   "declared_line_text": "- 清单 sha256：`artifacts/esd/manifest.json`（10 文件）",
+   "count_phrase_lines": [
+    120
+   ]
+  },
+  "C7_figure_probe_recheck": {
+   "status": "pass",
+   "detail": "4 figure endpoints re-probed live; status/bytes/sha256 re-derived and compared with the manifest's payload_sha256 (mismatches=[])",
+   "reprobe": {
+    "figures_endpoint": {
+     "declared": {
+      "endpoint": "/tensor/reports/11363/figures",
+      "http_status": 404,
+      "bytes": 0
+     },
+     "recomputed": {
+      "http_status": 404,
+      "entries": 0
+     }
+    },
+    "fig1_per_device_savings.png": {
+     "declared": {
+      "http_status": 200,
+      "bytes": 55500,
+      "payload_sha256": "sha256:333035f7049386bfd7c41fb2dc1099285296075aebfdb10c55a1237cd43ff187"
+     },
+     "recomputed": {
+      "http_status": 200,
+      "bytes": 55500,
+      "sha256": "sha256:333035f7049386bfd7c41fb2dc1099285296075aebfdb10c55a1237cd43ff187",
+      "png_magic_ok": true
+     }
+    },
+    "fig2_combined_vs_sum.png": {
+     "declared": {
+      "http_status": 200,
+      "bytes": 192545,
+      "payload_sha256": "sha256:411fb6d7836e18fc70f49acc268cc0561a30e628727f79e2b39d57df39b5fa2e"
+     },
+     "recomputed": {
+      "http_status": 200,
+      "bytes": 192545,
+      "sha256": "sha256:411fb6d7836e18fc70f49acc268cc0561a30e628727f79e2b39d57df39b5fa2e",
+      "png_magic_ok": true
+     }
+    },
+    "fig3_selfprop_coupling.png": {
+     "declared": {
+      "http_status": 200,
+      "bytes": 53786,
+      "payload_sha256": "sha256:5221d33b542e11ebb45b444d8d51b600922bd260ab2be8383734bcafeb3fedf9"
+     },
+     "recomputed": {
+      "http_status": 200,
+      "bytes": 53786,
+      "sha256": "sha256:5221d33b542e11ebb45b444d8d51b600922bd260ab2be8383734bcafeb3fedf9",
+      "png_magic_ok": true
+     }
+    },
+    "fig4_benchmark.png": {
+     "declared": {
+      "http_status": 200,
+      "bytes": 71694,
+      "payload_sha256": "sha256:135db99c731212ff89f52a2853670ac0ea35a478e669e181670ba064fa9edc1d"
+     },
+     "recomputed": {
+      "http_status": 200,
+      "bytes": 71694,
+      "sha256": "sha256:135db99c731212ff89f52a2853670ac0ea35a478e669e181670ba064fa9edc1d",
+      "png_magic_ok": true
+     }
+    }
+   }
+  },
+  "C8_observation_vs_probe": {
+   "status": "fail",
+   "detail": "observations[1] states the /figures byte endpoints answer 404 and that no figure hash is claimed; the same manifest records http_status=200 + payload_sha256 for 4 figure endpoints (fig1_per_device_savings.png,fig2_combined_vs_sum.png,fig3_selfprop_coupling.png,fig4_benchmark.png)",
+   "contradictory": true
+  },
+  "C9_schema_validation": {
+   "status": "fail",
+   "detail": "jsonschema: envelope vs schemas/kf_result.v1.schema.json (draft 2020-12, additionalProperties=false on the root) and manifest vs schemas/asset_manifest_wp11363_01.schema.json (draft-07); errors=[\"kf_result.json: Additional properties are not allowed ('claims' was unexpected) at []\"]; prevalence over docs/kf/*/kf_result.json = {'packages': 118, 'with_toplevel_claims': 83, 'schema_ok': 7}",
+   "errors": [
+    "kf_result.json: Additional properties are not allowed ('claims' was unexpected) at []"
+   ],
+   "prevalence": {
+    "packages": 118,
+    "with_toplevel_claims": 83,
+    "schema_ok": 7
+   }
+  },
+  "C10_envelope_manifest_identity": {
+   "status": "pass",
+   "detail": "envelope.outputs['asset_manifest.json'] is byte-equal (deep) to docs/kf/wp-11363-01/asset_manifest.json; envelope.provenance.source_hash == manifest.source.source_hash == live recompute"
+  },
+  "C11_verification_scope": {
+   "status": "pass",
+   "detail": "claims==[] in manifest and envelope with claims_empty_reason present; the single capability declaration is status=declared_reference_only with an explicit 'does NOT verify' reason; the only 'verified' keys are quote-resolution flags (29 paths, e.g. ['/assets[0]/locator/quote_verified', '/assets[10]/locator/quote_verified']) — no claim-grade verification asserted (claim_level_hits=[])",
+   "quote_level_paths": [
+    "/assets[0]/locator/quote_verified",
+    "/assets[10]/locator/quote_verified",
+    "/assets[11]/locator/quote_verified",
+    "/assets[12]/locator/quote_verified",
+    "/assets[13]/further_occurrences[0]/quote_verified",
+    "/assets[13]/further_occurrences[1]/quote_verified",
+    "/assets[13]/further_occurrences[2]/quote_verified",
+    "/assets[13]/locator/quote_verified",
+    "/assets[14]/locator/quote_verified",
+    "/assets[15]/locator/quote_verified",
+    "/assets[16]/locator/quote_verified",
+    "/assets[17]/locator/quote_verified",
+    "/assets[18]/locator/quote_verified",
+    "/assets[19]/locator/quote_verified",
+    "/assets[1]/locator/quote_verified",
+    "/assets[20]/locator/quote_verified",
+    "/assets[21]/locator/quote_verified",
+    "/assets[22]/locator/quote_verified",
+    "/assets[23]/locator/quote_verified",
+    "/assets[24]/locator/quote_verified",
+    "/assets[2]/locator/quote_verified",
+    "/assets[3]/locator/quote_verified",
+    "/assets[4]/locator/quote_verified",
+    "/assets[5]/locator/quote_verified",
+    "/assets[6]/locator/quote_verified",
+    "/assets[7]/locator/quote_verified",
+    "/assets[8]/locator/quote_verified",
+    "/assets[9]/locator/quote_verified",
+    "/locators/all_verified"
+   ]
+  },
+  "C12_cross_report_isolation": {
+   "status": "pass",
+   "detail": "all report-id-shaped tokens in the package are '11363'; other 5-digit numbers found: [] (checked in context: mission_id/values, not report ids)",
+   "other_numbers": []
+  },
+  "C13_registration_completeness": {
+   "status": "pass_with_notes",
+   "detail": "artefacts named in the report's audit chain vs registered assets: 8 individually registered, 5 covered only by the artifacts/esd/ directory quote, 0 uncovered",
+   "first_citation": {
+    "benchmark_results.json": {
+     "line": 119,
+     "occurrences": 1
+    },
+    "golden_regression.json": {
+     "line": 119,
+     "occurrences": 1
+    },
+    "per_device_table.csv": {
+     "line": 119,
+     "occurrences": 1
+    },
+    "combined_table.csv": {
+     "line": 44,
+     "occurrences": 2
+    },
+    "report_tables.md": {
+     "line": 119,
+     "occurrences": 1
+    },
+    "manifest.json": {
+     "line": 119,
+     "occurrences": 2
+    },
+    "capability_delta.json": {
+     "line": 124,
+     "occurrences": 1
+    },
+    "ESD_ENERGY_SAVING.md": {
+     "line": 123,
+     "occurrences": 1
+    },
+    "test_esd_energy_upper_bound.py": {
+     "line": 122,
+     "occurrences": 1
+    },
+    "test_esd_devices.py": {
+     "line": 122,
+     "occurrences": 1
+    },
+    "test_esd_benchmark.py": {
+     "line": 122,
+     "occurrences": 1
+    },
+    "test_esd_api.py": {
+     "line": 122,
+     "occurrences": 1
+    },
+    "test_esd_regression.py": {
+     "line": 122,
+     "occurrences": 1
+    }
+   },
+   "only_inside_dir": [
+    "benchmark_results.json",
+    "golden_regression.json",
+    "per_device_table.csv",
+    "combined_table.csv",
+    "report_tables.md"
+   ],
+   "uncovered": []
+  },
+  "C17_negative_resolution_claims": {
+   "status": "pass",
+   "detail": "14 unresolved artefacts re-probed by basename across the delivery worktree; the manifest's claim that none is present (same_basename_hits=[]) is confirmed for 14/14",
+   "probed": {
+    "physics/esd/devices.py": [],
+    "selfprop.py": [],
+    "modules.propeller_bemt.bem_point": [],
+    "energy_upper_bound.satisfied": [],
+    "tools/gen_esd_artifacts.py": [],
+    "artifacts/esd/manifest.json": [
+     "docs/sediment/tk-sediment-m5054/figures/manifest.json",
+     "knowledge/kb10k/manifest.json",
+     "knowledge/sediment/sloshing-impact-lbm/manifest.json"
+    ],
+    "tests/test_esd_energy_upper_bound.py": [],
+    "test_esd_devices.py": [],
+    "test_esd_benchmark.py": [],
+    "test_esd_api.py": [],
+    "test_esd_regression.py": [],
+    "docs/ESD_ENERGY_SAVING.md": [],
+    "propulsion.esd_energy_saving = REAL": [],
+    "artifacts/esd/capability_delta.json": []
+   },
+   "contradicted": []
+  },
+  "C14_report_arithmetic": {
+   "status": "pass",
+   "detail": "informational (outside 01's scope): Σ分项 recomputed from the 12 component rows vs the 21 combined rows printed in §③ — max |drift| = 0.01 pp; margin = Σ−combined within 0.01 pp; combined ≤ Σ holds for all printed rows; Δn/n max 2.9% < 5%; implied P_D per ship from kW/% is {'KVLCC2': [24.1, 24.1, 24.0, 24.0], 'KCS': [36.2, 36.2, 36.2, 36.1], 'Bulk180': [7.4, 7.4, 7.4, 7.4]}",
+   "sum_drift": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.01,
+    0.0,
+    0.01,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "margin_drift": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.01,
+    0.0,
+    0.01,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "literature_rel_err_from_rounded": [
+    {
+     "case": "KVLCC2_preswirl",
+     "recomputed_pct": 0.5
+    },
+    {
+     "case": "KCS_pbcf",
+     "recomputed_pct": 3.67
+    },
+    {
+     "case": "KVLCC2_rudder_bulb",
+     "recomputed_pct": 3.75
+    },
+    {
+     "case": "Bulk180_mewis",
+     "recomputed_pct": 3.6
+    },
+    {
+     "case": "KCS_hubcap",
+     "recomputed_pct": 9.17
+    }
+   ],
+   "literature_reported": {
+    "max": 9.33,
+    "mean": 4.13,
+    "mean_recomputed_from_rounded": 4.14
+   },
+   "note": "reported 3.68/3.69/3.52/9.33/0.46 and mean 4.13 are consistent with errors evaluated on unrounded model values and then rounded to 2 dp; recomputation from the printed 2-dp values reproduces them within 0.02 pp"
+  },
+  "C15_upstream_packages": {
+   "status": "unknown_not_run",
+   "detail": "platform work-package registry endpoints answer {'/tensor/work_packages?report_id=11363': 404, '/tensor/reports/11363/work_packages': 404} (no route to enumerate packages for a report, so pipeline completeness cannot be read from the platform). In the delivery worktree only wp-11363-01 exists for report 11363: {'wp-11363-01': True, 'wp-11363-02': False, 'wp-11363-03': False}",
+   "registry_probe": {
+    "/tensor/work_packages?report_id=11363": 404,
+    "/tensor/reports/11363/work_packages": 404
+   },
+   "worktree": {
+    "wp-11363-01": true,
+    "wp-11363-02": {
+     "found": false,
+     "hits": []
+    },
+    "wp-11363-03": {
+     "found": false,
+     "hits": []
+    }
+   }
+  },
+  "C16_independence": {
+   "status": "pass",
+   "detail": "context used = live report markdown (GET /tensor/reports/11363, sha256 sha256:346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23) + the two reviewed package artefacts only. docs/kf/wp-11363-01/report_selfcheck.json (the producer's own self-check) is excluded as evidence; every check above is recomputed here. Neither the producer's task prompt nor any producer narrative was used."
+  }
+ },
+ "findings": [
+  {
+   "id": "F4",
+   "severity": "low",
+   "blocking": false,
+   "title": "bundle_consistency.declared_in_manifest_line holds a file COUNT (10), not a line number",
+   "evidence": {
+    "field": "bundle_consistency.declared_in_manifest_line",
+    "value": 10,
+    "field_named_line_but_means": "the '（10 文件）' file count declared on report line 120",
+    "quote_at_that_line": "- 清单 sha256：`artifacts/esd/manifest.json`（10 文件）",
+    "semantically_correct_home": "bundle_consistency.member_file_count == 10"
+   },
+   "reproduction": "python3 runs/m19810/verify_wp11363_04.py (C6) — resolves the field as a line index and finds the '10 文件' count phrase instead of a line reference",
+   "affected_scope": "naming/ambiguity only; the arithmetic (6 named files + 4 png = 10) is correct and matches the report at line 120, so no count is misstated",
+   "overstated_claim": false
+  },
+  {
+   "id": "F1",
+   "severity": "medium",
+   "blocking": false,
+   "title": "manifest.observations contradicts manifest.platform_attachment_probes (figure byte status/hash)",
+   "evidence": {
+    "observation_text": "All four figures are declared in the platform record with captions, but the /figures byte endpoints answer 404, so no figure hash is claimed.",
+    "probes": {
+     "fig1_per_device_savings.png": {
+      "http_status": 200,
+      "payload_sha256": "sha256:333035f7049386bfd7c41fb2dc1099285296075aebfdb10c55a1237cd43ff187",
+      "png_magic_ok": true
+     },
+     "fig2_combined_vs_sum.png": {
+      "http_status": 200,
+      "payload_sha256": "sha256:411fb6d7836e18fc70f49acc268cc0561a30e628727f79e2b39d57df39b5fa2e",
+      "png_magic_ok": true
+     },
+     "fig3_selfprop_coupling.png": {
+      "http_status": 200,
+      "payload_sha256": "sha256:5221d33b542e11ebb45b444d8d51b600922bd260ab2be8383734bcafeb3fedf9",
+      "png_magic_ok": true
+     },
+     "fig4_benchmark.png": {
+      "http_status": 200,
+      "payload_sha256": "sha256:135db99c731212ff89f52a2853670ac0ea35a478e669e181670ba064fa9edc1d",
+      "png_magic_ok": true
+     }
+    },
+    "live_reprobe": {
+     "fig1_per_device_savings.png": {
+      "http_status": 200,
+      "bytes": 55500,
+      "sha256": "sha256:333035f7049386bfd7c41fb2dc1099285296075aebfdb10c55a1237cd43ff187",
+      "png_magic_ok": true
+     },
+     "fig2_combined_vs_sum.png": {
+      "http_status": 200,
+      "bytes": 192545,
+      "sha256": "sha256:411fb6d7836e18fc70f49acc268cc0561a30e628727f79e2b39d57df39b5fa2e",
+      "png_magic_ok": true
+     },
+     "fig3_selfprop_coupling.png": {
+      "http_status": 200,
+      "bytes": 53786,
+      "sha256": "sha256:5221d33b542e11ebb45b444d8d51b600922bd260ab2be8383734bcafeb3fedf9",
+      "png_magic_ok": true
+     },
+     "fig4_benchmark.png": {
+      "http_status": 200,
+      "bytes": 71694,
+      "sha256": "sha256:135db99c731212ff89f52a2853670ac0ea35a478e669e181670ba064fa9edc1d",
+      "png_magic_ok": true
+     },
+     "figures_endpoint": {
+      "http_status": 404,
+      "entries": 0
+     }
+    }
+   },
+   "reproduction": "python3 runs/m19810/verify_wp11363_04.py (C8) — re-probes the four figure endpoints and compares http_status/bytes/sha256 with the manifest probe block",
+   "affected_scope": "narrative observation field only; the numeric probe block is correct, so no asset hash or asset count is wrong. Downstream consumers that read observations instead of probes would wrongly conclude the figure bytes are unavailable.",
+   "overstated_claim": false
+  },
+  {
+   "id": "F3",
+   "severity": "high",
+   "blocking": true,
+   "title": "envelope kf_result.json fails the canonical schema: top-level 'claims' is an additional property (additionalProperties=false) — the declared schema_pass is not reproducible with schemas/kf_result.v1.schema.json",
+   "evidence": {
+    "schema_root_properties": [
+     "contract_version",
+     "outputs",
+     "package_id",
+     "provenance",
+     "report_id",
+     "task_type"
+    ],
+    "schema_additionalProperties": false,
+    "validator_error": [
+     "kf_result.json: Additional properties are not allowed ('claims' was unexpected) at []"
+    ],
+    "envelope_top_level_keys": [
+     "claims",
+     "outputs",
+     "package_id",
+     "provenance",
+     "report_id",
+     "task_type"
+    ],
+    "where_claims_is_allowed": "outputs.claims (array)",
+    "lane_prevalence": {
+     "packages": 118,
+     "with_toplevel_claims": 83,
+     "schema_ok": 7
+    }
+   },
+   "reproduction": "python3 -c \"import json,jsonschema;d=json.load(open('docs/kf/wp-11363-01/kf_result.json'));jsonschema.validate(d,json.load(open('schemas/kf_result.v1.schema.json')))\"",
+   "affected_scope": "lane-wide contract drift, not a defect unique to this package: 83/118 packages under docs/kf/*/kf_result.json carry the same top-level 'claims' key and only 7/118 validate. Consequence for 01: its acceptance item schema_pass=true (report_selfcheck.json) cannot be reproduced with the committed canonical schema; the review therefore records schema_pass as NOT CONFIRMED. Remediation is a schema/convention decision (add 'claims' to the canonical root, or move it into outputs.claims) and belongs to the lane owner, not to package 01.",
+   "overstated_claim": true
+  },
+  {
+   "id": "F5",
+   "severity": "low",
+   "blocking": false,
+   "title": "'verified' tokens in the package are quote-resolution flags (quote_verified / all_verified), which a naive scanner can misread as claim verification",
+   "evidence": {
+    "occurrences": 29,
+    "distinct_paths": [
+     "/assets[0]/locator/quote_verified",
+     "/assets[10]/locator/quote_verified",
+     "/assets[11]/locator/quote_verified",
+     "/assets[12]/locator/quote_verified"
+    ],
+    "claim_grade_flags": [],
+    "capability_asset_status": [
+     {
+      "status": "declared_reference_only",
+      "scope": "declared_in_prose_only",
+      "reason": "the report declares this capability grade; this 工序 records the declaration verbatim and does NOT verify it (the platform gate computes verification), so no grade is endorsed here"
+     }
+    ]
+   },
+   "reproduction": "python3 runs/m19810/verify_wp11363_04.py (C11) — collects every key containing 'verified'",
+   "affected_scope": "no claim is marked verified in the substantive sense: claims==[] and the capability declaration is declared_reference_only with a 'does NOT verify' reason. This note is about scanner ambiguity, not about a false verification claim",
+   "overstated_claim": false
+  },
+  {
+   "id": "F2",
+   "severity": "low",
+   "blocking": false,
+   "title": "artefacts cited outside the audit-chain line are registered only implicitly (no per-file asset row, no further_occurrences entry)",
+   "evidence": {
+    "cited_only_inside_directory_quote": [
+     "benchmark_results.json",
+     "golden_regression.json",
+     "per_device_table.csv",
+     "combined_table.csv",
+     "report_tables.md"
+    ],
+    "example": "line 44 names artifacts/esd/combined_table.csv as the full table behind the §③ combined-savings table; the only registration of that file is inside the line-119 directory quote of asset r11363:ref:09",
+    "first_citation": {
+     "benchmark_results.json": {
+      "line": 119,
+      "occurrences": 1
+     },
+     "golden_regression.json": {
+      "line": 119,
+      "occurrences": 1
+     },
+     "per_device_table.csv": {
+      "line": 119,
+      "occurrences": 1
+     },
+     "combined_table.csv": {
+      "line": 44,
+      "occurrences": 2
+     },
+     "report_tables.md": {
+      "line": 119,
+      "occurrences": 1
+     }
+    }
+   },
+   "reproduction": "python3 runs/m19810/verify_wp11363_04.py (C13)",
+   "affected_scope": "registration granularity only; the citation is still locatable verbatim inside the directory quote at line 119, so no citation is lost or mis-attributed",
+   "overstated_claim": false
+  }
+ ],
+ "artefact_hashes": {
+  "kf_result.json": "sha256:3347e4c40d00a416584f4ea879b46ebc5c4f6821ab353347a27baa2b4743f41a",
+  "asset_manifest.json": "sha256:a0c199c40dbcd9bee70dba7d086279dafcf7395e956a3f7f306c60fb2b88f711",
+  "report_selfcheck.json": "sha256:ad4ddefa7400ad2bd52301a1e0f61fec3fefa11132751dedaf34d2a9a39a8fc6"
+ }
+}
