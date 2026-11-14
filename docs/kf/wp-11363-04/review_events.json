@@ -1,0 +1,183 @@
+[
+ {
+  "event_id": "wp-11363-04:ev-00",
+  "type": "review_started",
+  "actor": "reviewer/wp-11363-04",
+  "reviewer_role": "red-team-reviewer",
+  "reviewed_package_id": "wp-11363-01",
+  "report_id": "11363"
+ },
+ {
+  "event_id": "wp-11363-04:ev-01",
+  "type": "independent_source_refetch",
+  "source_uri": "tensor://reports/11363",
+  "field": "markdown",
+  "sha256": "sha256:346ef4c6322f2c40bb1dda58a6336eed4e90122132009f11a4d1a9fe8a065c23",
+  "chars": 6902,
+  "bytes": 9618,
+  "lines": 124,
+  "contract_hash_matched": true
+ },
+ {
+  "event_id": "wp-11363-04:ev-10",
+  "type": "check",
+  "check_id": "C10_envelope_manifest_identity",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-11",
+  "type": "check",
+  "check_id": "C11_verification_scope",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-12",
+  "type": "check",
+  "check_id": "C12_cross_report_isolation",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-13",
+  "type": "check",
+  "check_id": "C13_registration_completeness",
+  "status": "pass_with_notes"
+ },
+ {
+  "event_id": "wp-11363-04:ev-14",
+  "type": "check",
+  "check_id": "C14_report_arithmetic",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-15",
+  "type": "check",
+  "check_id": "C15_upstream_packages",
+  "status": "unknown_not_run"
+ },
+ {
+  "event_id": "wp-11363-04:ev-16",
+  "type": "check",
+  "check_id": "C16_independence",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-17",
+  "type": "check",
+  "check_id": "C17_negative_resolution_claims",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-18",
+  "type": "check",
+  "check_id": "C1_source_identity",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-19",
+  "type": "check",
+  "check_id": "C2_report_identity",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-20",
+  "type": "check",
+  "check_id": "C3_locator_resolution",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-21",
+  "type": "check",
+  "check_id": "C4_counts_recompute",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-22",
+  "type": "check",
+  "check_id": "C5_id_integrity",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-23",
+  "type": "check",
+  "check_id": "C6_bundle_consistency",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-24",
+  "type": "check",
+  "check_id": "C7_figure_probe_recheck",
+  "status": "pass"
+ },
+ {
+  "event_id": "wp-11363-04:ev-25",
+  "type": "check",
+  "check_id": "C8_observation_vs_probe",
+  "status": "fail"
+ },
+ {
+  "event_id": "wp-11363-04:ev-26",
+  "type": "check",
+  "check_id": "C9_schema_validation",
+  "status": "fail"
+ },
+ {
+  "event_id": "wp-11363-04:fv-00",
+  "type": "finding_raised",
+  "finding_id": "F4",
+  "severity": "low",
+  "blocking": false,
+  "title": "bundle_consistency.declared_in_manifest_line holds a file COUNT (10), not a line number"
+ },
+ {
+  "event_id": "wp-11363-04:fv-01",
+  "type": "finding_raised",
+  "finding_id": "F1",
+  "severity": "medium",
+  "blocking": false,
+  "title": "manifest.observations contradicts manifest.platform_attachment_probes (figure byte status/hash)"
+ },
+ {
+  "event_id": "wp-11363-04:fv-02",
+  "type": "finding_raised",
+  "finding_id": "F3",
+  "severity": "high",
+  "blocking": true,
+  "title": "envelope kf_result.json fails the canonical schema: top-level 'claims' is an additional property (additionalProperties=false) — the declared schema_pass is not reproducible with schemas/kf_result.v1.schema.json"
+ },
+ {
+  "event_id": "wp-11363-04:fv-03",
+  "type": "finding_raised",
+  "finding_id": "F5",
+  "severity": "low",
+  "blocking": false,
+  "title": "'verified' tokens in the package are quote-resolution flags (quote_verified / all_verified), which a naive scanner can misread as claim verification"
+ },
+ {
+  "event_id": "wp-11363-04:fv-04",
+  "type": "finding_raised",
+  "finding_id": "F2",
+  "severity": "low",
+  "blocking": false,
+  "title": "artefacts cited outside the audit-chain line are registered only implicitly (no per-file asset row, no further_occurrences entry)"
+ },
+ {
+  "event_id": "wp-11363-04:ev-90",
+  "type": "verdict",
+  "verdict": "needs-fix",
+  "blocking_findings": [
+   "F3"
+  ],
+  "non_blocking_findings": [
+   "F4",
+   "F1",
+   "F5",
+   "F2"
+  ]
+ },
+ {
+  "event_id": "wp-11363-04:ev-91",
+  "type": "no_verified_marks",
+  "verified_marks": 0,
+  "note": "verification is computed by the platform gate"
+ }
+]
