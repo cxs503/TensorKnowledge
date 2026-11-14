@@ -1,0 +1,100 @@
+{
+  "package_id": "wp-5716-04",
+  "task_type": "04-independent-review",
+  "contract_version": "1.0",
+  "report_id": "5716",
+  "repro_cmd": [
+    "python3 scripts/kf/review_wp_5716_04.py --offline",
+    "pytest -q tests/test_wp_5716_04_review.py"
+  ],
+  "validation": {
+    "verdict": "needs-fix",
+    "disposition": "request changes",
+    "severity_counts": {
+      "high": 3,
+      "medium": 4,
+      "low": 4,
+      "blocking": 3,
+      "total": 11
+    },
+    "blocking_findings": [
+      "F1",
+      "F2",
+      "F3"
+    ],
+    "recompute_entries": 22,
+    "finding_count": 11,
+    "checks_not_run": 5,
+    "publication_state": "awaiting_pr_merge",
+    "publication_note": "本包不自称已发布；published.json 由平台门在合并时写入（pr-gate 记账）。",
+    "claims_verified_by_producer": false,
+    "invariants": [
+      "每个打印数字来自 recompute.json",
+      "每条复算输入带 1-based 行号与整行原文",
+      "每个检测器可在篡改源上停止触发",
+      "判定与阻断项一致",
+      "未标记已验证"
+    ],
+    "tests": "pytest -q tests/test_wp_5716_04_review.py"
+  },
+  "provenance": {
+    "source_uri": "tensor://reports/5716",
+    "source_field": "markdown",
+    "source_hash": "sha256:4f9848b22b55515826476e1d5b2fcd15da80087a3d261d6a937a4c17cda68377",
+    "hash_matches_pin": true,
+    "expected_hash": "sha256:4f9848b22b55515826476e1d5b2fcd15da80087a3d261d6a937a4c17cda68377",
+    "chars": 4790,
+    "source_chars": 4790,
+    "lines": 86,
+    "title": "IN10-G1 · 冰区航行全流程总攻验收门：跨模型接口契约 + 16 项一致性断言 + 论文级验收报告",
+    "scenario_key": "ship.ice_navigation.campaign_gate",
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/5716 (auth: platform login)",
+    "retrieved_at": "2026-11-14T19:20:51+00:00",
+    "generator": "scripts/kf/review_wp_5716_04.py",
+    "reviewed_package": "wp-5716-01"
+  },
+  "outputs": {
+    "source_5716.md": {
+      "path": "docs/kf/wp-5716-04/source_5716.md",
+      "sha256": "4f9848b22b55515826476e1d5b2fcd15da80087a3d261d6a937a4c17cda68377",
+      "bytes": 8108,
+      "role": "钉扎的快照（逐字节等于取回的 markdown，用于离线重建与哈希复核）"
+    },
+    "source_5716.md.meta.json": {
+      "path": "docs/kf/wp-5716-04/source_5716.md.meta.json",
+      "sha256": "4a1dc879b7f44cb0d8c44cf2ddbb48e259d327e4fc5e53b72d8f3fbbc847d3a5",
+      "bytes": 598,
+      "role": "取回元数据（哈希钉扎、抓取时刻、来源 URI）"
+    },
+    "figures/fig_review_errors.png": {
+      "path": "docs/kf/wp-5716-04/figures/fig_review_errors.png",
+      "sha256": "5269e0613ea00fa004542fbcfda9ee3bee1cca6db37a29ca75cdc16e3b25daf3",
+      "bytes": 246349,
+      "role": "图 1：复算误差 vs 自述容差 + 台账状态矩阵"
+    },
+    "recompute.json": {
+      "path": "docs/kf/wp-5716-04/recompute.json",
+      "sha256": "a4e695faa4db3ac83556c8bcb8f585b6aa1d8a318f5d1ef10f29c2567ba5477d",
+      "bytes": 40754,
+      "role": "复算台账：每条含公式/输入(带行号与原文)/复算值/报告值/相对差/容差/状态"
+    },
+    "review_report.json": {
+      "path": "docs/kf/wp-5716-04/review_report.json",
+      "sha256": "61805166202230d67f9414def3a751d69242554c8c6d9971de659a446a7bcadc",
+      "bytes": 21163,
+      "role": "复核结论：判定/发现(含复现路径)/被证成主张/未执行检查/独立性限制"
+    },
+    "report.md": {
+      "path": "docs/kf/wp-5716-04/report.md",
+      "sha256": "ae2f08576629093f40dac8818f7cbf2ddf4061dd411de6d0f82b6ef029d77418",
+      "bytes": 24626,
+      "role": "复核报告正文（全部数字由 recompute.json 渲染，零手抄）"
+    },
+    "README.md": {
+      "path": "docs/kf/wp-5716-04/README.md",
+      "sha256": "fa33e459b770ca45b6b6bf47705199d7923cf4a7f4283e93e3b6f335e9d3f098",
+      "bytes": 2725,
+      "role": "包索引：结论摘要 + 交付物哈希 + 复现命令 + 边界声明"
+    }
+  }
+}

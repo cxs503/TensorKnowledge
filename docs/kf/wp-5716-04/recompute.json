@@ -1,0 +1,849 @@
+{
+  "package_id": "wp-5716-04",
+  "report_id": "5716",
+  "reviewed_source_hash": "sha256:4f9848b22b55515826476e1d5b2fcd15da80087a3d261d6a937a4c17cda68377",
+  "convention": "value=复核方按 formula 用 inputs 算出的值；reported=报告印出的值（text 逐字来自源）；rel_diff_pct=(value-reported)/reported×100；status 见下方 status_legend",
+  "status_legend": {
+    "pass": "与报告印出值之差在该报告自述容差内",
+    "fail": "超出该报告自述容差，或同一量两值互相矛盾",
+    "derived": "复核方派生量，报告未印对应值（只做量级/恒等式核对）",
+    "violated": "报告自身参数满足该恒等式，但其印出的数字不满足（覆盖缺口）",
+    "unreconstructible": "用报告印出的数字无法复算该值"
+  },
+  "entries": [
+    {
+      "id": "C1_CB_LITERAL",
+      "label": "G01 几何门：按报告写出的公式逐字代入（∇ = DWT/0.8167，不含海水密度）",
+      "formula": "Cb = (DWT / 0.8167) / (L·B·T)",
+      "inputs": [
+        {
+          "name": "dwt_t",
+          "value": "45",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        },
+        {
+          "name": "dwt_over_disp",
+          "value": "0.8167",
+          "line": 5,
+          "quote": "几何先验门：由独立排水量（DWT/0.8167）反算 Cb=0.82007 vs 声明 0.82（相对差 8.5e-5），L/B=6.333、B/T=2.609 → 通过。"
+        },
+        {
+          "name": "L_pp_m",
+          "value": "190",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        },
+        {
+          "name": "B_m",
+          "value": "30",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        },
+        {
+          "name": "T_m",
+          "value": "11.5",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        }
+      ],
+      "value": 0.8405765346335745,
+      "value_str": "0.84058",
+      "unit": "-",
+      "reported": "0.82",
+      "reported_value": 0.82,
+      "reported_line": 3,
+      "reported_quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。",
+      "rel_diff_pct": 2.5093,
+      "rel_diff_str": "2.51",
+      "tol_pct": 2.0,
+      "within_tol": false,
+      "status": "fail",
+      "basis_sensitive": false,
+      "note": "字面代入得 0.84058，相对声明值 0.82 偏差 2.5093%（自述容差 2.0000%）：按报告写出的公式，G01 应判 FAIL。要得到报告印出的 0.82007 必须额外引入 ρ=1.0250 t/m3，该常数全文未出现。"
+    },
+    {
+      "id": "C2_CB_WITH_RHO",
+      "label": "G01 补上海水密度后的复算（reviewer 显式常数）",
+      "formula": "Cb = (DWT / 0.8167 / ρ) / (L·B·T),  ρ = 1.0250 t/m3",
+      "inputs": [
+        {
+          "name": "dwt_t",
+          "value": "45",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        },
+        {
+          "name": "dwt_over_disp",
+          "value": "0.8167",
+          "line": 5,
+          "quote": "几何先验门：由独立排水量（DWT/0.8167）反算 Cb=0.82007 vs 声明 0.82（相对差 8.5e-5），L/B=6.333、B/T=2.609 → 通过。"
+        },
+        {
+          "name": "L_pp_m",
+          "value": "190",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        },
+        {
+          "name": "B_m",
+          "value": "30",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        },
+        {
+          "name": "T_m",
+          "value": "11.5",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        }
+      ],
+      "value": 0.8200746679351947,
+      "value_str": "0.82007",
+      "unit": "-",
+      "reported": "0.82007",
+      "reported_value": 0.82007,
+      "reported_line": 5,
+      "reported_quote": "几何先验门：由独立排水量（DWT/0.8167）反算 Cb=0.82007 vs 声明 0.82（相对差 8.5e-5），L/B=6.333、B/T=2.609 → 通过。",
+      "rel_diff_pct": 0.0006,
+      "rel_diff_str": "0.0006",
+      "tol_pct": 2.0,
+      "within_tol": true,
+      "status": "pass",
+      "basis_sensitive": false,
+      "note": "补 ρ 后复算 0.82007 与印出的 0.82007 只差 5.692e-04%，G01 的 PASS 因此可复现——但成立依赖一个没有写进报告的常数。"
+    },
+    {
+      "id": "C3_LB",
+      "label": "L/B 副尺度比",
+      "formula": "L_pp / B",
+      "inputs": [
+        {
+          "name": "L_pp_m",
+          "value": "190",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        },
+        {
+          "name": "B_m",
+          "value": "30",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        }
+      ],
+      "value": 6.333333333333333,
+      "value_str": "6.3333",
+      "unit": "-",
+      "reported": "6.333",
+      "reported_value": 6.333,
+      "reported_line": 5,
+      "reported_quote": "几何先验门：由独立排水量（DWT/0.8167）反算 Cb=0.82007 vs 声明 0.82（相对差 8.5e-5），L/B=6.333、B/T=2.609 → 通过。",
+      "rel_diff_pct": 0.0053,
+      "rel_diff_str": "0.0053",
+      "tol_pct": 2.0,
+      "within_tol": true,
+      "status": "pass",
+      "basis_sensitive": false,
+      "note": ""
+    },
+    {
+      "id": "C4_BT",
+      "label": "B/T 副尺度比",
+      "formula": "B / T",
+      "inputs": [
+        {
+          "name": "B_m",
+          "value": "30",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        },
+        {
+          "name": "T_m",
+          "value": "11.5",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        }
+      ],
+      "value": 2.608695652173913,
+      "value_str": "2.6087",
+      "unit": "-",
+      "reported": "2.609",
+      "reported_value": 2.609,
+      "reported_line": 5,
+      "reported_quote": "几何先验门：由独立排水量（DWT/0.8167）反算 Cb=0.82007 vs 声明 0.82（相对差 8.5e-5），L/B=6.333、B/T=2.609 → 通过。",
+      "rel_diff_pct": -0.0117,
+      "rel_diff_str": "0.0117",
+      "tol_pct": 2.0,
+      "within_tol": true,
+      "status": "pass",
+      "basis_sensitive": false,
+      "note": ""
+    },
+    {
+      "id": "C5_SPEED_C3",
+      "label": "C3 剖面隐含平均航速",
+      "formula": "S_C3 / t_C3",
+      "inputs": [
+        {
+          "name": "c3_dist_nm",
+          "value": "684.1",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_time_h",
+          "value": "63.3",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        }
+      ],
+      "value": 10.807266982622433,
+      "value_str": "10.8073",
+      "unit": "kn",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "derived",
+      "basis_sensitive": false,
+      "note": ""
+    },
+    {
+      "id": "C6_SPEED_D1",
+      "label": "D1 航线隐含平均航速",
+      "formula": "S_D1 / t_D1",
+      "inputs": [
+        {
+          "name": "d1_dist_nm",
+          "value": "684.1",
+          "line": 35,
+          "quote": "- D1：主航线 684.1 nm / 54.5 h，no-go 0 nm，独立 haversine 复算差 0.000%。"
+        },
+        {
+          "name": "d1_time_h",
+          "value": "54.5",
+          "line": 35,
+          "quote": "- D1：主航线 684.1 nm / 54.5 h，no-go 0 nm，独立 haversine 复算差 0.000%。"
+        }
+      ],
+      "value": 12.552293577981652,
+      "value_str": "12.5523",
+      "unit": "kn",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "derived",
+      "basis_sensitive": false,
+      "note": ""
+    },
+    {
+      "id": "C7_TIME_FLOOR",
+      "label": "由报告自己的冰区占比/设计点/服务航速给出的最短可行总时间",
+      "formula": "t_min = (1-0.27)·S/13.0 + 0.27·S/4.5",
+      "inputs": [
+        {
+          "name": "c3_dist_nm",
+          "value": "684.1",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_ice_frac_pct",
+          "value": "27.0",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_design_kn",
+          "value": "4.50",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "v_service_kn",
+          "value": "13",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        }
+      ],
+      "value": 79.46084615384616,
+      "value_str": "79.4608",
+      "unit": "h",
+      "reported": "63.3",
+      "reported_value": 63.3,
+      "reported_line": 36,
+      "reported_quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。",
+      "rel_diff_pct": 25.5306,
+      "rel_diff_str": "25.53",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "violated",
+      "basis_sensitive": false,
+      "note": "27.0% 冰区按距离解释、冰区按 4.50 kn 航行时，总时间下限 79.4608 h，比印出的 63.3 h 长 25.5306%。没有任何门断言闭合这条恒等式（G10 只闭合设计点单位链）。"
+    },
+    {
+      "id": "C8_VICE_IMPLIED_C3",
+      "label": "反解：把 C3 印出的总时间当真，冰区段必须达到的平均航速",
+      "formula": "v_ice = 0.27·S / (t_C3 - (1-0.27)·S/13.0)",
+      "inputs": [
+        {
+          "name": "c3_dist_nm",
+          "value": "684.1",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_ice_frac_pct",
+          "value": "27.0",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_time_h",
+          "value": "63.3",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "v_service_kn",
+          "value": "13",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        }
+      ],
+      "value": 7.422377259224687,
+      "value_str": "7.4224",
+      "unit": "kn",
+      "reported": "4.50",
+      "reported_value": 4.5,
+      "reported_line": 36,
+      "reported_quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。",
+      "rel_diff_pct": 64.9417,
+      "rel_diff_str": "64.94",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "violated",
+      "basis_sensitive": true,
+      "note": "按 63.3 h 反解 7.4224 kn，按 D1 的 54.5 h 反解 11.4831 kn，按结论段 68.2 h 反解 6.2013 kn：三处都远离登记的 4.50 kn 设计点。"
+    },
+    {
+      "id": "C8b_VICE_IMPLIED_D1",
+      "label": "同上，改用 D1 印出航时",
+      "formula": "v_ice = 0.27·S / (t_D1 - (1-0.27)·S/13.0)",
+      "inputs": [
+        {
+          "name": "c3_dist_nm",
+          "value": "684.1",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_ice_frac_pct",
+          "value": "27.0",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "d1_time_h",
+          "value": "54.5",
+          "line": 35,
+          "quote": "- D1：主航线 684.1 nm / 54.5 h，no-go 0 nm，独立 haversine 复算差 0.000%。"
+        },
+        {
+          "name": "v_service_kn",
+          "value": "13",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        }
+      ],
+      "value": 11.483073259144843,
+      "value_str": "11.4831",
+      "unit": "kn",
+      "reported": "4.50",
+      "reported_value": 4.5,
+      "reported_line": 36,
+      "reported_quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。",
+      "rel_diff_pct": 155.1794,
+      "rel_diff_str": "155.18",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "violated",
+      "basis_sensitive": true,
+      "note": ""
+    },
+    {
+      "id": "C8c_VICE_IMPLIED_CONCL",
+      "label": "同上，改用结论段剖面航时",
+      "formula": "v_ice = 0.27·S / (t_p - (1-0.27)·S/13.0)",
+      "inputs": [
+        {
+          "name": "c3_dist_nm",
+          "value": "684.1",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_ice_frac_pct",
+          "value": "27.0",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "concl_profile_time_h",
+          "value": "68.2",
+          "line": 84,
+          "quote": "其中影响最实质的两条：(a) B2 板格 20 年 Miner 利用率 67.6（上游只报纵桁 pass；即便按简支 β 修正仍为 12.4，即降载/加厚板/提高 S-N 等级是必需工作，不是文档错误）；(b) C1 MT Uikku 链在独立十工况锚上 MAPE 36.2%，薄冰段 55.5% —— 与论文自述的薄冰弹性屈曲机理一致，登记为下一轮物理改进项（GAP-INT-05）。另有 D1↔C3 冰中航速 40–66% 分歧（航线时间 54.4 h vs 剖面 68.2 h）登记为 GAP-INT-07，需上游指定唯一真源。"
+        },
+        {
+          "name": "v_service_kn",
+          "value": "13",
+          "line": 3,
+          "quote": "北极喀拉海—边缘冰区 PC6 冰级 45k DWT 散货船母型（L_pp=190 m, B=30 m, T=11.5 m, Cb=0.82, 主机 18 MW, 服务航速 13 kn, σ_f=500 kPa, B1 冰挤压设计力 8 MN/0.25 Hz, 年冰区占比 0.12, 20 年寿命）。任务是把五个独立开发的模型（A2 冰况同化预报 / C3 航速剖面 / D1 冰区航线 / E1 数字孪生 / B2 冰带疲劳）串成一条可验收的端到端链，并验证它们之间的单位制、坐标系与冰况参数传递契约。"
+        }
+      ],
+      "value": 6.201310926713619,
+      "value_str": "6.2013",
+      "unit": "kn",
+      "reported": "4.50",
+      "reported_value": 4.5,
+      "reported_line": 36,
+      "reported_quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。",
+      "rel_diff_pct": 37.8069,
+      "rel_diff_str": "37.81",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "violated",
+      "basis_sensitive": true,
+      "note": ""
+    },
+    {
+      "id": "C9_ENERGY_POWER",
+      "label": "能量-时间闭合：平均功率",
+      "formula": "P̄ = E / t_C3",
+      "inputs": [
+        {
+          "name": "c3_energy_kwh",
+          "value": "203388",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_time_h",
+          "value": "63.3",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        }
+      ],
+      "value": 3213.0805687203792,
+      "value_str": "3213.0806",
+      "unit": "kW",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "derived",
+      "basis_sensitive": false,
+      "note": "占装机 18 MW 的 17.8504%，量级可信。"
+    },
+    {
+      "id": "C10_ENERGY_PER_NM",
+      "label": "单位航程能耗",
+      "formula": "E / S_C3",
+      "inputs": [
+        {
+          "name": "c3_energy_kwh",
+          "value": "203388",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_dist_nm",
+          "value": "684.1",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        }
+      ],
+      "value": 297.3074111971934,
+      "value_str": "297.3074",
+      "unit": "kWh/nm",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "derived",
+      "basis_sensitive": false,
+      "note": ""
+    },
+    {
+      "id": "C11_DIV_TIME",
+      "label": "D1 与 C3 的航时分歧（结论段口径）",
+      "formula": "(t_profile - t_route) / t_route",
+      "inputs": [
+        {
+          "name": "concl_route_time_h",
+          "value": "54.4",
+          "line": 84,
+          "quote": "其中影响最实质的两条：(a) B2 板格 20 年 Miner 利用率 67.6（上游只报纵桁 pass；即便按简支 β 修正仍为 12.4，即降载/加厚板/提高 S-N 等级是必需工作，不是文档错误）；(b) C1 MT Uikku 链在独立十工况锚上 MAPE 36.2%，薄冰段 55.5% —— 与论文自述的薄冰弹性屈曲机理一致，登记为下一轮物理改进项（GAP-INT-05）。另有 D1↔C3 冰中航速 40–66% 分歧（航线时间 54.4 h vs 剖面 68.2 h）登记为 GAP-INT-07，需上游指定唯一真源。"
+        },
+        {
+          "name": "concl_profile_time_h",
+          "value": "68.2",
+          "line": 84,
+          "quote": "其中影响最实质的两条：(a) B2 板格 20 年 Miner 利用率 67.6（上游只报纵桁 pass；即便按简支 β 修正仍为 12.4，即降载/加厚板/提高 S-N 等级是必需工作，不是文档错误）；(b) C1 MT Uikku 链在独立十工况锚上 MAPE 36.2%，薄冰段 55.5% —— 与论文自述的薄冰弹性屈曲机理一致，登记为下一轮物理改进项（GAP-INT-05）。另有 D1↔C3 冰中航速 40–66% 分歧（航线时间 54.4 h vs 剖面 68.2 h）登记为 GAP-INT-07，需上游指定唯一真源。"
+        }
+      ],
+      "value": 25.36764705882354,
+      "value_str": "25.3676",
+      "unit": "%",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": 15.0,
+      "within_tol": false,
+      "status": "fail",
+      "basis_sensitive": true,
+      "note": "按结论段数字，航时分歧 25.3676%（> 15.0000% 判据）。"
+    },
+    {
+      "id": "C12_DIV_TIME_C3",
+      "label": "D1 与 C3 的航时分歧（③ 结果段口径）",
+      "formula": "(t_C3 - t_D1) / t_D1",
+      "inputs": [
+        {
+          "name": "c3_time_h",
+          "value": "63.3",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "d1_time_h",
+          "value": "54.5",
+          "line": 35,
+          "quote": "- D1：主航线 684.1 nm / 54.5 h，no-go 0 nm，独立 haversine 复算差 0.000%。"
+        }
+      ],
+      "value": 16.146788990825684,
+      "value_str": "16.1468",
+      "unit": "%",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": 15.0,
+      "within_tol": false,
+      "status": "fail",
+      "basis_sensitive": true,
+      "note": "改用 ③ 的 63.3 h 时为 16.1468%。"
+    },
+    {
+      "id": "C13_DIV_SPEED_CONCL",
+      "label": "D1 与 C3 的平均航速分歧（结论段口径）",
+      "formula": "|S_C3/t_profile - v_D1| / v_D1",
+      "inputs": [
+        {
+          "name": "d1_dist_nm",
+          "value": "684.1",
+          "line": 35,
+          "quote": "- D1：主航线 684.1 nm / 54.5 h，no-go 0 nm，独立 haversine 复算差 0.000%。"
+        },
+        {
+          "name": "d1_time_h",
+          "value": "54.5",
+          "line": 35,
+          "quote": "- D1：主航线 684.1 nm / 54.5 h，no-go 0 nm，独立 haversine 复算差 0.000%。"
+        },
+        {
+          "name": "c3_dist_nm",
+          "value": "684.1",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "concl_profile_time_h",
+          "value": "68.2",
+          "line": 84,
+          "quote": "其中影响最实质的两条：(a) B2 板格 20 年 Miner 利用率 67.6（上游只报纵桁 pass；即便按简支 β 修正仍为 12.4，即降载/加厚板/提高 S-N 等级是必需工作，不是文档错误）；(b) C1 MT Uikku 链在独立十工况锚上 MAPE 36.2%，薄冰段 55.5% —— 与论文自述的薄冰弹性屈曲机理一致，登记为下一轮物理改进项（GAP-INT-05）。另有 D1↔C3 冰中航速 40–66% 分歧（航线时间 54.4 h vs 剖面 68.2 h）登记为 GAP-INT-07，需上游指定唯一真源。"
+        }
+      ],
+      "value": 20.087976539589448,
+      "value_str": "20.0880",
+      "unit": "%",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": 15.0,
+      "within_tol": false,
+      "status": "fail",
+      "basis_sensitive": true,
+      "note": "平均航速口径 20.0880%（> 15.0000%）。"
+    },
+    {
+      "id": "C14_DIV_SPEED_C3",
+      "label": "D1 与 C3 的平均航速分歧（③ 结果段口径）",
+      "formula": "|v_D1 - v_C3| / v_D1",
+      "inputs": [
+        {
+          "name": "d1_dist_nm",
+          "value": "684.1",
+          "line": 35,
+          "quote": "- D1：主航线 684.1 nm / 54.5 h，no-go 0 nm，独立 haversine 复算差 0.000%。"
+        },
+        {
+          "name": "d1_time_h",
+          "value": "54.5",
+          "line": 35,
+          "quote": "- D1：主航线 684.1 nm / 54.5 h，no-go 0 nm，独立 haversine 复算差 0.000%。"
+        },
+        {
+          "name": "c3_dist_nm",
+          "value": "684.1",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        },
+        {
+          "name": "c3_time_h",
+          "value": "63.3",
+          "line": 36,
+          "quote": "- C3：总航程 684.1 nm / 63.3 h / 203388 kWh；冰区占比 27.0%，设计点 4.50 kn, R_ice 464.7 kN。"
+        }
+      ],
+      "value": 13.902053712480257,
+      "value_str": "13.9021",
+      "unit": "%",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": 15.0,
+      "within_tol": true,
+      "status": "pass",
+      "basis_sensitive": true,
+      "note": "同一对模型换 ③ 的数字只有 13.9021%（≤ 15.0000% 即 PASS），报告登记的是 65.6%。判据的比较基准（全航程均值 or 冰区段）从未写明。"
+    },
+    {
+      "id": "C15_B2_UTIL_LINEAR",
+      "label": "B2 板格利用率按系数偏差线性换算（区间）",
+      "formula": "U' = U·(1 ± 0.758)",
+      "inputs": [
+        {
+          "name": "b2_util20",
+          "value": "67.58",
+          "line": 38,
+          "quote": "- B2：控制细节 `plate_panel_MPa`，20 年利用率 67.58（不通过）；纵桁 1.68e-05。"
+        },
+        {
+          "name": "b2_beta_dev_pct",
+          "value": "75.8",
+          "line": 72,
+          "quote": "| B2 板格系数 vs 简支板理论 β | 75.8% | Navier 级数 0.2874 | 否 |"
+        }
+      ],
+      "value": 16.35436,
+      "value_str": "16.3544",
+      "unit": "-",
+      "reported": "12.4",
+      "reported_value": 12.4,
+      "reported_line": 84,
+      "reported_quote": "其中影响最实质的两条：(a) B2 板格 20 年 Miner 利用率 67.6（上游只报纵桁 pass；即便按简支 β 修正仍为 12.4，即降载/加厚板/提高 S-N 等级是必需工作，不是文档错误）；(b) C1 MT Uikku 链在独立十工况锚上 MAPE 36.2%，薄冰段 55.5% —— 与论文自述的薄冰弹性屈曲机理一致，登记为下一轮物理改进项（GAP-INT-05）。另有 D1↔C3 冰中航速 40–66% 分歧（航线时间 54.4 h vs 剖面 68.2 h）登记为 GAP-INT-07，需上游指定唯一真源。",
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "unreconstructible",
+      "basis_sensitive": false,
+      "note": "线性换算区间 [16.3544, 118.8056] 不含报告给出的修正值 12.4：β 修正的方法（S-N 指数？载荷折减？）没有披露，该数字用报告印出的数字无法复算。"
+    },
+    {
+      "id": "C16_DISCLOSURE_REGISTER",
+      "label": "披露登记簿：自称条数 vs 可绑定 ID 数",
+      "formula": "n(注册的 D** 项)",
+      "inputs": [
+        {
+          "name": "assert_claim_disclosures",
+          "value": "7",
+          "line": 9,
+          "quote": "阶段全部调用上游模块本体（不重写物理），本战役只新增**契约层与验收层**：`contracts.py`（单位表/坐标系/保守重映射/方向探针）、`chain.py`（L1 案例单源注入 + 逐阶段 sha256 台账）、`assertions.py`（16 项门断言 + 7 项披露）、`assets.py`（跨库资产对账）、`figures.py`/`report.py`（图与报告程序化生成）。数据流：L1→A2→[保守重映射]→D1→C3→E1，B2 的 8 MN 与 C3 设计点喂给 E1，D1 航线冰厚分箱喂给 C3。一条命令：`cd backend && python -m modules.campaign_ice_nav.run_campaign`，墙钟 50.7 s。"
+        },
+        {
+          "name": "disclose_failed_claim",
+          "value": "4",
+          "line": 78,
+          "quote": "一致性门 16/16 通过、一条命令端到端跑通、JSON/报告/7 图齐全。**但有 4 项披露项如实不通过，不覆盖：**"
+        }
+      ],
+      "value": 4,
+      "value_str": "4",
+      "unit": "项",
+      "reported": "7",
+      "reported_value": 7.0,
+      "reported_line": 9,
+      "reported_quote": "阶段全部调用上游模块本体（不重写物理），本战役只新增**契约层与验收层**：`contracts.py`（单位表/坐标系/保守重映射/方向探针）、`chain.py`（L1 案例单源注入 + 逐阶段 sha256 台账）、`assertions.py`（16 项门断言 + 7 项披露）、`assets.py`（跨库资产对账）、`figures.py`/`report.py`（图与报告程序化生成）。数据流：L1→A2→[保守重映射]→D1→C3→E1，B2 的 8 MN 与 C3 设计点喂给 E1，D1 航线冰厚分箱喂给 C3。一条命令：`cd backend && python -m modules.campaign_ice_nav.run_campaign`，墙钟 50.7 s。",
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "fail",
+      "basis_sensitive": false,
+      "note": "自称 7 项披露，可绑定 ID 的只有 4 项（D01、D02、D06、D07）；结论段称 4 项不通过，登记簿只列 4 条。ID→行号：D01@L79；D02@L80；D05@L50；D06@L51；D07@L81"
+    },
+    {
+      "id": "C17_FIG_COUNT",
+      "label": "图数口径：④ 结果图段 vs 结论段",
+      "formula": "n(④) vs n(结论)",
+      "inputs": [
+        {
+          "name": "fig_claims_sec4",
+          "value": "4",
+          "line": 42,
+          "quote": "（4 张图见 figures 字段：契约重映射 / 航速剖面 / 疲劳 S-N 与利用率 / Uikku 实冰锚）"
+        },
+        {
+          "name": "fig_claims_concl",
+          "value": "7",
+          "line": 78,
+          "quote": "一致性门 16/16 通过、一条命令端到端跑通、JSON/报告/7 图齐全。**但有 4 项披露项如实不通过，不覆盖：**"
+        }
+      ],
+      "value": 4.0,
+      "value_str": "4",
+      "unit": "张",
+      "reported": "7",
+      "reported_value": 7.0,
+      "reported_line": 78,
+      "reported_quote": "一致性门 16/16 通过、一条命令端到端跑通、JSON/报告/7 图齐全。**但有 4 项披露项如实不通过，不覆盖：**",
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "fail",
+      "basis_sensitive": false,
+      "note": "④ 段报 4 张，结论段报 7 图。"
+    },
+    {
+      "id": "C18_WALLCLOCK",
+      "label": "单命令墙钟：② 方法段 vs ⑤ 局限段",
+      "formula": "(t₂ - t₉) / t₉",
+      "inputs": [
+        {
+          "name": "wallclock_sec2",
+          "value": "50.7",
+          "line": 9,
+          "quote": "阶段全部调用上游模块本体（不重写物理），本战役只新增**契约层与验收层**：`contracts.py`（单位表/坐标系/保守重映射/方向探针）、`chain.py`（L1 案例单源注入 + 逐阶段 sha256 台账）、`assertions.py`（16 项门断言 + 7 项披露）、`assets.py`（跨库资产对账）、`figures.py`/`report.py`（图与报告程序化生成）。数据流：L1→A2→[保守重映射]→D1→C3→E1，B2 的 8 MN 与 C3 设计点喂给 E1，D1 航线冰厚分箱喂给 C3。一条命令：`cd backend && python -m modules.campaign_ice_nav.run_campaign`，墙钟 50.7 s。"
+        },
+        {
+          "name": "wallclock_note9",
+          "value": "41.5",
+          "line": 54,
+          "quote": "9. 总链墙钟约 41.5 s（单核 CPU，无 GPU）。"
+        }
+      ],
+      "value": 22.168674698795186,
+      "value_str": "22.1687",
+      "unit": "%",
+      "reported": "41.5",
+      "reported_value": 41.5,
+      "reported_line": 54,
+      "reported_quote": "9. 总链墙钟约 41.5 s（单核 CPU，无 GPU）。",
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "fail",
+      "basis_sensitive": false,
+      "note": "② 段 50.7 s、⑤ 段 41.5 s，差 22.1687%，无工件可裁决。"
+    },
+    {
+      "id": "C19_GATE_MARGIN",
+      "label": "门判据裕度：通过数 / 要求数",
+      "formula": "n_pass / n_required",
+      "inputs": [
+        {
+          "name": "gates_passed",
+          "value": "16",
+          "line": 13,
+          "quote": "门判据 **16/16 通过**（要求 ≥8）："
+        },
+        {
+          "name": "gates_required",
+          "value": "8",
+          "line": 13,
+          "quote": "门判据 **16/16 通过**（要求 ≥8）："
+        }
+      ],
+      "value": 2.0,
+      "value_str": "2.00",
+      "unit": "×",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "derived",
+      "basis_sensitive": false,
+      "note": "要求 ≥8 而自称 16 通过，门槛本身不具区分力。"
+    },
+    {
+      "id": "C20_D1_TIME_DRIFT",
+      "label": "D1 航时：③ 段 vs 结论段",
+      "formula": "(t_route - t_D1) / t_D1",
+      "inputs": [
+        {
+          "name": "d1_time_h",
+          "value": "54.5",
+          "line": 35,
+          "quote": "- D1：主航线 684.1 nm / 54.5 h，no-go 0 nm，独立 haversine 复算差 0.000%。"
+        },
+        {
+          "name": "concl_route_time_h",
+          "value": "54.4",
+          "line": 84,
+          "quote": "其中影响最实质的两条：(a) B2 板格 20 年 Miner 利用率 67.6（上游只报纵桁 pass；即便按简支 β 修正仍为 12.4，即降载/加厚板/提高 S-N 等级是必需工作，不是文档错误）；(b) C1 MT Uikku 链在独立十工况锚上 MAPE 36.2%，薄冰段 55.5% —— 与论文自述的薄冰弹性屈曲机理一致，登记为下一轮物理改进项（GAP-INT-05）。另有 D1↔C3 冰中航速 40–66% 分歧（航线时间 54.4 h vs 剖面 68.2 h）登记为 GAP-INT-07，需上游指定唯一真源。"
+        }
+      ],
+      "value": -0.1834862385321127,
+      "value_str": "-0.18349",
+      "unit": "%",
+      "reported": null,
+      "reported_value": null,
+      "reported_line": null,
+      "reported_quote": null,
+      "rel_diff_pct": null,
+      "rel_diff_str": "—",
+      "tol_pct": null,
+      "within_tol": null,
+      "status": "fail",
+      "basis_sensitive": false,
+      "note": "③ 段 54.5 h、结论段 54.4 h（同一条 D1 航线）。"
+    }
+  ]
+}
