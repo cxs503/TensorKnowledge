@@ -1,0 +1,690 @@
+# KF-RESULT wp-11415-04
+
+**tags**: `kf-wp:wp-11415-04`, `04-independent-review`, `report:11415`, `lane:C`, `red-team-reviewer`
+
+**审核对象**: `wp-11415-01` (01-asset-registration, 28 assets, 0 claims) ｜ **源**: `tensor://reports/11415` field `markdown` sha256=`d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50` chars=7903
+**判定**: `pass` on semantic fidelity ｜ `approve-with-notes` ｜ 产线 `needs-fix` (blocker: F1) ｜ **未把任何结论标为 verified**（verification 由平台门计算）
+
+---
+
+## ① 本工序做了什么
+
+对报告 `11415` 的 01 工序产物 `wp-11415-01` 做独立红队审核。审核者上下文**只有**三样东西：平台重取的报告 markdown 原文、上游包的可机读载荷（单个 JSON 代码块里的 `outputs['asset_manifest.json']`）、以及按名再取回的平台图件二进制。**生产者的叙述段一律不读**（契约 `reviewer_context_excludes_producer_explanation`），也不读生产者对结果的任何解释。
+
+审出来 10 项检查，8 过 2 不过；共 5 条发现（F1=major、F2=major、F3=info、F4=info、F5=info）。两项失败检查**同源**：上游发布的 `kf_result` 信封不满足 `schemas/kf_result.v1.schema.json`（F2）；连带其自带验证器在重建输入下复跑得 `ALL_PASS=False`，且其声明的 run 目录/durable mirror 未提交（F1）。登记内容本身（定位码、覆盖、分辨率状态、图件指纹、标签数字）**未发现实质缺陷**。
+
+## ② 怎么做的（步骤 / 工具 / 关键设置）
+
+| 步 | 动作 | 工具 / 关键设置 |
+|---|---|---|
+| 1 | 取原文并独立重算哈希 | `scripts/kf_fetch_11415_04.py` → `/tensor/reports/11415`；sha256=`d8bc42883f1fa1d2…` chars=7903，与契约 `d8bc42883f1fa1d274a…` 一致 |
+| 2 | 只隔离上游可机读半部 | `scripts/kf_isolate_upstream_11415_04.py`：断言 md 里**恰好 1 个** JSON 代码块，取 `outputs['asset_manifest.json']`，生产者散文不解析 |
+| 3 | 定位码逐字节重算 | C2：`md[start:end]==quote`、`count(quote)==1`、`start_line/end_line` 重算、`A01..A28` 连号、章节归属 |
+| 4 | 覆盖完整性（按 token 找归属资产） | C3：路径/图名 token 扫原文 → 必须有**以该 token 为 label** 的资产；表格数、图数与平台 payload 对账 |
+| 5 | 标签零手抄 | C4：label/note 里全部数字原子必须是原文子串 |
+| 6 | 分辨率诚实性 | C5：`resolved_in_source` 复核 span；`referenced_unresolved` 的路径确认**确实不在**工作树；`declared_absent` 的旗标确认在原文 |
+| 7 | 信封 schema | C6：Draft 2020-12 对 `schemas/kf_result.v1.schema.json` + `asset_manifest.v1.wp-11415-01` 逐实例校验 |
+| 8 | 评审纪律 | C7：不自标 verified、claims 空有声明、单 report_id、图名与 payload 一致 |
+| 9 | 复跑上游验证器 | C8：`scripts/kf_probe_stage2_11415_04.py` 在 `runs/wp-11415-04/replay/` 重建 run 输入后执行 `scripts/kf_verify_11415.py` |
+| 10 | 图件二进制重取 | C9：`GET /tensor/reports/11415/figures/<name>` 后重算 sha256/字节数 |
+| 11 | 源表内部算术 | C10：从 markdown 解析 6 行参数表 + 6 行 C5 表，重算 `lw2=1.5·lw1`、`b/a`、跨表同值 |
+
+关键设置：零手抄断言在**构建期**执行（`scripts/kf_build_wp-11415-04.py` 里每条引文先断言 `md.count(quote)==1`，失败即中止）；本报告的每个数字由 `scripts/kf_report_wp-11415-04.py` 从机器产物注入，不手打。
+
+（产出物正本落 `docs/kf/wp-11415-04/`：仓级 `.gitignore` 排除 `artifacts/`，故工作副本在 `artifacts/wp-11415-04/`。）
+
+## ③ 产出物清单
+
+| 文件 | 要点 |
+|---|---|
+| `docs/kf/wp-11415-04/kf_result.json` | **正本**：`kf_result.v1` 信封（本工序交付本体，已通过 `schemas/kf_result.v1.schema.json`，构建期硬校验） |
+| `docs/kf/wp-11415-04/review_report.json` | **正本**：机读审核报告（10 项检查、5 条发现、判定、`checks_not_run`、`overstated_claims`） |
+| `docs/kf/wp-11415-04/review_events.json` | **正本**：审核事件账本 10 条（源锁定→隔离→定位码→覆盖/标签→分辨率→图件→源表算术→schema→复跑→判定） |
+| `artifacts/wp-11415-04/{kf_result,review_report,review_events}.json` | 同内容工作副本（`artifacts/` 被仓级 `.gitignore` 排除，故不以它为正本；`schemas/` 与 `docs/` 镜像才是入库面） |
+| `docs/kf/wp-11415-04/KF-RESULT-wp-11415-04.md` | 本报告（唯一一个 JSON 代码块 = 上述信封） |
+| `docs/kf/wp-11415-04/fig1_review_dashboard.png` | 四联图：检查矩阵 A / 资产清单 B / 产线 schema 合规率 C / 源表算术残差 D |
+| `runs/wp-11415-04/` | `report_11415.md`、`source_identity.json`、`independent_checks.json`、`stage2_probe.json`、`replay/`（复跑沙箱） |
+| `scripts/` | `kf_fetch_11415_04.py`、`kf_isolate_upstream_11415_04.py`、`kf_verify_wp-11415-04.py`、`kf_probe_stage2_11415_04.py`、`kf_build_wp-11415-04.py`、`kf_figure_wp-11415-04.py`、`kf_report_wp-11415-04.py`、`kf_scan_estate_envelopes.py`、`kf_publish_wp-11415-04.py` |
+| `tests/test_kf_wp_11415_04.py` | pytest：信封 schema、引文逐字唯一、判定与检查一致、无 verified、哈希链 |
+
+## ④ 证据定位表（claim/字段 → 原文引文片段）
+
+引文均由构建期断言「在原文恰好出现一次」，`line`/`char_span` 由脚本从原文计算。
+
+| 发现/检查 | 断言 | 原文引文（逐字） | 行 | char_span |
+|---|---|---|---|---|
+| F3 | title line | `# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）` | 1 | 0–59 |
+| F4 | withheld declaration in source | `**表值转录保真度未复核**：三张表是 IS Code 2008 表 2.3.1-1/2/3 的**数字化转录**，` | 163 | 6456–6514 |
+| F4 | figure evidence pointer | ``**证据工件**：`artifacts/weather_criterion_imo_2008_m9667/results.json`（表值指纹`` | 7 | 357–428 |
+| F4 | test pointer | ``**pytest**：`tests/test_weather_criterion_imo_m9667.py`（22 例全绿）`` | 9 | 462–524 |
+| F5 | lw2 = 1.5 lw1 | ``阵风力臂 `lw2 = 1.5·lw1`` | 19 | 733–753 |
+| F5 | theta1 chain formula | ``θ1 = 109·k·X1·X2·√(r·s)`，k 由船型预设给出`` | 52 | 2614–2649 |
+| F5 | S1 row | `\| S1_bulk_50k \| 61,323 \| 2.50 \| 0.022 \| 0.0124 \| 0.0187 \| 23.32 \| 0.28 \| 0.43 \…` | 35 | 1411–1541 |
+| F5 | S6 row | `\| S6_ferry_A4000 \| 21,115 \| 0.70 \| 0.189 \| 0.0827 \| 0.1241 \| 17.78 \| 6.23 \| 8.6…` | 40 | 2085–2222 |
+| F5 | GZ curve provenance | ``**船型参数表**（6 条完整船型；GZ 曲线由平台共享内核 `stability_core`` | 30 | 1117–1164 |
+| F5 | deviation declaration | `> 偏差与理由（方法自主权申报）：1) 节点文字把面积写作"0°→交点 / 交点到 φ2"，` | 194 | 7668–7714 |
+
+F1/F2 的断言对象是**仓/平台状态**（目录存在性、schema 校验结果），不是原文语句，故无「原文引文」可引；下表把它们绑到可重跑的机读原件：
+
+| 事实 | 值 | 来源 |
+|---|---|---|
+| 源 markdown sha256 | `d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50` | 平台重取并本地重算 |
+| 源字符/字节 | 7903 chars / 12279 bytes | `runs/wp-11415-04/source_identity.json` |
+| 上游提交镜像 sha256 | `d039cf17da2e5aebb1bd5b3ae0d0e0be19b6e222e4b4839fda2242ed2755e7b5` | `docs/kf/wp-11415-01/asset_manifest.json`（与上游声明的 `artifact_sha256` 逐字节一致） |
+| 上游 run 目录存在 | False | `runs/wp-11415-04/stage2_probe.json` |
+| 上游 durable mirror 存在 | False | 同上 |
+| 复跑验证器失败项 | ['kf_result_schema'] | `runs/wp-11415-04/replay/runs/wp-11415-01/verify_report.json` |
+| 产线 schema 合规率 | 39/40 包违规（含本上游包） | 扫描 `docs/kf/*/KF-RESULT-*.md` 的 json 块 |
+
+## ⑤ 注意点与局限
+
+1. 上游 runs/wp-11415-01/* 与 artifacts/wp-11415-01/asset_manifest.json 未提交 → 只能按平台原文+已发布块+已提交镜像重建输入复跑（F1）。
+2. ship-performance-platform 仓不在本工作树 → A04/A05/A06/A07/A12 指向的代码、工件、测试本体无法执行或逐行审阅。
+3. IS Code 2008 表 2.3.1-1/2/3 原件不可得 → 规范表数值转录保真度无法独立复核（WITHHELD，沿用报告自述）。
+4. 无生产者侧 verify_report.json 原件（未提交），无法判断其『全绿』是在哪一版信封上算出的。
+5. **判定取舍**：`schema_pass` 按仓内 schema 严格判不过（F2），但产线40 个已发布包里有 39 个同样违规、平台侧照常发布 —— 故判为**产线口径分歧、非本生产者越界**，不阻断语义保真度结论，但必须由平台在「放宽 schema」与「统一发射器」间二选一。
+6. **未跑即未跑**：`checks_not_run` 里 4 项一律标 `not_run`，不写成通过（规范表原件、外部仓复算、生产者 verify_report 原件、真实 KN 曲线）。
+7. **口径不确定不被本审核消除**：三张 IS Code 表的数值转录保真度在原文已自述 WITHHELD，本审核无原件可比，沿用 WITHHELD，不上调、不下调。
+
+## ⑥ 自检（逐条对照 acceptance）
+
+| acceptance | 结果 | 依据 |
+|---|---|---|
+| `valid_json` | ✓ | `artifacts/wp-11415-04/kf_result.json` 可解析，`review_report.json`/`review_events.json` 均为合法 JSON |
+| `schema_pass` | ✓（本包）／✗（上游包，F2） | 本包通过 `jsonschema` 对 `schemas/kf_result.v1.schema.json` 的校验（构建期硬校验，失败即中止）；上游包 2 处 `additionalProperties` 违规 |
+| `reviewer_independent` | ✓ | 上下文=平台原文+上游机读载荷+图件二进制；生产者散文未解析；结论未标 verified（限制见 ⑤） |
+| `upstream_packages_completed` | ✓（已 published）／附 F1 | `wp-11415-01` 平台状态 published，但 run 产物与 durable mirror 未提交 → 其验证器不可直接复跑 |
+
+**honest-FAIL**：`C6_schema` 与 `C8_replay_upstream_verifier` 两项为 FAIL，未粉饰；其根因同一，其中产线级违规面 39/40（97.5%）说明这不是单包事故。
+
+### ⑥.5 误差判定（逐项回答「是否 <3%」）
+
+本工序是审核而非数值求解，没有物理量的解析基准；可对标的「审核残差」逐项列出并显式回答：
+
+| 审核残差 | 基准 | 残差 | 是否 <3% |
+|---|---|---|---|
+| 28 个定位码 `md[start:end]` vs 登记 quote | 原文逐字节 | 0（28/28 全等） | **是**（0%） |
+| 上游提交镜像 vs 声明的 `artifact_sha256` | sha256 逐字节 | 0 | **是**（0%） |
+| 4 张图件再取回 vs 登记 `png_sha256`/字节数 | sha256 + 长度 | 0 | **是**（0%） |
+| 源表 `b/a`（表列）vs `b/a`（a,b 重算） | 自身重算 | max 1.03e-03（4 位小数舍入） | **是**（0.10%） |
+| 源表 `lw2/lw1` vs 1.5 | 规范定义 | ≤ 5e-3（同舍入） | **是**（<0.5%） |
+| 上游验证器复跑 vs 其『全绿』声明 | 复跑结果 | **不复现**（ALL_PASS=False） | **否** —— 判据不成立不是精度问题，见 F1/F2 |
+
+口径声明：审核对象的规范表数值转录保真度**无基准**（IS Code 2008 原件不在环境内，原文自述 WITHHELD），故「与主管机关计算结果逐位一致」这一层不做判定、不给百分比、不标 verified。
+
+## repro_cmd（一键复跑）
+
+```bash
+cd <repo-checkout>
+python3 scripts/kf_fetch_11415_04.py            # 取原文 + 重算 sha256（不一致即非 0 退出）
+python3 scripts/kf_isolate_upstream_11415_04.py # 只取上游可机读半部
+python3 scripts/kf_probe_stage2_11415_04.py     # schema 违规枚举 + 重建 run 输入复跑上游验证器
+python3 scripts/kf_verify_wp-11415-04.py        # C1–C10 独立检查（有 FAIL 即非 0 退出）
+python3 scripts/kf_build_wp-11415-04.py         # 生成 review_report/review_events/kf_result（含 schema 硬校验）
+python3 scripts/kf_figure_wp-11415-04.py        # 四联图
+python3 scripts/kf_report_wp-11415-04.py        # 生成本报告
+python3 -m pytest tests/test_kf_wp_11415_04.py -q
+```
+
+## result JSON
+
+```json
+{
+  "package_id": "wp-11415-04",
+  "task_type": "04-independent-review",
+  "contract_version": "1.0",
+  "report_id": "11415",
+  "provenance": {
+    "source_uri": "tensor://reports/11415",
+    "source_field": "markdown",
+    "source_hash": "sha256:d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50",
+    "source_hash_matches": true,
+    "title": "IS Code 2008 §2.3 天气衡准完整链：φ1 查表 + 面积判据验证（m9667 / p176w1-n10）",
+    "scenario_key": "ship-performance/stability/weather-criterion-imo-2008",
+    "chars": 7903
+  },
+  "outputs": {
+    "review_report.json": {
+      "package_id": "wp-11415-04",
+      "task_type": "04-independent-review",
+      "contract_version": "1.0",
+      "review_target": {
+        "package_id": "wp-11415-01",
+        "task_type": "01-asset-registration",
+        "report_id": "11415",
+        "committed_mirror": "docs/kf/wp-11415-01/asset_manifest.json",
+        "committed_mirror_sha256": "d039cf17da2e5aebb1bd5b3ae0d0e0be19b6e222e4b4839fda2242ed2755e7b5",
+        "published_envelope_path": "docs/kf/wp-11415-01/KF-RESULT-wp-11415-01.md (single fenced JSON block)",
+        "assets": 28,
+        "claims": 0
+      },
+      "source": {
+        "report_id": "11415",
+        "uri": "tensor://reports/11415",
+        "field": "markdown",
+        "sha256": "d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50",
+        "chars": 7903,
+        "bytes_utf8": 12279,
+        "title": "IS Code 2008 §2.3 天气衡准完整链：φ1 查表 + 面积判据验证（m9667 / p176w1-n10）",
+        "scenario_key": "ship-performance/stability/weather-criterion-imo-2008",
+        "platform_status": "published",
+        "platform_mission_id": 9667,
+        "rehash_matches_contract": true
+      },
+      "reviewer": {
+        "role": "red-team-reviewer",
+        "independent": true,
+        "context_included": [
+          "report 11415 markdown re-fetched from the platform (not from the producer)",
+          "machine-readable payload of wp-11415-01 (outputs.asset_manifest.json)",
+          "figure binaries re-fetched by name from the platform"
+        ],
+        "context_excluded": [
+          "producer's prose sections of wp-11415-01 (only the json block is parsed)",
+          "any upstream explanation of method or results"
+        ],
+        "limitations": [
+          "上游 runs/wp-11415-01/* 与 artifacts/wp-11415-01/asset_manifest.json 未提交 → 只能按平台原文+已发布块+已提交镜像重建输入复跑（F1）。",
+          "ship-performance-platform 仓不在本工作树 → A04/A05/A06/A07/A12 指向的代码、工件、测试本体无法执行或逐行审阅。",
+          "IS Code 2008 表 2.3.1-1/2/3 原件不可得 → 规范表数值转录保真度无法独立复核（WITHHELD，沿用报告自述）。",
+          "无生产者侧 verify_report.json 原件（未提交），无法判断其『全绿』是在哪一版信封上算出的。"
+        ]
+      },
+      "checks": [
+        {
+          "id": "C1_source_identity",
+          "status": "pass",
+          "detail": [
+            "sha256=d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50 chars=7903 bytes=12279 upstream source_chars=7903"
+          ],
+          "problems": []
+        },
+        {
+          "id": "C2_locator_fidelity",
+          "status": "pass",
+          "detail": [
+            "A02 '(preamble)' sentinel used for the title line (convention, quote verbatim)",
+            "28/28 locators recomputed from raw bytes"
+          ],
+          "problems": []
+        },
+        {
+          "id": "C3_coverage",
+          "status": "pass",
+          "detail": [
+            "file_tokens=5 figures=4 md_tables=5 table_assets=5 payload_figures=4"
+          ],
+          "problems": []
+        },
+        {
+          "id": "C4_label_numbers",
+          "status": "pass",
+          "detail": [
+            "atoms_checked=33 not_in_source=[]"
+          ],
+          "problems": []
+        },
+        {
+          "id": "C5_resolution_honesty",
+          "status": "pass",
+          "detail": [
+            "resolved=21 unresolved=6 absent=1"
+          ],
+          "problems": []
+        },
+        {
+          "id": "C6_schema",
+          "status": "FAIL",
+          "detail": [
+            "asset_manifest.v1(wp-11415-01) valid",
+            {
+              "schema_errors": [
+                {
+                  "instance": "kf_result.v1",
+                  "path": [],
+                  "message": "Additional properties are not allowed ('claims' was unexpected)"
+                },
+                {
+                  "instance": "kf_result.v1",
+                  "path": [
+                    "provenance"
+                  ],
+                  "message": "Additional properties are not allowed ('artifact_bytes', 'artifact_durable_mirror', 'artifact_path', 'artifact_sha256', 'contract_version', 'generator', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source"
+                }
+              ]
+            }
+          ],
+          "problems": [
+            "kf_result.v1 []: Additional properties are not allowed ('claims' was unexpected)",
+            "kf_result.v1 ['provenance']: Additional properties are not allowed ('artifact_bytes', 'artifact_durable_mirror', 'artifact_path', 'artifact_sha256', 'contract_version', 'generator', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source"
+          ]
+        },
+        {
+          "id": "C7_review_discipline",
+          "status": "pass",
+          "detail": [
+            "no self-declared verified; claims=[] with note; single report_id"
+          ],
+          "problems": []
+        },
+        {
+          "id": "C8_replay_upstream_verifier",
+          "status": "FAIL",
+          "detail": [
+            "replay exit=n/a failed_checks=['kf_result_schema']"
+          ],
+          "problems": [
+            "upstream verifier replay fails: ['kf_result_schema']"
+          ]
+        },
+        {
+          "id": "C9_figure_binaries",
+          "status": "pass",
+          "detail": [
+            "4 figure binaries re-fetched"
+          ],
+          "problems": []
+        },
+        {
+          "id": "C10_source_internal_arithmetic",
+          "status": "pass",
+          "detail": [
+            "parameter rows parsed=6 checked=6 c5_rows=6 max|b/a - b/a_areas|=1.03e-03 (4-decimal rounding)"
+          ],
+          "problems": []
+        }
+      ],
+      "check_summary": {
+        "total": 10,
+        "pass": 8,
+        "fail": 2,
+        "failed_ids": [
+          "C6_schema",
+          "C8_replay_upstream_verifier"
+        ]
+      },
+      "findings": [
+        {
+          "id": "F1",
+          "severity": "major",
+          "category": "reproducibility",
+          "blocking_for_pipeline": true,
+          "title": "上游验证器无法从仓内产物复跑；声明的 durable mirror 与 run 目录均不存在",
+          "detail": "wp-11415-01 的 provenance 声明 local_copy=runs/wp-11415-01/report_11415.md 与 artifact_durable_mirror=artifacts/wp-11415-01/asset_manifest.json，并把说明书（verifier=scripts/kf_verify_11415.py）留作复算入口；但两者在检出中均不存在，该验证器直接以 FileNotFoundError 退出。审核者按『平台原文 + 已发布 JSON 块 + 已提交 manifest 镜像』重建 run 输入后复跑，结果 ALL_PASS=False，唯一失败项为 kf_result_schema（见 F2）。因此『验证器全绿』这一说法在仓库内不可复现，只能标为 unreproduced。",
+          "evidence": [
+            {
+              "what": "declared durable mirror missing",
+              "mirror_path": "docs/kf/wp-11415-01/asset_manifest.json",
+              "mirror_sha256": "d039cf17da2e5aebb1bd5b3ae0d0e0be19b6e222e4b4839fda2242ed2755e7b5",
+              "mirror_bytes": 47725,
+              "declared_artifact_sha256": "d039cf17da2e5aebb1bd5b3ae0d0e0be19b6e222e4b4839fda2242ed2755e7b5",
+              "declared_artifact_bytes": 47725,
+              "mirror_matches_declared": true,
+              "mirror_json_equals_published_block": true,
+              "durable_mirror_declared": "artifacts/wp-11415-01/asset_manifest.json",
+              "durable_mirror_exists": false,
+              "run_dir_declared": "runs/wp-11415-01",
+              "run_dir_exists": false
+            }
+          ],
+          "reproduction": [
+            "python3 scripts/kf_fetch_11415_04.py",
+            "python3 scripts/kf_isolate_upstream_11415_04.py",
+            "python3 scripts/kf_probe_stage2_11415_04.py   # 重建 runs/ 后复跑上游验证器",
+            "cat runs/wp-11415-04/replay/runs/wp-11415-01/verify_report.json"
+          ],
+          "recommendation": "上游工序把 runs/wp-11415-01/{report_11415.json,report_11415.md,kf_result} 与 artifacts/wp-11415-01/asset_manifest.json 一并提交（或改验证器为从平台+已发布块重建输入），再谈『可复算』。"
+        },
+        {
+          "id": "F2",
+          "severity": "major",
+          "category": "schema_conformance",
+          "blocking_for_pipeline": false,
+          "title": "已发布 kf_result 信封不满足 schemas/kf_result.v1.schema.json（顶层 claims + provenance 15 个额外键）",
+          "detail": "对 wp-11415-01 已发布的 JSON 块做 Draft 2020-12 校验，得 2 处 additionalProperties 违规：根对象多出 claims；provenance 多出 15 个键（source_chars/source_title/artifact_sha256/… 而 schema 只允许 title/chars 命名）。同一校验对仓内 40 个已发布 KF-RESULT 包跑一遍，39 个同样违规 —— 说明这是产线范围的『发射口径 vs schema』分歧，不是本生产者独有的越界；平台侧显然接受（该包已 published）。故判非阻塞，但契约 acceptance.schema_pass 若按仓内 schema 严格判，本包不通过。",
+          "evidence": [
+            {
+              "what": "schema errors on published envelope",
+              "errors": [
+                {
+                  "path": [],
+                  "message": "Additional properties are not allowed ('claims' was unexpected)"
+                },
+                {
+                  "path": [
+                    "provenance"
+                  ],
+                  "message": "Additional properties are not allowed ('artifact_bytes', 'artifact_durable_mirror', 'artifact_path', 'artifact_sha256', 'contract_version', 'generator', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were "
+                }
+              ]
+            },
+            {
+              "what": "estate-wide scan",
+              "packages_checked": 40,
+              "packages_invalid": 39,
+              "packages_valid": [
+                "wp-9632-01"
+              ],
+              "share_invalid": 0.975,
+              "envelopes_with_top_level_claims": 23,
+              "validator": "schemas/kf_result.v1.schema.json (Draft 2020-12)",
+              "excluded_self_package": "wp-11415-04"
+            },
+            {
+              "what": "this envelope",
+              "errors": [
+                {
+                  "path": [],
+                  "message": "Additional properties are not allowed ('claims' was unexpected)"
+                },
+                {
+                  "path": [
+                    "provenance"
+                  ],
+                  "message": "Additional properties are not allowed ('artifact_bytes', 'artifact_durable_mirror', 'artifact_path', 'artifact_sha256', 'contract_version', 'generator', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were "
+                }
+              ]
+            }
+          ],
+          "reproduction": [
+            "python3 scripts/kf_probe_stage2_11415_04.py            # 枚举本信封的 schema 违规",
+            "python3 scripts/kf_scan_estate_envelopes.py --exclude wp-11415-04  # 产线级对照"
+          ],
+          "recommendation": "平台二选一：放宽 kf_result.v1（additionalProperties=true，或把 source_chars/source_title 等列为正式字段），或统一发射器与 schema 一致；本审核不自行改动上游产物。"
+        },
+        {
+          "id": "F3",
+          "severity": "info",
+          "category": "convention",
+          "blocking_for_pipeline": false,
+          "title": "A02（报告标题行）用 '(preamble)' 作为 in_report_section 哨兵",
+          "detail": "标题行自身即一级标题，登记为 '(preamble)' 属约定选择；quote 逐字命中、span 精确，无语义损失。建议把该哨兵写进 manifest schema/README，避免下游把 '(preamble)' 误当章节名。",
+          "evidence": [
+            {
+              "what": "title line",
+              "quote": "# IMO IS Code 2008 §2.3 天气衡准完整链 —— 验证报告（m9667 / p176w1-n10）",
+              "char_span": [
+                0,
+                59
+              ],
+              "line": 1,
+              "sha256": "sha256:101bb773ccbd584e297073589ed4e402f03ec30af0fadabd7696fb5bc6832611"
+            }
+          ],
+          "reproduction": [
+            "python3 scripts/kf_verify_wp-11415-04.py   # C2 会记录该哨兵"
+          ],
+          "recommendation": "文档化哨兵取值，非阻断。"
+        },
+        {
+          "id": "F4",
+          "severity": "info",
+          "category": "strength",
+          "blocking_for_pipeline": false,
+          "title": "登记内容本身逐字节通过：28/28 定位码、21/6/1 分辨率、4 张图重取 sha 一致、标签零手抄",
+          "detail": "28 个资产的 char_span 全部满足 md[start:end]==quote、count(quote)==1、start_line/end_line 重算一致、A01..A28 连号；21 条 resolved_in_source 的 span 复核通过、6 条 referenced_unresolved 的路径确认不在本工作树、1 条 declared_absent 的 TABLE_PROVENANCE.verified = False 旗标在原文出现；4 张图的 png_sha256/字节数与平台再取回逐字节一致；label/note 中 33 个数字原子全部为原文子串。",
+          "evidence": [
+            {
+              "what": "withheld declaration in source",
+              "quote": "**表值转录保真度未复核**：三张表是 IS Code 2008 表 2.3.1-1/2/3 的**数字化转录**，",
+              "char_span": [
+                6456,
+                6514
+              ],
+              "line": 163,
+              "sha256": "sha256:21338172c93d10d5b1a1e86d70da88eda9d36b97689630a67130375d45acfc00"
+            },
+            {
+              "what": "figure evidence pointer",
+              "quote": "**证据工件**：`artifacts/weather_criterion_imo_2008_m9667/results.json`（表值指纹",
+              "char_span": [
+                357,
+                428
+              ],
+              "line": 7,
+              "sha256": "sha256:d560d5d087088c5dc82ed1b59502a71e92cd516fa0131a6e3cdd5afac86f0da5"
+            },
+            {
+              "what": "test pointer",
+              "quote": "**pytest**：`tests/test_weather_criterion_imo_m9667.py`（22 例全绿）",
+              "char_span": [
+                462,
+                524
+              ],
+              "line": 9,
+              "sha256": "sha256:a126a90da10c4372ae57afd6a7a248e286363bac86f21829936968bb66fef28d"
+            }
+          ],
+          "reproduction": [
+            "python3 scripts/kf_verify_wp-11415-04.py"
+          ],
+          "recommendation": "无需动作。"
+        },
+        {
+          "id": "F5",
+          "severity": "info",
+          "category": "source_self_consistency",
+          "blocking_for_pipeline": false,
+          "title": "被审报告自身表格自洽（lw2=1.5·lw1、b/a=b/a、C5 与参数表同值），但规范表转录保真度仍 WITHHELD",
+          "detail": "从原文解析 6 行参数表 + 6 行 C5 表做恒等式重算：lw2/lw1 与 1.5 的最大偏离在 4 位小数舍入内；b/a 与 b/a（面积重算）最大相对偏离 1.03e-03（4 位小数舍入传播，非矛盾）；C5 的 b/a 两列与参数表同值。但三张 IS Code 表 2.3.1-1/2/3 的数值转录无原件可比，报告已自述 WITHHELD，本审核沿用该状态，不升级为 verified。",
+          "evidence": [
+            {
+              "what": "lw2 = 1.5 lw1",
+              "quote": "阵风力臂 `lw2 = 1.5·lw1`",
+              "char_span": [
+                733,
+                753
+              ],
+              "line": 19,
+              "sha256": "sha256:fd6cb1cce505498be96639dc5788cec3db023135a67020e9cba13e3616d980e2"
+            },
+            {
+              "what": "theta1 chain formula",
+              "quote": "`θ1 = 109·k·X1·X2·√(r·s)`，k 由船型预设给出",
+              "char_span": [
+                2614,
+                2649
+              ],
+              "line": 52,
+              "sha256": "sha256:7b51802f3d94c0fca1230d2563402daa4d237e36cc59b4f19688e75e0e74ed25"
+            },
+            {
+              "what": "S1 row",
+              "quote": "| S1_bulk_50k | 61,323 | 2.50 | 0.022 | 0.0124 | 0.0187 | 23.32 | 0.28 | 0.43 | 45 | 0.2400 | 1.1818 | 4.924 | 4.924 | COMPLIANT |",
+              "char_span": [
+                1411,
+                1541
+              ],
+              "line": 35,
+              "sha256": "sha256:02a7dd2b146acaa8e38e2afaf7e64fd28e02dd0de9f587c597e9c4c6545261a0"
+            },
+            {
+              "what": "S6 row",
+              "quote": "| S6_ferry_A4000 | 21,115 | 0.70 | 0.189 | 0.0827 | 0.1241 | 17.78 | 6.23 | 8.68 | 25 | 0.0946 | 0.0722 | 0.764 | 0.764 | NON_COMPLIANT |",
+              "char_span": [
+                2085,
+                2222
+              ],
+              "line": 40,
+              "sha256": "sha256:b9dae3fcbedf85674d9c828cb903f208702fce168d832dab66dffe194eb4fdcc"
+            },
+            {
+              "what": "GZ curve provenance",
+              "quote": "**船型参数表**（6 条完整船型；GZ 曲线由平台共享内核 `stability_core`",
+              "char_span": [
+                1117,
+                1164
+              ],
+              "line": 30,
+              "sha256": "sha256:02aa2779e75d0812b5691b6bfbd25088ed085da9c1188c860df0259438fb3df9"
+            },
+            {
+              "what": "deviation declaration",
+              "quote": "> 偏差与理由（方法自主权申报）：1) 节点文字把面积写作\"0°→交点 / 交点到 φ2\"，",
+              "char_span": [
+                7668,
+                7714
+              ],
+              "line": 194,
+              "sha256": "sha256:519afcbbfe4d08f81bc6ae8d49a7b505812f93acf0abd6bf6ea9c579051d97cb"
+            }
+          ],
+          "reproduction": [
+            "python3 scripts/kf_verify_wp-11415-04.py   # C10"
+          ],
+          "recommendation": "维持 WITHHELD；换入经核对的规范表后需重跑 C2/C10。"
+        }
+      ],
+      "checks_not_run": [
+        {
+          "check": "规范表 2.3.1-1/2/3 数值 vs 原作逐格比对",
+          "status": "not_run",
+          "reason": "IS Code 2008 原件不在环境内，报告亦自述 TABLE_PROVENANCE.verified = False。"
+        },
+        {
+          "check": "ship-performance-platform 模块复算（weather_criterion_iso.py / pytest 22 例）",
+          "status": "not_run",
+          "reason": "该仓不在本工作树；A04/A07 的 resolution 已如实登记为 referenced_unresolved。"
+        },
+        {
+          "check": "生产者 verify_report.json 原件比对",
+          "status": "not_run",
+          "reason": "runs/wp-11415-01 未提交（见 F1）；本审核只能用重建输入复跑验证器。"
+        },
+        {
+          "check": "真实 KN/GZ 曲线条件下的判据复核",
+          "status": "not_run",
+          "reason": "被审报告用壁舷式解析曲线，报告已声明其比真实 KN 更陡；无实船 KN 数据可注入。"
+        }
+      ],
+      "overstated_claims": [
+        {
+          "claim_as_registered": "artifact_durable_mirror = artifacts/wp-11415-01/asset_manifest.json",
+          "status_in_repo": "missing",
+          "note": "声明为『durable mirror』但该路径在检出中不存在；已提交的镜像是 docs/kf/wp-11415-01/asset_manifest.json（sha256 与声明一致）。"
+        },
+        {
+          "claim_as_registered": "verifier = scripts/kf_verify_11415.py（可复算入口）",
+          "status_in_repo": "runs_on_reconstructed_inputs_only",
+          "note": "按仓内状态直接运行 FileNotFoundError；重建输入的复跑结果 ALL_PASS=False（失败项 kf_result_schema）。"
+        }
+      ],
+      "no_verified_marking": true,
+      "verification_owner": "platform",
+      "disposition": {
+        "verdict": "pass",
+        "on_what": "语义保真度（28/28 定位码逐字节、覆盖完整、分辨率如实、标签零手抄、图二进制可重取）",
+        "disposition": "approve-with-notes",
+        "pipeline_verdict": "needs-fix",
+        "pipeline_blockers": [
+          "F1"
+        ],
+        "rationale": "登记内容本身未发现实质缺陷：全部定位码、计数、分辨率状态、图件指纹均可独立复现。两项失败检查同源（信封 schema），且属产线范围口径分歧（39/40 包同样违规），不判为生产者越界；但 F1（复跑不可行 + 声明的 durable mirror 缺失）使『验证器全绿』在仓库内不可复现，需上游补交 run 产物后才能结案。本次不把任何结论标为 verified —— verification 由平台门计算。"
+      }
+    },
+    "review_events.json": [
+      {
+        "seq": 1,
+        "event": "source_pinned",
+        "actor": "wp-11415-04",
+        "basis": [
+          "C1_source_identity"
+        ],
+        "outcome": "pass",
+        "note": "sha256=d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50 chars=7903 与契约一致"
+      },
+      {
+        "seq": 2,
+        "event": "upstream_payload_isolated",
+        "actor": "wp-11415-04",
+        "basis": [
+          "scripts/kf_isolate_upstream_11415_04.py"
+        ],
+        "outcome": "pass",
+        "note": "只取 wp-11415-01 的单个 json 块，生产者叙述未进入审核上下文"
+      },
+      {
+        "seq": 3,
+        "event": "locators_recomputed",
+        "actor": "wp-11415-04",
+        "basis": [
+          "C2_locator_fidelity"
+        ],
+        "outcome": "pass",
+        "note": "28/28 逐字节命中"
+      },
+      {
+        "seq": 4,
+        "event": "coverage_and_labels_audited",
+        "actor": "wp-11415-04",
+        "basis": [
+          "C3_coverage",
+          "C4_label_numbers"
+        ],
+        "outcome": "pass",
+        "note": "5 个文件引用 + 4 张图 + 5 张表全部有归属资产；33 个数字原子均为原文子串"
+      },
+      {
+        "seq": 5,
+        "event": "resolution_honesty_audited",
+        "actor": "wp-11415-04",
+        "basis": [
+          "C5_resolution_honesty"
+        ],
+        "outcome": "pass",
+        "note": "21 resolved / 6 referenced_unresolved / 1 declared_absent，桶与计数自洽"
+      },
+      {
+        "seq": 6,
+        "event": "figure_binaries_refetched",
+        "actor": "wp-11415-04",
+        "basis": [
+          "C9_figure_binaries"
+        ],
+        "outcome": "pass",
+        "note": "4 张 png 的 sha256 与字节数与登记值逐字节一致"
+      },
+      {
+        "seq": 7,
+        "event": "source_internal_arithmetic_recomputed",
+        "actor": "wp-11415-04",
+        "basis": [
+          "C10_source_internal_arithmetic"
+        ],
+        "outcome": "pass",
+        "note": "lw2/lw1、b/a、C5 交叉列全部自洽（最大偏离 1.03e-03 = 4 位小数舍入）"
+      },
+      {
+        "seq": 8,
+        "event": "envelope_schema_check",
+        "actor": "wp-11415-04",
+        "basis": [
+          "C6_schema"
+        ],
+        "outcome": "fail",
+        "note": "kf_result.v1 两处 additionalProperties 违规；产线级 39/40 包同样违规（F2）"
+      },
+      {
+        "seq": 9,
+        "event": "upstream_verifier_replayed",
+        "actor": "wp-11415-04",
+        "basis": [
+          "C8_replay_upstream_verifier"
+        ],
+        "outcome": "fail",
+        "note": "重建输入后 ALL_PASS=False，唯一失败项 kf_result_schema（F1 的可复现性证据）"
+      },
+      {
+        "seq": 10,
+        "event": "disposition_emitted",
+        "actor": "wp-11415-04",
+        "basis": [
+          "C1..C10"
+        ],
+        "outcome": "approve-with-notes",
+        "note": "语义保真度 pass；产线 needs-fix（F1）；无一结论标 verified"
+      }
+    ]
+  }
+}
+```
