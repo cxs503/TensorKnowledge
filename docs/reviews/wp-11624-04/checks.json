@@ -1,0 +1,334 @@
+[
+ {
+  "id": "C01",
+  "check": "provenance.source_hash recomputed from fresh report markdown",
+  "status": "pass",
+  "evidence": {
+   "retrieval": "platform_api:GET /api/v1/tensor/reports/11624 -> field `markdown`",
+   "recomputed_sha256": "a5a0885e7f86a7d7e46ba9e66dcd748d1607075c640484785fce58868aaedd33",
+   "contract": "sha256:a5a0885e7f86a7d7e46ba9e66dcd748d1607075c640484785fce58868aaedd33",
+   "chars": 4253,
+   "bytes_utf8": 5676,
+   "match": true
+  },
+  "gate": true
+ },
+ {
+  "id": "C02",
+  "check": "chars/bytes agree with contract (4253 chars)",
+  "status": "pass",
+  "evidence": {
+   "declared_chars": 4253,
+   "recomputed_chars": 4253,
+   "recomputed_bytes_utf8": 5676
+  },
+  "gate": true
+ },
+ {
+  "id": "C03",
+  "check": "all 27 upstream asset locators re-resolve byte-exactly (span/unique/line)",
+  "status": "pass",
+  "evidence": {
+   "assets": 27,
+   "resolved": 27,
+   "bad": [],
+   "method": "md[start_char:end_char]==quote and md.count(quote)==1 and line_no(start/end) match"
+  },
+  "gate": true
+ },
+ {
+  "id": "C04",
+  "check": "A01 document span covers the whole source and carries the contract hash",
+  "status": "pass",
+  "evidence": {
+   "span": [
+    0,
+    4253
+   ],
+   "len": 4253,
+   "declared_sha256": "a5a0885e7f86a7d7e46ba9e66dcd748d1607075c640484785fce58868aaedd33",
+   "recomputed_sha256": "a5a0885e7f86a7d7e46ba9e66dcd748d1607075c640484785fce58868aaedd33"
+  },
+  "gate": true
+ },
+ {
+  "id": "C05",
+  "check": "identity_facts (title/scenario/id/mission/status) agree with the live record",
+  "status": "pass",
+  "evidence": {
+   "facts": [
+    {
+     "field": "/title",
+     "ko_value": "EEXI/CII 合规验证面：MEPC.392(81) Attained vs Required + CII 年度评级 A-E",
+     "live_value": "EEXI/CII 合规验证面：MEPC.392(81) Attained vs Required + CII 年度评级 A-E",
+     "agrees": true
+    },
+    {
+     "field": "/scenario_key",
+     "ko_value": "P187-W1-N06",
+     "live_value": "P187-W1-N06",
+     "agrees": true
+    },
+    {
+     "field": "/id",
+     "ko_value": 11624,
+     "live_value": 11624,
+     "agrees": true
+    },
+    {
+     "field": "/mission_id",
+     "ko_value": 9810,
+     "live_value": 9810,
+     "agrees": true
+    },
+    {
+     "field": "/status",
+     "ko_value": "published",
+     "live_value": "published",
+     "agrees": true
+    }
+   ],
+   "title_equals_contract": true
+  },
+  "gate": true
+ },
+ {
+  "id": "C06",
+  "check": "4 figure declarations: names/captions match live record, zero bytes, zero body anchor",
+  "status": "pass",
+  "evidence": {
+   "declared": 4,
+   "live": 4,
+   "per_figure": [
+    {
+     "pointer": "/figures/0",
+     "name": "eexi_comparison",
+     "name_matches_live": true,
+     "caption_matches_live": true,
+     "has_bytes": false,
+     "name_in_markdown": false,
+     "caption_in_markdown": false,
+     "ko_body_tokens_found": []
+    },
+    {
+     "pointer": "/figures/1",
+     "name": "cii_rating",
+     "name_matches_live": true,
+     "caption_matches_live": true,
+     "has_bytes": false,
+     "name_in_markdown": false,
+     "caption_in_markdown": false,
+     "ko_body_tokens_found": []
+    },
+    {
+     "pointer": "/figures/2",
+     "name": "dual_algorithm",
+     "name_matches_live": true,
+     "caption_matches_live": true,
+     "has_bytes": false,
+     "name_in_markdown": false,
+     "caption_in_markdown": false,
+     "ko_body_tokens_found": []
+    },
+    {
+     "pointer": "/figures/3",
+     "name": "sensitivity",
+     "name_matches_live": true,
+     "caption_matches_live": true,
+     "has_bytes": false,
+     "name_in_markdown": false,
+     "caption_in_markdown": false,
+     "ko_body_tokens_found": []
+    }
+   ]
+  },
+  "gate": true
+ },
+ {
+  "id": "C07",
+  "check": "manifest bookkeeping adds up (27 assets / 27 locators / by-kind and by-resolution sums)",
+  "status": "pass",
+  "evidence": {
+   "by_kind_sum": 27,
+   "by_resolution_sum": 27,
+   "assets": 27,
+   "locators": 27,
+   "locators_resolved": 27
+  },
+  "gate": true
+ },
+ {
+  "id": "C08",
+  "check": "counts asserted in asset labels/notes equal the counts in the quoted text",
+  "status": "pass",
+  "evidence": {
+   "A06_table_rows_5": true,
+   "A13_criteria_16": true,
+   "A15_capabilities_4": true,
+   "A16_limitations_4": true,
+   "A18_error_rows_4": true
+  },
+  "gate": true
+ },
+ {
+  "id": "C09",
+  "check": "upstream envelope marks nothing `verified` (verification belongs to the platform gate)",
+  "status": "pass",
+  "evidence": {
+   "hits": [],
+   "scan": "all boolean/status keys named *verified*"
+  },
+  "gate": true
+ },
+ {
+  "id": "C10",
+  "check": "single-report scope: only report_id 11624 appears in the upstream KO",
+  "status": "pass",
+  "evidence": {
+   "report_ids": [
+    "11624"
+   ]
+  },
+  "gate": true
+ },
+ {
+  "id": "C11",
+  "check": "claims arrays empty and consistent; absence carries an explicit written reason",
+  "status": "pass",
+  "evidence": {
+   "envelope_claims": [],
+   "manifest_claims": [],
+   "reason_present": true,
+   "reviewer_can_check_upstream_contract": false,
+   "note": "the upstream work-package contract is not part of this package's input; whether register_assets-only was really contracted is therefore NOT verifiable here -> recorded as a not_run sub-check, not as pass"
+  },
+  "gate": true
+ },
+ {
+  "id": "C11b",
+  "check": "upstream contract text (objective.register_assets / no_forced_claim_generation) available to reviewer",
+  "status": "not_run",
+  "evidence": "upstream contract YAML/notes for wp-11624-01 not supplied in this work package input",
+  "gate": false
+ },
+ {
+  "id": "C12",
+  "check": "upstream artifact_sha256/bytes match the artifact file actually on disk",
+  "status": "pass",
+  "evidence": {
+   "path": "knowledge/kf/wp-11624-01/asset_manifest.json",
+   "declared_sha256": "3c4ab994158ebe61243556e9e5e8eb21f59e26f7ae28efa4203f6aced0b211cf",
+   "recomputed_sha256": "3c4ab994158ebe61243556e9e5e8eb21f59e26f7ae28efa4203f6aced0b211cf",
+   "declared_bytes": 40188,
+   "recomputed_bytes": 40188
+  },
+  "gate": true
+ },
+ {
+  "id": "C13",
+  "check": "embedded manifest equals the standalone artifact on every shared key (no post-hoc divergence)",
+  "status": "pass",
+  "evidence": {
+   "shared_keys": 22,
+   "differing_shared_keys": [],
+   "envelope_only_keys": [
+    "artifact_bytes",
+    "artifact_path",
+    "artifact_sha256"
+   ],
+   "artifact_only_keys": [],
+   "interpretation": "envelope-only keys are the artifact's own path/sha256/bytes, which a file cannot contain about itself -- self-reference, not divergence"
+  },
+  "gate": true
+ },
+ {
+  "id": "C14",
+  "check": "upstream envelope conforms to schemas/kf_result.v1.schema.json (additionalProperties=false)",
+  "status": "fail",
+  "evidence": {
+   "errors": [
+    {
+     "path": [],
+     "message": "Additional properties are not allowed ('claims' was unexpected)"
+    },
+    {
+     "path": [
+      "provenance"
+     ],
+     "message": "Additional properties are not allowed ('contract_version', 'emitted_at', 'generator', 'lane', 'local_copy', 'notes', 'producer', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were unexpected)"
+    }
+   ],
+   "repo_prevalence": {
+    "envelopes": 164,
+    "strict_fail": 157
+   },
+   "interpretation": "deployment convention tolerates extra provenance keys (the same shape recurs across the repository: 157/163 envelopes are equally off-schema), so this is recorded as a non-blocking conformance finding (F4); gate=False is a deliberate reviewer decision, stated in the report body"
+  },
+  "gate": false
+ },
+ {
+  "id": "C15",
+  "check": "A07 `parameter_set` completeness: label names DWT/MCR/V_ref/年航程, but 2 of 4 columns are '-'",
+  "status": "fail",
+  "evidence": {
+   "rows": [
+    "| Capesize Bulk Carrier | 180,000 | - | 14.0 | - |",
+    "| 18000TEU Container Ship | 200,000 | - | 22.0 | - |",
+    "| VLCC Oil Tanker | 320,000 | - | 15.0 | - |"
+   ],
+   "empty_cell_count_per_row": {
+    "Capesize Bulk Carrier": 2,
+    "18000TEU Container Ship": 2,
+    "VLCC Oil Tanker": 2
+   },
+   "mcr_all_empty": true,
+   "annual_distance_all_empty": true,
+   "label": "三船型参数表（DWT / MCR / V_ref / 年航程）"
+  },
+  "gate": false
+ },
+ {
+  "id": "C16",
+  "check": "report-internal consistency: C4 test case vs the declared parameter table",
+  "status": "fail",
+  "evidence": {
+   "C4_line": "- **C4**: ✓ PASS — Required EEXI (200000 DWT bulk) = 2.2781 (expect [2.0, 3.0])",
+   "declared_200k_dwt_row": [
+    "| 18000TEU Container Ship | 200,000 | - | 22.0 | - |"
+   ],
+   "declared_bulk_rows": [
+    "| Capesize Bulk Carrier | 180,000 | - | 14.0 | - |"
+   ],
+   "result_table_rows": [
+    "| Capesize Bulk Carrier | 3.396 | 2.396 | ✗ | 2.820 | 2.274 | E |",
+    "| 18000TEU Container Ship | 7.433 | 11.986 | ✓ | 6.762 | 4.516 | E |",
+    "| VLCC Oil Tanker | 2.531 | 2.007 | ✗ | 2.371 | 2.047 | D |"
+   ],
+   "observation": "C4 exercises 'Required EEXI (200000 DWT bulk)' = 2.2781, but the declared parameter table holds no 200000 DWT bulk carrier: its only bulk carrier is 180,000 DWT and its only 200,000 DWT entry is the container ship, whose Required EEXI is 11.986 in the result table. The test case is therefore not traceable to the declared parameter set.",
+   "registered_verbatim_by_upstream": true
+  },
+  "gate": false
+ },
+ {
+  "id": "C17",
+  "check": "'dual algorithm' independence claim is a tautology (identical algebra), so C3 cannot validate EEXI physics",
+  "status": "pass",
+  "evidence": {
+   "direct": "EEXI = Σ(P_i × SFOC_i × CF_i) / (f_i × f_c × f_l × Capacity × V_ref)",
+   "itemized": "EEXI = Σ_i [(P_i × SFOC_i × CF_i) / (f_i × f_c × f_l × Capacity × V_ref)]",
+   "observation": "the two 'algorithms' share one and the same denominator (f_i x f_c x f_l x Capacity x V_ref); distributing Sigma over a constant denominator is an algebraic identity, so rel_diff in {0, 1.75e-16} is arithmetic, not independent physical validation. The report's wording '两种数学等价但代码路径不同的算法' is a re-implementation cross-check at best.",
+   "tolerance_line": "两种算法应给出完全相同的结果（相对差 < 1e-9）。"
+  },
+  "gate": false
+ },
+ {
+  "id": "C18",
+  "check": "report self-declares its own evidence gap (WITHHELD) and the KO registers it verbatim",
+  "status": "pass",
+  "evidence": {
+   "quote": "1. **参考线系数**：转录自 MEPC.308(73)，离线环境未回读规则原文，证据等级 WITHHELD\n2. **营运剖面**：使用典型值，实际船舶营运条件可能显著不同\n3. **创新技术**：未考虑 f_eff 修正（创新技术节能效果）\n4. **冰区修正**：f_i 默认 1.0，冰区航行船舶需额外修正",
+   "contains_withheld": true
+  },
+  "gate": false
+ }
+]
