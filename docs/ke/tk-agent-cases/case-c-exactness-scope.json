@@ -1,0 +1,152 @@
+{
+  "schema": "tk-agent-case/1",
+  "case_id": "case-c-exactness-scope",
+  "title": "精确性边界：引用误差能否被当成「分辨率无关」的结论？",
+  "dimension_focus": "D3(信任) × 精确性粒度：引用值 / 复现值 / 判据三层必须分开陈述",
+  "question": "claim 正文引用「实测误差 0.077%」，本仓复现给出不同分辨率下的偏差；agent 应如何陈述该数字的适用范围？",
+  "answer_summary": "引用值 0.077% 是教科书原文的单一网格结果；本仓复现为 NX=32 -1.531%、NX=64 -0.383%、NX=128 -0.096% —— 全部 <3% 判据，但随分辨率单调改善，因此禁止把引用值当作分辨率无关常量。",
+  "verdict": "pass_with_granularity_constraint",
+  "knowledge": {
+    "claim_id": "tkc:oss-lbm:kruger-taylor-green-decay",
+    "claim_file": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-taylor-green-decay.json",
+    "evidence_file": "knowledge/oss-lbm/evidence/tke-oss-lbm-kruger-tg-decay.json",
+    "claim_statement": "Krüger 教科书 chapter13 实现 Taylor-Green 涡衰减验证：理论衰减率 2/t_d = 2ν(kx²+ky²) 对比拟合 d lnE/dt，实测误差 0.077%（<3%）。"
+  },
+  "retrieval": {
+    "ke_endpoints": [
+      "/search?q=%E8%A1%B0%E5%87%8F%E7%8E%87",
+      "/query/chain?claim_id=tkc:oss-lbm:kruger-taylor-green-decay",
+      "/query/by-status?axis=evidence&status=established&kind=claim"
+    ],
+    "filters_used": {
+      "axis": "evidence",
+      "status": "established"
+    },
+    "expected_hits": 1
+  },
+  "measurements": [
+    {
+      "id": "tg_quoted_err",
+      "label": "claim 正文引用的误差（Krüger 原文）",
+      "value": 0.077,
+      "unit": "pct",
+      "source": {
+        "path": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-taylor-green-decay.json",
+        "pointer": "/statement",
+        "pattern": "实测误差\\s*([0-9.]+)%"
+      },
+      "acceptance": {
+        "kind": "quoted_value",
+        "threshold": null
+      },
+      "note": "引用值来自教科书原文，不是本仓复现值"
+    },
+    {
+      "id": "tg_repro_nx32",
+      "label": "本仓复现 |偏差| NX=32",
+      "value": -1.531251699147856,
+      "unit": "pct",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "pointer": "/taylor_green/runs/0/E_rel_dev_pct"
+      },
+      "acceptance": {
+        "kind": "rel_err_pct_le",
+        "threshold": 3.0
+      },
+      "note": ""
+    },
+    {
+      "id": "tg_repro_nx64",
+      "label": "本仓复现 |偏差| NX=64",
+      "value": -0.3829919257303916,
+      "unit": "pct",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "pointer": "/taylor_green/runs/1/E_rel_dev_pct"
+      },
+      "acceptance": {
+        "kind": "rel_err_pct_le",
+        "threshold": 3.0
+      },
+      "note": ""
+    },
+    {
+      "id": "tg_repro_nx128",
+      "label": "本仓复现 |偏差| NX=128",
+      "value": -0.0957575272335034,
+      "unit": "pct",
+      "source": {
+        "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+        "pointer": "/taylor_green/runs/2/E_rel_dev_pct"
+      },
+      "acceptance": {
+        "kind": "rel_err_pct_le",
+        "threshold": 3.0
+      },
+      "note": ""
+    }
+  ],
+  "figures": [
+    {
+      "file": "fig-exactness-scope.png",
+      "caption": "各量 |偏差| 与 3% 判据的对数刻度对照 + 精确性等级计数（机器精度 / <3% / >3% 出界 / WITHHELD）。"
+    }
+  ],
+  "granularity": {
+    "statement": "同一物理量的精度主张按来源分三层：引用(quoted) / 复现(reproduced) / 判据(tolerance)；三层不得混用。",
+    "cited_value_pct": 0.077,
+    "cited_source": {
+      "path": "knowledge/oss-lbm/claims/tkc-oss-lbm-kruger-taylor-green-decay.json",
+      "pointer": "/statement",
+      "pattern": "实测误差\\s*([0-9.]+)%"
+    },
+    "reproduced": [
+      {
+        "resolution": "NX=32",
+        "value_pct": -1.531251699147856,
+        "source": {
+          "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+          "pointer": "/taylor_green/runs/0/E_rel_dev_pct"
+        }
+      },
+      {
+        "resolution": "NX=64",
+        "value_pct": -0.3829919257303916,
+        "source": {
+          "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+          "pointer": "/taylor_green/runs/1/E_rel_dev_pct"
+        }
+      },
+      {
+        "resolution": "NX=128",
+        "value_pct": -0.0957575272335034,
+        "source": {
+          "path": "runs/oss-lbm-kruger-8676/validation_summary.json",
+          "pointer": "/taylor_green/runs/2/E_rel_dev_pct"
+        }
+      }
+    ],
+    "monotone_in_resolution": true
+  },
+  "scope": {
+    "in_scope": [
+      "引用值与其出处（教科书 chapter13 vortexdecay.m）",
+      "本仓复现值与其 run 工件",
+      "3% 判据（平台精度标准）"
+    ],
+    "out_of_scope": [],
+    "withheld": [
+      "把引用值推广到其他分辨率/几何：无数据支撑",
+      "低于 0.05% 的精度主张：记录分辨率为 2 位有效数字，无法支撑"
+    ]
+  },
+  "agent_rules": [
+    "引用值与复现值必须分别标注来源，不得合并成单一数字。",
+    "精度主张必须带分辨率标签（NX/格距）。",
+    "超出记录分辨率的精度断言 → WITHHELD，不得四舍五入升级。"
+  ],
+  "known_gaps": [
+    "仓内无 256^2 及以上分辨率运行，无法给出渐近精度"
+  ]
+}

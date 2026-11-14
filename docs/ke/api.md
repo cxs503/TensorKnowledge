@@ -210,3 +210,31 @@ KE_TEST_DSN='postgresql:///ke_m8801?user=postgres' pytest tests/test_ke_api.py -
 self-audit refusal, publish gating, all six query classes, search filters,
 concurrent distinct writes, concurrent same-id race (exactly one 201), plus a
 smoke test that ingests the real `knowledge/oss-lbm` package.
+## Agent read recipes (TK agent cases)
+
+The four-dimensional retrieval index ([`retrieval-index.md`](retrieval-index.md)) is
+what an agent walks before it may answer with a number. Three worked cases live in
+[`tk-agent-cases/`](tk-agent-cases/) and are regenerated from recorded run artefacts
+by `python tests/test_tk_agent_cases.py --regen`:
+
+| case | question pinned | endpoints exercised |
+|---|---|---|
+| `case-a-taylor-green.json` | can the claim's accuracy be reproduced? | `/query/by-domain`, `/query/chain`, `/search` |
+| `case-b-provenance.json` | how far does the lineage actually reach? | `/query/chain`, `/query/claim-evidence`, `/query/stats` |
+| `case-c-exactness-scope.json` | is a quoted error resolution-independent? | `/query/by-status`, `/search` |
+
+Minimal read sequence for a physics number:
+
+```bash
+BASE=http://127.0.0.1:8021
+curl -s "$BASE/query/by-domain?domain=<scope.domain>&kind=claim"      # D1 + D2
+curl -s "$BASE/query/chain?claim_id=<tkc:...>"                        # D4
+curl -s "$BASE/query/by-status?axis=evidence&status=established"      # D3
+```
+
+Three rules the cases make machine-checkable: (1) a claim's quoted error is **not**
+the repo's reproduced error — cite both with their own locator; (2) an over-tolerance
+measurement must be registered as out-of-scope, never averaged away; (3) structural
+chain completeness does not imply upstream-source liveness — say `WITHHELD`, not
+"verified". `pytest tests/test_tk_agent_cases.py -q` re-checks every number against
+`runs/oss-lbm-kruger-8676/*.json` and every claim id against `knowledge/oss-lbm`.
