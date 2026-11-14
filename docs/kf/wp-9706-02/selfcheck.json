@@ -1,0 +1,72 @@
+{
+  "package_id": "wp-9706-02",
+  "task_type": "02-classification-parse",
+  "report_id": "9706",
+  "note": "生产侧自检记录，不是平台验证单、不产生验证级别；平台门独立重算 source_hash 与子串。",
+  "checks": {
+    "valid_json": {
+      "pass": true,
+      "how": "json.load on classification.json / kf_result.wp-9706-02.json / work-package.json"
+    },
+    "schema_pass": {
+      "pass": true,
+      "how": "jsonschema: kf_result.v1 + work-package-contract.schema.json"
+    },
+    "source_locator_resolvable": {
+      "pass": true,
+      "locator_count": 45,
+      "how": "text[start:end] re-sliced == quote for every locator; all referenced ids exist"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "declared": "sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+      "recomputed": "sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+      "chars": 12546,
+      "bytes": 20505
+    },
+    "no_duplicate_ids": {
+      "pass": true,
+      "locators": 45,
+      "claims": 8,
+      "flags": 4
+    },
+    "all_claims_have_evidence_or_explicit_unresolved_status": {
+      "pass": true,
+      "claims_with_locator": 8,
+      "unresolved_flags": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    "quote_content_hash": {
+      "pass": true
+    },
+    "structure_offsets_cover_text": {
+      "pass": true
+    },
+    "single_json_block_in_report": {
+      "pass": true
+    },
+    "no_verified_claims": {
+      "pass": true,
+      "how": "epistemic_status=draft, assessment_status=unassessed"
+    }
+  },
+  "all_pass": true,
+  "pipeline_gate": {
+    "verdict": "FAIL_STRUCTURAL",
+    "G1_structural_pass": false,
+    "G2_evidence_pass": true,
+    "failing_G1_rules": [
+      "S1.files_present",
+      "S5.summary_schema",
+      "S12.zero_claim_legality",
+      "S13.counts_consistent",
+      "S14.source_identity"
+    ],
+    "verification_level": "L0",
+    "note": "G1 的 S1/S5/S12/S13/S14 按 03 分支写死（要求四个 03 产物），02 包结构上不可能通过；这是产线规则作用域缺陷，不是本包产物缺陷。本包不伪造 03 产物来凑 G1。"
+  }
+}
