@@ -1,0 +1,1589 @@
+# KF-RESULT wp-9706-02
+
+**工作包**：`wp-9706-02` ｜ **工序**：02 分类解析（classification / parse） ｜ **报告**：`9706`
+**源指纹**：`sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534`（本工序独立重算一致，12546 字符 / 20505 字节）
+**skill 选定**：`xsk-experimental-validation`（report_type=`experimental-validation`，lifecycle=`template-created`）
+**状态**：draft（本包不主张任何结论已验证；验证级别由平台门计算）
+
+## ① 本工序做了什么
+
+只做一件事：给报告 9706 判定**报告类型 + 主题标签 + 结构切分**，并给出**判定依据的原文定位**。
+不做知识抽取（那是 03 工序），不登记资产（`register_assets: false`），不改写上游产物，不碰其它 report_id。
+
+判定结论（可反驳假设，`epistemic_status: draft`）：
+
+- `report_type = experimental-validation`，置信度 **medium**（机械次选 `software-engineering`、实质次选 `scientific-computation`，理由见 ②/⑤）；
+- `selected_skill = xsk-experimental-validation`；
+- 主题：船舶总体性能 / `dp_capability`，学科面 = 操纵（推力分配）× 耐波（环境力）；
+- 结构：`10` 个一二级标题分区，偏移首尾相接覆盖全文
+  （`offsets_cover_whole_text = True`），表 1–表 10 共 10 张表。
+
+## ② 怎么做的（步骤 / 工具 / 关键设置）
+
+1. **取源**：`GET $TENSOR_API_BASE/tensor/reports/9706` → `markdown` 字段，落到
+   `docs/kf/sources/9706.md`（字节落盘，不做换行归一），sha256 与契约一致才继续（不一致即终止）。
+2. **结构切分**：按行扫描 `# ` / `## ` 标题，记录每区 `[start_offset, end_offset)` 与字符数；
+   偏移量以**同一字符串**为基准（证据门解析 locator 用的也是这个字符串）。
+3. **零手抄取证**：每个 locator = 报告中含某个**唯一锚点**的**整行**，由脚本切片生成
+   （`slice_line`），并校验 `text[start:end] == quote`、`len(quote) ≥ 12`、`content_hash = sha256(quote)`。
+   45 个 locator 的锚点唯一性由脚本强制（重复即中止），因此不存在"凭记忆重述"。
+4. **类型判定**：读 `extraction-skills/registry.json` 的六分型 `identify_signals`，逐信号判
+   matched / partial / absent（partial 只计 0.5，不升级为 matched），按覆盖计分选 `report_type`
+   与 `skill_id`；同时跑一次**英文字面扫描**作对照（结果如实登记：全 0）。
+5. **工具**：Python 3（本源 + `jsonschema` 校验 + `ke.wp_line.build_contract` 生成契约）、
+   matplotlib(Agg) 出图。无网络依赖（源已落盘）。
+
+## ③ 产出物清单
+
+| 文件 | 要点 |
+|---|---|
+| `classification.json` | 六分型判定 + 候选类型逐信号表 + 结构切分 + 45 个 locator + 8 条判定 claim + 4 条 unresolved 标记 |
+| `kf_result.wp-9706-02.json` | 契约信道；`schemas/kf_result.v1.schema.json` 校验通过（`outputs.classification.json` 内嵌同内容） |
+| `work-package.json` | 02 分支契约，`schemas/work-package-contract.schema.json` 校验通过 |
+| `figures/structure_segments.png` | 结构切分图（各 H2 区字符数） |
+| `figures/signal_coverage.png` | 六分型信号覆盖：人工判读 vs 英文字面扫描 |
+| `selfcheck.json` | 生产侧自检（**不是**平台验证单，不给 L 级） |
+| `KF-RESULT-wp-9706-02.md` | 本报告（全文唯一一个 json 代码块 = 结果 JSON） |
+
+**图件说明（为何不是场量云图/比较曲线）**：本工序是文档分类/解析，无物理场量、无解析解基准，
+故图为"文档结构 + 信号覆盖"两类；数值类图表属报告 9706 上游（其 4 张 PNG 在 ship-performance-platform
+仓库，本工序不复制、不评估）。
+
+## ④ 证据定位表（claim/字段 → 原文引文片段）
+
+locator 一律 `locator_type=char_range`，偏移量以报告 markdown 字符（码点）为基准，
+`content_hash = sha256(quote)`。下表引文为截断显示，完整逐字引文见 `classification.json` 的 `locators`。
+
+| locator | 用途 | 偏移 [start,end) | 原文片段（截断） |
+|---|---|---|---|
+| L01 | 报告标题行（类型/主题首个识别信号） | [0,49) | `# IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图` |
+| L02 | 摘要：三个物理环节 + 判据全过的总陈述 | [367,402) | `本文把"DP 能不能抗住这个环境"这件事做成可机器裁决的三个物理环节：` |
+| L03 | §2 计算流水线（环境力 → 分配 → 包线） | [2322,2384) | `τ_req = −F_env   (N, N, N·m)                       ← 力矩原点取水线面舯` |
+| L04 | §1 证据分级表头（含声明不确定度列） | [1649,1676) | `| 要素 | 模型 | 分级 | 不确定度（声明） |` |
+| L05 | §1 波浪漂移力谱积分行：控制方程型信号 | [1868,2001) | `| 波浪漂移 | 二阶平均漂移力 F_k=2∫S(ω)·ρg·D_k(ψ)·A_ref·f(ω)dω，f=1/(1+(ω/ω₀)…` |
+| L06 | §1 推力折减行：参数化假设 + 敏感性 | [2002,2106) | `| 推力折减 | 推力器-船体/推力器-推力器干扰 5%（IMCA M140 量级）+ 隧道推力器横流线性折减 0.12/kn（…` |
+| L07 | 摘要：分配写成凸 SOCP | [522,574) | `其可行域是凸的（各推力器可及集 = 椭圆的 Minkowski 和），因此写成凸二阶锥问题（SOCP），` |
+| L08 | §5 踩坑 2：迭代/停滞退出（收敛讨论） | [9703,9756) | `4 次不降即停"后，最大迭代从 40 降到 10 量级。**教训**：对偶法要显式编码"不可行侧"的出口。` |
+| L09 | §6 误差判定表头：比较对 + <3% 判据 | [10713,10766) | `| 关键量 | 基准（clean-room / 解析） | 本次结果 | 相对偏差 | 是否 < 3% |` |
+| L10 | §6 honest-FAIL 行：唯一超差、无定量基准 | [11430,11527) | `| 最差扇区风速 vs DNV/IMCA 能力图 | 公开图示 15–30 kn（定性带） | 59.4 kn | 显著偏高（约…` |
+| L11 | §6 结论：honest-FAIL 纪律 | [11785,11814) | `按 honest-FAIL 纪律如实登记，不粉饰、不覆盖。` |
+| L12 | §7 复跑命令（测试） | [11903,11973) | `python -m pytest tests/test_dp_capability.py -q            # 44 …` |
+| L13 | §7 端点（API 信号） | [12172,12242) | `curl -s -X POST localhost:8001/api/v1/dynamic-positioning/capabi…` |
+| L14 | §7 审计链陈述 | [12362,12436) | `**审计链**：表 10 给出每个工件的 sha256；`artifacts/dp_capability/acceptance.…` |
+| L15 | §5 局限 1：绝对幅值偏乐观 | [9758,9823) | `**局限 1（绝对幅值偏乐观）**：最差扇区 59 kn（1 kn 流 + Hs 2 m）高于公开能力图常见的 15–30 kn…` |
+| L16 | §5 适用范围 | [10583,10629) | `**适用范围**：准静态能力评估（时间平均环境力、稳态推力分配）；不含 DP 控制器动力学、` |
+| L17 | 表 5 最差扇区（24 航向口径） | [5756,5780) | `最差扇区 **59.41 kn @ 75°**，` |
+| L18 | 表 8 baseline 行（61.88 kn @ 60°） | [7154,7230) | `| baseline（interaction 0.95, 1.0 kn, ×1.0） | 61.88 | 60 | 1.94 |…` |
+| L19 | 表 6 判据④汇总与口径 | [6507,6547) | `判据④（平均/最差航向口径，限值 30%）：最大平均降级 **19.03%**，` |
+| L20 | 表 10 工件行：sha256 仅前 16 位 | [8182,8267) | `| `artifacts/dp_capability/dp_capability_report.json` | 36254 | …` |
+| L21 | §1 几何先校验 | [1346,1398) | `几何先校验后计算（平台纪律：先证 Cb/L/B）：Δ = ρ·L·B·T·C_b 与给定排水量的相对偏差` |
+| L22 | §1 参数化参考船声明 | [1493,1538) | `**声明**：这是"参数化参考船"，不是某一实船的图纸数据；所有结论对该船的参数空间成立，` |
+| L23 | §3 标题 | [3250,3282) | `## 3 计算结果
+
+<!-- TABLES:BEGIN -->` |
+| L24 | §1 标题 | [1091,1116) | `## 1 案例介绍（物理背景 / 几何 / 参数）` |
+| L25 | §2 标题 | [2113,2144) | `## 2 怎么做的（方法 / 流程 / 关键设置 / 工具链）` |
+| L26 | §4 标题 | [8547,8649) | `## 4 结果图
+
+图件由 `scripts/gen_dp_capability_artifacts.py` 生成（matplo…` |
+| L27 | §5 标题 | [9284,9310) | `## 5 注意点（踩过的坑 / 局限 / 适用范围）` |
+| L28 | §6 标题 | [10678,10711) | `## 6 误差判定（逐项 vs 基准，显式回答"是否 < 3%"）` |
+| L29 | §7 标题 | [11821,11835) | `## 7 复现 / 验收命令` |
+| L30 | 表 7 标题（风-流扫掠） | [6624,6666) | `### 表 7 风-流边界（可抗最大风速，`*` = 超过 120 kn 搜索上限）` |
+| L31 | 表 4 迭代行 | [5126,5166) | `| QP 迭代（最大 / 平均） | 3 / 3.0 | < 50（判据①） |` |
+| L32 | 摘要：环境力三分解 | [403,462) | `（1）**环境力**——风（投影面积 × 经验系数族）、流（水下侧投影阻力）、二阶平均波浪漂移力（长波衍射型谱积分）；` |
+| L33 | §6 行：力平衡残差 vs 基准 0 | [10789,10857) | `| 环境力-推力平衡残差（10 工况点） | 0（等式约束应精确成立） | 0.0（机器精度 ≤1e-12） | 0 | **是…` |
+| L34 | 表 5 后定性一致性核查 | [5868,5910) | `DNV/IMCA 定性一致性核查（`dnv_qualitative_check`）：` |
+| L35 | 表 8 标题（敏感性变体） | [7030,7069) | `### 表 8 关键假设敏感性（最差扇区可抗风速，DAG 判据③的量级稳定性）` |
+| L36 | 表 5 标题（24 航向包线） | [5285,5336) | `### 表 5 判据③：操作包线（流速 1.0 kn、Hs 2.0 m、Tp 8.0 s；24 航向）` |
+| L37 | 表 10 标题 | [7943,7966) | `### 表 10 工件与审计链（sha256）` |
+| L38 | §7 验收判定文件 | [12362,12436) | `**审计链**：表 10 给出每个工件的 sha256；`artifacts/dp_capability/acceptance.…` |
+| L39 | 测试 44 例全绿（外部仓库） | [308,353) | `**测试**：`tests/test_dp_capability.py`（44 例，全绿）` |
+| L40 | 页首测试行 | [308,353) | `**测试**：`tests/test_dp_capability.py`（44 例，全绿）` |
+| L41 | §2 推力器广义力映射 | [2636,2703) | `* 推力器模型：全回转 w∈R²（广义力映射 B=T_max·[[1,0],[0,1],[−y,x]]）；隧道式 w∈R¹（只横…` |
+| L42 | §2 方法学取舍（第一版启发式废弃） | [3087,3140) | `**为什么不用"方向启发式 + QP"**：第一版实现按"实际推力方向"阻尼更新方位角，在单推力器失效工况` |
+| L43 | §5 局限 2：无定量基准 | [10127,10175) | `**局限 2（定性判据不是定量基准）**：判据③是"与 DNV 典型 PSV 能力图定性一致"，` |
+| L44 | §5 局限 3：漂移力/风系数近似 | [10327,10375) | `**局限 3（漂移力与风系数是近似）**：漂移力用长波衍射型近似（无 RAO/无二阶传递函数），` |
+| L45 | §5 局限 4：推进器水动力未建模 | [10497,10546) | `**局限 4（推进器水动力未建模）**：未计螺旋桨尾流对相邻推力器的影响、未计推进器-船体相互作用` |
+
+判定 claim → locator：
+
+| claim | 判定要点（截断） | locator |
+|---|---|---|
+| C01 | 报告类型判定依据：本文对三个物理环节（环境力 / 推力分配 / 操作包线）给出模型、判据与数值结果，属数值计算类评估报告，而非文献综述、算法说明或软件变更报… | L01, L02, L32 |
+| C02 | 最强类型信号之一：§6 以「关键量 / 基准 / 本次结果 / 相对偏差 / 是否 < 3%」逐项构成「模型值 vs 独立基准」比较对，这是比较对型报告的核… | L09, L33 |
+| C03 | 另一个最强信号：报告自带验收判据与容差（迭代 < 50、力平衡残差 1%、降级限值 30%），并把唯一超差项按 honest-FAIL 显式登记、声明无定量… | L31, L19, L10, L11 |
+| C04 | 计算类信号：§1/§2 有控制方程型内容（漂移力谱积分、广义力映射 τ_req 与 SOCP 形式）与求解器迭代/停滞退出的收敛讨论；但无空间离散、无网格、… | L05, L07, L03, L08 |
+| C05 | 工程类信号只到捎带级：给了一个对外端点与 44 例测试陈述，但无 changed-files / commit / 接口契约，故不判 software-en… | L13, L39, L42 |
+| C06 | 主题判定：动力定位能力评估——环境力（风/流/二阶漂移）+ 推力分配（凸 SOCP）+ 操作包线/单点失效降级，落在船舶总体性能学科的「操纵 × 耐波」交叉… | L02, L32, L36, L19 |
+| C07 | 对象与适用范围：参数化参考船 PSV-6450（DP-2），结论仅对准静态能力评估成立，不含 DP 控制器动力学 / 瞬时波动 / 冰区。… | L22, L16 |
+| C08 | 源文自述证据分级：风/流/漂移力为 REAL（经验系数族 / 工程惯例 / 长波衍射近似），推力折减为参数化假设；这是源文自述，本工序不定级、不背书。… | L04, L05, L06 |
+
+结构切分（偏移连续覆盖全文）：
+
+| seq | 标题 | 偏移 [start,end) | 字符数 |
+|---|---|---|---|
+| 0 | IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图 | [0,360) | 360 |
+| 1 | 摘要 | [360,1091) | 731 |
+| 2 | 1 案例介绍（物理背景 / 几何 / 参数） | [1091,2113) | 1022 |
+| 3 | 2 怎么做的（方法 / 流程 / 关键设置 / 工具链） | [2113,3250) | 1137 |
+| 4 | 3 计算结果 | [3250,8547) | 5297 |
+| 5 | 4 结果图 | [8547,9284) | 737 |
+| 6 | 5 注意点（踩过的坑 / 局限 / 适用范围） | [9284,10678) | 1394 |
+| 7 | 6 误差判定（逐项 vs 基准，显式回答"是否 < 3%"） | [10678,11821) | 1143 |
+| 8 | 7 复现 / 验收命令 | [11821,12130) | 309 |
+| 9 | 端点 | [12130,12546) | 416 |
+
+## ⑤ 注意点与局限
+
+1. **类型判定是假设，不是事实**：`experimental-validation`（matched 3 个）与
+   实质次选 `scientific-computation`
+   （matched 1 个）
+   各拿到报告的一半（比较对/基线比对 vs 控制方程/收敛讨论）；机械次选
+   `software-engineering` 的 matched 核心信号只有「端点」，属附带项。`confidence=medium` 的理由已写进
+   `classification.json.confidence_reason`；03/04 工序若按次选 skill 抽得更好，应直接改判本包结论。
+2. **registry 的 `identify_signals` 是英文，字面扫描在中文报告上全 0**（见
+   `figures/signal_coverage.png` 红柱）：本包的类型判定依赖人工判读，因此**不具备"可全自动化复算"性质**。
+   这是产线级缺陷，不是本报告的缺陷，已在 finish 的能力台账里登记。
+3. **4 条 unresolved 不粉饰**（`consistency_flags`）：
+   F1 表 8 baseline 61.88 kn @ 60° 与表 5 最小值 59.41 kn @ 75° 口径不一致（源文未说明）；
+   F2 表 10 的 sha256 只有前 16 位，工件不在本仓库，审计链无法独立复算；
+   F3 "44 例全绿 / pytest / 端点"指向跨仓代码，本工序未核验、不主张成立；
+   F4 最差扇区绝对风速与公开能力图带（15–30 kn）显著偏离，源文自评"模型偏乐观"并 honest-FAIL 登记。
+4. **locator 只证明"原文如此写"**，不证明数值正确；本包不做数值核验（表 3–表 10 的正确性属 03/04）。
+5. **不越界**：仅 report_id=9706；未读写其它 report；未改动上游产物；未标任何 verified。
+6. **产线门实测（如实记录，不粉饰）**：`ke.wp_gate.run_gates` 对本包给出
+   `verdict=FAIL_STRUCTURAL`、G2 证据门通过、**G1 结构门不通过**；不通过项 = `S1.files_present, S5.summary_schema, S12.zero_claim_legality, S13.counts_consistent, S14.source_identity`。
+   原因不是本包产物不合规（`work-package.json` / `classification.json` 均过 schema，S2/S3/S4/S6–S11/S15 全绿），
+   而是 G1 规则按 03 分支写死：S1 强制要求 `claims.json / evidence.json / provenance.json / extraction_summary.json`
+   四个 03 产物，随后 S5/S12/S13/S14 也以 `extraction_summary.json` 为前提。02 分支契约只声明
+   `classification.json`——若为了让 G1 变绿而补造这四个 03 文件，将同时违反 S7（未声明产物）与
+   `no_forced_claim_generation`。本包选择**记录缺陷、不伪造**；该规则作用域缺陷计入能力台账（见
+   `selfcheck.json.pipeline_gate`）。
+
+## ⑥ 自检（逐条对照 acceptance）
+
+| acceptance | 结果 | 依据 |
+|---|---|---|
+| `valid_json` | ✅ | 三个 JSON 均 `json.loads` 通过 |
+| `schema_pass` | ✅ | `kf_result.v1` + `work-package-contract.v1` 经 `jsonschema` 校验 |
+| `source_locator_resolvable` | ✅ | 45/45 个 locator 重新切片逐字相等；claim/flag/grade 引用的 locator id 全部存在（缺=[]） |
+| `source_hash_matches` | ✅ | 重算 `sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534` == 契约声明 |
+| `no_duplicate_ids` | ✅ | locator id / claim id / flag id 各自唯一（45 / 8 / 4） |
+| `all_claims_have_evidence_or_explicit_unresolved_status` | ✅ | 8 条判定 claim 全部带 locator；4 条无法定论事项进 `consistency_flags(status=unresolved)` |
+| （附加）平台门 G1 `ke.wp_gate` | ⚠️ 不通过 | `S1.files_present, S5.summary_schema, S12.zero_claim_legality, S13.counts_consistent, S14.source_identity`——G1 规则按 03 分支写死，02 包结构上不可满足（见 ⑤-6），非本包产物缺陷 |
+
+如实说明：`report_type` 的**判读**环节不可程序化复算（见 ⑤-2），能复算的是哈希、locator 切片、
+结构切分与信号计分——这四项均 100% 复算一致。没有任何一项被标为 verified。
+
+## 复跑
+
+```bash
+# 一键复跑（工作树根执行）
+python docs/kf/wp-9706-02/build.py
+# 只校验收到的源哈希（应与契约一致）
+sha256sum docs/kf/sources/9706.md   # sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534
+```
+
+## 结果 JSON（全文唯一一个 json 代码块）
+
+```json
+{
+  "package_id": "wp-9706-02",
+  "task_type": "02-classification-parse",
+  "contract_version": "1.0",
+  "report_id": "9706",
+  "provenance": {
+    "source_uri": "tensor://reports/9706",
+    "source_field": "markdown",
+    "source_hash": "sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+    "source_hash_matches": true,
+    "title": "IN145-N04 DP 系统能力评估：凸推力分配 × 环境力平衡 × 操作包线（PSV-6450，判据全过）",
+    "scenario_key": "dp_capability",
+    "chars": 12546
+  },
+  "outputs": {
+    "classification.json": {
+      "schema": "classification.v1",
+      "package_id": "wp-9706-02",
+      "task_type": "02-classification-parse",
+      "report_id": "9706",
+      "classification_status": "classified",
+      "report_type": "experimental-validation",
+      "report_type_confidence": "medium",
+      "classification_is_hypothesis": true,
+      "epistemic_status": "draft",
+      "confidence_reason": "两个类型各成立一半：比较对/基线比对（§6）与判据+容差结构强指向 experimental-validation，控制方程与求解器收敛（§1/§2/§5 踩坑 2）指向 scientific-computation。按预声明规则（matched 信号数优先、其次覆盖分）取 experimental-validation 为首选；机械次选 software-engineering 的核心 matched 信号（端点）对体裁只是附带项（见 substantive_alternate_report_type 字段）。confidence 取 medium 而非 high，原因三：(a) facility 信号缺失（纯数值、无试验设施）；(b) registry identify_signals 为英文，字面扫描在中文正文上全 0（见 figures/signal_coverage.png），判读依赖人工；(c) 结论可被 03/04 工序反驳。",
+      "topic": {
+        "domain": "ship-overall-performance",
+        "disciplines": [
+          "maneuvering",
+          "seakeeping"
+        ],
+        "scenario_key": "dp_capability",
+        "subjects": [
+          "dynamic positioning capability assessment",
+          "convex thrust allocation (SOCP)",
+          "environmental force balance (wind / current / 2nd-order drift)",
+          "capability polar / operability envelope",
+          "single-thruster-failure degradation (DP-2 redundancy)"
+        ],
+        "vessel": "PSV-6450 参数化参考船（78 m 级 PSV，DP-2）",
+        "mission_stage": "IN145-N04（战役 DAG，物理域）"
+      },
+      "selected_skill": {
+        "skill_id": "xsk-experimental-validation",
+        "skill_version": "0.1.0",
+        "report_type": "experimental-validation",
+        "lifecycle_state": "template-created",
+        "registry": "extraction-skills/registry.json",
+        "selection_rule": "按 registry.json identify_signals 覆盖计分（matched=1, partial=0.5）取最高；同分时优先 skill 步骤能覆盖原文主要 claim 形状者",
+        "expected_steps_for_process_03": [
+          "extract-conditions（测试矩阵/工况条件随每条 claim 附加）",
+          "extract-comparison-pairs（模型值 + 参考值 + 参考来源，缺一侧即 unresolved）",
+          "extract-uncertainty（逐字复制声明不确定度，不得自算误差带）"
+        ],
+        "caveat": "skill 处于 template-created；选中它不等于该 skill 已被本报告验证（K1–K6 由 registry 校验）。"
+      },
+      "alternate_report_type": "software-engineering",
+      "substantive_alternate_report_type": "scientific-computation",
+      "alternative_note": "机械次选=software-engineering（覆盖分 2.5/5）但其 matched 核心信号仅「端点」一项，对本文体裁是附带项；实质最接近的次选是 scientific-computation（覆盖分 1.5/5），其缺的三项信号 discretisation / mesh refinement / timing table 都是网格类 PDE 报告的专属信号，准静态能力模型结构上不可能命中——这是 registry 信号集对「非网格数值评估」的覆盖偏差，不是本报告不是数值计算类报告的证明。",
+      "type_candidates": [
+        {
+          "report_type": "experimental-validation",
+          "skill_id": "xsk-experimental-validation",
+          "signal_judgement": {
+            "test matrix": {
+              "status": "matched",
+              "locator_ids": [
+                "L36",
+                "L35",
+                "L30",
+                "L19"
+              ],
+              "note": "24 航向包线 + 5 个失效工况 + 7 个敏感性变体 + 4 航向×7 流速扫掠"
+            },
+            "facility": {
+              "status": "absent",
+              "locator_ids": [
+                "L25"
+              ],
+              "note": "无物理试验设施；§2 只给数值工具链"
+            },
+            "measurement uncertainty": {
+              "status": "partial",
+              "locator_ids": [
+                "L04",
+                "L05"
+              ],
+              "note": "给的是模型不确定度声明（±25%/±15%/±30%），不是测量不确定度/覆盖因子"
+            },
+            "validation case": {
+              "status": "matched",
+              "locator_ids": [
+                "L33",
+                "L09"
+              ],
+              "note": "10 个工况点力平衡 vs 基准 0"
+            },
+            "baseline comparison": {
+              "status": "matched",
+              "locator_ids": [
+                "L09",
+                "L10",
+                "L43"
+              ],
+              "note": "§6 逐项 vs 解析/clean-room 基准，无定量基准项已声明"
+            }
+          },
+          "signal_coverage": {
+            "matched": [
+              "test matrix",
+              "validation case",
+              "baseline comparison"
+            ],
+            "partial": [
+              "measurement uncertainty"
+            ],
+            "absent": [
+              "facility"
+            ],
+            "score": 3.5,
+            "of": 5
+          },
+          "registry_keyword_hits": {
+            "test matrix": 0,
+            "facility": 0,
+            "measurement uncertainty": 0,
+            "validation case": 0,
+            "baseline comparison": 0
+          },
+          "decision": "primary",
+          "reason": "matched 信号最多（3 个，覆盖 3.5/5），且其 skill 步骤 extract-comparison-pairs / extract-uncertainty 正对上 §6 比较对与 §5 声明不确定度"
+        },
+        {
+          "report_type": "software-engineering",
+          "skill_id": "xsk-software-engineering",
+          "signal_judgement": {
+            "changed files": {
+              "status": "partial",
+              "locator_ids": [
+                "L42"
+              ],
+              "note": "提到第一版实现被废弃，无 changed-files 清单"
+            },
+            "commit": {
+              "status": "absent",
+              "locator_ids": [
+                "L42"
+              ],
+              "note": "只说差异在 git 历史里可查，无 commit id"
+            },
+            "interface": {
+              "status": "partial",
+              "locator_ids": [
+                "L13"
+              ],
+              "note": "一个端点 URL，无接口契约"
+            },
+            "regression": {
+              "status": "partial",
+              "locator_ids": [
+                "L39",
+                "L40"
+              ],
+              "note": "44 例测试全绿（外部仓库，不可核验）"
+            },
+            "API": {
+              "status": "matched",
+              "locator_ids": [
+                "L13"
+              ],
+              "note": "给出 /dynamic-positioning/capability 端点"
+            }
+          },
+          "signal_coverage": {
+            "matched": [
+              "API"
+            ],
+            "partial": [
+              "changed files",
+              "interface",
+              "regression"
+            ],
+            "absent": [
+              "commit"
+            ],
+            "score": 2.5,
+            "of": 5
+          },
+          "registry_keyword_hits": {
+            "changed files": 0,
+            "commit": 0,
+            "interface": 0,
+            "regression": 0,
+            "API": 3
+          },
+          "decision": "alternate",
+          "reason": "按覆盖分位列第二（2.5/5，matched 1 个），但 matched 的核心信号对报告体裁是附带项（端点/测试陈述），故只列为机械次选、不作首选"
+        },
+        {
+          "report_type": "scientific-computation",
+          "skill_id": "xsk-scientific-computation",
+          "signal_judgement": {
+            "governing equation": {
+              "status": "matched",
+              "locator_ids": [
+                "L05",
+                "L03",
+                "L07"
+              ],
+              "note": "漂移力谱积分 + τ_req=−F_env + SOCP 形式"
+            },
+            "discretisation": {
+              "status": "absent",
+              "locator_ids": [
+                "L25"
+              ],
+              "note": "准静态求解，无空间/时间离散"
+            },
+            "convergence study": {
+              "status": "partial",
+              "locator_ids": [
+                "L08",
+                "L31"
+              ],
+              "note": "求解器迭代/停滞退出与残差讨论，无网格或时间步收敛研究"
+            },
+            "mesh refinement": {
+              "status": "absent",
+              "locator_ids": [
+                "L25"
+              ],
+              "note": "无网格"
+            },
+            "timing table": {
+              "status": "absent",
+              "locator_ids": [
+                "L25"
+              ],
+              "note": "无耗时表（只有 QP 迭代次数）"
+            }
+          },
+          "signal_coverage": {
+            "matched": [
+              "governing equation"
+            ],
+            "partial": [
+              "convergence study"
+            ],
+            "absent": [
+              "discretisation",
+              "mesh refinement",
+              "timing table"
+            ],
+            "score": 1.5,
+            "of": 5
+          },
+          "registry_keyword_hits": {
+            "governing equation": 0,
+            "discretisation": 0,
+            "convergence study": 0,
+            "mesh refinement": 0,
+            "timing table": 0
+          },
+          "decision": "rejected",
+          "reason": "覆盖 1.5/5：关键识别信号缺失（见 absent 列表），选中会引导错误的抽取步骤"
+        },
+        {
+          "report_type": "technical-proposal",
+          "skill_id": "xsk-technical-proposal",
+          "signal_judgement": {
+            "proposal": {
+              "status": "absent",
+              "locator_ids": [
+                "L02"
+              ],
+              "note": "无待批方案，结果已产生"
+            },
+            "design": {
+              "status": "partial",
+              "locator_ids": [
+                "L25"
+              ],
+              "note": "有方法设计，但服务于已完成的评估"
+            },
+            "roadmap": {
+              "status": "absent",
+              "locator_ids": [
+                "L02"
+              ],
+              "note": "无路线图"
+            },
+            "specification": {
+              "status": "partial",
+              "locator_ids": [
+                "L09"
+              ],
+              "note": "有判据/容差规格（<3%、30%、<50 次）"
+            },
+            "plan": {
+              "status": "absent",
+              "locator_ids": [
+                "L02"
+              ],
+              "note": "无计划"
+            }
+          },
+          "signal_coverage": {
+            "matched": [],
+            "partial": [
+              "design",
+              "specification"
+            ],
+            "absent": [
+              "proposal",
+              "roadmap",
+              "plan"
+            ],
+            "score": 1.0,
+            "of": 5
+          },
+          "registry_keyword_hits": {
+            "proposal": 0,
+            "design": 0,
+            "roadmap": 0,
+            "specification": 0,
+            "plan": 0
+          },
+          "decision": "rejected",
+          "reason": "覆盖 1.0/5：关键识别信号缺失（见 absent 列表），选中会引导错误的抽取步骤"
+        },
+        {
+          "report_type": "algorithm-implementation",
+          "skill_id": "xsk-algorithm-implementation",
+          "signal_judgement": {
+            "pseudocode": {
+              "status": "absent",
+              "locator_ids": [
+                "L03"
+              ],
+              "note": "§2 只有流水线示意，非伪代码"
+            },
+            "complexity": {
+              "status": "absent",
+              "locator_ids": [
+                "L03"
+              ],
+              "note": "无复杂度分析"
+            },
+            "algorithm block": {
+              "status": "partial",
+              "locator_ids": [
+                "L07",
+                "L41"
+              ],
+              "note": "SOCP 形式与推力器映射，无算法块"
+            },
+            "function signature": {
+              "status": "absent",
+              "locator_ids": [
+                "L25"
+              ],
+              "note": "只提模块路径，无函数签名"
+            },
+            "O(n": {
+              "status": "absent",
+              "locator_ids": [
+                "L03"
+              ],
+              "note": "无渐进复杂度符号"
+            }
+          },
+          "signal_coverage": {
+            "matched": [],
+            "partial": [
+              "algorithm block"
+            ],
+            "absent": [
+              "pseudocode",
+              "complexity",
+              "function signature",
+              "O(n"
+            ],
+            "score": 0.5,
+            "of": 5
+          },
+          "registry_keyword_hits": {
+            "pseudocode": 0,
+            "complexity": 0,
+            "algorithm block": 0,
+            "function signature": 0,
+            "O(n": 0
+          },
+          "decision": "rejected",
+          "reason": "覆盖 0.5/5：关键识别信号缺失（见 absent 列表），选中会引导错误的抽取步骤"
+        },
+        {
+          "report_type": "literature-review",
+          "skill_id": "xsk-literature-review",
+          "signal_judgement": {
+            "related work": {
+              "status": "absent",
+              "locator_ids": [
+                "L09"
+              ],
+              "note": "无相关工作章节；§6 基准是解析式不是文献"
+            },
+            "state of the art": {
+              "status": "absent",
+              "locator_ids": [
+                "L09"
+              ],
+              "note": "无 SOTA 对比"
+            },
+            "survey": {
+              "status": "absent",
+              "locator_ids": [
+                "L02"
+              ],
+              "note": "非综述"
+            },
+            "bibliography": {
+              "status": "absent",
+              "locator_ids": [
+                "L09"
+              ],
+              "note": "全文无参考文献列表"
+            }
+          },
+          "signal_coverage": {
+            "matched": [],
+            "partial": [],
+            "absent": [
+              "related work",
+              "state of the art",
+              "survey",
+              "bibliography"
+            ],
+            "score": 0.0,
+            "of": 4
+          },
+          "registry_keyword_hits": {
+            "related work": 0,
+            "state of the art": 0,
+            "survey": 0,
+            "bibliography": 0
+          },
+          "decision": "rejected",
+          "reason": "覆盖 0.0/5：关键识别信号缺失（见 absent 列表），选中会引导错误的抽取步骤"
+        }
+      ],
+      "structure": {
+        "total_chars": 12546,
+        "total_bytes": 20505,
+        "section_count": 10,
+        "sections": [
+          {
+            "seq": 0,
+            "level": 1,
+            "heading": "# IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图",
+            "start_offset": 0,
+            "end_offset": 360,
+            "chars": 360,
+            "table_count": 0,
+            "table_rows": 0
+          },
+          {
+            "seq": 1,
+            "level": 2,
+            "heading": "## 摘要",
+            "start_offset": 360,
+            "end_offset": 1091,
+            "chars": 731,
+            "table_count": 0,
+            "table_rows": 0
+          },
+          {
+            "seq": 2,
+            "level": 2,
+            "heading": "## 1 案例介绍（物理背景 / 几何 / 参数）",
+            "start_offset": 1091,
+            "end_offset": 2113,
+            "chars": 1022,
+            "table_count": 0,
+            "table_rows": 6
+          },
+          {
+            "seq": 3,
+            "level": 2,
+            "heading": "## 2 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+            "start_offset": 2113,
+            "end_offset": 3250,
+            "chars": 1137,
+            "table_count": 0,
+            "table_rows": 0
+          },
+          {
+            "seq": 4,
+            "level": 2,
+            "heading": "## 3 计算结果",
+            "start_offset": 3250,
+            "end_offset": 8547,
+            "chars": 5297,
+            "table_count": 10,
+            "table_rows": 98
+          },
+          {
+            "seq": 5,
+            "level": 2,
+            "heading": "## 4 结果图",
+            "start_offset": 8547,
+            "end_offset": 9284,
+            "chars": 737,
+            "table_count": 0,
+            "table_rows": 0
+          },
+          {
+            "seq": 6,
+            "level": 2,
+            "heading": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+            "start_offset": 9284,
+            "end_offset": 10678,
+            "chars": 1394,
+            "table_count": 0,
+            "table_rows": 0
+          },
+          {
+            "seq": 7,
+            "level": 2,
+            "heading": "## 6 误差判定（逐项 vs 基准，显式回答\"是否 < 3%\"）",
+            "start_offset": 10678,
+            "end_offset": 11821,
+            "chars": 1143,
+            "table_count": 0,
+            "table_rows": 14
+          },
+          {
+            "seq": 8,
+            "level": 2,
+            "heading": "## 7 复现 / 验收命令",
+            "start_offset": 11821,
+            "end_offset": 12130,
+            "chars": 309,
+            "table_count": 0,
+            "table_rows": 0
+          },
+          {
+            "seq": 9,
+            "level": 1,
+            "heading": "# 端点",
+            "start_offset": 12130,
+            "end_offset": 12546,
+            "chars": 416,
+            "table_count": 0,
+            "table_rows": 0
+          }
+        ],
+        "offsets_cover_whole_text": true
+      },
+      "claims": [
+        {
+          "id": "C01",
+          "statement": "报告类型判定依据：本文对三个物理环节（环境力 / 推力分配 / 操作包线）给出模型、判据与数值结果，属数值计算类评估报告，而非文献综述、算法说明或软件变更报告。",
+          "locator_ids": [
+            "L01",
+            "L02",
+            "L32"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "C02",
+          "statement": "最强类型信号之一：§6 以「关键量 / 基准 / 本次结果 / 相对偏差 / 是否 < 3%」逐项构成「模型值 vs 独立基准」比较对，这是比较对型报告的核心结构。",
+          "locator_ids": [
+            "L09",
+            "L33"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "C03",
+          "statement": "另一个最强信号：报告自带验收判据与容差（迭代 < 50、力平衡残差 1%、降级限值 30%），并把唯一超差项按 honest-FAIL 显式登记、声明无定量基准。",
+          "locator_ids": [
+            "L31",
+            "L19",
+            "L10",
+            "L11"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "C04",
+          "statement": "计算类信号：§1/§2 有控制方程型内容（漂移力谱积分、广义力映射 τ_req 与 SOCP 形式）与求解器迭代/停滞退出的收敛讨论；但无空间离散、无网格、无耗时表。",
+          "locator_ids": [
+            "L05",
+            "L07",
+            "L03",
+            "L08"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "C05",
+          "statement": "工程类信号只到捎带级：给了一个对外端点与 44 例测试陈述，但无 changed-files / commit / 接口契约，故不判 software-engineering。",
+          "locator_ids": [
+            "L13",
+            "L39",
+            "L42"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "C06",
+          "statement": "主题判定：动力定位能力评估——环境力（风/流/二阶漂移）+ 推力分配（凸 SOCP）+ 操作包线/单点失效降级，落在船舶总体性能学科的「操纵 × 耐波」交叉面。",
+          "locator_ids": [
+            "L02",
+            "L32",
+            "L36",
+            "L19"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "C07",
+          "statement": "对象与适用范围：参数化参考船 PSV-6450（DP-2），结论仅对准静态能力评估成立，不含 DP 控制器动力学 / 瞬时波动 / 冰区。",
+          "locator_ids": [
+            "L22",
+            "L16"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "C08",
+          "statement": "源文自述证据分级：风/流/漂移力为 REAL（经验系数族 / 工程惯例 / 长波衍射近似），推力折减为参数化假设；这是源文自述，本工序不定级、不背书。",
+          "locator_ids": [
+            "L04",
+            "L05",
+            "L06"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed"
+        }
+      ],
+      "grade_notes_from_source": [
+        {
+          "element": "风",
+          "grade_as_stated_by_source": "REAL（经验系数族，非 CFD）",
+          "locator_id": "L04",
+          "note": "源文自述；幅值 ±25%",
+          "graded_by_this_package": false
+        },
+        {
+          "element": "流",
+          "grade_as_stated_by_source": "REAL（工程惯例）",
+          "locator_id": "L04",
+          "note": "源文自述；±15%",
+          "graded_by_this_package": false
+        },
+        {
+          "element": "波浪漂移",
+          "grade_as_stated_by_source": "REAL（长波衍射近似）",
+          "locator_id": "L05",
+          "note": "源文自述；±30%，无 RAO/二阶传递函数",
+          "graded_by_this_package": false
+        },
+        {
+          "element": "推力折减",
+          "grade_as_stated_by_source": "参数化假设（已做敏感性）",
+          "locator_id": "L06",
+          "note": "源文自述；5% 为 IMCA M140 量级",
+          "graded_by_this_package": false
+        }
+      ],
+      "consistency_flags": [
+        {
+          "id": "F1",
+          "statement": "口径不一致（未解决）：表 8 baseline 报「最差扇区 61.88 kn @ 60°」，而表 5（同称 1.0 kn 流、Hs 2.0 m、24 航向）的最小值是 59.41 kn @ 75°。两表扫描航向集或口径不同，源文未说明，本工序不替它判定哪个为准。",
+          "locator_ids": [
+            "L18",
+            "L17"
+          ],
+          "status": "unresolved",
+          "handling": "需 03 工序逐表抽取后由原文/上游工件澄清；本工序不猜"
+        },
+        {
+          "id": "F2",
+          "statement": "工件审计链不可独立重算：表 10 的 sha256 只给前 16 位（省略号截断），工件本体也不在本仓库，无法按表复算。",
+          "locator_ids": [
+            "L20",
+            "L37",
+            "L14"
+          ],
+          "status": "unresolved",
+          "handling": "需平台侧或上游仓库提供完整 sha256 / 工件本体"
+        },
+        {
+          "id": "F3",
+          "statement": "外部可核验项：44 例测试全绿、pytest 命令、端点 URL 都指向 ship-performance-platform 仓库，本工序所在仓库无该代码，故未核验、也不主张其成立。",
+          "locator_ids": [
+            "L39",
+            "L40",
+            "L12",
+            "L13"
+          ],
+          "status": "unresolved",
+          "handling": "超出本工序边界（跨仓核验不属 02）"
+        },
+        {
+          "id": "F4",
+          "statement": "无定量基准项：最差扇区绝对风速（≈59 kn）与公开能力图 15–30 kn 带显著偏离，源文自评为模型偏乐观并如实登记为不小于 3%；本工序只记录该自评，不改变其状态。",
+          "locator_ids": [
+            "L10",
+            "L15",
+            "L43"
+          ],
+          "status": "unresolved",
+          "handling": "无单值基准，属源文 honest-FAIL，需 04 审核判断是否可接受"
+        }
+      ],
+      "unresolved": {
+        "ids": [
+          "F1",
+          "F2",
+          "F3",
+          "F4"
+        ],
+        "count": 4,
+        "note": "已识别但本工序无法定到单一答案的事项：不丢弃，也不用猜测补齐。"
+      },
+      "locators": [
+        {
+          "id": "L01",
+          "locator_type": "char_range",
+          "start_offset": 0,
+          "end_offset": 49,
+          "quote": "# IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图",
+          "content_hash": "sha256:a16b397e93c9e0158ebb00fc6e02978dcb903a6abc6cadfe6e9e76d4be744be1",
+          "role": "报告标题行（类型/主题首个识别信号）"
+        },
+        {
+          "id": "L02",
+          "locator_type": "char_range",
+          "start_offset": 367,
+          "end_offset": 402,
+          "quote": "本文把\"DP 能不能抗住这个环境\"这件事做成可机器裁决的三个物理环节：",
+          "content_hash": "sha256:9774eef27705a6176a42758fa5128690f3a37869550d0ca5b09f19170d8ed2d8",
+          "role": "摘要：三个物理环节 + 判据全过的总陈述"
+        },
+        {
+          "id": "L03",
+          "locator_type": "char_range",
+          "start_offset": 2322,
+          "end_offset": 2384,
+          "quote": "τ_req = −F_env   (N, N, N·m)                       ← 力矩原点取水线面舯",
+          "content_hash": "sha256:8ddeb89bb9a027a7a12b43adde832e268179261932532f84cda37fe0d76c66fe",
+          "role": "§2 计算流水线（环境力 → 分配 → 包线）"
+        },
+        {
+          "id": "L04",
+          "locator_type": "char_range",
+          "start_offset": 1649,
+          "end_offset": 1676,
+          "quote": "| 要素 | 模型 | 分级 | 不确定度（声明） |",
+          "content_hash": "sha256:db56fd32038444ad88771cf31a3bc75e463e08dd323571bbb0087e9da53b0359",
+          "role": "§1 证据分级表头（含声明不确定度列）"
+        },
+        {
+          "id": "L05",
+          "locator_type": "char_range",
+          "start_offset": 1868,
+          "end_offset": 2001,
+          "quote": "| 波浪漂移 | 二阶平均漂移力 F_k=2∫S(ω)·ρg·D_k(ψ)·A_ref·f(ω)dω，f=1/(1+(ω/ω₀)⁴)，谱型用平台**单源谱核** `physics.wave_spectrum_core` | REAL（长波衍射近似） | ±30% |",
+          "content_hash": "sha256:b96dfa626e70f65b6155d424d4d78ef764372d9cdacded7f89adeaada3dded24",
+          "role": "§1 波浪漂移力谱积分行：控制方程型信号"
+        },
+        {
+          "id": "L06",
+          "locator_type": "char_range",
+          "start_offset": 2002,
+          "end_offset": 2106,
+          "quote": "| 推力折减 | 推力器-船体/推力器-推力器干扰 5%（IMCA M140 量级）+ 隧道推力器横流线性折减 0.12/kn（上限 40%） | 参数化假设（已在 §5/表 8 做敏感性） | 见敏感性 |",
+          "content_hash": "sha256:e79c911fd49529c6f8f3d25423ea9accf920585a19a0220b3764234c29d1a60f",
+          "role": "§1 推力折减行：参数化假设 + 敏感性"
+        },
+        {
+          "id": "L07",
+          "locator_type": "char_range",
+          "start_offset": 522,
+          "end_offset": 574,
+          "quote": "其可行域是凸的（各推力器可及集 = 椭圆的 Minkowski 和），因此写成凸二阶锥问题（SOCP），",
+          "content_hash": "sha256:4be30ade939366569d1b46b856b9ce2bf75454afb693920f1f0338dda8b4fdc0",
+          "role": "摘要：分配写成凸 SOCP"
+        },
+        {
+          "id": "L08",
+          "locator_type": "char_range",
+          "start_offset": 9703,
+          "end_offset": 9756,
+          "quote": "4 次不降即停\"后，最大迭代从 40 降到 10 量级。**教训**：对偶法要显式编码\"不可行侧\"的出口。",
+          "content_hash": "sha256:3014d9950931450f5ab50877e262baf6c67a5b6ece771b65cdb5b21f340266e8",
+          "role": "§5 踩坑 2：迭代/停滞退出（收敛讨论）"
+        },
+        {
+          "id": "L09",
+          "locator_type": "char_range",
+          "start_offset": 10713,
+          "end_offset": 10766,
+          "quote": "| 关键量 | 基准（clean-room / 解析） | 本次结果 | 相对偏差 | 是否 < 3% |",
+          "content_hash": "sha256:dea70d9d9cd2f293bf17cae57d8568bd07f96b47bf2bc95f732900076b15af76",
+          "role": "§6 误差判定表头：比较对 + <3% 判据"
+        },
+        {
+          "id": "L10",
+          "locator_type": "char_range",
+          "start_offset": 11430,
+          "end_offset": 11527,
+          "quote": "| 最差扇区风速 vs DNV/IMCA 能力图 | 公开图示 15–30 kn（定性带） | 59.4 kn | 显著偏高（约 +100%） | **否——如实登记**（见局限 1 诊断） |",
+          "content_hash": "sha256:fc297069ab6b0af79c596d70c7a2662284bb284b1510c34238e14e2f2f46eb86",
+          "role": "§6 honest-FAIL 行：唯一超差、无定量基准"
+        },
+        {
+          "id": "L11",
+          "locator_type": "char_range",
+          "start_offset": 11785,
+          "end_offset": 11814,
+          "quote": "按 honest-FAIL 纪律如实登记，不粉饰、不覆盖。",
+          "content_hash": "sha256:1faae38f5aea372ad31b2e8992a7f0080cbbfa1dd6345eb364bfe8be68486f09",
+          "role": "§6 结论：honest-FAIL 纪律"
+        },
+        {
+          "id": "L12",
+          "locator_type": "char_range",
+          "start_offset": 11903,
+          "end_offset": 11973,
+          "quote": "python -m pytest tests/test_dp_capability.py -q            # 44 passed",
+          "content_hash": "sha256:e31d8884f4718820bae2393fbf98b6cf151e260c6b52b622f6f033548988c6b6",
+          "role": "§7 复跑命令（测试）"
+        },
+        {
+          "id": "L13",
+          "locator_type": "char_range",
+          "start_offset": 12172,
+          "end_offset": 12242,
+          "quote": "curl -s -X POST localhost:8001/api/v1/dynamic-positioning/capability \\",
+          "content_hash": "sha256:9758918546f2ac850224859d3a50c91a2f6b905da20f04b3d7797e7bc895e669",
+          "role": "§7 端点（API 信号）"
+        },
+        {
+          "id": "L14",
+          "locator_type": "char_range",
+          "start_offset": 12362,
+          "end_offset": 12436,
+          "quote": "**审计链**：表 10 给出每个工件的 sha256；`artifacts/dp_capability/acceptance.json` 逐条判据",
+          "content_hash": "sha256:2f30be45df06bd6905f57708810a95d1ef3a30955cf4c13e92292be618285254",
+          "role": "§7 审计链陈述"
+        },
+        {
+          "id": "L15",
+          "locator_type": "char_range",
+          "start_offset": 9758,
+          "end_offset": 9823,
+          "quote": "**局限 1（绝对幅值偏乐观）**：最差扇区 59 kn（1 kn 流 + Hs 2 m）高于公开能力图常见的 15–30 kn。",
+          "content_hash": "sha256:a906aa0c76e854a6e346b237f1b57a7bd21ea9c927bc533b2c40f683f7a7b6d2",
+          "role": "§5 局限 1：绝对幅值偏乐观"
+        },
+        {
+          "id": "L16",
+          "locator_type": "char_range",
+          "start_offset": 10583,
+          "end_offset": 10629,
+          "quote": "**适用范围**：准静态能力评估（时间平均环境力、稳态推力分配）；不含 DP 控制器动力学、",
+          "content_hash": "sha256:f8a8ab7ed7ada5f919494b4325764d120effd569b7a86dac1a307de646f773f5",
+          "role": "§5 适用范围"
+        },
+        {
+          "id": "L17",
+          "locator_type": "char_range",
+          "start_offset": 5756,
+          "end_offset": 5780,
+          "quote": "最差扇区 **59.41 kn @ 75°**，",
+          "content_hash": "sha256:7bc75edd9f12d98df556c449d77057fc2bfd543052fcc740087634532267bd98",
+          "role": "表 5 最差扇区（24 航向口径）"
+        },
+        {
+          "id": "L18",
+          "locator_type": "char_range",
+          "start_offset": 7154,
+          "end_offset": 7230,
+          "quote": "| baseline（interaction 0.95, 1.0 kn, ×1.0） | 61.88 | 60 | 1.94 | 77.32 | — |",
+          "content_hash": "sha256:036b7748e80e488cdf22978ef8a9c99b18f3802b32d4e56d340aa5fa84b919b6",
+          "role": "表 8 baseline 行（61.88 kn @ 60°）"
+        },
+        {
+          "id": "L19",
+          "locator_type": "char_range",
+          "start_offset": 6507,
+          "end_offset": 6547,
+          "quote": "判据④（平均/最差航向口径，限值 30%）：最大平均降级 **19.03%**，",
+          "content_hash": "sha256:6fadda362a47fa32519c39e512b827ac3f39afba61fdf56e067da0d13621e311",
+          "role": "表 6 判据④汇总与口径"
+        },
+        {
+          "id": "L20",
+          "locator_type": "char_range",
+          "start_offset": 8182,
+          "end_offset": 8267,
+          "quote": "| `artifacts/dp_capability/dp_capability_report.json` | 36254 | `11f58960a7503108…` |",
+          "content_hash": "sha256:28ced6182b8c5dca88223138644f98e7777243309bb12017facd88246521d926",
+          "role": "表 10 工件行：sha256 仅前 16 位"
+        },
+        {
+          "id": "L21",
+          "locator_type": "char_range",
+          "start_offset": 1346,
+          "end_offset": 1398,
+          "quote": "几何先校验后计算（平台纪律：先证 Cb/L/B）：Δ = ρ·L·B·T·C_b 与给定排水量的相对偏差",
+          "content_hash": "sha256:c597e2ec8392a5a0bacfa1ae0362666abf78ea56f6ef7cc434a88671b2c1fe54",
+          "role": "§1 几何先校验"
+        },
+        {
+          "id": "L22",
+          "locator_type": "char_range",
+          "start_offset": 1493,
+          "end_offset": 1538,
+          "quote": "**声明**：这是\"参数化参考船\"，不是某一实船的图纸数据；所有结论对该船的参数空间成立，",
+          "content_hash": "sha256:f5dfa04da1fb0753c3c099e970502bf576d2a4c88c00eb06324d80945484d78f",
+          "role": "§1 参数化参考船声明"
+        },
+        {
+          "id": "L23",
+          "locator_type": "char_range",
+          "start_offset": 3250,
+          "end_offset": 3282,
+          "quote": "## 3 计算结果\n\n<!-- TABLES:BEGIN -->",
+          "content_hash": "sha256:3f3b279b14531ece46de2623a10c58895e59da201a26f8166942fe941f8ebb83",
+          "role": "§3 标题"
+        },
+        {
+          "id": "L24",
+          "locator_type": "char_range",
+          "start_offset": 1091,
+          "end_offset": 1116,
+          "quote": "## 1 案例介绍（物理背景 / 几何 / 参数）",
+          "content_hash": "sha256:93d2ff19722995c139b51034dd3124d6a22eabc894052922d2069f31471ff5ce",
+          "role": "§1 标题"
+        },
+        {
+          "id": "L25",
+          "locator_type": "char_range",
+          "start_offset": 2113,
+          "end_offset": 2144,
+          "quote": "## 2 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+          "content_hash": "sha256:eb372a85ced638ad33e69a2252a04af55cd45c91a87f8c5ffe8efb22f490537d",
+          "role": "§2 标题"
+        },
+        {
+          "id": "L26",
+          "locator_type": "char_range",
+          "start_offset": 8547,
+          "end_offset": 8649,
+          "quote": "## 4 结果图\n\n图件由 `scripts/gen_dp_capability_artifacts.py` 生成（matplotlib Agg，sha256 已入 `acceptance.json`）：",
+          "content_hash": "sha256:a1dfa7152c6214184356348d8e1ac0dffb244c87bc72c2ad22bb20224b36d43c",
+          "role": "§4 标题"
+        },
+        {
+          "id": "L27",
+          "locator_type": "char_range",
+          "start_offset": 9284,
+          "end_offset": 9310,
+          "quote": "## 5 注意点（踩过的坑 / 局限 / 适用范围）",
+          "content_hash": "sha256:1d6b5437712b32ca3fc0b6f74a40b27b613cba11247ea7ea6232a6f50542878f",
+          "role": "§5 标题"
+        },
+        {
+          "id": "L28",
+          "locator_type": "char_range",
+          "start_offset": 10678,
+          "end_offset": 10711,
+          "quote": "## 6 误差判定（逐项 vs 基准，显式回答\"是否 < 3%\"）",
+          "content_hash": "sha256:67a541e9ccdedcef2f154c0ae18ddaaf8e11e2d2dfe302fdb706e5cae1890a02",
+          "role": "§6 标题"
+        },
+        {
+          "id": "L29",
+          "locator_type": "char_range",
+          "start_offset": 11821,
+          "end_offset": 11835,
+          "quote": "## 7 复现 / 验收命令",
+          "content_hash": "sha256:e7ca2277d0050f34c4005e79f48d34b5d3be7f82c5a04492cd1f69905c37d352",
+          "role": "§7 标题"
+        },
+        {
+          "id": "L30",
+          "locator_type": "char_range",
+          "start_offset": 6624,
+          "end_offset": 6666,
+          "quote": "### 表 7 风-流边界（可抗最大风速，`*` = 超过 120 kn 搜索上限）",
+          "content_hash": "sha256:00976c015eba92e1997fbf066ebe260d5d831305fbe92cce70ee6eab9fa9c2f4",
+          "role": "表 7 标题（风-流扫掠）"
+        },
+        {
+          "id": "L31",
+          "locator_type": "char_range",
+          "start_offset": 5126,
+          "end_offset": 5166,
+          "quote": "| QP 迭代（最大 / 平均） | 3 / 3.0 | < 50（判据①） |",
+          "content_hash": "sha256:7f6c496b0c79a2879adcdac4819f303b61d37b53a4b433bac393d94fd172ad10",
+          "role": "表 4 迭代行"
+        },
+        {
+          "id": "L32",
+          "locator_type": "char_range",
+          "start_offset": 403,
+          "end_offset": 462,
+          "quote": "（1）**环境力**——风（投影面积 × 经验系数族）、流（水下侧投影阻力）、二阶平均波浪漂移力（长波衍射型谱积分）；",
+          "content_hash": "sha256:aa32b4b7682449d465c3abde96420936e6a9e1b28af3d8a3b030f0cb7f787e74",
+          "role": "摘要：环境力三分解"
+        },
+        {
+          "id": "L33",
+          "locator_type": "char_range",
+          "start_offset": 10789,
+          "end_offset": 10857,
+          "quote": "| 环境力-推力平衡残差（10 工况点） | 0（等式约束应精确成立） | 0.0（机器精度 ≤1e-12） | 0 | **是** |",
+          "content_hash": "sha256:6ecb32146661b6d4ea6f239567b7ecfda16407d6d21a1f285867c5e04b768e60",
+          "role": "§6 行：力平衡残差 vs 基准 0"
+        },
+        {
+          "id": "L34",
+          "locator_type": "char_range",
+          "start_offset": 5868,
+          "end_offset": 5910,
+          "quote": "DNV/IMCA 定性一致性核查（`dnv_qualitative_check`）：",
+          "content_hash": "sha256:f05a7314dd8a4eb447693b3ad0cde7edb156666bac61642f0d90d09a9ce3ef80",
+          "role": "表 5 后定性一致性核查"
+        },
+        {
+          "id": "L35",
+          "locator_type": "char_range",
+          "start_offset": 7030,
+          "end_offset": 7069,
+          "quote": "### 表 8 关键假设敏感性（最差扇区可抗风速，DAG 判据③的量级稳定性）",
+          "content_hash": "sha256:36265d001f06bae056de5eada5217fa7c924b4c07fb0535646428e76051bce15",
+          "role": "表 8 标题（敏感性变体）"
+        },
+        {
+          "id": "L36",
+          "locator_type": "char_range",
+          "start_offset": 5285,
+          "end_offset": 5336,
+          "quote": "### 表 5 判据③：操作包线（流速 1.0 kn、Hs 2.0 m、Tp 8.0 s；24 航向）",
+          "content_hash": "sha256:d22a8c7e0b6d9b58b923ba4de1ff351c6be34fa44379630e5da7548239ba8a10",
+          "role": "表 5 标题（24 航向包线）"
+        },
+        {
+          "id": "L37",
+          "locator_type": "char_range",
+          "start_offset": 7943,
+          "end_offset": 7966,
+          "quote": "### 表 10 工件与审计链（sha256）",
+          "content_hash": "sha256:d07fc1f492ea442aaf263c7ddaadcc13f916699dcf2e9c35a5d60052e85bf657",
+          "role": "表 10 标题"
+        },
+        {
+          "id": "L38",
+          "locator_type": "char_range",
+          "start_offset": 12362,
+          "end_offset": 12436,
+          "quote": "**审计链**：表 10 给出每个工件的 sha256；`artifacts/dp_capability/acceptance.json` 逐条判据",
+          "content_hash": "sha256:2f30be45df06bd6905f57708810a95d1ef3a30955cf4c13e92292be618285254",
+          "role": "§7 验收判定文件"
+        },
+        {
+          "id": "L39",
+          "locator_type": "char_range",
+          "start_offset": 308,
+          "end_offset": 353,
+          "quote": "**测试**：`tests/test_dp_capability.py`（44 例，全绿）",
+          "content_hash": "sha256:38a9251524606fb5be0bdbe018fb791a2efdf788d26319e2aaf418b3a1eae290",
+          "role": "测试 44 例全绿（外部仓库）"
+        },
+        {
+          "id": "L40",
+          "locator_type": "char_range",
+          "start_offset": 308,
+          "end_offset": 353,
+          "quote": "**测试**：`tests/test_dp_capability.py`（44 例，全绿）",
+          "content_hash": "sha256:38a9251524606fb5be0bdbe018fb791a2efdf788d26319e2aaf418b3a1eae290",
+          "role": "页首测试行"
+        },
+        {
+          "id": "L41",
+          "locator_type": "char_range",
+          "start_offset": 2636,
+          "end_offset": 2703,
+          "quote": "* 推力器模型：全回转 w∈R²（广义力映射 B=T_max·[[1,0],[0,1],[−y,x]]）；隧道式 w∈R¹（只横向），",
+          "content_hash": "sha256:ff459527ed781ad3a7b59fa18ccfadbfbdfdad5ff26b7cc00593ee0c9b691eb9",
+          "role": "§2 推力器广义力映射"
+        },
+        {
+          "id": "L42",
+          "locator_type": "char_range",
+          "start_offset": 3087,
+          "end_offset": 3140,
+          "quote": "**为什么不用\"方向启发式 + QP\"**：第一版实现按\"实际推力方向\"阻尼更新方位角，在单推力器失效工况",
+          "content_hash": "sha256:2802f7e5209fce7ab9de367527cfffcefd80126c9f8d28a06deb311d286e901e",
+          "role": "§2 方法学取舍（第一版启发式废弃）"
+        },
+        {
+          "id": "L43",
+          "locator_type": "char_range",
+          "start_offset": 10127,
+          "end_offset": 10175,
+          "quote": "**局限 2（定性判据不是定量基准）**：判据③是\"与 DNV 典型 PSV 能力图定性一致\"，",
+          "content_hash": "sha256:df734ed80b13d45852fde82f10f92b917f23216fb741c6794c84223bfa55d232",
+          "role": "§5 局限 2：无定量基准"
+        },
+        {
+          "id": "L44",
+          "locator_type": "char_range",
+          "start_offset": 10327,
+          "end_offset": 10375,
+          "quote": "**局限 3（漂移力与风系数是近似）**：漂移力用长波衍射型近似（无 RAO/无二阶传递函数），",
+          "content_hash": "sha256:3c3cf6eb00dc99ee60b9ff2c90e4b861163c4f54c3b1684cdef4deb1fc3f9d2a",
+          "role": "§5 局限 3：漂移力/风系数近似"
+        },
+        {
+          "id": "L45",
+          "locator_type": "char_range",
+          "start_offset": 10497,
+          "end_offset": 10546,
+          "quote": "**局限 4（推进器水动力未建模）**：未计螺旋桨尾流对相邻推力器的影响、未计推进器-船体相互作用",
+          "content_hash": "sha256:7351ae86432e85730dccb3bb2808433411f4c925840fc4a00f7aac42a69358f6",
+          "role": "§5 局限 4：推进器水动力未建模"
+        }
+      ],
+      "locator_index": {
+        "L01": {
+          "start_offset": 0,
+          "end_offset": 49,
+          "content_hash": "sha256:a16b397e93c9e0158ebb00fc6e02978dcb903a6abc6cadfe6e9e76d4be744be1"
+        },
+        "L02": {
+          "start_offset": 367,
+          "end_offset": 402,
+          "content_hash": "sha256:9774eef27705a6176a42758fa5128690f3a37869550d0ca5b09f19170d8ed2d8"
+        },
+        "L03": {
+          "start_offset": 2322,
+          "end_offset": 2384,
+          "content_hash": "sha256:8ddeb89bb9a027a7a12b43adde832e268179261932532f84cda37fe0d76c66fe"
+        },
+        "L04": {
+          "start_offset": 1649,
+          "end_offset": 1676,
+          "content_hash": "sha256:db56fd32038444ad88771cf31a3bc75e463e08dd323571bbb0087e9da53b0359"
+        },
+        "L05": {
+          "start_offset": 1868,
+          "end_offset": 2001,
+          "content_hash": "sha256:b96dfa626e70f65b6155d424d4d78ef764372d9cdacded7f89adeaada3dded24"
+        },
+        "L06": {
+          "start_offset": 2002,
+          "end_offset": 2106,
+          "content_hash": "sha256:e79c911fd49529c6f8f3d25423ea9accf920585a19a0220b3764234c29d1a60f"
+        },
+        "L07": {
+          "start_offset": 522,
+          "end_offset": 574,
+          "content_hash": "sha256:4be30ade939366569d1b46b856b9ce2bf75454afb693920f1f0338dda8b4fdc0"
+        },
+        "L08": {
+          "start_offset": 9703,
+          "end_offset": 9756,
+          "content_hash": "sha256:3014d9950931450f5ab50877e262baf6c67a5b6ece771b65cdb5b21f340266e8"
+        },
+        "L09": {
+          "start_offset": 10713,
+          "end_offset": 10766,
+          "content_hash": "sha256:dea70d9d9cd2f293bf17cae57d8568bd07f96b47bf2bc95f732900076b15af76"
+        },
+        "L10": {
+          "start_offset": 11430,
+          "end_offset": 11527,
+          "content_hash": "sha256:fc297069ab6b0af79c596d70c7a2662284bb284b1510c34238e14e2f2f46eb86"
+        },
+        "L11": {
+          "start_offset": 11785,
+          "end_offset": 11814,
+          "content_hash": "sha256:1faae38f5aea372ad31b2e8992a7f0080cbbfa1dd6345eb364bfe8be68486f09"
+        },
+        "L12": {
+          "start_offset": 11903,
+          "end_offset": 11973,
+          "content_hash": "sha256:e31d8884f4718820bae2393fbf98b6cf151e260c6b52b622f6f033548988c6b6"
+        },
+        "L13": {
+          "start_offset": 12172,
+          "end_offset": 12242,
+          "content_hash": "sha256:9758918546f2ac850224859d3a50c91a2f6b905da20f04b3d7797e7bc895e669"
+        },
+        "L14": {
+          "start_offset": 12362,
+          "end_offset": 12436,
+          "content_hash": "sha256:2f30be45df06bd6905f57708810a95d1ef3a30955cf4c13e92292be618285254"
+        },
+        "L15": {
+          "start_offset": 9758,
+          "end_offset": 9823,
+          "content_hash": "sha256:a906aa0c76e854a6e346b237f1b57a7bd21ea9c927bc533b2c40f683f7a7b6d2"
+        },
+        "L16": {
+          "start_offset": 10583,
+          "end_offset": 10629,
+          "content_hash": "sha256:f8a8ab7ed7ada5f919494b4325764d120effd569b7a86dac1a307de646f773f5"
+        },
+        "L17": {
+          "start_offset": 5756,
+          "end_offset": 5780,
+          "content_hash": "sha256:7bc75edd9f12d98df556c449d77057fc2bfd543052fcc740087634532267bd98"
+        },
+        "L18": {
+          "start_offset": 7154,
+          "end_offset": 7230,
+          "content_hash": "sha256:036b7748e80e488cdf22978ef8a9c99b18f3802b32d4e56d340aa5fa84b919b6"
+        },
+        "L19": {
+          "start_offset": 6507,
+          "end_offset": 6547,
+          "content_hash": "sha256:6fadda362a47fa32519c39e512b827ac3f39afba61fdf56e067da0d13621e311"
+        },
+        "L20": {
+          "start_offset": 8182,
+          "end_offset": 8267,
+          "content_hash": "sha256:28ced6182b8c5dca88223138644f98e7777243309bb12017facd88246521d926"
+        },
+        "L21": {
+          "start_offset": 1346,
+          "end_offset": 1398,
+          "content_hash": "sha256:c597e2ec8392a5a0bacfa1ae0362666abf78ea56f6ef7cc434a88671b2c1fe54"
+        },
+        "L22": {
+          "start_offset": 1493,
+          "end_offset": 1538,
+          "content_hash": "sha256:f5dfa04da1fb0753c3c099e970502bf576d2a4c88c00eb06324d80945484d78f"
+        },
+        "L23": {
+          "start_offset": 3250,
+          "end_offset": 3282,
+          "content_hash": "sha256:3f3b279b14531ece46de2623a10c58895e59da201a26f8166942fe941f8ebb83"
+        },
+        "L24": {
+          "start_offset": 1091,
+          "end_offset": 1116,
+          "content_hash": "sha256:93d2ff19722995c139b51034dd3124d6a22eabc894052922d2069f31471ff5ce"
+        },
+        "L25": {
+          "start_offset": 2113,
+          "end_offset": 2144,
+          "content_hash": "sha256:eb372a85ced638ad33e69a2252a04af55cd45c91a87f8c5ffe8efb22f490537d"
+        },
+        "L26": {
+          "start_offset": 8547,
+          "end_offset": 8649,
+          "content_hash": "sha256:a1dfa7152c6214184356348d8e1ac0dffb244c87bc72c2ad22bb20224b36d43c"
+        },
+        "L27": {
+          "start_offset": 9284,
+          "end_offset": 9310,
+          "content_hash": "sha256:1d6b5437712b32ca3fc0b6f74a40b27b613cba11247ea7ea6232a6f50542878f"
+        },
+        "L28": {
+          "start_offset": 10678,
+          "end_offset": 10711,
+          "content_hash": "sha256:67a541e9ccdedcef2f154c0ae18ddaaf8e11e2d2dfe302fdb706e5cae1890a02"
+        },
+        "L29": {
+          "start_offset": 11821,
+          "end_offset": 11835,
+          "content_hash": "sha256:e7ca2277d0050f34c4005e79f48d34b5d3be7f82c5a04492cd1f69905c37d352"
+        },
+        "L30": {
+          "start_offset": 6624,
+          "end_offset": 6666,
+          "content_hash": "sha256:00976c015eba92e1997fbf066ebe260d5d831305fbe92cce70ee6eab9fa9c2f4"
+        },
+        "L31": {
+          "start_offset": 5126,
+          "end_offset": 5166,
+          "content_hash": "sha256:7f6c496b0c79a2879adcdac4819f303b61d37b53a4b433bac393d94fd172ad10"
+        },
+        "L32": {
+          "start_offset": 403,
+          "end_offset": 462,
+          "content_hash": "sha256:aa32b4b7682449d465c3abde96420936e6a9e1b28af3d8a3b030f0cb7f787e74"
+        },
+        "L33": {
+          "start_offset": 10789,
+          "end_offset": 10857,
+          "content_hash": "sha256:6ecb32146661b6d4ea6f239567b7ecfda16407d6d21a1f285867c5e04b768e60"
+        },
+        "L34": {
+          "start_offset": 5868,
+          "end_offset": 5910,
+          "content_hash": "sha256:f05a7314dd8a4eb447693b3ad0cde7edb156666bac61642f0d90d09a9ce3ef80"
+        },
+        "L35": {
+          "start_offset": 7030,
+          "end_offset": 7069,
+          "content_hash": "sha256:36265d001f06bae056de5eada5217fa7c924b4c07fb0535646428e76051bce15"
+        },
+        "L36": {
+          "start_offset": 5285,
+          "end_offset": 5336,
+          "content_hash": "sha256:d22a8c7e0b6d9b58b923ba4de1ff351c6be34fa44379630e5da7548239ba8a10"
+        },
+        "L37": {
+          "start_offset": 7943,
+          "end_offset": 7966,
+          "content_hash": "sha256:d07fc1f492ea442aaf263c7ddaadcc13f916699dcf2e9c35a5d60052e85bf657"
+        },
+        "L38": {
+          "start_offset": 12362,
+          "end_offset": 12436,
+          "content_hash": "sha256:2f30be45df06bd6905f57708810a95d1ef3a30955cf4c13e92292be618285254"
+        },
+        "L39": {
+          "start_offset": 308,
+          "end_offset": 353,
+          "content_hash": "sha256:38a9251524606fb5be0bdbe018fb791a2efdf788d26319e2aaf418b3a1eae290"
+        },
+        "L40": {
+          "start_offset": 308,
+          "end_offset": 353,
+          "content_hash": "sha256:38a9251524606fb5be0bdbe018fb791a2efdf788d26319e2aaf418b3a1eae290"
+        },
+        "L41": {
+          "start_offset": 2636,
+          "end_offset": 2703,
+          "content_hash": "sha256:ff459527ed781ad3a7b59fa18ccfadbfbdfdad5ff26b7cc00593ee0c9b691eb9"
+        },
+        "L42": {
+          "start_offset": 3087,
+          "end_offset": 3140,
+          "content_hash": "sha256:2802f7e5209fce7ab9de367527cfffcefd80126c9f8d28a06deb311d286e901e"
+        },
+        "L43": {
+          "start_offset": 10127,
+          "end_offset": 10175,
+          "content_hash": "sha256:df734ed80b13d45852fde82f10f92b917f23216fb741c6794c84223bfa55d232"
+        },
+        "L44": {
+          "start_offset": 10327,
+          "end_offset": 10375,
+          "content_hash": "sha256:3c3cf6eb00dc99ee60b9ff2c90e4b861163c4f54c3b1684cdef4deb1fc3f9d2a"
+        },
+        "L45": {
+          "start_offset": 10497,
+          "end_offset": 10546,
+          "content_hash": "sha256:7351ae86432e85730dccb3bb2808433411f4c925840fc4a00f7aac42a69358f6"
+        }
+      },
+      "constraints_applied": {
+        "every_claim_must_have_source_locator": true,
+        "do_not_invent_missing_information": true,
+        "preserve_uncertainty": true,
+        "no_forced_claim_generation": true,
+        "do_not_mark_claims_as_verified": true
+      },
+      "not_done": [
+        "未做知识抽取（claims/evidence/provenance 属 03 工序）：本包只做类型/主题判定、结构切分与证据定位。",
+        "未给任何结论标 verified：epistemic_status 一律 draft，assessment_status 一律 unassessed，验证级别由平台门计算。",
+        "未核验源文数值本身（表 3–表 10）与外部仓库代码/测试；locator 只证明「原文如此写」。",
+        "未读取或写入任何其它 report_id。"
+      ],
+      "source": {
+        "source_uri": "tensor://reports/9706",
+        "source_field": "markdown",
+        "source_hash_declared": "sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+        "source_hash_recomputed": "sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+        "source_hash_matches": true,
+        "chars": 12546,
+        "bytes": 20505,
+        "title_as_in_source": "IN145-N04 动力定位（DP）系统能力评估：推力分配优化 × 环境力平衡 × 操作包线图",
+        "title_platform": "IN145-N04 DP 系统能力评估：凸推力分配 × 环境力平衡 × 操作包线（PSV-6450，判据全过）",
+        "scenario_key": "dp_capability"
+      }
+    }
+  }
+}
+```
