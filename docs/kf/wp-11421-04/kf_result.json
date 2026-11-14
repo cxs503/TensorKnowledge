@@ -1,0 +1,65 @@
+{
+  "package_id": "wp-11421-04",
+  "task_type": "04-independent-review",
+  "contract_version": "1.0",
+  "report_id": "11421",
+  "provenance": {
+    "source_uri": "tensor://reports/11421",
+    "source_field": "markdown",
+    "source_hash": "sha256:f85c29fe650365140152064807d90b2accdf43382f2222956470f3521e0a280a",
+    "source_hash_matches": true,
+    "title": "P270W1-N07 端到端不确定度传播：几何→阻力→推进→EEXI/CII 六因子分解（蒙特卡洛 + Sobol）",
+    "scenario_key": "ship_performance",
+    "chars": 18542
+  },
+  "outputs": {
+    "review_report.json": {
+      "review_id": "wp-11421-04",
+      "reviewed_package": "wp-11421-01",
+      "report_id": "11421",
+      "reviewer_role": "red-team-reviewer",
+      "disposition": "approve_with_notes",
+      "findings_count": 5,
+      "findings_severity": {
+        "low": 2,
+        "info": 3
+      },
+      "checks_performed": 13,
+      "checks_not_run": 6,
+      "upstream_crosscheck_validated": true,
+      "summary": "Report 11421 is internally consistent on all verifiable arithmetic claims. Two low-severity prose issues (F1: Jansen estimator non-negativity claim; F2: 5% FD-analytic bound) confirmed from upstream X4/X5. Three informational findings (F3: interaction effects not discussed; F4: unverifiable external claim; F5: Table 6 ratio clarity). No numerical corrections needed. Disposition: approve_with_notes."
+    },
+    "review_events.json": [
+      {
+        "event_id": "RE-001",
+        "event_type": "review_started",
+        "timestamp": "2026-11-12T00:00:00Z",
+        "details": "Independent review of report 11421 (wp-11421-04), reviewing upstream wp-11421-01."
+      },
+      {
+        "event_id": "RE-002",
+        "event_type": "source_verified",
+        "timestamp": "2026-11-12T00:01:00Z",
+        "details": "Source hash verified: sha256:f85c29fe650365140152064807d90b2accdf43382f2222956470f3521e0a280a, chars=18542, bytes_utf8=26405."
+      },
+      {
+        "event_id": "RE-003",
+        "event_type": "checks_completed",
+        "timestamp": "2026-11-12T00:02:00Z",
+        "details": "13 independent checks performed; 6 checks not run (require external code/artifacts)."
+      },
+      {
+        "event_id": "RE-004",
+        "event_type": "findings_recorded",
+        "timestamp": "2026-11-12T00:03:00Z",
+        "details": "5 findings: F1 (low, incorrect prose), F2 (low, incorrect prose), F3 (info, missing interpretation), F4 (info, unverifiable claim), F5 (info, documentation clarity)."
+      },
+      {
+        "event_id": "RE-005",
+        "event_type": "disposition_made",
+        "timestamp": "2026-11-12T00:04:00Z",
+        "details": "Disposition: approve_with_notes. Report is scientifically sound; two low-severity prose issues need fixing before downstream citation."
+      }
+    ]
+  }
+}
