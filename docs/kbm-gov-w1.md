@@ -200,3 +200,19 @@ all_ko_relocate(153/153) / buckets_reconcile / writeback_matches_ledger / refusa
 `queue_id / item_id / subject_key / source_report / state / decision_code / governed / votes[]`；
 `state ∈ {approved, draft, rejected}` 与 `review-event.schema.json` 的 decision 一一对应
 （approve / request-changes / reject）。factory 只需追加 `item_id` 到自家队列，回写即复用本层 `writeback.json` 结构。
+**图**（`runs/kbm-gov-w1/figures/`）：f1 治理漏斗（三口径标注）· f2 去重簇规模与层级 · f3 矛盾检测标定曲线 · f4 评审泳道票型分布 · f5 阈值敏感性双联图。
+| f5-sensitivity.png | 去重阈值 / 矛盾阈值双扫描 | 单调且阈值有区分度：`near_dup_jaccard` 0.3→22.88%、0.5→16.34%、0.8→12.42%；`contradict_rel` ≤0.30 recall 恒 1.00、0.50 掉 0（诱导分歧 33% < 50%） |
+python scripts/kbm_gov_ablation.py  --out runs/kbm-gov-w1      # 标定 + 敏感性 + 5 张图
+| 标定+敏感性+图 | `python scripts/kbm_gov_ablation.py --out runs/kbm-gov-w1` | ✅ recall 1.00、控制组 0、5 图 |
+| 两次跑批字节一致 | run+ablation 前后各取 19 个工件 sha256 | ✅ **19/19 字节相同**（含 5 张 PNG）。m19212 轮复核：run 目录 21 工件除后跑的 `verify.json` 外全等；ablation `analysis.json` + 5 张 PNG 全等 |
+## 重开第 2 轮复核（m19212）· 本单交付状态
+| 全流程可跑 | `python scripts/kbm_gov_w1.py run --out runs/kbm-gov-w1 --limit 200` | ✅ 200/153/89，重复率 16.3399%、矛盾对 0、通过率 69.9346%（与 W1 报告逐位一致） |
+| 复核 8 项 | `python scripts/kbm_gov_w1.py verify --out runs/kbm-gov-w1` | ✅ `all_ok=true`（8/8 true） |
+| 标定 + 敏感性 | `python scripts/kbm_gov_ablation.py --out runs/kbm-gov-w1` | ✅ recall 1.00（m≥1.20）、控制组 0、5 张图 |
+| 两次跑批/两次标定字节一致 | `cmp` 逐文件 | ✅ run 目录 21 工件除后跑的 `verify.json` 外全等；`analysis.json` + 5 张 PNG 全等 |
+| 本单单元测试 | `python -m pytest tests/test_kbm_gov.py -q` | ✅ 24 passed, 1 skipped（pilot 工件缺失时按设计 skip） |
+| KBM/KE 族回归 | `pytest tests/test_kbm_gov.py tests/test_kbm_clean.py tests/test_kbm_extract.py tests/test_ke_api.py -q` | ✅ 94 passed, 1 xfailed |
+| 静态检查 | `ruff check ke/gov.py scripts/kbm_gov_w1.py scripts/kbm_gov_ablation.py tests/test_kbm_gov.py` | ✅ All checks passed |
+| 全仓回归 | `pytest tests -q --ignore=tests/test_kf_wp11107_01.py`（本地，131 s） | ⚠ 1682 passed / 218 failed / 347 errors —— 失败与错误全部落在 `tests/kf/*`、`tests/test_kf_*`、`tests/test_wp*`（缺已提交工件，如 `artifacts/kf-wp-297-04/review_report.json`）与 `tests/test_ke_migrate.py`（数据漂移 369≠257）；**与本单改动路径零交集**，属仓内既有欠账 → 记 **WITHHELD（既有欠账，非本单回归）** |
+**热文件声明**：`ke/` 是 TensorKnowledge 核心模块目录，本单只**新增** `ke/gov.py`（无既有模块被修改、无 import 变更），
+`governance/` 只新增配置文件 `gov-config-v1.json`，与在开的其他 PR 无路径重叠。
