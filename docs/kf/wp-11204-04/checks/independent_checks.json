@@ -1,0 +1,283 @@
+{
+  "package_id": "wp-11204-04",
+  "report_id": "11204",
+  "source_hash_recomputed": "sha256:d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86",
+  "generated_by": "docs/kf/wp-11204-04/review_checks.py",
+  "checks": {
+    "C1_source_hash": {
+      "title": "source markdown hash == work-package contract hash",
+      "pass": true,
+      "detail": "recomputed sha256:d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86 chars=5999 vs contract sha256:d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86 chars=5999",
+      "recomputed": "sha256:d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86"
+    },
+    "C2_upstream_pinned": {
+      "title": "upstream wp-11204-01 registered the same source bytes",
+      "pass": true,
+      "detail": "package=wp-11204-01 producer=agent/m15693 hash=sha256:d22a30cc692b82f2acf6ea669fd898a330143436344e4091c4a39c06a5292f86"
+    },
+    "C3_anchors_verbatim": {
+      "title": "all review anchors are verbatim substrings of the source",
+      "pass": true,
+      "detail": "missing=[]",
+      "anchors": {
+        "ct_peak": "P_fem=34689 N vs ASTM P_Q=34725 N",
+        "ct_peak_row": "| CT 峰值载荷 [N] | 34689 | ASTM E399 P_Q = 34725 | -0.104% |",
+        "ct_J_el_row": "| CT 弹性 J [J/m²] | 1957.7 | K²(1−ν²)/E = 1956.1 | +0.081% |",
+        "ct_J_pl_row": "| CT 弹塑性 J [J/m²] | 60485 | E1820 η 法 = 57036 | +6.047% |",
+        "seb_J_row": "| SE(B) J [J/m²] | 136.34 | K²(1−ν²)/E = 132.11 | +3.202% |",
+        "seb_peak_row": "| SE(B) 粘聚区峰值载荷 [N] | 7674 | LEFM = 7782 | -1.385% |",
+        "eta_pl": "eta_pl = 2 + 0.522(1-a/W)",
+        "delta_ratio": "delta_0/delta_f = 0.009",
+        "ligament": "约 0.5 mm，远小于韧带 12.5 mm",
+        "bk_row45": "| 45 | 341.42 | 341.42 | 340.45 | -0.283% |",
+        "jpl_ratio": "J_pl/J = 0.191",
+        "half_model": "实测 J 偏小 50%（CT）/ 82%（SE(B)）",
+        "kn_init": "初版取 K_n = 1e14 时峰值载荷偏低 58%",
+        "pytest_s": "pytest 40 项 19 s 全绿"
+      },
+      "anchor_lines": {
+        "ct_peak": 54,
+        "ct_peak_row": 65,
+        "ct_J_el_row": 66,
+        "ct_J_pl_row": 67,
+        "seb_J_row": 68,
+        "seb_peak_row": 69,
+        "eta_pl": 44,
+        "delta_ratio": 27,
+        "ligament": 28,
+        "bk_row45": 82,
+        "jpl_ratio": 71,
+        "half_model": 123,
+        "kn_init": 129,
+        "pytest_s": 162
+      }
+    },
+    "C4_table_arithmetic": {
+      "title": "declared relative errors == (ours-ref)/ref within 0.005 pp",
+      "pass": true,
+      "detail": "worst gap 0.0028 pp",
+      "table": {
+        "ct_peak_load": {
+          "recomputed_pct": -0.1037,
+          "declared_pct": -0.104,
+          "gap_pp": 0.0003
+        },
+        "ct_J_elastic": {
+          "recomputed_pct": 0.0818,
+          "declared_pct": 0.081,
+          "gap_pp": 0.0008
+        },
+        "ct_J_elastoplastic": {
+          "recomputed_pct": 6.0471,
+          "declared_pct": 6.047,
+          "gap_pp": 0.0001
+        },
+        "seb_J": {
+          "recomputed_pct": 3.2019,
+          "declared_pct": 3.202,
+          "gap_pp": -0.0001
+        },
+        "seb_peak_load": {
+          "recomputed_pct": -1.3878,
+          "declared_pct": -1.385,
+          "gap_pp": -0.0028
+        }
+      }
+    },
+    "C5_bk_law": {
+      "title": "extended-BK analytic column reproduces with eta=1.5, G_IIc=600, G_IIIc=800",
+      "pass": true,
+      "detail": "recomputed 0..90 deg from G_Ic=200, G_shear,c=600, eta=1.5",
+      "series": {
+        "0": {
+          "declared": 200.0,
+          "recomputed": 200.0,
+          "ok": true
+        },
+        "15": {
+          "declared": 206.94,
+          "recomputed": 206.935,
+          "ok": true
+        },
+        "30": {
+          "declared": 250.0,
+          "recomputed": 250.0,
+          "ok": true
+        },
+        "45": {
+          "declared": 341.42,
+          "recomputed": 341.4214,
+          "ok": true
+        },
+        "60": {
+          "declared": 459.81,
+          "recomputed": 459.8076,
+          "ok": true
+        },
+        "75": {
+          "declared": 560.49,
+          "recomputed": 560.4884,
+          "ok": true
+        },
+        "90": {
+          "declared": 600.0,
+          "recomputed": 600.0,
+          "ok": true
+        }
+      }
+    },
+    "C6_cohesive_selfconsistent": {
+      "title": "cohesive inputs satisfy the report's own delta_0/delta_f = 0.009 and K >> sigma^2/2G",
+      "pass": true,
+      "detail": "delta_0/delta_f=0.00900 (declared 0.009); K/(sigma^2/2G_Ic)=111.1x"
+    },
+    "C7_elastic_J_load_level": {
+      "title": "reported elastic J corresponds to the stated peak load (ASTM E399 K + J=K^2(1-nu^2)/E)",
+      "pass": false,
+      "detail": "reported J is not attainable at the documented peak load: implied P is 12,005 N (CT, 0.346x of P_Q=34,725 N) and 2,000 N (SE(B), 0.257x of LEFM peak=7,782 N)",
+      "implied_load_N": {
+        "CT": 12004.8,
+        "SEB": 2000.0
+      },
+      "lefm_J_at_stated_peak": {
+        "CT": 16380.1,
+        "SEB": 2000.2
+      },
+      "reported_J": {
+        "CT_elastic": 1957.7,
+        "SEB": 132.11
+      },
+      "geometry_factors": {
+        "CT_f(0.5)": 9.6591,
+        "SEB_f(0.5)": 2.6625
+      }
+    },
+    "C8_sign_consistency": {
+      "title": "error signs agree between the criterion table and the data tables",
+      "pass": false,
+      "detail": "+0.104% (criterion table) coexists with -0.104% (data tables); +1.385% with -1.385%/-1.38%",
+      "occurrences": {
+        "C1_CT_peak": {
+          "plus_hits": 1,
+          "minus_hits": 2
+        },
+        "C1b_SEB_peak": {
+          "plus_hits": 1,
+          "minus_hits": 2
+        }
+      }
+    },
+    "C9_criterion_verdicts": {
+      "title": "each PASS verdict follows from |value| < threshold",
+      "pass": true,
+      "detail": "6 criterion rows",
+      "rows": {
+        "C1 CT 峰值载荷误差": {
+          "value_pct": 0.104,
+          "threshold_pct": 5.0,
+          "declared": "PASS",
+          "ok": true
+        },
+        "C1b SE(B) 粘聚区峰值载荷误差": {
+          "value_pct": 1.385,
+          "threshold_pct": 5.0,
+          "declared": "PASS",
+          "ok": true
+        },
+        "C2 CT 弹性 J 误差": {
+          "value_pct": 0.081,
+          "threshold_pct": 8.0,
+          "declared": "PASS",
+          "ok": true
+        },
+        "C2 CT 弹塑性 J 误差": {
+          "value_pct": 6.047,
+          "threshold_pct": 8.0,
+          "declared": "PASS",
+          "ok": true
+        },
+        "C2 SE(B) J 误差": {
+          "value_pct": 3.202,
+          "threshold_pct": 8.0,
+          "declared": "PASS",
+          "ok": true
+        },
+        "C3 混合模式断裂能误差": {
+          "value_pct": 0.385,
+          "threshold_pct": 10.0,
+          "declared": "PASS",
+          "ok": true
+        }
+      },
+      "n_rows": 6
+    },
+    "C10_mesh_monotonicity": {
+      "title": "SE(B) J error decreases monotonically over the reported mesh ladder",
+      "pass": true,
+      "detail": "SE(B) series [23.14, 11.42, 6.59, 4.42, 3.2]; CT series [0.47, -0.88, 0.08, 0.59, 0.42]"
+    },
+    "C11_no_self_verification": {
+      "title": "review payload sets no verification field",
+      "pass": true,
+      "detail": "offending keys []"
+    },
+    "C12_anecdote_evidence": {
+      "title": "process-anecdote numbers (-50%/-82%/58%) carry a results table",
+      "pass": false,
+      "detail": "prose-only percentages: 50%, 58%, 82%",
+      "occurrences_in_table_rows": {
+        "50%": 0,
+        "82%": 0,
+        "58%": 0
+      }
+    },
+    "C13_lt3pct_verdicts": {
+      "title": "section-6 '<3%?' answers agree with the quoted percentages",
+      "pass": true,
+      "detail": "6 rows adjudicated",
+      "rows": {
+        "CT 弹性 J": {
+          "abs_pct": 0.081,
+          "declared_lt3pct": "是",
+          "ok": true
+        },
+        "CT 峰值载荷": {
+          "abs_pct": 0.104,
+          "declared_lt3pct": "是",
+          "ok": true
+        },
+        "SE(B) 粘聚区峰值载荷": {
+          "abs_pct": 1.385,
+          "declared_lt3pct": "是",
+          "ok": true
+        },
+        "混合模式断裂能（单元级最大）": {
+          "abs_pct": 0.385,
+          "declared_lt3pct": "是",
+          "ok": true
+        },
+        "CT 弹塑性 J（19% 塑性占比）": {
+          "abs_pct": 6.047,
+          "declared_lt3pct": "否",
+          "ok": true
+        },
+        "SE(B) J（72×60 网格）": {
+          "abs_pct": 3.202,
+          "declared_lt3pct": "否",
+          "ok": true
+        }
+      },
+      "n_rows": 6
+    }
+  },
+  "summary": {
+    "n_checks": 13,
+    "n_pass": 10,
+    "n_finding": 3,
+    "failing": [
+      "C12_anecdote_evidence",
+      "C7_elastic_J_load_level",
+      "C8_sign_consistency"
+    ]
+  }
+}
