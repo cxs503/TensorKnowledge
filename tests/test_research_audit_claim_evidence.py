@@ -96,3 +96,17 @@ def test_nonreciprocal_link_fails(tmp_path):
     report = audit_claim_evidence(claims, evidence, sources)
     assert report["overall_status"] == "failed"
     assert any(f["check_id"] == "evidence_without_claim" for f in report["findings"])
+
+
+def test_repository_demo_bundle_has_valid_provenance_but_is_unreviewed():
+    from pathlib import Path
+
+    repo_root = Path(__file__).resolve().parents[1]
+    report = audit_claim_evidence(
+        repo_root / "knowledge/kbm/demo-sample/extract/claims",
+        repo_root / "knowledge/kbm/demo-sample/extract/evidence",
+        repo_root,
+    )
+    assert report["overall_status"] == "inconclusive"
+    assert report["counts"] == {"claims": 6, "evidence": 6, "pending_review": 6}
+    assert all(check["state"] == "passed" for check in report["checks"])
