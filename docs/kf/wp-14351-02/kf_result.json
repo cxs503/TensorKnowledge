@@ -1,0 +1,631 @@
+{
+  "package_id": "wp-14351-02",
+  "task_type": "02-classification-parse",
+  "contract_version": "1.0",
+  "report_id": "14351",
+  "provenance": {
+    "source_uri": "tensor://reports/14351",
+    "source_field": "markdown",
+    "source_hash": "sha256:8c696991f8bef0c1f0903d2104e88a437897875c759af309c0c7710ce1260558",
+    "source_hash_matches": true,
+    "chars": 4190
+  },
+  "outputs": {
+    "classification.json": {
+      "package_id": "wp-14351-02",
+      "task_type": "02-classification-parse",
+      "contract_version": "1.0",
+      "report_id": "14351",
+      "provenance": {
+        "source_uri": "tensor://reports/14351",
+        "source_field": "markdown",
+        "source_hash": "sha256:8c696991f8bef0c1f0903d2104e88a437897875c759af309c0c7710ce1260558",
+        "source_hash_recomputed": "sha256:8c696991f8bef0c1f0903d2104e88a437897875c759af309c0c7710ce1260558",
+        "source_hash_matches": true,
+        "chars": 4190,
+        "title": "GAP-FEM-3D-COHESIVE 返修轮：DCB 位移控制双缺陷修复 + 试件级 honest 部分验收",
+        "scenario_key": "TensorFEM",
+        "resolved_via": "file://docs/kf/wp-14351-02/source/14351.md"
+      },
+      "objective": {
+        "classify_report_type": true,
+        "register_assets": false,
+        "claim_extraction": false
+      },
+      "report_type": {
+        "value": "experimental-validation",
+        "status": "hypothesis",
+        "confidence": "low",
+        "base_confidence": "medium",
+        "confidence_rule": "high/medium/low for margin >=3 / 1-2 / 0, then downgraded one notch when sensitivity.changes_decision is true (fragility discount)",
+        "margin_over_runner_up": 1,
+        "scores": {
+          "scientific-computation": 5,
+          "experimental-validation": 6,
+          "software-engineering": 3
+        },
+        "excluded": {
+          "literature-review": "no declared probe matched -> zero evidence, cannot be selected",
+          "algorithm-implementation": "no declared probe matched -> zero evidence, cannot be selected",
+          "technical-proposal": "no declared probe matched -> zero evidence, cannot be selected"
+        },
+        "selection_rule": "score(report_type) = sum over distinct registry identify_signals of (2 if the signal organises a heading or table row else 1); primary = argmax; ties -> registry order; confidence high/medium/low for margin >=3 / 1-2 / 0, downgraded one notch if the sensitivity variant flips the label",
+        "rule_registration": "exploratory (probes authored after reading the source) — not pre-registered",
+        "alternatives": [
+          {
+            "report_type": "scientific-computation",
+            "skill_id": "xsk-scientific-computation",
+            "score": 5
+          },
+          {
+            "report_type": "software-engineering",
+            "skill_id": "xsk-software-engineering",
+            "score": 3
+          }
+        ]
+      },
+      "selected_skill": {
+        "skill_id": "xsk-experimental-validation",
+        "skill_version": "0.1.0",
+        "report_type": "experimental-validation",
+        "lifecycle_state": "template-created",
+        "selection_basis": "xsk-experimental-validation steps extract-comparison-pairs / extract-uncertainty match the report's reference-vs-implementation error tables; the defect-repair narrative transfers to the secondary skills below",
+        "secondary_skill_hint": [
+          {
+            "report_type": "scientific-computation",
+            "skill_id": "xsk-scientific-computation",
+            "score": 5
+          },
+          {
+            "report_type": "software-engineering",
+            "skill_id": "xsk-software-engineering",
+            "score": 3
+          }
+        ]
+      },
+      "topic_tags": [
+        {
+          "id": "tag-01",
+          "tag": "cohesive-zone-model",
+          "basis_probe": "内聚单元",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "内聚单元",
+            "start_offset": 272,
+            "end_offset": 326,
+            "quote": "DCB（ASTM D5528 双悬臂梁，Mode I 层间断裂）用于检验 3D 内聚单元在真实三维应力状态下",
+            "content_hash": "sha256:73221b00fba7ff6e665da93a8a3f8a4862bf03a15bd9ddad8dbe27b873cdaac5"
+          },
+          "status": "located"
+        },
+        {
+          "id": "tag-02",
+          "tag": "dcb-mode-i",
+          "basis_probe": "DCB",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "DCB",
+            "start_offset": 141,
+            "end_offset": 197,
+            "quote": "证据页。**结论先行：单元级（COH3D8 + BK）能力为 REAL 且已用可复现运行工件背书；试件级（DCB",
+            "content_hash": "sha256:0406985dc518d69aeae2e4533f745c6f24426c4ccbfe5a29e1f1bd1b5c599c50"
+          },
+          "status": "located"
+        },
+        {
+          "id": "tag-03",
+          "tag": "displacement-control",
+          "basis_probe": "位移控制",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "位移控制",
+            "start_offset": 0,
+            "end_offset": 61,
+            "quote": "# GAP-FEM-3D-COHESIVE · 返修轮：位移控制求解器缺陷修复 + honest 部分验收（m15256）",
+            "content_hash": "sha256:fe9e6261ddf263070470e271ddb295f4a81ca532709fa993064f6bac29691604"
+          },
+          "status": "located"
+        },
+        {
+          "id": "tag-04",
+          "tag": "defect-fix",
+          "basis_probe": "缺陷",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "缺陷",
+            "start_offset": 0,
+            "end_offset": 61,
+            "quote": "# GAP-FEM-3D-COHESIVE · 返修轮：位移控制求解器缺陷修复 + honest 部分验收（m15256）",
+            "content_hash": "sha256:fe9e6261ddf263070470e271ddb295f4a81ca532709fa993064f6bac29691604"
+          },
+          "status": "located"
+        },
+        {
+          "id": "tag-05",
+          "tag": "honest-FAIL",
+          "basis_probe": "FAIL",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "FAIL",
+            "start_offset": 1969,
+            "end_offset": 2062,
+            "quote": "| DCB 柔性 C [m/N]（vs Williams 根部转角梁） | 2.35674e-05 | 1.32143e-04 | +460.7% | ≤10% | **FAIL** |",
+            "content_hash": "sha256:7dbced7ca8580e7076289179e3101f1bc2430686a0ba74bb897813e5385b4434"
+          },
+          "status": "located"
+        },
+        {
+          "id": "tag-06",
+          "tag": "fem-verification",
+          "basis_probe": "验证算例",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "验证算例",
+            "start_offset": 63,
+            "end_offset": 140,
+            "quote": "本页是 feature-ledger 锚点 `GAP-FEM-3D-COHESIVE`（\"3D cohesive zone 单元 + 验证算例\"）返修轮的",
+            "content_hash": "sha256:c60e44840b5d1cca85555a77ee6ecf6c31a2f2021afb3fa87755dad2023d899c"
+          },
+          "status": "located"
+        },
+        {
+          "id": "tag-07",
+          "tag": "bk-law",
+          "basis_probe": "BK",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "BK",
+            "start_offset": 141,
+            "end_offset": 197,
+            "quote": "证据页。**结论先行：单元级（COH3D8 + BK）能力为 REAL 且已用可复现运行工件背书；试件级（DCB",
+            "content_hash": "sha256:0406985dc518d69aeae2e4533f745c6f24426c4ccbfe5a29e1f1bd1b5c599c50"
+          },
+          "status": "located"
+        }
+      ],
+      "structure": {
+        "sections": [
+          {
+            "id": "sec-01",
+            "level": 1,
+            "heading": "# GAP-FEM-3D-COHESIVE · 返修轮：位移控制求解器缺陷修复 + honest 部分验收（m15256）",
+            "start_offset": 0,
+            "end_offset": 244,
+            "role_keywords_hit": [
+              "validation",
+              "change"
+            ]
+          },
+          {
+            "id": "sec-02",
+            "level": 2,
+            "heading": "## 1. 案例介绍（物理背景 / 几何 / 参数）",
+            "start_offset": 244,
+            "end_offset": 683,
+            "role_keywords_hit": [
+              "setup"
+            ]
+          },
+          {
+            "id": "sec-03",
+            "level": 2,
+            "heading": "## 2. 怎么做的（方法 / 流程）",
+            "start_offset": 683,
+            "end_offset": 1800,
+            "role_keywords_hit": [
+              "method",
+              "change"
+            ]
+          },
+          {
+            "id": "sec-04",
+            "level": 2,
+            "heading": "## 3. 计算结果（数字表，程序化提取自 JSON 工件）",
+            "start_offset": 1800,
+            "end_offset": 2881,
+            "role_keywords_hit": [
+              "results",
+              "comparison",
+              "verification"
+            ]
+          },
+          {
+            "id": "sec-05",
+            "level": 2,
+            "heading": "## 4. 结果图",
+            "start_offset": 2881,
+            "end_offset": 3079,
+            "role_keywords_hit": [
+              "results"
+            ]
+          },
+          {
+            "id": "sec-06",
+            "level": 2,
+            "heading": "## 5. 注意点 / 局限",
+            "start_offset": 3079,
+            "end_offset": 3485,
+            "role_keywords_hit": [
+              "limitations"
+            ]
+          },
+          {
+            "id": "sec-07",
+            "level": 2,
+            "heading": "## 6. 误差判定（逐项回答\"是否 <3%\"）",
+            "start_offset": 3485,
+            "end_offset": 3786,
+            "role_keywords_hit": [
+              "comparison",
+              "validation"
+            ]
+          },
+          {
+            "id": "sec-08",
+            "level": 2,
+            "heading": "## 复现命令（repro_cmd）",
+            "start_offset": 3786,
+            "end_offset": 4190,
+            "role_keywords_hit": [
+              "reproduction"
+            ]
+          }
+        ],
+        "role_keywords": {
+          "setup": [
+            "案例介绍",
+            "几何",
+            "参数"
+          ],
+          "method": [
+            "怎么做的",
+            "方法"
+          ],
+          "results": [
+            "计算结果",
+            "结果图"
+          ],
+          "comparison": [
+            "计算结果",
+            "误差判定",
+            "基准"
+          ],
+          "validation": [
+            "验收",
+            "误差判定",
+            "判定"
+          ],
+          "uncertainty": [
+            "不确定度",
+            "误差带"
+          ],
+          "limitations": [
+            "注意点",
+            "局限"
+          ],
+          "change": [
+            "修复",
+            "怎么做的"
+          ],
+          "verification": [
+            "pytest",
+            "passed",
+            "工件",
+            "计算结果"
+          ],
+          "reproduction": [
+            "复现命令"
+          ]
+        },
+        "coverage": {
+          "literature-review": {
+            "section_roles_declared": [
+              "introduction",
+              "related work",
+              "comparison",
+              "open problems"
+            ],
+            "roles_present": [
+              "comparison"
+            ],
+            "ratio": 0.25
+          },
+          "scientific-computation": {
+            "section_roles_declared": [
+              "method",
+              "numerical setup",
+              "results",
+              "convergence"
+            ],
+            "roles_present": [
+              "method",
+              "results"
+            ],
+            "ratio": 0.5
+          },
+          "algorithm-implementation": {
+            "section_roles_declared": [
+              "algorithm",
+              "implementation",
+              "complexity",
+              "correctness"
+            ],
+            "roles_present": [],
+            "ratio": 0.0
+          },
+          "software-engineering": {
+            "section_roles_declared": [
+              "change",
+              "what changed",
+              "verification",
+              "limitations"
+            ],
+            "roles_present": [
+              "change",
+              "verification",
+              "limitations"
+            ],
+            "ratio": 0.75
+          },
+          "technical-proposal": {
+            "section_roles_declared": [
+              "purpose",
+              "method",
+              "results",
+              "limitations",
+              "conclusion"
+            ],
+            "roles_present": [
+              "method",
+              "results",
+              "limitations"
+            ],
+            "ratio": 0.6
+          },
+          "experimental-validation": {
+            "section_roles_declared": [
+              "setup",
+              "measurement",
+              "comparison",
+              "uncertainty",
+              "validation"
+            ],
+            "roles_present": [
+              "setup",
+              "comparison",
+              "validation"
+            ],
+            "ratio": 0.6
+          }
+        },
+        "chars": 4190,
+        "heading_count": 8,
+        "note": "offsets are character offsets over the decoded markdown (source_hash is byte-level over UTF-8)"
+      },
+      "signals": [
+        {
+          "id": "sig-01",
+          "report_type": "scientific-computation",
+          "registry_signal": "convergence study",
+          "probe": "收敛",
+          "detection": "table",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "收敛",
+            "start_offset": 2270,
+            "end_offset": 2336,
+            "quote": "| 收敛 | — | converged_all=True, 40 步, 16 Newton 迭代 | — | — | PASS |",
+            "content_hash": "sha256:b1155bed160fc9dd2ce6024a2a4e9e57db5ec2ce774875c4b5893f09f4ab21b0"
+          },
+          "strength": "core",
+          "weight": 2
+        },
+        {
+          "id": "sig-02",
+          "report_type": "scientific-computation",
+          "registry_signal": "discretisation",
+          "probe": "结构化 HEX8",
+          "detection": "inline",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "结构化 HEX8",
+            "start_offset": 386,
+            "end_offset": 445,
+            "quote": "结构化 HEX8 adherends + 零厚度 COH3D8 韧带。材料/内聚参数：E=70 GPa，ν=0.30，",
+            "content_hash": "sha256:998d799c202dfae9f3e7a46ec66c212fff287848c2beb2cc75e880051a250daa"
+          },
+          "strength": "supporting",
+          "weight": 1
+        },
+        {
+          "id": "sig-03",
+          "report_type": "scientific-computation",
+          "registry_signal": "mesh refinement",
+          "probe": "nx=50",
+          "detection": "inline",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "nx=50",
+            "start_offset": 3147,
+            "end_offset": 3204,
+            "quote": "  （nx=24 时 5.61×；nx=50 时约 11×），量级接近 2³，**首要怀疑有效自由跨度为 2a**",
+            "content_hash": "sha256:04ab7c35d9e21edf98eb2f278b55739fd5ac5059e708cd5d3af021439548f2f0"
+          },
+          "strength": "supporting",
+          "weight": 1
+        },
+        {
+          "id": "sig-04",
+          "report_type": "scientific-computation",
+          "registry_signal": "timing table",
+          "probe": "runtime 135.7 s",
+          "detection": "inline",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "runtime 135.7 s",
+            "start_offset": 2488,
+            "end_offset": 2557,
+            "quote": "宽度分辨基准（`benchmarks/cohesive3d_dcb_3d.json`，quick 模式，runtime 135.7 s）：",
+            "content_hash": "sha256:59ab374a42cfa478e0f4adde959b513725cdae7da4926a87816141f9eb31ec5a"
+          },
+          "strength": "supporting",
+          "weight": 1
+        },
+        {
+          "id": "sig-05",
+          "report_type": "experimental-validation",
+          "registry_signal": "baseline comparison",
+          "probe": "基准(ref)",
+          "detection": "table",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "基准(ref)",
+            "start_offset": 1899,
+            "end_offset": 1942,
+            "quote": "| 量 | 基准(ref) | 本实现(got) | 相对误差 | 判据 | 判定 |",
+            "content_hash": "sha256:a9c25f2dc10262c2579b5c8cf6e33e38d6cff9755c822d8ec7c183dbe0717472"
+          },
+          "strength": "core",
+          "weight": 2
+        },
+        {
+          "id": "sig-06",
+          "report_type": "experimental-validation",
+          "registry_signal": "test matrix",
+          "probe": "| 量 | 基准(ref) | 本实现(got) | 相对误差 | 判据 | 判定 |",
+          "detection": "table",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "| 量 | 基准(ref) | 本实现(got) | 相对误差 | 判据 | 判定 |",
+            "start_offset": 1899,
+            "end_offset": 1942,
+            "quote": "| 量 | 基准(ref) | 本实现(got) | 相对误差 | 判据 | 判定 |",
+            "content_hash": "sha256:a9c25f2dc10262c2579b5c8cf6e33e38d6cff9755c822d8ec7c183dbe0717472"
+          },
+          "strength": "core",
+          "weight": 2
+        },
+        {
+          "id": "sig-07",
+          "report_type": "experimental-validation",
+          "registry_signal": "validation case",
+          "probe": "honest 部分验收",
+          "detection": "heading",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "honest 部分验收",
+            "start_offset": 0,
+            "end_offset": 61,
+            "quote": "# GAP-FEM-3D-COHESIVE · 返修轮：位移控制求解器缺陷修复 + honest 部分验收（m15256）",
+            "content_hash": "sha256:fe9e6261ddf263070470e271ddb295f4a81ca532709fa993064f6bac29691604"
+          },
+          "strength": "core",
+          "weight": 2
+        },
+        {
+          "id": "sig-08",
+          "report_type": "software-engineering",
+          "registry_signal": "changed files",
+          "probe": "src/tensorfem/cohesive3d_dcb.py",
+          "detection": "inline",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "src/tensorfem/cohesive3d_dcb.py",
+            "start_offset": 778,
+            "end_offset": 841,
+            "quote": "   复现后定位到两个**求解器缺陷**（均已在 `src/tensorfem/cohesive3d_dcb.py` 修复）：",
+            "content_hash": "sha256:6b7ab50ac7ee810a8bfcfda290a52517a8083b8ac5f37854503965aa90face22"
+          },
+          "strength": "supporting",
+          "weight": 1
+        },
+        {
+          "id": "sig-09",
+          "report_type": "software-engineering",
+          "registry_signal": "regression",
+          "probe": "回归",
+          "detection": "table",
+          "locator": {
+            "locator_type": "char_offset",
+            "value": "回归",
+            "start_offset": 2146,
+            "end_offset": 2198,
+            "quote": "| 峰值反力非零（缺陷 A 回归） | >0 | 0.15135 N | — | >0 | PASS |",
+            "content_hash": "sha256:b843b3e16dce7bddc92d35bdea3f6e83d4aa32d6fa8a379c11aa31c8c6130542"
+          },
+          "strength": "core",
+          "weight": 2
+        }
+      ],
+      "sensitivity": {
+        "variant": "merge_collocated",
+        "rule": "two distinct registry signals found on the same source line count once (max weight)",
+        "scores": {
+          "scientific-computation": 5,
+          "experimental-validation": 4,
+          "software-engineering": 3
+        },
+        "argmax": "scientific-computation",
+        "changes_decision": true,
+        "collocated": [
+          {
+            "report_type": "experimental-validation",
+            "start_offset": 1899,
+            "signals": [
+              "baseline comparison",
+              "test matrix"
+            ]
+          }
+        ],
+        "reading": "if the label flips under this variant the single-type assignment is fragile and must be delivered as a hypothesis with both types' evidence, not as a fact"
+      },
+      "unresolved": [
+        {
+          "id": "unres-01",
+          "status": "unresolved",
+          "scope": "classification",
+          "question": "primary report_type is genuinely mixed (validation + defect repair + numerics)",
+          "reason": "runner-up scores within the declared margin band; single-type assignment is a rebuttable hypothesis, not a verified fact"
+        },
+        {
+          "id": "unres-02",
+          "status": "unresolved",
+          "scope": "signal-absence",
+          "question": "measurement uncertainty / error band for the reported errors",
+          "reason": "declared probe '不确定度' has zero hits; absence is recorded, not filled in"
+        },
+        {
+          "id": "unres-03",
+          "status": "unresolved",
+          "scope": "signal-absence",
+          "question": "commit id / explicit changed-file list",
+          "reason": "report names one touched file but no commit hash or diffstat; the 'changed files' signal rests on that single path mention"
+        },
+        {
+          "id": "unres-04",
+          "status": "unresolved",
+          "scope": "structure",
+          "question": "section role labels are keyword-derived, not author-declared",
+          "reason": "role_keywords mapping is this package's judgement; a role can be mislabelled without a heading keyword"
+        }
+      ],
+      "no_extraction_declaration": {
+        "claims": [],
+        "reason": "contract objective register_assets=false and package notes '不做抽取'; 02 emits no claims, so every located statement here is classification evidence, not a knowledge claim"
+      },
+      "counts": {
+        "sections": 8,
+        "signals": 9,
+        "topic_tags_located": 7,
+        "topic_tags_unresolved": 0,
+        "unresolved": 4,
+        "claims": 0
+      },
+      "limits": [
+        "classification only: no claim extraction, no asset registration, no verification level assigned",
+        "report_type is a hypothesis; G3 (independent review) owns semantic agreement",
+        "probe-based detection can miss paraphrased signals and cannot judge truth of the content"
+      ]
+    }
+  }
+}

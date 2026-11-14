@@ -1,0 +1,554 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/classification.wp-14351-02.schema.json",
+  "title": "classification.json — wp-14351-02 (package-local shape)",
+  "description": "Package-local structural schema for the 02-classification-parse artefact of report 14351. It pins the fields this package actually emits (report_type hypothesis, located signals, sections, unresolved). It is NOT an ecosystem-wide classification standard and carries no authority for other report_ids; the repository has no shared classification schema yet, which is recorded as a limitation in the deliverable report.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "package_id",
+    "task_type",
+    "contract_version",
+    "report_id",
+    "provenance",
+    "objective",
+    "report_type",
+    "selected_skill",
+    "topic_tags",
+    "structure",
+    "signals",
+    "unresolved",
+    "counts",
+    "limits",
+    "sensitivity"
+  ],
+  "properties": {
+    "package_id": {
+      "const": "wp-14351-02"
+    },
+    "task_type": {
+      "const": "02-classification-parse"
+    },
+    "contract_version": {
+      "const": "1.0"
+    },
+    "report_id": {
+      "const": "14351"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_uri",
+        "source_field",
+        "source_hash",
+        "source_hash_recomputed",
+        "source_hash_matches",
+        "chars"
+      ],
+      "properties": {
+        "source_uri": {
+          "type": "string",
+          "pattern": "^tensor://reports/14351$"
+        },
+        "source_field": {
+          "const": "markdown"
+        },
+        "source_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "source_hash_recomputed": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "source_hash_matches": {
+          "type": "boolean"
+        },
+        "chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "resolved_via": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 10
+        },
+        "scenario_key": {
+          "type": "string",
+          "minLength": 2
+        }
+      }
+    },
+    "objective": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "classify_report_type",
+        "register_assets",
+        "claim_extraction"
+      ],
+      "properties": {
+        "classify_report_type": {
+          "const": true
+        },
+        "register_assets": {
+          "const": false
+        },
+        "claim_extraction": {
+          "const": false
+        }
+      }
+    },
+    "report_type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "status",
+        "confidence",
+        "scores",
+        "selection_rule",
+        "alternatives",
+        "base_confidence",
+        "confidence_rule"
+      ],
+      "properties": {
+        "value": {
+          "enum": [
+            "literature-review",
+            "scientific-computation",
+            "algorithm-implementation",
+            "software-engineering",
+            "technical-proposal",
+            "experimental-validation"
+          ]
+        },
+        "status": {
+          "const": "hypothesis"
+        },
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "margin_over_runner_up": {
+          "type": "integer"
+        },
+        "scores": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "excluded": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "selection_rule": {
+          "type": "string",
+          "minLength": 20
+        },
+        "rule_registration": {
+          "type": "string"
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "report_type",
+              "skill_id",
+              "score"
+            ],
+            "properties": {
+              "report_type": {
+                "type": "string"
+              },
+              "skill_id": {
+                "type": "string",
+                "pattern": "^xsk-[a-z0-9-]+$"
+              },
+              "score": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "base_confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "confidence_rule": {
+          "type": "string",
+          "minLength": 20
+        }
+      }
+    },
+    "selected_skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "skill_id",
+        "skill_version",
+        "report_type",
+        "selection_basis"
+      ],
+      "properties": {
+        "skill_id": {
+          "type": "string",
+          "pattern": "^xsk-[a-z0-9-]+$"
+        },
+        "skill_version": {
+          "type": "string"
+        },
+        "report_type": {
+          "type": "string"
+        },
+        "lifecycle_state": {
+          "type": "string"
+        },
+        "selection_basis": {
+          "type": "string",
+          "minLength": 20
+        },
+        "secondary_skill_hint": {
+          "type": "array"
+        }
+      }
+    },
+    "topic_tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tag",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^tag-[0-9]{2}$"
+          },
+          "tag": {
+            "type": "string",
+            "minLength": 2
+          },
+          "basis_probe": {
+            "type": "string"
+          },
+          "locator": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "status": {
+            "enum": [
+              "located",
+              "unresolved"
+            ]
+          }
+        }
+      }
+    },
+    "structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sections",
+        "chars",
+        "heading_count"
+      ],
+      "properties": {
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "level",
+              "heading",
+              "start_offset",
+              "end_offset"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^sec-[0-9]{2}$"
+              },
+              "level": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3
+              },
+              "heading": {
+                "type": "string",
+                "minLength": 3
+              },
+              "start_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end_offset": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "role_keywords_hit": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "role_keywords": {
+          "type": "object"
+        },
+        "coverage": {
+          "type": "object"
+        },
+        "chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "heading_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "signals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "report_type",
+          "registry_signal",
+          "probe",
+          "detection",
+          "strength",
+          "weight",
+          "locator"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^sig-[0-9]{2}$"
+          },
+          "report_type": {
+            "enum": [
+              "literature-review",
+              "scientific-computation",
+              "algorithm-implementation",
+              "software-engineering",
+              "technical-proposal",
+              "experimental-validation"
+            ]
+          },
+          "registry_signal": {
+            "type": "string",
+            "minLength": 3
+          },
+          "probe": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detection": {
+            "enum": [
+              "heading",
+              "table",
+              "inline"
+            ]
+          },
+          "strength": {
+            "enum": [
+              "core",
+              "supporting"
+            ]
+          },
+          "weight": {
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "locator": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "locator_type",
+              "value",
+              "start_offset",
+              "end_offset",
+              "quote",
+              "content_hash"
+            ],
+            "properties": {
+              "locator_type": {
+                "const": "char_offset"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "start_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end_offset": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 12
+              },
+              "content_hash": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "status",
+          "scope",
+          "question",
+          "reason"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^unres-[0-9]{2}$"
+          },
+          "status": {
+            "const": "unresolved"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string",
+            "minLength": 10
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 20
+          }
+        }
+      }
+    },
+    "no_extraction_declaration": {
+      "type": "object"
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "sections",
+        "signals",
+        "topic_tags_located",
+        "unresolved",
+        "claims"
+      ],
+      "properties": {
+        "sections": {
+          "type": "integer"
+        },
+        "signals": {
+          "type": "integer"
+        },
+        "topic_tags_located": {
+          "type": "integer"
+        },
+        "topic_tags_unresolved": {
+          "type": "integer"
+        },
+        "unresolved": {
+          "type": "integer"
+        },
+        "claims": {
+          "const": 0
+        }
+      }
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "sensitivity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "variant",
+        "rule",
+        "scores",
+        "argmax",
+        "changes_decision",
+        "collocated"
+      ],
+      "properties": {
+        "variant": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 20
+        },
+        "scores": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "argmax": {
+          "type": "string"
+        },
+        "changes_decision": {
+          "type": "boolean"
+        },
+        "collocated": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "reading": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

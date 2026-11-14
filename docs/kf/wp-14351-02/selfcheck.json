@@ -1,0 +1,93 @@
+{
+  "package_id": "wp-14351-02",
+  "report_id": "14351",
+  "source_hash": "sha256:8c696991f8bef0c1f0903d2104e88a437897875c759af309c0c7710ce1260558",
+  "acceptance": {
+    "valid_json": "pass",
+    "schema_pass": "pass",
+    "source_hash_matches": "pass",
+    "source_locator_resolvable": "pass",
+    "no_duplicate_ids": "pass",
+    "all_claims_have_evidence_or_explicit_unresolved_status": "pass"
+  },
+  "checks": [
+    {
+      "item": "valid_json",
+      "ok": true,
+      "detail": {
+        "file": "docs/kf/wp-14351-02/classification.json",
+        "bytes": 19728
+      }
+    },
+    {
+      "item": "schema_pass",
+      "ok": true,
+      "detail": {
+        "schemas": [
+          "schemas/kf_result.v1.schema.json",
+          "schemas/classification.wp-14351-02.schema.json"
+        ],
+        "errors": [],
+        "note": "the envelope is checked against the ecosystem schema; classification.json is checked against a package-local schema because the repo has no shared classification schema"
+      }
+    },
+    {
+      "item": "source_hash_matches",
+      "ok": true,
+      "detail": {
+        "declared": "sha256:8c696991f8bef0c1f0903d2104e88a437897875c759af309c0c7710ce1260558",
+        "recomputed": "sha256:8c696991f8bef0c1f0903d2104e88a437897875c759af309c0c7710ce1260558",
+        "chars": 4190
+      }
+    },
+    {
+      "item": "source_locator_resolvable",
+      "ok": true,
+      "detail": {
+        "resolved": 16,
+        "failed": [],
+        "without_locator": []
+      }
+    },
+    {
+      "item": "no_duplicate_ids",
+      "ok": true,
+      "detail": {
+        "total": 28,
+        "duplicates": [],
+        "empty": []
+      }
+    },
+    {
+      "item": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "ok": true,
+      "detail": {
+        "claims": 0,
+        "claims_note": "contract objective register_assets=false and package notes '不做抽取'; 02 emits no claims, so every located statement here is classification evidence, not a knowledge claim",
+        "judgements_with_resolvable_evidence": 16,
+        "judgements_without_evidence_and_not_declared": [],
+        "declared_unresolved": [
+          {
+            "owner": "unres-01",
+            "reason": "runner-up scores within the declared margin band; single-type assignment is a rebuttable hypothesis, not a verified fact"
+          },
+          {
+            "owner": "unres-02",
+            "reason": "declared probe '不确定度' has zero hits; absence is recorded, not filled in"
+          },
+          {
+            "owner": "unres-03",
+            "reason": "report names one touched file but no commit hash or diffstat; the 'changed files' signal rests on that single path mention"
+          },
+          {
+            "owner": "unres-04",
+            "reason": "role_keywords mapping is this package's judgement; a role can be mislabelled without a heading keyword"
+          }
+        ],
+        "mode": "claims=0 by contract -> applied to classification judgements (non-vacuous)"
+      }
+    }
+  ],
+  "all_pass": true,
+  "verification_note": "self-check only. No verification level / verified flag is claimed here: the platform gate recomputes source_hash and locators independently, and independent review (04) is out of scope."
+}
