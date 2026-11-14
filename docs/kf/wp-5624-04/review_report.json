@@ -1,0 +1,357 @@
+{
+  "reviewer": "agent/m20756 · independent-reviewer (wp-5624-04)",
+  "reviewed_package": "wp-5624-01",
+  "reviewed_report_id": "5624",
+  "reviewed_artifacts": {
+    "asset_manifest.json": "sha256:db0f062ea5d6b10354d4aa060500a12d56601782e1d93d8ae1486a9cb3078ece",
+    "kf_result.json": "sha256:01c63fb3e63a8f3284c82cc21e4c7079ffaf886e9aecf7407137d2071427cdef",
+    "kf_result_wp-5624-01.md": "sha256:03e9158c0a91ec1c0f313946a1c3e4cf92b01e0fd08b0cbbb3d9cca84926fcad"
+  },
+  "source": {
+    "uri": "tensor://reports/5624",
+    "field": "markdown",
+    "contract_hash": "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839",
+    "recomputed_hash": "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839",
+    "matches_contract": true,
+    "chars": 1833,
+    "bytes_utf8": 3255,
+    "snapshot": "tests/fixtures/kf/5624_markdown.md",
+    "snapshot_sha256": "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839"
+  },
+  "method": {
+    "independence": "复核只读取报告正文快照与上游机器产物，不采信生产者的文字解释",
+    "locators": {
+      "total": 9,
+      "resolved": 9,
+      "figures": 3,
+      "items": [
+        {
+          "bucket": "referenced_artifacts",
+          "id": "5624-ref-01",
+          "occurrences": 1,
+          "space": "markdown"
+        },
+        {
+          "bucket": "referenced_artifacts",
+          "id": "5624-ref-02",
+          "occurrences": 1,
+          "space": "markdown"
+        },
+        {
+          "bucket": "referenced_artifacts",
+          "id": "5624-ref-03",
+          "occurrences": 1,
+          "space": "markdown"
+        },
+        {
+          "bucket": "referenced_artifacts",
+          "id": "5624-ref-04",
+          "occurrences": 1,
+          "space": "markdown"
+        },
+        {
+          "bucket": "content_digests",
+          "id": "5624-dig-01",
+          "occurrences": 1,
+          "space": "markdown"
+        },
+        {
+          "bucket": "content_digests",
+          "id": "5624-dig-02",
+          "occurrences": 1,
+          "space": "markdown"
+        },
+        {
+          "bucket": "attachments",
+          "id": "fig1_inventory.png",
+          "occurrences": 1,
+          "space": "figure_caption"
+        },
+        {
+          "bucket": "attachments",
+          "id": "fig2_sizes.png",
+          "occurrences": 1,
+          "space": "figure_caption"
+        },
+        {
+          "bucket": "attachments",
+          "id": "fig3_acceptance.png",
+          "occurrences": 1,
+          "space": "figure_caption"
+        }
+      ]
+    },
+    "sections_recomputed": 7,
+    "pinned_inputs": [
+      "asset_manifest.json",
+      "kf_result.json",
+      "kf_result_wp-5624-01.md"
+    ]
+  },
+  "live_probe": {
+    "probed": true,
+    "base": "http://127.0.0.1:8010/api/v1",
+    "record_id": "5624",
+    "live_sha256": "sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839",
+    "snapshot_matches_live": true
+  },
+  "checks_total": 17,
+  "checks_passed": 16,
+  "checks": [
+    {
+      "id": "C01",
+      "check": "source markdown sha256 recomputed == contract value == upstream manifest",
+      "result": "pass",
+      "detail": "recomputed=sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839 contract=sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839 manifest=sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839"
+    },
+    {
+      "id": "C02",
+      "check": "fixture snapshot == live platform record (byte-exact)",
+      "result": "pass",
+      "detail": "live=sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839 snapshot=sha256:15b2f982058ab3d45a1177e94f1b8140660cd0aaff3c645b3f22de33a0bd7839 chars=1833"
+    },
+    {
+      "id": "C03",
+      "check": "chars / utf8-bytes recomputed == upstream manifest",
+      "result": "pass",
+      "detail": "chars=1833 (declared 1833) bytes=3255 (declared 3255)"
+    },
+    {
+      "id": "C04",
+      "check": "size.lines == newline count == splitlines count (standard content-line convention)",
+      "result": "pass",
+      "detail": "manifest.lines=46 newline_count=46 splitlines=46 naive_split_newline_tokens=47 ends_with_newline=True"
+    },
+    {
+      "id": "C05",
+      "check": "ATX section re-split (count/ranges/chars/sha256) == upstream manifest",
+      "result": "pass",
+      "detail": "recomputed sections=7 manifest=7 mismatch=[]"
+    },
+    {
+      "id": "C06",
+      "check": "every locator quote is a byte-exact substring of the source markdown",
+      "result": "pass",
+      "detail": "locators=9 resolved=9 declared_total=9"
+    },
+    {
+      "id": "C07",
+      "check": "locator quotes are pairwise distinct (one quote -> one source location)",
+      "result": "fail",
+      "detail": "duplicate_groups={\"markdown|`artifacts/`（0 文件）与 `runs/`（0 文件），\": [\"referenced_artifacts:5624-ref-01\", \"referenced_artifacts:5624-ref-02\"]} occurrences_in_markdown={\"markdown|`artifacts/`（0 文件）与 `runs/`（0 文件），\": 1}"
+    },
+    {
+      "id": "C08",
+      "check": "upstream kf_result envelope passes schemas/kf_result.v1.schema.json",
+      "result": "pass",
+      "detail": "validated against schemas/kf_result.v1.schema.json"
+    },
+    {
+      "id": "C09",
+      "check": "claims==[] (01 lane) and no self-declared 'verified' status",
+      "result": "pass",
+      "detail": "claims=[] envelope_has_verification_status=False boundary.verification_status='none — 由平台门独立计算，本包不标 verified'"
+    },
+    {
+      "id": "C10",
+      "check": "boundary: only report 5624 read/written",
+      "result": "pass",
+      "detail": "read=['5624'] written=['5624']"
+    },
+    {
+      "id": "C11",
+      "check": "internal count contradiction registered as unresolved with verbatim quotes",
+      "result": "pass",
+      "detail": "observation=5624-obs-01 status=unresolved quotes_resolved=3/3 (markdown or figure-caption space)"
+    },
+    {
+      "id": "C12",
+      "check": "upstream acceptance suite is runnable from a bare checkout (no gitignored fixture)",
+      "result": "pass",
+      "detail": "gitignored=True tracked_in_git=False docs_fallback_in_fixture=True fixture_line=['OUT = ARTIFACTS_OUT if (ARTIFACTS_OUT / \"kf_result.json\").is_file() else DOCS_OUT']"
+    },
+    {
+      "id": "C13",
+      "check": "fresh-checkout replay of the upstream suite (worktree state, gitignored trees removed)",
+      "result": "pass",
+      "detail": "summary='11 passed, 1 warning in 0.63s' errors=0 failed=0 artifacts_tree_present=False"
+    },
+    {
+      "id": "C15",
+      "check": "A/B: reverting the docs/ fallback reproduces the reported defect (11 red, not a claim)",
+      "result": "pass",
+      "detail": "as_is=rc0 ('11 passed, 1 warning in 0.63s') fallback_ablated=rc1 ('1 warning, 11 errors in 1.02s', errors=11)"
+    },
+    {
+      "id": "C17",
+      "check": "scan of tests/kf for the same gitignored-fixture defect class (report only, out of this PR's scope)",
+      "result": "pass",
+      "detail": "modules_reading_gitignored_trees={'test_wp_14445_01.py': ['runs'], 'test_wp_297_04.py': ['artifacts']} count=2"
+    },
+    {
+      "id": "C16",
+      "check": "this package's own inputs are committed (no gitignored artifacts/ dependency)",
+      "result": "pass",
+      "detail": "inputs=['tests/kf/test_wp_5624_04.py', 'scripts/kf/wp-5624-04/review_wp_5624_01.py', 'tests/fixtures/kf/5624_markdown.md'] missing=[] artifacts_read={\"tests/kf/test_wp_5624_04.py\": false, \"scripts/kf/wp-5624-04/review_wp_5624_01.py\": false}"
+    },
+    {
+      "id": "C14",
+      "check": "reviewed upstream artifacts are content-pinned by sha256",
+      "result": "pass",
+      "detail": "{\"asset_manifest.json\": \"db0f062ea5d6\", \"kf_result.json\": \"01c63fb3e63a\", \"kf_result_wp-5624-01.md\": \"03e9158c0a91\"}"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-C04",
+      "severity": "info",
+      "type": "prior_review_delta",
+      "title": "前一轮审核把 lines=46 记为 low 级歧义；本轮复算判定为无缺陷（口径=换行符数，与 splitlines 一致）",
+      "evidence": {
+        "manifest_lines": 46,
+        "newline_count": 46,
+        "splitlines": 46,
+        "naive_split_newline_tokens": 47,
+        "reason": "46 只在 md.split('\\n') 这种朴素切分下变成 47（末尾换行产生的空令牌），不是清单缺陷；仅建议在清单里写明口径"
+      },
+      "affected_scope": "metadata only",
+      "recommendation": "在 asset_manifest 里写明 lines 的口径（可选，非阻塞）",
+      "status": "closed_no_defect"
+    },
+    {
+      "id": "F-C07",
+      "severity": "medium",
+      "type": "duplicate_extraction",
+      "title": "distinct ref_ids share one locator quote, so 'existence not checked' is asserted twice for one occurrence",
+      "evidence": {
+        "duplicate_groups": {
+          "markdown|`artifacts/`（0 文件）与 `runs/`（0 文件），": [
+            "referenced_artifacts:5624-ref-01",
+            "referenced_artifacts:5624-ref-02"
+          ]
+        },
+        "occurrences_in_markdown": {
+          "markdown|`artifacts/`（0 文件）与 `runs/`（0 文件），": 1
+        },
+        "note": "each quote occurs exactly once in the source, so the second ref_id carries no distinct evidence anchor"
+      },
+      "affected_scope": "referenced_artifacts extraction; cosmetic for hash/section/claims correctness",
+      "recommendation": "merge ref-01/ref-02 into one ref_id with two raw_texts, or dedupe quotes at extraction time",
+      "status": "open"
+    },
+    {
+      "id": "F-C13",
+      "severity": "major",
+      "type": "reproducibility_defect_remediated",
+      "title": "上游验收套件在裸检出中曾全红（fixture 读 gitignored 的 artifacts/）；本包加 docs/ 镜像回退后重放转绿",
+      "evidence": {
+        "before_fix": {
+          "status": "ran",
+          "cwd": "gitignored trees removed; tracked files at HEAD overlaid with worktree versions",
+          "artifacts_tree_present": false,
+          "fallback_ablated": true,
+          "returncode": 1,
+          "summary": "1 warning, 11 errors in 1.02s",
+          "errors": 11,
+          "failed": 0,
+          "targets": [
+            "tests/kf/test_wp_5624_01.py"
+          ]
+        },
+        "after_fix": {
+          "status": "ran",
+          "cwd": "gitignored trees removed; tracked files at HEAD overlaid with worktree versions",
+          "artifacts_tree_present": false,
+          "fallback_ablated": false,
+          "returncode": 0,
+          "summary": "11 passed, 1 warning in 0.63s",
+          "errors": 0,
+          "failed": 0,
+          "targets": [
+            "tests/kf/test_wp_5624_01.py"
+          ]
+        },
+        "gitignore_rule": "artifacts/ 在 .gitignore 中",
+        "committed_mirror": "docs/kf/wp-5624-01/kf_result.json 已跟踪",
+        "ab_experiment": "同一次运行内：检出复原为 HEAD+worktree，仅把 OUT 一行改回修复前写法作为对照臂"
+      },
+      "affected_scope": "被验收包的『pytest 11 passed』主张在干净检出下不成立（可复算主张受影响），数据本身不受影响",
+      "recommendation": "已实施：fixture 优先 artifacts/，缺失回退 docs/；后续 01 包应同法自检",
+      "status": "fixed_in_this_package"
+    },
+    {
+      "id": "F-C17",
+      "severity": "low",
+      "type": "same_defect_class_elsewhere",
+      "title": "tests/kf 下另有 2 个测试模块直接读 gitignored 的 artifacts/ 或 runs/，同类缺陷不止 5624 一线",
+      "evidence": {
+        "modules": {
+          "test_wp_14445_01.py": [
+            "runs"
+          ],
+          "test_wp_297_04.py": [
+            "artifacts"
+          ]
+        },
+        "scope": "tests/kf",
+        "reported_from": "wp-5624-04",
+        "observed": "同目录 pytest 在干净检出下共计 8 failed / 15 errors（归属其它包，本包不改他人产物）"
+      },
+      "affected_scope": "仓内其它包的裸检出可复现性（与 5624 线无关）",
+      "recommendation": "各包按 R3 同法加 docs/ 镜像回退；建议后续单独立项统一处理",
+      "status": "open_out_of_scope"
+    }
+  ],
+  "checks_not_run": [
+    "被登记工件的存在性/内容一致性：工件根位于 m4963 的 TensorPlatform worktree，跨 worktree 取证越界",
+    "content_digests 的 sha256 值重算：被摘要工件不在本 worktree",
+    "报告附图（fig1/fig2/fig3）的图像内容核验：平台记录中 figures 未携带 png_base64 载荷",
+    "m4963 的 artifact_indexer 源码复核：工具不在本仓"
+  ],
+  "independence_limitations": [
+    "审核者与生产者同为 LLM 代理，可能共享推理模式，独立性受此限制（结构性局限，无法在包内消除）",
+    "审核在单一 worktree 内完成，未跨仓取证：被登记工件本身（TensorPlatform 侧 artifacts/、runs/）未核",
+    "报告附图无 png_base64 载荷，图与数据的一致性不可验",
+    "平台在线重取需 --fetch；离线模式的结论只覆盖已被快照固定的字节"
+  ],
+  "overstated_claims": [
+    {
+      "claim": "上游 kf_result_wp-5624-01.md 记载『python3 -m pytest tests/kf/test_wp_5624_01.py -v → 11 passed』",
+      "reality": "在仅含已跟踪文件的干净检出中该套件 11 用例全部 ERROR（FileNotFoundError），因为 fixture 读取被 .gitignore 排除的 artifacts/kf/wp-5624-01/kf_result.json；『11 passed』只在手动补齐 artifacts/ 后成立，上游未登记该环境依赖。",
+      "handling": "本包在 fixture 中加 docs/ 镜像回退后重放，见 C12/C13 与 F-C13"
+    }
+  ],
+  "disposition": "approve_with_notes",
+  "disposition_rationale": "登记正确性、哈希一致性、逐字 locator、契约边界、claims 策略均通过；未发现阻塞性正确性/安全问题。存在 1 个中等提取缺陷（重复 locator 引用）、1 个低级计数口径歧义，以及 1 个影响可复算主张的测试环境缺陷（已在本包修复并重放验证）。",
+  "remediation": [
+    {
+      "id": "R1",
+      "target": "wp-5624-01 asset_manifest.referenced_artifacts",
+      "action": "合并共享同一 locator_quote 的 ref-01/ref-02，或按 raw_text 保留两条但要求 quote 互不相同",
+      "status": "open",
+      "owner_note": "属 01 工序产物，本 04 包不改上游产物内容（只读边界）"
+    },
+    {
+      "id": "R2",
+      "target": "wp-5624-01 asset_manifest.source_asset.size.lines",
+      "action": "登记计数口径（内容行数 = 换行符数），避免 46/47 争议",
+      "status": "open",
+      "owner_note": "同上，只读边界"
+    },
+    {
+      "id": "R3",
+      "target": "tests/kf/test_wp_5624_01.py",
+      "action": "fixture 优先 artifacts/，缺失时回退到已跟踪的 docs/kf/wp-5624-01/ 镜像",
+      "status": "fixed",
+      "evidence": "C12 pass + C13 干净检出重放"
+    }
+  ],
+  "reproduction": {
+    "offline": "python3 scripts/kf/wp-5624-04/review_wp_5624_01.py",
+    "online": "python3 scripts/kf/wp-5624-04/review_wp_5624_01.py --fetch --fresh-clone",
+    "tests": "python3 -m pytest tests/kf/test_wp_5624_04.py tests/kf/test_wp_5624_01.py -q",
+    "emitted_at": "2026-11-14T00:00:00Z",
+    "deterministic": true
+  },
+  "claims": []
+}
