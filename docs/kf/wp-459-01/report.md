@@ -33,7 +33,10 @@
 | `scripts/kf/register_assets.py` | 可复跑登记器（API 或本地快照 → 清单 + 信封；含自检退出码） |
 | `scripts/kf/emit_kf_report.py` | 报告生成器（数字/引文从清单注入，零手抄；含图生成） |
 | `tests/test_kf_wp459_01_assets.py` | 14 项验收测试 |
-| `schemas/kf_result.v1.schema.json` | 结果信封 schema（与契约同名同结构） |
+| `schemas/kf_result.v1.schema.json` | 结果信封 schema rev 1.1（本单修复：恢复信封语义 + 把工序实际使用的顶层元数据键纳入白名单；见 ⑦） |
+| `scripts/kf/audit_envelope_conformance.py` | 信封一致性普查器（确定性、无 wall-clock；`--write` 重生成普查产物） |
+| `docs/kf/wp-459-01/envelope_conformance.json` | 普查产物（机器生成，本单 161/162 信封通过，逐条残余缺陷在案） |
+| `tests/test_kf_result_envelope_contract.py` | 23 项家族门：普查字节可复现 + 残余白名单精确性 + schema 必须仍然拒绝的 15 个破坏样本 |
 
 ## ④ 证据定位表（字段 / 资产 → 原文逐字引文）
 
@@ -72,6 +75,7 @@
 5. **`artifacts/fig1–3.png` 是连字符范围写法**（en-dash），不是字面文件名；登记为 `declared_shorthand` 并保留原文引文，不做路径展开猜测。
 6. **登记 ≠ 核验**：所有资产都没有 `verified` 标记；`claims` 为空数组是 01 工序的合法完整结果（契约 `notes` 明示），不为了凑指标造知识。
 7. **源码路径引用靠正则抽取**：只覆盖 `*.py|*.json|*.md|*.png` 扩展名；正文里无扩展名的目录/模块引用不会被登记（漏登记优于乱登记）。
+8. **本单引入的信封 schema 曾被覆盖写入，导致全仓 ~70 个验收测试在 main 上恒红**：rev 1.0 把顶层 `additionalProperties` 设为 false（连 01 工序契约明确要求的 `claims: []` 都算非法）并把 `provenance` 收紧成 7 键白名单，与仓内既有信封家族冲突。修复见 ⑦；**本单不隐藏这件事**：修复前 rev 1.0 只接受 6/162 个已合入信封。
 
 ## ⑥ 自检：逐条对照 acceptance
 
@@ -84,6 +88,7 @@
 | 5 | `no_duplicate_ids` | ✅ | `asset_id` 与 `(kind, name)` 唯一性断言通过 |
 | 6 | `all_claims_have_evidence_or_explicit_unresolved_status` | ✅（空真） | `claims: []`，契约允许；无 evidence 的 claim 数为 0 |
 | 7 | 不越权：不动其它 report_id / 不标 verified | ✅ | 只读 459；清单无 verified 字段；无抽取产物 |
+| 8 | 家族一致性（本单新增门） | ✅ | `pytest tests/test_kf_result_envelope_contract.py`：普查字节可复现、残余白名单精确、schema 仍拒绝 15 个破坏样本；161/162 已合入信封通过 |
 
 **honest-FAIL 声明**：无失败项。但需明确：本工序的 ✅ 只证明“登记面正确”，**不证明报告 459 的科学结论成立**（其正文自报平台 Holtrop 法对 KCS 高估 +93% 等 honest-FAIL 仍待领域侧处理，不在本单范围）。
 
@@ -101,6 +106,47 @@ python3 -m pytest tests/test_kf_wp459_01_assets.py -q
 ```
 
 *（在线复跑去掉 `--record` 即直接拉平台 459；同样应得到逐字节相同的清单。）*
+
+## ⑦ 信封 schema 修复（rev 1.1）——本单的第二个交付面
+
+**声明（热文件重叠）**：本单修改 `schemas/kf_result.v1.schema.json`（全仓共享验收面，属热路径）。改动前先声明理由与边界：**只修该 schema 的语义宽度，不改任何工作包的数据字节，不动 `asset_manifest.v1.schema.json` 与各包自带的 schema 副本。**
+
+**问题（可复现）**：该文件由本包首版引入，后被一次合入**就地覆盖**为更窄的「工厂契约」版 rev 1.0：顶层 `additionalProperties: false`（于是 01 工序契约明确要求的 `claims: []` 反而非法）、`provenance` 收紧成 7 键白名单（`producer` / `emitted_at` / `notes` / `lane` / … 全部非法）、`source_uri` 变成必填。而仓内既有信封家族是按信封语义产出的 ⇒ **main 上约 70 个包验收测试恒红**（每个包只校验自己的信封，所以谁都没看见）。
+
+**普查（`scripts/kf/audit_envelope_conformance.py`，机器生成 → `docs/kf/wp-459-01/envelope_conformance.json`，零手抄）**：
+
+| 指标 | rev 1.0（覆盖写入版） | rev 1.1（本修复） |
+|---|---|---|
+| 探查面 | 170 个 `kf_result*.json` = 162 信封 + 7 份 schema 副本 + 1 份 pre-envelope 旧式记录 | 同 |
+| 被接受的信封 | **6 / 162（3.7%）** | **161 / 162（99.4%）** |
+| 因 `provenance` 额外键（producer/emitted_at/notes/lane…）被拒 | 156 | 0 |
+| 因顶层额外键（`claims` / `contract_version` / `schema_version` …）被拒 | 118 | 0（白名单显式纳入） |
+| 因 `provenance` 缺 `source_uri` 被拒 | 76 | 0（改为可选） |
+| 因 `outputs` 键白名单被拒 | 7 | 0（outputs 键名由工序契约规定） |
+| 因 `task_type` 只收契约全名（短码 `01` 被拒） | 3 | 0（全名与短码等价） |
+
+（各因由有重叠，故合计大于信封数。）
+
+**保留的真实门（未放松，用 15 个破坏样本钉死）**：工位身份 `package_id`/`task_type`/`report_id` 形态；`provenance.source_field` 必填且取值受限；`provenance.source_hash` 必填且必须是 `sha256:<64 hex>`（这是平台唯一独立复算的量）；`outputs` 必须非空；`claims` 若出现必须带 `claim_id`/`text`/`status`，且 **`verified` 不是合法 claim 状态**（verified 只能由平台门计算）。
+
+**残余（如实登记，未粉饰）**：2 个已合入信封仍不合规，且**是包自身的缺陷、不是 schema 的问题**，各自需要独立修单：`docs/kf/wp-4331-01/kf_result.json`（`report_id` 是整数、`provenance` 缺 `source_field` ⇒ 哈希覆盖面未声明，不可验）、`docs/kf/wp-9777-01/kf_result.json`（扁平旧式记录，无 `provenance`/`outputs` 信封）。二者写进普查产物的 `residual_allowlist`，并由 pytest 断言「白名单必须仍然失败」，防止将来被静默吞掉。
+
+**验证（本机实跑）**：
+
+| 命令 | 修复前 | 修复后 |
+|---|---|---|
+| `pytest tests/ -k "kf or kbm"`（忽略 1 个既有 collection 错误文件） | 168 failed / 1066 passed | **102 failed / 1132 passed**（+66 通过，0 新增失败） |
+| `pytest <91 个引用该 schema 的测试文件>` | 118 failed | **50 failed**（+68 通过，**0 regression**） |
+| `pytest tests/test_kf_result_envelope_contract.py tests/test_kf_wp459_01_assets.py` | 14 passed / 1 failed（`test_result_matches_envelope_schema`） | **37 passed** |
+| `python3 scripts/kf/audit_envelope_conformance.py` | `allowlist_match=False` | `allowlist_match=True`，161/162 |
+
+剩余 50 个红项全部与信封无关（缺 `runs/**` 离线快照、`asset_manifest.v1.schema.json` 的另一套约束等既有欠账），不属本单范围，此处不声称已修。
+
+![fig_wp459_01_envelope_conformance.png](figures/fig_wp459_01_envelope_conformance.png)
+
+**图 2 说明**：(a) 161/162 vs 6/162 的接受数，直接由 `scripts/kf/fig_wp459_01_envelope_conformance.py` 在**已提交字节**上重算（rev 1.0 的 schema blob 从 `git d2ecb95` 取，修复后仍可复算）；(b) rev 1.0 的拒绝因由普查——同一信封可同时命中多条因由，故合计大于 162。零手抄：图里每个数字都是脚本跑出来的。
+
+**为什么不是「把 162 个信封改窄」**：那等于按一个事后覆盖进来的契约批量重写已验收的证据件（含哈希/引文/离线快照绑定），既不可审计也会丢信息；而 schema 是描述家族的那一层，错在它。
 
 ![fig_wp459_01_asset_inventory.png](figures/fig_wp459_01_asset_inventory.png)
 
