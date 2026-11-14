@@ -1,0 +1,665 @@
+{
+ "review_report_version": "1.0",
+ "review_id": "wp-11267-04",
+ "reviewer_role": "red-team-reviewer",
+ "report_id": "11267",
+ "package_reviewed": "wp-11267-01",
+ "review_object_contract": {
+  "package_id": "wp-11267-01",
+  "task_type": "01-asset-registration",
+  "contract_version": "1.0",
+  "lane": "C"
+ },
+ "reviewed_artifacts": [
+  {
+   "path": "docs/kf/wp-11267-01/asset_manifest.json",
+   "sha256": "sha256:cd50467970c5ce7b9b34d33062324627175e86807d32cd6b669a88ac9a0aff15"
+  },
+  {
+   "path": "docs/kf/wp-11267-01/kf_result.json",
+   "sha256": "sha256:7f0ce0f357ba6f8919cbea28ce13365b9213da33405be57050657c1c96c68bd8"
+  },
+  {
+   "path": "docs/kf/wp-11267-01/verification.json",
+   "sha256": "sha256:1dd3324a52ceb4cb76007fe59b388b5dca77293347c47ea6d48a9e56b7e309fb"
+  },
+  {
+   "path": "docs/kf/wp-11267-01/asset_manifest.schema.json",
+   "sha256": "sha256:3f83ea495de915593ebaa4602cb3327cc4726b55cc5d06ad657a6180837dabcd"
+  }
+ ],
+ "source": {
+  "uri": "tensor://reports/11267",
+  "field": "markdown",
+  "recomputed_sha256": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+  "contract_declared_sha256": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+  "hash_match": true,
+  "chars": 7482,
+  "bytes_utf8": 11574,
+  "lines": 201,
+  "fetched_via": "GET /tensor/reports/11267（现场重取，非磁盘副本）"
+ },
+ "verdict": "needs-fix",
+ "verdict_reason": "语义保真无缺陷：23 资产 / 34 locator 全逐字可定位（0 span 错、0 行号错、0 幻觉、0 漏登记），7 张图 payload 现场重取字节级一致，源 hash 三方一致，claims=[] 合规且无 verified 标记。判 needs-fix 只因两处机器可检的元数据缺陷（F1 信封 schema 版本漂移、F2 探针文案矛盾），均不影响 manifest 的事实内容，与 F3 的时效性风险一并交下游注意。",
+ "verdict_scope": {
+  "semantic_fidelity": "pass",
+  "artifact_integrity": "pass",
+  "envelope_schema_current": "fail (F1)",
+  "probe_semantics": "needs-fix (F2)",
+  "downstream_freshness": "attention (F3)"
+ },
+ "contract_checks": {
+  "valid_json": true,
+  "schema_pass": true,
+  "reviewer_independent": true,
+  "upstream_packages_completed": true,
+  "notes": "schema_pass 指本审核包 review_report.json/kf_result.json 通过 schemas/kf_result.v1.schema.json；上游信封对当前 schema 的符合性另见 F1（不改写上游产物，只记录）。"
+ },
+ "independence": {
+  "reviewer_is_not_producer": true,
+  "producer": "kf-worker/m15695",
+  "reviewer_worktree": "/root/tp-agent/work/m19785",
+  "repo_head": "445efce0fb14750df98a995d4c0667c7519b55ee",
+  "independent_recomputation": "自写复算器 docs/kf/wp-11267-04/review_wp-11267-04.py，资产发现规则、locator 判定、计数复核、图 payload 重取均由审核员重新实现，未复用生产者代码",
+  "context_used": [
+   "报告原文 markdown（API 现场重取）",
+   "上游机器产物 asset_manifest.json / kf_result.json / 其 pinned schema",
+   "上游自检 verification.json（仅用于交叉比对，不作判定依据）"
+  ],
+  "context_exclusions": [
+   "未采用生产者的解释性叙述作为判定依据",
+   "未读取或写入任何其它 report_id"
+  ],
+  "limitations": [
+   "生产者结论文档 docs/kf_result_wp-11267-01.md 的前 60 行在进入独立复算前被同目录浏览命令落屏（邻近可见，非有意取证）；本报告全部判定与数字由复算器对原文/产物重新计算，未引用其自检结论，但严格意义上审核上下文并非完全隔离。",
+   "复核基线是仓库工作树快照（HEAD），未对生产者运行时做历史重建；生产者进程环境不可复现。",
+   "集群作业状态为查询时刻快照（见 F3），非报告定稿时刻的状态。"
+  ]
+ },
+ "scope_performed": [
+  "源身份：markdown 字节哈希、字符数、标题、scenario_key 三方（契约/manifest/现场重取）比对",
+  "locator 逐字符复核：23 个资产级 locator + 34 个 all_locators，共 57 条，逐条 quote∈原文、md[s:e]==quote、行号重算、quote_sha256 重算",
+  "独立资产发现：图片链接 / 反引号路径 token / python -m 入口 / cjNNN 作业号 / test_* 符号五类规则，比对登记集（召回）与幻觉（精确率）",
+  "declared_absent 保真：7 条逐条判“原文自述缺失”并做句级判定，反向检查判据表 not measured 行是否漏登记",
+  "图 payload：7 张图从 /tensor/reports/11267/figures/<name> 现场重取，字节数与 sha256 与登记比对，校验 PNG magic",
+  "计数自洽：total / by_resolution / by_class / id 唯一 / occurrence_count==len(all_locators) / 派生计数",
+  "节段归属：in_report_section 与 locator 所在最近标题逐条比对",
+  "图题保真：manifest 图题与记录元数据 caption 逐字比对",
+  "信封与 manifest schema：按生成时在册版本（548f89e）与当前版本分别校验",
+  "工序边界：claims=[] 、verified 标记扫描、跨 report_id 引用扫描",
+  "外部时序核对：cj308/cj313/cj314 集群队列状态查询"
+ ],
+ "checks": [
+  {
+   "id": "K1-source-identity",
+   "name": "源身份：manifest/契约/独立重算三方 hash 与字符数一致",
+   "verdict": "pass",
+   "detail": {
+    "manifest_hash": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+    "recomputed": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+    "contract_hash": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f",
+    "chars": {
+     "manifest": 7482,
+     "recomputed": 7482
+    },
+    "bytes_utf8": {
+     "manifest": 11574,
+     "recomputed": 11574
+    },
+    "title_match": true,
+    "scenario_match": true
+   },
+   "evidence": [
+    {
+     "quote": "# MPI 域分解并行有限元基础设施（p284w3-n04-fem-mpi-parallel）",
+     "start_char": 0,
+     "start_line": 1
+    }
+   ]
+  },
+  {
+   "id": "K2-locator-verbatim",
+   "name": "locator 逐字符可定位（quote∈原文 / md[s:e]==quote / 行号重算一致）",
+   "verdict": "pass",
+   "detail": {
+    "locators_checked": 57,
+    "bad": 0,
+    "quote_not_in_markdown": 0,
+    "span_mismatch": 0,
+    "line_mismatch": 0,
+    "document_method_spans": 1,
+    "examples": []
+   },
+   "evidence": [
+    {
+     "quote": "# MPI 域分解并行有限元基础设施（p284w3-n04-fem-mpi-parallel）",
+     "start_char": 0,
+     "start_line": 1
+    }
+   ]
+  },
+  {
+   "id": "K3-counts-selfconsistent",
+   "name": "counts 与实际数组逐项自洽（总数/按类/按可解性/id 唯一）",
+   "verdict": "pass",
+   "detail": {
+    "declared": {
+     "assets": 23,
+     "by_class": {
+      "cluster_job": 3,
+      "code_module_path": 1,
+      "code_script": 3,
+      "data_artifact": 1,
+      "declared_measurement_gap": 4,
+      "figure_artifact": 7,
+      "run_command": 1,
+      "source_document": 1,
+      "test_suite": 1,
+      "test_symbol": 1
+     },
+     "by_resolution": {
+      "declared_absent": 7,
+      "referenced_unresolved": 8,
+      "resolved_in_source": 8
+     },
+     "resolved_in_source": 8,
+     "referenced_unresolved": 8,
+     "declared_absent": 7,
+     "body_image_links": 7,
+     "figure_references_total": 14,
+     "distinct_referenced_paths": 15,
+     "claims": 0
+    },
+    "actual_total": 23,
+    "actual_by_resolution": {
+     "resolved_in_source": 8,
+     "referenced_unresolved": 8,
+     "declared_absent": 7
+    },
+    "actual_by_class": {
+     "source_document": 1,
+     "code_module_path": 1,
+     "run_command": 1,
+     "data_artifact": 1,
+     "code_script": 3,
+     "declared_measurement_gap": 4,
+     "figure_artifact": 7,
+     "cluster_job": 3,
+     "test_symbol": 1,
+     "test_suite": 1
+    },
+    "id_unique": true,
+    "name_unique": true
+   },
+   "evidence": []
+  },
+  {
+   "id": "K4-discovery-recall",
+   "name": "审核员独立发现集无漏登记",
+   "verdict": "pass",
+   "detail": {
+    "discovered_keys": 15,
+    "missed": 0,
+    "missed_items": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "K4b-no-phantom-assets",
+   "name": "无“原文中不存在”的幻觉资产（每条 locator quote 均在原文）",
+   "verdict": "pass",
+   "detail": {
+    "phantom": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "K5-declared-absent-fidelity",
+   "name": "declared_absent 每条都是原文自述缺失（句级），且判据表未测量行无遗漏",
+   "verdict": "pass",
+   "detail": {
+    "declared_absent": 7,
+    "bad": [],
+    "locator_narrower_than_sentence": [
+     {
+      "asset_id": "A16",
+      "name": "cj308",
+      "quote": "cj308",
+      "line": 169,
+      "line_text": "（cj308 全量判据、cj313 P=1/2 点、cj314 P=4/8 点）在报告定稿时仍为 `queued`"
+     },
+     {
+      "asset_id": "A17",
+      "name": "cj313",
+      "quote": "cj313",
+      "line": 169,
+      "line_text": "（cj308 全量判据、cj313 P=1/2 点、cj314 P=4/8 点）在报告定稿时仍为 `queued`"
+     },
+     {
+      "asset_id": "A18",
+      "name": "cj314",
+      "quote": "cj314",
+      "line": 169,
+      "line_text": "（cj308 全量判据、cj313 P=1/2 点、cj314 P=4/8 点）在报告定稿时仍为 `queued`"
+     }
+    ],
+    "unmeasured_rows_in_report": 3,
+    "unregistered_unmeasured_rows": []
+   },
+   "evidence": [
+    {
+     "quote": "| C1_strong_efficiency | not measured | 0.600000 | P=16 | FAIL (未测量) |",
+     "start_char": 4472,
+     "start_line": 124
+    },
+    {
+     "quote": "| C2_weak_ratio | not measured | 1.500000 | P=32 | FAIL (未测量) |",
+     "start_char": 4543,
+     "start_line": 125
+    },
+    {
+     "quote": "| C4_comm_fraction | not measured | 0.300000 | P=16 | FAIL (未测量) |",
+     "start_char": 4607,
+     "start_line": 126
+    },
+    {
+     "quote": "   自动探测，但**未在本机实测**（如实声明，不作为本节点证据）。",
+     "start_char": 6086,
+     "start_line": 162
+    },
+    {
+     "quote": "cj308",
+     "start_char": 6405,
+     "start_line": 169
+    },
+    {
+     "quote": "cj313",
+     "start_char": 6416,
+     "start_line": 169
+    },
+    {
+     "quote": "cj314",
+     "start_char": 6430,
+     "start_line": 169
+    }
+   ]
+  },
+  {
+   "id": "K6-figure-payload",
+   "name": "7 张图现场重取，字节数与 sha256 与登记一致（非占位/非错误体）",
+   "verdict": "pass",
+   "detail": {
+    "figures": 7,
+    "all_match": true,
+    "declared_figure_assets": [
+     "strong_scaling.png",
+     "weak_scaling.png",
+     "communication.png",
+     "iterations.png",
+     "accuracy.png",
+     "load_balance.png",
+     "fields.png"
+    ],
+    "artifact_endpoint_probe": {
+     "path": "/tensor/reports/11267/artifacts",
+     "http_status": 404,
+     "bytes": 22,
+     "body_head": "{\"detail\":\"Not Found\"}"
+    }
+   },
+   "evidence": []
+  },
+  {
+   "id": "K7-scope-boundary",
+   "name": "claims=[] 合规、全库无 verified 判定、只碰本报告",
+   "verdict": "pass",
+   "detail": {
+    "claims": [],
+    "claims_empty_reason_len": 435,
+    "verified_token_in_reason": false,
+    "other_report_ids_seen": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "K8-envelope-schema-dual",
+   "name": "信封 schema：按生成时在册版本 vs 按当前版本分别判定",
+   "verdict": "needs-fix",
+   "detail": {
+    "emission_schema_commit": "548f89e",
+    "emission_schema_errors": null,
+    "current_schema_errors": {
+     "message": "Additional properties are not allowed ('claims' was unexpected)",
+     "path": []
+    },
+    "top_level_keys": [
+     "claims",
+     "outputs",
+     "package_id",
+     "provenance",
+     "report_id",
+     "task_type"
+    ],
+    "provenance_keys": [
+     "emitted_at",
+     "notes",
+     "producer",
+     "source_field",
+     "source_hash"
+    ]
+   },
+   "evidence": []
+  },
+  {
+   "id": "K9-manifest-schema",
+   "name": "asset_manifest.json 过本包 pinned schema",
+   "verdict": "pass",
+   "detail": {
+    "pinned_schema": "docs/kf/wp-11267-01/asset_manifest.schema.json",
+    "errors": null
+   },
+   "evidence": []
+  },
+  {
+   "id": "K10-derived-counts",
+   "name": "派生计数（图链接/图引用/独立路径数）复核",
+   "verdict": "pass",
+   "detail": {
+    "manifest_body_image_links": 7,
+    "recomputed_image_links": 7,
+    "manifest_figure_references_total": 14,
+    "recomputed_bare_png_mentions": 14,
+    "manifest_distinct_referenced_paths": 15,
+    "recomputed_backticked_paths": 10
+   },
+   "evidence": []
+  },
+  {
+   "id": "K11-worktree-probe-wording",
+   "name": "worktree_probe 的 reason 文本与 result 不自相矛盾、无绝对路径泄漏",
+   "verdict": "needs-fix",
+   "detail": {
+    "contradictory_entries": 14,
+    "sample": [
+     [
+      "A05",
+      "C1_strong_efficiency",
+      "path exists in TensorKnowledge worktree: C1_strong_efficiency"
+     ],
+     [
+      "A06",
+      "C2_weak_ratio",
+      "path exists in TensorKnowledge worktree: C2_weak_ratio"
+     ],
+     [
+      "A07",
+      "C4_comm_fraction",
+      "path exists in TensorKnowledge worktree: C4_comm_fraction"
+     ]
+    ],
+    "absolute_path_entries": 14
+   },
+   "evidence": []
+  },
+  {
+   "id": "K13-section-attribution",
+   "name": "in_report_section 与 locator 实际所在节段一致",
+   "verdict": "pass",
+   "detail": {
+    "assets_checked": 22,
+    "mismatch": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "K14-occurrence-count",
+   "name": "occurrence_count == len(all_locators)，且总 locator 数可复核",
+   "verdict": "pass",
+   "detail": {
+    "total_locators": 34,
+    "mismatch": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "K15-caption-fidelity",
+   "name": "图题逐字等于记录元数据 caption（非记忆重述）",
+   "verdict": "pass",
+   "detail": {
+    "record_figures": 7,
+    "mismatch": []
+   },
+   "evidence": []
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "medium",
+   "likelihood": "certain (machine-detectable)",
+   "blocking": false,
+   "title": "上游信封 kf_result.json 不符合当前 KF-RESULT v1 schema（顶层多出 claims；provenance 缺 source_uri）",
+   "evidence": {
+    "emission_schema_commit": "548f89e (2026-11-12 09:21 +0800)",
+    "emission_schema_verdict": "pass",
+    "current_schema_error": {
+     "message": "Additional properties are not allowed ('claims' was unexpected)",
+     "path": []
+    },
+    "top_level_keys": [
+     "claims",
+     "outputs",
+     "package_id",
+     "provenance",
+     "report_id",
+     "task_type"
+    ],
+    "provenance_keys": [
+     "emitted_at",
+     "notes",
+     "producer",
+     "source_field",
+     "source_hash"
+    ],
+    "provenance_source_hash_recomputed": "sha256:2ca7aed6b4a376b61e38173425b70566dea93e4c0ce7695600091b9eb6de5a9f"
+   },
+   "analysis": "上游产物生成时（2026-11-12T01:54Z）在册 schema（commit 548f89e）允许顶层 claims 与 provenance 扩展字段，故生产者的 schema_pass 自检在当时为真；2026-11-13（ef809cd）schema 收紧为 provenance required=[source_uri, source_field, source_hash] 且 additionalProperties=false，上游信封随即不再通过。仓库内 117 份 kf_result.json 只有 18 份符合当前 schema —— 属系统性版本漂移，非本包独有缺陷。",
+   "remediation": "重发信封：把 claims 移入 outputs 或删除，provenance 增补 source_uri=tensor://reports/11267；或由平台提供 schema 版本别名（v1.0 冻结版）。",
+   "affected_scope": "wp-11267-01 的 kf_result.json（下游 02/03 工序若用当前 schema 校验会被拒）"
+  },
+  {
+   "id": "F2",
+   "severity": "low",
+   "likelihood": "certain (计数)",
+   "blocking": false,
+   "title": "worktree_probe 的 reason 文本与 result 自相矛盾（14/23 资产写成 “path exists …” 却 result=unresolved），并泄漏生产者绝对工作树路径",
+   "evidence": {
+    "contradictory_entries": 14,
+    "absolute_path_entries": 14,
+    "sample": [
+     [
+      "A05",
+      "C1_strong_efficiency",
+      "path exists in TensorKnowledge worktree: C1_strong_efficiency"
+     ],
+     [
+      "A06",
+      "C2_weak_ratio",
+      "path exists in TensorKnowledge worktree: C2_weak_ratio"
+     ],
+     [
+      "A07",
+      "C4_comm_fraction",
+      "path exists in TensorKnowledge worktree: C4_comm_fraction"
+     ]
+    ]
+   },
+   "analysis": "探针模板把 check 文案固定为 “path exists in <repo> worktree: <name>”，而实际 result 由存在性判定得出；两者拼接后对不存在的路径也宣称 exists，读者只能靠 result 字段判读。同时 path 指向 /root/tp-agent/work/m15695/…（生产者临时工作树，已不可达），降低可复现性。",
+   "remediation": "check 文案改为条件式（exists/missing 由 result 决定），路径字段改为仓库相对路径或工作树标识（producer=…）。",
+   "affected_scope": "manifest 中 14 个资产的 resolution_check.worktree_probe（不含已 resolved 的 9 个）"
+  },
+  {
+   "id": "F3",
+   "severity": "medium",
+   "likelihood": "certain (集群查询)",
+   "blocking": false,
+   "title": "cj308/cj313/cj314 登记为 declared_absent 与报告原文一致，但集群现状已 succeeded —— 下游不得把“无扩展点数据”当作永久结论",
+   "evidence": {
+    "report_quote": "`` （cj308 全量判据、cj313 P=1/2 点、cj314 P=4/8 点）在报告定稿时仍为 `queued` `` (L169)",
+    "queue_probe": {
+     "cj308": "succeeded node=n315 rc=0 submitted=11-10 11:40 age=3974.1min",
+     "cj313": "succeeded node=n315 rc=0 submitted=11-10 11:53 age=3972.1min",
+     "cj314": "succeeded node=n330 rc=0 submitted=11-10 11:53 age=3971.1min"
+    },
+    "probe_tool": "run_cluster(action=ps, job_id=cj30x)"
+   },
+   "analysis": "登记口径要求“登记报告声明为空”，上游据此把三个作业记为 declared_absent —— 对报告原文是忠实的（报告定稿时确为 queued）；但三个作业现均为 succeeded/rc=0，说明 P=16/P=32 扩展点数据已可获取。这不是上游的缺陷，是时效性风险：若 03 抽取把“集群算力未到位”写成 claim，或 05 综述据此判“扩展性不可验证”，就会把一个已消失的阻塞当作事实。",
+   "remediation": "不要求 01 返工；建议平台对 declared_absent 附 freshness_checked_at，或在补测工序用 cj308/313/314 工件刷新扩展点数字。",
+   "affected_scope": "下游 03（claim 抽取）/05（综述）对扩展性结论的表述"
+  },
+  {
+   "id": "F4",
+   "severity": "low",
+   "likelihood": "certain",
+   "blocking": false,
+   "title": "cluster_job 资产的 locator 只有裸作业号，“缺失”语义仅由所在句承载",
+   "evidence": {
+    "locator_quote": "`cj308` (L169)",
+    "sentence": "`向 外协方双节点集群递交的三个作业` (L168)",
+    "line": 169
+   },
+   "analysis": "locator.quote=`cj308` 逐字可定位（K2 通过），但单看引文无法自证 declared_absent；语义要靠 note 与上下文句。对“零手抄”不构成违规（引文逐字），但对“证据自足”是弱化。",
+   "remediation": "把 locator 扩到所在句（char span 覆盖整句），或在 resolution_check 里记录句级 quote。",
+   "affected_scope": "A16/A17/A18"
+  },
+  {
+   "id": "F5",
+   "severity": "info",
+   "likelihood": "n/a",
+   "blocking": false,
+   "title": "派生计数 distinct_referenced_paths=15 未能被审核口径复现（审核员口径 11）",
+   "evidence": {
+    "manifest_distinct_referenced_paths": 15,
+    "reviewer_backticked_paths": 10,
+    "reproduced": {
+     "body_image_links": "7/7",
+     "figure_references_total": "14/14"
+    }
+   },
+   "analysis": "图片类派生计数（7 图链接、14 处图引用）逐项复现；路径去重数因口径不同（是否计入模块点分名、目录 token、glob 形式）差 4，属定义差异，非错误。",
+   "remediation": "在 method_notes 中写明该计数的口径；不影响产物可用性。",
+   "affected_scope": "manifest.counts"
+  },
+  {
+   "id": "F6",
+   "severity": "info",
+   "likelihood": "certain",
+   "blocking": false,
+   "title": "A00 文档型 locator 的 span 覆盖全文而 quote 只是标题行（span≠quote）",
+   "evidence": {
+    "span": [
+     0,
+     7482
+    ],
+    "quote_len": 47,
+    "all_locators_entry_exact": true,
+    "detail": 1
+   },
+   "analysis": "method=document 的 locator 用全文 span 表示“登记的是整份文档”，identity 引文另置；其 all_locators[0] 的 0–47 精确对齐标题行。按逐字符口径（md[s:e]==quote）该条不成立，需靠 method 字段区分，审核时已单列，不计为缺陷。",
+   "remediation": "可选：method=document 时把 quote 设为整篇正文，或增设 identity_quote 字段。",
+   "affected_scope": "A00"
+  }
+ ],
+ "observations": [
+  {
+   "id": "O1-criteria-coverage",
+   "text": "判据 C1–C6 中只有 3 个（未测量的 C1/C2/C4）被登记为资产；C3/C5/C6 已测量出数值，未作资产登记",
+   "criteria_in_report": [
+    "C1_strong_efficiency",
+    "C2_weak_ratio",
+    "C3_parallel_vs_serial_l2",
+    "C4_comm_fraction",
+    "C5_iteration_reduction",
+    "C6_load_balance"
+   ],
+   "criteria_keys": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6"
+   ],
+   "registered_as_asset": [
+    "C1",
+    "C2",
+    "C4",
+    "MPIComm"
+   ],
+   "criteria_not_registered": [
+    "C3",
+    "C5",
+    "C6"
+   ],
+   "scope_declared_by_producer": [
+    "claim extraction (claims == [])"
+   ]
+  }
+ ],
+ "checks_not_run": [
+  {
+   "check": "复跑上游 tensorphysics.fem_parallel.verification 流水线",
+   "status": "not_run",
+   "reason": "审核对象是资产登记而非报告结论；且 P=16/P=32 需集群资源，属补测工序范围"
+  },
+  {
+   "check": "报告性能数字（S(P)/E(P)/iters/rel L2）的可信度重算",
+   "status": "not_run",
+   "reason": "本工序判语义保真：报告原文是登记的事实基准，不重算其物理量；数字重算归 05 综述/平台门"
+  },
+  {
+   "check": "cj308/cj313/cj314 工件（fetch）内容核验",
+   "status": "not_run",
+   "reason": "只查了队列终态（succeeded），未取回工件，故不对扩展点数值作任何断言"
+  },
+  {
+   "check": "生产者运行时刻的可信时间戳/签名",
+   "status": "not_run",
+   "reason": "工作树内无签名设施，仅有产物自身 generated_at 字段"
+  }
+ ],
+ "overstated_claims": [
+  {
+   "claim": "上游 verification.json C2_schema_pass=pass / 生产者叙述“draft-2020-12 校验 schemas/kf_result.v1.schema.json”",
+   "status": "true at emission, false under current schema",
+   "evidence": "F1：当前 schema additionalProperties=false 且 provenance 必需 source_uri"
+  },
+  {
+   "claim": "上游自检 9/9 checks pass 且 acceptance 6/6",
+   "status": "partially reproduced",
+   "evidence": "审核员 15 项独立复核 13 pass / 2 needs-fix / 0 fail；上游自检未覆盖探针文案自相矛盾（F2）与派生计数口径（F5）"
+  },
+  {
+   "claim": "报告⑤.9“集群算力未到位，P=16/P=32 没有任何集群数据”",
+   "status": "stale (report-time true, now false)",
+   "evidence": "F3：cj308/cj313/cj314 均 succeeded"
+  }
+ ],
+ "disposition": {
+  "decision": "needs-fix（非阻断：manifest 事实内容可用；阻断项仅信封 schema 与探针文案两处元数据）",
+  "required_fixes": [
+   "F1 重发信封（顶层 claims 移入 outputs；provenance 补 source_uri）",
+   "F2 探针 check 文案条件化 + 路径改仓库相对"
+  ],
+  "advisory": [
+   "F3 下游 03/05 不得把“无扩展点数据”写成事实；建议补测工序用 cj308/313/314 工件刷新",
+   "F4 locator 扩到句级",
+   "F5 记录派生计数口径",
+   "F6 document 型 locator 口径写清"
+  ],
+  "escalation": "无需升级"
+ },
+ "reviewer_repro_cmd": "python3 docs/kf/wp-11267-04/review_wp-11267-04.py && python3 docs/kf/wp-11267-04/build_review.py",
+ "generated_at": "2026-11-14T03:55:32+00:00",
+ "repo_head": "445efce0fb14750df98a995d4c0667c7519b55ee"
+}
