@@ -1,0 +1,2327 @@
+{
+  "manifest_version": "1.0",
+  "package_id": "wp-13272-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13272",
+  "lane": "C",
+  "generated_at": "2026-11-14T13:58:22.835582+00:00",
+  "producer": "kf-worker m20478 (TensorKnowledge) · scripts/wp13272_register_assets.py",
+  "source": {
+    "report_id": "13272",
+    "source_uri": "tensor://reports/13272",
+    "source_field": "markdown",
+    "source_hash": "sha256:75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90",
+    "hash_match": true,
+    "chars": 4537,
+    "bytes": 6829,
+    "lines": 106,
+    "title": "CII 规则内核三副本单源化与 regime 语义修复（m13764）",
+    "scenario_key": "green_navigation",
+    "mission_id": 13764,
+    "status": "published",
+    "retrieved_via": "GET http://127.0.0.1:8010/api/v1/tensor/reports/13272 (Bearer)",
+    "work_package_boundary": "report_id=13272 only; no other report read or written"
+  },
+  "assets": [
+    {
+      "asset_id": "r13272:document",
+      "asset_class": "report_document",
+      "label": "源报告 13272 的 markdown 全文（钉住字节）",
+      "token": "report_13272.md",
+      "locator": {
+        "source_field": "markdown",
+        "method": "document",
+        "start_char": 0,
+        "end_char": 4537,
+        "start_line": 1,
+        "end_line": 106,
+        "quote": "# CII 规则内核三副本单源化与 regime 语义修复（m13764）\n\n**锚点**：NEW（`KPI-QC-RECHECK` 已合并功能独立复核的子项；建议新条目\n`DEF-CII-SINGLE-SOURCE`，见文末）\n**证据等级**：数值层 REAL（纯代数，可独立标量复算）；法规系数层 WITHHELD（离线未回读规则原文；\n本次不动系数，仅修语义与副本一致性）\n\n## ① 案例介绍（问题背景）\n\nIMO 碳强度规则（MEPC.353(78) 参考线 / MEPC.338(76) 年度折减率 Z / MEPC.354(78) 评级）\n在本仓存在 **三份独立实现**：\n\n| 代号 | 位置 | Z 表口径 | 角色 |\n|---|---|---|---|\n| A | `backend/services/cii_required_value.py` | 分数 | 权威口径（显式 regime，m1829 建） |\n| B | `backend/api/green_shipping.py` | 分数 | 主 API 副本 |\n| C | `backend/modules/green_navigation_ice/mepc.py` | 百分比 | 冰区链副本 |\n\n复核靶子：**同一年份的 CII 要求值，三处是否给同一个数、同一套语义？**\n（同一规则三副本 = 单源纪律的直接违反对象，且三处都不是错值报错型，而是静默默认型。）\n\n## ② 怎么做的（方法）\n\n1. 写机器对账工具 `tools/cii_consistency_scan.py`：对 (年份 2019–2030) × 三实现，\n   逐点取 (z, required_value, regime, extrapolated, 异常)，判定是否一致，输出 JSON 基线。\n2. 先跑基线（`artifacts/cii_consistency_scan_before.json`）→ **12/12 年份不一致**。\n3. 定位根因（两条，均为静默默认）：\n   - **C1（真缺陷，仅 C）**：`mepc.z_factor` 用 `Z_FACTORS.get(year, 11.0)` 一次性兜底，\n     `year<2023` 也套 11% 折减 → 规则尚未生效的年份给出\"要求值\"，比 2019 参考线**低 11.0%**\n     （bulk carrier / 80000 DWT：3.7662 vs 4.2317 gCO2/(dwt·nm)）；\n   - **C2（仅 B/C）**：`year>2026` 静默沿用 11%，返回体无外推标记，下游无法区分\n     \"法规确定值\"与\"外推值\"。\n4. 修复（最小改动，语义层单源化）：\n   - `mepc.py`：Z 表由 A 派生（`Z_FACTORS = 100·A.CII_Z_FACTOR`），新增\n     `z_regime() / z_extrapolated() / required_cii_meta()`；`z_factor()` 对 <2023 返回 0.0\n     （= 参考线口径，且 regime 可判）；2023–2026 数值逐位不变；\n   - `green_shipping.py`：`_gn_required_cii()` 委派 A 的 `required_cii()`，保留原键\n     （`z_factor` 仍为分数），新增 `regime / z_extrapolated / required_value_is_reference / regime_note`；\n   - `green_navigation_ice/api.py`：`compliance` 与 `model_audit` 回显 regime 标记与\n     `dd_vector_basis`（dd 向量为通用单档，未做船型×容量档转录 → 机器可见的局限声明）；\n   - **不动**任何法规系数（a/c、Z 表值、dd 值），不据此提高证据等级。\n\n## ③ 计算结果（程序化注入，`artifacts/cii_consistency_scan_*.json`）\n\nbulk carrier, Capacity = 80000 DWT：\n\n| year | regime | z（分数） | 修复前 B | 修复前 C | 修复后 A=B=C | 一致性 |\n|---|---|---|---|---|---|---|\n| 2019–2022 | not_yet_applicable | 0.00 | 4.2317 (无标记) | **3.7662 (−11.0%)** | 4.2317 | 前 ✗ / 后 ✓ |\n| 2023 | determined | 0.05 | 4.0201 | 4.0201 | 4.0201 | 前 ✗(regime 缺) / 后 ✓ |\n| 2024 | determined | 0.07 | 3.9355 | 3.9355 | 3.9355 | 同上 |\n| 2025 | determined | 0.09 | 3.8508 | 3.8508 | 3.8508 | 同上 |\n| 2026 | determined | 0.11 | 3.7662 | 3.7662 | 3.7662 | 同上 |\n| 2027–2030 | extrapolated | 0.11 | 3.7662 (无标记) | 3.7662 (无标记) | 3.7662 (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |\n\n对账结论：修复前 `divergent_years = 12/12`，修复后 `0/12`\n（`artifacts/cii_consistency_scan_before.json` / `_after.json`）。\n\n## ④ 结果图\n\n`artifacts/m13764_cii_consistency.png`：左右两栏为修复前/后三实现的 required CII–year 曲线，\n灰色带 = 规则未适用年份（2019–2022）。修复前 C 曲线在灰带内整体低于 A/B 11.0%（缺陷可见）；\n修复后三线完全重合。\n\n## ⑤ 注意点 / 局限\n\n- **未动的部分**：法规系数（a/c、Z 表、dd 向量）均为离线转录，证据等级仍 WITHHELD；\n  本次修复**不改变**任何系数的可信度，只消除\"同一规则三个答案\"与\"静默默认\"。\n- **评级（A–E）机制已验，法规值未验**：`dd_vector` 只有一档通用值 (0.86, 0.94, 1.06, 1.18)，\n  未做 MEPC.354(78) G4 的船型×容量档转录。因此只断言分区完备/单调/端点归属（机制层），\n  不断言逐船型评级正确；`DD_VECTOR_BASIS` 与 `/reference`、`model_audit` 均显式回显该局限。\n  `green_shipping` 的 L4 层仍保持 NOT_SUPPORTED，未因本次修复被提升（不制造假能力）。\n- **行为变更（向后兼容性）**：`mepc.required_cii(ref, 2019)` 由 3.7662 变为 4.2317（修正值）；\n  2023–2026 逐位不变，故 pathway / monte_carlo / pipeline 现有链路（年份 ≥2023）数值不受影响\n  （冰区模块 47 条测试、green_shipping 37 条测试全绿）。\n- 2027+ 仍返回 11%（工程保守取最后已通过值），但现在**必须**带 `z_extrapolated=True`，\n  调用方不能\"只看数字\"当合规结论。\n\n## ⑥ 误差判定\n\n| 关键量 | 基准 | 修复前误差 | 修复后误差 | <3%? |\n|---|---|---|---|---|\n| 2019–2022 要求值（C 实现） | 2019 参考线 `a·Cap^(−c)` = 4.2317 | **−11.00%** | 0.00%（逐位相等） | 前否 / **后是** |\n| 三实现 z 值（2019–2030，12 年 × 4 船型 × 3 容量） | A 单源 | 不一致（B/C 缺 regime，C 4 年错值） | 相对差 ≤1e-15 | **后是** |\n| 三实现 required_value（同上网格） | A 单源 | 同上 | 相对差 ≤1e-15 | **后是** |\n| 评级机制（边界分区/单调/端点） | 解析定义 dd_i·req | — | 153 条断言全通过 | 不适用（机制层） |\n\n## 复现\n\n```bash\npython3 tools/cii_consistency_scan.py --out artifacts/cii_consistency_scan_after.json\npython3 -m pytest tests/test_cii_single_source_consistency.py -q          # 153 passed\npython3 -m pytest backend/modules/green_navigation_ice/tests -q           # 47 passed\npython3 -m pytest backend/tests/test_green_shipping.py \\\n                 backend/tests/test_green_efficiency_m1895.py -q          # 37 passed\npython3 -m pytest tests/test_cii_regime_m1829.py -q                       # 70 passed\n```\n\n## 建议新总账条目\n\n- `slug=DEF-CII-SINGLE-SOURCE`，域：绿色航行（`ship-performance-platform`）\n- 验收：三实现 (2019–2035 × {bulk,tanker,container,gas} × {15k,80k,200k}) 的\n  z/required_value/regime 逐点相对差 ≤1e-12 且 `divergent_years == 0`（本单已达：\n  12/12 → 0/12，153 条回归断言）；\n- 后续增量（未做）：MEPC.354(78) G4 船型×容量档 dd 向量转录 → 才能把\n  `green_shipping` L4 评级从 NOT_SUPPORTED 提升。",
+        "quote_sha256": "75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90",
+        "unique": true,
+        "occurrences": 1,
+        "context": "# CII 规则内核三副本单源化与 regime 语义修复（m13764）\n\n**锚点**：NEW（`KPI-QC-RECHECK` 已合并功能独立复核的子项；"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "pinned bytes",
+        "checks": [
+          {
+            "check": "byte_identical_to_served_markdown",
+            "result": "pass (scripts/kf_fetch_13272.py --check)"
+          },
+          {
+            "check": "sha256",
+            "result": "75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90"
+          },
+          {
+            "check": "chars/bytes_utf8",
+            "result": "4537 / 6829"
+          }
+        ]
+      },
+      "note": "任务边界：只读 report_id=13272；本工序不抽取、不复核报告结论"
+    },
+    {
+      "asset_id": "r13272:preamble",
+      "asset_class": "report_section",
+      "label": "抬头（标题 + 锚点 + 分层证据等级声明）",
+      "token": "## 前正文",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 0,
+        "end_char": 192,
+        "start_line": 1,
+        "end_line": 7,
+        "quote": "# CII 规则内核三副本单源化与 regime 语义修复（m13764）\n\n**锚点**：NEW（`KPI-QC-RECHECK` 已合并功能独立复核的子项；建议新条目\n`DEF-CII-SINGLE-SOURCE`，见文末）\n**证据等级**：数值层 REAL（纯代数，可独立标量复算）；法规系数层 WITHHELD（离线未回读规则原文；\n本次不动系数，仅修语义与副本一致性）\n\n",
+        "quote_sha256": "9836870fb68f00d50c152b81f83ab89382b64aa112d67eae6cc06244359f9ce2",
+        "unique": true,
+        "occurrences": 1,
+        "context": "# CII 规则内核三副本单源化与 regime 语义修复（m13764）\n\n**锚点**：NEW（`KPI-QC-RECHECK` 已合并功能独立复核的子项；建议新条目\n`DEF-CII-SINGLE-SOURCE`，见文末）\n**证据等"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "evidence_level_declared",
+            "result": "数值层 REAL / 法规系数层 WITHHELD（报告自述，仅登记）"
+          }
+        ]
+      },
+      "note": "抬头已声明证据等级分层；登记不等于接受该判断"
+    },
+    {
+      "asset_id": "r13272:section:case",
+      "asset_class": "report_section",
+      "label": "① 案例介绍（三副本 A/B/C 与复核靶子）",
+      "token": "## ① 案例介绍（问题背景）",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 192,
+        "end_char": 632,
+        "start_line": 8,
+        "end_line": 21,
+        "quote": "## ① 案例介绍（问题背景）\n\nIMO 碳强度规则（MEPC.353(78) 参考线 / MEPC.338(76) 年度折减率 Z / MEPC.354(78) 评级）\n在本仓存在 **三份独立实现**：\n\n| 代号 | 位置 | Z 表口径 | 角色 |\n|---|---|---|---|\n| A | `backend/services/cii_required_value.py` | 分数 | 权威口径（显式 regime，m1829 建） |\n| B | `backend/api/green_shipping.py` | 分数 | 主 API 副本 |\n| C | `backend/modules/green_navigation_ice/mepc.py` | 百分比 | 冰区链副本 |\n\n复核靶子：**同一年份的 CII 要求值，三处是否给同一个数、同一套语义？**\n（同一规则三副本 = 单源纪律的直接违反对象，且三处都不是错值报错型，而是静默默认型。）\n\n",
+        "quote_sha256": "de4cca6b4651adaf778d32a51525ce952b0f53132bdd182ad1b9e6d789e07af1",
+        "unique": true,
+        "occurrences": 1,
+        "context": "WITHHELD（离线未回读规则原文；\n本次不动系数，仅修语义与副本一致性）\n\n## ① 案例介绍（问题背景）\n\nIMO 碳强度规则（MEPC.353(78) 参考线 / MEPC.338(76) 年度折减率 Z / MEPC.354(78) 评级）\n在本仓存在 **三份独立实现**：\n\n| 代号 | 位置 | Z 表口径 | 角色 |\n|---|---|---|---|\n| A | `backend/services/cii_required_value.py` | 分数 | 权威口径（显式 regime，m1829 建） |\n| B | `backend/api/green_shipping.py` | 分数 | 主 API 副本 |\n| C | `backend/modules/green_navigation_ice/mepc.py` | 百分比 | 冰区链副本 |\n\n复核靶子：**同一年份的 CII 要求值，三处是否给同一个数、同一套语义？**\n（同一规则三副本 = 单源纪律的直接违反对象，且三处都不是错值报错型，而是静默默认型。）\n\n## ② 怎么做的（方法）\n\n1. 写机器对账工具 `tools/cii_con"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "heading_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "span_inside_document",
+            "result": "192..632 of 4537"
+          }
+        ]
+      },
+      "note": "H2 节；span 从节标题行到下一 H2 之前"
+    },
+    {
+      "asset_id": "r13272:section:method",
+      "asset_class": "report_section",
+      "label": "② 怎么做的（机器对账工具 → 基线 → 根因 C1/C2 → 最小修复）",
+      "token": "## ② 怎么做的（方法）",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 632,
+        "end_char": 1728,
+        "start_line": 22,
+        "end_line": 42,
+        "quote": "## ② 怎么做的（方法）\n\n1. 写机器对账工具 `tools/cii_consistency_scan.py`：对 (年份 2019–2030) × 三实现，\n   逐点取 (z, required_value, regime, extrapolated, 异常)，判定是否一致，输出 JSON 基线。\n2. 先跑基线（`artifacts/cii_consistency_scan_before.json`）→ **12/12 年份不一致**。\n3. 定位根因（两条，均为静默默认）：\n   - **C1（真缺陷，仅 C）**：`mepc.z_factor` 用 `Z_FACTORS.get(year, 11.0)` 一次性兜底，\n     `year<2023` 也套 11% 折减 → 规则尚未生效的年份给出\"要求值\"，比 2019 参考线**低 11.0%**\n     （bulk carrier / 80000 DWT：3.7662 vs 4.2317 gCO2/(dwt·nm)）；\n   - **C2（仅 B/C）**：`year>2026` 静默沿用 11%，返回体无外推标记，下游无法区分\n     \"法规确定值\"与\"外推值\"。\n4. 修复（最小改动，语义层单源化）：\n   - `mepc.py`：Z 表由 A 派生（`Z_FACTORS = 100·A.CII_Z_FACTOR`），新增\n     `z_regime() / z_extrapolated() / required_cii_meta()`；`z_factor()` 对 <2023 返回 0.0\n     （= 参考线口径，且 regime 可判）；2023–2026 数值逐位不变；\n   - `green_shipping.py`：`_gn_required_cii()` 委派 A 的 `required_cii()`，保留原键\n     （`z_factor` 仍为分数），新增 `regime / z_extrapolated / required_value_is_reference / regime_note`；\n   - `green_navigation_ice/api.py`：`compliance` 与 `model_audit` 回显 regime 标记与\n     `dd_vector_basis`（dd 向量为通用单档，未做船型×容量档转录 → 机器可见的局限声明）；\n   - **不动**任何法规系数（a/c、Z 表值、dd 值），不据此提高证据等级。\n\n",
+        "quote_sha256": "03c4d5d07367d19e1af7cb5fd3310d38de18780f70ac06e4ebc2a30b6d279614",
+        "unique": true,
+        "occurrences": 1,
+        "context": "副本 = 单源纪律的直接违反对象，且三处都不是错值报错型，而是静默默认型。）\n\n## ② 怎么做的（方法）\n\n1. 写机器对账工具 `tools/cii_consistency_scan.py`：对 (年份 2019–2030) × 三实现，\n   逐点取 (z, required_value, regime, extrapolated, 异常)，判定是否一致，输出 JSON 基线。\n2. 先跑基线（`artifacts/cii_consistency_scan_before.json`）→ **12/12 年份不一致**。\n3. 定位根因（两条，均为静默默认）：\n   - **C1（真缺陷，仅 C）**：`mepc.z_factor` 用 `Z_FACTORS.get(year, 11.0)` 一次性兜底，\n     `year<2023` 也套 11% 折减 → 规则尚未生效的年份给出\"要求值\"，比 2019 参考线**低 11.0%**\n     （bulk carrier / 80000 DWT：3.7662 vs 4.2317 gCO2/(dwt·nm)）；\n   - **C2（仅 B/C）**：`year>2026` 静默沿用 11%，返回体无外推标记，下游无法区分\n     \"法规确定值\"与\"外推值\"。\n4. 修复（最小改动，语义层单源化）：\n   - `mepc.py`：Z 表由 A 派生（`Z_FACTORS = 100·A.CII_Z_FACTOR`），新增\n     `z_regime() / z_extrapolated() / required_cii_meta()`；`z_factor()` 对 <2023 返回 0.0\n     （= 参考线口径，且 regime 可判）；2023–2026 数值逐位不变；\n   - `green_shipping.py`：`_gn_required_cii()` 委派 A 的 `required_cii()`，保留原键\n     （`z_factor` 仍为分数），新增 `regime / z_extrapolated / required_value_is_reference / regime_note`；\n   - `green_navigation_ice/api.py`：`compliance` 与 `model_audit` 回显 regime 标记与\n     `dd_vector_basis`（dd 向量为通用单档，未做船型×容量档转录 → 机器可见的局限声明）；\n   - **不动**任何法规系数（a/c、Z 表值、dd 值），不据此提高证据等级。\n\n## ③ 计算结果（程序化注入，`artifacts/cii_consisten"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "heading_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "span_inside_document",
+            "result": "632..1728 of 4537"
+          }
+        ]
+      },
+      "note": "H2 节；span 从节标题行到下一 H2 之前"
+    },
+    {
+      "asset_id": "r13272:section:results",
+      "asset_class": "report_section",
+      "label": "③ 计算结果（2019–2030 三实现 required CII 与 regime 一致性表）",
+      "token": "## ③ 计算结果（程序化注入，`artifacts/cii_consistency_scan_*.json`）",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1728,
+        "end_char": 2497,
+        "start_line": 43,
+        "end_line": 58,
+        "quote": "## ③ 计算结果（程序化注入，`artifacts/cii_consistency_scan_*.json`）\n\nbulk carrier, Capacity = 80000 DWT：\n\n| year | regime | z（分数） | 修复前 B | 修复前 C | 修复后 A=B=C | 一致性 |\n|---|---|---|---|---|---|---|\n| 2019–2022 | not_yet_applicable | 0.00 | 4.2317 (无标记) | **3.7662 (−11.0%)** | 4.2317 | 前 ✗ / 后 ✓ |\n| 2023 | determined | 0.05 | 4.0201 | 4.0201 | 4.0201 | 前 ✗(regime 缺) / 后 ✓ |\n| 2024 | determined | 0.07 | 3.9355 | 3.9355 | 3.9355 | 同上 |\n| 2025 | determined | 0.09 | 3.8508 | 3.8508 | 3.8508 | 同上 |\n| 2026 | determined | 0.11 | 3.7662 | 3.7662 | 3.7662 | 同上 |\n| 2027–2030 | extrapolated | 0.11 | 3.7662 (无标记) | 3.7662 (无标记) | 3.7662 (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |\n\n对账结论：修复前 `divergent_years = 12/12`，修复后 `0/12`\n（`artifacts/cii_consistency_scan_before.json` / `_after.json`）。\n\n",
+        "quote_sha256": "f6e42395937c5211d1ae4ade7cbb4952eef9994f9b97242d089bced13be0da2f",
+        "unique": true,
+        "occurrences": 1,
+        "context": "**不动**任何法规系数（a/c、Z 表值、dd 值），不据此提高证据等级。\n\n## ③ 计算结果（程序化注入，`artifacts/cii_consistency_scan_*.json`）\n\nbulk carrier, Capacity = 80000 DWT：\n\n| year | regime | z（分数） | 修复前 B | 修复前 C | 修复后 A=B=C | 一致性 |\n|---|---|---|---|---|---|---|\n| 2019–2022 | not_yet_applicable | 0.00 | 4.2317 (无标记) | **3.7662 (−11.0%)** | 4.2317 | 前 ✗ / 后 ✓ |\n| 2023 | determined | 0.05 | 4.0201 | 4.0201 | 4.0201 | 前 ✗(regime 缺) / 后 ✓ |\n| 2024 | determined | 0.07 | 3.9355 | 3.9355 | 3.9355 | 同上 |\n| 2025 | determined | 0.09 | 3.8508 | 3.8508 | 3.8508 | 同上 |\n| 2026 | determined | 0.11 | 3.7662 | 3.7662 | 3.7662 | 同上 |\n| 2027–2030 | extrapolated | 0.11 | 3.7662 (无标记) | 3.7662 (无标记) | 3.7662 (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |\n\n对账结论：修复前 `divergent_years = 12/12`，修复后 `0/12`\n（`artifacts/cii_consistency_scan_before.json` / `_after.json`）。\n\n## ④ 结果图\n\n`artifacts/m13764_cii_consiste"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "heading_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "span_inside_document",
+            "result": "1728..2497 of 4537"
+          }
+        ]
+      },
+      "note": "H2 节；span 从节标题行到下一 H2 之前"
+    },
+    {
+      "asset_id": "r13272:section:figures",
+      "asset_class": "report_section",
+      "label": "④ 结果图（修复前/后三实现曲线）",
+      "token": "## ④ 结果图",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2497,
+        "end_char": 2654,
+        "start_line": 59,
+        "end_line": 64,
+        "quote": "## ④ 结果图\n\n`artifacts/m13764_cii_consistency.png`：左右两栏为修复前/后三实现的 required CII–year 曲线，\n灰色带 = 规则未适用年份（2019–2022）。修复前 C 曲线在灰带内整体低于 A/B 11.0%（缺陷可见）；\n修复后三线完全重合。\n\n",
+        "quote_sha256": "ae5c4ce3072b5bf13fe4cc0caff4d76be3d2e5efb2b9a976c3d2d61ba86da0b7",
+        "unique": true,
+        "occurrences": 1,
+        "context": "cy_scan_before.json` / `_after.json`）。\n\n## ④ 结果图\n\n`artifacts/m13764_cii_consistency.png`：左右两栏为修复前/后三实现的 required CII–year 曲线，\n灰色带 = 规则未适用年份（2019–2022）。修复前 C 曲线在灰带内整体低于 A/B 11.0%（缺陷可见）；\n修复后三线完全重合。\n\n## ⑤ 注意点 / 局限\n\n- **未动的部分**：法规系数（a/c、Z 表、"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "heading_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "span_inside_document",
+            "result": "2497..2654 of 4537"
+          }
+        ]
+      },
+      "note": "H2 节；span 从节标题行到下一 H2 之前"
+    },
+    {
+      "asset_id": "r13272:section:limits",
+      "asset_class": "report_section",
+      "label": "⑤ 注意点 / 局限（法规系数层未动、dd 向量单档、向后兼容）",
+      "token": "## ⑤ 注意点 / 局限",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2654,
+        "end_char": 3296,
+        "start_line": 65,
+        "end_line": 78,
+        "quote": "## ⑤ 注意点 / 局限\n\n- **未动的部分**：法规系数（a/c、Z 表、dd 向量）均为离线转录，证据等级仍 WITHHELD；\n  本次修复**不改变**任何系数的可信度，只消除\"同一规则三个答案\"与\"静默默认\"。\n- **评级（A–E）机制已验，法规值未验**：`dd_vector` 只有一档通用值 (0.86, 0.94, 1.06, 1.18)，\n  未做 MEPC.354(78) G4 的船型×容量档转录。因此只断言分区完备/单调/端点归属（机制层），\n  不断言逐船型评级正确；`DD_VECTOR_BASIS` 与 `/reference`、`model_audit` 均显式回显该局限。\n  `green_shipping` 的 L4 层仍保持 NOT_SUPPORTED，未因本次修复被提升（不制造假能力）。\n- **行为变更（向后兼容性）**：`mepc.required_cii(ref, 2019)` 由 3.7662 变为 4.2317（修正值）；\n  2023–2026 逐位不变，故 pathway / monte_carlo / pipeline 现有链路（年份 ≥2023）数值不受影响\n  （冰区模块 47 条测试、green_shipping 37 条测试全绿）。\n- 2027+ 仍返回 11%（工程保守取最后已通过值），但现在**必须**带 `z_extrapolated=True`，\n  调用方不能\"只看数字\"当合规结论。\n\n",
+        "quote_sha256": "ac676b070dcaeafe7656ce00591b7ca53049408b25e8064a4161524a2449fb65",
+        "unique": true,
+        "occurrences": 1,
+        "context": "曲线在灰带内整体低于 A/B 11.0%（缺陷可见）；\n修复后三线完全重合。\n\n## ⑤ 注意点 / 局限\n\n- **未动的部分**：法规系数（a/c、Z 表、dd 向量）均为离线转录，证据等级仍 WITHHELD；\n  本次修复**不改变**任何系数的可信度，只消除\"同一规则三个答案\"与\"静默默认\"。\n- **评级（A–E）机制已验，法规值未验**：`dd_vector` 只有一档通用值 (0.86, 0.94, 1.06, 1.18)，\n  未做 MEPC.354(78) G4 的船型×容量档转录。因此只断言分区完备/单调/端点归属（机制层），\n  不断言逐船型评级正确；`DD_VECTOR_BASIS` 与 `/reference`、`model_audit` 均显式回显该局限。\n  `green_shipping` 的 L4 层仍保持 NOT_SUPPORTED，未因本次修复被提升（不制造假能力）。\n- **行为变更（向后兼容性）**：`mepc.required_cii(ref, 2019)` 由 3.7662 变为 4.2317（修正值）；\n  2023–2026 逐位不变，故 pathway / monte_carlo / pipeline 现有链路（年份 ≥2023）数值不受影响\n  （冰区模块 47 条测试、green_shipping 37 条测试全绿）。\n- 2027+ 仍返回 11%（工程保守取最后已通过值），但现在**必须**带 `z_extrapolated=True`，\n  调用方不能\"只看数字\"当合规结论。\n\n## ⑥ 误差判定\n\n| 关键量 | 基准 | 修复前误差 | 修复后误差 | "
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "heading_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "span_inside_document",
+            "result": "2654..3296 of 4537"
+          }
+        ]
+      },
+      "note": "H2 节；span 从节标题行到下一 H2 之前"
+    },
+    {
+      "asset_id": "r13272:section:error_judgement",
+      "asset_class": "report_section",
+      "label": "⑥ 误差判定（−11.00% → 0.00%；相对差 ≤1e-15）",
+      "token": "## ⑥ 误差判定",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3296,
+        "end_char": 3692,
+        "start_line": 79,
+        "end_line": 87,
+        "quote": "## ⑥ 误差判定\n\n| 关键量 | 基准 | 修复前误差 | 修复后误差 | <3%? |\n|---|---|---|---|---|\n| 2019–2022 要求值（C 实现） | 2019 参考线 `a·Cap^(−c)` = 4.2317 | **−11.00%** | 0.00%（逐位相等） | 前否 / **后是** |\n| 三实现 z 值（2019–2030，12 年 × 4 船型 × 3 容量） | A 单源 | 不一致（B/C 缺 regime，C 4 年错值） | 相对差 ≤1e-15 | **后是** |\n| 三实现 required_value（同上网格） | A 单源 | 同上 | 相对差 ≤1e-15 | **后是** |\n| 评级机制（边界分区/单调/端点） | 解析定义 dd_i·req | — | 153 条断言全通过 | 不适用（机制层） |\n\n",
+        "quote_sha256": "7ad2a5f4adb1bd2680cc472e8f9de838c23da35a7dd47c62dae3520a0e361e91",
+        "unique": true,
+        "occurrences": 1,
+        "context": "xtrapolated=True`，\n  调用方不能\"只看数字\"当合规结论。\n\n## ⑥ 误差判定\n\n| 关键量 | 基准 | 修复前误差 | 修复后误差 | <3%? |\n|---|---|---|---|---|\n| 2019–2022 要求值（C 实现） | 2019 参考线 `a·Cap^(−c)` = 4.2317 | **−11.00%** | 0.00%（逐位相等） | 前否 / **后是** |\n| 三实现 z 值（2019–2030，12 年 × 4 船型 × 3 容量） | A 单源 | 不一致（B/C 缺 regime，C 4 年错值） | 相对差 ≤1e-15 | **后是** |\n| 三实现 required_value（同上网格） | A 单源 | 同上 | 相对差 ≤1e-15 | **后是** |\n| 评级机制（边界分区/单调/端点） | 解析定义 dd_i·req | — | 153 条断言全通过 | 不适用（机制层） |\n\n## 复现\n\n```bash\npython3 tools/cii_consist"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "heading_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "span_inside_document",
+            "result": "3296..3692 of 4537"
+          }
+        ]
+      },
+      "note": "H2 节；span 从节标题行到下一 H2 之前"
+    },
+    {
+      "asset_id": "r13272:section:reproduce",
+      "asset_class": "report_section",
+      "label": "复现（repro 命令块所在节）",
+      "token": "## 复现",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3692,
+        "end_char": 4200,
+        "start_line": 88,
+        "end_line": 98,
+        "quote": "## 复现\n\n```bash\npython3 tools/cii_consistency_scan.py --out artifacts/cii_consistency_scan_after.json\npython3 -m pytest tests/test_cii_single_source_consistency.py -q          # 153 passed\npython3 -m pytest backend/modules/green_navigation_ice/tests -q           # 47 passed\npython3 -m pytest backend/tests/test_green_shipping.py \\\n                 backend/tests/test_green_efficiency_m1895.py -q          # 37 passed\npython3 -m pytest tests/test_cii_regime_m1829.py -q                       # 70 passed\n```\n\n",
+        "quote_sha256": "1617997bbcdcad7d1dc3f2b3b781b5d33026565835cfc57a9fdf684c69b78cfd",
+        "unique": true,
+        "occurrences": 1,
+        "context": "dd_i·req | — | 153 条断言全通过 | 不适用（机制层） |\n\n## 复现\n\n```bash\npython3 tools/cii_consistency_scan.py --out artifacts/cii_consistency_scan_after.json\npython3 -m pytest tests/test_cii_single_source_consistency.py -q          # 153 passed\npython3 -m pytest backend/modules/green_navigation_ice/tests -q           # 47 passed\npython3 -m pytest backend/tests/test_green_shipping.py \\\n                 backend/tests/test_green_efficiency_m1895.py -q          # 37 passed\npython3 -m pytest tests/test_cii_regime_m1829.py -q                       # 70 passed\n```\n\n## 建议新总账条目\n\n- `slug=DEF-CII-SINGLE-SOURC"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "heading_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "span_inside_document",
+            "result": "3692..4200 of 4537"
+          }
+        ]
+      },
+      "note": "H2 节；span 从节标题行到下一 H2 之前"
+    },
+    {
+      "asset_id": "r13272:section:ledger",
+      "asset_class": "report_section",
+      "label": "建议新总账条目（DEF-CII-SINGLE-SOURCE 验收条件与后续增量）",
+      "token": "## 建议新总账条目",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 4200,
+        "end_char": 4537,
+        "start_line": 99,
+        "end_line": 106,
+        "quote": "## 建议新总账条目\n\n- `slug=DEF-CII-SINGLE-SOURCE`，域：绿色航行（`ship-performance-platform`）\n- 验收：三实现 (2019–2035 × {bulk,tanker,container,gas} × {15k,80k,200k}) 的\n  z/required_value/regime 逐点相对差 ≤1e-12 且 `divergent_years == 0`（本单已达：\n  12/12 → 0/12，153 条回归断言）；\n- 后续增量（未做）：MEPC.354(78) G4 船型×容量档 dd 向量转录 → 才能把\n  `green_shipping` L4 评级从 NOT_SUPPORTED 提升。",
+        "quote_sha256": "2e2cd773008f678210137dd8917f747e56124530dea0c675a09c630adfa14d37",
+        "unique": true,
+        "occurrences": 1,
+        "context": "                       # 70 passed\n```\n\n## 建议新总账条目\n\n- `slug=DEF-CII-SINGLE-SOURCE`，域：绿色航行（`ship-performance-platform`）\n- 验收：三实现 (2019–2035 × {bulk,tanker,container,gas} × {15k,80k,200k}) 的\n  z/required_value/regime 逐点相对差 ≤1e-12 且 `divergent_years == 0`（本单已达：\n  12/12 → 0/12，153 条回归断言）；\n- 后续增量（未做）：MEPC.354(78) G4 船型×容量档 dd 向量转录 → 才能把\n  `green_shipping` L4 评级从 NOT_SUPPORTED 提升。"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "heading_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "span_inside_document",
+            "result": "4200..4537 of 4537"
+          }
+        ]
+      },
+      "note": "H2 节；span 从节标题行到下一 H2 之前"
+    },
+    {
+      "asset_id": "r13272:table:1",
+      "asset_class": "report_table",
+      "label": "表格 1（3 数据行 × 4 列，位于 §case）",
+      "token": "| 代号 | 位置 | Z 表口径 | 角色 |",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 297,
+        "end_char": 545,
+        "start_line": 13,
+        "end_line": 17,
+        "quote": "| 代号 | 位置 | Z 表口径 | 角色 |\n|---|---|---|---|\n| A | `backend/services/cii_required_value.py` | 分数 | 权威口径（显式 regime，m1829 建） |\n| B | `backend/api/green_shipping.py` | 分数 | 主 API 副本 |\n| C | `backend/modules/green_navigation_ice/mepc.py` | 百分比 | 冰区链副本 |\n",
+        "quote_sha256": "fcae3a030d1fd9bbd6b4eb73ea7edf8be267718c0b9b739654bfccc664b09b3f",
+        "unique": true,
+        "occurrences": 1,
+        "context": "Z / MEPC.354(78) 评级）\n在本仓存在 **三份独立实现**：\n\n| 代号 | 位置 | Z 表口径 | 角色 |\n|---|---|---|---|\n| A | `backend/services/cii_required_value.py` | 分数 | 权威口径（显式 regime，m1829 建） |\n| B | `backend/api/green_shipping.py` | 分数 | 主 API 副本 |\n| C | `backend/modules/green_navigation_ice/mepc.py` | 百分比 | 冰区链副本 |\n\n复核靶子：**同一年份的 CII 要求值，三处是否给同一个数、同一套语义？**"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "shape",
+            "result": "3 data rows x 4 cols"
+          },
+          {
+            "check": "has_separator_row",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "只登记表位置与形状；单元格内容不在 01 工序抽取（抽取属 03）"
+    },
+    {
+      "asset_id": "r13272:table:2",
+      "asset_class": "report_table",
+      "label": "表格 2（6 数据行 × 7 列，位于 §results）",
+      "token": "| year | regime | z（分数） | 修复前 B | 修复前 C | 修复后 A=B=C | 一致性 |",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1823,
+        "end_char": 2385,
+        "start_line": 47,
+        "end_line": 54,
+        "quote": "| year | regime | z（分数） | 修复前 B | 修复前 C | 修复后 A=B=C | 一致性 |\n|---|---|---|---|---|---|---|\n| 2019–2022 | not_yet_applicable | 0.00 | 4.2317 (无标记) | **3.7662 (−11.0%)** | 4.2317 | 前 ✗ / 后 ✓ |\n| 2023 | determined | 0.05 | 4.0201 | 4.0201 | 4.0201 | 前 ✗(regime 缺) / 后 ✓ |\n| 2024 | determined | 0.07 | 3.9355 | 3.9355 | 3.9355 | 同上 |\n| 2025 | determined | 0.09 | 3.8508 | 3.8508 | 3.8508 | 同上 |\n| 2026 | determined | 0.11 | 3.7662 | 3.7662 | 3.7662 | 同上 |\n| 2027–2030 | extrapolated | 0.11 | 3.7662 (无标记) | 3.7662 (无标记) | 3.7662 (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |\n",
+        "quote_sha256": "4d9ddfba97ac57f051ee6d8d033de58607d42a4f80b83107cc1874da049595b4",
+        "unique": true,
+        "occurrences": 1,
+        "context": "）\n\nbulk carrier, Capacity = 80000 DWT：\n\n| year | regime | z（分数） | 修复前 B | 修复前 C | 修复后 A=B=C | 一致性 |\n|---|---|---|---|---|---|---|\n| 2019–2022 | not_yet_applicable | 0.00 | 4.2317 (无标记) | **3.7662 (−11.0%)** | 4.2317 | 前 ✗ / 后 ✓ |\n| 2023 | determined | 0.05 | 4.0201 | 4.0201 | 4.0201 | 前 ✗(regime 缺) / 后 ✓ |\n| 2024 | determined | 0.07 | 3.9355 | 3.9355 | 3.9355 | 同上 |\n| 2025 | determined | 0.09 | 3.8508 | 3.8508 | 3.8508 | 同上 |\n| 2026 | determined | 0.11 | 3.7662 | 3.7662 | 3.7662 | 同上 |\n| 2027–2030 | extrapolated | 0.11 | 3.7662 (无标记) | 3.7662 (无标记) | 3.7662 (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |\n\n对账结论：修复前 `divergent_years = 12/12`，修复后 "
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "shape",
+            "result": "6 data rows x 7 cols"
+          },
+          {
+            "check": "has_separator_row",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "只登记表位置与形状；单元格内容不在 01 工序抽取（抽取属 03）"
+    },
+    {
+      "asset_id": "r13272:table:3",
+      "asset_class": "report_table",
+      "label": "表格 3（4 数据行 × 5 列，位于 §error_judgement）",
+      "token": "| 关键量 | 基准 | 修复前误差 | 修复后误差 | <3%? |",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3307,
+        "end_char": 3691,
+        "start_line": 81,
+        "end_line": 86,
+        "quote": "| 关键量 | 基准 | 修复前误差 | 修复后误差 | <3%? |\n|---|---|---|---|---|\n| 2019–2022 要求值（C 实现） | 2019 参考线 `a·Cap^(−c)` = 4.2317 | **−11.00%** | 0.00%（逐位相等） | 前否 / **后是** |\n| 三实现 z 值（2019–2030，12 年 × 4 船型 × 3 容量） | A 单源 | 不一致（B/C 缺 regime，C 4 年错值） | 相对差 ≤1e-15 | **后是** |\n| 三实现 required_value（同上网格） | A 单源 | 同上 | 相对差 ≤1e-15 | **后是** |\n| 评级机制（边界分区/单调/端点） | 解析定义 dd_i·req | — | 153 条断言全通过 | 不适用（机制层） |\n",
+        "quote_sha256": "550fd8433f6c165d063819f36bda2738b5015991b58e0c612c012ec8a9679e5e",
+        "unique": true,
+        "occurrences": 1,
+        "context": "=True`，\n  调用方不能\"只看数字\"当合规结论。\n\n## ⑥ 误差判定\n\n| 关键量 | 基准 | 修复前误差 | 修复后误差 | <3%? |\n|---|---|---|---|---|\n| 2019–2022 要求值（C 实现） | 2019 参考线 `a·Cap^(−c)` = 4.2317 | **−11.00%** | 0.00%（逐位相等） | 前否 / **后是** |\n| 三实现 z 值（2019–2030，12 年 × 4 船型 × 3 容量） | A 单源 | 不一致（B/C 缺 regime，C 4 年错值） | 相对差 ≤1e-15 | **后是** |\n| 三实现 required_value（同上网格） | A 单源 | 同上 | 相对差 ≤1e-15 | **后是** |\n| 评级机制（边界分区/单调/端点） | 解析定义 dd_i·req | — | 153 条断言全通过 | 不适用（机制层） |\n\n## 复现\n\n```bash\npython3 tools/cii_consis"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "shape",
+            "result": "4 data rows x 5 cols"
+          },
+          {
+            "check": "has_separator_row",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "只登记表位置与形状；单元格内容不在 01 工序抽取（抽取属 03）"
+    },
+    {
+      "asset_id": "r13272:repro_block:1",
+      "asset_class": "repro_command_block",
+      "label": "复现命令块 1（bash，6 条命令）",
+      "token": "```bash",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3699,
+        "end_char": 4198,
+        "start_line": 90,
+        "end_line": 97,
+        "quote": "```bash\npython3 tools/cii_consistency_scan.py --out artifacts/cii_consistency_scan_after.json\npython3 -m pytest tests/test_cii_single_source_consistency.py -q          # 153 passed\npython3 -m pytest backend/modules/green_navigation_ice/tests -q           # 47 passed\npython3 -m pytest backend/tests/test_green_shipping.py \\\n                 backend/tests/test_green_efficiency_m1895.py -q          # 37 passed\npython3 -m pytest tests/test_cii_regime_m1829.py -q                       # 70 passed\n```",
+        "quote_sha256": "cc8615a3314d5ff011b42008843e5e26c58d7f2aa538a328a8df60d9b06947c5",
+        "unique": true,
+        "occurrences": 1,
+        "context": "q | — | 153 条断言全通过 | 不适用（机制层） |\n\n## 复现\n\n```bash\npython3 tools/cii_consistency_scan.py --out artifacts/cii_consistency_scan_after.json\npython3 -m pytest tests/test_cii_single_source_consistency.py -q          # 153 passed\npython3 -m pytest backend/modules/green_navigation_ice/tests -q           # 47 passed\npython3 -m pytest backend/tests/test_green_shipping.py \\\n                 backend/tests/test_green_efficiency_m1895.py -q          # 37 passed\npython3 -m pytest tests/test_cii_regime_m1829.py -q                       # 70 passed\n```\n\n## 建议新总账条目\n\n- `slug=DEF-CII-SINGLE-SOU"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "commands",
+            "result": "6"
+          },
+          {
+            "check": "executed_here",
+            "result": "no"
+          }
+        ]
+      },
+      "note": "命令块仅登记，未在本工序执行（执行属复现工位）"
+    },
+    {
+      "asset_id": "r13272:figure:m13764_cii_consistency_png",
+      "asset_class": "declared_figure",
+      "label": "平台声明的图件 m13764_cii_consistency.png",
+      "token": "m13764_cii_consistency.png",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2507,
+        "end_char": 2582,
+        "start_line": 61,
+        "end_line": 61,
+        "quote": "`artifacts/m13764_cii_consistency.png`：左右两栏为修复前/后三实现的 required CII–year 曲线，",
+        "quote_sha256": "409fe31d6268ee632e9bd9ff2d77094077984870adff226204b0549283051189",
+        "unique": true,
+        "occurrences": 1,
+        "context": "fore.json` / `_after.json`）。\n\n## ④ 结果图\n\n`artifacts/m13764_cii_consistency.png`：左右两栏为修复前/后三实现的 required CII–year 曲线，\n灰色带 = 规则未适用年份（2019–2022）。修复前 C 曲线在灰带内整体"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source caption span + pinned png bytes",
+        "checks": [
+          {
+            "check": "declared_in_record",
+            "result": "pass (figures[].name)"
+          },
+          {
+            "check": "filename_in_markdown",
+            "result": "pass"
+          },
+          {
+            "check": "figure_endpoint_http_status",
+            "result": "200"
+          },
+          {
+            "check": "pinned_bytes",
+            "result": "docs/kf/wp-13272-01/source/figures/m13764_cii_consistency.png (79031 bytes)"
+          },
+          {
+            "check": "png_magic_and_ihdr",
+            "result": "pass 1650x630"
+          },
+          {
+            "check": "sha256_matches_fetch_record",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "图件字节由 /tensor/reports/13272/figures/<name> 取得并钉入 source/figures/"
+    },
+    {
+      "asset_id": "r13272:code-or-artifact-path:impl-a",
+      "asset_class": "code_or_artifact_path",
+      "label": "A 实现（权威口径）：CII 要求值内核",
+      "token": "backend/services/cii_required_value.py",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 347,
+        "end_char": 385,
+        "start_line": 15,
+        "end_line": 15,
+        "quote": "backend/services/cii_required_value.py",
+        "quote_sha256": "6ac474b34e6c44c2eb4cc8c1e5cd822a05d2f59301ede97f52729a63b9cade80",
+        "unique": true,
+        "occurrences": 1,
+        "context": "| Z 表口径 | 角色 |\n|---|---|---|---|\n| A | `backend/services/cii_required_value.py` | 分数 | 权威口径（显式 regime，m1829 建） |\n| B |"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 ① 表格行；分数口径、显式 regime（m1829 建）"
+    },
+    {
+      "asset_id": "r13272:code-or-artifact-path:impl-b",
+      "asset_class": "code_or_artifact_path",
+      "label": "B 实现（主 API 副本）",
+      "token": "backend/api/green_shipping.py",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 427,
+        "end_char": 456,
+        "start_line": 16,
+        "end_line": 16,
+        "quote": "backend/api/green_shipping.py",
+        "quote_sha256": "be94d321bc4d3b99ea8c9225e4f09ef4128e96d04737c2d66dcd3825ceb95244",
+        "unique": true,
+        "occurrences": 1,
+        "context": "| 分数 | 权威口径（显式 regime，m1829 建） |\n| B | `backend/api/green_shipping.py` | 分数 | 主 API 副本 |\n| C | `backend/modul"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 ① 表格行；分数口径副本"
+    },
+    {
+      "asset_id": "r13272:code-or-artifact-path:impl-c",
+      "asset_class": "code_or_artifact_path",
+      "label": "C 实现（冰区链副本，本单真缺陷所在）",
+      "token": "backend/modules/green_navigation_ice/mepc.py",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 483,
+        "end_char": 527,
+        "start_line": 17,
+        "end_line": 17,
+        "quote": "backend/modules/green_navigation_ice/mepc.py",
+        "quote_sha256": "9caa3f4c4f64e99eb3d3bf5fd62da1d13596a28b5d637210dd87fc8f1c922d63",
+        "unique": true,
+        "occurrences": 1,
+        "context": "n_shipping.py` | 分数 | 主 API 副本 |\n| C | `backend/modules/green_navigation_ice/mepc.py` | 百分比 | 冰区链副本 |\n\n复核靶子：**同一年份的 CII 要求值，"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 ① 表格行；百分比口径、Z 表一次性兜底"
+    },
+    {
+      "asset_id": "r13272:code-or-artifact-path:ice-api",
+      "asset_class": "code_or_artifact_path",
+      "label": "冰区链 compliance / model_audit 回显层",
+      "token": "green_navigation_ice/api.py",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1552,
+        "end_char": 1579,
+        "start_line": 39,
+        "end_line": 39,
+        "quote": "green_navigation_ice/api.py",
+        "quote_sha256": "b0c8a24ea1c8f3975fa0ac3e3522331656f2a5690f86c6f572d855f2a1148c95",
+        "unique": true,
+        "occurrences": 1,
+        "context": "alue_is_reference / regime_note`；\n   - `green_navigation_ice/api.py`：`compliance` 与 `model_audit` 回显 regime"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 ② 修复项 4"
+    },
+    {
+      "asset_id": "r13272:code-or-artifact-path:scan-tool",
+      "asset_class": "code_or_artifact_path",
+      "label": "机器对账工具（三实现 × 年份逐点对账）",
+      "token": "tools/cii_consistency_scan.py",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 647,
+        "end_char": 713,
+        "start_line": 24,
+        "end_line": 24,
+        "quote": "1. 写机器对账工具 `tools/cii_consistency_scan.py`：对 (年份 2019–2030) × 三实现，",
+        "quote_sha256": "599c67a6af126250e9f8a8af164798715925132bba74b8682faf295a84ec1521",
+        "unique": true,
+        "occurrences": 2,
+        "context": "象，且三处都不是错值报错型，而是静默默认型。）\n\n## ② 怎么做的（方法）\n\n1. 写机器对账工具 `tools/cii_consistency_scan.py`：对 (年份 2019–2030) × 三实现，\n   逐点取 (z, required_value, regime, extr"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "2"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 ② 第 1 条"
+    },
+    {
+      "asset_id": "r13272:code-or-artifact-path:scan-before",
+      "asset_class": "code_or_artifact_path",
+      "label": "基线对账产物（修复前）",
+      "token": "artifacts/cii_consistency_scan_before.json",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 786,
+        "end_char": 857,
+        "start_line": 26,
+        "end_line": 26,
+        "quote": "2. 先跑基线（`artifacts/cii_consistency_scan_before.json`）→ **12/12 年份不一致**。",
+        "quote_sha256": "d3ee976998e7cb8d106acb101ed2bb4f81739241b0d24ef8861eb2bf08662646",
+        "unique": true,
+        "occurrences": 2,
+        "context": "e, extrapolated, 异常)，判定是否一致，输出 JSON 基线。\n2. 先跑基线（`artifacts/cii_consistency_scan_before.json`）→ **12/12 年份不一致**。\n3. 定位根因（两条，均为静默默认）：\n   - **C1（真缺陷，仅 C）*"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "2"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 ② 第 2 条基线"
+    },
+    {
+      "asset_id": "r13272:code-or-artifact-path:scan-after",
+      "asset_class": "code_or_artifact_path",
+      "label": "修复后对账产物",
+      "token": "artifacts/cii_consistency_scan_after.json",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3751,
+        "end_char": 3792,
+        "start_line": 91,
+        "end_line": 91,
+        "quote": "artifacts/cii_consistency_scan_after.json",
+        "quote_sha256": "fe67d1247654e94a586cf2e70b7ec5f56a6bb0207133cc346b88225595fbab0b",
+        "unique": true,
+        "occurrences": 1,
+        "context": "on3 tools/cii_consistency_scan.py --out artifacts/cii_consistency_scan_after.json\npython3 -m pytest tests/test_cii_single"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 ③ 与 复现 两处引用，token 唯一"
+    },
+    {
+      "asset_id": "r13272:declared-figure-artifact:fig-artifact",
+      "asset_class": "declared_figure_artifact",
+      "label": "报告正文声明的结果图文件（仓内产物路径，非平台图件）",
+      "token": "artifacts/m13764_cii_consistency.png",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2508,
+        "end_char": 2544,
+        "start_line": 61,
+        "end_line": 61,
+        "quote": "artifacts/m13764_cii_consistency.png",
+        "quote_sha256": "db09a78a0096ca21f95a015f85b0898b9c825710defe2468b5411a074af9111e",
+        "unique": true,
+        "occurrences": 1,
+        "context": "ore.json` / `_after.json`）。\n\n## ④ 结果图\n\n`artifacts/m13764_cii_consistency.png`：左右两栏为修复前/后三实现的 required CII–year 曲线，\n灰"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "§④ 正文逐字给出的文件名；本仓未落盘"
+    },
+    {
+      "asset_id": "r13272:test-path:test-consistency",
+      "asset_class": "test_path",
+      "label": "单源一致性回归测试（153 条断言）",
+      "token": "tests/test_cii_single_source_consistency.py",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3811,
+        "end_char": 3854,
+        "start_line": 92,
+        "end_line": 92,
+        "quote": "tests/test_cii_single_source_consistency.py",
+        "quote_sha256": "d18a3496ae95c991d81be183640d4619a822d13c5cb979bb2557b9bc2875f8eb",
+        "unique": true,
+        "occurrences": 1,
+        "context": "tency_scan_after.json\npython3 -m pytest tests/test_cii_single_source_consistency.py -q          # 153 passed\npython3 -m pyt"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 复现 块 + ⑥ 表"
+    },
+    {
+      "asset_id": "r13272:test-path:test-ice",
+      "asset_class": "test_path",
+      "label": "冰区链测试目录（47 条）",
+      "token": "backend/modules/green_navigation_ice/tests",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3898,
+        "end_char": 3940,
+        "start_line": 93,
+        "end_line": 93,
+        "quote": "backend/modules/green_navigation_ice/tests",
+        "quote_sha256": "e987594415e255b401e994c63e191daebb7debf9db0b03810aca100fcc6271eb",
+        "unique": true,
+        "occurrences": 1,
+        "context": "         # 153 passed\npython3 -m pytest backend/modules/green_navigation_ice/tests -q           # 47 passed\npython3 -m pyt"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 复现 块"
+    },
+    {
+      "asset_id": "r13272:test-path:test-green-shipping",
+      "asset_class": "test_path",
+      "label": "green_shipping 测试（与 green_efficiency 合计 37 条）",
+      "token": "backend/tests/test_green_shipping.py",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3984,
+        "end_char": 4020,
+        "start_line": 94,
+        "end_line": 94,
+        "quote": "backend/tests/test_green_shipping.py",
+        "quote_sha256": "0c112fd397a2fe70f91a7dc27a16a4bbaf3f0c1f2381901de184a18c0fae1c18",
+        "unique": true,
+        "occurrences": 1,
+        "context": "          # 47 passed\npython3 -m pytest backend/tests/test_green_shipping.py \\\n                 backend/tests/test_g"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 复现 块"
+    },
+    {
+      "asset_id": "r13272:test-path:test-green-efficiency",
+      "asset_class": "test_path",
+      "label": "绿色效率评审测试（m1895）",
+      "token": "backend/tests/test_green_efficiency_m1895.py",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 4040,
+        "end_char": 4084,
+        "start_line": 95,
+        "end_line": 95,
+        "quote": "backend/tests/test_green_efficiency_m1895.py",
+        "quote_sha256": "910417b55e482838703a0dd3cce2be9954d994dacccdc6975db890d7db7690e1",
+        "unique": true,
+        "occurrences": 1,
+        "context": "st_green_shipping.py \\\n                 backend/tests/test_green_efficiency_m1895.py -q          # 37 passed\npython3 -m pyte"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 复现 块"
+    },
+    {
+      "asset_id": "r13272:test-path:test-cii-regime",
+      "asset_class": "test_path",
+      "label": "CII regime 语义测试（70 条）",
+      "token": "tests/test_cii_regime_m1829.py",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 4127,
+        "end_char": 4157,
+        "start_line": 96,
+        "end_line": 96,
+        "quote": "tests/test_cii_regime_m1829.py",
+        "quote_sha256": "f6c0447062aaa6facebf3dac9aff6261d2c1742656a8f7c609ada4ff5505dbec",
+        "unique": true,
+        "occurrences": 1,
+        "context": "          # 37 passed\npython3 -m pytest tests/test_cii_regime_m1829.py -q                       # 70 passed\n``"
+      },
+      "resolution": {
+        "status": "metadata_only",
+        "scope": "locator in source; referent not materialised (cross-repo)",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          },
+          {
+            "check": "referent_materialised_here",
+            "result": "no (ship-performance-platform)"
+          }
+        ],
+        "reason": "引文位置已在钉住的 markdown 中逐字解析；但该路径指向 ship-performance-platform，其源码/产物未在本仓落盘，本工序未回读、未执行、未复核其内容（登记≠验证）"
+      },
+      "note": "报告 复现 块（与 A 实现配套）"
+    },
+    {
+      "asset_id": "r13272:code-symbol:bug-c1-expr",
+      "asset_class": "code_symbol",
+      "label": "C1 缺陷代码片段（Z 表一次性兜底 11%）",
+      "token": "Z_FACTORS.get(year, 11.0)",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 918,
+        "end_char": 943,
+        "start_line": 28,
+        "end_line": 28,
+        "quote": "Z_FACTORS.get(year, 11.0)",
+        "quote_sha256": "717927657d8ebe405b0cc0449e9eb93c17639db7bdc264444de272ca3d2b8a66",
+        "unique": true,
+        "occurrences": 1,
+        "context": "   - **C1（真缺陷，仅 C）**：`mepc.z_factor` 用 `Z_FACTORS.get(year, 11.0)` 一次性兜底，\n     `year<2023` 也套 11% 折减 → 规则"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 根因 C1 逐字引用"
+    },
+    {
+      "asset_id": "r13272:code-symbol:sym-z-factor",
+      "asset_class": "code_symbol",
+      "label": "C 实现 z_factor()（修复后 <2023 返回 0.0）",
+      "token": "z_factor()",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1302,
+        "end_char": 1312,
+        "start_line": 35,
+        "end_line": 35,
+        "quote": "z_factor()",
+        "quote_sha256": "f929a61245a7c6a98bce45f04d0357298e49f550646a17be608e3515a1e1f43e",
+        "unique": true,
+        "occurrences": 1,
+        "context": "_extrapolated() / required_cii_meta()`；`z_factor()` 对 <2023 返回 0.0\n     （= 参考线口径，且 regime "
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 修复项 1"
+    },
+    {
+      "asset_id": "r13272:code-symbol:sym-z-regime",
+      "asset_class": "code_symbol",
+      "label": "C 新增 z_regime()（regime 判定）",
+      "token": "z_regime()",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1248,
+        "end_char": 1258,
+        "start_line": 35,
+        "end_line": 35,
+        "quote": "z_regime()",
+        "quote_sha256": "0bc7ca72fddcefbb67ca0db9da5646a68559b37060af525fef9c297bed31c824",
+        "unique": true,
+        "occurrences": 1,
+        "context": "FACTORS = 100·A.CII_Z_FACTOR`），新增\n     `z_regime() / z_extrapolated() / required_cii_meta("
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 修复项 1"
+    },
+    {
+      "asset_id": "r13272:code-symbol:sym-z-extrapolated-fn",
+      "asset_class": "code_symbol",
+      "label": "C 新增 z_extrapolated()（外推标记）",
+      "token": "z_extrapolated()",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1261,
+        "end_char": 1277,
+        "start_line": 35,
+        "end_line": 35,
+        "quote": "z_extrapolated()",
+        "quote_sha256": "92da4d2ea40868f0aa3d1d1c55d111744240afd29a18e12b7cf318ab1ada2e45",
+        "unique": true,
+        "occurrences": 1,
+        "context": "·A.CII_Z_FACTOR`），新增\n     `z_regime() / z_extrapolated() / required_cii_meta()`；`z_factor()` 对 <"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 修复项 1"
+    },
+    {
+      "asset_id": "r13272:code-symbol:sym-required-cii-meta",
+      "asset_class": "code_symbol",
+      "label": "C 新增 required_cii_meta()（成组元信息）",
+      "token": "required_cii_meta()",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1280,
+        "end_char": 1299,
+        "start_line": 35,
+        "end_line": 35,
+        "quote": "required_cii_meta()",
+        "quote_sha256": "2410837e207c41f21ccd83e867ab554acec51dc4c6e4e4dfc8d9f761f5180861",
+        "unique": true,
+        "occurrences": 1,
+        "context": "增\n     `z_regime() / z_extrapolated() / required_cii_meta()`；`z_factor()` 对 <2023 返回 0.0\n     （= 参考"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 修复项 1"
+    },
+    {
+      "asset_id": "r13272:code-symbol:sym-gn-required-cii",
+      "asset_class": "code_symbol",
+      "label": "B 侧委派函数 _gn_required_cii()",
+      "token": "_gn_required_cii()",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1400,
+        "end_char": 1418,
+        "start_line": 37,
+        "end_line": 37,
+        "quote": "_gn_required_cii()",
+        "quote_sha256": "d31f9b5835c9ccfc704896420628349027742b6a364c96facffee6f9bc8da567",
+        "unique": true,
+        "occurrences": 1,
+        "context": "–2026 数值逐位不变；\n   - `green_shipping.py`：`_gn_required_cii()` 委派 A 的 `required_cii()`，保留原键\n     （`z_"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 修复项 2：委派 A 的 required_cii()"
+    },
+    {
+      "asset_id": "r13272:code-symbol:sym-required-cii",
+      "asset_class": "code_symbol",
+      "label": "A 权威实现 required_cii()",
+      "token": "required_cii()",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1374,
+        "end_char": 1448,
+        "start_line": 37,
+        "end_line": 37,
+        "quote": "   - `green_shipping.py`：`_gn_required_cii()` 委派 A 的 `required_cii()`，保留原键",
+        "quote_sha256": "ada879c5f02e336c0f676b5964b28d93f42d4fe91cd9040bd7e50442bde6b70e",
+        "unique": true,
+        "occurrences": 2,
+        "context": "（= 参考线口径，且 regime 可判）；2023–2026 数值逐位不变；\n   - `green_shipping.py`：`_gn_required_cii()` 委派 A 的 `required_cii()`，保留原键\n     （`z_factor` 仍为分数），新增 `regime / z_e"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "2"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 修复项 2；token 2 次出现但同属一行"
+    },
+    {
+      "asset_id": "r13272:code-symbol:flag-z-extrapolated",
+      "asset_class": "code_symbol",
+      "label": "外推标记键 z_extrapolated（2027+ 必须携带）",
+      "token": "z_extrapolated",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3212,
+        "end_char": 3274,
+        "start_line": 76,
+        "end_line": 76,
+        "quote": "- 2027+ 仍返回 11%（工程保守取最后已通过值），但现在**必须**带 `z_extrapolated=True`，",
+        "quote_sha256": "5f945a7b165da48e693d5afe72ae7a9e5e61304e231417bf23ad8efacfcc21a7",
+        "unique": true,
+        "occurrences": 4,
+        "context": " （冰区模块 47 条测试、green_shipping 37 条测试全绿）。\n- 2027+ 仍返回 11%（工程保守取最后已通过值），但现在**必须**带 `z_extrapolated=True`，\n  调用方不能\"只看数字\"当合规结论。\n\n## ⑥ 误差判定\n\n| 关键量 |"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "4"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ⑤ 行为变更第 2 条"
+    },
+    {
+      "asset_id": "r13272:code-symbol:flag-required-is-reference",
+      "asset_class": "code_symbol",
+      "label": "回显键 required_value_is_reference",
+      "token": "required_value_is_reference",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1502,
+        "end_char": 1529,
+        "start_line": 38,
+        "end_line": 38,
+        "quote": "required_value_is_reference",
+        "quote_sha256": "538ff500ea8c507d79ac508b5d63f5c9f67854df77ceb8c5e8db1c4852474e58",
+        "unique": true,
+        "occurrences": 1,
+        "context": "or` 仍为分数），新增 `regime / z_extrapolated / required_value_is_reference / regime_note`；\n   - `green_navigation_"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② B 侧新增键"
+    },
+    {
+      "asset_id": "r13272:code-symbol:flag-regime-note",
+      "asset_class": "code_symbol",
+      "label": "回显键 regime_note",
+      "token": "regime_note",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1532,
+        "end_char": 1543,
+        "start_line": 38,
+        "end_line": 38,
+        "quote": "regime_note",
+        "quote_sha256": "0e6b558f97e1c436ca012de6aea319532592f2aece237016010977ab3d76de9c",
+        "unique": true,
+        "occurrences": 1,
+        "context": "polated / required_value_is_reference / regime_note`；\n   - `green_navigation_ice/api.py`：`c"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② B 侧新增键"
+    },
+    {
+      "asset_id": "r13272:code-symbol:const-dd-basis",
+      "asset_class": "code_symbol",
+      "label": "常量 DD_VECTOR_BASIS（dd 向量单档局限的机器可见声明）",
+      "token": "DD_VECTOR_BASIS",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2906,
+        "end_char": 2921,
+        "start_line": 71,
+        "end_line": 71,
+        "quote": "DD_VECTOR_BASIS",
+        "quote_sha256": "ab1dc22e7dbbbfe213683a0a87a01777cfa3c0b0f93a116998a43dc73c41ff3f",
+        "unique": true,
+        "occurrences": 1,
+        "context": "录。因此只断言分区完备/单调/端点归属（机制层），\n  不断言逐船型评级正确；`DD_VECTOR_BASIS` 与 `/reference`、`model_audit` 均显式回显该局限。"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ⑤ 局限"
+    },
+    {
+      "asset_id": "r13272:code-symbol:field-dd-vector-basis",
+      "asset_class": "code_symbol",
+      "label": "回显字段 dd_vector_basis",
+      "token": "dd_vector_basis",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1630,
+        "end_char": 1645,
+        "start_line": 40,
+        "end_line": 40,
+        "quote": "dd_vector_basis",
+        "quote_sha256": "463720a2bc21caecf1eeb008c73ad91fcbf334670317f890c1f455030db1847b",
+        "unique": true,
+        "occurrences": 1,
+        "context": "ce` 与 `model_audit` 回显 regime 标记与\n     `dd_vector_basis`（dd 向量为通用单档，未做船型×容量档转录 → 机器可见的局限声明）；\n  "
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 修复项 4"
+    },
+    {
+      "asset_id": "r13272:code-symbol:field-divergent-years",
+      "asset_class": "code_symbol",
+      "label": "对账结果字段 divergent_years",
+      "token": "divergent_years",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2386,
+        "end_char": 2431,
+        "start_line": 56,
+        "end_line": 56,
+        "quote": "对账结论：修复前 `divergent_years = 12/12`，修复后 `0/12`",
+        "quote_sha256": "5236c1cce0e31b389cc833f0e554e37587f1ccc65d62f3cbea60777d467b1800",
+        "unique": true,
+        "occurrences": 2,
+        "context": " (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |\n\n对账结论：修复前 `divergent_years = 12/12`，修复后 `0/12`\n（`artifacts/cii_consistency_scan_before"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "2"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ③ 对账结论行"
+    },
+    {
+      "asset_id": "r13272:regulatory-reference:mepc353",
+      "asset_class": "regulatory_reference",
+      "label": "参考线规则 MEPC.353(78)",
+      "token": "MEPC.353(78)",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 219,
+        "end_char": 231,
+        "start_line": 10,
+        "end_line": 10,
+        "quote": "MEPC.353(78)",
+        "quote_sha256": "a0cad4aa9806ef881d78407e3bb65552372f773e85564cdd382b5cb29b9f26b9",
+        "unique": true,
+        "occurrences": 1,
+        "context": "仅修语义与副本一致性）\n\n## ① 案例介绍（问题背景）\n\nIMO 碳强度规则（MEPC.353(78) 参考线 / MEPC.338(76) 年度折减率 Z / MEPC.354(7"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ① 法规三件之一；系数层证据等级 WITHHELD"
+    },
+    {
+      "asset_id": "r13272:regulatory-reference:mepc338",
+      "asset_class": "regulatory_reference",
+      "label": "年度折减率 Z 表来源 MEPC.338(76)",
+      "token": "MEPC.338(76)",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 238,
+        "end_char": 250,
+        "start_line": 10,
+        "end_line": 10,
+        "quote": "MEPC.338(76)",
+        "quote_sha256": "7684a7e42a81d24ff3a6d95d69c85a6742308288af1cc4fdf31bdbf37b577612",
+        "unique": true,
+        "occurrences": 1,
+        "context": "例介绍（问题背景）\n\nIMO 碳强度规则（MEPC.353(78) 参考线 / MEPC.338(76) 年度折减率 Z / MEPC.354(78) 评级）\n在本仓存在 **三份独立"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ①；本次不动 Z 表值"
+    },
+    {
+      "asset_id": "r13272:regulatory-reference:mepc354",
+      "asset_class": "regulatory_reference",
+      "label": "评级规则 MEPC.354(78)（G4 档未转录）",
+      "token": "MEPC.354(78)",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2837,
+        "end_char": 2891,
+        "start_line": 70,
+        "end_line": 70,
+        "quote": "  未做 MEPC.354(78) G4 的船型×容量档转录。因此只断言分区完备/单调/端点归属（机制层），",
+        "quote_sha256": "155ffc263d5d98843460fe7a5ab4156ad60b6702759c0ee68ef67b324ff89f1f",
+        "unique": true,
+        "occurrences": 3,
+        "context": "ctor` 只有一档通用值 (0.86, 0.94, 1.06, 1.18)，\n  未做 MEPC.354(78) G4 的船型×容量档转录。因此只断言分区完备/单调/端点归属（机制层），\n  不断言逐船型评级正确；`DD_VECTOR_BASIS` 与 `/refe"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "3"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ⑤；dd 向量只有通用单档"
+    },
+    {
+      "asset_id": "r13272:equation:eq-reference-line",
+      "asset_class": "equation",
+      "label": "参考线解析式 a·Cap^(−c)",
+      "token": "a·Cap^(−c)",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3365,
+        "end_char": 3463,
+        "start_line": 83,
+        "end_line": 83,
+        "quote": "| 2019–2022 要求值（C 实现） | 2019 参考线 `a·Cap^(−c)` = 4.2317 | **−11.00%** | 0.00%（逐位相等） | 前否 / **后是** |",
+        "quote_sha256": "d1697f9f2ed8c36686d03e53d3a4fcc66300d54bb8b1678dab69f2438de4a621",
+        "unique": true,
+        "occurrences": 1,
+        "context": " | 修复后误差 | <3%? |\n|---|---|---|---|---|\n| 2019–2022 要求值（C 实现） | 2019 参考线 `a·Cap^(−c)` = 4.2317 | **−11.00%** | 0.00%（逐位相等） | 前否 / **后是** |\n| 三实现 z 值（2019–2030，12 年 × 4 船型 × 3 容量）"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ⑥ 基准列；2019 基线 4.2317 由此式算出"
+    },
+    {
+      "asset_id": "r13272:equation:eq-rating-def",
+      "asset_class": "equation",
+      "label": "评级判定式 dd_i·req",
+      "token": "dd_i·req",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 3652,
+        "end_char": 3660,
+        "start_line": 86,
+        "end_line": 86,
+        "quote": "dd_i·req",
+        "quote_sha256": "4f9a21214590125ebeaad74124ca5f5d7de5b77d9886537063af7b4996233619",
+        "unique": true,
+        "occurrences": 1,
+        "context": "15 | **后是** |\n| 评级机制（边界分区/单调/端点） | 解析定义 dd_i·req | — | 153 条断言全通过 | 不适用（机制层） |\n\n## 复现\n\n`"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ⑥ 机制层基准"
+    },
+    {
+      "asset_id": "r13272:numeric-token:value-42317",
+      "asset_class": "numeric_token",
+      "label": "2019 基线要求值 4.2317 gCO2/(dwt·nm)",
+      "token": "4.2317",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1020,
+        "end_char": 1083,
+        "start_line": 30,
+        "end_line": 30,
+        "quote": "     （bulk carrier / 80000 DWT：3.7662 vs 4.2317 gCO2/(dwt·nm)）；",
+        "quote_sha256": "6808eb52316476f550230bb87cf8caa48eeee8053611009dcb5271abae2d4e9a",
+        "unique": true,
+        "occurrences": 5,
+        "context": " 规则尚未生效的年份给出\"要求值\"，比 2019 参考线**低 11.0%**\n     （bulk carrier / 80000 DWT：3.7662 vs 4.2317 gCO2/(dwt·nm)）；\n   - **C2（仅 B/C）**：`year>2026` 静默沿用 11%"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "5"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 根因 C1 括号内（修复后 C 亦为此值）"
+    },
+    {
+      "asset_id": "r13272:numeric-token:value-37662",
+      "asset_class": "numeric_token",
+      "label": "C 实现错值 3.7662（比参考线低 11.0%）",
+      "token": "3.7662",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1020,
+        "end_char": 1083,
+        "start_line": 30,
+        "end_line": 30,
+        "quote": "     （bulk carrier / 80000 DWT：3.7662 vs 4.2317 gCO2/(dwt·nm)）；",
+        "quote_sha256": "6808eb52316476f550230bb87cf8caa48eeee8053611009dcb5271abae2d4e9a",
+        "unique": true,
+        "occurrences": 9,
+        "context": " 规则尚未生效的年份给出\"要求值\"，比 2019 参考线**低 11.0%**\n     （bulk carrier / 80000 DWT：3.7662 vs 4.2317 gCO2/(dwt·nm)）；\n   - **C2（仅 B/C）**：`year>2026` 静默沿用 11%"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "9"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 根因 C1 括号内"
+    },
+    {
+      "asset_id": "r13272:numeric-token:err-minus11",
+      "asset_class": "numeric_token",
+      "label": "C1 偏差幅度 −11.0%",
+      "token": "−11.0%",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1913,
+        "end_char": 2012,
+        "start_line": 49,
+        "end_line": 49,
+        "quote": "| 2019–2022 | not_yet_applicable | 0.00 | 4.2317 (无标记) | **3.7662 (−11.0%)** | 4.2317 | 前 ✗ / 后 ✓ |",
+        "quote_sha256": "404c3b00d8bfbb117398f40ee5a2dbaa7d86547bd184fdd03e7fa2081641e7fc",
+        "unique": true,
+        "occurrences": 1,
+        "context": "C | 一致性 |\n|---|---|---|---|---|---|---|\n| 2019–2022 | not_yet_applicable | 0.00 | 4.2317 (无标记) | **3.7662 (−11.0%)** | 4.2317 | 前 ✗ / 后 ✓ |\n| 2023 | determined | 0.05 | 4.0201 | 4"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ③ 表 2019–2022 行（C 实现错值相对参考线的偏差）"
+    },
+    {
+      "asset_id": "r13272:numeric-token:div-before",
+      "asset_class": "numeric_token",
+      "label": "修复前不一致年份数 12/12",
+      "token": "12/12",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 786,
+        "end_char": 857,
+        "start_line": 26,
+        "end_line": 26,
+        "quote": "2. 先跑基线（`artifacts/cii_consistency_scan_before.json`）→ **12/12 年份不一致**。",
+        "quote_sha256": "d3ee976998e7cb8d106acb101ed2bb4f81739241b0d24ef8861eb2bf08662646",
+        "unique": true,
+        "occurrences": 3,
+        "context": "e, extrapolated, 异常)，判定是否一致，输出 JSON 基线。\n2. 先跑基线（`artifacts/cii_consistency_scan_before.json`）→ **12/12 年份不一致**。\n3. 定位根因（两条，均为静默默认）：\n   - **C1（真缺陷，仅 C）*"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "3"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ② 基线结论"
+    },
+    {
+      "asset_id": "r13272:numeric-token:div-after",
+      "asset_class": "numeric_token",
+      "label": "修复后不一致年份数 0/12",
+      "token": "0/12",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2386,
+        "end_char": 2431,
+        "start_line": 56,
+        "end_line": 56,
+        "quote": "对账结论：修复前 `divergent_years = 12/12`，修复后 `0/12`",
+        "quote_sha256": "5236c1cce0e31b389cc833f0e554e37587f1ccc65d62f3cbea60777d467b1800",
+        "unique": true,
+        "occurrences": 2,
+        "context": " (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |\n\n对账结论：修复前 `divergent_years = 12/12`，修复后 `0/12`\n（`artifacts/cii_consistency_scan_before"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "2"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ③ 对账结论"
+    },
+    {
+      "asset_id": "r13272:numeric-token:assertions153",
+      "asset_class": "numeric_token",
+      "label": "回归断言 153 条",
+      "token": "153 条回归断言",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 4434,
+        "end_char": 4443,
+        "start_line": 104,
+        "end_line": 104,
+        "quote": "153 条回归断言",
+        "quote_sha256": "6dff4989cd05d6ba3892971712337177bb0c1de9470f27c0554027828caf0f9d",
+        "unique": true,
+        "occurrences": 1,
+        "context": "ergent_years == 0`（本单已达：\n  12/12 → 0/12，153 条回归断言）；\n- 后续增量（未做）：MEPC.354(78) G4 船型×容量档 dd "
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 复现 与 ⑥（153 passed）"
+    },
+    {
+      "asset_id": "r13272:numeric-token:capacity-80000",
+      "asset_class": "numeric_token",
+      "label": "核算船型/容量档：bulk carrier 80000 DWT",
+      "token": "80000 DWT",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1786,
+        "end_char": 1821,
+        "start_line": 45,
+        "end_line": 45,
+        "quote": "bulk carrier, Capacity = 80000 DWT：",
+        "quote_sha256": "50d1168d6988c649d04d817a597c6ccc2b83d5f698ce51278c564df518a60eb1",
+        "unique": true,
+        "occurrences": 2,
+        "context": "rtifacts/cii_consistency_scan_*.json`）\n\nbulk carrier, Capacity = 80000 DWT：\n\n| year | regime | z（分数） | 修复前 B | 修复前 "
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "2"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ③ 数值表口径"
+    },
+    {
+      "asset_id": "r13272:regime-token:regime-not-applicable",
+      "asset_class": "regime_token",
+      "label": "regime 取值 not_yet_applicable（规则未适用年份）",
+      "token": "not_yet_applicable",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 1927,
+        "end_char": 1945,
+        "start_line": 49,
+        "end_line": 49,
+        "quote": "not_yet_applicable",
+        "quote_sha256": "590c5319da2b60af1b558bd8de9fc25434a5cb40a8b5102b10d64e637e2998a1",
+        "unique": true,
+        "occurrences": 1,
+        "context": "|---|---|---|---|---|---|\n| 2019–2022 | not_yet_applicable | 0.00 | 4.2317 (无标记) | **3.7662 (−11.0"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ③ 表 2019–2022 行"
+    },
+    {
+      "asset_id": "r13272:regime-token:regime-determined",
+      "asset_class": "regime_token",
+      "label": "regime 取值 determined（法规确定值）",
+      "token": "determined",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2013,
+        "end_char": 2090,
+        "start_line": 50,
+        "end_line": 50,
+        "quote": "| 2023 | determined | 0.05 | 4.0201 | 4.0201 | 4.0201 | 前 ✗(regime 缺) / 后 ✓ |",
+        "quote_sha256": "bdd1c34bde887d2411e44e3f9f350426016f6de8fd62a92893c2e287ab4d094c",
+        "unique": true,
+        "occurrences": 4,
+        "context": ".7662 (−11.0%)** | 4.2317 | 前 ✗ / 后 ✓ |\n| 2023 | determined | 0.05 | 4.0201 | 4.0201 | 4.0201 | 前 ✗(regime 缺) / 后 ✓ |\n| 2024 | determined | 0.07 | 3.9355 | 3"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "4"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ③ 表 2023 行"
+    },
+    {
+      "asset_id": "r13272:regime-token:regime-extrapolated",
+      "asset_class": "regime_token",
+      "label": "regime 取值 extrapolated（外推值）",
+      "token": "extrapolated",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 2274,
+        "end_char": 2384,
+        "start_line": 54,
+        "end_line": 54,
+        "quote": "| 2027–2030 | extrapolated | 0.11 | 3.7662 (无标记) | 3.7662 (无标记) | 3.7662 (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |",
+        "quote_sha256": "64e61c90167cfb519d641aebb9d4cdec6e8cf0993d8e27e214025dccc2504eff",
+        "unique": true,
+        "occurrences": 6,
+        "context": " 0.11 | 3.7662 | 3.7662 | 3.7662 | 同上 |\n| 2027–2030 | extrapolated | 0.11 | 3.7662 (无标记) | 3.7662 (无标记) | 3.7662 (`z_extrapolated=True`) | 前 ✗ / 后 ✓ |\n\n对账结论：修复前 `divergent_years = 12/12`，修复后"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "6"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 ③ 表 2027–2030 行"
+    },
+    {
+      "asset_id": "r13272:platform-ledger-reference:ledger-def-slug",
+      "asset_class": "platform_ledger_reference",
+      "label": "建议新总账条目 slug",
+      "token": "DEF-CII-SINGLE-SOURCE",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 4212,
+        "end_char": 4278,
+        "start_line": 101,
+        "end_line": 101,
+        "quote": "- `slug=DEF-CII-SINGLE-SOURCE`，域：绿色航行（`ship-performance-platform`）",
+        "quote_sha256": "e9f5deb66c83f101cb4e88f8041b38ed785d753a7807255740c4986379efb7c5",
+        "unique": true,
+        "occurrences": 2,
+        "context": "           # 70 passed\n```\n\n## 建议新总账条目\n\n- `slug=DEF-CII-SINGLE-SOURCE`，域：绿色航行（`ship-performance-platform`）\n- 验收：三实现 (2019–2035 × {bulk,tanker,cont"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "2"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 文末建议条目"
+    },
+    {
+      "asset_id": "r13272:platform-ledger-reference:kpi-qc-recheck",
+      "asset_class": "platform_ledger_reference",
+      "label": "上游 KPI 条目（本单锚点）",
+      "token": "KPI-QC-RECHECK",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 51,
+        "end_char": 65,
+        "start_line": 3,
+        "end_line": 3,
+        "quote": "KPI-QC-RECHECK",
+        "quote_sha256": "569dca75270b3201ad11646ed4367016f09027fd3105aab5f84e24c332b10676",
+        "unique": true,
+        "occurrences": 1,
+        "context": "副本单源化与 regime 语义修复（m13764）\n\n**锚点**：NEW（`KPI-QC-RECHECK` 已合并功能独立复核的子项；建议新条目\n`DEF-CII-SINGLE-SOU"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告抬头 锚点 行"
+    },
+    {
+      "asset_id": "r13272:platform-ledger-reference:domain-repo",
+      "asset_class": "platform_ledger_reference",
+      "label": "所属域仓名（ship-performance-platform）",
+      "token": "ship-performance-platform",
+      "locator": {
+        "source_field": "markdown",
+        "method": "char_span",
+        "start_char": 4212,
+        "end_char": 4278,
+        "start_line": 101,
+        "end_line": 101,
+        "quote": "- `slug=DEF-CII-SINGLE-SOURCE`，域：绿色航行（`ship-performance-platform`）",
+        "quote_sha256": "e9f5deb66c83f101cb4e88f8041b38ed785d753a7807255740c4986379efb7c5",
+        "unique": true,
+        "occurrences": 1,
+        "context": "           # 70 passed\n```\n\n## 建议新总账条目\n\n- `slug=DEF-CII-SINGLE-SOURCE`，域：绿色航行（`ship-performance-platform`）\n- 验收：三实现 (2019–2035 × {bulk,tanker,cont"
+      },
+      "resolution": {
+        "status": "resolved",
+        "scope": "source span",
+        "checks": [
+          {
+            "check": "token_occurrences",
+            "result": "1"
+          },
+          {
+            "check": "locator_unique",
+            "result": "pass"
+          },
+          {
+            "check": "quote_verbatim",
+            "result": "pass"
+          }
+        ]
+      },
+      "note": "报告 文末建议条目：域归属"
+    }
+  ],
+  "counts": {
+    "assets": 59,
+    "by_class": {
+      "code_or_artifact_path": 7,
+      "code_symbol": 13,
+      "declared_figure": 1,
+      "declared_figure_artifact": 1,
+      "equation": 2,
+      "numeric_token": 7,
+      "platform_ledger_reference": 3,
+      "regime_token": 3,
+      "regulatory_reference": 3,
+      "report_document": 1,
+      "report_section": 9,
+      "report_table": 3,
+      "repro_command_block": 1,
+      "test_path": 5
+    },
+    "by_resolution": {
+      "metadata_only": 13,
+      "resolved": 46
+    },
+    "markdown_locators": 59,
+    "sections": 9,
+    "tables": 3,
+    "fenced_blocks": 1,
+    "figures_declared": 1,
+    "figures_with_pinned_bytes": 1,
+    "claims": 0
+  },
+  "claims": [],
+  "claims_note": "task_type=01 的职责边界：只登记资产位置，不抽取知识对象、不判断报告结论真伪。claims=[] 是本工序的完整结果，不是缺失。",
+  "integrity": {
+    "hash_recomputed_locally": true,
+    "hash_algorithm": "sha256",
+    "verified_logic": "每个 locator 由本脚本从 md[start:end] 现取现算：quote 逐字等于该 span 原文，quote_sha256 为 quote 的 sha256，start_line/end_line 由字符偏移反查；'accepted' 只能由平台门独立重算 source_hash 判定，本文件不自证 verified。"
+  }
+}
