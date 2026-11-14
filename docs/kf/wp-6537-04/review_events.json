@@ -1,0 +1,118 @@
+{
+ "package_id": "wp-6537-04",
+ "report_id": "6537",
+ "events": [
+  {
+   "seq": 1,
+   "event": "source_fetched",
+   "target": "GET /api/v1/tensor/reports/6537",
+   "result": "sha256:aaf27418db0e671d671f7cafa2aecf6d68e235f593384832f3fb46cf152d1f71, 10530 chars",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 2,
+   "event": "snapshot_identity_checked",
+   "target": "docs/kf/wp-6537-01/source_6537.md",
+   "result": "disk sha256 == utf8 sha256 == contract",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 3,
+   "event": "upstream_artefacts_loaded",
+   "target": "docs/kf/wp-6537-01/{asset_manifest.json,verification.json}",
+   "result": "manifest sha256:5afa3314a56cda0010c8de63fea5f5218d8009f8a6388220ead0f5cf668468a2",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 4,
+   "event": "locators_span_checked",
+   "target": "37 assets",
+   "result": "31/37 satisfy md[start:end]==quote and count==1",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 5,
+   "event": "upstream_verify_replayed",
+   "target": "scripts/kf/build_asset_manifest_6537.py:585-613",
+   "result": "reproduces all_pass=True; span-tested 31, skipped 6",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 6,
+   "event": "structure_recounted",
+   "target": "manifest.counts",
+   "result": "class/resolution histograms, tables, blocks, refs all equal",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 7,
+   "event": "schema_validated",
+   "target": "schemas/asset_manifest.v1.schema.json",
+   "result": "72 validator errors",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 8,
+   "event": "peer_schema_baseline",
+   "target": "docs/kf/wp-*/asset_manifest.json",
+   "result": "{'declaring_v1': 69, 'schema_clean': 48}",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 9,
+   "event": "figure_endpoints_probed",
+   "target": "GET /tensor/reports/6537/figures/<name> x5",
+   "result": "all HTTP 404, matching the recorded probes",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 10,
+   "event": "target_resolution_checked",
+   "target": "11 path_reference targets",
+   "result": "0 present in this worktree; consistent with unresolved",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 11,
+   "event": "report_arithmetic_recomputed",
+   "target": "report 6537 §1 fuel table",
+   "result": "GWP100_CH4 solved=29.7931; TtW max |Δ|(C-fuels)=0.0776; crossover=2.3009%",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 12,
+   "event": "upstream_test_suite_run",
+   "target": "pytest -q tests/test_kf_asset_manifest_6537.py",
+   "result": "13 passed (out-of-band)",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 13,
+   "event": "findings_raised",
+   "target": "docs/kf/wp-6537-04/review_report.json",
+   "result": "F1 major(blocking), F2 major(blocking), F3 medium, F4 minor, F5 minor; positives P1-P7",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  },
+  {
+   "seq": 14,
+   "event": "verdict_assigned",
+   "target": "docs/kf/wp-6537-04/review_report.json",
+   "result": "needs-fix / request-changes",
+   "actor": "agent/m20899",
+   "evidence_checks": 79
+  }
+ ]
+}
