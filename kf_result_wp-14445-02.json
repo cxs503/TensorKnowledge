@@ -1,0 +1,1018 @@
+{
+  "package_id": "wp-14445-02",
+  "task_type": "02-classification-parse",
+  "contract_version": "1.0",
+  "report_id": "14445",
+  "provenance": {
+    "source_uri": "tensor://reports/14445",
+    "source_field": "markdown",
+    "source_hash": "sha256:0fad2f03c7cceceba726538a60a0c9e206b0a932e9d53e10f5e32388da25c85b",
+    "source_hash_matches": true,
+    "title": "GAP-PP-5 可微路径设备口径：文档化 CPU 基线 + tensor-tau 梯度回归 A/B（m15359）",
+    "scenario_key": "gap_pp5_cpu_baseline",
+    "chars": 8040
+  },
+  "outputs": {
+    "classification.json": {
+      "schema": "classification.v1",
+      "package_id": "wp-14445-02",
+      "task_type": "02-classification-parse",
+      "contract_version": "1.0",
+      "report_id": "14445",
+      "source": {
+        "uri": "tensor://reports/14445",
+        "field": "markdown",
+        "title": "GAP-PP-5 可微路径设备口径：文档化 CPU 基线 + tensor-tau 梯度回归 A/B（m15359）",
+        "scenario_key": "gap_pp5_cpu_baseline",
+        "hash_alg": "sha256",
+        "hash": "0fad2f03c7cceceba726538a60a0c9e206b0a932e9d53e10f5e32388da25c85b",
+        "hash_with_prefix": "sha256:0fad2f03c7cceceba726538a60a0c9e206b0a932e9d53e10f5e32388da25c85b",
+        "chars": 8040,
+        "bytes_utf8": 9541,
+        "declared_chars": 8040,
+        "recomputed_independently": true,
+        "matches_contract": true
+      },
+      "taxonomy": {
+        "source": "extraction-skills/registry.json",
+        "report_types": [
+          "literature-review",
+          "scientific-computation",
+          "algorithm-implementation",
+          "software-engineering",
+          "technical-proposal",
+          "experimental-validation"
+        ],
+        "note": "six-type taxonomy is read from the registry at build time; no local vocabulary"
+      },
+      "report_type": {
+        "primary": "scientific-computation",
+        "secondary": [
+          "software-engineering"
+        ],
+        "confidence": "medium",
+        "confidence_rationale": "three of the six types have real textual support (timing table; commit+regression; test matrix/validation case), so the choice of a single primary is a judgement about what the report IS, not a count. The spine of the document is the device baseline matrix (front matter ① -> appendix §5) plus analytic verification (L3, L8); the defect A/B is written up as a finding handed back (L5). Hence scientific-computation primary, software-engineering secondary, confidence medium not high",
+        "decision_rule": "primary = the type of the artifact the round set out to deliver; secondary = types carried by substantial sections. Signal counts are NOT the decision rule and are reported separately so the choice stays falsifiable",
+        "alternatives_considered": [
+          {
+            "report_type": "software-engineering",
+            "supporting_locator_ids": [
+              "L4",
+              "L6",
+              "L7",
+              "L5"
+            ],
+            "why_not_primary": "commit/regression/pytest-A/B evidence is present and would make this the primary under a literal-signal or count rule, but it covers §7 plus one paragraph of §2 — the deliverable itself is the timing matrix"
+          },
+          {
+            "report_type": "experimental-validation",
+            "supporting_locator_ids": [
+              "L3",
+              "L8",
+              "L9"
+            ],
+            "why_not_primary": "test-matrix / validation-case / baseline-comparison wording is present, but two of the registry's experimental-validation signals are unsatisfied ('facility': none; 'measurement uncertainty': no budget, only a metric-comparability caveat about the RSS figure, locator T4) and the validation target is an analytic anchor for the solver, not measured data"
+          },
+          {
+            "report_type": "algorithm-implementation",
+            "supporting_locator_ids": [],
+            "why_not_primary": "no pseudocode/complexity/algorithm block; the code is an example CLI, not the subject"
+          },
+          {
+            "report_type": "literature-review",
+            "supporting_locator_ids": [],
+            "why_not_primary": "three citations for anchors, no survey structure, nothing synthesised from the literature"
+          },
+          {
+            "report_type": "technical-proposal",
+            "supporting_locator_ids": [],
+            "why_not_primary": "it reports work already executed (A/B done, tables filled), it does not propose future work"
+          }
+        ],
+        "signal_policy": {
+          "literal_scan_leader": "software-engineering",
+          "literal_matched_counts": {
+            "literature-review": 0,
+            "scientific-computation": 0,
+            "algorithm-implementation": 0,
+            "software-engineering": 2,
+            "technical-proposal": 0,
+            "experimental-validation": 0
+          },
+          "rule_applied": "primary is a substantive reading of what the round delivered; the literal registry scan is reported verbatim next to it, including its disagreement",
+          "falsifier": "if the stage-02 policy were literal-signal-only, 'software-engineering' would be primary and this classification wrong; the registry phrase list also has no phrase for the report's own words ('Wall-clock / throughput table')"
+        },
+        "unclassified_is_legal": true
+      },
+      "skills": {
+        "selected_skill_id": "xsk-scientific-computation",
+        "secondary_skill_ids": [
+          "xsk-software-engineering"
+        ],
+        "selection_rule": "skill whose report_type equals report_type.primary; secondary skill recorded for the software-engineering findings section"
+      },
+      "signals": {
+        "scan_rule": "word-boundary (not raw substring) case-insensitive count of each registry identify_signals phrase over the whole markdown; open matchers such as 'O(n' are counted literally",
+        "per_skill": [
+          {
+            "skill_id": "xsk-literature-review",
+            "report_type": "literature-review",
+            "signals": [
+              {
+                "signal": "related work",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "state of the art",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "survey",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "bibliography",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "citation density >= 5 per 1000 chars",
+                "literal_occurrences": 0,
+                "matched": false
+              }
+            ],
+            "signals_matched": 0,
+            "signals_total": 5
+          },
+          {
+            "skill_id": "xsk-scientific-computation",
+            "report_type": "scientific-computation",
+            "signals": [
+              {
+                "signal": "governing equations",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "discretisation",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "convergence study",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "mesh refinement",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "timing table",
+                "literal_occurrences": 0,
+                "matched": false
+              }
+            ],
+            "signals_matched": 0,
+            "signals_total": 5
+          },
+          {
+            "skill_id": "xsk-algorithm-implementation",
+            "report_type": "algorithm-implementation",
+            "signals": [
+              {
+                "signal": "pseudocode",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "complexity",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "algorithm block",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "function signature",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "O(n",
+                "literal_occurrences": 0,
+                "matched": false
+              }
+            ],
+            "signals_matched": 0,
+            "signals_total": 5
+          },
+          {
+            "skill_id": "xsk-software-engineering",
+            "report_type": "software-engineering",
+            "signals": [
+              {
+                "signal": "changed files",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "commit",
+                "literal_occurrences": 2,
+                "matched": true
+              },
+              {
+                "signal": "interface",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "regression",
+                "literal_occurrences": 2,
+                "matched": true
+              },
+              {
+                "signal": "API",
+                "literal_occurrences": 0,
+                "matched": false
+              }
+            ],
+            "signals_matched": 2,
+            "signals_total": 5
+          },
+          {
+            "skill_id": "xsk-technical-proposal",
+            "report_type": "technical-proposal",
+            "signals": [
+              {
+                "signal": "proposal",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "design",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "roadmap",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "specification",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "plan",
+                "literal_occurrences": 0,
+                "matched": false
+              }
+            ],
+            "signals_matched": 0,
+            "signals_total": 5
+          },
+          {
+            "skill_id": "xsk-experimental-validation",
+            "report_type": "experimental-validation",
+            "signals": [
+              {
+                "signal": "test matrix",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "facility",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "measurement uncertainty",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "validation case",
+                "literal_occurrences": 0,
+                "matched": false
+              },
+              {
+                "signal": "baseline comparison",
+                "literal_occurrences": 0,
+                "matched": false
+              }
+            ],
+            "signals_matched": 0,
+            "signals_total": 5
+          }
+        ],
+        "semantic_signal_map": [
+          {
+            "map_id": "S1",
+            "report_type": "scientific-computation",
+            "registry_signal": "timing table",
+            "locator_id": "L1",
+            "strength": "strong",
+            "quote": "Wall-clock / throughput table",
+            "note": "registry phrase mapped onto a report feature stated in different words"
+          },
+          {
+            "map_id": "S2",
+            "report_type": "software-engineering",
+            "registry_signal": "regression",
+            "locator_id": "L4",
+            "strength": "strong",
+            "quote": "live regression",
+            "note": "registry phrase mapped onto a report feature stated in different words"
+          },
+          {
+            "map_id": "S3",
+            "report_type": "software-engineering",
+            "registry_signal": "commit",
+            "locator_id": "L6",
+            "strength": "strong",
+            "quote": "TensorLBM commit",
+            "note": "registry phrase mapped onto a report feature stated in different words"
+          },
+          {
+            "map_id": "S4",
+            "report_type": "experimental-validation",
+            "registry_signal": "test matrix",
+            "locator_id": "L9",
+            "strength": "strong",
+            "quote": "9 configurations",
+            "note": "registry phrase mapped onto a report feature stated in different words"
+          },
+          {
+            "map_id": "S5",
+            "report_type": "experimental-validation",
+            "registry_signal": "validation case",
+            "locator_id": "L3",
+            "strength": "partial",
+            "quote": "shear-wave decay anchor",
+            "note": "registry phrase mapped onto a report feature stated in different words"
+          },
+          {
+            "map_id": "S6",
+            "report_type": "experimental-validation",
+            "registry_signal": "baseline comparison",
+            "locator_id": "L8",
+            "strength": "partial",
+            "quote": "ref vs got",
+            "note": "registry phrase mapped onto a report feature stated in different words"
+          }
+        ],
+        "absent_signal_evidence": [
+          {
+            "map_id": "A1",
+            "report_type": "scientific-computation",
+            "registry_signal": "convergence study",
+            "locator_id": "L10",
+            "satisfied": false,
+            "quote": "Tau-mode convergence curve figure omitted",
+            "note": "the report has no convergence study: the tau convergence curve is explicitly reported as omitted"
+          }
+        ]
+      },
+      "evidence_for_classification": [
+        {
+          "method": "char_span",
+          "start_char": 5286,
+          "end_char": 5315,
+          "start_line": 89,
+          "end_line": 89,
+          "quote": "Wall-clock / throughput table",
+          "quote_sha256": "999ec4f85f0e046eeaa8ee92a9326fde919fd3db90363e936b153419038ea764",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L1"
+        },
+        {
+          "method": "char_span",
+          "start_char": 5997,
+          "end_char": 6017,
+          "start_line": 102,
+          "end_line": 102,
+          "quote": "Sensitivity: 3 grids",
+          "quote_sha256": "28c57fa40eb9e240c20d3d41aab527fa90ab57c46f91a93b8d36f60f4b448e57",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L2"
+        },
+        {
+          "method": "char_span",
+          "start_char": 4770,
+          "end_char": 4793,
+          "start_line": 76,
+          "end_line": 76,
+          "quote": "shear-wave decay anchor",
+          "quote_sha256": "1769e2c974b5e72fbdbbf675ae79efb70c5c572fa83c3e3e121868727fa12cc2",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L3"
+        },
+        {
+          "method": "char_span",
+          "start_char": 3542,
+          "end_char": 3557,
+          "start_line": 50,
+          "end_line": 50,
+          "quote": "live regression",
+          "quote_sha256": "e4b1344f3043a9a944d6925f9b32e7edd8def36eec85abe8f08e8ba823015582",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L4"
+        },
+        {
+          "method": "char_span",
+          "start_char": 7910,
+          "end_char": 7934,
+          "start_line": 113,
+          "end_line": 113,
+          "quote": "Fix belongs in TensorLBM",
+          "quote_sha256": "2c2d97e1973d6462a8d26aae5a377083a0449524ba7c18425527d3bee3dbd0ed",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L5"
+        },
+        {
+          "method": "char_span",
+          "start_char": 3379,
+          "end_char": 3395,
+          "start_line": 49,
+          "end_line": 49,
+          "quote": "TensorLBM commit",
+          "quote_sha256": "15c6910c03e91ffd2109c957e25960a641ffdd27a8a9235f82eccd067975b5f5",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L6"
+        },
+        {
+          "method": "char_span",
+          "start_char": 7995,
+          "end_char": 8038,
+          "start_line": 113,
+          "end_line": 113,
+          "quote": "upstream test that is currently red on main",
+          "quote_sha256": "d118440ef0c4f3febe3671ba7dc694b303eea0f1abec427154c5962fa399f3ac",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L7"
+        },
+        {
+          "method": "char_span",
+          "start_char": 4194,
+          "end_char": 4204,
+          "start_line": 63,
+          "end_line": 63,
+          "quote": "ref vs got",
+          "quote_sha256": "a55fe5a9d1f45986a94c0297ed854f04021e4786c735b58f3bf158a4bce7228e",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L8"
+        },
+        {
+          "method": "char_span",
+          "start_char": 6061,
+          "end_char": 6077,
+          "start_line": 102,
+          "end_line": 102,
+          "quote": "9 configurations",
+          "quote_sha256": "67a2827ee7570ef5da306bd92f439e33b678015976c5743a8107448ddb202954",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L9"
+        },
+        {
+          "method": "char_span",
+          "start_char": 6798,
+          "end_char": 6839,
+          "start_line": 107,
+          "end_line": 107,
+          "quote": "Tau-mode convergence curve figure omitted",
+          "quote_sha256": "b28b1b59e6ebbae62cae9542f4594965fb2c10843362529f2c7bd7228c41ed9f",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L10"
+        },
+        {
+          "method": "char_span",
+          "start_char": 1803,
+          "end_char": 1810,
+          "start_line": 23,
+          "end_line": 23,
+          "quote": "不是 CUDA",
+          "quote_sha256": "415e01488dc8d6e32868380f099e80399823f9a1685d5e00a1361d00126d0fe1",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "L12"
+        }
+      ],
+      "topic_tags": [
+        {
+          "tag": "differentiable-lbm",
+          "locator_id": "T1"
+        },
+        {
+          "tag": "autograd-gradient-check",
+          "locator_id": "T3"
+        },
+        {
+          "tag": "cpu-device-baseline",
+          "locator_id": "T4"
+        },
+        {
+          "tag": "wall-clock-throughput",
+          "locator_id": "T5"
+        },
+        {
+          "tag": "tau-mode-inverse-problem",
+          "locator_id": "T2"
+        },
+        {
+          "tag": "cluster-leg-incomplete",
+          "locator_id": "T6"
+        },
+        {
+          "tag": "gpu-node-not-pooled",
+          "locator_id": "T7"
+        }
+      ],
+      "topic_locators": [
+        {
+          "method": "char_span",
+          "start_char": 154,
+          "end_char": 184,
+          "start_line": 2,
+          "end_line": 2,
+          "quote": "examples/differentiable_lbm.py",
+          "quote_sha256": "3a374cf59228e9998a6ff028ff99302b6b212d58f3d25a028609e3160a6ab8c1",
+          "resolvable": true,
+          "occurrences": 2,
+          "unique_in_source": false,
+          "locator_id": "T1"
+        },
+        {
+          "method": "char_span",
+          "start_char": 185,
+          "end_char": 195,
+          "start_line": 2,
+          "end_line": 2,
+          "quote": "--mode tau",
+          "quote_sha256": "03ece7dd69925579faf80cc90343e228d99bf0eab78a3b9bcf0822e0d2b9ce2b",
+          "resolvable": true,
+          "occurrences": 3,
+          "unique_in_source": false,
+          "locator_id": "T2"
+        },
+        {
+          "method": "char_span",
+          "start_char": 559,
+          "end_char": 567,
+          "start_line": 7,
+          "end_line": 7,
+          "quote": "autograd",
+          "quote_sha256": "78b1457554800d3953e9fa932334f43aa5f9322cf0b332e3656620d569732d46",
+          "resolvable": true,
+          "occurrences": 7,
+          "unique_in_source": false,
+          "locator_id": "T3"
+        },
+        {
+          "method": "char_span",
+          "start_char": 1797,
+          "end_char": 1802,
+          "start_line": 23,
+          "end_line": 23,
+          "quote": "VmHWM",
+          "quote_sha256": "a919f1aa10e386a1522e39ae9101c3935c86bb8e2d5f94c31d0aca2c752dbb23",
+          "resolvable": true,
+          "occurrences": 2,
+          "unique_in_source": false,
+          "locator_id": "T4"
+        },
+        {
+          "method": "char_span",
+          "start_char": 1258,
+          "end_char": 1263,
+          "start_line": 14,
+          "end_line": 14,
+          "quote": "MLUPS",
+          "quote_sha256": "37ca682bb63854e9fad846bb8598a194d955a7dd118a80d433f883841b3ddbb3",
+          "resolvable": true,
+          "occurrences": 6,
+          "unique_in_source": false,
+          "locator_id": "T5"
+        },
+        {
+          "method": "char_span",
+          "start_char": 6301,
+          "end_char": 6340,
+          "start_line": 105,
+          "end_line": 105,
+          "quote": "Cluster leg not completed in this round",
+          "quote_sha256": "e3441cb736d116d8422f01ed5e60d93ee2080565a55fa0467b0e25a9c36d190b",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "T6"
+        },
+        {
+          "method": "char_span",
+          "start_char": 6639,
+          "end_char": 6669,
+          "start_line": 106,
+          "end_line": 106,
+          "quote": "GPU node was added to the pool",
+          "quote_sha256": "4d2c03685bac03c69e0c74c0378dcf8cf6251ae1b9a63c1bee7578dacf17bd45",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "T7"
+        }
+      ],
+      "structure": {
+        "headings_found": 19,
+        "by_kind": {
+          "contract_section_zh": 6,
+          "appendix": 2,
+          "appendix_section_en": 11
+        },
+        "sections": [
+          {
+            "index": 1,
+            "kind": "contract_section_zh",
+            "level": 2,
+            "start_char": 0,
+            "start_line": 1,
+            "title": "## ① 案例介绍",
+            "end_char": 448,
+            "chars": 449
+          },
+          {
+            "index": 2,
+            "kind": "contract_section_zh",
+            "level": 2,
+            "start_char": 449,
+            "start_line": 6,
+            "title": "## ② 怎么做的",
+            "end_char": 920,
+            "chars": 472
+          },
+          {
+            "index": 3,
+            "kind": "contract_section_zh",
+            "level": 2,
+            "start_char": 921,
+            "start_line": 10,
+            "title": "## ③ 计算结果",
+            "end_char": 1406,
+            "chars": 486
+          },
+          {
+            "index": 4,
+            "kind": "contract_section_zh",
+            "level": 2,
+            "start_char": 1407,
+            "start_line": 17,
+            "title": "## ④ 结果图",
+            "end_char": 1546,
+            "chars": 140
+          },
+          {
+            "index": 5,
+            "kind": "contract_section_zh",
+            "level": 2,
+            "start_char": 1547,
+            "start_line": 20,
+            "title": "## ⑤ 注意点 / 局限",
+            "end_char": 1860,
+            "chars": 314
+          },
+          {
+            "index": 6,
+            "kind": "contract_section_zh",
+            "level": 2,
+            "start_char": 1861,
+            "start_line": 25,
+            "title": "## ⑥ 误差判定（是否 <3%）",
+            "end_char": 2120,
+            "chars": 260
+          },
+          {
+            "index": 7,
+            "kind": "appendix",
+            "level": 1,
+            "start_char": 2121,
+            "start_line": 34,
+            "title": "# 附录：程序化生成的表格",
+            "end_char": 2135,
+            "chars": 15
+          },
+          {
+            "index": 8,
+            "kind": "appendix",
+            "level": 1,
+            "start_char": 2136,
+            "start_line": 36,
+            "title": "# GAP-PP-5 · differentiable path device line: documented CPU baseline a",
+            "end_char": 2363,
+            "chars": 228
+          },
+          {
+            "index": 9,
+            "kind": "appendix_section_en",
+            "level": 2,
+            "start_char": 2364,
+            "start_line": 41,
+            "title": "## 1 Problem setting & baseline provenance",
+            "end_char": 3070,
+            "chars": 707
+          },
+          {
+            "index": 10,
+            "kind": "appendix_section_en",
+            "level": 2,
+            "start_char": 3071,
+            "start_line": 46,
+            "title": "## 2 Method & implementation",
+            "end_char": 3936,
+            "chars": 866
+          },
+          {
+            "index": 11,
+            "kind": "appendix_section_en",
+            "level": 2,
+            "start_char": 3937,
+            "start_line": 52,
+            "title": "## 3 Parameters",
+            "end_char": 4188,
+            "chars": 252
+          },
+          {
+            "index": 12,
+            "kind": "appendix_section_en",
+            "level": 2,
+            "start_char": 4189,
+            "start_line": 63,
+            "title": "## 4 ref vs got",
+            "end_char": 4204,
+            "chars": 16
+          },
+          {
+            "index": 13,
+            "kind": "appendix_section_en",
+            "level": 3,
+            "start_char": 4205,
+            "start_line": 64,
+            "title": "### 4.1 tau recovery end-to-end (ref = tau* = 0.9, exact by construction)",
+            "end_char": 4509,
+            "chars": 305
+          },
+          {
+            "index": 14,
+            "kind": "appendix_section_en",
+            "level": 3,
+            "start_char": 4510,
+            "start_line": 70,
+            "title": "### 4.2 gradient vs central finite difference (fp64)",
+            "end_char": 4761,
+            "chars": 252
+          },
+          {
+            "index": 15,
+            "kind": "appendix_section_en",
+            "level": 3,
+            "start_char": 4762,
+            "start_line": 76,
+            "title": "### 4.3 shear-wave decay anchor (analytic nu = (tau-0.5)/3), fp64",
+            "end_char": 5019,
+            "chars": 258
+          },
+          {
+            "index": 16,
+            "kind": "appendix_section_en",
+            "level": 3,
+            "start_char": 5020,
+            "start_line": 83,
+            "title": "### 4.4 upstream regression test A/B (`pytest tests/test_autograd.py -k collide_step_gradients`)",
+            "end_char": 5280,
+            "chars": 261
+          },
+          {
+            "index": 17,
+            "kind": "appendix_section_en",
+            "level": 2,
+            "start_char": 5281,
+            "start_line": 89,
+            "title": "## 5 Wall-clock / throughput table (variant B = intended differentiable path, median of reps)",
+            "end_char": 6261,
+            "chars": 981
+          },
+          {
+            "index": 18,
+            "kind": "appendix_section_en",
+            "level": 2,
+            "start_char": 6262,
+            "start_line": 104,
+            "title": "## 6 Failure modes / scope / repro",
+            "end_char": 7488,
+            "chars": 1227
+          },
+          {
+            "index": 19,
+            "kind": "appendix_section_en",
+            "level": 2,
+            "start_char": 7489,
+            "start_line": 111,
+            "title": "## 7 Findings handed back to TensorLBM (cross-repo, not fixed here)",
+            "end_char": 8039,
+            "chars": 551
+          }
+        ],
+        "language_layout": "bilingual: ①-⑥ Chinese front matter, then '# 附录' English appendix §1-§7",
+        "note": "segmentation is purely structural (heading regex + ①-⑥ markers); no semantic rewrite"
+      },
+      "parse_notes": [
+        {
+          "note_id": "N1",
+          "kind": "internal_discrepancy_observed",
+          "summary": "front matter ③/⑥ state the shear-wave anchor errors as <0.01% while the appendix §4.3 table for the same three tau points tops out at 4.8824%; the two readings are not reconcilable from the text alone",
+          "locator_ids": [
+            "D1",
+            "D2",
+            "D3"
+          ],
+          "disposition": "reported, not adjudicated (stage 02 does not extract or grade claims)"
+        },
+        {
+          "note_id": "N2",
+          "kind": "internal_discrepancy_observed",
+          "summary": "front matter ⑤ places the numbers on a loongarch64 control-plane host while appendix §6 says they come from the x86_64 control-plane host; §2 lists loongarch64 as the device",
+          "locator_ids": [
+            "D4",
+            "D5"
+          ],
+          "disposition": "reported, not adjudicated; device identification is genuinely uncertain"
+        },
+        {
+          "note_id": "N3",
+          "kind": "structural_duplication_risk",
+          "summary": "the front matter summarises the appendix: the deliverable described in ① is re-presented as the appendix timing table, and the appendix is introduced as programmatically generated — the same result therefore appears twice in one document, so a stage-03 extractor must deduplicate by value+context or it will double-count",
+          "locator_ids": [
+            "D6",
+            "D7",
+            "D8"
+          ],
+          "disposition": "reported as a downstream risk; this stage extracts nothing"
+        }
+      ],
+      "parse_note_locators": [
+        {
+          "method": "char_span",
+          "start_char": 1394,
+          "end_char": 1403,
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "<0.01% 量级",
+          "quote_sha256": "c489359422dd837d7226da881532dd32fac922808b0233c4e634f59004e90c2d",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "D1"
+        },
+        {
+          "method": "char_span",
+          "start_char": 2041,
+          "end_char": 2053,
+          "start_line": 28,
+          "end_line": 28,
+          "quote": "三参数点均 <0.01%",
+          "quote_sha256": "0e8aac3b15b0d08d1d5365266494ce993fec5b2e64913f55d0fabfd608c1562d",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "D2"
+        },
+        {
+          "method": "char_span",
+          "start_char": 4897,
+          "end_char": 4939,
+          "start_line": 79,
+          "end_line": 79,
+          "quote": "| 0.6 | 0.03333333 | 0.03496079 | 4.8824 |",
+          "quote_sha256": "df85175ad14be64f4eb0bfc5cb0cfd485b0ccd56ec2e83e276a83b01e3045a9f",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "D3"
+        },
+        {
+          "method": "char_span",
+          "start_char": 1688,
+          "end_char": 1710,
+          "start_line": 21,
+          "end_line": 21,
+          "quote": "来自控制面宿主（loongarch64 架构",
+          "quote_sha256": "1fbf9140712a9a834dd2bd5376eff19d2b24606e0a0ed18abdabfbe2ae8fc7ac",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "D4"
+        },
+        {
+          "method": "char_span",
+          "start_char": 6565,
+          "end_char": 6604,
+          "start_line": 105,
+          "end_line": 105,
+          "quote": "come from the control-plane x86_64 host",
+          "quote_sha256": "68d9974babc26e74f66ef3cc831373223f630b5d830693ad334de24a2b0493bf",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "D5"
+        },
+        {
+          "method": "char_span",
+          "start_char": 204,
+          "end_char": 218,
+          "start_line": 2,
+          "end_line": 2,
+          "quote": "墙钟/吞吐/峰值RSS 矩阵",
+          "quote_sha256": "dc2daa1ddbdbe228ab8c9cc2ebc9c7aea37cdbf8999c9dcd025edeeec6829c74",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "D6"
+        },
+        {
+          "method": "char_span",
+          "start_char": 5286,
+          "end_char": 5326,
+          "start_line": 89,
+          "end_line": 89,
+          "quote": "Wall-clock / throughput table (variant B",
+          "quote_sha256": "d8bb95e4d54b0471a52c3d5e53957c81922dc4302b3b17010ed0668c396ed805",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "D7"
+        },
+        {
+          "method": "char_span",
+          "start_char": 2126,
+          "end_char": 2134,
+          "start_line": 34,
+          "end_line": 34,
+          "quote": "程序化生成的表格",
+          "quote_sha256": "744b2700a5c076acbd0b98580637b094a38d5f05a5e3cdb437abfc03089c088e",
+          "resolvable": true,
+          "occurrences": 1,
+          "unique_in_source": true,
+          "locator_id": "D8"
+        }
+      ],
+      "uncertainty": {
+        "preserved": true,
+        "items": [
+          "report_type is a refutable hypothesis (primary + alternative recorded)",
+          "registry signals are literal-string matchers; a semantic match the phrase list does not cover is not counted",
+          "the two internal discrepancies are flagged, never resolved by this stage"
+        ]
+      },
+      "non_actions": {
+        "claims_extracted": false,
+        "assets_registered": false,
+        "marked_verified": false,
+        "other_reports_touched": false,
+        "note": "objective.classify_report_type=true, register_assets=false; verification is the platform's gate"
+      },
+      "counts": {
+        "sections": 19,
+        "type_evidence_locators": 11,
+        "topic_tags": 7,
+        "parse_notes": 3,
+        "parse_note_locators": 8
+      }
+    }
+  }
+}
