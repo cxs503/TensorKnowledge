@@ -1,0 +1,185 @@
+{
+ "package_id": "wp-11349-04",
+ "report_id": "11349",
+ "reviewed_package": "wp-11349-01",
+ "verdict": "needs-fix",
+ "acceptance": {
+  "valid_json": "pass",
+  "schema_pass": "pass（kf_result 通过 schemas/kf_result.v1.schema.json，errors=0；review_events 通过 review-event.schema.json，errors=0）",
+  "reviewer_independent": "partial（判据机器可重算；但审核者与生产者同属单一模型族，见 review_report.independence_limitations）",
+  "upstream_packages_completed": "pass（审核对象 wp-11349-01 已发布为平台报告 id=14789（tags 含 kf-wp:wp-11349-01，status=published）；docs/kf 下 report 11349 无 02/03 包，04 的上游即 01）"
+ },
+ "constraints": {
+  "review_prompt_not_copied_from_producer": "pass（本包审核提示词由契约 notes/objective 复述，未取自 wp-11349-01 的说明文本）",
+  "reviewer_context_excludes_producer_explanation": "pass（判定仅用 report 11349 markdown + wp-11349-01 的机器产物 asset_manifest.json/kf_result.json/self_check.json/report_published.json；未读生产者的过程叙述）",
+  "do_not_mark_claims_as_verified": "pass（全产物无 verified 戳；verdict=needs-fix，verification 交平台门）",
+  "single_report_boundary": "pass（只读写 report_id=11349 与该 report 的包；未解引用 11344）",
+  "zero_handcopy": "pass（review_report 内每个引文由脚本从 markdown 切片校验，见 check C04a/C04b）"
+ },
+ "checks": [
+  {
+   "id": "C01",
+   "check": "source_hash 契约一致性",
+   "result": "pass",
+   "detail": "recomputed=sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80 contract=sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80"
+  },
+  {
+   "id": "C02",
+   "check": "asset_manifest.source.hash 与重算一致",
+   "result": "pass",
+   "detail": "manifest=e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80 recomputed=sha256:e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80"
+  },
+  {
+   "id": "C03",
+   "check": "asset_manifest.source.chars/bytes 与实测一致",
+   "result": "pass",
+   "detail": "declared chars=1029 bytes=1657 | measured chars=1029 bytes=1657"
+  },
+  {
+   "id": "C04a",
+   "check": "locator.quote 在源 markdown 中唯一",
+   "result": "pass",
+   "detail": "非唯一项=[]"
+  },
+  {
+   "id": "C04b",
+   "check": "locator.char_span 切片 == quote",
+   "result": "pass",
+   "detail": "失配项=[]"
+  },
+  {
+   "id": "C04c",
+   "check": "locator.start_line/end_line 覆盖 quote",
+   "result": "pass",
+   "detail": "失配项=[]"
+  },
+  {
+   "id": "C05",
+   "check": "in_report_section 均为源文档真实标题",
+   "result": "pass",
+   "detail": "失配项=[] | 源标题=['P266W1-N10 补记：能力台账路由接线缺陷修复', '修复', '发现的缺陷（可复现）', '局限']"
+  },
+  {
+   "id": "C06",
+   "check": "counts 与 assets 明细自洽",
+   "result": "pass",
+   "detail": "declared={\"assets\": 11, \"by_class\": {\"report_document\": 1, \"source_file\": 2, \"source_symbol\": 2, \"api_endpoint\": 3, \"test_case\": 1, \"cross_report_reference\": 1, \"evidence_table\": 1}, \"by_resolution\": {\"resolved_in_source\": 2, \"referenced_unresolved\": 9}} | recomputed assets=11 by_class={'report_document': 1, 'source_file': 2, 'source_symbol': 2, 'api_endpoint': 3, 'test_case': 1, 'cross_report_reference': 1, 'evidence_table': 1} by_resolution={'resolved_in_source': 2, 'referenced_unresolved': 9}"
+  },
+  {
+   "id": "C07",
+   "check": "asset_id 唯一",
+   "result": "pass",
+   "detail": "ids=['A00', 'A01', 'A02', 'A03', 'A04', 'A05', 'A06', 'A07', 'A08', 'A09', 'A10']"
+  },
+  {
+   "id": "C08",
+   "check": "kf_result.outputs['asset_manifest.json'] == 磁盘 manifest",
+   "result": "pass",
+   "detail": "envelope keys=['asset_manifest.json']"
+  },
+  {
+   "id": "C09",
+   "check": "kf_result 通过 schemas/kf_result.v1.schema.json",
+   "result": "fail",
+   "detail": "errors=2 []:Additional properties are not allowed ('claims' was unexpected) ; ['provenance']:Additional properties are not allowed ('emitted_at', 'notes', 'producer' were unexpected)"
+  },
+  {
+   "id": "C10",
+   "check": "asset_manifest 通过包内 pinned schema",
+   "result": "pass",
+   "detail": "errors=0"
+  },
+  {
+   "id": "C11",
+   "check": "被审产物未自我打 verified 戳",
+   "result": "pass",
+   "detail": "manifest.integrity.verified=False verification_stamp=None"
+  },
+  {
+   "id": "C12",
+   "check": "上游自报 artifact_sha256 与磁盘实测一致",
+   "result": "pass",
+   "detail": "declared manifest=0663bcdcc8460ef216096cb11a3f6a67ef9122c51883a909fa1b116e79e01c42 measured=0663bcdcc8460ef216096cb11a3f6a67ef9122c51883a909fa1b116e79e01c42 | declared kf=21155502045b04b1a8fa0fd3b0427183c700e4ece1fe60fd8b86eb35a20854e6 measured=21155502045b04b1a8fa0fd3b0427183c700e4ece1fe60fd8b86eb35a20854e6"
+  },
+  {
+   "id": "C13",
+   "check": "上游 KF-RESULT 报告已发布（id/tag 自洽）",
+   "result": "pass",
+   "detail": "id=14789 title=KF-RESULT wp-11349-01 status=published"
+  },
+  {
+   "id": "C14",
+   "check": "上游落盘快照字节 == 平台正文重算",
+   "result": "pass",
+   "detail": "snapshot=docs/kf/wp-11349-01/source/report_11349.md"
+  },
+  {
+   "id": "C15",
+   "check": "referenced_unresolved 的仓内路径确实不可达",
+   "result": "pass",
+   "detail": "probed={\"A01\": {\"path\": \"backend/api/capability_audit.py\", \"in_worktree\": false}, \"A02\": {\"path\": \"backend/main.py\", \"in_worktree\": false}, \"A08\": {\"path\": \"test_capability_semantics_api.py\", \"in_worktree\": false}} bad=[]"
+  },
+  {
+   "id": "C16",
+   "check": "报告“21 能力”与当前端点 total_capabilities 一致",
+   "result": "pass",
+   "detail": "endpoint total_capabilities=21"
+  }
+ ],
+ "findings": [
+  {
+   "id": "F-C09",
+   "severity": "major",
+   "check": "kf_result 通过 schemas/kf_result.v1.schema.json",
+   "detail": "errors=2 []:Additional properties are not allowed ('claims' was unexpected) ; ['provenance']:Additional properties are not allowed ('emitted_at', 'notes', 'producer' were unexpected)"
+  }
+ ],
+ "not_run": [
+  "backend/tests/test_capability_semantics_api.py 未执行：该测试属 TensorPlatform 仓，本工作树（TensorKnowledge）无此文件",
+  "2026-11-10 时点线上 404 无法回溯重放：本次只观测当前时点状态（见 live_probe）",
+  "未解引用 report_id=11344（产线边界：只碰 11349）"
+ ],
+ "artifacts_sha256": {
+  "review_report.json": "108ba98a81af83e3e57a31112632041cedd2af0a82a83bf844442c7649d37961",
+  "kf_result.json": "bf381afb678bd568009bbbaa27dc0ab114d31a1bd164cd75ab1a718bba2ddf87",
+  "source/report_11349.md": "e1dbc9395d11c8d95307584aeb333cc48373b7af373961368e1010642b906e80",
+  "upstream/asset_manifest.json": "0663bcdcc8460ef216096cb11a3f6a67ef9122c51883a909fa1b116e79e01c42",
+  "upstream/kf_result.json": "21155502045b04b1a8fa0fd3b0427183c700e4ece1fe60fd8b86eb35a20854e6"
+ },
+ "tests_run": {
+  "cmd": "python3 -m pytest tests/test_kf_wp_11349_04.py -q",
+  "result": "4 passed",
+  "what_it_asserts": [
+   "已交付矩阵 18 项、唯一 fail 为 C09、verdict=needs-fix",
+   "本包 kf_result 与 review_event 对仓内 schema errors=0（无超集字段）",
+   "篡改上游 locator.start_char(+1) → C04b 必须 fail（切片判据真在断言）",
+   "篡改源 markdown 1 字符 → C01/C02 必须 fail（哈希判据真在断言）"
+  ]
+ },
+ "publication": {
+  "id": 18032,
+  "title": "KF-RESULT wp-11349-04",
+  "status": "published",
+  "mission_id": 19809,
+  "tags": [
+   "kf-wp:wp-11349-04",
+   "KF-RESULT",
+   "04-independent-review",
+   "red-team-reviewer",
+   "report:11349",
+   "reviewed:wp-11349-01",
+   "needs-fix",
+   "capability-ledger",
+   "API接线",
+   "lane:C"
+  ],
+  "markdown_chars": 15781,
+  "markdown_sha256": "ca5062a5232cd7cc0ef4c03ebf5c4919ece80b982d1665745cc6421e3c949182",
+  "readback_verified_identical": true,
+  "json_blocks": 1,
+  "figures": 0,
+  "figure_omission_reason": "纯文档/接口审核任务，无场量云图与收敛曲线；证据以 ④定位表 + runs/ 原始回包替代"
+ },
+ "envelope_schema_errors": 0,
+ "review_event_schema_errors": 0
+}
