@@ -1,0 +1,155 @@
+{
+  "schema": "acceptance.v1",
+  "package_id": "wp-13272-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13272",
+  "source_uri": "tensor://reports/13272",
+  "source_hash": "sha256:75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90",
+  "contract": {
+    "package_id": "wp-13272-01",
+    "task_type": "01-asset-registration",
+    "report_id": "13272",
+    "source_field": "markdown",
+    "source_hash": "sha256:75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90",
+    "delivery_repo": "TensorKnowledge",
+    "work_package_boundary": "report_id=13272 only"
+  },
+  "checks": [
+    {
+      "id": "AC1",
+      "item": "源哈希可独立重算且与钉住记录一致",
+      "expected": "75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90",
+      "observed": "75ed781cefac9fee890f493c256dec8aea2e70795eca9d7a8bbfef1af1bcce90",
+      "pass": true,
+      "method": "hashlib.sha256(markdown.encode('utf-8'))"
+    },
+    {
+      "id": "AC2",
+      "item": "源文本规模一致（chars / bytes / lines）",
+      "expected": "4537 / 6829 / 106",
+      "observed": "4537 / 6829 / 106",
+      "pass": true,
+      "method": "len(md) / len(md.encode) / 换行计数"
+    },
+    {
+      "id": "AC3",
+      "item": "工单边界：产物中只出现 report 13272",
+      "expected": "全部 tensor:// 引用 = tensor://reports/13272",
+      "observed": "唯一取值 ['tensor://reports/13272']",
+      "pass": true,
+      "method": "扫描 manifest 序列化串中的 tensor://reports/<id>"
+    },
+    {
+      "id": "AC4",
+      "item": "每个 char_span 定位器可离线重解（md[start:end] == quote）",
+      "expected": "0 个不复现项",
+      "observed": "0 个不复现项",
+      "pass": true,
+      "method": "逐条切片比对"
+    },
+    {
+      "id": "AC5",
+      "item": "行号由字符偏移反查一致（start_line / end_line）",
+      "expected": "0 个行号偏差",
+      "observed": "0 个偏差",
+      "pass": true,
+      "method": "line_index + char_to_line 重算"
+    },
+    {
+      "id": "AC6",
+      "item": "每个定位器唯一（token 唯一，或引文所在行唯一）",
+      "expected": "全部 unique=true",
+      "observed": "unique=false: 0",
+      "pass": true,
+      "method": "occurrences 计数 + anchor 唯一性断言"
+    },
+    {
+      "id": "AC7",
+      "item": "结构资产齐备（抬头 + 8 个 H2 + 3 表格 + 1 代码块）",
+      "expected": "sections=9, tables=3, fenced_blocks=1",
+      "observed": "sections=9, tables=3, fenced_blocks=1",
+      "pass": true,
+      "method": "parse_sections / parse_tables / parse_fences"
+    },
+    {
+      "id": "AC8",
+      "item": "声明图件字节可解析（PNG 魔数 + IHDR 尺寸 + sha256）",
+      "expected": "1 张声明图件全部取到字节",
+      "observed": "1/1 张取到字节；sha256=df7720159e47e017 尺寸=[1932, 896]",
+      "pass": true,
+      "method": "GET /tensor/reports/13272/figures/<name> → 本地 sha256 + IHDR 解析"
+    },
+    {
+      "id": "AC9",
+      "item": "counts 由资产表重算且自洽",
+      "expected": "by_class 合计 = by_resolution 合计 = assets 数",
+      "observed": "assets=59, by_class 合计=59, by_resolution 合计=59",
+      "pass": true,
+      "method": "从 assets 数组重新计数并与 counts 块比对"
+    },
+    {
+      "id": "AC10",
+      "item": "跨仓引用不冒充已复核（metadata_only 且带 reason）",
+      "expected": "全部跨仓引用 status=metadata_only + reason 非空",
+      "observed": "13 条 metadata_only；缺 reason 0 条",
+      "pass": true,
+      "method": "遍历 assets[].resolution"
+    },
+    {
+      "id": "AC11",
+      "item": "01 工序契约：claims 为空且给出理由",
+      "expected": "claims == [] 且 claims_note 非空",
+      "observed": "claims=[]；claims_note 长度 70",
+      "pass": true,
+      "method": "字段检查"
+    },
+    {
+      "id": "AC12",
+      "item": "未执行报告命令块（不制造已复现的假象）",
+      "expected": "repro_block.checks[executed_here] = no",
+      "observed": "no",
+      "pass": true,
+      "method": "检查复现命令块资产的 executed_here 标记"
+    },
+    {
+      "id": "AC13",
+      "item": "文档资产覆盖全文（document span = 全文，且 quote 哈希 = 源哈希）",
+      "expected": "span 0..4537，quote_sha256 = 源哈希",
+      "observed": "span 0..4537，quote_sha256 一致 True",
+      "pass": true,
+      "method": "document 资产 span 与哈希比对"
+    },
+    {
+      "id": "AC14",
+      "item": "清单/信封 schema 可校验（asset_manifest_kf.v1 / kf_result.v1）",
+      "expected": "两 schema 校验通过",
+      "observed": "由 tests/test_kf_wp13272_01.py 用 jsonschema 校验",
+      "pass": true,
+      "method": "pytest tests/test_kf_wp13272_01.py"
+    },
+    {
+      "id": "AC15",
+      "item": "资产分类自洽（by_class 键集合 = 资产实测类别集合，且每类 ≥1）",
+      "expected": "键集合一致、每类计数 ≥1",
+      "observed": "14 类：code_or_artifact_path=7, code_symbol=13, declared_figure=1, declared_figure_artifact=1, equation=2, numeric_token=7, platform_ledger_reference=3, regime_token=3, regulatory_reference=3, report_document=1, report_section=9, report_table=3, repro_command_block=1, test_path=5",
+      "pass": true,
+      "method": "assets[].asset_class 重新计数"
+    },
+    {
+      "id": "AC16",
+      "item": "资产解析图渲染为非空 PNG（matplotlib，IHDR 可解析）",
+      "expected": "PNG 魔数 + 尺寸 > 0",
+      "observed": "docs/kf/wp-13272-01/fig1_asset_resolution.png 尺寸=[1932, 896]",
+      "pass": true,
+      "method": "matplotlib Agg 渲染 → png_size() 解析 IHDR"
+    }
+  ],
+  "summary": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0,
+    "failed_ids": [],
+    "all_pass": true
+  },
+  "scope_note": "本验收表只覆盖 01 工序（资产登记）自身的可机验项：源字节、定位器可复现性、图件字节、清单自洽、边界与诚实性。它不评价报告 13272 的任何技术结论（那属 03/04 工序），也不构成平台 gate 的 accepted 判定。"
+}
