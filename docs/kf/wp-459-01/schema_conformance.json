@@ -1,0 +1,789 @@
+{
+  "report": "kf_result schema conformance scan",
+  "package_id": "wp-459-01",
+  "roots": [
+    "docs/kf",
+    "runs",
+    "work"
+  ],
+  "current": {
+    "schema": "kf_result.v1.schema.json",
+    "envelopes_scanned": 135,
+    "envelopes_valid": 88,
+    "envelopes_invalid": 47,
+    "finding_count": 39,
+    "invalid_json": 0,
+    "findings": [
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'generator', 'hash_algo', 'hashed_bytes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 15,
+        "examples": [
+          "docs/kf/wp-13560-01/kf_result.json",
+          "docs/kf/wp-14068-01/kf_result.json",
+          "docs/kf/wp-14445-01/kf_result.json",
+          "docs/kf/wp-542-01/kf_result.json",
+          "docs/kf/wp-5656-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "enum",
+        "path": "task_type",
+        "message": "'01' is not one of ['01-asset-registration', '02-classification-parse', '03-knowledge-extraction', '04-independent-review', '05-synthesis-research']",
+        "count": 3,
+        "examples": [
+          "docs/kf/wp-174-01/kf_result.json",
+          "docs/kf/wp-5624-01/kf_result.json",
+          "docs/kf/wp-9645-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "<root>",
+        "message": "Additional properties are not allowed ('schema_version' was unexpected)",
+        "count": 2,
+        "examples": [
+          "docs/kf/wp-5761-01/kf_result.json",
+          "docs/kf/wp-5925-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('artifact_bytes', 'artifact_path', 'artifact_sha256', 'contract_version', 'generator', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were unexpected)",
+        "count": 2,
+        "examples": [
+          "docs/kf/wp-10429-01/kf_result.json",
+          "docs/kf/wp-9763-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'generator', 'hash_alg', 'hashed_bytes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 2,
+        "examples": [
+          "docs/kf/wp-7545-01/kf_result.json",
+          "work/kf_wp7545/upstream/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('hash_algo', 'hashed_bytes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 2,
+        "examples": [
+          "docs/kf/wp-12866-01/kf_result.json",
+          "docs/kf/wp-7840-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "<root>",
+        "message": "Additional properties are not allowed ('asset_count', 'figure_count', 'generated_at', 'manifest_sha256', 'producer', 'source_hash', 'source_uri', 'verification_status' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9777-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "<root>",
+        "message": "Additional properties are not allowed ('coupling_contract' was unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-5656-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "outputs",
+        "message": "Additional properties are not allowed ('asset_manifest.digest.json' was unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9656-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "outputs",
+        "message": "Additional properties are not allowed ('selfcheck.json' was unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9582-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "outputs",
+        "message": "Additional properties are not allowed ('source_markdown.md', 'verification.json' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-7473-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "outputs",
+        "message": "Additional properties are not allowed ('verification.json' was unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-8288-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('bytes_utf8', 'contract_declared_hash', 'hash_match', 'platform_mission_id', 'platform_status', 'platform_tags' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-10647-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('bytes_utf8', 'hash_matches_contract', 'tool' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-13476-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_source_hash', 'contract_version', 'generator', 'lane', 'local_copy', 'manifest_bytes', 'manifest_path', 'manifest_sha256', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-8037-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'generator', 'hash_algo', 'hash_matches_contract', 'hashed_bytes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-7473-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'generator', 'hash_algo', 'hashed_bytes', 'outputs_binding', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-7883-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'hash_algo', 'hash_scope', 'source_bytes_utf8', 'source_chars', 'source_lines' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9656-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'hash_algo', 'hashed_bytes', 'output_bytes', 'output_path', 'output_sha256', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-542-04/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'hash_algo', 'hashed_bytes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-6537-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'generator', 'hash_algo', 'hashed_bytes', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_note', 'verifier', 'work_package' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-5761-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'generator', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-5925-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'generator', 'lane', 'retrieved_via', 'scenario_key_matches_contract', 'source_bytes_utf8', 'source_chars', 'source_title', 'title_matches_contract', 'verification_status', 'verifier' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-14179-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('emitted_at_policy' was unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-10618-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('fetched_via', 'hash_algo', 'hashed_bytes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-14041-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('generator', 'hash_algo', 'hashed_bytes', 'repo_head', 'review_event_schema_ok', 'reviewed_artifact_sha256', 'reviewed_package', 'source_bytes_utf8', 'source_chars', 'verifier' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-5760-04/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('generator', 'independence', 'reviewed_package', 'reviewer_role' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-6939-04/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('generator', 'repro_cmd', 'retrieval', 'retrieved_at', 'source_bytes', 'source_chars', 'source_hash_algorithm', 'source_hash_matches_contract', 'source_hash_recomputed_in_run', 'source_hash_scope' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-736-01/kf_result_wp-736-01.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('local_copy', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-11557-01/kf_result.wp-11557-01.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('retrieval_method', 'retrieved_at', 'source_hash_verified' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-4331-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-11204-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('source_chars', 'source_hash_expected', 'source_mission_id' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9756-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "required",
+        "path": "<root>",
+        "message": "'outputs' is a required property",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9777-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "required",
+        "path": "<root>",
+        "message": "'provenance' is a required property",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9777-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "required",
+        "path": "provenance",
+        "message": "'source_field' is a required property",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-4331-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "type",
+        "path": "outputs/review_events.json",
+        "message": "{'package_id': 'wp-1561-04', 'object': 'wp-1561-01', 'policy_version': 'ke-review-v0.1', 'producer_ids': ['agent/m15529 (TensorKnowledge) · package wp-1561-01'], 'system_transitions': [{'id': 'kf1561-04:submit', 'from': 'draft', 'to': 'in-review', 'policy_version': 'ke-review-v0.1', 'by': 'platform-task-completion', 'at': '2026-11-12T02:47:00Z', 'note': 'task completion moves the package into review (ke_state_machine.submit); it is deliberately NOT a review decision, so it is kept out of `events`'}], 'events': [{'id': 'kf1561-04:review-1', 'decision': 'approve', 'policy_version': 'ke-review-v0.1', 'reviewer': {'id': 'agent/m15823 (TensorKnowledge) · package wp-1561-04 · red-team-reviewer', 'reviewer_type': 'agent'}, 'reviewed_at': '2026-11-12T02:50:00Z', 'findings': [{'id': 'F-01', 'severity': 'low', 'blocking': False, 'title': 'record title != markdown H1, and the drift is not registered as an observation'}, {'id': 'F-02', 'severity': 'low', 'blocking': False, 'title': \"'eta_R = 1.0 is conservative' points the optimistic way for power adequacy\"}, {'id': 'F-03', 'severity': 'info', 'blocking': False, 'title': 'two denominators in one geometry bullet (registered as 1561-o000) — arithmetic reproduced'}, {'id': 'F-04', 'severity': 'medium', 'blocking': False, 'title': 'five declared figures have no retrievable payload -> figure-borne statements are unverifiable'}, {'id': 'F-05', 'severity': 'info', 'blocking': False, 'title': 'subject-report arithmetic is self-consistent for 5/5 ships; residual differences trace to integer rpm'}, {'id': 'F-06', 'severity': 'low', 'blocking': False, 'title': 'two non-resolved assets carry a status but no reason'}, {'id': 'F-07', 'severity': 'low', 'blocking': False, 'title': 'declared line count 163 vs 162 actual lines'}], 'review_report': 'docs/kf/wp-1561-04/review_report.json', 'disposition': 'approve-with-notes', 'note': 'approve with non-blocking findings; no claim is marked verified by this event'}]} is not of type 'array'",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-1561-04/kf_result.json"
+        ]
+      },
+      {
+        "validator": "type",
+        "path": "outputs/review_events.json",
+        "message": "{'path': 'docs/kf/wp-5760-04/review_events.json', 'sha256': 'a92e86f569c0b0a07671a1a47e3027da696b3a27d887e11e34994e04f25c44bf', 'bytes': 839, 'schema_valid': True, 'schema_error': None} is not of type 'array'",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-5760-04/kf_result.json"
+        ]
+      },
+      {
+        "validator": "type",
+        "path": "provenance/producer",
+        "message": "{'repo': 'TensorKnowledge', 'worktree': '/root/tp-agent/work/m15516', 'branch': 'agent/m15516'} is not of type 'string'",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-736-01/kf_result_wp-736-01.json"
+        ]
+      },
+      {
+        "validator": "type",
+        "path": "report_id",
+        "message": "4331 is not of type 'string'",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-4331-01/kf_result.json"
+        ]
+      }
+    ]
+  },
+  "baseline": {
+    "schema": "kf_result.v1.baseline.json",
+    "envelopes_scanned": 135,
+    "envelopes_valid": 6,
+    "envelopes_invalid": 129,
+    "finding_count": 46,
+    "invalid_json": 0,
+    "findings": [
+      {
+        "validator": "additionalProperties",
+        "path": "<root>",
+        "message": "Additional properties are not allowed ('claims' was unexpected)",
+        "count": 94,
+        "examples": [
+          "docs/kf/wp-10329-01/kf_result.json",
+          "docs/kf/wp-10344-01/kf_result.json",
+          "docs/kf/wp-10429-01/kf_result.json",
+          "docs/kf/wp-10459-01/kf_result.json",
+          "docs/kf/wp-10542-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('emitted_at', 'notes', 'producer' were unexpected)",
+        "count": 83,
+        "examples": [
+          "docs/kf/wp-10329-01/kf_result.json",
+          "docs/kf/wp-10344-01/kf_result.json",
+          "docs/kf/wp-10459-01/kf_result.json",
+          "docs/kf/wp-10542-01/kf_result.json",
+          "docs/kf/wp-10816-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "required",
+        "path": "provenance",
+        "message": "'source_uri' is a required property",
+        "count": 67,
+        "examples": [
+          "docs/kf/wp-10329-01/kf_result.json",
+          "docs/kf/wp-10344-01/kf_result.json",
+          "docs/kf/wp-10459-01/kf_result.json",
+          "docs/kf/wp-10816-01/kf_result.json",
+          "docs/kf/wp-11107-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'generator', 'hash_algo', 'hashed_bytes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 8,
+        "examples": [
+          "docs/kf/wp-542-01/kf_result.json",
+          "docs/kf/wp-5656-01/kf_result.json",
+          "docs/kf/wp-5687-01/kf_result.json",
+          "docs/kf/wp-5687-04/upstream_snapshot/kf_result.json",
+          "docs/kf/wp-5716-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'emitted_at', 'fetched_via', 'generator', 'hash_algo', 'hashed_bytes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 5,
+        "examples": [
+          "docs/kf/wp-13560-01/kf_result.json",
+          "docs/kf/wp-14068-01/kf_result.json",
+          "docs/kf/wp-14445-01/kf_result.json",
+          "docs/kf/wp-7450-01/kf_result.json",
+          "docs/kf/wp-8288-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('notes', 'producer' were unexpected)",
+        "count": 4,
+        "examples": [
+          "docs/kf/wp-12160-01/kf_result.json",
+          "docs/kf/wp-459-01/kf_result.json",
+          "docs/kf/wp-5559-04/kf_result.json",
+          "work/wp-5559-04/kf_result.json"
+        ]
+      },
+      {
+        "validator": "enum",
+        "path": "task_type",
+        "message": "'01' is not one of ['01-asset-registration', '02-classification-parse', '03-knowledge-extraction', '04-independent-review', '05-synthesis-research']",
+        "count": 3,
+        "examples": [
+          "docs/kf/wp-174-01/kf_result.json",
+          "docs/kf/wp-5624-01/kf_result.json",
+          "docs/kf/wp-9645-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "<root>",
+        "message": "Additional properties are not allowed ('schema_version' was unexpected)",
+        "count": 2,
+        "examples": [
+          "docs/kf/wp-5761-01/kf_result.json",
+          "docs/kf/wp-5925-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'emitted_at', 'fetched_via', 'generator', 'hash_alg', 'hashed_bytes', 'producer', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 2,
+        "examples": [
+          "docs/kf/wp-7545-01/kf_result.json",
+          "work/kf_wp7545/upstream/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('emitted_at', 'hash_algo', 'hashed_bytes', 'notes', 'producer', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 2,
+        "examples": [
+          "docs/kf/wp-12866-01/kf_result.json",
+          "docs/kf/wp-7840-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "<root>",
+        "message": "Additional properties are not allowed ('asset_count', 'figure_count', 'generated_at', 'manifest_sha256', 'producer', 'source_hash', 'source_uri', 'verification_status' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9777-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "<root>",
+        "message": "Additional properties are not allowed ('coupling_contract' was unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-5656-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "outputs",
+        "message": "Additional properties are not allowed ('asset_manifest.digest.json' was unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9656-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "outputs",
+        "message": "Additional properties are not allowed ('selfcheck.json' was unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9582-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "outputs",
+        "message": "Additional properties are not allowed ('source_markdown.md', 'verification.json' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-7473-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "outputs",
+        "message": "Additional properties are not allowed ('verification.json' was unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-8288-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('artifact_bytes', 'artifact_path', 'artifact_sha256', 'contract_version', 'generator', 'lane', 'local_copy', 'notes', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9763-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('artifact_bytes', 'artifact_path', 'artifact_sha256', 'contract_version', 'generator', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-10429-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('bytes_utf8', 'contract_declared_hash', 'emitted_at', 'hash_match', 'notes', 'platform_mission_id', 'platform_status', 'platform_tags', 'producer' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-10647-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('bytes_utf8', 'emitted_at', 'hash_matches_contract', 'notes', 'producer', 'tool' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-13476-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_source_hash', 'contract_version', 'emitted_at', 'generator', 'lane', 'local_copy', 'manifest_bytes', 'manifest_path', 'manifest_sha256', 'producer', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-8037-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'emitted_at', 'fetched_via', 'generator', 'hash_algo', 'hashed_bytes', 'notes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-7554-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'emitted_at', 'fetched_via', 'hash_algo', 'hash_scope', 'notes', 'producer', 'source_bytes_utf8', 'source_chars', 'source_lines' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9656-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'emitted_at', 'fetched_via', 'hash_algo', 'hashed_bytes', 'notes', 'producer', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-6537-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'generator', 'hash_algo', 'hash_matches_contract', 'hashed_bytes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-7473-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'generator', 'hash_algo', 'hashed_bytes', 'notes', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-6939-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'generator', 'hash_algo', 'hashed_bytes', 'outputs_binding', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-7883-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'fetched_via', 'hash_algo', 'hashed_bytes', 'output_bytes', 'output_path', 'output_sha256', 'producer', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-542-04/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'generator', 'hash_algo', 'hashed_bytes', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_note', 'verifier', 'work_package' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-5761-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'generator', 'lane', 'local_copy', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status', 'verifier', 'work_package' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-5925-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('contract_version', 'generator', 'lane', 'notes', 'producer', 'retrieved_via', 'scenario_key_matches_contract', 'source_bytes_utf8', 'source_chars', 'source_title', 'title_matches_contract', 'verification_status', 'verifier' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-14179-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('emitted_at', 'emitted_at_policy', 'notes', 'producer' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-10618-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('emitted_at', 'fetched_via', 'hash_algo', 'hashed_bytes', 'notes', 'producer', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-14041-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('emitted_at', 'generator', 'independence', 'notes', 'producer', 'reviewed_package', 'reviewer_role' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-6939-04/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('emitted_at', 'local_copy', 'notes', 'producer', 'retrieved_via', 'source_bytes_utf8', 'source_chars', 'source_title', 'verification_status' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-11557-01/kf_result.wp-11557-01.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('emitted_at', 'notes', 'producer', 'source_bytes_utf8', 'source_chars' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-11204-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('emitted_at', 'notes', 'producer', 'source_chars', 'source_hash_expected', 'source_mission_id' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-9756-01/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('generator', 'hash_algo', 'hashed_bytes', 'repo_head', 'review_event_schema_ok', 'reviewed_artifact_sha256', 'reviewed_package', 'source_bytes_utf8', 'source_chars', 'verifier' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-5760-04/kf_result.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('generator', 'producer', 'repro_cmd', 'retrieval', 'retrieved_at', 'source_bytes', 'source_chars', 'source_hash_algorithm', 'source_hash_matches_contract', 'source_hash_recomputed_in_run', 'source_hash_scope' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-736-01/kf_result_wp-736-01.json"
+        ]
+      },
+      {
+        "validator": "additionalProperties",
+        "path": "provenance",
+        "message": "Additional properties are not allowed ('retrieval_method', 'retrieved_at', 'source_hash_verified' were unexpected)",
+        "count": 1,
+        "examples": [
+          "docs/kf/wp-4331-01/kf_result.json"
+        ]
+      }
+    ]
+  },
+  "delta": {
+    "valid_before": 6,
+    "valid_after": 88,
+    "newly_valid": 82,
+    "scanned_before": 135,
+    "scanned_after": 135,
+    "findings_before": 46,
+    "findings_after": 39,
+    "regressions": [],
+    "additive_only": true
+  }
+}
