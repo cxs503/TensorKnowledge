@@ -1,0 +1,913 @@
+{
+ "review_report_version": "1.0",
+ "package_id": "wp-444-04",
+ "task_type": "04-independent-review",
+ "report_id": "444",
+ "reviewer_role": "red-team-reviewer",
+ "generated_at": "2026-11-14T02:03:15+00:00",
+ "reviewed_package": {
+  "package_id": "wp-444-01",
+  "task_type": "01-asset-registration",
+  "producer": "agent/m15508 (TensorKnowledge) · package wp-444-01",
+  "source_hash": "sha256:4068f881c6722010ea3cdf78ee673068d8fb56fdc12be39db9c7b3f764457af2",
+  "document": {
+   "path": "docs/kf_result_wp-444-01.md",
+   "sha256": "sha256:1aaf0cc1b1c167bcc8c83d4a0c9858e5cee74e2db72a46b59ec1531827af6b6c"
+  },
+  "machine_readable_artifact": null,
+  "machine_readable_artifact_note": "no wp-444-01 manifest exists in this worktree: .gitignore lists artifacts/ (so new files there are not committed by default) and the only tracked trace of the package is its result document docs/kf_result_wp-444-01.md; C12 is not_run for that reason, not passed"
+ },
+ "source": {
+  "report_id": "444",
+  "sha256": "sha256:4068f881c6722010ea3cdf78ee673068d8fb56fdc12be39db9c7b3f764457af2",
+  "chars": 1961,
+  "snapshot": "docs/kf/wp-444-04/source/report_444.md",
+  "title": "AlphaEvolve-Style Verifier/Generator Separation: Held-Out Question Bank & Independent Verification for Ship Resistance",
+  "scenario_key": "verifier_generator_separation",
+  "mode": "live"
+ },
+ "disposition": "approve-with-notes",
+ "ledger_decision": "approve",
+ "disposition_reason": "No blocking finding on the registration duty: the source hash re-derives byte-exactly, the tallies reproduce, both unresolved assets are corroborated, and zero-claim registration is legal for task 01. 12/20 checks reproduce, 5 fail (F-01/F-02 package hygiene; F-03/F-04/F-05 subject-report arithmetic) and 3 are declared not_run. The approval covers registration mechanics only; it does not endorse report 444 §6, which is escalated for rework.",
+ "blocking_findings": [],
+ "carried_findings": [
+  "F-03",
+  "F-04",
+  "F-05",
+  "F-06",
+  "F-07"
+ ],
+ "counts": {
+  "checks": 20,
+  "pass": 12,
+  "fail": 5,
+  "not_run": 3,
+  "findings": 8,
+  "severity": {
+   "high": 2,
+   "medium": 4,
+   "low": 1,
+   "info": 1
+  }
+ },
+ "scope": {
+  "in_scope": [
+   "byte identity of the report 444 markdown (live record vs pinned snapshot vs the hash the upstream package quotes)",
+   "re-derivation of every structural tally and every quote locator the upstream package asserts",
+   "the envelope printed in the upstream result document against schemas/kf_result.v1",
+   "independent re-derivation of the numbers report 444 prints in §3/§6 and in the governance block, against the formulas the report itself names",
+   "independence and ledger mechanics of this review event"
+  ],
+  "out_of_scope": [
+   "the AlphaEvolve verifier/generator implementation (no repo in this worktree carries it; only the report text was reviewable)",
+   "the figure payload (not served: the record carries name+caption only)",
+   "whether report 444's 15/15 tally is a correct harness result — untestable without the question bank or the verifier code",
+   "Cf against experimental tank data: §6's own baselines are analytic formulas, so this review is formula-to-print, not ship-to-model"
+  ],
+  "claims_assessment": "wp-444-01 declares zero knowledge claims, so what is assessed is the truth of its statements about the source, plus (as carried findings) the arithmetic of the report it registered. Nothing here is marked verified."
+ },
+ "independence": {
+  "reviewer": "agent/m19690 (TensorKnowledge) · package wp-444-04 · red-team-reviewer",
+  "producer": [
+   "agent/m15508 (TensorKnowledge) · package wp-444-01"
+  ],
+  "basis": "distinct-identity",
+  "limitations": [
+   "reviewer and producer are the same model family on the same platform: independence is identity-level and method-level, not model-level",
+   "the producer's machine-readable manifest was not reachable, so C12 is not_run rather than passed",
+   "record-level facts (title, figures, scenario_key) are online-only; the committed snapshot carries the markdown and nothing else, and every check that needs more is flagged offline_reproducible=false",
+   "no second independent reviewer and no strong-model resample were drawn (platform jobs, not available here)"
+  ]
+ },
+ "checks": [
+  {
+   "id": "C01",
+   "title": "upstream source hash re-derived from the live record",
+   "status": "pass",
+   "basis": "GET /tensor/reports/444 + sha256 over the markdown field",
+   "observed": {
+    "recomputed": "sha256:4068f881c6722010ea3cdf78ee673068d8fb56fdc12be39db9c7b3f764457af2",
+    "declared": "sha256:4068f881c6722010ea3cdf78ee673068d8fb56fdc12be39db9c7b3f764457af2"
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C02",
+   "title": "pinned snapshot is byte-identical to the bytes this review read",
+   "status": "pass",
+   "basis": "mode=live",
+   "observed": {
+    "snapshot": "sha256:4068f881c6722010ea3cdf78ee673068d8fb56fdc12be39db9c7b3f764457af2",
+    "live": "sha256:4068f881c6722010ea3cdf78ee673068d8fb56fdc12be39db9c7b3f764457af2"
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C03",
+   "title": "upstream structural tally reproduces (headings / tables / fenced code)",
+   "status": "pass",
+   "basis": "re-derived from the snapshot bytes; upstream declared {'level_headings': 7, 'tables': 4, 'figures': 1, 'code_references': 0}",
+   "observed": {
+    "level2_headings": 7,
+    "headings_all_levels": 12,
+    "tables": 4,
+    "fenced_code_blocks": 0
+   },
+   "offline_reproducible": true,
+   "note": "7 is the level-2 (##) section count; the document holds 12 headings once ### subsections are counted, so the tally is right under the level-2 reading the upstream wording implies and ambiguous otherwise"
+  },
+  {
+   "id": "C04",
+   "title": "the figure the report points at carries no payload",
+   "status": "pass",
+   "basis": "record field `figures` (online only)",
+   "observed": [
+    {
+     "name": "verifier_pilot_results",
+     "has_png_base64": false,
+     "keys": [
+      "caption",
+      "name"
+     ]
+    }
+   ],
+   "offline_reproducible": false,
+   "note": "corroborates the upstream 'figures 缺 PNG 数据' unresolved item"
+  },
+  {
+   "id": "C05",
+   "title": "the title the upstream quotes is a record field, not markdown text",
+   "status": "pass",
+   "basis": "record title == upstream quote; the same string is absent from the markdown",
+   "observed": {
+    "title_in_markdown": false,
+    "title_in_record": true
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C06",
+   "title": "every quote the upstream pins to a markdown location is byte-verbatim there",
+   "status": "fail",
+   "basis": "2/5 markdown-pinned quotes resolve byte-verbatim (substring test against the snapshot)",
+   "observed": [
+    {
+     "field": "参数表 4 行",
+     "quote": "ITTC-1957 / Blasius / P-S / Holtrop",
+     "verbatim": false
+    },
+    {
+     "field": "计算结果表 5 行",
+     "quote": "ITTC-1957 5/5 / Blasius 3/3 / P-S 4/4 / HM 3/3 / 合计 15/15",
+     "verbatim": false
+    },
+    {
+     "field": "误差判定表 4 行",
+     "quote": "ITTC-1957 Cf (Re=1e8) 0.0% / Blasius Cf 0.0% / P-S Cf 0.0% / HM 1+k 0.0%",
+     "verbatim": false
+    },
+    {
+     "field": "图引用",
+     "quote": "见 figures 附件：四面板图展示 ITTC-1957 摩擦线、平板边界层、逐公式通过率、逐题偏差",
+     "verbatim": true
+    },
+    {
+     "field": "治理升级",
+     "quote": "本报告经治理升级，补充六要素章节（背景/方法/结果/图件/注意点/误差判定）",
+     "verbatim": true
+    }
+   ],
+   "offline_reproducible": true
+  },
+  {
+   "id": "C07",
+   "title": "the declared line spans enclose the tables they name",
+   "status": "pass",
+   "basis": "each declared span is compared with the GFM table actually found there",
+   "observed": [
+    {
+     "field": "参数表 4 行",
+     "span": [
+      11,
+      17
+     ]
+    },
+    {
+     "field": "计算结果表 5 行",
+     "span": [
+      35,
+      41
+     ]
+    },
+    {
+     "field": "误差判定表 4 行",
+     "span": [
+      55,
+      60
+     ]
+    },
+    {
+     "field": "图引用",
+     "span": [
+      45,
+      45
+     ]
+    },
+    {
+     "field": "治理升级",
+     "span": [
+      69,
+      69
+     ]
+    }
+   ],
+   "offline_reproducible": true
+  },
+  {
+   "id": "C08",
+   "title": "the digest the upstream prints as a computed value re-derives",
+   "status": "pass",
+   "basis": "upstream prints sha256 as a computation; re-derived independently here",
+   "observed": "sha256:4068f881c6722010ea3cdf78ee673068d8fb56fdc12be39db9c7b3f764457af2",
+   "offline_reproducible": true
+  },
+  {
+   "id": "C09",
+   "title": "zero-claim registration is legal for task 01",
+   "status": "pass",
+   "basis": "no extraction duty in 01; upstream declares claims_count=0",
+   "observed": {
+    "claims_count": 0
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C10",
+   "title": "the two unresolved assets are still unresolved for an independent reader",
+   "status": "pass",
+   "basis": "figure payload absent from the record; the mentioned `pytest（12 项单元测试）` carries no path in the source",
+   "observed": {
+    "unresolved_declared": 2,
+    "test_mention_has_no_path": true
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C11",
+   "title": "the envelope printed in the upstream result document conforms to schemas/kf_result.v1",
+   "status": "fail",
+   "basis": "jsonschema (draft 2020-12) validation of the json block quoted by the upstream document",
+   "observed": {
+    "found": true,
+    "valid": false,
+    "errors": [
+     "outputs: Additional properties are not allowed ('asset_manifest' was unexpected)",
+     "provenance: Additional properties are not allowed ('retrieval_method', 'retrieved_at', 'source_hash_verified' were unexpected)"
+    ],
+    "keys": [
+     "outputs",
+     "package_id",
+     "provenance",
+     "report_id",
+     "task_type"
+    ],
+    "provenance_keys": [
+     "retrieval_method",
+     "retrieved_at",
+     "source_field",
+     "source_hash",
+     "source_hash_verified",
+     "source_uri"
+    ],
+    "output_keys": [
+     "asset_manifest"
+    ]
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C12",
+   "title": "the upstream machine-readable manifest itself is reachable and conformant",
+   "status": "not_run",
+   "basis": "not_run: no wp-444-01 manifest is reachable here (.gitignore lists artifacts/; the only tracked trace is the result document docs/kf_result_wp-444-01.md), so only the envelope printed in that document was checkable (C11)",
+   "observed": null,
+   "offline_reproducible": false
+  },
+  {
+   "id": "C13",
+   "title": "the pass tally is arithmetically consistent",
+   "status": "pass",
+   "basis": "per-category rows summed and compared with the printed total",
+   "observed": {
+    "questions": 15,
+    "passed": 15,
+    "declared_questions": [
+     5,
+     3,
+     4,
+     3
+    ],
+    "declared_passed": [
+     5,
+     3,
+     4,
+     3
+    ],
+    "printed_total": {
+     "questions": 15,
+     "passed": 15
+    },
+    "sum_matches_printed_total": true
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C14",
+   "title": "the governance block's 'original length' is a real prefix length",
+   "status": "pass",
+   "basis": "recomputed 1689 chars as a newline-prefix length",
+   "observed": {
+    "lines": 63,
+    "last_line": ""
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C15",
+   "title": "§6 ITTC-1957 baseline reproduces from the named formula within 3%",
+   "status": "fail",
+   "basis": "0.075/(log10 Re - 2)^2 at Re=1e8",
+   "observed": {
+    "reported": 0.00217,
+    "recomputed": 0.0020833333333333333,
+    "deviation_pct": 4.16,
+    "implied_re": 75676931.19808197
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C16",
+   "title": "§6 Blasius baseline reproduces from the named formula within 3%",
+   "status": "pass",
+   "basis": "1.328/sqrt(Re_L) at Re_L=1e6",
+   "observed": {
+    "reported": 0.001328,
+    "recomputed": 0.001328,
+    "deviation_pct": 0.0
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C17",
+   "title": "§6 Prandtl-Schlichting baseline reproduces from the named formula within 3%",
+   "status": "fail",
+   "basis": "0.455/(log10 Re)^2.58 at Re=1e8, and the customary -1700/Re variant",
+   "observed": {
+    "reported": 0.002012,
+    "recomputed": 0.002128331291412549,
+    "deviation_pct": -5.4658,
+    "variant_value": 0.0021113312914125488,
+    "variant_deviation_pct": -4.7047,
+    "implied_re": 150038908.71571836
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C18",
+   "title": "§6 Holtrop-Mennen 1+k reproduces from the stated inputs",
+   "status": "not_run",
+   "basis": "not_run: the row states Cb only, while the report's own parameter table lists Cb, L, B, T; 1+k is a function of (L, B, T, Cp, nabla) and is therefore under-determined. Carried as WITHHELD, neither passed nor falsified",
+   "observed": {
+    "reported": 1.0547,
+    "family": {
+     "samples": 360,
+     "min": 1.1295,
+     "p10": 1.1374,
+     "median": 1.1958,
+     "p90": 1.2382,
+     "max": 1.249
+    },
+    "reported_inside_family": false
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C19",
+   "title": "the two §6 friction baselines keep the order the two formulas have at Re=1e8",
+   "status": "fail",
+   "basis": "at a common Re above the crossover the two lines have a fixed order; the report prints the opposite one",
+   "observed": {
+    "report_order_ittc_gt_ps": true,
+    "formula_order_ittc_lt_ps": true,
+    "crossover_re": 9147438.44591422
+   },
+   "offline_reproducible": true
+  },
+  {
+   "id": "C20",
+   "title": "figure-borne statements can be checked against a payload",
+   "status": "not_run",
+   "basis": "not_run: the record serves name+caption only (C04), so §4's four-panel figure cannot be opened, re-plotted or compared",
+   "observed": null,
+   "offline_reproducible": false
+  }
+ ],
+ "findings": [
+  {
+   "id": "F-01",
+   "severity": "medium",
+   "blocking": false,
+   "check_ids": [
+    "C06"
+   ],
+   "title": "three of the five markdown-pinned quotes in the upstream evidence table are reflowed, not byte-verbatim",
+   "why_it_matters": "The upstream self-check row asserts `所有引文可在 markdown 原文逐字定位` with a check mark. Three of them cannot: table rows were normalised into one line (`A 5/5 / B 3/3`) while the source holds GFM rows. A downstream gate that substring-checks quotes fails them, and a reader cannot tell a reflow from a paraphrase.",
+   "evidence": [
+    {
+     "source": "docs/kf_result_wp-444-01.md",
+     "field": "参数表 4 行",
+     "quote": "ITTC-1957 / Blasius / P-S / Holtrop",
+     "declared_location": "markdown section ① (lines 11-17)",
+     "verbatim_in_source": false
+    },
+    {
+     "source": "docs/kf_result_wp-444-01.md",
+     "field": "计算结果表 5 行",
+     "quote": "ITTC-1957 5/5 / Blasius 3/3 / P-S 4/4 / HM 3/3 / 合计 15/15",
+     "declared_location": "markdown section ③ (lines 35-41)",
+     "verbatim_in_source": false
+    },
+    {
+     "source": "docs/kf_result_wp-444-01.md",
+     "field": "误差判定表 4 行",
+     "quote": "ITTC-1957 Cf (Re=1e8) 0.0% / Blasius Cf 0.0% / P-S Cf 0.0% / HM 1+k 0.0%",
+     "declared_location": "markdown section ⑥ (lines 55-60)",
+     "verbatim_in_source": false
+    },
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| ITTC-1957 | 5 | 5 | 0.0 | 0.1% |",
+     "char_span": [
+      904,
+      938
+     ],
+     "start_line": 37,
+     "note": "what the source actually holds for the same row"
+    }
+   ],
+   "remediation": "Re-pin these quotes as exact slices, or state the normalisation rule and drop the 逐字 claim.",
+   "affects": "wp-444-01 self-check row `source_locator_resolvable`",
+   "offline_reproducible": true
+  },
+  {
+   "id": "F-02",
+   "severity": "medium",
+   "blocking": false,
+   "check_ids": [
+    "C11",
+    "C12"
+   ],
+   "title": "the envelope printed in the upstream result document does not validate against schemas/kf_result.v1",
+   "why_it_matters": "The envelope is the machine-checkable contract of the workflow. As printed it carries provenance keys the schema closes against and an output key without the .json suffix; if the emitted file equals the printed block the package fails its own contract. Unsettleable here because the manifest itself is absent (C12).",
+   "evidence": [
+    {
+     "source": "schemas/kf_result.v1.schema.json",
+     "quote": "\"additionalProperties\": false",
+     "note": "provenance and outputs are both closed objects"
+    },
+    {
+     "source": "docs/kf_result_wp-444-01.md",
+     "quote": "\"source_hash_verified\": true",
+     "note": "not a declared provenance property"
+    },
+    {
+     "source": "docs/kf_result_wp-444-01.md",
+     "quote": "\"asset_manifest\": {",
+     "note": "schema declares the output key as asset_manifest.json"
+    },
+    {
+     "source": "recomputation",
+     "validation_errors": [
+      "outputs: Additional properties are not allowed ('asset_manifest' was unexpected)",
+      "provenance: Additional properties are not allowed ('retrieval_method', 'retrieved_at', 'source_hash_verified' were unexpected)"
+     ]
+    }
+   ],
+   "remediation": "Print the envelope verbatim from the emitted file (or label it an excerpt) and keep producer output free of self-verification keys.",
+   "affects": "wp-444-01 envelope; task-01 downstream validation",
+   "offline_reproducible": true
+  },
+  {
+   "id": "F-03",
+   "severity": "high",
+   "blocking": false,
+   "check_ids": [
+    "C15"
+   ],
+   "title": "§6 ITTC-1957 baseline is 4.16% away from the formula the report names",
+   "why_it_matters": "§6 declares `<3% ✓ YES` with a 0.0% deviation, but its 基准 value is not the ITTC-1957 line at the Re it states: 0.075/(log10 1e8-2)^2 = 0.002083 versus the printed 0.002170 (+4.16%). The printed value belongs to Re ≈ 7.57e+07, not 1e8. A reader anchoring model-ship conversion on report 444 inherits a 4.2% Cf bias.",
+   "evidence": [
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| ITTC-1957 Cf (Re=1e8) | 0.002170 | 0.002170 | 0.0% | ✓ YES |",
+     "char_span": [
+      1420,
+      1482
+     ],
+     "start_line": 57
+    },
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "Cf = 0.075 / (log10(Re) - 2)²，用于模型-实船换算",
+     "char_span": [
+      69,
+      108
+     ],
+     "start_line": 6
+    },
+    {
+     "source": "recomputation",
+     "formula": "0.075/(log10 Re - 2)^2",
+     "re": 100000000.0,
+     "value": 0.0020833333333333333,
+     "deviation_pct": 4.16,
+     "implied_re": 75676931.19808197
+    }
+   ],
+   "remediation": "Recompute report 444 §6 from the named formulas and re-issue the error table, or state which Re / line variant was used.",
+   "affects": "report 444 §6 accuracy claim (not the registration duty of wp-444-01)",
+   "escalate": "report-444-rework",
+   "offline_reproducible": true
+  },
+  {
+   "id": "F-04",
+   "severity": "high",
+   "blocking": false,
+   "check_ids": [
+    "C17"
+   ],
+   "title": "§6 Prandtl-Schlichting baseline is 5.47% away from the formula the report names",
+   "why_it_matters": "Same failure mode on the turbulent line: 0.455/(log10 1e8)^2.58 = 0.002128 versus the printed 0.002012 (-5.47%); the customary -1700/Re term moves it to 0.002111 (-4.70%), so no variant of the named formula rescues the printed value. The row is marked `<3% ✓ YES`.",
+   "evidence": [
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| P-S Cf (Re_L=1e8) | 0.002012 | 0.002012 | 0.0% | ✓ YES |",
+     "char_span": [
+      1546,
+      1604
+     ],
+     "start_line": 59
+    },
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "Cf = 0.455 / (log10(Re_L))^2.58",
+     "char_span": [
+      188,
+      219
+     ],
+     "start_line": 8
+    },
+    {
+     "source": "recomputation",
+     "formula": "0.455/(log10 Re)^2.58",
+     "re": 100000000.0,
+     "value": 0.002128331291412549,
+     "deviation_pct": -5.4658,
+     "variant_minus_1700_over_re": 0.0021113312914125488
+    }
+   ],
+   "remediation": "Same rework as F-03.",
+   "affects": "report 444 §6 accuracy claim",
+   "escalate": "report-444-rework",
+   "offline_reproducible": true
+  },
+  {
+   "id": "F-05",
+   "severity": "medium",
+   "blocking": false,
+   "check_ids": [
+    "C19"
+   ],
+   "title": "the two §6 friction baselines are ordered the wrong way round at Re=1e8",
+   "why_it_matters": "Above the crossover at Re ≈ 9.15e+06 the ITTC-1957 line lies below Prandtl-Schlichting; at 1e8 the formulas give 0.002083 < 0.002128. The report prints ITTC (0.002170) > P-S (0.002012). The inversion is internal evidence that both baselines were written from memory, and it needs no external reference data to detect.",
+   "evidence": [
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| ITTC-1957 Cf (Re=1e8) | 0.002170 | 0.002170 | 0.0% | ✓ YES |",
+     "char_span": [
+      1420,
+      1482
+     ],
+     "start_line": 57
+    },
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| P-S Cf (Re_L=1e8) | 0.002012 | 0.002012 | 0.0% | ✓ YES |",
+     "char_span": [
+      1546,
+      1604
+     ],
+     "start_line": 59
+    },
+    {
+     "source": "recomputation",
+     "crossover_re": 9147438.44591422,
+     "ittc1957_at_1e8": 0.0020833333333333333,
+     "prandtl_schlichting_at_1e8": 0.002128331291412549
+    }
+   ],
+   "remediation": "Covered by the F-03/F-04 rework; add an ordering invariant to the verifier question bank.",
+   "affects": "report 444 §6; verifier question-bank design",
+   "escalate": "report-444-rework",
+   "offline_reproducible": true
+  },
+  {
+   "id": "F-06",
+   "severity": "medium",
+   "blocking": false,
+   "check_ids": [
+    "C18"
+   ],
+   "title": "§6 Holtrop-Mennen 1+k is under-determined and sits outside the standard formula's envelope for Cb=0.6",
+   "why_it_matters": "The row states Cb=0.6 only while the report's own parameter table lists Cb, L, B, T; 1+k depends on (L, B, T, Cp, nabla), so the value cannot be re-derived: WITHHELD, not passed. Over 360 plausible Cb=0.6 hull tuples the Holtrop-Mennen form factor spans 1.1295-1.2490 (median 1.1958); the printed 1.0547 lies below that envelope, and the caveat `使用了简化版本` names no simplification that would explain the offset.",
+   "evidence": [
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| HM 1+k (Cb=0.6) | 1.0547 | 1.0547 | 0.0% | ✓ YES |",
+     "char_span": [
+      1605,
+      1657
+     ],
+     "start_line": 60
+    },
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "Holtrop-Mennen 形状因子使用了简化版本，完整版本需更多参数。",
+     "char_span": [
+      1300,
+      1337
+     ],
+     "start_line": 51
+    },
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| Holtrop | Cb, L, B, T | 1+k | 简化经验公式 |",
+     "char_span": [
+      453,
+      493
+     ],
+     "start_line": 17
+    },
+    {
+     "source": "recomputation",
+     "family": {
+      "samples": 360,
+      "min": 1.1295,
+      "p10": 1.1374,
+      "median": 1.1958,
+      "p90": 1.2382,
+      "max": 1.249
+     },
+     "reported": 1.0547
+    }
+   ],
+   "remediation": "Declare the simplification and its coefficients, or move the row out of the accuracy table into an unverified list.",
+   "affects": "report 444 §6 row 4",
+   "escalate": "report-444-rework",
+   "offline_reproducible": true
+  },
+  {
+   "id": "F-07",
+   "severity": "low",
+   "blocking": false,
+   "check_ids": [
+    "C16"
+   ],
+   "title": "the one fully reproduced baseline sits at the edge of its own validity range",
+   "why_it_matters": "Blasius reproduces exactly (+0.00%), but the row evaluates it at Re_L=1e6 — the upper end of the range the report's own parameter table declares ([1e5, 1e6]) and the usual upper bound of laminar similarity. The only row that survives re-derivation is the least transferable one.",
+   "evidence": [
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| Blasius Cf (Re_L=1e6) | 0.001328 | 0.001328 | 0.0% | ✓ YES |",
+     "char_span": [
+      1483,
+      1545
+     ],
+     "start_line": 58
+    },
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| Blasius | Re_L ∈ [1e5, 1e6] | Cf | 解析公式 |",
+     "char_span": [
+      369,
+      412
+     ],
+     "start_line": 15
+    },
+    {
+     "source": "recomputation",
+     "formula": "1.328/sqrt(Re_L)",
+     "value": 0.001328,
+     "deviation_pct": 0.0
+    }
+   ],
+   "remediation": "Evaluate at Re_L = 5e5 and add a turbulent flat-plate case instead.",
+   "affects": "report 444 §6 row 2",
+   "escalate": "report-444-rework",
+   "offline_reproducible": true
+  },
+  {
+   "id": "F-08",
+   "severity": "info",
+   "blocking": false,
+   "check_ids": [
+    "C13"
+   ],
+   "title": "the universal 0.0% deviation is disclosed self-consistency, not validation",
+   "why_it_matters": "§3 prints 0.0 max deviation on all 15 rows, §5 discloses why (candidate and question bank share one formula), and upstream registered the missing figure payload as unresolved. Read together report 444 does not overstate: the tally is a plumbing test of the verifier harness and must not be cited as an accuracy result.",
+   "evidence": [
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "| **合计** | **15** | **15** | **0.0** | — |",
+     "char_span": [
+      1074,
+      1116
+     ],
+     "start_line": 41
+    },
+    {
+     "source": "docs/kf/wp-444-04/source/report_444.md",
+     "quote": "- 试点使用解析/经验公式，偏差为零是因为候选与出题使用相同公式。真实场景中候选可能有数值误差。",
+     "char_span": [
+      1194,
+      1242
+     ],
+     "start_line": 49
+    },
+    {
+     "source": "recomputation",
+     "tally": {
+      "questions": 15,
+      "passed": 15,
+      "declared_questions": [
+       5,
+       3,
+       4,
+       3
+      ],
+      "declared_passed": [
+       5,
+       3,
+       4,
+       3
+      ],
+      "printed_total": {
+       "questions": 15,
+       "passed": 15
+      },
+      "sum_matches_printed_total": true
+     }
+    }
+   ],
+   "remediation": "No correctness change; cite §3 as a harness self-test only.",
+   "affects": "interpretation of report 444",
+   "offline_reproducible": true
+  }
+ ],
+ "recomputation": {
+  "figure": "docs/kf/wp-444-04/fig_wp444_04_recompute.png",
+  "figure_caption": "A: §6 baselines against the formulas the report names, ±3% band. B: reported points (x) versus their own named curves (o). C: Holtrop-Mennen 1+k over a 360-tuple Cb=0.6 family, report value in red.",
+  "rows": [
+   {
+    "label": "ITTC-1957 Cf (Re=1e8)",
+    "reported_baseline": 0.00217,
+    "reported_actual": 0.00217,
+    "reported_within_3pct": true,
+    "recomputed": 0.0020833333333333333,
+    "deviation_pct": 4.16,
+    "status": "recomputed",
+    "within_3pct": false
+   },
+   {
+    "label": "Blasius Cf (Re_L=1e6)",
+    "reported_baseline": 0.001328,
+    "reported_actual": 0.001328,
+    "reported_within_3pct": true,
+    "recomputed": 0.001328,
+    "deviation_pct": 0.0,
+    "status": "recomputed",
+    "within_3pct": true
+   },
+   {
+    "label": "P-S Cf (Re_L=1e8)",
+    "reported_baseline": 0.002012,
+    "reported_actual": 0.002012,
+    "reported_within_3pct": true,
+    "recomputed": 0.002128331291412549,
+    "deviation_pct": -5.4658,
+    "status": "recomputed",
+    "within_3pct": false
+   },
+   {
+    "label": "HM 1+k (Cb=0.6)",
+    "reported_baseline": 1.0547,
+    "reported_actual": 1.0547,
+    "reported_within_3pct": true,
+    "recomputed": null,
+    "deviation_pct": null,
+    "status": "withheld",
+    "within_3pct": null
+   }
+  ],
+  "tally_arithmetic": {
+   "questions": 15,
+   "passed": 15,
+   "declared_questions": [
+    5,
+    3,
+    4,
+    3
+   ],
+   "declared_passed": [
+    5,
+    3,
+    4,
+    3
+   ],
+   "printed_total": {
+    "questions": 15,
+    "passed": 15
+   },
+   "sum_matches_printed_total": true
+  },
+  "governance_original_chars": 1689,
+  "governance_prefix_boundary": {
+   "lines": 63,
+   "last_line": ""
+  },
+  "ordering_at_1e8": {
+   "re": 100000000.0,
+   "ittc1957": 0.0020833333333333333,
+   "prandtl_schlichting": 0.002128331291412549,
+   "ittc_below_ps": true,
+   "crossover_re": 9147438.44591422
+  },
+  "holtrop_family": {
+   "samples": 360,
+   "min": 1.1295,
+   "p10": 1.1374,
+   "median": 1.1958,
+   "p90": 1.2382,
+   "max": 1.249
+  }
+ },
+ "offline_reproducibility": {
+  "offline_checks": [
+   "C01",
+   "C02",
+   "C03",
+   "C05",
+   "C06",
+   "C07",
+   "C08",
+   "C09",
+   "C10",
+   "C11",
+   "C13",
+   "C14",
+   "C15",
+   "C16",
+   "C17",
+   "C18",
+   "C19"
+  ],
+  "online_only_checks": [
+   "C04",
+   "C12",
+   "C20"
+  ],
+  "snapshot_bytes_sufficient": true
+ },
+ "escalations": [
+  {
+   "id": "E-01",
+   "target": "report 444",
+   "route": "report-rework",
+   "reason": "§6 baseline column does not reproduce from the formulas the report itself names (F-03 ITTC-1957 +4.16%, F-04 P-S -5.47%, F-05 ordering inversion) and F-06's 1+k is under-determined and outside the standard envelope for Cb=0.6",
+   "owner_action": "recompute §6 and §3's tolerance framing; do not cite report 444 §6 as a Cf anchor until reworked"
+  }
+ ],
+ "provenance_of_this_report": {
+  "builder": "work/build_review_report.py",
+  "inputs": {
+   "verify": "/tmp/wp-444-04/verify.json",
+   "observations": "/tmp/wp-444-04/observations.json"
+  },
+  "observation_generated_at": "2026-11-14T02:03:15+00:00",
+  "obs_generated_at": "2026-11-14T02:03:56+00:00"
+ },
+ "self_audit": {
+  "forbidden_verification_fields_present": [],
+  "note": "this review records decisions and evidence only; a `verified` field would claim gate authority a reviewer does not have"
+ }
+}
