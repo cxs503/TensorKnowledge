@@ -124,7 +124,7 @@
 
 ```bash
 # 0) 环境：TENSOR_API_BASE / TENSOR_AGENT_USER / TENSOR_AGENT_PASS 已在环境中
-cd /root/tp-agent/work/m15506
+cd /root/tp-agent/work/m19471
 python3 scripts/kf_wp331_01_register_assets.py \
     --out-dir artifacts/kf/wp-331-01 --emit-envelope /tmp/kf_env331.json
 python3 scripts/kf_wp331_01_gate_dryrun.py \
@@ -143,14 +143,16 @@ python3 -m pytest tests/test_kf_wp331_01.py -q
 ```json
 {
   "package_id": "wp-331-01",
-  "task_type": "01",
+  "task_type": "01-asset-registration",
   "report_id": "331",
   "provenance": {
-    "source_hash": "sha256:d67069723d0db8be79d7bb84232f2f25e2f927c8473935797fa907e0c6fbf717",
+    "source_uri": "tensor://reports/331",
     "source_field": "markdown",
-    "producer": "tensor-agent m15506 (knowledge-factory worker, lane C)",
-    "emitted_at": "2026-11-12T00:52:50+00:00",
-    "notes": "hash 由生产者从平台 markdown 字段 utf-8 字节独立重算；平台门会再独立重算一次。"
+    "source_hash": "sha256:d67069723d0db8be79d7bb84232f2f25e2f927c8473935797fa907e0c6fbf717",
+    "source_hash_matches": true,
+    "title": "M404: DEM-FEM Coupling Interface Schema + Hertz/Beam Benchmarks (CPU)",
+    "scenario_key": "dem_fem_coupling_hertz_cpu",
+    "chars": 1371
   },
   "outputs": {
     "asset_manifest.json": {
@@ -331,7 +333,6 @@ python3 -m pytest tests/test_kf_wp331_01.py -q
         "note": "工序 01 只登记资产与指纹；不抽取知识、不判定 verified、不重跑上游算例。"
       }
     }
-  },
-  "claims": []
+  }
 }
 ```

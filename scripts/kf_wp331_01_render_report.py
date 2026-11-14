@@ -181,7 +181,7 @@ def render(manifest: dict, envelope: dict, md_source: str,
 
 ```bash
 # 0) 环境：TENSOR_API_BASE / TENSOR_AGENT_USER / TENSOR_AGENT_PASS 已在环境中
-cd /root/tp-agent/work/m15506
+cd /root/tp-agent/work/m19471
 python3 scripts/kf_wp331_01_register_assets.py \\
     --out-dir artifacts/kf/wp-331-01 --emit-envelope /tmp/kf_env331.json
 python3 scripts/kf_wp331_01_gate_dryrun.py \\

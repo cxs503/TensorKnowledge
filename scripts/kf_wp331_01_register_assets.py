@@ -32,7 +32,7 @@ REPORT_ID = "331"
 PACKAGE_ID = "wp-331-01"
 TASK_TYPE = "01-asset-registration"
 EXPECTED_HASH = ("sha256:d67069723d0db8be79d7bb84232f2f25e2f927c8473935797fa907e0c6fbf717")
-PRODUCER = "tensor-agent m15506 (knowledge-factory worker, lane C)"
+PRODUCER = "tensor-agent m19471 (knowledge-factory worker, lane C)"
 # 平台图件目录（只读探测，用于说明 404 不是瞬时故障）
 DEFAULT_FIGURE_ROOT = "/root/tensor-ecosystem/TensorPlatform/backend/uploads/tensor_reports"
 # 候选工件只读扫描根（找不到就保持 unresolved，不猜）
@@ -258,18 +258,18 @@ def build(base: str, figure_root: str = DEFAULT_FIGURE_ROOT,
 def envelope(manifest: dict) -> dict:
     return {
         "package_id": PACKAGE_ID,
-        "task_type": "01",
+        "task_type": TASK_TYPE,
         "report_id": REPORT_ID,
         "provenance": {
+            "source_uri": manifest["source"]["source_uri"],
+            "source_field": manifest["source"]["source_field"],
             "source_hash": manifest["source"]["source_hash"],
-            "source_field": "markdown",
-            "producer": PRODUCER,
-            "emitted_at": manifest["generated_at"],
-            "notes": "hash 由生产者从平台 markdown 字段 utf-8 字节独立重算；"
-                     "平台门会再独立重算一次。",
+            "source_hash_matches": manifest["source"]["hash_matches"],
+            "title": manifest["source"]["title_record"],
+            "scenario_key": manifest["source"]["scenario_key"],
+            "chars": manifest["source"]["chars"],
         },
         "outputs": {"asset_manifest.json": manifest},
-        "claims": [],
     }
 
 
