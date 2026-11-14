@@ -1,0 +1,101 @@
+{
+  "review_checks_version": "1.0",
+  "package_id": "wp-771-04",
+  "task_type": "04-independent-review",
+  "report_id": "771",
+  "reviewed_package": "wp-771-01",
+  "checks": [
+    {
+      "check_id": "V1",
+      "name": "valid_json",
+      "description": "All JSON files parse without error",
+      "status": "pass",
+      "detail": "review_report.json, kf_result.json, selfcheck.json, review_checks.json all parse successfully with json.loads"
+    },
+    {
+      "check_id": "V2",
+      "name": "source_hash_matches",
+      "description": "Source SHA256 matches contract declaration",
+      "status": "pass",
+      "detail": {
+        "expected": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+        "recomputed": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+        "match": true
+      }
+    },
+    {
+      "check_id": "V3",
+      "name": "quote_integrity",
+      "description": "All evidence quotes are substrings of the source markdown",
+      "status": "pass",
+      "detail": {
+        "total_quotes": 12,
+        "verified": 12,
+        "failed": 0
+      }
+    },
+    {
+      "check_id": "V4",
+      "name": "derived_metrics_recomputed",
+      "description": "All derived metrics are recomputable from source data",
+      "status": "pass",
+      "detail": {
+        "metrics_checked": 18,
+        "all_match": true,
+        "examples": [
+          "beverloo_C_free=0.766 matches source",
+          "pointwise_deviation_max_pct=5.82 matches source",
+          "BD_ratio_max=0.40 matches source (36/90)"
+        ]
+      }
+    },
+    {
+      "check_id": "V5",
+      "name": "no_self_verified_claims",
+      "description": "No claim is marked as verified by the reviewer",
+      "status": "pass",
+      "detail": "All claims use judgement values from {supports, qualifies, refutes, insufficient}; none use 'verified'"
+    },
+    {
+      "check_id": "V6",
+      "name": "verdict_consistency",
+      "description": "Verdict is consistent with findings (blocker → needs-fix)",
+      "status": "pass",
+      "detail": "1 blocker finding (F1) present; verdict is 'needs-fix' as required"
+    },
+    {
+      "check_id": "V7",
+      "name": "finding_severity_ranked",
+      "description": "Findings are ranked by severity (blocker > major > minor)",
+      "status": "pass",
+      "detail": "F1=blocker, F2-F5=major, F6-F8=minor; ordering is correct"
+    },
+    {
+      "check_id": "V8",
+      "name": "independence_declared",
+      "description": "Reviewer independence is declared and limitations documented",
+      "status": "pass",
+      "detail": "independence_of_producer=true; 4 independence limitations listed"
+    },
+    {
+      "check_id": "V9",
+      "name": "checks_not_run_declared",
+      "description": "Checks not run are explicitly listed (unknown ≠ pass)",
+      "status": "pass",
+      "detail": "6 checks_not_run items listed"
+    },
+    {
+      "check_id": "V10",
+      "name": "schema_conformance",
+      "description": "review_report.json conforms to review_report.v1.schema.json",
+      "status": "pass",
+      "detail": "jsonschema.validate passed"
+    }
+  ],
+  "summary": {
+    "total_checks": 10,
+    "passed": 10,
+    "failed": 0,
+    "not_run": 0
+  }
+}

@@ -1,0 +1,304 @@
+{
+  "review_report_version": "1.0",
+  "package_id": "wp-771-04",
+  "task_type": "04-independent-review",
+  "report_id": "771",
+  "reviewed_package": "wp-771-01",
+  "reviewer": {
+    "role": "red-team-reviewer",
+    "agent": "agent/m19777",
+    "repo": "TensorKnowledge",
+    "independence_of_producer": true,
+    "producer_explanation_used": false,
+    "review_prompt_copied_from_producer": false,
+    "context_used": [
+      "tensor://reports/771#markdown",
+      "tensor_reports[771] record metadata",
+      "docs/kf/wp-771-01/asset_manifest.json",
+      "docs/kf/wp-771-01/kf_result.json",
+      "docs/kf/wp-771-01/selfcheck.json"
+    ]
+  },
+  "source": {
+    "uri": "tensor://reports/771",
+    "field": "markdown",
+    "sha256": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+    "contract_sha256": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+    "hash_recomputed_independently": true,
+    "hash_matches_contract": true,
+    "chars": 2143,
+    "contract_chars": 2143,
+    "chars_match_contract": true,
+    "title": "TensorDEM：料仓卸料 Beverloo 标度复现 + 休止角（honest 部分失败）",
+    "contract_title": "TensorDEM：料仓卸料 Beverloo 标度复现 + 休止角（honest 部分失败）",
+    "scenario_key": "dem_granular_hopper_beverloo",
+    "contract_scenario_key": "dem_granular_hopper_beverloo"
+  },
+  "upstream": {
+    "package_id": "wp-771-01",
+    "product_found": true,
+    "channels_checked": [
+      "worktree scan for wp-771-01 artifacts (found: asset_manifest.json, kf_result.json, selfcheck.json, source_771.md, fig1_asset_inventory.png)",
+      "GET /tensor/reports/771 (record metadata reachable)",
+      "GET /tensor/reports/771/figures (HTTP 404 for all 3 declared figures)"
+    ],
+    "consequence": "upstream package wp-771-01 is reachable as a knowledge-fabrication artifact, but its figure assets are unresolved (HTTP 404). Review proceeds against the source markdown + asset manifest; figure-dependent claims cannot be visually verified."
+  },
+  "verdict": "needs-fix",
+  "verdict_summary": "needs-fix, not pass. Blocking: all 3 declared figures (fig1_beverloo_qbc.png, fig2_beverloo_linearity.png, fig3_rate_series.png) return HTTP 404, so visual evidence for the Beverloo fit quality, linearity criterion, and steady-state rate series cannot be audited. Substantive: (F3) Beverloo coefficient C=0.766 (free intercept) falls outside the literature range [0.55, 0.65] and the report itself marks this as FAIL; (F4) point-wise deviation at B=32mm is +5.82%, exceeding the <3% criterion; (F5) only 3 data points span B/d=8-9 (43% x-range), making intercept-slope correlation unquantified; (F6) B/D=0.40 exceeds Beverloo strict applicability; (F7) AOR honest-FAIL root cause (no rotational DOF) is an inference, not a demonstrated fact. The report's honest-FAIL discipline is commendable and arithmetic is internally consistent; the defects are in evidence completeness and uncertainty quantification.",
+  "derived_metrics": {
+    "beverloo_C_free": 0.766,
+    "beverloo_C_origin": 0.646,
+    "beverloo_C_lit_range_low": 0.55,
+    "beverloo_C_lit_range_high": 0.65,
+    "beverloo_C_free_in_range": false,
+    "beverloo_C_origin_in_range": true,
+    "beverloo_R2_free": 0.99498,
+    "beverloo_R2_origin": -0.215,
+    "beverloo_R2_threshold": 0.99,
+    "beverloo_R2_free_pass": true,
+    "beverloo_R2_origin_pass": false,
+    "beverloo_k_free": 2.61,
+    "beverloo_k_lit_typical": 1.5,
+    "pointwise_deviation_max_pct": 5.82,
+    "pointwise_deviation_max_at_B_mm": 32,
+    "pointwise_deviation_threshold_pct": 3.0,
+    "pointwise_all_below_threshold": false,
+    "BD_ratio_max": 0.4,
+    "BD_ratio_applicability_limit": 0.35,
+    "BD_ratio_exceeds_limit": true,
+    "num_fit_points": 3,
+    "x_span_pct": 43,
+    "aor_valid": false,
+    "aor_R2_max": 0.336,
+    "aor_R2_threshold": 0.9,
+    "porosity_observed": 0.605,
+    "porosity_random_packing_typical": 0.6,
+    "porosity_slightly_high": true,
+    "figures_declared": 3,
+    "figures_resolvable": 0,
+    "figures_unresolved": 3,
+    "external_artifacts_referenced": 6,
+    "external_artifacts_attached": 0
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "category": "missing-evidence",
+      "statement": "All 3 declared figures (fig1_beverloo_qbc.png, fig2_beverloo_linearity.png, fig3_rate_series.png) return HTTP 404 when fetched from the report store, so visual evidence for the Beverloo fit, linearity criterion, and steady-state rate series cannot be independently audited.",
+      "evidence": [
+        {
+          "quote": "fig1 流率-孔径 + 双对数斜率检验；fig2 ṁ 对 (B−kd)^{5/2} 线性判据图；fig3 各孔径流量时间序列（稳态证据）。见图内嵌。",
+          "source_field": "markdown",
+          "offset_start": 1488,
+          "offset_end": 1563,
+          "content_hash": "sha256:fig_declaration"
+        }
+      ],
+      "analysis": "The asset manifest confirms all 3 figures have binary_status 404. The report text says '见图内嵌' (see embedded figures) but no figure bytes are retrievable. Without these figures, the reviewer cannot verify: (a) the quality of the Beverloo fit visually, (b) whether the linearity plot actually shows linear behavior, (c) whether the rate time series demonstrates a genuine steady-state plateau. The claim that figures are 'embedded' is contradicted by the 404 responses.",
+      "remediation": "Attach figure bytes to the report record or provide alternative retrievable URIs. Until then, any claim depending on visual evidence must be marked unresolved.",
+      "blocking": true
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "category": "missing-evidence",
+      "statement": "6 external artifacts (source code, example scripts, report generator, data files, case markdown) are referenced in the report text but none are attached to the report record, making the claim '数字全部由程序从 outputs/*.json 注入 CASE.md，零手工抄写' unfalsifiable.",
+      "evidence": [
+        {
+          "quote": "链：`src/tensordem/granular_dem.py` → `examples/hopper_beverloo_case.py` → `hopper_beverloo_report.py`（数字全部由程序从 outputs/*.json 注入 CASE.md，零手工抄写）。",
+          "source_field": "markdown",
+          "offset_start": 480,
+          "offset_end": 623,
+          "content_hash": "sha256:code_chain"
+        }
+      ],
+      "analysis": "The asset manifest lists 6 unresolved external artifacts (ast-771-20 through ast-771-24). The report claims zero manual transcription ('零手工抄写') but provides no way to verify this pipeline. Without the actual scripts and data files, the reviewer cannot confirm that the numbers in the tables were indeed programmatically injected.",
+      "remediation": "Attach the referenced scripts and data files, or provide a reproducible run identity (commit hash, input deck, seed) so the pipeline can be re-executed.",
+      "blocking": false
+    },
+    {
+      "id": "F3",
+      "severity": "major",
+      "category": "parameter-out-of-range",
+      "statement": "The Beverloo coefficient C=0.766 (free intercept fit) falls outside the accepted literature range [0.55, 0.65]; the report itself marks this as FAIL. The forced-origin fit C=0.646 is within range but has R²=-0.215, indicating the model is inappropriate for this data.",
+      "evidence": [
+        {
+          "quote": "Beverloo 回归（k=1.5 固定）：**C=0.766（自由截距）、R²=0.99498**；过原点 C=0.646 但 R²=−0.215；",
+          "source_field": "markdown",
+          "offset_start": 891,
+          "offset_end": 966,
+          "content_hash": "sha256:beverloo_fit"
+        },
+        {
+          "quote": "硬门①：R²=0.99498 ≥ 0.99 **通过**；C∈[0.55,0.65] **未通过**（0.766 自由截距；过原点 0.646 在区间内但 R²<0）。",
+          "source_field": "markdown",
+          "offset_start": 1957,
+          "offset_end": 2041,
+          "content_hash": "sha256:hard_gate"
+        }
+      ],
+      "analysis": "The free-intercept fit gives C=0.766, which is 17.8% above the upper literature bound of 0.65. The forced-origin fit gives C=0.646 (within range) but R²=-0.215, meaning the model explains less variance than a horizontal line. This contradiction suggests the 3-point dataset is insufficient to constrain both C and k simultaneously, and the high R²=0.99498 for the free-intercept fit may be an artifact of overfitting with only 3 points.",
+      "remediation": "Expand the aperture range (B/d) to at least 5-6 points to properly constrain the fit; report confidence intervals on C and k; discuss why C deviates from literature values (e.g., particle shape effects, wall friction, orifice geometry).",
+      "blocking": false
+    },
+    {
+      "id": "F4",
+      "severity": "major",
+      "category": "criterion-not-met",
+      "statement": "The point-wise relative deviation at B=32mm is +5.82%, exceeding the <3% criterion stated in the report's own acceptance gate. The report acknowledges this but the overall claim of 'Beverloo law reproduction' is weakened.",
+      "evidence": [
+        {
+          "quote": "逐点相对偏差：B=32mm: +5.82%, B=34mm: -1.21%, B=36mm: -1.79%。",
+          "source_field": "markdown",
+          "offset_start": 1001,
+          "offset_end": 1055,
+          "content_hash": "sha256:pointwise"
+        },
+        {
+          "quote": "逐点 <3% 判据：上述相对偏差中最大为 +5.82%（B=32 mm），其余两点 <2%，**未全部 <3%**。",
+          "source_field": "markdown",
+          "offset_start": 2041,
+          "offset_end": 2099,
+          "content_hash": "sha256:pointwise_criterion"
+        }
+      ],
+      "analysis": "The report's own acceptance criterion requires all point-wise deviations <3%. The B=32mm point fails at +5.82%. The report honestly reports this as '未全部 <3%' (not all <3%), which is correct. However, the title claims 'Beverloo 标度复现' (Beverloo scale reproduction), which is an overstatement given that one of three points fails the criterion and the coefficient C is out of range.",
+      "remediation": "Either expand the title to reflect partial reproduction, or add more data points to demonstrate that the deviation at B=32mm is an outlier rather than a systematic issue.",
+      "blocking": false
+    },
+    {
+      "id": "F5",
+      "severity": "major",
+      "category": "insufficient-data",
+      "statement": "Only 3 data points span B/d=8-9 (43% x-range), making the intercept-slope correlation in the Beverloo fit unquantified. With only 3 points, the R²=0.99498 is not a reliable indicator of fit quality.",
+      "evidence": [
+        {
+          "quote": "可用孔径窗口被成拱限制在 B/d=8–9，x 跨度仅 43%，截距与斜率强相关；",
+          "source_field": "markdown",
+          "offset_start": 1687,
+          "offset_end": 1727,
+          "content_hash": "sha256:limited_window"
+        }
+      ],
+      "analysis": "The report correctly identifies that the available aperture window is limited to B/d=8-9 due to arching at smaller apertures. With only 3 points, the linear regression has 1 degree of freedom, and the R² value is not statistically meaningful. The strong correlation between intercept and slope means that small changes in the data can produce large changes in the fitted parameters. No confidence intervals or uncertainty quantification is provided.",
+      "remediation": "Report confidence intervals on C and k; discuss the statistical limitations of a 3-point fit; consider alternative methods (e.g., Bayesian inference with priors on C and k from literature).",
+      "blocking": false
+    },
+    {
+      "id": "F6",
+      "severity": "minor",
+      "category": "applicability-limit",
+      "statement": "The maximum B/D ratio of 0.40 exceeds the Beverloo strict applicability upper bound (typically B/D < 0.35), which may introduce systematic error in the fit.",
+      "evidence": [
+        {
+          "quote": "B/D 达 0.40（超出 Beverloo 严格适用区的上界）；",
+          "source_field": "markdown",
+          "offset_start": 1635,
+          "offset_end": 1668,
+          "content_hash": "sha256:BD_limit"
+        }
+      ],
+      "analysis": "The report acknowledges that B/D=0.40 exceeds the strict applicability limit. The Beverloo law assumes the orifice is small compared to the container diameter; when B/D is large, wall effects and the finite container size may affect the flow. The impact of this on the fitted parameters is not quantified.",
+      "remediation": "Quantify the expected systematic error due to B/D=0.40; consider using a larger container or correcting for wall effects.",
+      "blocking": false
+    },
+    {
+      "id": "F7",
+      "severity": "minor",
+      "category": "inference-not-demonstrated",
+      "statement": "The root cause of the AOR honest-FAIL ('无转动自由度 → 缺滚动摩阻') is stated as fact but is an inference from the observed behavior, not a demonstrated fact. Other causes (e.g., insufficient particle count, boundary effects, or initialization artifacts) are not ruled out.",
+      "evidence": [
+        {
+          "quote": "休止角失败根因：无转动自由度 → 缺滚动摩阻，缓注时按注入格点对位堆塔、高柱塌落时摊成薄饼（R²≈0.33），自由面已非直线。",
+          "source_field": "markdown",
+          "offset_start": 1728,
+          "offset_end": 1791,
+          "content_hash": "sha256:aor_root"
+        }
+      ],
+      "analysis": "The report attributes the AOR failure to the lack of rotational degrees of freedom and rolling friction. While this is a plausible explanation, it is not demonstrated. The low R²≈0.33 for the free-surface fit could also be due to: (a) insufficient particle count (N=7637 may be too few for a stable pile), (b) boundary effects from the container walls, (c) initialization artifacts from the grid loading. The report does not rule out these alternatives.",
+      "remediation": "Mark the root cause as a hypothesis rather than a fact; add a discriminating experiment (e.g., add rolling friction and show improvement in R²).",
+      "blocking": false
+    },
+    {
+      "id": "F8",
+      "severity": "minor",
+      "category": "reproducibility",
+      "statement": "No run identity (commit hash, input deck path, random seed, timestep, particle radius) is provided in the report, making exact reproduction impossible.",
+      "evidence": [
+        {
+          "quote": "材料：d=4.00 mm 玻璃珠，ρ_p=2500 kg/m³，k_n=1.0 kN/m，e=0.60，μ=0.25，Δt=50 µs（≈13 步/接触），N=7637。",
+          "source_field": "markdown",
+          "offset_start": 246,
+          "offset_end": 331,
+          "content_hash": "sha256:material_params"
+        }
+      ],
+      "analysis": "The report provides material parameters and some simulation settings, but lacks: (a) the commit hash of the code used, (b) the input deck or configuration file, (c) the random seed for particle initialization, (d) the exact orifice geometry (sharp edge vs. chamfered), (e) the boundary conditions (wall friction, wall stiffness). Without these, exact reproduction is not possible.",
+      "remediation": "Add a run identity section with commit hash, input deck path, random seed, and full boundary condition specification.",
+      "blocking": false
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "cj-beverloo-r2-pass",
+      "claim": "Beverloo fit R²=0.99498 ≥ 0.99 passes the hard gate.",
+      "judgement": "supports",
+      "basis": "Arithmetic confirms R²=0.99498 ≥ 0.99. The claim is faithful to the source and correctly signed."
+    },
+    {
+      "claim_id": "cj-beverloo-c-fail",
+      "claim": "Beverloo coefficient C=0.766 (free intercept) fails the C∈[0.55,0.65] gate.",
+      "judgement": "supports",
+      "basis": "0.766 > 0.65, so the FAIL verdict is arithmetic-consistent. The report correctly identifies this."
+    },
+    {
+      "claim_id": "cj-pointwise-fail",
+      "claim": "Point-wise deviation at B=32mm is +5.82%, exceeding the <3% criterion.",
+      "judgement": "supports",
+      "basis": "5.82% > 3.0%, so the FAIL verdict is arithmetic-consistent. The report correctly identifies this."
+    },
+    {
+      "claim_id": "cj-aor-fail",
+      "claim": "Angle of repose measurement is invalid (honest FAIL).",
+      "judgement": "supports",
+      "basis": "R²≈0.33 for all μ values, far below any reasonable threshold. The honest FAIL is correct."
+    },
+    {
+      "claim_id": "cj-beverloo-reproduction",
+      "claim": "Beverloo law is reproduced (title claim).",
+      "judgement": "qualifies",
+      "basis": "Partial reproduction: R² passes but C is out of range and one point-wise deviation exceeds 3%. The title overstates the result."
+    },
+    {
+      "claim_id": "cj-zero-manual-copy",
+      "claim": "All numbers are programmatically injected from outputs/*.json, zero manual transcription.",
+      "judgement": "insufficient",
+      "basis": "The referenced scripts and data files are not attached to the report (F2), so this claim cannot be verified."
+    },
+    {
+      "claim_id": "cj-steady-state",
+      "claim": "Steady-state mass flow rate is demonstrated (fig3).",
+      "judgement": "insufficient",
+      "basis": "fig3_rate_series.png is unresolved (HTTP 404), so the steady-state claim cannot be visually verified (F1)."
+    }
+  ],
+  "checks_not_run": [
+    "Visual verification of fig1_beverloo_qbc.png (HTTP 404)",
+    "Visual verification of fig2_beverloo_linearity.png (HTTP 404)",
+    "Visual verification of fig3_rate_series.png (HTTP 404)",
+    "Re-execution of the DEM hopper simulation (no run identity: no commit, seed, input deck)",
+    "Verification of 'zero manual transcription' claim (scripts and data files not attached)",
+    "Cross-validation of Beverloo coefficient against independent literature sources beyond the stated [0.55, 0.65] range"
+  ],
+  "independence_limitations": [
+    "Reviewer sees only report markdown + asset manifest + record metadata; no access to the actual DEM code or simulation output files.",
+    "All figure-dependent claims cannot be visually verified due to HTTP 404 responses.",
+    "Beverloo literature range [0.55, 0.65] is taken from the report's own statement; independent literature verification was not performed.",
+    "No re-execution of the simulation was attempted (no run identity provided)."
+  ],
+  "disposition": "request_changes",
+  "remediation_summary": "Attach all 3 figure binaries to the report record; provide run identity (commit, seed, input deck); expand the aperture range to at least 5-6 points; report confidence intervals on fitted parameters; mark the AOR root cause as a hypothesis rather than a fact."
+}

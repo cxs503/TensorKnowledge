@@ -1,0 +1,39 @@
+{
+  "package_id": "wp-771-04",
+  "accepted": true,
+  "failed": [],
+  "checks": {
+    "valid_json": {
+      "pass": true,
+      "detail": "all JSON files serialised with json.dumps"
+    },
+    "schema_pass": {
+      "pass": true,
+      "detail": "envelope validates against review_report.v1.schema.json"
+    },
+    "source_hash_matches": {
+      "pass": true,
+      "detail": {
+        "expected": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+        "recomputed": "sha256:c9ba197538ee604e7608c163d3148fbb535bd8ee560b08237ca7ab17769f6559",
+        "match": true
+      }
+    },
+    "reviewer_independent": {
+      "pass": true,
+      "detail": "reviewer did not use producer explanation; review prompt independently written"
+    },
+    "no_self_verified_claims": {
+      "pass": true,
+      "detail": "all claims use judgement from {supports, qualifies, refutes, insufficient}"
+    },
+    "verdict_consistent_with_findings": {
+      "pass": true,
+      "detail": "1 blocker finding present; verdict is needs-fix"
+    },
+    "checks_not_run_declared": {
+      "pass": true,
+      "detail": "6 checks_not_run items explicitly listed"
+    }
+  }
+}
