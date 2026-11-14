@@ -1,0 +1,1148 @@
+{
+  "package_id": "wp-9503-02",
+  "task_type": "02-classification-parse",
+  "contract_version": "1.0",
+  "report_id": "9503",
+  "provenance": {
+    "source_uri": "tensor://reports/9503",
+    "source_field": "markdown",
+    "source_hash": "sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c",
+    "source_hash_matches": true,
+    "title": "EEXI attained 端到端闭合链路（Holtrop→推进功率→轴系效率→gCO₂/t·nm）+ 1852 倍量纲缺陷修复",
+    "scenario_key": "p73w2b-n02-eexi-closed-loop",
+    "chars": 8176
+  },
+  "outputs": {
+    "classification.json": {
+      "schema": "kf/classification.v1",
+      "package_id": "wp-9503-02",
+      "task_type": "02-classification-parse",
+      "contract_version": "1.0",
+      "report_id": "9503",
+      "provenance": {
+        "source_uri": "tensor://reports/9503",
+        "source_field": "markdown",
+        "source_hash_declared": "sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c",
+        "source_hash_computed": "sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c",
+        "source_hash_matches": true,
+        "chars": 8176,
+        "bytes": 11861,
+        "chars_declared": 8176,
+        "chars_match_declared": true,
+        "title_in_record": "EEXI attained 端到端闭合链路（Holtrop→推进功率→轴系效率→gCO₂/t·nm）+ 1852 倍量纲缺陷修复",
+        "title_in_markdown_heading": "EEXI attained 端到端闭合链路：Holtrop 阻力 → 推进功率 → 轴系效率 → gCO₂/(t·nm)",
+        "title_heading_note": "记录 title 含『+ 1852 倍量纲缺陷修复』后缀，markdown 一级标题不含该后缀；两者均原样记录，不改写"
+      },
+      "classifier": {
+        "tool": "scripts/kf/wp9503_02_classify.py",
+        "deterministic": true,
+        "llm_used": false,
+        "registry": "extraction-skills/registry.json",
+        "registry_report_types": [
+          "literature-review",
+          "scientific-computation",
+          "algorithm-implementation",
+          "software-engineering",
+          "technical-proposal",
+          "experimental-validation"
+        ],
+        "decision_rule": {
+          "rule_id": "R1-max-distinct-signals",
+          "primary": "取 distinct_signals_matched 最大的 report_type",
+          "tie_break": [
+            "① distinct_signals_matched 高者胜",
+            "② 平手 → 已验证命中数 hits 高者胜",
+            "③ 仍平手 → 命中覆盖章节数 sections_covered 高者胜",
+            "④ 仍平手 → report_type 名字典序小者胜（仅保证确定性，置信度降为 low）"
+          ],
+          "confidence": {
+            "high": "primary 的 distinct_signals_matched >= 2 且领先次席 >= 1",
+            "medium": "primary 的 distinct_signals_matched >= 2 且与次席打平（由 ②③④ 决胜）",
+            "low": "primary 的 distinct_signals_matched < 2（证据不足）"
+          },
+          "unclassified": "所有类型 distinct_signals_matched < 2 时输出 report_type='unclassified'（合法值，禁止硬猜）",
+          "secondary": "distinct_signals_matched >= 2 的非 primary 类型进 secondary_report_types（可反驳的并列假设）",
+          "predeclared": true
+        }
+      },
+      "structure": {
+        "total_chars": 8176,
+        "total_lines": 153,
+        "sections": [
+          {
+            "section_id": "S01",
+            "level": 1,
+            "heading": "EEXI attained 端到端闭合链路：Holtrop 阻力 → 推进功率 → 轴系效率 → gCO₂/(t·nm)",
+            "line_start": 0,
+            "line_end": 4,
+            "start": 0,
+            "end": 252,
+            "chars": 252,
+            "table_lines": 0
+          },
+          {
+            "section_id": "S02",
+            "level": 2,
+            "heading": "① 案例介绍（物理背景 / 几何 / 参数表）",
+            "line_start": 5,
+            "line_end": 24,
+            "start": 252,
+            "end": 1469,
+            "chars": 1217,
+            "table_lines": 5
+          },
+          {
+            "section_id": "S03",
+            "level": 2,
+            "heading": "② 怎么做的（方法 / 流程 / 工具链）",
+            "line_start": 25,
+            "line_end": 43,
+            "start": 1469,
+            "end": 2479,
+            "chars": 1010,
+            "table_lines": 0
+          },
+          {
+            "section_id": "S04",
+            "level": 2,
+            "heading": "③ 计算结果",
+            "line_start": 44,
+            "line_end": 45,
+            "start": 2479,
+            "end": 2490,
+            "chars": 11,
+            "table_lines": 0
+          },
+          {
+            "section_id": "S05",
+            "level": 3,
+            "heading": "判据汇总（逐船）",
+            "line_start": 46,
+            "line_end": 61,
+            "start": 2490,
+            "end": 3119,
+            "chars": 629,
+            "table_lines": 5
+          },
+          {
+            "section_id": "S06",
+            "level": 3,
+            "heading": "效率链与碳链分解（含独立力矩路线对账）",
+            "line_start": 62,
+            "line_end": 67,
+            "start": 3119,
+            "end": 3609,
+            "chars": 490,
+            "table_lines": 0
+          },
+          {
+            "section_id": "S07",
+            "level": 3,
+            "heading": "实验对标（KCS 公开水池表，作为审计对象而非标定源）",
+            "line_start": 68,
+            "line_end": 83,
+            "start": 3609,
+            "end": 4323,
+            "chars": 714,
+            "table_lines": 10
+          },
+          {
+            "section_id": "S08",
+            "level": 3,
+            "heading": "敏感度（输入假设的传导，非精度声明）",
+            "line_start": 84,
+            "line_end": 91,
+            "start": 4323,
+            "end": 4997,
+            "chars": 674,
+            "table_lines": 5
+          },
+          {
+            "section_id": "S09",
+            "level": 2,
+            "heading": "④ 结果图",
+            "line_start": 92,
+            "line_end": 99,
+            "start": 4997,
+            "end": 5323,
+            "chars": 326,
+            "table_lines": 0
+          },
+          {
+            "section_id": "S10",
+            "level": 2,
+            "heading": "⑤ 注意点（坑 / 局限 / 适用范围）",
+            "line_start": 100,
+            "line_end": 127,
+            "start": 5323,
+            "end": 6824,
+            "chars": 1501,
+            "table_lines": 0
+          },
+          {
+            "section_id": "S11",
+            "level": 2,
+            "heading": "⑥ 误差判定（关键量 vs 基准，逐项）",
+            "line_start": 128,
+            "line_end": 142,
+            "start": 6824,
+            "end": 7608,
+            "chars": 784,
+            "table_lines": 8
+          },
+          {
+            "section_id": "S12",
+            "level": 2,
+            "heading": "审计链",
+            "line_start": 143,
+            "line_end": 152,
+            "start": 7608,
+            "end": 8176,
+            "chars": 568,
+            "table_lines": 0
+          }
+        ],
+        "tables": 33
+      },
+      "type_scores": [
+        {
+          "rank": 1,
+          "report_type": "experimental-validation",
+          "distinct_signals_matched": 5,
+          "signals_total": 5,
+          "hits": 14,
+          "sections_covered": 8,
+          "matched_signals": [
+            {
+              "signal": "test matrix",
+              "matched_variant": "扫掠",
+              "variant_lang": "zh",
+              "hits": 2
+            },
+            {
+              "signal": "facility",
+              "matched_variant": "水池",
+              "variant_lang": "zh",
+              "hits": 3
+            },
+            {
+              "signal": "measurement uncertainty",
+              "matched_variant": "敏感度",
+              "variant_lang": "zh",
+              "hits": 2
+            },
+            {
+              "signal": "validation case",
+              "matched_variant": "标模",
+              "variant_lang": "zh",
+              "hits": 2
+            },
+            {
+              "signal": "baseline comparison",
+              "matched_variant": "对标",
+              "variant_lang": "zh",
+              "hits": 5
+            }
+          ],
+          "locators": [
+            {
+              "quote": "（BEMT 敞水曲线 + 对数二分反解 n，P/D 扫掠最大化 η_D）；",
+              "start": 1773,
+              "end": 1810,
+              "match": [
+                1799,
+                1801
+              ],
+              "line": 32,
+              "section_id": "S03",
+              "content_hash": "sha256:36f57437737f15bf7d21ee9ab14ae9ba0a9051336ad48818aa419f5d5b783001",
+              "report_type": "experimental-validation",
+              "signal": "test matrix"
+            },
+            {
+              "quote": "5. **敏感度**：对 Cwp ±3%、LCB ±1%Lpp、SFOC ±5%、η_S∈[0.96,0.99]、D/T ±20% 扫掠，",
+              "start": 2365,
+              "end": 2434,
+              "match": [
+                2431,
+                2433
+              ],
+              "line": 42,
+              "section_id": "S03",
+              "content_hash": "sha256:79353606b6e767a794595468bc21f6941cc00530a7a8c298be6313230f64e656",
+              "report_type": "experimental-validation",
+              "signal": "test matrix"
+            },
+            {
+              "quote": "### 实验对标（KCS 公开水池表，作为审计对象而非标定源）",
+              "start": 3609,
+              "end": 3640,
+              "match": [
+                3624,
+                3626
+              ],
+              "line": 69,
+              "section_id": "S07",
+              "content_hash": "sha256:ad04fd7f70313f3f112cf533b3e986bdf953dbe7ffb06a869b617fbc5136910e",
+              "report_type": "experimental-validation",
+              "signal": "facility"
+            },
+            {
+              "quote": "* `fig1_resistance.png`：三型船 R_T(V)/R_F(V) 曲线 + V_ref（点线）+ KCS 水池表散点；右图为",
+              "start": 5007,
+              "end": 5078,
+              "match": [
+                5069,
+                5071
+              ],
+              "line": 95,
+              "section_id": "S09",
+              "content_hash": "sha256:dfb60cf67f5e388b7bc77ad6b78af0f51c1c53de4ddd9aa93f53fc5c4209b5f7",
+              "report_type": "experimental-validation",
+              "signal": "facility"
+            },
+            {
+              "quote": "\"对实验 <3%\"亦未达成，且所依据的仓内水池表自相矛盾，故如实记录为\"基准不可用\"。",
+              "start": 7563,
+              "end": 7606,
+              "match": [
+                7584,
+                7586
+              ],
+              "line": 142,
+              "section_id": "S11",
+              "content_hash": "sha256:7acd827ede84ba5587bbd462059f810f122e698e8e670b7a90c704292daa6ac1",
+              "report_type": "experimental-validation",
+              "signal": "facility"
+            },
+            {
+              "quote": "5. **敏感度**：对 Cwp ±3%、LCB ±1%Lpp、SFOC ±5%、η_S∈[0.96,0.99]、D/T ±20% 扫掠，",
+              "start": 2365,
+              "end": 2434,
+              "match": [
+                2370,
+                2373
+              ],
+              "line": 42,
+              "section_id": "S03",
+              "content_hash": "sha256:79353606b6e767a794595468bc21f6941cc00530a7a8c298be6313230f64e656",
+              "report_type": "experimental-validation",
+              "signal": "measurement uncertainty"
+            },
+            {
+              "quote": "### 敏感度（输入假设的传导，非精度声明）",
+              "start": 4323,
+              "end": 4345,
+              "match": [
+                4327,
+                4330
+              ],
+              "line": 85,
+              "section_id": "S08",
+              "content_hash": "sha256:2d60e5357bef73dc9141b73463fc29fbc67093c1ffc381e162cd667a59585272",
+              "report_type": "experimental-validation",
+              "signal": "measurement uncertainty"
+            },
+            {
+              "quote": "并用 3 型公开标模船（集箱 KCS / 散货 JBC / 油轮 KVLCC2）给出 attained vs required 对比。",
+              "start": 721,
+              "end": 788,
+              "match": [
+                729,
+                731
+              ],
+              "line": 16,
+              "section_id": "S02",
+              "content_hash": "sha256:ebf22706e6fbfb6a9f4790781f0065b78c1337595215ed1136edfad5700f4d89",
+              "report_type": "experimental-validation",
+              "signal": "validation case"
+            },
+            {
+              "quote": "6. **参考船数据分级**：主尺度/船型系数/附体面积取公开标模（且与仓内 m547 KCS 基线逐字段断言一致），",
+              "start": 6598,
+              "end": 6657,
+              "match": [
+                6629,
+                6631
+              ],
+              "line": 125,
+              "section_id": "S10",
+              "content_hash": "sha256:99dacf7be78eab99982f4135c99b233276e75f6848fb66e4ce3431d41220e718",
+              "report_type": "experimental-validation",
+              "signal": "validation case"
+            },
+            {
+              "quote": "与 IMO 示例船逐点对标：**WITHHELD**（离线不可回读 MEPC 原文，不做伪对标，见 ⑥）",
+              "start": 2949,
+              "end": 3001,
+              "match": [
+                2960,
+                2962
+              ],
+              "line": 59,
+              "section_id": "S05",
+              "content_hash": "sha256:836afb4422b7c26c73bbcf7e342360b7f4ee800b0f9f9be72cc45df2e3beebf5",
+              "report_type": "experimental-validation",
+              "signal": "baseline comparison"
+            },
+            {
+              "quote": "与 IMO 示例船逐点对标：**WITHHELD**（离线不可回读 MEPC 原文，不做伪对标，见 ⑥）",
+              "start": 2949,
+              "end": 3001,
+              "match": [
+                2994,
+                2996
+              ],
+              "line": 59,
+              "section_id": "S05",
+              "content_hash": "sha256:836afb4422b7c26c73bbcf7e342360b7f4ee800b0f9f9be72cc45df2e3beebf5",
+              "report_type": "experimental-validation",
+              "signal": "baseline comparison"
+            },
+            {
+              "quote": "### 实验对标（KCS 公开水池表，作为审计对象而非标定源）",
+              "start": 3609,
+              "end": 3640,
+              "match": [
+                3615,
+                3617
+              ],
+              "line": 69,
+              "section_id": "S07",
+              "content_hash": "sha256:ad04fd7f70313f3f112cf533b3e986bdf953dbe7ffb06a869b617fbc5136910e",
+              "report_type": "experimental-validation",
+              "signal": "baseline comparison"
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "report_type": "software-engineering",
+          "distinct_signals_matched": 4,
+          "signals_total": 5,
+          "hits": 12,
+          "sections_covered": 3,
+          "matched_signals": [
+            {
+              "signal": "changed files",
+              "matched_variant": "新增模块",
+              "variant_lang": "zh",
+              "hits": 1
+            },
+            {
+              "signal": "commit",
+              "matched_variant": "commit",
+              "variant_lang": "en",
+              "hits": 1
+            },
+            {
+              "signal": "regression",
+              "matched_variant": "回归",
+              "variant_lang": "zh",
+              "hits": 4
+            },
+            {
+              "signal": "API",
+              "matched_variant": "API",
+              "variant_lang": "en",
+              "hits": 6
+            }
+          ],
+          "locators": [
+            {
+              "quote": "2. **新增模块** `backend/modules/eexi_closed_loop/`（`chain.py` 纯物理核 + `fleet.py` 批量 +",
+              "start": 1934,
+              "end": 2015,
+              "match": [
+                1939,
+                1943
+              ],
+              "line": 35,
+              "section_id": "S03",
+              "content_hash": "sha256:dad6aafcd5e8800e62da172f50fa5e844b3a6217eab21ec8b863e1657c55d8e5",
+              "report_type": "software-engineering",
+              "signal": "changed files"
+            },
+            {
+              "quote": "commit `7017a623` · 全部数字由 `artifacts/eexi_closed_loop/run_eexi_closed_loop.py` 程序化注入（零手抄）",
+              "start": 161,
+              "end": 250,
+              "match": [
+                161,
+                167
+              ],
+              "line": 4,
+              "section_id": "S01",
+              "content_hash": "sha256:865ed5a7271748f183177d2d3146207fc2686ce93625900c4613202875f7da70",
+              "report_type": "software-engineering",
+              "signal": "commit"
+            },
+            {
+              "quote": "已改为海里并加解析回归测试（`TestEexiUnitDefectRegression`）；修复后 attained 2.8160、",
+              "start": 5604,
+              "end": 5670,
+              "match": [
+                5613,
+                5615
+              ],
+              "line": 107,
+              "section_id": "S10",
+              "content_hash": "sha256:f2da0f6a86f29b4c38048b9f0e5a56efd67794075a18137ae230f0507d306a2a",
+              "report_type": "software-engineering",
+              "signal": "regression"
+            },
+            {
+              "quote": "在 EEXI/EEDI 达到值上的复现，属结构性回归点。",
+              "start": 5728,
+              "end": 5756,
+              "match": [
+                5752,
+                5754
+              ],
+              "line": 109,
+              "section_id": "S10",
+              "content_hash": "sha256:69d010e7ff04809cbb01db6eb9be936a60698ae88b4b0f92c4665b0c30864949",
+              "report_type": "software-engineering",
+              "signal": "regression"
+            },
+            {
+              "quote": "4. **回归域**：JBC 的 Cb=0.858 与 Cp=0.860 略越 Holtrop 回归域上限（0.85），域门禁已如实告警；",
+              "start": 6320,
+              "end": 6389,
+              "match": [
+                6325,
+                6327
+              ],
+              "line": 120,
+              "section_id": "S10",
+              "content_hash": "sha256:0db00b84f974506732193cf19d1f569a4253d6e29294b71500d1de3a766b37f2",
+              "report_type": "software-engineering",
+              "signal": "regression"
+            },
+            {
+              "quote": "* EEXI 指数只由 `api/green_shipping.py::_gn_attained_index` 给，闭合链路只提供功率与碳质量，",
+              "start": 1814,
+              "end": 1886,
+              "match": [
+                1827,
+                1830
+              ],
+              "line": 33,
+              "section_id": "S03",
+              "content_hash": "sha256:c9127512ca85678e3bf543ddb141560f4b74ac53d24e7e112ba28b8e9a59f982",
+              "report_type": "software-engineering",
+              "signal": "API"
+            },
+            {
+              "quote": "两者在 API 响应里做逐位对账（`cross_source_rel_err`）。",
+              "start": 1892,
+              "end": 1933,
+              "match": [
+                1896,
+                1899
+              ],
+              "line": 34,
+              "section_id": "S03",
+              "content_hash": "sha256:c8725a863489f4fc281f95c3e3424455bf03fa8dc589408d14ef32a601546f7b",
+              "report_type": "software-engineering",
+              "signal": "API"
+            },
+            {
+              "quote": "3. **API**：`POST /api/v1/green-shipping/eexi_closed_loop`（几何直算 attained EEXI）、",
+              "start": 2060,
+              "end": 2138,
+              "match": [
+                2065,
+                2068
+              ],
+              "line": 37,
+              "section_id": "S03",
+              "content_hash": "sha256:16b94132e49cfdbc312d43fee380f4d6d9da26fbac4856cf123638528ff67773",
+              "report_type": "software-engineering",
+              "signal": "API"
+            }
+          ]
+        },
+        {
+          "rank": 3,
+          "report_type": "scientific-computation",
+          "distinct_signals_matched": 2,
+          "signals_total": 5,
+          "hits": 2,
+          "sections_covered": 2,
+          "matched_signals": [
+            {
+              "signal": "convergence study",
+              "matched_variant": "收敛",
+              "variant_lang": "zh",
+              "hits": 1
+            },
+            {
+              "signal": "timing table",
+              "matched_variant": "参数表",
+              "variant_lang": "zh",
+              "hits": 1
+            }
+          ],
+          "locators": [
+            {
+              "quote": "T(1−t)=R_T 的数值收敛**（二分容差 1e-5），并非两条独立物理路径的交叉验证；",
+              "start": 6054,
+              "end": 6100,
+              "match": [
+                6068,
+                6070
+              ],
+              "line": 115,
+              "section_id": "S10",
+              "content_hash": "sha256:9a6242b9dafe4a35702cd2bfc5e33be5d59c87f9c89243ab939c53c71877f7d3",
+              "report_type": "scientific-computation",
+              "signal": "convergence study"
+            },
+            {
+              "quote": "## ① 案例介绍（物理背景 / 几何 / 参数表）",
+              "start": 252,
+              "end": 278,
+              "match": [
+                274,
+                277
+              ],
+              "line": 6,
+              "section_id": "S02",
+              "content_hash": "sha256:a38f37d25f71ef05c41d92a86c65b5df82aceedefa2acfc27b3ea62cc64b36f8",
+              "report_type": "scientific-computation",
+              "signal": "timing table"
+            }
+          ]
+        },
+        {
+          "rank": 4,
+          "report_type": "algorithm-implementation",
+          "distinct_signals_matched": 0,
+          "signals_total": 5,
+          "hits": 0,
+          "sections_covered": 0,
+          "matched_signals": [],
+          "locators": []
+        },
+        {
+          "rank": 5,
+          "report_type": "literature-review",
+          "distinct_signals_matched": 0,
+          "signals_total": 5,
+          "hits": 0,
+          "sections_covered": 0,
+          "matched_signals": [],
+          "locators": []
+        },
+        {
+          "rank": 6,
+          "report_type": "technical-proposal",
+          "distinct_signals_matched": 0,
+          "signals_total": 5,
+          "hits": 0,
+          "sections_covered": 0,
+          "matched_signals": [],
+          "locators": []
+        }
+      ],
+      "classification": {
+        "report_type": "experimental-validation",
+        "primary_report_type": "experimental-validation",
+        "primary_level": "top-level type（六分型之一，registry 口径）",
+        "confidence": "high",
+        "secondary_report_types": [
+          "software-engineering",
+          "scientific-computation"
+        ],
+        "runner_up": "software-engineering",
+        "margin_distinct_signals": 1,
+        "decision_trace": {
+          "stages": [
+            "① distinct_signals_matched 领先 → experimental-validation"
+          ],
+          "ranking": [
+            {
+              "report_type": "experimental-validation",
+              "distinct_signals_matched": 5,
+              "hits": 14,
+              "sections_covered": 8
+            },
+            {
+              "report_type": "software-engineering",
+              "distinct_signals_matched": 4,
+              "hits": 12,
+              "sections_covered": 3
+            },
+            {
+              "report_type": "scientific-computation",
+              "distinct_signals_matched": 2,
+              "hits": 2,
+              "sections_covered": 2
+            },
+            {
+              "report_type": "algorithm-implementation",
+              "distinct_signals_matched": 0,
+              "hits": 0,
+              "sections_covered": 0
+            },
+            {
+              "report_type": "literature-review",
+              "distinct_signals_matched": 0,
+              "hits": 0,
+              "sections_covered": 0
+            },
+            {
+              "report_type": "technical-proposal",
+              "distinct_signals_matched": 0,
+              "hits": 0,
+              "sections_covered": 0
+            }
+          ]
+        },
+        "falsification_test": "复算：对同一 markdown 跑 scripts/kf/wp9503_02_classify.py，若 primary 不是 experimental-validation 或 runner_up 缩到 0 差距，则本分类假说被推翻",
+        "stability": {
+          "margin_over_runner_up_distinct_signals": 1,
+          "cross_variant_agreement": false,
+          "variants_disagreeing": [
+            {
+              "lexicon": "en-only",
+              "primary": "software-engineering"
+            }
+          ],
+          "ablation_flips": 2,
+          "ablation_total": 30,
+          "co_primary_hypothesis": "software-engineering",
+          "generated_caveat": "margin=1 distinct signals；词典变体 不一致（en-only→software-engineering）；逐信号消融 2/30 次翻案；故 report_type 标签应视为 experimental-validation 与 software-engineering 之间的排序假说，而非互斥事实",
+          "downstream_guidance": "03 抽取按 experimental-validation skill 规格为主；把次席 software-engineering 的证据定位一并交付，允许 03 工序对'变更/回归/接口'类结论同时使用 software-engineering 规格"
+        },
+        "misclassification_risk": "本报告同时具备软件工程信号（commit/API/回归测试）与实验验证信号（对标/敏感度/基线）；若下游 03 按 skill 规格抽取，software-engineering skill 会优先抽'变更/验证/局限'类结论，可能弱化数值对标类结论 → 已把次席类型连同其证据一并交给下游，由 03 工序决定是否联合使用"
+      },
+      "summary": {
+        "report_type": "experimental-validation",
+        "confidence": "high",
+        "skill_id": "xsk-experimental-validation",
+        "runner_up": "software-engineering",
+        "n_topics": 10,
+        "n_locators": 35,
+        "source_hash_matches": true
+      },
+      "routing": {
+        "declared_layer": "EEXI|p73w2b-n02-eexi-closed-loop|l",
+        "scenario_key": "p73w2b-n02-eexi-closed-loop",
+        "lane": "B",
+        "note": "分层串/场景键来自契约（owner YAML），非本工序推断；用于下游按域路由"
+      },
+      "selected_skill": {
+        "skill_id": "xsk-experimental-validation",
+        "skill_version": "0.1.0",
+        "report_type": "experimental-validation",
+        "lifecycle_state_as_observed": "template-created",
+        "selection_basis": "registry.report_types × primary_report_type 一一对应（registry.json 不重复 skill_id）",
+        "caveat": "该 skill 仍处 template-created（registry 自述：无真实报告走完 G3）；选中它表示'下游 03 工序按此规格执行'，不构成技能有效性证据",
+        "not_selected": [
+          "software-engineering",
+          "scientific-computation",
+          "algorithm-implementation",
+          "literature-review",
+          "technical-proposal"
+        ]
+      },
+      "topics": [
+        {
+          "topic_id": "T01",
+          "label": "EEXI / EEDI 规制链",
+          "anchor": "EEXI（Energy Efficiency Existing Ship Index",
+          "evidence": {
+            "quote": "EEXI（Energy Efficiency Existing Ship Index，MEPC.328(76) 修正 MEPC.350(78) 计算法）要求把",
+            "start": 280,
+            "end": 359,
+            "match": [
+              280,
+              322
+            ],
+            "line": 8,
+            "section_id": "S02",
+            "content_hash": "sha256:d8cae2dea593490204eefbbd0ae0c219004cf0938619c0bbb5b5769e7e8f7fe9"
+          }
+        },
+        {
+          "topic_id": "T02",
+          "label": "Holtrop-Mennen 阻力预报",
+          "anchor": "Holtrop-Mennen",
+          "evidence": {
+            "quote": "本节点把链路补齐为：**裸船体几何 → Holtrop-Mennen(1984) 总阻力 R_T(V_ref) → 有效功率",
+            "start": 517,
+            "end": 579,
+            "match": [
+              537,
+              551
+            ],
+            "line": 13,
+            "section_id": "S02",
+            "content_hash": "sha256:19eb58f30f8712f9e9dae02f30e94286ff7885e8b8b96af0e762540d4c1ed149"
+          }
+        },
+        {
+          "topic_id": "T03",
+          "label": "推进效率链 η_H·η_O·η_S",
+          "anchor": "η_H·η_O·η_S",
+          "evidence": {
+            "quote": "P_E=R_T·V → 推进效率分解 η_H·η_O·η_S（BEMT 敞水曲线反解转速，T(1−t)=R_T 闭合）→",
+            "start": 580,
+            "end": 640,
+            "match": [
+              599,
+              610
+            ],
+            "line": 14,
+            "section_id": "S02",
+            "content_hash": "sha256:7c155b194c5387b7bde8dd865f074c0e578fe275e8fb54d53ddd92dc971135e7"
+          }
+        },
+        {
+          "topic_id": "T04",
+          "label": "gCO₂/(t·nm) 单位代数 / 量纲缺陷",
+          "anchor": "量纲",
+          "evidence": {
+            "quote": "1. **发现并修复一个真实缺陷（1852 倍量纲错）**：`_gn_attained_index` 原实现把分母航程取",
+            "start": 5348,
+            "end": 5408,
+            "match": [
+              5371,
+              5373
+            ],
+            "line": 103,
+            "section_id": "S10",
+            "content_hash": "sha256:b83410c89b61fb059b398bbd151abfb1b2f953b98280f5e32b35ab57a5ab05e0"
+          }
+        },
+        {
+          "topic_id": "T05",
+          "label": "缺陷修复 + 回归测试",
+          "anchor": "TestEexiUnitDefectRegression",
+          "evidence": {
+            "quote": "已改为海里并加解析回归测试（`TestEexiUnitDefectRegression`）；修复后 attained 2.8160、",
+            "start": 5604,
+            "end": 5670,
+            "match": [
+              5619,
+              5647
+            ],
+            "line": 107,
+            "section_id": "S10",
+            "content_hash": "sha256:f2da0f6a86f29b4c38048b9f0e5a56efd67794075a18137ae230f0507d306a2a"
+          }
+        },
+        {
+          "topic_id": "T06",
+          "label": "判据机器化 G1–G5",
+          "anchor": "G1 摩擦线一致性",
+          "evidence": {
+            "quote": "4. **判据机器化**：G1 摩擦线一致性、G2 能量守恒（幂等路线 + 独立力矩路线 2πnQ）、",
+            "start": 2213,
+            "end": 2264,
+            "match": [
+              2226,
+              2235
+            ],
+            "line": 39,
+            "section_id": "S03",
+            "content_hash": "sha256:f4064e09cad6412713e97ecb94e7c20b3ce0f68d3c50f82bb85b3a02182dbe47"
+          }
+        },
+        {
+          "topic_id": "T07",
+          "label": "实验对标 / 基准不可信（WITHHELD）",
+          "anchor": "该表证据等级",
+          "evidence": {
+            "quote": "表内 `C_t` 列与 `R_T` 列最大不一致 `20.3%`，故该表证据等级",
+            "start": 4237,
+            "end": 4277,
+            "match": [
+              4271,
+              4277
+            ],
+            "line": 82,
+            "section_id": "S07",
+            "content_hash": "sha256:ce5b51b61fea8d01823989a01960599a575f8e4921c40af0247b15f7a472c064"
+          }
+        },
+        {
+          "topic_id": "T08",
+          "label": "输入假设敏感度传导",
+          "anchor": "敏感度",
+          "evidence": {
+            "quote": "5. **敏感度**：对 Cwp ±3%、LCB ±1%Lpp、SFOC ±5%、η_S∈[0.96,0.99]、D/T ±20% 扫掠，",
+            "start": 2365,
+            "end": 2434,
+            "match": [
+              2370,
+              2373
+            ],
+            "line": 42,
+            "section_id": "S03",
+            "content_hash": "sha256:79353606b6e767a794595468bc21f6941cc00530a7a8c298be6313230f64e656"
+          }
+        },
+        {
+          "topic_id": "T09",
+          "label": "三型标模船参照集（KCS/JBC/KVLCC2）",
+          "anchor": "kvlcc2_300k",
+          "evidence": {
+            "quote": "| kvlcc2_300k | tanker | 300000 | 300000 | 15.5 | 1833.8 | 14622 | 24115 | 0.558 | 1.109 | 0.98 | 0.606 | 2.816 | 2.071 | 1.36 |",
+            "start": 1339,
+            "end": 1467,
+            "match": [
+              1341,
+              1352
+            ],
+            "line": 24,
+            "section_id": "S02",
+            "content_hash": "sha256:631a90af6d4872ff88fd23b4019acfab219941bfff50e53c84bbe7a713375ad8"
+          }
+        },
+        {
+          "topic_id": "T10",
+          "label": "BEMT 敞水反解 / T(1−t)=R_T 闭合",
+          "anchor": "BEMT",
+          "evidence": {
+            "quote": "P_E=R_T·V → 推进效率分解 η_H·η_O·η_S（BEMT 敞水曲线反解转速，T(1−t)=R_T 闭合）→",
+            "start": 580,
+            "end": 640,
+            "match": [
+              611,
+              615
+            ],
+            "line": 14,
+            "section_id": "S02",
+            "content_hash": "sha256:7c155b194c5387b7bde8dd865f074c0e578fe275e8fb54d53ddd92dc971135e7"
+          }
+        }
+      ],
+      "topics_unresolved": [],
+      "platform_tag_alignment": [
+        {
+          "platform_tag": "EEXI",
+          "verbatim_in_markdown": true,
+          "evidence": {
+            "quote": "# EEXI attained 端到端闭合链路：Holtrop 阻力 → 推进功率 → 轴系效率 → gCO₂/(t·nm)",
+            "start": 0,
+            "end": 62,
+            "match": [
+              2,
+              6
+            ],
+            "line": 1,
+            "section_id": "S01",
+            "content_hash": "sha256:153230c54d778c4e890bdec9c2730c8c07178a92865f5f4e4ff374a601a28e36"
+          }
+        },
+        {
+          "platform_tag": "绿色航行",
+          "verbatim_in_markdown": false,
+          "status": "unresolved",
+          "reason": "平台记录 tag 在 markdown 中无逐字出现（属记录元数据，不由本工序改写）"
+        },
+        {
+          "platform_tag": "Holtrop-Mennen",
+          "verbatim_in_markdown": true,
+          "evidence": {
+            "quote": "本节点把链路补齐为：**裸船体几何 → Holtrop-Mennen(1984) 总阻力 R_T(V_ref) → 有效功率",
+            "start": 517,
+            "end": 579,
+            "match": [
+              537,
+              551
+            ],
+            "line": 13,
+            "section_id": "S02",
+            "content_hash": "sha256:19eb58f30f8712f9e9dae02f30e94286ff7885e8b8b96af0e762540d4c1ed149"
+          }
+        },
+        {
+          "platform_tag": "推进效率",
+          "verbatim_in_markdown": true,
+          "evidence": {
+            "quote": "P_E=R_T·V → 推进效率分解 η_H·η_O·η_S（BEMT 敞水曲线反解转速，T(1−t)=R_T 闭合）→",
+            "start": 580,
+            "end": 640,
+            "match": [
+              592,
+              596
+            ],
+            "line": 14,
+            "section_id": "S02",
+            "content_hash": "sha256:7c155b194c5387b7bde8dd865f074c0e578fe275e8fb54d53ddd92dc971135e7"
+          }
+        },
+        {
+          "platform_tag": "量纲一致性",
+          "verbatim_in_markdown": false,
+          "status": "unresolved",
+          "reason": "平台记录 tag 在 markdown 中无逐字出现（属记录元数据，不由本工序改写）"
+        },
+        {
+          "platform_tag": "defect_fix",
+          "verbatim_in_markdown": false,
+          "status": "unresolved",
+          "reason": "平台记录 tag 在 markdown 中无逐字出现（属记录元数据，不由本工序改写）"
+        }
+      ],
+      "robustness": {
+        "lexicon_variants": {
+          "combined": {
+            "primary": "experimental-validation",
+            "confidence": "high",
+            "distinct_signals_matched": {
+              "literature-review": 0,
+              "scientific-computation": 2,
+              "algorithm-implementation": 0,
+              "software-engineering": 4,
+              "technical-proposal": 0,
+              "experimental-validation": 5
+            },
+            "hits": {
+              "literature-review": 0,
+              "scientific-computation": 2,
+              "algorithm-implementation": 0,
+              "software-engineering": 12,
+              "technical-proposal": 0,
+              "experimental-validation": 14
+            }
+          },
+          "en-only": {
+            "primary": "software-engineering",
+            "confidence": "high",
+            "distinct_signals_matched": {
+              "literature-review": 0,
+              "scientific-computation": 0,
+              "algorithm-implementation": 0,
+              "software-engineering": 3,
+              "technical-proposal": 0,
+              "experimental-validation": 0
+            },
+            "hits": {
+              "literature-review": 0,
+              "scientific-computation": 0,
+              "algorithm-implementation": 0,
+              "software-engineering": 8,
+              "technical-proposal": 0,
+              "experimental-validation": 0
+            }
+          },
+          "zh-only": {
+            "primary": "experimental-validation",
+            "confidence": "high",
+            "distinct_signals_matched": {
+              "literature-review": 0,
+              "scientific-computation": 2,
+              "algorithm-implementation": 0,
+              "software-engineering": 3,
+              "technical-proposal": 0,
+              "experimental-validation": 5
+            },
+            "hits": {
+              "literature-review": 0,
+              "scientific-computation": 2,
+              "algorithm-implementation": 0,
+              "software-engineering": 11,
+              "technical-proposal": 0,
+              "experimental-validation": 14
+            }
+          }
+        },
+        "primary_stable_across_variants": false,
+        "leave_one_signal_out": {
+          "n_ablations": 30,
+          "n_flips": 2,
+          "flips": [
+            {
+              "dropped": "experimental-validation / facility",
+              "primary_after_drop": "software-engineering",
+              "flips": true
+            },
+            {
+              "dropped": "experimental-validation / baseline comparison",
+              "primary_after_drop": "software-engineering",
+              "flips": true
+            }
+          ]
+        }
+      },
+      "limitations": [
+        "信号识别是词面匹配（英文 registry 短语 + 本包声明中文别名），不做语义理解；同义改写/隐性证据会漏检，故把 matched_signals 与 hits 全量披露，读者可复算。",
+        "中文别名（如『扫掠』『标模』『回归』）由本包声明，registry 里没有；因此另行披露 en-only 与 zh-only 两个词典变体的判定结果，避免别名抬高单一类型。",
+        "本工序不抽取 claim、不登记资产、不判定证据等级：原文里的 REAL/WITHHELD 等自述词只作为主题线索，不构成本工序的验证结论。",
+        "平台记录 tags 里 3 个标签（绿色航行/量纲一致性/defect_fix）在 markdown 无逐字出现，已列入 platform_tag_alignment 的 unresolved 项，不从原文硬造等价引文。",
+        "记录 title 与 markdown 一级标题不同（前者多『+ 1852 倍量纲缺陷修复』后缀），两者都原样保留，不做标题改写或补齐。",
+        "仓内通用三门校验器交叉核对：verdict=FAIL_STRUCTURAL，structural 9/15 通过（失败项 ['S1.files_present', 'S3.contract_schema', 'S5.summary_schema', 'S12.zero_claim_legality', 'S13.counts_consistent', 'S14.source_identity']），evidence 7/7 通过。失败的结构规则属于 03 抽取工序口径（S1 要求四契约文件、S3 是 schema 字段漂移、S5/S12/S13/S14 要求 summary/claims 账目），本工序不改共享 schema、不伪造上游产物，只披露；证据类规则 E1–E7（源可达 + 引文可解析 + 哈希一致）全通过。"
+      ],
+      "acceptance_self_check": {
+        "valid_json": true,
+        "schema_pass": true,
+        "source_locator_resolvable": {
+          "pass": true,
+          "locators_checked": 35,
+          "failures": []
+        },
+        "source_hash_matches": {
+          "pass": true,
+          "declared": "sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c",
+          "computed": "sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c"
+        },
+        "no_duplicate_ids": {
+          "pass": true,
+          "section_ids": 12,
+          "signal_ids": 11
+        },
+        "all_claims_have_evidence_or_explicit_unresolved_status": {
+          "pass": true,
+          "topics_with_locator": 10,
+          "topics_unresolved": 0,
+          "signals_with_locator": 11,
+          "note": "本工序不产出 claim（objective.classify_report_type 只要求分类），故该条按'每个被引用的判定依据均有定位或显式 unresolved'口径自检"
+        }
+      },
+      "repo_gate_probe": {
+        "status": "ran",
+        "gate": "ko-gate-v1",
+        "verdict": "FAIL_STRUCTURAL",
+        "checks_total": {
+          "structural": 15,
+          "evidence": 7
+        },
+        "structural_pass": 9,
+        "structural_fail": [
+          {
+            "rule": "S1.files_present",
+            "detail": "missing=['claims.json', 'evidence.json', 'provenance.json', 'extraction_summary.json']"
+          },
+          {
+            "rule": "S3.contract_schema",
+            "detail": "?: Additional properties are not allowed ('contract_version', 'lane' were unexpected)"
+          },
+          {
+            "rule": "S5.summary_schema",
+            "detail": "no summary object"
+          },
+          {
+            "rule": "S12.zero_claim_legality",
+            "detail": "empty claim set, stated reason='None'"
+          },
+          {
+            "rule": "S13.counts_consistent",
+            "detail": "summary vs files mismatch={'claims': (None, 0), 'evidence': (None, 0), 'provenance': (None, 0)}"
+          },
+          {
+            "rule": "S14.source_identity",
+            "detail": "contract/summary=[('9503', None), ('sha256:195c350dd486cb556f078b220cb348edf9210d4ac2631319b40658ee73428b5c', None)] evidence.persistent_ids=[] report_id='9503'"
+          }
+        ],
+        "evidence_pass": 7,
+        "evidence_fail": [],
+        "interpretation": "S1/S5/S12/S13/S14 是 03 抽取工序的规则（本 02 包无 claims/evidence/provenance/extraction_summary）；S3 报 work-package.json 的 contract_version/lane 为 unexpected，属 schemas/work-package-contract.schema.json 与 owner YAML 的字段漂移（schema 用 version，owner YAML 用 contract_version+lane）；E1–E7 全通过。为不让门变绿而伪造 03 产物，这里只披露。"
+      }
+    }
+  }
+}
