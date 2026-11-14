@@ -1,0 +1,962 @@
+{
+  "schema_version": "1.0",
+  "package_id": "wp-9632-02",
+  "task_type": "02-classification-parse",
+  "report_id": "9632",
+  "taxonomy": {
+    "name": "extraction-skill-report-type",
+    "version": "1.0",
+    "source": "extraction-skills/registry.json",
+    "report_types": [
+      "scientific-computation",
+      "experimental-validation",
+      "algorithm-implementation",
+      "software-engineering",
+      "literature-review",
+      "technical-proposal"
+    ]
+  },
+  "report_type": "scientific-computation",
+  "status": "classified_draft",
+  "selected_skill": {
+    "skill_id": "xsk-scientific-computation",
+    "skill_version": "0.1.0",
+    "lifecycle_state": "template-created",
+    "selection_basis": "identify_signals 命中 4/5 (score 0.8), 次优 experimental-validation score 0.5"
+  },
+  "confidence": {
+    "label": "high",
+    "score": 0.8,
+    "margin_over_second": 0.3,
+    "basis": "四个独立 registry 信号（控制方程/离散/收敛研究/网格加密）均有可定位原文；唯一未命中信号(timing table)不改变类型判定；次优类型仅在验证方法上有部分重合",
+    "falsifier": "若下游定位到本报告主体为实测试验（设施/试次/测量不确定度）而非数值基准，则应为 experimental-validation"
+  },
+  "candidate_matrix": [
+    {
+      "report_type": "scientific-computation",
+      "skill_id": "xsk-scientific-computation",
+      "signals_total": 5,
+      "matched": 4,
+      "partial": 0,
+      "absent": 1,
+      "score": 0.8,
+      "signal_ids": [
+        "sig-01",
+        "sig-02",
+        "sig-03",
+        "sig-04",
+        "sig-05"
+      ],
+      "rank": 1,
+      "decision": "selected"
+    },
+    {
+      "report_type": "experimental-validation",
+      "skill_id": "xsk-experimental-validation",
+      "signals_total": 5,
+      "matched": 1,
+      "partial": 3,
+      "absent": 1,
+      "score": 0.5,
+      "signal_ids": [
+        "sig-06",
+        "sig-07",
+        "sig-08",
+        "sig-09",
+        "sig-10"
+      ],
+      "rank": 2,
+      "decision": "rejected_secondary"
+    },
+    {
+      "report_type": "algorithm-implementation",
+      "skill_id": "xsk-algorithm-implementation",
+      "signals_total": 5,
+      "matched": 0,
+      "partial": 2,
+      "absent": 3,
+      "score": 0.2,
+      "signal_ids": [
+        "sig-11",
+        "sig-12",
+        "sig-13",
+        "sig-14",
+        "sig-15"
+      ],
+      "rank": 3,
+      "decision": "rejected_secondary"
+    },
+    {
+      "report_type": "software-engineering",
+      "skill_id": "xsk-software-engineering",
+      "signals_total": 5,
+      "matched": 0,
+      "partial": 1,
+      "absent": 4,
+      "score": 0.1,
+      "signal_ids": [
+        "sig-16",
+        "sig-17",
+        "sig-18",
+        "sig-19",
+        "sig-20"
+      ],
+      "rank": 4,
+      "decision": "rejected_secondary"
+    },
+    {
+      "report_type": "literature-review",
+      "skill_id": "xsk-literature-review",
+      "signals_total": 5,
+      "matched": 0,
+      "partial": 0,
+      "absent": 5,
+      "score": 0.0,
+      "signal_ids": [
+        "sig-26",
+        "sig-27",
+        "sig-28",
+        "sig-29",
+        "sig-30"
+      ],
+      "rank": 5,
+      "decision": "rejected_secondary"
+    },
+    {
+      "report_type": "technical-proposal",
+      "skill_id": "xsk-technical-proposal",
+      "signals_total": 5,
+      "matched": 0,
+      "partial": 0,
+      "absent": 5,
+      "score": 0.0,
+      "signal_ids": [
+        "sig-21",
+        "sig-22",
+        "sig-23",
+        "sig-24",
+        "sig-25"
+      ],
+      "rank": 6,
+      "decision": "rejected_secondary"
+    }
+  ],
+  "signals": [
+    {
+      "id": "sig-01",
+      "report_type": "scientific-computation",
+      "signal": "governing equations",
+      "match": "matched",
+      "evidence_id": "ev-sc-eq",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "核心控制方程为含孔隙率修正的 Stefan 平衡（registry 信号为英文，源报告为中文，按语义比对）"
+    },
+    {
+      "id": "sig-02",
+      "report_type": "scientific-computation",
+      "signal": "discretisation",
+      "match": "matched",
+      "evidence_id": "ev-sc-disc",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "显式守恒焓法、固定网格、Dirichlet 冷面 + 远端零通量"
+    },
+    {
+      "id": "sig-03",
+      "report_type": "scientific-computation",
+      "signal": "convergence study",
+      "match": "matched",
+      "evidence_id": "ev-sc-conv",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "50→400 网格的前缘与相对误差序列"
+    },
+    {
+      "id": "sig-04",
+      "report_type": "scientific-computation",
+      "signal": "mesh refinement",
+      "match": "matched",
+      "evidence_id": "ev-sc-mesh",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "网格加密表（N、Δx、Δt、前缘、误差）"
+    },
+    {
+      "id": "sig-05",
+      "report_type": "scientific-computation",
+      "signal": "timing table",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": "ev-sc-tool",
+      "status": "explicitly_absent",
+      "note": "源报告无计时/性能表；最近似段落为工具链描述，不足以判定 matched"
+    },
+    {
+      "id": "sig-06",
+      "report_type": "experimental-validation",
+      "signal": "test matrix",
+      "match": "partial",
+      "evidence_id": "ev-ev-matrix",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "有 φ×饱和度 参数扫描矩阵，但不是实验试次矩阵（无试件/工况编号）"
+    },
+    {
+      "id": "sig-07",
+      "report_type": "experimental-validation",
+      "signal": "facility",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无试验设施、量测布置或台架描述"
+    },
+    {
+      "id": "sig-08",
+      "report_type": "experimental-validation",
+      "signal": "measurement uncertainty",
+      "match": "partial",
+      "evidence_id": "ev-ev-uncert",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "仅有文献观测分散量级，非本工作的测量不确定度评定"
+    },
+    {
+      "id": "sig-09",
+      "report_type": "experimental-validation",
+      "signal": "validation case",
+      "match": "partial",
+      "evidence_id": "ev-ev-case",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "以手算/解析解为参照的验证算例，非实测验证案例"
+    },
+    {
+      "id": "sig-10",
+      "report_type": "experimental-validation",
+      "signal": "baseline comparison",
+      "match": "matched",
+      "evidence_id": "ev-ev-base",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "并列给出模型/并联/串联/ME-1 与相对偏差的基线比较行"
+    },
+    {
+      "id": "sig-11",
+      "report_type": "algorithm-implementation",
+      "signal": "pseudocode",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无伪代码"
+    },
+    {
+      "id": "sig-12",
+      "report_type": "algorithm-implementation",
+      "signal": "complexity",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无复杂度分析"
+    },
+    {
+      "id": "sig-13",
+      "report_type": "algorithm-implementation",
+      "signal": "algorithm block",
+      "match": "partial",
+      "evidence_id": "ev-alg-fn",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "有求解器模块/函数划分，非算法块"
+    },
+    {
+      "id": "sig-14",
+      "report_type": "algorithm-implementation",
+      "signal": "function signature",
+      "match": "partial",
+      "evidence_id": "ev-alg-fn",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "仅出现点分函数名，无签名（参数/返回）"
+    },
+    {
+      "id": "sig-15",
+      "report_type": "algorithm-implementation",
+      "signal": "O(n",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无 Big-O 记号"
+    },
+    {
+      "id": "sig-16",
+      "report_type": "software-engineering",
+      "signal": "changed files",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无变更文件清单"
+    },
+    {
+      "id": "sig-17",
+      "report_type": "software-engineering",
+      "signal": "commit",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无提交号/分支"
+    },
+    {
+      "id": "sig-18",
+      "report_type": "software-engineering",
+      "signal": "interface",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无对外接口契约描述"
+    },
+    {
+      "id": "sig-19",
+      "report_type": "software-engineering",
+      "signal": "regression",
+      "match": "partial",
+      "evidence_id": "ev-swe-test",
+      "context_evidence_id": null,
+      "status": "evidenced",
+      "note": "有测试套件与全通过陈述，但无回归对比基线"
+    },
+    {
+      "id": "sig-20",
+      "report_type": "software-engineering",
+      "signal": "API",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无 API 端点/协议描述"
+    },
+    {
+      "id": "sig-21",
+      "report_type": "technical-proposal",
+      "signal": "proposal",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "非立项/建议文档"
+    },
+    {
+      "id": "sig-22",
+      "report_type": "technical-proposal",
+      "signal": "design",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无设计规格章节"
+    },
+    {
+      "id": "sig-23",
+      "report_type": "technical-proposal",
+      "signal": "roadmap",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无路线图"
+    },
+    {
+      "id": "sig-24",
+      "report_type": "technical-proposal",
+      "signal": "specification",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无需求规格"
+    },
+    {
+      "id": "sig-25",
+      "report_type": "technical-proposal",
+      "signal": "plan",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无实施计划"
+    },
+    {
+      "id": "sig-26",
+      "report_type": "literature-review",
+      "signal": "related work",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无相关工作综述"
+    },
+    {
+      "id": "sig-27",
+      "report_type": "literature-review",
+      "signal": "state of the art",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无现状梳理"
+    },
+    {
+      "id": "sig-28",
+      "report_type": "literature-review",
+      "signal": "survey",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "非综述"
+    },
+    {
+      "id": "sig-29",
+      "report_type": "literature-review",
+      "signal": "bibliography",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": null,
+      "status": "explicitly_absent",
+      "note": "无参考文献表"
+    },
+    {
+      "id": "sig-30",
+      "report_type": "literature-review",
+      "signal": "citation density >= 5 per 1000 chars",
+      "match": "absent",
+      "evidence_id": null,
+      "context_evidence_id": "ev-lit-cite",
+      "status": "explicitly_absent",
+      "note": "程序化统计：年份式引用 2 次 / 10749 字符 = 0.186 次/千字符，远低于 5 次/千字符信号阈值"
+    }
+  ],
+  "structure": {
+    "language": "zh",
+    "chars": 10749,
+    "lines": 239,
+    "sections": [
+      {
+        "id": "sec-01",
+        "level": 1,
+        "heading": "IN101-N07 冰脊固结热力学：龙骨大孔隙再冻结与固结度-阻力耦合",
+        "start_offset": 0,
+        "end_offset": 274,
+        "chars": 274
+      },
+      {
+        "id": "sec-02",
+        "level": 2,
+        "heading": "1. 案例介绍（物理背景 / 几何 / 参数表）",
+        "start_offset": 274,
+        "end_offset": 1241,
+        "chars": 967
+      },
+      {
+        "id": "sec-03",
+        "level": 2,
+        "heading": "2. 怎么做的（方法 / 流程 / 关键设置 / 工具链）",
+        "start_offset": 1241,
+        "end_offset": 1275,
+        "chars": 34
+      },
+      {
+        "id": "sec-04",
+        "level": 3,
+        "heading": "2.1 含孔隙率修正的 Stefan 定律（核心）",
+        "start_offset": 1275,
+        "end_offset": 1892,
+        "chars": 617
+      },
+      {
+        "id": "sec-05",
+        "level": 3,
+        "heading": "2.2 有效导热系数（判据 b 的参照）",
+        "start_offset": 1892,
+        "end_offset": 2165,
+        "chars": 273
+      },
+      {
+        "id": "sec-06",
+        "level": 3,
+        "heading": "2.3 固结层强度与阻力耦合",
+        "start_offset": 2165,
+        "end_offset": 2549,
+        "chars": 384
+      },
+      {
+        "id": "sec-07",
+        "level": 3,
+        "heading": "2.4 独立的数值对照：一维焓法",
+        "start_offset": 2549,
+        "end_offset": 2779,
+        "chars": 230
+      },
+      {
+        "id": "sec-08",
+        "level": 3,
+        "heading": "2.5 工具链",
+        "start_offset": 2779,
+        "end_offset": 2953,
+        "chars": 174
+      },
+      {
+        "id": "sec-09",
+        "level": 2,
+        "heading": "3. 计算结果（判据逐项）",
+        "start_offset": 2953,
+        "end_offset": 2971,
+        "chars": 18
+      },
+      {
+        "id": "sec-10",
+        "level": 3,
+        "heading": "判据 (a) 一维纯冰 Stefan：数值 vs 解析 ≤2%",
+        "start_offset": 2971,
+        "end_offset": 3393,
+        "chars": 422
+      },
+      {
+        "id": "sec-11",
+        "level": 3,
+        "heading": "判据 (b) $k_{eff}$ 与 Maxwell-Eucken 并联模型 ≤5%",
+        "start_offset": 3393,
+        "end_offset": 3803,
+        "chars": 410
+      },
+      {
+        "id": "sec-12",
+        "level": 3,
+        "heading": "判据 (c) $h_c(t)$ 与 Leppäranta & Hakala 1992 观测带 ±30%",
+        "start_offset": 3803,
+        "end_offset": 4797,
+        "chars": 994
+      },
+      {
+        "id": "sec-13",
+        "level": 3,
+        "heading": "判据 (d) $\\sigma_c$ 终值 vs 手算 ≤10%",
+        "start_offset": 4797,
+        "end_offset": 5255,
+        "chars": 458
+      },
+      {
+        "id": "sec-14",
+        "level": 3,
+        "heading": "判据 (e) 完全固结脊阻力 / 未固结脊阻力 ≥ 3",
+        "start_offset": 5255,
+        "end_offset": 6003,
+        "chars": 748
+      },
+      {
+        "id": "sec-15",
+        "level": 3,
+        "heading": "判据 (f) 负控：$T_{air}$=0 °C 时 $h_c=0$",
+        "start_offset": 6003,
+        "end_offset": 6398,
+        "chars": 395
+      },
+      {
+        "id": "sec-16",
+        "level": 3,
+        "heading": "补充：孔隙率与固结度扫掠",
+        "start_offset": 6398,
+        "end_offset": 7509,
+        "chars": 1111
+      },
+      {
+        "id": "sec-17",
+        "level": 2,
+        "heading": "4. 结果图",
+        "start_offset": 7509,
+        "end_offset": 8687,
+        "chars": 1178
+      },
+      {
+        "id": "sec-18",
+        "level": 2,
+        "heading": "5. 注意点（踩过的坑 / 局限 / 适用范围）",
+        "start_offset": 8687,
+        "end_offset": 9583,
+        "chars": 896
+      },
+      {
+        "id": "sec-19",
+        "level": 2,
+        "heading": "6. 误差判定（逐项回答「是否 <3%」）",
+        "start_offset": 9583,
+        "end_offset": 10347,
+        "chars": 764
+      },
+      {
+        "id": "sec-20",
+        "level": 2,
+        "heading": "7. 复现与审计链",
+        "start_offset": 10347,
+        "end_offset": 10749,
+        "chars": 402
+      }
+    ],
+    "headings": 20,
+    "table_rows": 84,
+    "table_blocks": 12,
+    "figure_refs": 6,
+    "display_equations": 5
+  },
+  "topics": [
+    {
+      "id": "top-01",
+      "label": "冰脊固结（consolidated layer）",
+      "kind": "domain",
+      "evidence_id": "ev-top-01"
+    },
+    {
+      "id": "top-02",
+      "label": "Stefan / Neumann 相变传热",
+      "kind": "method",
+      "evidence_id": "ev-top-02"
+    },
+    {
+      "id": "top-03",
+      "label": "多孔介质有效导热系数",
+      "kind": "method",
+      "evidence_id": "ev-top-03"
+    },
+    {
+      "id": "top-04",
+      "label": "冰脊阻力（固结层挤压 + 碎石排开）",
+      "kind": "result",
+      "evidence_id": "ev-top-04"
+    }
+  ],
+  "preserved_uncertainty": [
+    {
+      "id": "cav-01",
+      "kind": "evidence_strength",
+      "note": "文献锚为导出带（derived_from_literature, exact=False），一致性检验非逐点实验验证",
+      "evidence_id": "ev-cav-01"
+    },
+    {
+      "id": "cav-02",
+      "kind": "applicability",
+      "note": "重雪工况下模型值降到文献带下方；报告未做参数回标，属已知保守侧偏差",
+      "evidence_id": "ev-cav-02"
+    },
+    {
+      "id": "cav-03",
+      "kind": "upper_bound",
+      "note": "强度取小试样单轴抗压上界，未含尺寸效应与应变率软化",
+      "evidence_id": "ev-cav-03"
+    },
+    {
+      "id": "cav-04",
+      "kind": "model_scope",
+      "note": "阻力为平面应变塑性极限载荷，不含船体几何与动力放大，不可用于详细结构设计载荷",
+      "evidence_id": "ev-cav-04"
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "unr-01",
+      "item": "timing table 信号",
+      "status": "not_found_in_source",
+      "note": "全文检索无计时/性能表；不作为分类阻断项"
+    },
+    {
+      "id": "unr-02",
+      "item": "facility / 试次矩阵",
+      "status": "not_found_in_source",
+      "note": "无试验设施与试次描述；据此外推 experimental-validation 的判据缺失"
+    },
+    {
+      "id": "unr-03",
+      "item": "图件文件可达性",
+      "status": "out_of_scope_deferred",
+      "note": "正文引用的 ../artifacts/... 路径属工序 01 资产可达性核验，本包不做"
+    },
+    {
+      "id": "unr-04",
+      "item": "上游 asset_manifest.json",
+      "status": "out_of_scope_deferred",
+      "note": "工序 02 契约声明 register_assets=false，未读取也未改写 01 产物"
+    }
+  ],
+  "producer_notes": {
+    "scope": "02-classification-parse：仅报告类型判定 + 主题标签 + 结构切分；不做 claim 抽取、不做资产登记",
+    "method": "以 extraction-skills/registry.json 的 identify_signals 为判据逐条比对：matched=1.0 / partial=0.5 / absent=0.0 加权得分，最高分类型入选，其余显式记 rejected_secondary",
+    "locator_basis": "start_offset/end_offset 为 markdown 字段（Python str）的字符偏移，语义与 ke.wp_gate.locator_matches 一致；quote 由脚本按选择器机器切片，非手抄",
+    "quote_policy": "每条 quote 均为源 markdown 的逐字子串，content_hash=sha256(quote)"
+  },
+  "claims_produced": [],
+  "claims_status": "not_produced_by_this_process",
+  "not_performed": [
+    "claim_extraction",
+    "asset_registration",
+    "verification_verdict",
+    "parameter_recomputation"
+  ],
+  "provenance": {
+    "source_uri": "tensor://reports/9632",
+    "source_field": "markdown",
+    "source_hash": "sha256:b2c5eb5dad0b6db25574338b37aa5be1c8fdf20bbc7d3c75640e1c1727756841",
+    "source_hash_matches": true,
+    "title": "IN101-N07 冰脊固结热力学：龙骨大孔隙再冻结与固结度-阻力耦合",
+    "scenario_key": "ice_ridge_consolidation",
+    "chars": 10749
+  },
+  "evidence": [
+    {
+      "id": "ev-sc-eq",
+      "locator_type": "equation_block",
+      "value": "Stefan 定律（含孔隙率修正）核心方程",
+      "quote": "$$h_c=\\sqrt{\\frac{2k_{eff}\\Delta T\\,t}{\\phi_{keel}\\rho_i L_f}}$$",
+      "start_offset": 1438,
+      "end_offset": 1502,
+      "content_hash": "sha256:52fc0526502865bef416bc31d14cde7649a73af1ac3fc5ae093848b0dcfcfc19",
+      "covers": [
+        "sig-01"
+      ]
+    },
+    {
+      "id": "ev-sc-disc",
+      "locator_type": "method_paragraph",
+      "value": "一维焓法离散方案",
+      "quote": "`thermal.solve_porous_stefan_1d` 是显式守恒焓法（线性相变、固定网格、Dirichlet 冷面 + 远端零通量），它**不知道**式 (1)–(3) 的存在，因此与之对比是独立验证；$\\phi\\to1$ 且取致密冰潜热时退化为经典 Neumann 问题。前缘由三个独立估计量给出（焓积分、$H=L_{vol}/2$ 交点、$H=0$ 交点），基准取焓积分量（能量守恒、收敛最好）。",
+      "start_offset": 2571,
+      "end_offset": 2777,
+      "content_hash": "sha256:08f2338d42314449f0058b1391f2bda20f2d806eb152c59c9056dc5bfc667f51",
+      "covers": [
+        "sig-02"
+      ]
+    },
+    {
+      "id": "ev-sc-conv",
+      "locator_type": "result_paragraph",
+      "value": "网格收敛与相对误差",
+      "quote": "解析前缘（Neumann 相似解，$\\Delta T$=20.0 K，$t$=30 d）= **0.82635 m**；400 网格数值解 = **0.82628 m**，相对误差 **+0.0087%**（判据 2%）→ **通过**。",
+      "start_offset": 3272,
+      "end_offset": 3391,
+      "content_hash": "sha256:bcc5ee354171a652faafd81c65a9a655a66c35b32b2a506210dbca493bbe7744",
+      "covers": [
+        "sig-03"
+      ]
+    },
+    {
+      "id": "ev-sc-mesh",
+      "locator_type": "table_header",
+      "value": "网格加密表",
+      "quote": "| 网格 N | $\\Delta x$ (mm) | $\\Delta t$ (s) | 数值前缘 (m) | 与解析相对误差 |",
+      "start_offset": 3008,
+      "end_offset": 3072,
+      "content_hash": "sha256:3af7be7800f9104918a6e3a324d796ff7de24f1a5a0e9aeb8d2d79356b1ede8e",
+      "covers": [
+        "sig-04"
+      ]
+    },
+    {
+      "id": "ev-sc-tool",
+      "locator_type": "toolchain_paragraph",
+      "value": "工具链（无计时表）",
+      "quote": "`numpy`（数组物理）+ `scipy` 无依赖的纯 `math.erf`/二分法（相似常数）+ 自研焓法求解器；matplotlib 出图（Agg 后端）；pytest 23 例；`benchmarks/ice_ridge_consolidation/run_validation.py` 一键复现全部数字与图。",
+      "start_offset": 2792,
+      "end_offset": 2951,
+      "content_hash": "sha256:32e6403d825e3d8fe9b6c8b1e587d9a5384f2a603f4f9fe4f8751c2980dafbeb",
+      "covers": [
+        "sig-05"
+      ]
+    },
+    {
+      "id": "ev-ev-base",
+      "locator_type": "baseline_comparison",
+      "value": "k_eff 与 Maxwell-Eucken 并联参照逐行对比",
+      "quote": "| 0.30 | 1.6296 | 1.6380 | 1.5426 | 1.1507 | -0.513% |",
+      "start_offset": 3534,
+      "end_offset": 3588,
+      "content_hash": "sha256:b3be5c0a583c27a635e1542c83eb2d7a2db8998083c9d9a0472aedf4066ced62",
+      "covers": [
+        "sig-10"
+      ]
+    },
+    {
+      "id": "ev-ev-case",
+      "locator_type": "validation_case",
+      "value": "独立算术路径的手算校核",
+      "quote": "相对误差 **+0.0000%**（判据 10%）→ **通过**。手算是一条独立算术路径（硬数字逐项代入，最后一行给出了完整算式），因此该判据核验的是「模型实现与文档公式一致」。",
+      "start_offset": 5163,
+      "end_offset": 5253,
+      "content_hash": "sha256:093e5062775d069070f04a95e863236cf5a6e0094fed8f94a2fb51e5492edaea",
+      "covers": [
+        "sig-09"
+      ]
+    },
+    {
+      "id": "ev-ev-matrix",
+      "locator_type": "parameter_sweep",
+      "value": "参数扫描矩阵",
+      "quote": "全扫描（$\\phi\\in[0.30,0.50]$ × 饱和度 $S_{pore}\\in\\{0.80,0.90,0.95,1.00\\}$）最大相对偏差 = **+4.21%**（判据 5%）→ **通过**。偏差全部来自排水修正项 $\\phi(1-S)k_{pore}$，方向为负（模型不高于并联上界），符合物理。",
+      "start_offset": 3645,
+      "end_offset": 3801,
+      "content_hash": "sha256:993eb9b68e7974b49790be12a17023ac859de4a9cb2e7155c40defd7baee5438",
+      "covers": [
+        "sig-06"
+      ]
+    },
+    {
+      "id": "ev-ev-uncert",
+      "locator_type": "uncertainty_statement",
+      "value": "文献观测分散量级",
+      "quote": "* (c) 的基准是文献导出带，**不适用 3% 标准**（观测分散本身 ±20% 量级），按任务判据 ±30% 判定，达到 +2.88%。",
+      "start_offset": 10275,
+      "end_offset": 10345,
+      "content_hash": "sha256:9ba810d7541431c2efadc457e55a02a426122116cc8a8bcd8cdfcc7fe1c93fd2",
+      "covers": [
+        "sig-08"
+      ]
+    },
+    {
+      "id": "ev-alg-fn",
+      "locator_type": "code_identifier",
+      "value": "求解器函数标识符",
+      "quote": "`thermal.solve_porous_stefan_1d` 是显式守恒焓法（线性相变、固定网格、Dirichlet 冷面 + 远端零通量），它**不知道**式 (1)–(3) 的存在，因此与之对比是独立验证；$\\phi\\to1$ 且取致密冰潜热时退化为经典 Neumann 问题。前缘由三个独立估计量给出（焓积分、$H=L_{vol}/2$ 交点、$H=0$ 交点），基准取焓积分量（能量守恒、收敛最好）。",
+      "start_offset": 2571,
+      "end_offset": 2777,
+      "content_hash": "sha256:08f2338d42314449f0058b1391f2bda20f2d806eb152c59c9056dc5bfc667f51",
+      "covers": [
+        "sig-13",
+        "sig-14"
+      ]
+    },
+    {
+      "id": "ev-swe-test",
+      "locator_type": "test_evidence",
+      "value": "测试套件规模",
+      "quote": "* 测试：`tests/test_ice_ridge_consolidation.py`（23 例，全部通过）",
+      "start_offset": 10470,
+      "end_offset": 10525,
+      "content_hash": "sha256:4d6373c437473b9e1add26d61e2d4a2a6c43c7d99f0c6417de90d2c09574578a",
+      "covers": [
+        "sig-19"
+      ]
+    },
+    {
+      "id": "ev-lit-cite",
+      "locator_type": "citation",
+      "value": "唯一文献锚（Leppäranta & Hakala 1992）",
+      "quote": "### 判据 (c) $h_c(t)$ 与 Leppäranta & Hakala 1992 观测带 ±30%",
+      "start_offset": 3803,
+      "end_offset": 3858,
+      "content_hash": "sha256:abf733781dd9cb17e9fe214f5dc9960480bd7bc5234fa2403b141c1bb5917f9a",
+      "covers": [
+        "sig-30"
+      ]
+    },
+    {
+      "id": "ev-top-01",
+      "locator_type": "section_paragraph",
+      "value": "固结层为控制量（学科问题界定）",
+      "quote": "一艘船或海洋结构物闯进一年冰脊 (first-year ice ridge) 时，真正挡住它的是**固结层**：脊体龙骨 (keel) 是破碎冰块堆积，块间大孔隙（体积分数 $\\phi_{keel}\\in[0.30,0.50]$）被海水充满；脊形成后冷空气自龙骨顶面向下冻结孔隙水，形成厚 $h_c(t)$ 的固结层。固结层厚度与强度几乎线性地决定冰脊阻力，是冰区航行/结构设计的控制量。",
+      "start_offset": 303,
+      "end_offset": 497,
+      "content_hash": "sha256:9cb6e11533472bed80f677a0e149c513cae28bd19adabf17ed7225d0e25b54cf",
+      "covers": [
+        "top-01"
+      ]
+    },
+    {
+      "id": "ev-top-02",
+      "locator_type": "method_paragraph",
+      "value": "Neumann 相似解形式",
+      "quote": "保留冻结层显热的相似解（Neumann）形式为任务书要求的 $h_c(t)=2\\lambda\\sqrt{\\kappa t}$：",
+      "start_offset": 1504,
+      "end_offset": 1567,
+      "content_hash": "sha256:96819e5a44736e16d09af28618154019cd6cb13968cc02acbd904d46354011c5",
+      "covers": [
+        "top-02"
+      ]
+    },
+    {
+      "id": "ev-top-03",
+      "locator_type": "method_paragraph",
+      "value": "冰骨架+卤水通道并联导热网络",
+      "quote": "龙骨冻结后为「冰骨架 + 卤水通道」的并联（等应变）网络：",
+      "start_offset": 1918,
+      "end_offset": 1947,
+      "content_hash": "sha256:5dc4ddd06a9e0f7cfdccdcd2ba2406ccb35d3ddf4c2f53960e83e42b87cec496",
+      "covers": [
+        "top-03"
+      ]
+    },
+    {
+      "id": "ev-top-04",
+      "locator_type": "method_paragraph",
+      "value": "阻力两项分解",
+      "quote": "其中 $\\bar T_c$ 由准稳态层内线性温度剖面取深度平均，$\\sigma_{ice}(T)=\\sigma_{ref}|T|/|T_{ref}|$（$\\sigma_{ref}$=1.5 MPa，$T_{ref}$=−10 °C，两端截断）。阻力按单位宽度分解为两项：",
+      "start_offset": 2298,
+      "end_offset": 2433,
+      "content_hash": "sha256:15d3ab595ce60eb76ddb3169fbd09525e2623917c0489c9d96f303936893b6e3",
+      "covers": [
+        "top-04"
+      ]
+    },
+    {
+      "id": "ev-cav-01",
+      "locator_type": "limitation",
+      "value": "文献锚是导出带而非数字化观测",
+      "quote": "1. **文献锚值是「导出带」而不是数字化观测点**。Leppäranta & Hakala (1992) 原图未在本仓数字化，编造点值会违反溯源纪律；本报告用「平整冰 Stefan 系数 0.023–0.028 × 固结层/平整冰厚比 1.5–2.0」导出 $a_{ridge}\\in[0.0345,0.056]$，标签 `derived_from_literature`、`exact=False`。因此判据 (c) 是**与文献标定带的一致性检验**，不是逐点实验验证；数字化原始剖面列为后续工作。",
+      "start_offset": 8716,
+      "end_offset": 8968,
+      "content_hash": "sha256:4e663840b4d603bda451820a8fb4a5a6c7cac533e9deabd0ec277171a0353824",
+      "covers": [
+        "cav-01"
+      ]
+    },
+    {
+      "id": "ev-cav-02",
+      "locator_type": "limitation",
+      "value": "雪敏感性导致落到文献带下方",
+      "quote": "2. **雪的敏感性很大**：0.1 m 雪即把 FDD=700 的 $h_c$ 从 1.21 m 压到 0.81 m。本节点的核心式（无雪）满足判据 (c)，但重雪工况会落到文献带下方——报告不做参数回标，直接给出雪热阻闭式解与敏感性图（Fig 6）供使用方按现场雪深取值。",
+      "start_offset": 8969,
+      "end_offset": 9107,
+      "content_hash": "sha256:a57d482853a05acdb83141e59da6caac57ce453a9aa2697054a3027afd8a8f9f",
+      "covers": [
+        "cav-02"
+      ]
+    },
+    {
+      "id": "ev-cav-03",
+      "locator_type": "limitation",
+      "value": "强度为上界值",
+      "quote": "5. **强度是上界值**：$σ_{ref}$=1.5 MPa 为小试样单轴抗压；未含尺寸效应与应变率软化，故 $\\sigma_c$ 与 $R$ 系统偏保守（偏高）。",
+      "start_offset": 9275,
+      "end_offset": 9358,
+      "content_hash": "sha256:6011a2f22d4c3d71624badf0a8a30b105e047f3a1798e4c86a31aec9c05c3f42",
+      "covers": [
+        "cav-03"
+      ]
+    },
+    {
+      "id": "ev-cav-04",
+      "locator_type": "limitation",
+      "value": "阻力模型为平面应变塑性极限载荷",
+      "quote": "7. **阻力模型是平面应变塑性极限载荷**：不含船体几何、冲击动力放大、块体咬合；$\\kappa_r$ 为工程取值（0.5–1.0 扫描）。量级可用于方案比较，不可用于详细结构设计载荷。",
+      "start_offset": 9487,
+      "end_offset": 9581,
+      "content_hash": "sha256:61e0fe3aae032e160c654651fa6b8d8bf947902ae813d285753b50a3d8a5ea62",
+      "covers": [
+        "cav-04"
+      ]
+    }
+  ]
+}
