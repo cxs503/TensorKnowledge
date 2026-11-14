@@ -1,0 +1,202 @@
+{
+  "review_id": "wp-11421-04",
+  "reviewed_package": "wp-11421-01",
+  "report_id": "11421",
+  "reviewer_role": "red-team-reviewer",
+  "independence_statement": "Review performed independently from the producer of wp-11421-01. Source = report markdown (source.md, sha256:f85c29fe650365140152064807d90b2accdf43382f2222956470f3521e0a280a, 18542 chars) + upstream kf_result.json + crosscheck.json. Did not inspect producer code (scripts/p270w1_n07_uncertainty.py) or artifacts (results.json, tables.md). Same-model dependence: both producer and reviewer are LLM-based agents; this limits true independence for semantic interpretation but not for arithmetic verification.",
+  "scope": "Semantic fidelity of report 11421: internal arithmetic consistency, claim-to-evidence binding, statistical sanity, and physical plausibility. Also reviewed wp-11421-01's crosscheck findings (X1–X7) for correctness.",
+  "checks_performed": [
+    {
+      "check": "R1: Geometric self-consistency (Cb·L·B·T, Cp, Cwp, DWT closure)",
+      "method": "Independent recomputation from §1.2 table values",
+      "result": "PASS — ∇=89883.5 m³ (report 89,883), Cp=0.846 (report 0.846), DWT implied=80153.5 t (report 80,154), rel_err=0.001919 (report 0.0019197). All within rounding tolerance."
+    },
+    {
+      "check": "R2: Sobol group sums (Table 4 Σ row)",
+      "method": "Sum six group rows independently",
+      "result": "PASS — ΣS_g(EEXI)=0.9861 (report 0.9860), ΣS_T,g(EEXI)=1.0007 (match), ΣS_g(CII)=0.9979 (match), ΣS_T,g(CII)=1.0006 (match). EEXI ΣS_g off by 0.0001 — rounding artifact from 4-decimal printing."
+    },
+    {
+      "check": "R3: Compliance probability standard error",
+      "method": "SE = sqrt(p(1-p)/N) for N=200000",
+      "result": "PASS — SE(EEXI)=0.001113 (report 0.0011), SE(CII)=0.001113 (report 0.0011). Consistent."
+    },
+    {
+      "check": "R4: Out-of-Holtrop-domain fraction sanity",
+      "method": "Normal approximation: Cp~N(0.846, σ=0.0127), P(Cp>0.85)",
+      "result": "PASS — P≈0.383, expected count≈76,653 (report 76,999/200,000=38.5%). Consistent within MC sampling noise."
+    },
+    {
+      "check": "R5: X4 re-verification (negative S_i vs 'S_i≥0' claim)",
+      "method": "Scan Table 5 for negative S_i entries, compare to SE",
+      "result": "CONFIRMED — 6 negative entries (geom_L, geom_B, op_port, op_speed for EEXI; eng_mcr, op_epl for CII), all |S_i|<SE. Upstream finding X4 is correct: the prose claim '同样满足 S_i≥0' is wrong for first-order Jansen estimator."
+    },
+    {
+      "check": "R6: X5 re-verification (FD vs analytic <5% claim)",
+      "method": "Compute |c_i_analytic - c_i_FD| / |c_i_analytic| for all non-zero analytic entries",
+      "result": "CONFIRMED — geom_L has rel_diff=16.25% (analytic=0.00080, FD=0.00067), exceeding the 5% bound. All other non-zero entries are <0.54%. Upstream finding X5 is correct."
+    },
+    {
+      "check": "R7: σ→0 control (Table 6) — ratio consistency",
+      "method": "Compute σ(ε)/σ(1) from printed values; compare to reported ratio column",
+      "result": "PARTIAL — Ratios computed from printed 4-decimal σ values diverge from reported ratios at small ε (ε=0.01: printed ratio=0.00969 vs reported 0.01001; ε=0.001: printed=0.00129 vs reported 0.00100). This is expected: the reported ratios use internal precise σ values, while printed σ is rounded. The crosscheck X6 correctly flags this as 'within quantum'. No defect — just a documentation clarity issue."
+    },
+    {
+      "check": "R8: Convergence drift (Table 7) — 1e5→3e5",
+      "method": "Recompute drift from printed table values",
+      "result": "PASS — σ(EEXI) drift=0.251% (report 0.250%), σ(CII) drift=-0.013% (report -0.011%), P(EEXI) drift=0.00050 (report 0.00048), P(CII) drift=0.00180 (report 0.00188). Differences are from rounding in printed table; all within C7 tolerance (<2% std, <0.01 probability)."
+    },
+    {
+      "check": "R9: Table 3 CV column = std/mean",
+      "method": "Verify CV = std/mean for each row",
+      "result": "PASS — eexi_attained: 0.15562/3.54773=0.04387 (report 0.0439); cii_attained: 0.37314/3.71992=0.10031 (report 0.1003); all 5 rows consistent within 4-decimal rounding."
+    },
+    {
+      "check": "R10: Interaction effects (ΣS_T - ΣS_g)",
+      "method": "Compute difference between total-effect and first-order sums",
+      "result": "OBSERVATION — EEXI interaction = 0.0146 (1.5% of variance), CII interaction = 0.0027 (0.3%). EEXI has noticeably larger interaction effects than CII, consistent with the nonlinear V_ref反解 step affecting EEXI more. Report does not explicitly discuss this; not a defect but a missed interpretive opportunity."
+    },
+    {
+      "check": "R11: Dimensional analysis of 1852 defect fix (§2.3)",
+      "method": "Verify unit consistency of EEXI formula before/after fix",
+      "result": "PASS — Original denominator capacity·V_ref[m/s]·3600 = capacity·V_ref[m/h]; correct denominator capacity·V_ref[kn] = capacity·V_ref[nm/h]. Since 1 nm = 1852 m, the original denominator was 1852× too large, making EEXI 1852× too small. The fix is dimensionally correct."
+    },
+    {
+      "check": "R12: Table 5 zero-sensitivity factors (op_port, op_speed for EEXI)",
+      "method": "Verify that op_port and op_speed should not affect EEXI",
+      "result": "PASS — EEXI reference point depends on P_avail and V_ref反解, not on service speed or port CO₂. Analytic c_i=0 is correct. FD=0.00000 is also correct (within quantization floor). Sobol S_i≈0 (noise level) is expected."
+    },
+    {
+      "check": "R13: Crosscheck X1–X7 verdicts",
+      "method": "Re-verify each crosscheck finding against source.md",
+      "result": "CONFIRMED — X1 pass, X2 pass, X3 pass, X4 fail (correct), X5 fail (correct), X6 pass, X7 pass. All 7 verdicts are correct."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F1",
+      "severity": "low",
+      "category": "incorrect_prose_claim",
+      "title": "Jansen estimator 'S_i ≥ 0' claim is wrong for first-order estimates",
+      "description": "§2.2 states the Jansen estimator '同样满足 S_i ≥ 0', but Table 5 prints 6 negative first-order indices. All are within ±1 SE (estimator noise), so no conclusion changes, but the method description is factually incorrect. Jansen's first-order estimator is not mathematically non-negative; only the total-effect form is.",
+      "evidence": {
+        "claim_quote": "且同样满足 `S_i ≥ 0`",
+        "claim_location": "§2.2, char ~4957",
+        "counter_evidence": "Table 5: geom_L EEXI S_i=-0.0028 (SE=0.0060), geom_B=-0.0016 (SE=0.0059), op_port=-0.0031 (SE=0.0060), op_speed=-0.0031 (SE=0.0060), eng_mcr CII=-0.0004 (SE=0.0081), op_epl CII=-0.0004 (SE=0.0081)",
+        "counter_location": "Table 5, chars 15526–16500"
+      },
+      "impact": "If downstream users quote this as a method property, they will be misinformed. No effect on this report's numerical conclusions.",
+      "remediation": "Change prose to '总效应估计量非负' or '一阶估计量在噪声水平内可正可负'.",
+      "upstream_status": "Already identified as X4 in wp-11421-01 crosscheck."
+    },
+    {
+      "finding_id": "F2",
+      "severity": "low",
+      "category": "incorrect_prose_claim",
+      "title": "FD vs analytic '<5%' claim violated by geom_L",
+      "description": "§3.4(b) claims '非零项相对差 < 5%', but geom_L has 16.25% relative difference (analytic=0.00080, FD=0.00067). The report itself explains this is at the Holtrop quantization floor (§4.1), so the defect is the unconditional wording, not the numbers.",
+      "evidence": {
+        "claim_quote": "非零项相对差 < 5%",
+        "claim_location": "§3.4(b), char ~9154",
+        "counter_evidence": "Table 5: geom_L c_i(EEXI)=+0.00080, FD=+0.00067, rel_diff=16.25%",
+        "counter_location": "Table 5, char ~15526"
+      },
+      "impact": "Minor — the numbers are correct, only the summary statement is overbroad.",
+      "remediation": "Add qualifier: '|c_i| ≥ 0.005 的项相对差 < 5%' or exclude geom_L from the claim.",
+      "upstream_status": "Already identified as X5 in wp-11421-01 crosscheck."
+    },
+    {
+      "finding_id": "F3",
+      "severity": "info",
+      "category": "missing_interpretation",
+      "title": "EEXI interaction effects not discussed",
+      "description": "ΣS_T,g(EEXI) - ΣS_g(EEXI) = 0.0146, meaning ~1.5% of EEXI variance comes from factor interactions. For CII it's only 0.3%. This difference is physically meaningful (EEXI's V_ref反解 introduces nonlinearity that CII's direct evaluation lacks), but the report does not discuss it.",
+      "evidence": {
+        "data": "Table 4: ΣS_g(EEXI)=0.9860, ΣS_T,g(EEXI)=1.0007; ΣS_g(CII)=0.9979, ΣS_T,g(CII)=1.0006"
+      },
+      "impact": "None on correctness; missed opportunity for physical insight.",
+      "remediation": "Add a sentence in §3.3 noting the interaction difference and its physical origin."
+    },
+    {
+      "finding_id": "F4",
+      "severity": "info",
+      "category": "unverified_external_claim",
+      "title": "'Holtrop-Mennen 唯一实现' not independently verifiable from this record",
+      "description": "The report claims Holtrop-Mennen is the '唯一实现' (only implementation) in backend/physics/holtrop. This is a claim about the codebase, not about the report's internal consistency. From this record alone, it cannot be verified — it's a referenced_unresolved asset (A11).",
+      "evidence": {
+        "claim_quote": "Holtrop-Mennen 唯一实现（backend/physics/holtrop）",
+        "claim_location": "§2.1, char ~2931"
+      },
+      "impact": "None on this report's numerical results. Relevant only if downstream users need to know about alternative implementations.",
+      "remediation": "No action needed for this report; the asset is correctly classified as referenced_unresolved in wp-11421-01."
+    },
+    {
+      "finding_id": "F5",
+      "severity": "info",
+      "category": "documentation_clarity",
+      "title": "Table 6 σ→0 ratios computed from internal values, not printed σ",
+      "description": "The ratio column in Table 6 (σ(ε)/σ(1)) and the relative error column are computed from internal high-precision σ values, not from the 4-decimal printed σ values. A reader recomputing from the table will get different ratios (e.g., ε=0.001: printed ratio=0.00129 vs reported 0.00100). This is not a defect but a clarity issue.",
+      "evidence": {
+        "table": "Table 6, chars 9354–9600",
+        "note": "The crosscheck X6 correctly identifies this as 'within quantum'."
+      },
+      "impact": "None on correctness; may confuse readers who try to reproduce from printed values.",
+      "remediation": "Add a footnote: '比值由内部高精度 σ 计算，非由表中四舍五入值重算'."
+    }
+  ],
+  "checks_not_run": [
+    {
+      "check": "C1 单源一致性 (API vs internal computation)",
+      "reason": "Requires running the actual API and internal code; not available from this record."
+    },
+    {
+      "check": "C8 物理合理性 (sign checks on sensitivities)",
+      "reason": "Requires re-running the sensitivity analysis; not available from this record."
+    },
+    {
+      "check": "Figure content verification (fig1–fig6)",
+      "reason": "Only verified PNG payload existence and validity in wp-11421-01; did not inspect pixel content or verify that figures match table data."
+    },
+    {
+      "check": "Monte Carlo sample reproducibility",
+      "reason": "Samples are not in this record; would require re-running scripts/p270w1_n07_uncertainty.py with seed 20270101."
+    },
+    {
+      "check": "Rule coefficient verification (EEXI_req, CII_req)",
+      "reason": "Explicitly WITHHELD per report; MEPC.328(76)/MEPC.353(78) coefficients not available."
+    },
+    {
+      "check": "1852 defect fix regression test",
+      "reason": "Requires running test_chain.py::test_attained_index_unit_1852_fix; test code not in this record."
+    }
+  ],
+  "overstated_claims": [
+    {
+      "claim": "§2.2: '且同样满足 S_i ≥ 0'",
+      "reality": "Jansen first-order estimator can produce negative values (6 cases in Table 5, all within noise). Only total-effect form is non-negative.",
+      "severity": "low"
+    },
+    {
+      "claim": "§3.4(b): '非零项相对差 < 5%'",
+      "reality": "geom_L has 16.25% relative difference (at quantization floor).",
+      "severity": "low"
+    },
+    {
+      "claim": "§2.1: 'Holtrop-Mennen 唯一实现'",
+      "reality": "Unverifiable from this record; classified as referenced_unresolved.",
+      "severity": "info"
+    }
+  ],
+  "disposition": "approve_with_notes",
+  "disposition_rationale": "The report is internally consistent on all verifiable arithmetic claims. The two findings (F1, F2) are already identified by the upstream wp-11421-01 crosscheck as X4 and X5 — both are low-severity prose/documentation issues, not numerical errors. The report's numerical results (MC distributions, Sobol indices, convergence, negative controls) are self-consistent and physically plausible. The remaining findings (F3–F5) are informational: missing interpretation, unverifiable external claims, and documentation clarity. None block acceptance of the report's scientific content.",
+  "remediation_summary": "Fix F1 (prose about Jansen estimator non-negativity) and F2 (5% bound qualifier). Consider adding F3 (interaction effects discussion) and F5 (Table 6 footnote) for clarity. No numerical corrections needed.",
+  "upstream_crosscheck_validation": {
+    "X1": {"verdict": "pass", "reviewer_agrees": true},
+    "X2": {"verdict": "pass", "reviewer_agrees": true},
+    "X3": {"verdict": "pass", "reviewer_agrees": true},
+    "X4": {"verdict": "fail", "reviewer_agrees": true, "note": "Confirmed: 6 negative S_i entries, all within ±1 SE. Prose claim is wrong."},
+    "X5": {"verdict": "fail", "reviewer_agrees": true, "note": "Confirmed: geom_L rel_diff=16.25% > 5%. Wording issue, not numerical."},
+    "X6": {"verdict": "pass", "reviewer_agrees": true},
+    "X7": {"verdict": "pass", "reviewer_agrees": true}
+  }
+}
