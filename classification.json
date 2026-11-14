@@ -1,0 +1,74 @@
+{
+  "package_id": "wp-14179-02",
+  "task_type": "02-classification-parse",
+  "report_id": "14179",
+  "provenance": {
+    "source_hash": "sha256:2352b96c50e792447e06d9d7450f16f0b34ba7ce2cbf1bf775c3402dcee59315",
+    "source_field": "markdown",
+    "producer": "agent/m19804",
+    "emitted_at": "2025-06-14T00:00:00Z",
+    "notes": "Classification-only work package; no extraction performed per contract."
+  },
+  "outputs": {
+    "classification.json": {
+      "report_type": "audit",
+      "report_subtype": "cross-audit",
+      "domain": "resistance",
+      "subdomain": "calibration",
+      "topic_tags": [
+        "CALIB-REFLUX",
+        "calib_reflux_audit",
+        "holtrop",
+        "ittc57",
+        "friction_coefficient",
+        "kcs"
+      ],
+      "ship_type": "KCS",
+      "ship_type_full": "KRISO Container Ship",
+      "verdict": "L5",
+      "methods": [
+        "Holtrop1984",
+        "TensorLBM",
+        "ITTC-57"
+      ],
+      "key_quantities": [
+        "A_hat",
+        "RT",
+        "Cf"
+      ],
+      "classification_rationale": {
+        "report_type": {
+          "value": "audit",
+          "evidence_quote": "交差审计：m14897 H5-CALIB-REFLUX（ship-performance-platform）→ verdict **L5**",
+          "source_section": "标题"
+        },
+        "domain": {
+          "value": "resistance",
+          "evidence_quote": "摩擦线常量 `ITTC57_A = 0.075`（`backend/physics/holtrop/mennen.py:ittc57_cf`）",
+          "source_section": "① 案例介绍"
+        },
+        "subdomain": {
+          "value": "calibration",
+          "evidence_quote": "H5-CALIB-REFLUX · 高保真→经验系数回流",
+          "source_section": "① 案例介绍"
+        },
+        "ship_type": {
+          "value": "KCS",
+          "evidence_quote": "**验证船型**：KCS（KRISO 集装箱船），几何先过门：Cb_lib=0.6509 vs",
+          "source_section": "① 案例介绍"
+        },
+        "verdict": {
+          "value": "L5",
+          "evidence_quote": "**verdict = L5**（完整、集成、可复现的科研工程机制；诚实注记：高保真源为 RANS 级、",
+          "source_section": "判级（L0–L5 功能实质）"
+        },
+        "methods": {
+          "value": ["Holtrop1984", "TensorLBM", "ITTC-57"],
+          "evidence_quote": "**高保真源**：TensorLBM `wall_model_les.flat_plate.run_flat_plate`",
+          "source_section": "① 案例介绍"
+        }
+      },
+      "layer": "CALIB-REFLUX|calib_reflux_audit|m"
+    }
+  }
+}
