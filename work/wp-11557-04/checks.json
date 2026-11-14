@@ -1,0 +1,203 @@
+{
+  "schema": {
+    "valid": true,
+    "errors": []
+  },
+  "numeric_provenance": {
+    "all_ok": true,
+    "checks": [
+      {
+        "claim": "F1 52.9%",
+        "stated": 52.9,
+        "recomputed": 52.898551,
+        "ok": true
+      },
+      {
+        "claim": "F1 reference 2.7629",
+        "stated": 2.7629,
+        "recomputed": 2.762895,
+        "ok": true
+      },
+      {
+        "claim": "F1 half threshold 1.3814",
+        "stated": 1.3814,
+        "recomputed": 1.381447,
+        "ok": true
+      },
+      {
+        "claim": "F1 validator rel err 0.5295",
+        "stated": 0.5295,
+        "recomputed": 0.529479,
+        "ok": true
+      },
+      {
+        "claim": "F1 rho needed 4142",
+        "stated": 4142.0,
+        "recomputed": 4142.011834,
+        "ok": true
+      },
+      {
+        "claim": "F2 deviation 6310%",
+        "stated": 6310.0,
+        "recomputed": 6310.164858,
+        "ok": true
+      },
+      {
+        "claim": "F2 factor 316",
+        "stated": 316.0,
+        "recomputed": 315.508243,
+        "ok": true
+      },
+      {
+        "claim": "F2 ratio 63.1016",
+        "stated": 63.1016,
+        "recomputed": 63.101649,
+        "ok": true
+      },
+      {
+        "claim": "F2 alternative basis 98.4%",
+        "stated": 98.4,
+        "recomputed": 98.448519,
+        "ok": true
+      },
+      {
+        "claim": "F3 band 3.0deg",
+        "stated": 3.0,
+        "recomputed": 3.0,
+        "ok": true
+      },
+      {
+        "claim": "F3 band 4.5deg",
+        "stated": 4.5,
+        "recomputed": 4.5,
+        "ok": true
+      },
+      {
+        "claim": "F3 ratio 23x",
+        "stated": 23.0,
+        "recomputed": 23.333333,
+        "ok": true
+      },
+      {
+        "claim": "F3 ratio 15.6x",
+        "stated": 15.6,
+        "recomputed": 15.555556,
+        "ok": true
+      },
+      {
+        "claim": "F5 KE 2.54e-5 J",
+        "stated": 2.54e-05,
+        "recomputed": 2.5e-05,
+        "ok": true
+      },
+      {
+        "claim": "F5 bound/KE ratio 39x",
+        "stated": 39.0,
+        "recomputed": 39.429833,
+        "ok": true
+      },
+      {
+        "claim": "F5 max change 5.07e-5 J",
+        "stated": 5.07e-05,
+        "recomputed": 5.1e-05,
+        "ok": true
+      },
+      {
+        "claim": "F5 78.9% of KE at 1 m/s",
+        "stated": 78.9,
+        "recomputed": 78.859667,
+        "ok": true
+      },
+      {
+        "claim": "F5 3943% at 0.1 m/s",
+        "stated": 3943.0,
+        "recomputed": 3942.983341,
+        "ok": true
+      },
+      {
+        "claim": "F7 R_bend 7.2 MN",
+        "stated": 7.2,
+        "recomputed": 7.195541,
+        "ok": true
+      },
+      {
+        "claim": "F7 R_crush 75 MN",
+        "stated": 75.0,
+        "recomputed": 75.0,
+        "ok": true
+      },
+      {
+        "claim": "F7 R_crush 112.5 MN",
+        "stated": 112.5,
+        "recomputed": 112.5,
+        "ok": true
+      },
+      {
+        "claim": "F7 crossover 94 m/s",
+        "stated": 94.0,
+        "recomputed": 94.23122,
+        "ok": true
+      },
+      {
+        "claim": "F6 cells 4000",
+        "stated": 4000,
+        "recomputed": 4000.0,
+        "ok": true
+      },
+      {
+        "claim": "F6 splitting 270",
+        "stated": 270,
+        "recomputed": 270.0,
+        "ok": true
+      },
+      {
+        "claim": "F6 mixed 0",
+        "stated": 0,
+        "recomputed": 0.0,
+        "ok": true
+      },
+      {
+        "claim": "F4 tests 35",
+        "stated": 35,
+        "recomputed": 35.0,
+        "ok": true
+      },
+      {
+        "claim": "F8 quotes 11",
+        "stated": 11,
+        "recomputed": 11.0,
+        "ok": true
+      },
+      {
+        "claim": "F8 range exact 10",
+        "stated": 10,
+        "recomputed": 10.0,
+        "ok": true
+      }
+    ]
+  },
+  "quote_gate": {
+    "checked": 11,
+    "verbatim_unique": 11,
+    "bad": [],
+    "all_ok": true
+  },
+  "code_quote_gate": {
+    "reference_is_model": true,
+    "docstring_formula": true,
+    "implementation": true,
+    "half_threshold": true,
+    "double_threshold": true,
+    "hardcoded_weights": true,
+    "all_present": true,
+    "quotes": {
+      "reference_is_model": "V_c_timco = compute_critical_velocity(config)",
+      "docstring_formula": "R = 0.5 · σ_f · h² · (1 + 0.5 · B/h) · f(shape)",
+      "implementation": "R_lindqvist = C_L * config.sigma_f * config.h**2 * math.sqrt(config.D / config.h)",
+      "half_threshold": "if V < 0.5 * V_c:",
+      "double_threshold": "elif V > 2.0 * V_c:",
+      "hardcoded_weights": "w_crush = 0.7"
+    },
+    "c8_assertion_present": true
+  }
+}

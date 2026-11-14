@@ -1,0 +1,52 @@
+{
+  "validate_against_lindqvist_keys": [
+    "R_bend",
+    "R_crush",
+    "R_lindqvist",
+    "R_model",
+    "R_split",
+    "relative_error"
+  ],
+  "validate_against_timco_keys": [
+    "V_c_model",
+    "V_c_timco",
+    "mode_sequence",
+    "relative_error"
+  ],
+  "timco_result": {
+    "V_c_model": 1.3,
+    "V_c_timco": 2.7628948199776886,
+    "relative_error": 0.5294790121577998
+  },
+  "lindqvist_relative_error_is_ratio_not_percent": {
+    "returned": 63.10164858405164,
+    "as_percent": 6310.164858405164
+  },
+  "C8": {
+    "particle_mass_kg": 0.0025361507101204104,
+    "velocity_m_s": 0.1,
+    "KE_initial_total_J": 2.536150710120411e-05,
+    "reported_energy_change_J": 0.001,
+    "reported_1eJ_as_fraction_of_KE_pct": 3942.9833408935
+  },
+  "C1_test_blocks": {
+    "repose_asserts": [
+      "assert result.angle >= 0",
+      "assert result.angle < 90",
+      "assert result_low.angle >= 0",
+      "assert result_high.angle >= 0",
+      "assert 0 <= result.angle < 70"
+    ],
+    "validation_asserts": [
+      "assert \"R_model\" in result",
+      "assert \"R_lindqvist\" in result",
+      "assert \"relative_error\" in result",
+      "assert result[\"R_model\"] > 0",
+      "assert result[\"R_lindqvist\"] > 0",
+      "assert \"V_c_model\" in result",
+      "assert \"V_c_timco\" in result",
+      "assert \"relative_error\" in result"
+    ]
+  },
+  "threshold_asserts_anywhere_in_C4_C5_blocks": []
+}
