@@ -1,0 +1,278 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cxs503/TensorKnowledge/blob/main/schemas/classification.v1.schema.json",
+  "title": "classification.v1 — 工序 02 分类解析产物",
+  "description": "报告→知识产线工序 02（02-classification-parse）产物。只做两件事：给报告打类型/主题标签，并给出判定依据的逐字原文定位（char_span + quote + content_hash）。不做抽取（claims 必须为空），不做验证（不得出现 verified 类标记）。report_type 是可反驳的假设，argument 必须能被 evidence locator 反驳。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "package_id",
+    "task_type",
+    "report_id",
+    "classification_status",
+    "classification_scope",
+    "source",
+    "report_type",
+    "topics",
+    "structure",
+    "skill",
+    "evidence",
+    "self_check"
+  ],
+  "properties": {
+    "schema": {"const": "classification.v1"},
+    "package_id": {"type": "string", "pattern": "^wp-[a-z0-9][a-z0-9-]{2,63}$"},
+    "task_type": {"const": "02-classification-parse"},
+    "contract_version": {"const": "1.0"},
+    "report_id": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"},
+    "classification_status": {
+      "enum": ["hypothesis-draft-revocable", "unclassified"],
+      "description": "分类是假设，不是结论。unclassified 是合法值（禁止硬猜）。"
+    },
+    "classification_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classify_report_type", "register_assets", "extraction_performed", "claims"],
+      "properties": {
+        "classify_report_type": {"const": true},
+        "register_assets": {"const": false},
+        "extraction_performed": {"const": false},
+        "claims": {"type": "array", "maxItems": 0}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "field", "declared_hash", "computed_hash", "hash_matches", "chars", "bytes_utf8"],
+      "properties": {
+        "uri": {"type": "string", "pattern": "^(https?://\\S+|file://\\S+|tensor://\\S+)$"},
+        "field": {"enum": ["markdown", "summary", "record"]},
+        "declared_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "computed_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "hash_matches": {"type": "boolean"},
+        "chars": {"type": "integer", "minimum": 0},
+        "bytes_utf8": {"type": "integer", "minimum": 0},
+        "fetched_via": {"type": "string"},
+        "title": {"type": "string"},
+        "scenario_key": {"type": "string"},
+        "mission_id_in_report": {"type": ["integer", "string"]}
+      }
+    },
+    "report_type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary", "confidence", "decision_rule", "support_scores", "alternatives", "taxonomy_coverage", "signal_table"],
+      "properties": {
+        "primary": {
+          "enum": [
+            "literature-review",
+            "scientific-computation",
+            "algorithm-implementation",
+            "software-engineering",
+            "technical-proposal",
+            "experimental-validation",
+            "unclassified"
+          ]
+        },
+        "confidence": {"enum": ["low", "medium", "high"]},
+        "decision_rule": {"type": "string", "minLength": 20},
+        "support_scores": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0}},
+        "runner_up": {"type": "string"},
+        "taxonomy_coverage": {"enum": ["full", "partial", "none"]},
+        "subtype": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label", "in_register", "evidence_refs"],
+          "properties": {
+            "label": {"type": "string"},
+            "in_register": {"type": "boolean"},
+            "gap_note": {"type": "string"},
+            "evidence_refs": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "alternatives": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["report_type", "disposition", "support_score", "reason", "evidence_refs"],
+            "properties": {
+              "report_type": {"type": "string"},
+              "disposition": {"enum": ["supported", "partial", "not-supported"]},
+              "support_score": {"type": "number", "minimum": 0},
+              "reason": {"type": "string", "minLength": 8},
+              "evidence_refs": {"type": "array", "items": {"type": "string"}},
+              "lexical_hits": {"type": "integer", "minimum": 0}
+            }
+          }
+        },
+        "signal_table": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["report_type", "signal", "matched"],
+            "properties": {
+              "report_type": {"type": "string"},
+              "signal": {"type": "string"},
+              "matched": {"enum": ["yes", "partial", "no"]},
+              "lexical_hits": {"type": "integer", "minimum": 0},
+              "evidence_refs": {"type": "array", "items": {"type": "string"}},
+              "note": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "topics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disciplines", "domain", "scenario_key", "keywords", "keywords_verified_verbatim"],
+      "properties": {
+        "disciplines": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "domain": {"type": "string"},
+        "scenario_key": {"type": "string"},
+        "keywords": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "keywords_verified_verbatim": {"type": "boolean"},
+        "keyword_absent": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["headings", "sections", "tables", "fenced_code_blocks", "ordered_list_gaps", "anomalies"],
+      "properties": {
+        "headings": {"type": "integer", "minimum": 0},
+        "tables": {"type": "integer", "minimum": 0},
+        "fenced_code_blocks": {"type": "integer", "minimum": 0},
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["level", "title", "start_offset", "start_line"],
+            "properties": {
+              "level": {"type": "integer", "minimum": 1, "maximum": 6},
+              "title": {"type": "string"},
+              "start_offset": {"type": "integer", "minimum": 0},
+              "start_line": {"type": "integer", "minimum": 1},
+              "end_offset": {"type": "integer", "minimum": 0}
+            }
+          }
+        },
+        "ordered_list_gaps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["section", "observed", "missing"],
+            "properties": {
+              "section": {"type": "string"},
+              "observed": {"type": "array", "items": {"type": "integer"}},
+              "missing": {"type": "array", "items": {"type": "integer"}}
+            }
+          }
+        },
+        "anomalies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "detail", "evidence_refs"],
+            "properties": {
+              "code": {"type": "string"},
+              "detail": {"type": "string"},
+              "evidence_refs": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      }
+    },
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skill_id", "skill_version", "registry_version", "registry_path", "selection_basis"],
+      "properties": {
+        "skill_id": {"type": "string", "pattern": "^xsk-[a-z-]+$"},
+        "skill_version": {"type": "string"},
+        "registry_version": {"type": "string"},
+        "registry_path": {"type": "string"},
+        "selection_basis": {"type": "string"},
+        "section_match": {"type": "array", "items": {"type": "string"}},
+        "lifecycle_state": {"type": "string"},
+        "method_note": {"type": "string"}
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "purpose", "supports", "locator"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^E[0-9]{2}$"},
+          "purpose": {"type": "string", "minLength": 6},
+          "supports": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "note": {"type": "string"},
+          "locator": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["locator_type", "start_offset", "end_offset", "start_line", "end_line", "quote", "content_hash"],
+            "properties": {
+              "locator_type": {"const": "char_span"},
+              "start_offset": {"type": "integer", "minimum": 0},
+              "end_offset": {"type": "integer", "minimum": 1},
+              "start_line": {"type": "integer", "minimum": 1},
+              "end_line": {"type": "integer", "minimum": 1},
+              "quote": {"type": "string", "minLength": 12},
+              "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+              "char_offsets_basis": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "question", "why"],
+        "properties": {
+          "id": {"type": "string"},
+          "status": {"const": "unresolved"},
+          "question": {"type": "string"},
+          "why": {"type": "string"}
+        }
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "repro": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "generator": {"type": "string"},
+        "command": {"type": "string"},
+        "offline_source": {"type": "string"},
+        "requires_network": {"type": "boolean"}
+      }
+    },
+    "self_check": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["result", "detail"],
+        "properties": {
+          "result": {"enum": ["pass", "fail", "vacuous-pass", "not_run"]},
+          "detail": {"type": "string"}
+        }
+      }
+    }
+  }
+}
