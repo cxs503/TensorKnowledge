@@ -1,0 +1,40 @@
+{
+  "package_id": "wp-9706-02",
+  "task_type": "02-classification-parse",
+  "version": "1.0.0",
+  "input": {
+    "report_id": "9706",
+    "source_uri": "tensor://reports/9706",
+    "source_hash": "sha256:7d0e024b8630cd3390f5efc0c3f5abfb467e85a869c78126bbb210a1a2d13534",
+    "source_field": "markdown"
+  },
+  "objective": {
+    "classify_report_type": true,
+    "register_assets": false
+  },
+  "constraints": {
+    "every_claim_must_have_source_locator": true,
+    "do_not_invent_missing_information": true,
+    "preserve_uncertainty": true,
+    "no_forced_claim_generation": true,
+    "do_not_mark_claims_as_verified": true
+  },
+  "output": {
+    "classification.json": true
+  },
+  "acceptance": {
+    "valid_json": true,
+    "schema_pass": true
+  },
+  "review": {
+    "required": true,
+    "independent_reviewer": true,
+    "reviewer_role": "document-analyst",
+    "sample_rate": 1.0
+  },
+  "delivery": {
+    "repo": "TensorKnowledge",
+    "status": "draft"
+  },
+  "mission_id": "19803"
+}
