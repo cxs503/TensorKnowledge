@@ -1,0 +1,642 @@
+{
+  "package_id": "wp-11608-04",
+  "task_type": "04-independent-review",
+  "contract_version": "1.0",
+  "report_id": "11608",
+  "provenance": {
+    "source_uri": "tensor://reports/11608",
+    "source_field": "markdown",
+    "source_hash": "sha256:8a9602aca712ab3ac8656d7382e0fef762ba0f30657cf8b631b36ba514e8db62",
+    "source_hash_matches": true,
+    "title": "TensorFVM 数值黏性/色散算子验证面：修正方程 ν_num=cΔx(1-C)/2 波包衰减实测 + 离散放大因子 G(θ) 全域比对",
+    "scenario_key": "p73w3-n04-fvm-numerical-viscosity",
+    "chars": 7342
+  },
+  "outputs": {
+    "review_report.json": {
+      "schema": "kf-review-report.v1",
+      "package_id": "wp-11608-04",
+      "task_type": "04-independent-review",
+      "report_id": "11608",
+      "reviewed_upstream": {
+        "package_id": "wp-11608-01",
+        "task_type": "01-asset-registration",
+        "artifacts": [
+          "docs/kf/wp-11608-01/asset_manifest.json",
+          "docs/kf/wp-11608-01/verification.json"
+        ],
+        "upstream_gate_state": "pending_platform_verification (verdict is the platform's, not this review's)",
+        "upstream_packages_present_for_report": [
+          "wp-11608-01"
+        ],
+        "upstream_packages_absent": [
+          "wp-11608-02",
+          "wp-11608-03"
+        ]
+      },
+      "independence": {
+        "context_allowed": [
+          "report markdown (verbatim, hash pinned)",
+          "upstream asset manifest"
+        ],
+        "producer_explanations_read": false,
+        "producer_code_read": false,
+        "producer_tests_read": false,
+        "producer_artifacts_read": false,
+        "method": "all four schemes re-implemented from the stencil/continuum definitions printed in the report; every number recomputed with an independent numpy path",
+        "limitation": "no TensorFVM checkout in the review scope, so the producer's script, tests (57 cases), figures and the 227 KB JSON cannot be diffed against; 'not reproduced' below means 'not obtainable by an independent route at the stated parameters', not 'fabricated'"
+      },
+      "scope": {
+        "criteria_reviewed": [
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "(f) inventory"
+        ],
+        "sections_covered": [
+          "1.2",
+          "1.3",
+          "2.1",
+          "2.2",
+          "2.3",
+          "3.1-3.6",
+          "4",
+          "6.1",
+          "7",
+          "8"
+        ],
+        "sections_excluded": [
+          "9 局限与展望 (outlook only, no numeric claim)"
+        ],
+        "report_ids_touched": [
+          "11608"
+        ]
+      },
+      "checks_run": [
+        "sha256 of markdown bytes vs contract",
+        "independent 1D periodic solver for upwind / Lax-Wendroff / CD2 / Leonard QUICK",
+        "single-mode amplitude decay over 2 wave periods -> nu_meas for the 9 upwind and 9 Lax-Wendroff combinations",
+        "closed-form von Neumann symbol vs stencil-applied-to-mode at 48 interior theta",
+        "multi-step march vs closed-form |G| at 63 grid-compatible theta per scheme and Courant number",
+        "mutant-stencil negative controls (0.1% upwind coefficient error, QUICK 3/4 -> 0.74)",
+        "leading-order viscosity of QUICK by analytic continuation of its own symbol",
+        "4-level grid refinement at fixed physical mode",
+        "CD2 half-period growth for all 9 (C, k dx) pairs",
+        "arithmetic/inventory and markdown hygiene probes"
+      ],
+      "checks_not_run": [
+        "producer pytest suite (57 cases) — no TensorFVM checkout in scope",
+        "artifacts/fvm_modified_equation.json (227 KB) contents and sizes",
+        "fig1_von_neumann.png / fig2_nu_comparison.png / fig3_grid_convergence.png",
+        "commit identity (report says '待平台自动推送')",
+        "2D diagonal advection cross-derivative claim (sec 2.3 item 6 / 5.4) — no 2D solver was built; recorded unknown",
+        "QUICK stability limit claim (C <= 0.5) — not probed"
+      ],
+      "findings": [
+        {
+          "id": "R1",
+          "severity": "major",
+          "blocking": false,
+          "subject": "report sec 3.1 (criterion a) — upwind viscosity table",
+          "claim_as_written": "9 per-row measured nu and a relative-error column (0.03%-0.50%) show |nu_meas/nu_th - 1| < 1%",
+          "evidence_locator": {
+            "quote": "**结论**: ✅ 全部 9 组合误差 < 1%，最大误差 0.50%",
+            "start_char": 2131,
+            "end_char": 2166,
+            "start_line": 100,
+            "occurrences": 1,
+            "verbatim_in_source": true
+          },
+          "criterion_locator": {
+            "quote": "ν_num^meas / ν_num^th - 1 < 1%",
+            "start_char": 1618,
+            "end_char": 1648,
+            "start_line": 86,
+            "occurrences": 1,
+            "verbatim_in_source": true
+          },
+          "reviewer_recomputation": {
+            "method": "independent 1D periodic upwind solver + single-mode amplitude decay, 2 wave periods, k dx = 2 pi m/256",
+            "nu_th_formula_reproduced": true,
+            "max_dev_pct_reviewer": 0.1611,
+            "exact_von_neumann_dev_pct": [
+              -0.0008,
+              -0.0032,
+              -0.0132,
+              0.01,
+              0.0402,
+              0.1611,
+              -0.0008,
+              -0.0032,
+              -0.0132
+            ],
+            "report_dev_pct": [
+              0.03,
+              0.05,
+              0.13,
+              0.04,
+              0.08,
+              0.28,
+              0.1,
+              0.2,
+              0.5
+            ],
+            "report_over_exact_ratio_band": [
+              1.74,
+              124.32
+            ],
+            "sign_contradictions": 3,
+            "sign_contradiction_rows": [
+              {
+                "C": 0.5,
+                "kdx": 0.04909
+              },
+              {
+                "C": 0.5,
+                "kdx": 0.09817
+              },
+              {
+                "C": 0.5,
+                "kdx": 0.19635
+              }
+            ]
+          },
+          "impact": "the acceptance conclusion survives (reviewer max deviation 0.16% < 1%), but 9 of 9 stated per-row numbers are not reproducible and 3 of 9 have the wrong sign of deviation, so the table cannot serve as evidence for the criteria it is attached to",
+          "candidate_mechanism_hypothesis": {
+            "status": "unverified_hypothesis (producer code not in review scope)",
+            "text": "a nu that is biased by (k_used/k_true)^2 (rounded k dx in the denominator) or by a time base that is not an integer number of steps would produce exactly this kind of few-tenths-of-a-percent offset; the review asserts only that the printed values are not obtainable from the stated parameters, not why"
+          },
+          "repro": "python3 runs/wp-11608-04/independent_checks.py  # key a_upwind.rows",
+          "disposition": "needs-fix: replace the measured column with values recomputed from the exact symbol (or publish the solver + seed so the residual round-off is reproducible); do not widen the criterion to make the numbers fit"
+        },
+        {
+          "id": "R2",
+          "severity": "major",
+          "blocking": false,
+          "subject": "report sec 2.2 / 1.2 — QUICK leading-order viscosity formula and its 'small but nonzero' characterisation",
+          "claim_as_written": "QUICK: nu_th = c dx (1-C)(1-C^2)/8, described as '二阶迎风型，小但非零的数值黏性'",
+          "evidence_locator": {
+            "quote": "QUICK: `ν_th = cΔx(1-C)(1-C²)/8`",
+            "start_char": 1016,
+            "end_char": 1048,
+            "start_line": 56,
+            "occurrences": 1,
+            "verbatim_in_source": true
+          },
+          "reviewer_recomputation": {
+            "derivation": "Fourier substitution of the Leonard two-upstream interpolation u_{j+1/2} = 3/4 u_j + 3/8 u_{j-1} - 1/8 u_{j-2} gives nu -> c dx (5-4C)/8 as k dx -> 0",
+            "derived_formula": "c*dx*(5-4C)/8",
+            "exact_over_report_formula": [
+              {
+                "C": "0.2",
+                "kdx": "0.02",
+                "ratio": 5.47
+              },
+              {
+                "C": "0.2",
+                "kdx": "0.01",
+                "ratio": 5.47
+              },
+              {
+                "C": "0.5",
+                "kdx": "0.02",
+                "ratio": 8.0
+              },
+              {
+                "C": "0.5",
+                "kdx": "0.01",
+                "ratio": 8.0
+              },
+              {
+                "C": "0.8",
+                "kdx": "0.02",
+                "ratio": 25.0
+              },
+              {
+                "C": "0.8",
+                "kdx": "0.01",
+                "ratio": 25.0
+              }
+            ],
+            "quick_over_upwind_leading": {
+              "C=0.2": 1.312,
+              "C=0.5": 1.5,
+              "C=0.8": 2.25
+            }
+          },
+          "impact": "the printed QUICK coefficient is 5.5x-25x too small and the qualitative statement is inverted: QUICK's leading-order viscosity is 1.3x-2.25x that of first-order upwind at the same Courant number, not smaller. The report gives no QUICK stencil, so the formula cannot even be checked against its own scheme",
+          "repro": "python3 runs/wp-11608-04/independent_checks.py  # key f_quick",
+          "disposition": "needs-fix: either print the QUICK stencil next to the formula, or drop the analytic QUICK row and keep QUICK as explicitly qualitative"
+        },
+        {
+          "id": "R3",
+          "severity": "major",
+          "blocking": false,
+          "subject": "report sec 3.3 (criterion c) — Lax-Wendroff residual viscosity",
+          "claim_as_written": "nu_meas = 1.2e-4 ... 7.2e-4, 'nu_num 比阈值小 1-2 个量级'",
+          "evidence_locator": {
+            "quote": "**结论**: ✅ ν_num 比阈值小 1-2 个量级，相位误差全部 < 1%",
+            "start_char": 3287,
+            "end_char": 3327,
+            "start_line": 131,
+            "occurrences": 1,
+            "verbatim_in_source": true
+          },
+          "reviewer_recomputation": {
+            "max_nu_reviewer": 0.001796,
+            "min_nu_reviewer": 5.8e-05,
+            "bound_holds": true,
+            "margin_over_threshold": 5.57,
+            "report_over_reviewer_ratio_band": [
+              0.33,
+              2.08
+            ],
+            "theta_scaling_report": "reported nu doubles when kdx doubles -> O(theta)",
+            "theta_scaling_theory": "nu_LW = C(1-C^2) theta^2/8 -> O(theta^2)",
+            "C_dependence_theory": "C(1-C^2)/8 peaks at C=1/sqrt(3)=0.5774; report rises monotonically"
+          },
+          "impact": "the pass/fail conclusion (nu << 1e-2 c dx) survives with a 5.6x margin, not the ~14x the table implies; the tabulated values are off by 0.33x-2.08x and their theta-dependence is O(theta) where theory requires O(theta^2), and the reported monotone rise in C contradicts the theoretical maximum at C = 0.577",
+          "candidate_mechanism_hypothesis": {
+            "status": "unverified_hypothesis",
+            "text": "the reported O(theta) scaling is what a fixed step count (rather than a fixed number of wave periods) would give; recorded as a hypothesis only"
+          },
+          "repro": "python3 runs/wp-11608-04/independent_checks.py  # key c_lax_wendroff",
+          "disposition": "needs-fix: recompute the column from the Lax-Wendroff symbol; the 1-2 orders-of-magnitude margin claim must be re-derived before it is restated"
+        },
+        {
+          "id": "R4",
+          "severity": "medium",
+          "blocking": false,
+          "subject": "report sec 2.3 / 3.2 (criterion b) — von Neumann amplification factor",
+          "claim_as_written": "criterion |G_num - G_ana| < 1e-3 (sec 2.3, absolute) and |G_num - G_ana|/|G_ana| < 1e-3 (sec 3.2, relative), residual column 1.5e-4-5.9e-4",
+          "evidence_locator": {
+            "quote": "**判据**: |G_num - G_ana| / |G_ana| < 1e-3，全域 θ（49 点）",
+            "start_char": 2204,
+            "end_char": 2255,
+            "start_line": 104,
+            "occurrences": 1,
+            "verbatim_in_source": true
+          },
+          "reviewer_recomputation": {
+            "stencil_vs_closed_form_max_abs_err": {
+              "upwind": {
+                "C=0.2": 1.11e-16,
+                "C=0.5": 1.11e-16,
+                "C=0.8": 2.22e-16
+              },
+              "lax_wendroff": {
+                "C=0.2": 0.0,
+                "C=0.5": 2.22e-16,
+                "C=0.8": 2.22e-16
+              },
+              "cd2": {
+                "C=0.2": 0.0,
+                "C=0.5": 0.0,
+                "C=0.8": 0.0
+              },
+              "quick": {
+                "C=0.2": 1.11e-16,
+                "C=0.5": 2.22e-16,
+                "C=0.8": 2.22e-16
+              }
+            },
+            "march_vs_closed_form_max_rel_err": {
+              "upwind": {
+                "C=0.2": 1.84e-16,
+                "C=0.5": 2.12e-15,
+                "C=0.8": 3.69e-16
+              },
+              "lax_wendroff": {
+                "C=0.2": 1.21e-16,
+                "C=0.5": 2.19e-16,
+                "C=0.8": 7.47e-16
+              },
+              "cd2": {
+                "C=0.2": 2.2e-16,
+                "C=0.5": 2.18e-16,
+                "C=0.8": 1.91e-16
+              },
+              "quick": {
+                "C=0.2": 1.52e-16,
+                "C=0.5": 4.45e-16,
+                "C=0.8": 1.9e-15
+              }
+            },
+            "mutant_0p1pct_coefficient_error_still_passes_abs_1e-3": {
+              "C=0.2": {
+                "max_abs_err": 0.00039999999999995595,
+                "max_rel_err": 0.0006666666666665932,
+                "passes_abs_1e-3": true
+              },
+              "C=0.5": {
+                "max_abs_err": 0.0009999999999998287,
+                "max_rel_err": NaN,
+                "passes_abs_1e-3": true
+              },
+              "C=0.8": {
+                "max_abs_err": 0.0015999999999998238,
+                "max_rel_err": 0.0026666666666663725,
+                "passes_abs_1e-3": false
+              }
+            },
+            "ill_posed_case": {
+              "case": "upwind, C=0.5, theta=pi",
+              "G_abs": 6.123233995736766e-17,
+              "why": "upwind |G(pi)| = |1-2C| = 0 at C=0.5, so the relative criterion divides by 0"
+            }
+          },
+          "impact": "two incompatible thresholds are stated for one criterion; the relative form divides by |G| = 0 at upwind C = 0.5, theta = pi; an independent march agrees with the closed form at 1e-15, i.e. 11 orders below the tabulated residuals, and a 0.1% coefficient error still passes the absolute form at C = 0.2 and C = 0.5 -> the criterion as written cannot detect the defect it exists to detect, and the tabulated residual column has no traceable provenance",
+          "repro": "python3 runs/wp-11608-04/independent_checks.py  # key b_von_neumann",
+          "disposition": "needs-fix: fix one definition (absolute on a normalised G), exclude theta where |G|->0, and add a mutant/negative control so the threshold has demonstrated sensitivity"
+        },
+        {
+          "id": "R5",
+          "severity": "medium",
+          "blocking": false,
+          "subject": "report sec 3.4 (criterion d) — CD2 amplitude growth band",
+          "claim_as_written": "0.5 周期后 A_ratio = 1.15 ~ 1.35（增长 15%-35%）",
+          "evidence_locator": {
+            "quote": "- **振幅增长**: 0.5 周期后，A_ratio = 1.15 ~ 1.35",
+            "start_char": 3531,
+            "end_char": 3572,
+            "start_line": 141,
+            "occurrences": 1,
+            "verbatim_in_source": true
+          },
+          "reviewer_recomputation": {
+            "G_at_pi_over_2_reproduced": {
+              "C=0.2": 1.0198,
+              "C=0.5": 1.118,
+              "C=0.8": 1.2806
+            },
+            "report_G_values": {
+              "C=0.5": 1.118,
+              "C=0.8": 1.281
+            },
+            "growth_range_reviewer": [
+              1.0155,
+              1.2721
+            ],
+            "cases_below_report_band": 7,
+            "cases_above_report_band": 0,
+            "band_supported_as_stated": false
+          },
+          "impact": "|G|=1.118 (C=0.5) and 1.281 (C=0.8) at theta=pi/2 are reproduced exactly, but the quoted growth band holds for 2 of 9 cases: the reviewer range is 1.016-1.272, so 7 of 9 cases grow far less than the '15%' lower bound. The qualitative conclusion (CD2 is dispersive and unstable) holds",
+          "repro": "python3 runs/wp-11608-04/independent_checks.py  # key d_cd2",
+          "disposition": "needs-fix: quote the growth per case (or the range over the tested C, k dx pairs) instead of a band that no enumerated case supports"
+        },
+        {
+          "id": "R6",
+          "severity": "minor",
+          "blocking": false,
+          "subject": "report sec 3.5 (criterion e) — grid convergence table",
+          "claim_as_written": "nu_meas = 0.250 / 0.125 / 0.0625 / 0.0313, ratios 0.500 / 0.500 / 0.501",
+          "evidence_locator": {
+            "quote": "**结论**: ✅ ν_num 严格随 Δx 线性衰减，比值 0.500 ± 0.001",
+            "start_char": 3945,
+            "end_char": 3989,
+            "start_line": 156,
+            "occurrences": 1,
+            "verbatim_in_source": true
+          },
+          "reviewer_recomputation": {
+            "assumed_parameters": "C = 0.5, physical mode m = 8 on domain L = 256 (report states neither C nor k dx per level)",
+            "reviewer_nu": [
+              0.250403,
+              0.12505,
+              0.062506,
+              0.031251
+            ],
+            "report_nu": 0.25,
+            "reviewer_ratios": [
+              0.4994,
+              0.49985,
+              0.49996
+            ],
+            "report_ratios": [
+              0.5,
+              0.5,
+              0.501
+            ],
+            "max_ratio_dev_pct": 0.1207,
+            "criterion_pct": 5.0
+          },
+          "impact": "conclusion (nu proportional to dx) reproduced: ratios 0.4994-0.49996 vs the stated 0.500-0.501, deviation 0.12% against a 5% tolerance. The table is non-self-describing (no C, no k dx) and rounded to a precision that hides the +0.16% finite-theta deviation visible in sec 3.1",
+          "repro": "python3 runs/wp-11608-04/independent_checks.py  # key e_grid_convergence",
+          "disposition": "approve with notes: add the per-level (C, k dx) columns"
+        },
+        {
+          "id": "R7",
+          "severity": "minor",
+          "blocking": false,
+          "subject": "report sec 7 / 8 / trailing line — artifact, test and audit trail",
+          "claim_as_written": "8 artifacts with sizes, 'pytest ... 57 passed', commit '待平台自动推送', trailing *报告工件路径* line",
+          "evidence_locator": {
+            "quote": "- **测试执行**: `pytest tests/test_numerical_viscosity.py -v`，57 passed",
+            "start_char": 6609,
+            "end_char": 6676,
+            "start_line": 275,
+            "occurrences": 1,
+            "verbatim_in_source": true
+          },
+          "reviewer_recomputation": {
+            "sweep_count_arithmetic_matches": true,
+            "sweep_count_claim": 36,
+            "artifacts_verifiable_in_this_scope": false,
+            "tests_not_run": 57,
+            "offtopic_hydroelasticity_paths_present": true,
+            "body_figure_links": [
+              "fig1_von_neumann.png",
+              "fig2_nu_comparison.png",
+              "fig3_grid_convergence.png"
+            ],
+            "figures_embedded_in_platform_record": false
+          },
+          "impact": "no TensorFVM checkout exists in the review scope, so the 8 artifact paths, their byte sizes and the 57-test claim are unverifiable here (recorded as not_run, not as false); the trailing artifact line and the platform record.figures both point at hydroelasticity artifacts, contradicting the FVM subject — this is the same subject-mismatch the upstream package wp-11608-01 registered",
+          "repro": "ls docs/kf/wp-11608-01/asset_manifest.json  # limitations[] records the same mismatch",
+          "disposition": "needs-fix (hygiene): delete the off-subject trailing line, attach the three figures to the platform record, and give the commit hash once pushed"
+        },
+        {
+          "id": "R8",
+          "severity": "info",
+          "blocking": false,
+          "subject": "report header — self-declared acceptance status",
+          "claim_as_written": "验证状态: ✅ 全部验收判据通过",
+          "evidence_locator": {
+            "quote": "**验证状态**: ✅ 全部验收判据通过",
+            "start_char": 113,
+            "end_char": 133,
+            "start_line": 6,
+            "occurrences": 1,
+            "verbatim_in_source": true
+          },
+          "reviewer_recomputation": {
+            "conclusion_level_holds": [
+              "a",
+              "c",
+              "d(qualitative)",
+              "e"
+            ],
+            "row_level_refuted_or_unsupported": [
+              "a(9/9 rows)",
+              "b",
+              "c(9/9 rows)",
+              "d(band)"
+            ],
+            "quick_formula_refuted": true
+          },
+          "impact": "the header is a conclusion-level claim that mostly survives the review, but at row level 3 of 6 criteria tables contain values that do not reproduce; a blanket green tick overstates the evidence even though the physics conclusions are largely right",
+          "repro": "see R1-R5",
+          "disposition": "needs-fix: downgrade to a per-criterion status with the recomputed numbers"
+        }
+      ],
+      "reproduced_consistent_items": [
+        {
+          "item": "upwind leading-order viscosity nu_th = c dx (1-C)/2",
+          "how": "independent derivation + march at k dx -> 0.005",
+          "result": [
+            0.4,
+            0.4,
+            0.4
+          ],
+          "status": "reproduced_consistent"
+        },
+        {
+          "item": "CD2 |G(pi/2)| = sqrt(1+C^2) = 1.118 (C=0.5) / 1.281 (C=0.8)",
+          "how": "closed-form symbol",
+          "result": {
+            "C=0.2": 1.0198,
+            "C=0.5": 1.118,
+            "C=0.8": 1.2806
+          },
+          "status": "reproduced_consistent"
+        },
+        {
+          "item": "grid convergence: nu halved when dx is halved",
+          "how": "4-level march at C=0.5, physical mode m=8",
+          "result": [
+            0.4994,
+            0.49985,
+            0.49996
+          ],
+          "status": "reproduced_consistent"
+        },
+        {
+          "item": "sweep inventory 36 = 4 schemes x 3 C x 3 k dx",
+          "how": "arithmetic check",
+          "result": true,
+          "status": "reproduced_consistent"
+        },
+        {
+          "item": "k dx grid {2 pi m/256} ~ {0.049, 0.098, 0.196}",
+          "how": "arithmetic check",
+          "result": [
+            0.04909,
+            0.09817,
+            0.19635
+          ],
+          "status": "reproduced_consistent"
+        }
+      ],
+      "overstated_claims": [
+        "sec 3.1: 9 per-row nu_meas with a 0.03%-0.50% error column (R1)",
+        "sec 1.2/2.2: QUICK 'small but nonzero' viscosity + its closed form (R2)",
+        "sec 3.3: '1-2 orders of magnitude below threshold' (actual margin 5.6x) (R3)",
+        "sec 3.4: growth band 1.15-1.35 (7 of 9 cases below 1.15) (R5)",
+        "header: 'all acceptance criteria pass' at row level (R8)"
+      ],
+      "severity_counts": {
+        "major": 3,
+        "medium": 2,
+        "minor": 2,
+        "info": 1
+      },
+      "disposition": {
+        "verdict": "needs-fix",
+        "rationale": "no data-integrity or security issue; the four physical conclusions (upwind formula validated, CD2 dispersive/unstable, Lax-Wendroff nearly inviscid, nu proportional to dx) survive independent re-derivation, but 3 of 6 criteria tables contain rows that do not reproduce numerically, one printed formula (QUICK) is demonstrably wrong, and one quoted band is unsupported",
+        "blocking_issues": [],
+        "remediation": [
+          "recompute the sec 3.1 / 3.3 / 3.2 measured columns from the exact symbols and publish solver+seed so residuals are reproducible",
+          "print the QUICK stencil and correct its leading-order coefficient to (5-4C)/8",
+          "pick one definition for criterion (b), exclude |G|->0, add a mutant control",
+          "quote CD2 growth per case instead of a band",
+          "add per-level (C, k dx) to the grid table; drop the off-subject trailing line"
+        ],
+        "claims_marked_verified_by_this_review": 0,
+        "verification_owner": "platform gate (this review only reports findings)"
+      },
+      "acceptance_self_check": {
+        "valid_json": {
+          "ok": true,
+          "basis": "kf_result.wp-11608-04.json and review_report.json both parse with json.load"
+        },
+        "schema_pass": {
+          "ok": true,
+          "basis": "jsonschema Draft202012Validator against schemas/kf_result.v1.schema.json"
+        },
+        "reviewer_independent": {
+          "ok": true,
+          "basis": "producer code, tests, artifacts and explanations were not read; all four schemes were re-implemented from the stencil definitions printed in the report"
+        },
+        "upstream_packages_completed": {
+          "ok": true,
+          "scope_note": "partial upstream only",
+          "basis": "for report 11608 only wp-11608-01 exists in docs/kf/ and is published (publish.json status=published, gate=pending_platform_verification); wp-11608-02 and wp-11608-03 are absent, so this review covers wp-11608-01 plus the report body"
+        },
+        "do_not_mark_claims_as_verified": {
+          "ok": true,
+          "basis": "claims_marked_verified = 0; the review issues findings and a disposition only, the verification verdict is the platform gate's"
+        },
+        "review_prompt_not_copied_from_producer": {
+          "ok": true,
+          "basis": "findings were derived from the source markdown; the only producer text reproduced is the verbatim quotation needed for each evidence locator"
+        }
+      },
+      "provenance": {
+        "source_uri": "tensor://reports/11608",
+        "source_field": "markdown",
+        "source_hash": "sha256:8a9602aca712ab3ac8656d7382e0fef762ba0f30657cf8b631b36ba514e8db62",
+        "source_hash_recomputed": "sha256:8a9602aca712ab3ac8656d7382e0fef762ba0f30657cf8b631b36ba514e8db62",
+        "source_hash_matches_contract": true,
+        "chars": 7342,
+        "reviewer_artifacts": [
+          "runs/wp-11608-04/independent_checks.py",
+          "runs/wp-11608-04/checks.json",
+          "runs/wp-11608-04/build_review.py",
+          "runs/wp-11608-04/review_report.json",
+          "runs/wp-11608-04/review_events.json",
+          "docs/kf/wp-11608-04/KF-RESULT-wp-11608-04.md"
+        ]
+      }
+    },
+    "review_events.json": [
+      {
+        "seq": 1,
+        "event": "source_fetched",
+        "detail": "chars=7342, sha256_matches_contract=True"
+      },
+      {
+        "seq": 2,
+        "event": "producer_context_withheld",
+        "detail": "only report markdown + upstream asset manifest were read"
+      },
+      {
+        "seq": 3,
+        "event": "independent_recomputation",
+        "detail": "4 schemes re-implemented, 6 criterion blocks recomputed, 4 mutant controls"
+      },
+      {
+        "seq": 4,
+        "event": "finding_raised",
+        "detail": "R1=major; R2=major; R3=major; R4=medium; R5=medium; R6=minor; R7=minor; R8=info"
+      },
+      {
+        "seq": 5,
+        "event": "disposition_issued",
+        "detail": "needs-fix; 0 claims marked verified; verdict is the platform gate's call"
+      }
+    ]
+  }
+}
