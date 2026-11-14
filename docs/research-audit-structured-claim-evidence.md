@@ -13,7 +13,7 @@ The structured audit complements the Markdown citation audit. It consumes existi
     python scripts/research_audit/claim_evidence_audit.py \
       --claims knowledge/kbm/demo-sample/extract/claims \
       --evidence knowledge/kbm/demo-sample/extract/evidence \
-      --source-root knowledge/kbm/demo-sample \
+      --source-root . \
       --output research-audit.json
 
 Exit codes: 0 = passed, 1 = failed or inconclusive. A structurally sound but unassessed evidence item yields inconclusive, not passed.
