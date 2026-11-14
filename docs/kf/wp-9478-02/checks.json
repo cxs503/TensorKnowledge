@@ -1,0 +1,55 @@
+{
+  "package_id": "wp-9478-02",
+  "report_id": "9478",
+  "checks": [
+    {
+      "criterion": "valid_json",
+      "pass": true,
+      "detail": "classification.json / checks.json parsed by json.load"
+    },
+    {
+      "criterion": "schema_pass",
+      "pass": null,
+      "status": "not_run_locally",
+      "detail": "no classification schema exists in schemas/ (only kf_result.v1.schema.json, validated against the delivered result by verify_result.py); structural shape checks below stand in"
+    },
+    {
+      "criterion": "source_locator_resolvable",
+      "pass": true,
+      "detail": "30/30 locators resolve byte-exactly at declared char offsets; failing=[]"
+    },
+    {
+      "criterion": "source_hash_matches",
+      "pass": true,
+      "detail": "recomputed sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+    },
+    {
+      "criterion": "no_duplicate_ids",
+      "pass": true,
+      "detail": "51 ids across claims/evidence/unresolved; duplicates=[]"
+    },
+    {
+      "criterion": "all_claims_have_evidence_or_explicit_unresolved_status",
+      "pass": true,
+      "detail": "13 claims, each with >=1 resolvable quote; 8 records explicitly unresolved; missing=[]"
+    },
+    {
+      "criterion": "do_not_mark_claims_as_verified",
+      "pass": true,
+      "detail": "every claim is draft/unassessed"
+    },
+    {
+      "criterion": "chars_match_contract",
+      "pass": true,
+      "detail": "chars=5748"
+    }
+  ],
+  "all_hard_checks_pass": true,
+  "counts": {
+    "claims": 13,
+    "evidence": 30,
+    "unresolved": 8
+  },
+  "citation_density_per_1000_chars": 0.348,
+  "amplitude_error_recomputed_pct": 6.14
+}

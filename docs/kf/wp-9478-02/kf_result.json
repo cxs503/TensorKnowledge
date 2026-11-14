@@ -1,0 +1,1828 @@
+{
+  "package_id": "wp-9478-02",
+  "task_type": "02-classification-parse",
+  "contract_version": "1.0",
+  "report_id": "9478",
+  "provenance": {
+    "source_uri": "tensor://reports/9478",
+    "source_field": "markdown",
+    "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28",
+    "source_hash_matches": true,
+    "title": "P153W2-N03: TensorFEM×TensorLBM FSI Strong Coupling — Turek-Hron FSI-2 + Flutter + Energy Conservation",
+    "scenario_key": "P153W2-N03-fsi-strong-coupling",
+    "chars": 5748
+  },
+  "outputs": {
+    "classification.json": {
+      "schema": "kf-classification-parse.v1",
+      "package_id": "wp-9478-02",
+      "task_type": "02-classification-parse",
+      "contract_version": "1.0",
+      "report_id": "9478",
+      "source": {
+        "source_uri": "tensor://reports/9478",
+        "source_field": "markdown",
+        "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28",
+        "source_hash_recomputed": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28",
+        "chars": 5748,
+        "bytes_utf8": 5875,
+        "n_lines": 144,
+        "title_from_record": "P153W2-N03: TensorFEM×TensorLBM FSI Strong Coupling — Turek-Hron FSI-2 + Flutter + Energy Conservation",
+        "title_from_body": "P153W2-N03: FSI Strong Coupling — Turek-Hron FSI-2 + Flutter + Energy Conservation",
+        "scenario_key": "P153W2-N03-fsi-strong-coupling",
+        "record_mission_id": 8136,
+        "record_tags": [
+          "FSI",
+          "Turek-Hron",
+          "strong-coupling",
+          "Aitken",
+          "flutter",
+          "energy-conservation",
+          "TensorFEM"
+        ],
+        "record_summary_chars": 372,
+        "record_figures": [
+          {
+            "name": "fsi2_displacement_clcd",
+            "caption": "Turek-Hron FSI-2: Beam tip displacement and aerodynamic coefficients time history under strong coupling FSI"
+          },
+          {
+            "name": "fsi2_energy",
+            "caption": "Energy conservation: total structural energy (kinetic + strain) normalized, demonstrating energy ledger tracking"
+          },
+          {
+            "name": "fsi2_flutter",
+            "caption": "Flutter analysis: (left) critical velocity vs mass ratio showing U_cr ∝ √μ scaling; (right) growth rate vs velocity for μ=10"
+          },
+          {
+            "name": "fsi2_convergence",
+            "caption": "Time-step convergence study: frequency and amplitude vs Δt showing good convergence"
+          }
+        ],
+        "record_summary_states": {
+          "mentions_verified": true,
+          "n_chars": 372
+        }
+      },
+      "report_type": "scientific-computation",
+      "report_type_confidence": "medium",
+      "classification_is_hypothesis": true,
+      "scoring_rule": {
+        "weights": {
+          "literal_registry_signal": 1.0,
+          "applies_to_section_hit": 0.5,
+          "semantic_anchor": 2.0
+        },
+        "note": "weights fixed before scoring; section hits are weak because 'method'/'results' are generic titles; absences are never counted, they are recorded as unresolved"
+      },
+      "report_type_alternatives": [
+        {
+          "report_type": "algorithm-implementation",
+          "total_score": 4.5,
+          "component_scores": {
+            "literal": 0.0,
+            "section": 0.5,
+            "semantic": 4.0
+          },
+          "why_not_primary": "lower total score under the same predeclared rule; the decisive anchors of that type are absent (see semantic_anchor_absent)"
+        },
+        {
+          "report_type": "experimental-validation",
+          "total_score": 4.0,
+          "component_scores": {
+            "literal": 0.0,
+            "section": 0.0,
+            "semantic": 4.0
+          },
+          "why_not_primary": "lower total score under the same predeclared rule; the decisive anchors of that type are absent (see semantic_anchor_absent)"
+        },
+        {
+          "report_type": "literature-review",
+          "total_score": 2.5,
+          "component_scores": {
+            "literal": 0.0,
+            "section": 0.5,
+            "semantic": 2.0
+          },
+          "why_not_primary": "lower total score under the same predeclared rule; the decisive anchors of that type are absent (see semantic_anchor_absent)"
+        },
+        {
+          "report_type": "technical-proposal",
+          "total_score": 2.5,
+          "component_scores": {
+            "literal": 0.0,
+            "section": 1.5,
+            "semantic": 1.0
+          },
+          "why_not_primary": "lower total score under the same predeclared rule; the decisive anchors of that type are absent (see semantic_anchor_absent)"
+        },
+        {
+          "report_type": "software-engineering",
+          "total_score": 1.5,
+          "component_scores": {
+            "literal": 1.0,
+            "section": 0.5,
+            "semantic": 0.0
+          },
+          "why_not_primary": "lower total score under the same predeclared rule; the decisive anchors of that type are absent (see semantic_anchor_absent)"
+        }
+      ],
+      "selected_skill": {
+        "skill_id": "xsk-scientific-computation",
+        "skill_version": "0.1.0",
+        "lifecycle_state": "template-created",
+        "registry_path": "extraction-skills/registry.json",
+        "selection_rule": "report_type argmax of (literal registry signals + applies_to section hits + curated semantic anchors); 'unclassified' not used because the signals are resolvable"
+      },
+      "candidate_scoring": [
+        {
+          "report_type": "scientific-computation",
+          "skill_id": "xsk-scientific-computation",
+          "literal_signal_score": 1.0,
+          "literal_signal_hits": [
+            {
+              "signal": "convergence study",
+              "literal_count": 1,
+              "first_offset": 4084
+            }
+          ],
+          "section_score": 1.0,
+          "section_hits": [
+            "method",
+            "results"
+          ],
+          "semantic_anchor_score": 10.0,
+          "semantic_anchors_present": 5,
+          "semantic_anchors_total": 5,
+          "semantic_anchor_detail": [
+            {
+              "anchor_id": "a-eq",
+              "what": "numerical scheme written as an equation",
+              "lines": [
+                34,
+                34
+              ],
+              "quote": "   - ω^{k+1} = -ω^k · (r^{k-1})^T · (r^k - r^{k-1}) / ||r^k - r^{k-1}||²",
+              "start_offset": 1316,
+              "end_offset": 1388,
+              "weight": 1.0
+            },
+            {
+              "anchor_id": "a-param",
+              "what": "parameter table with units",
+              "lines": [
+                16,
+                16
+              ],
+              "quote": "| Young's modulus E | 1.3×10⁷ | Pa |",
+              "start_offset": 678,
+              "end_offset": 714,
+              "weight": 1.0
+            },
+            {
+              "anchor_id": "a-conv",
+              "what": "time-step convergence study",
+              "lines": [
+                93,
+                93
+              ],
+              "quote": "- Frequency change from Δt=0.002 to Δt=0.001: 0.01% ≤ 3% ✓",
+              "start_offset": 3643,
+              "end_offset": 3701,
+              "weight": 1.0
+            },
+            {
+              "anchor_id": "a-errref",
+              "what": "error stated against a reference value",
+              "lines": [
+                131,
+                131
+              ],
+              "quote": "| Frequency f [Hz] | 3.0163 | 3.0000 | 0.54% | ✅ Yes |",
+              "start_offset": 5203,
+              "end_offset": 5257,
+              "weight": 1.0
+            },
+            {
+              "anchor_id": "a-assume",
+              "what": "modelling assumption stated verbatim",
+              "lines": [
+                113,
+                113
+              ],
+              "quote": "3. **Single-mode approximation**: Only the first bending mode is considered. Higher modes may be important for some FSI problems.",
+              "start_offset": 4528,
+              "end_offset": 4657,
+              "weight": 1.0
+            }
+          ],
+          "semantic_anchor_absent": [],
+          "total_score": 12.0
+        },
+        {
+          "report_type": "algorithm-implementation",
+          "skill_id": "xsk-algorithm-implementation",
+          "literal_signal_score": 0.0,
+          "literal_signal_hits": [],
+          "section_score": 0.5,
+          "section_hits": [
+            "algorithm"
+          ],
+          "semantic_anchor_score": 4.0,
+          "semantic_anchors_present": 2,
+          "semantic_anchors_total": 4,
+          "semantic_anchor_detail": [
+            {
+              "anchor_id": "c-alg",
+              "what": "algorithm composition stated",
+              "lines": [
+                31,
+                31
+              ],
+              "quote": "We implement a partitioned Dirichlet-Neumann coupling with:",
+              "start_offset": 1090,
+              "end_offset": 1149,
+              "weight": 1.0
+            },
+            {
+              "anchor_id": "c-impl",
+              "what": "implementation detail of a component",
+              "lines": [
+                45,
+                45
+              ],
+              "quote": "4. **Structural Model**: Euler-Bernoulli cantilever beam with modal decomposition (first mode), Newmark-beta time integration (β=0.25, γ=0.5).",
+              "start_offset": 1856,
+              "end_offset": 1998,
+              "weight": 1.0
+            }
+          ],
+          "semantic_anchor_absent": [
+            {
+              "anchor_id": "c-pseudo",
+              "what": "pseudocode block",
+              "absent_because": "no pseudocode or algorithm block"
+            },
+            {
+              "anchor_id": "c-complex",
+              "what": "complexity analysis",
+              "absent_because": "no complexity statement"
+            }
+          ],
+          "total_score": 4.5
+        },
+        {
+          "report_type": "experimental-validation",
+          "skill_id": "xsk-experimental-validation",
+          "literal_signal_score": 0.0,
+          "literal_signal_hits": [],
+          "section_score": 0.0,
+          "section_hits": [],
+          "semantic_anchor_score": 4.0,
+          "semantic_anchors_present": 2,
+          "semantic_anchors_total": 5,
+          "semantic_anchor_detail": [
+            {
+              "anchor_id": "b-case",
+              "what": "benchmark validation case",
+              "lines": [
+                7,
+                7
+              ],
+              "quote": "The Turek-Hron FSI-2 benchmark (2006) is the gold standard for validating fluid-structure interaction solvers. It involves a 2D laminar channel flow (Re≈100) past a rigid cylinder with an elastic beam attached to its trailing edge. The beam undergoes vortex-induced vibration (VIV) due to periodic vortex shedding from the cylinder.",
+              "start_offset": 136,
+              "end_offset": 468,
+              "weight": 1.0
+            },
+            {
+              "anchor_id": "b-baseline",
+              "what": "baseline comparison with an acceptance bound",
+              "lines": [
+                61,
+                61
+              ],
+              "quote": "| C1: Frequency | error ≤ 5% | 0.54% | ✅ PASS |",
+              "start_offset": 2552,
+              "end_offset": 2599,
+              "weight": 1.0
+            }
+          ],
+          "semantic_anchor_absent": [
+            {
+              "anchor_id": "b-facility",
+              "what": "experimental facility / rig",
+              "absent_because": "no facility or rig is described anywhere in the body"
+            },
+            {
+              "anchor_id": "b-uncert",
+              "what": "measurement uncertainty budget",
+              "absent_because": "no measurement-uncertainty statement or budget is given"
+            },
+            {
+              "anchor_id": "b-matrix",
+              "what": "repeated-run test matrix",
+              "absent_because": "no test matrix / repeat runs; results are single deterministic runs"
+            }
+          ],
+          "total_score": 4.0
+        },
+        {
+          "report_type": "literature-review",
+          "skill_id": "xsk-literature-review",
+          "literal_signal_score": 0.0,
+          "literal_signal_hits": [],
+          "section_score": 0.5,
+          "section_hits": [
+            "introduction"
+          ],
+          "semantic_anchor_score": 2.0,
+          "semantic_anchors_present": 2,
+          "semantic_anchors_total": 3,
+          "semantic_anchor_detail": [
+            {
+              "anchor_id": "f-cite1",
+              "what": "citation to prior work",
+              "lines": [
+                22,
+                22
+              ],
+              "quote": "### Reference Values (Turek & Hron 2006)",
+              "start_offset": 855,
+              "end_offset": 895,
+              "weight": 0.5,
+              "why_weak": "a citation used as a reference-value source, not as reviewed literature"
+            },
+            {
+              "anchor_id": "f-cite2",
+              "what": "second citation",
+              "lines": [
+                50,
+                50
+              ],
+              "quote": "Theodorsen (1935) analytical solution for 2-DOF typical section (plunge + pitch):",
+              "start_offset": 2145,
+              "end_offset": 2226,
+              "weight": 0.5,
+              "why_weak": "a solution formula borrowed for one calculation"
+            }
+          ],
+          "semantic_anchor_absent": [
+            {
+              "anchor_id": "f-survey",
+              "what": "related-work / survey section",
+              "absent_because": "no related-work or survey section; only two citations in the whole body"
+            }
+          ],
+          "total_score": 2.5
+        },
+        {
+          "report_type": "technical-proposal",
+          "skill_id": "xsk-technical-proposal",
+          "literal_signal_score": 0.0,
+          "literal_signal_hits": [],
+          "section_score": 1.5,
+          "section_hits": [
+            "method",
+            "results",
+            "limitations"
+          ],
+          "semantic_anchor_score": 1.0,
+          "semantic_anchors_present": 1,
+          "semantic_anchors_total": 2,
+          "semantic_anchor_detail": [
+            {
+              "anchor_id": "e-roadmap",
+              "what": "roadmap with staged items",
+              "lines": [
+                121,
+                125
+              ],
+              "quote": "### Future Work\n- Full Navier-Stokes fluid solver (TensorLBM integration)\n- Geometric nonlinearity for large deformation\n- Multi-mode structural model\n- 3D extension",
+              "start_offset": 4910,
+              "end_offset": 5075,
+              "weight": 0.5,
+              "why_weak": "a 'Future Work' bullet list is a work plan, not a project roadmap"
+            }
+          ],
+          "semantic_anchor_absent": [
+            {
+              "anchor_id": "e-proposal",
+              "what": "proposal / design-intent framing",
+              "absent_because": "no proposal, design intent or specification language: the text reports finished work"
+            }
+          ],
+          "total_score": 2.5
+        },
+        {
+          "report_type": "software-engineering",
+          "skill_id": "xsk-software-engineering",
+          "literal_signal_score": 1.0,
+          "literal_signal_hits": [
+            {
+              "signal": "interface",
+              "literal_count": 3,
+              "first_offset": 2846
+            }
+          ],
+          "section_score": 0.5,
+          "section_hits": [
+            "limitations"
+          ],
+          "semantic_anchor_score": 0.0,
+          "semantic_anchors_present": 0,
+          "semantic_anchors_total": 2,
+          "semantic_anchor_detail": [],
+          "semantic_anchor_absent": [
+            {
+              "anchor_id": "d-change",
+              "what": "changed files / commit reference",
+              "absent_because": "no changed-file list and the audit-chain Code field is empty"
+            },
+            {
+              "anchor_id": "d-regress",
+              "what": "regression result with a runnable command",
+              "absent_because": "test counts are asserted without a command or link"
+            }
+          ],
+          "total_score": 1.5
+        }
+      ],
+      "structure": {
+        "n_lines": 144,
+        "n_chars": 5748,
+        "headings": [
+          {
+            "level": 1,
+            "title": "P153W2-N03: FSI Strong Coupling — Turek-Hron FSI-2 + Flutter + Energy Conservation",
+            "line": 2,
+            "start_offset": 1,
+            "end_offset": 85,
+            "section_end_offset": 87
+          },
+          {
+            "level": 2,
+            "title": "1. Case Introduction",
+            "line": 4,
+            "start_offset": 87,
+            "end_offset": 110,
+            "section_end_offset": 112
+          },
+          {
+            "level": 3,
+            "title": "Physical Background",
+            "line": 6,
+            "start_offset": 112,
+            "end_offset": 135,
+            "section_end_offset": 470
+          },
+          {
+            "level": 3,
+            "title": "Geometry & Parameters",
+            "line": 9,
+            "start_offset": 470,
+            "end_offset": 495,
+            "section_end_offset": 855
+          },
+          {
+            "level": 3,
+            "title": "Reference Values (Turek & Hron 2006)",
+            "line": 22,
+            "start_offset": 855,
+            "end_offset": 895,
+            "section_end_offset": 1046
+          },
+          {
+            "level": 2,
+            "title": "2. Method",
+            "line": 28,
+            "start_offset": 1046,
+            "end_offset": 1058,
+            "section_end_offset": 1060
+          },
+          {
+            "level": 3,
+            "title": "Strong Coupling Algorithm",
+            "line": 30,
+            "start_offset": 1060,
+            "end_offset": 1089,
+            "section_end_offset": 2124
+          },
+          {
+            "level": 3,
+            "title": "Flutter Analysis",
+            "line": 49,
+            "start_offset": 2124,
+            "end_offset": 2144,
+            "section_end_offset": 2408
+          },
+          {
+            "level": 2,
+            "title": "3. Results",
+            "line": 55,
+            "start_offset": 2408,
+            "end_offset": 2421,
+            "section_end_offset": 2423
+          },
+          {
+            "level": 3,
+            "title": "Acceptance Criteria Summary",
+            "line": 57,
+            "start_offset": 2423,
+            "end_offset": 2454,
+            "section_end_offset": 2942
+          },
+          {
+            "level": 3,
+            "title": "Detailed Results",
+            "line": 70,
+            "start_offset": 2942,
+            "end_offset": 2962,
+            "section_end_offset": 3897
+          },
+          {
+            "level": 2,
+            "title": "4. Figures",
+            "line": 100,
+            "start_offset": 3897,
+            "end_offset": 3910,
+            "section_end_offset": 4103
+          },
+          {
+            "level": 2,
+            "title": "5. Limitations & Notes",
+            "line": 108,
+            "start_offset": 4103,
+            "end_offset": 4128,
+            "section_end_offset": 4130
+          },
+          {
+            "level": 3,
+            "title": "Current Limitations",
+            "line": 110,
+            "start_offset": 4130,
+            "end_offset": 4153,
+            "section_end_offset": 4732
+          },
+          {
+            "level": 3,
+            "title": "Applicability",
+            "line": 116,
+            "start_offset": 4732,
+            "end_offset": 4749,
+            "section_end_offset": 4910
+          },
+          {
+            "level": 3,
+            "title": "Future Work",
+            "line": 121,
+            "start_offset": 4910,
+            "end_offset": 4925,
+            "section_end_offset": 5077
+          },
+          {
+            "level": 2,
+            "title": "6. Error Assessment",
+            "line": 127,
+            "start_offset": 5077,
+            "end_offset": 5099,
+            "section_end_offset": 5643
+          },
+          {
+            "level": 2,
+            "title": "Audit Chain",
+            "line": 139,
+            "start_offset": 5643,
+            "end_offset": 5657,
+            "section_end_offset": 5748
+          }
+        ],
+        "heading_counts": {
+          "h1": 1,
+          "h2": 7,
+          "h3": 10
+        },
+        "top_level_sections": [
+          {
+            "title": "1. Case Introduction",
+            "line": 4,
+            "start_offset": 87,
+            "end_offset": 112
+          },
+          {
+            "title": "2. Method",
+            "line": 28,
+            "start_offset": 1046,
+            "end_offset": 1060
+          },
+          {
+            "title": "3. Results",
+            "line": 55,
+            "start_offset": 2408,
+            "end_offset": 2423
+          },
+          {
+            "title": "4. Figures",
+            "line": 100,
+            "start_offset": 3897,
+            "end_offset": 4103
+          },
+          {
+            "title": "5. Limitations & Notes",
+            "line": 108,
+            "start_offset": 4103,
+            "end_offset": 4130
+          },
+          {
+            "title": "6. Error Assessment",
+            "line": 127,
+            "start_offset": 5077,
+            "end_offset": 5643
+          },
+          {
+            "title": "Audit Chain",
+            "line": 139,
+            "start_offset": 5643,
+            "end_offset": 5748
+          }
+        ],
+        "tables": [
+          {
+            "first_line": 10,
+            "n_lines": 11
+          },
+          {
+            "first_line": 59,
+            "n_lines": 10
+          },
+          {
+            "first_line": 129,
+            "n_lines": 7
+          }
+        ],
+        "figure_refs": [
+          {
+            "line": 103,
+            "text": "1. : Tip displacement and CL/CD time history",
+            "label_empty": true
+          },
+          {
+            "line": 104,
+            "text": "2. : Energy conservation verification",
+            "label_empty": true
+          },
+          {
+            "line": 105,
+            "text": "3. : Flutter analysis (U_cr vs μ, growth rate vs U)",
+            "label_empty": true
+          },
+          {
+            "line": 106,
+            "text": "4. : Time-step convergence study",
+            "label_empty": true
+          }
+        ],
+        "numbered_list_items": [
+          {
+            "line": 33,
+            "text": "1. **Aitken Δ² Dynamic Relaxation**: Accelerates convergence of the fixed-point iteration by dynamically adjusting the relaxation parameter ω at each sub-iteration:",
+            "label_empty": false
+          },
+          {
+            "line": 37,
+            "text": "2. **Non-matching Mesh RBF Transfer**: Radial Basis Function interpolation (thin-plate spline) with polynomial augmentation for consistency, plus conservation correction for force transfer.",
+            "label_empty": false
+          },
+          {
+            "line": 39,
+            "text": "3. **Energy Conservation Ledger**: Tracks all energy terms:",
+            "label_empty": false
+          },
+          {
+            "line": 45,
+            "text": "4. **Structural Model**: Euler-Bernoulli cantilever beam with modal decomposition (first mode), Newmark-beta time integration (β=0.25, γ=0.5).",
+            "label_empty": false
+          },
+          {
+            "line": 47,
+            "text": "5. **Fluid Model**: Quasi-steady vortex shedding at Strouhal frequency St=0.16, with added mass and fluid damping effects.",
+            "label_empty": false
+          },
+          {
+            "line": 103,
+            "text": "1. : Tip displacement and CL/CD time history",
+            "label_empty": true
+          },
+          {
+            "line": 104,
+            "text": "2. : Energy conservation verification",
+            "label_empty": true
+          },
+          {
+            "line": 105,
+            "text": "3. : Flutter analysis (U_cr vs μ, growth rate vs U)",
+            "label_empty": true
+          },
+          {
+            "line": 106,
+            "text": "4. : Time-step convergence study",
+            "label_empty": true
+          },
+          {
+            "line": 111,
+            "text": "1. **Quasi-steady fluid model**: The fluid forces are modeled using a quasi-steady approximation rather than full Navier-Stokes. This captures the essential VIV physics but doesn't resolve the full flow field.",
+            "label_empty": false
+          },
+          {
+            "line": 112,
+            "text": "2. **Linear structural model**: Euler-Bernoulli beam theory with small deformation assumption. Large deformation effects (geometric nonlinearity) are not captured.",
+            "label_empty": false
+          },
+          {
+            "line": 113,
+            "text": "3. **Single-mode approximation**: Only the first bending mode is considered. Higher modes may be important for some FSI problems.",
+            "label_empty": false
+          },
+          {
+            "line": 114,
+            "text": "4. **2D only**: No 3D effects (spanwise correlation, tip vortices, etc.)",
+            "label_empty": false
+          }
+        ],
+        "audit_chain": {
+          "Code": {
+            "line": 140,
+            "value": "",
+            "empty": true
+          },
+          "Tests": {
+            "line": 141,
+            "value": "(38 tests, all pass)",
+            "empty": false
+          },
+          "Full FSI suite": {
+            "line": 142,
+            "value": "162 tests, all pass",
+            "empty": false
+          },
+          "Figures": {
+            "line": 143,
+            "value": "",
+            "empty": true
+          }
+        }
+      },
+      "claims": [
+        {
+          "id": "cls-9478-02-01",
+          "statement": "报告类型主判 = scientific-computation（skill xsk-scientific-computation，总分 12.0 = 关键词信号 1.0 + 章节命中 1.0 + 语义锚点 10.0）：正文同时具备数值格式方程、带单位参数表、时间步收敛研究、误差对参照值逐项表与显式模型假设。",
+          "claim_type": "classification-decision",
+          "evidence_refs": [
+            "ev-9478-02-01",
+            "ev-9478-02-02",
+            "ev-9478-02-03",
+            "ev-9478-02-04"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02"
+        },
+        {
+          "id": "cls-9478-02-02",
+          "statement": "次高两候选 algorithm-implementation 4.5、experimental-validation 4.0 与主判差距大，且各自缺该类型的关键锚点：experimental-validation 有基准校验场景与带容差基线比较，但无设施/测量不确定度/重复试验矩阵；algorithm-implementation 有算法组成陈述，但无伪代码与复杂度分析。故二者只作备选假设记录，不作主型——本判定是可反驳假设，不是既成结论。",
+          "claim_type": "classification-decision",
+          "evidence_refs": [
+            "ev-9478-02-05",
+            "ev-9478-02-06",
+            "ev-9478-02-07"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02",
+          "scope_note": "缺失类锚点无法用 locator 证明，见 unresolved U1/U5。"
+        },
+        {
+          "id": "cls-9478-02-03",
+          "statement": "选中 skill = xsk-scientific-computation（registry report_type=scientific-computation，lifecycle_state=template-created）；其三步抽取（参数+单位、误差+参照值、显式假设）在正文均有可直接引用的原文，说明该类型不是空选中。",
+          "claim_type": "classification-decision",
+          "evidence_refs": [
+            "ev-9478-02-08",
+            "ev-9478-02-09",
+            "ev-9478-02-10"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02"
+        },
+        {
+          "id": "cls-9478-02-04",
+          "statement": "排除 literature-review：全文仅 2 处具名文献引用，引用密度 0.348/千字符，低于 registry 识别信号 citation density >= 5 per 1000 chars；且无 related work/survey 章节。",
+          "claim_type": "classification-decision",
+          "evidence_refs": [
+            "ev-9478-02-11",
+            "ev-9478-02-12"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02",
+          "scope_note": "引用计数与密度由本脚本程序化计算，见 checks.json。"
+        },
+        {
+          "id": "cls-9478-02-05",
+          "statement": "排除 software-engineering：正文无变更文件清单/commit 标识，Audit Chain 的 Code 字段为空，测试规模只有文字断言而无命令；唯一命中的关键词 'interface' 指 FSI 界面（界面守恒），属数值问题而非软件接口。",
+          "claim_type": "classification-decision",
+          "evidence_refs": [
+            "ev-9478-02-13",
+            "ev-9478-02-14"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02"
+        },
+        {
+          "id": "cls-9478-02-06",
+          "statement": "结构切分：144 行 / 5748 字符，标题 h1=1、h2=7、h3=10，二级章节 7 个（含尾段 Audit Chain），markdown 表 3 张。",
+          "claim_type": "parse-observation",
+          "evidence_refs": [
+            "ev-9478-02-15",
+            "ev-9478-02-16",
+            "ev-9478-02-17"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02",
+          "scope_note": "计数由 parse_structure() 生成，逐项落在 structure 字段。"
+        },
+        {
+          "id": "cls-9478-02-07",
+          "statement": "图注与图文件的绑定在正文中丢失：Figures 章节 4 条图注的名称位全部为空（形如 '1. : Tip displacement…'），而记录 metadata 有 4 条具名图（fsi2_displacement_clcd、fsi2_energy、fsi2_flutter、fsi2_convergence）；正文中字符串 'fsi2' 出现 0 次，即正文不给任何图文件名，正文与图的绑定只能按位置猜测。Audit Chain 的 Code 与 Figures 两行为空值，Tests/Full FSI suite 两行只有文字断言。",
+          "claim_type": "parse-observation",
+          "evidence_refs": [
+            "ev-9478-02-18",
+            "ev-9478-02-19"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02"
+        },
+        {
+          "id": "cls-9478-02-08",
+          "statement": "验收表存在无计算值的 PASS：C3 的计算列写 'tracked' 却标 PASS，C4/C5 只写不等式，C8（Honest FAIL 条目）也标 PASS；即 PASS 状态并非处处由数值支撑。",
+          "claim_type": "parse-observation",
+          "evidence_refs": [
+            "ev-9478-02-20",
+            "ev-9478-02-21",
+            "ev-9478-02-22"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02"
+        },
+        {
+          "id": "cls-9478-02-09",
+          "statement": "算术复核不一致：C2 幅度误差记 6.13%，按报告自身数值 (53.07−50.0)/50.0 复算为 6.14%；C6 又把幅度变化写作 6.07%，与 C2 的 6.13% 不同源。",
+          "claim_type": "parse-observation",
+          "evidence_refs": [
+            "ev-9478-02-23",
+            "ev-9478-02-24"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02",
+          "scope_note": "本工序只做算术复算，不判定哪一值为真。"
+        },
+        {
+          "id": "cls-9478-02-10",
+          "statement": "Flutter 项的计算列与参考列为同一数字 6.325 却标 '<2%' 误差：表内未给出两者之差，故该项误差无表内证据，属于用相同数字自我比较的行。",
+          "claim_type": "parse-observation",
+          "evidence_refs": [
+            "ev-9478-02-25",
+            "ev-9478-02-26"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02"
+        },
+        {
+          "id": "cls-9478-02-11",
+          "statement": "审计链断言测试规模（38 tests / 162 tests, all pass）但未给命令、路径或链接，Figures 与 Code 引用为空，故该断言在本报告内不可核验。",
+          "claim_type": "parse-observation",
+          "evidence_refs": [
+            "ev-9478-02-27"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02"
+        },
+        {
+          "id": "cls-9478-02-12",
+          "statement": "源身份与正文标题不一致：契约/记录的 title 含 'TensorFEM×TensorLBM'，而正文 H1 只写 'P153W2-N03: FSI Strong Coupling — Turek-Hron FSI-2 + Flutter + Energy Conservation'；正文对 TensorFEM / TensorLBM 的具名出现次数为 0 / 1。",
+          "claim_type": "parse-observation",
+          "evidence_refs": [
+            "ev-9478-02-28"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02",
+          "scope_note": "标题差异不改变 source_hash；仅记录元数据与正文的表述差异。"
+        },
+        {
+          "id": "cls-9478-02-13",
+          "statement": "求解器身份只存在于元数据：记录 tags 含 `TensorFEM`，而正文中 'TensorFEM' / 'TensorLBM' 出现次数为 0 / 1（后者仅出现在 Future Work 的 'TensorLBM integration' 一栏）；正文对流体侧自述为 quasi-steady 近似而非 LBM 求解，故『TensorFEM×TensorLBM FSI』这一联合身份在正文中没有对应的实现叙述。",
+          "claim_type": "parse-observation",
+          "evidence_refs": [
+            "ev-9478-02-29",
+            "ev-9478-02-30"
+          ],
+          "epistemic_status": "draft",
+          "assessment_status": "unassessed",
+          "created_by": "agent/wp-9478-02",
+          "scope_note": "本工序只记录正文与元数据的差异，不判定该报告是否用到了这两个求解器。"
+        }
+      ],
+      "evidence": [
+        {
+          "id": "ev-9478-02-01",
+          "claim_refs": [
+            "cls-9478-02-01"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 1316,
+            "end_offset": 1388,
+            "byte_start_utf8": 1339,
+            "byte_end_utf8": 1416,
+            "line_start": 34,
+            "line_end": 34,
+            "quote": "   - ω^{k+1} = -ω^k · (r^{k-1})^T · (r^k - r^{k-1}) / ||r^k - r^{k-1}||²",
+            "content_hash": "sha256:fea4b1c6f7fb2189bc09839ae40d94a906cdf9b1ff704c576dffa54cc5cc05b2",
+            "occurrences_in_source": 1
+          },
+          "note": "numerical scheme written as an equation (Aitken relaxation update)",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-02",
+          "claim_refs": [
+            "cls-9478-02-01"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 678,
+            "end_offset": 714,
+            "byte_start_utf8": 683,
+            "byte_end_utf8": 722,
+            "line_start": 16,
+            "line_end": 16,
+            "quote": "| Young's modulus E | 1.3×10⁷ | Pa |",
+            "content_hash": "sha256:18640f5f0f565aa8ca592f9da6a6de6ed60b2183d0d63e13c527b88e9dcc6aa8",
+            "occurrences_in_source": 1
+          },
+          "note": "parameter table row carrying value + unit",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-03",
+          "claim_refs": [
+            "cls-9478-02-01"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 5203,
+            "end_offset": 5257,
+            "byte_start_utf8": 5317,
+            "byte_end_utf8": 5373,
+            "line_start": 131,
+            "line_end": 131,
+            "quote": "| Frequency f [Hz] | 3.0163 | 3.0000 | 0.54% | ✅ Yes |",
+            "content_hash": "sha256:95970ec4224c76ce48724303573f0ca43261b4a88eda43202b265aa92c8439b5",
+            "occurrences_in_source": 1
+          },
+          "note": "error tabulated against a reference value",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-04",
+          "claim_refs": [
+            "cls-9478-02-01"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 3643,
+            "end_offset": 3701,
+            "byte_start_utf8": 3742,
+            "byte_end_utf8": 3806,
+            "line_start": 93,
+            "line_end": 93,
+            "quote": "- Frequency change from Δt=0.002 to Δt=0.001: 0.01% ≤ 3% ✓",
+            "content_hash": "sha256:7be985724b3b5909f6a3393e94faf41b52fcd2cde4451090bfd780703cd7b3ed",
+            "occurrences_in_source": 1
+          },
+          "note": "time-step convergence study",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-05",
+          "claim_refs": [
+            "cls-9478-02-02"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 136,
+            "end_offset": 468,
+            "byte_start_utf8": 138,
+            "byte_end_utf8": 472,
+            "line_start": 7,
+            "line_end": 7,
+            "quote": "The Turek-Hron FSI-2 benchmark (2006) is the gold standard for validating fluid-structure interaction solvers. It involves a 2D laminar channel flow (Re≈100) past a rigid cylinder with an elastic beam attached to its trailing edge. The beam undergoes vortex-induced vibration (VIV) due to periodic vortex shedding from the cylinder.",
+            "content_hash": "sha256:90423b28024ffb0c70882730f3e609d5a09de85a8c10cd920a7325e87b60ff91",
+            "occurrences_in_source": 1
+          },
+          "note": "benchmark named as the validation target (experimental-validation anchor)",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-06",
+          "claim_refs": [
+            "cls-9478-02-02"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 2552,
+            "end_offset": 2599,
+            "byte_start_utf8": 2606,
+            "byte_end_utf8": 2657,
+            "line_start": 61,
+            "line_end": 61,
+            "quote": "| C1: Frequency | error ≤ 5% | 0.54% | ✅ PASS |",
+            "content_hash": "sha256:4d15600c5a02c78afb8ef7e972f4db83054fa447db56f0414decba1fb855ae3e",
+            "occurrences_in_source": 1
+          },
+          "note": "baseline comparison row with an acceptance bound",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-07",
+          "claim_refs": [
+            "cls-9478-02-02"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 1090,
+            "end_offset": 1149,
+            "byte_start_utf8": 1110,
+            "byte_end_utf8": 1169,
+            "line_start": 31,
+            "line_end": 31,
+            "quote": "We implement a partitioned Dirichlet-Neumann coupling with:",
+            "content_hash": "sha256:d919ef0d6f057cecd61ff59f51502e8c46ecc2d1ff917e898c224e6bc180ce72",
+            "occurrences_in_source": 1
+          },
+          "note": "algorithm composition stated (algorithm-implementation anchor)",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-08",
+          "claim_refs": [
+            "cls-9478-02-03"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 678,
+            "end_offset": 714,
+            "byte_start_utf8": 683,
+            "byte_end_utf8": 722,
+            "line_start": 16,
+            "line_end": 16,
+            "quote": "| Young's modulus E | 1.3×10⁷ | Pa |",
+            "content_hash": "sha256:18640f5f0f565aa8ca592f9da6a6de6ed60b2183d0d63e13c527b88e9dcc6aa8",
+            "occurrences_in_source": 1
+          },
+          "note": "step 1 input: parameter with value and unit",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-09",
+          "claim_refs": [
+            "cls-9478-02-03"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 5203,
+            "end_offset": 5257,
+            "byte_start_utf8": 5317,
+            "byte_end_utf8": 5373,
+            "line_start": 131,
+            "line_end": 131,
+            "quote": "| Frequency f [Hz] | 3.0163 | 3.0000 | 0.54% | ✅ Yes |",
+            "content_hash": "sha256:95970ec4224c76ce48724303573f0ca43261b4a88eda43202b265aa92c8439b5",
+            "occurrences_in_source": 1
+          },
+          "note": "step 2 input: error with its reference",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-10",
+          "claim_refs": [
+            "cls-9478-02-03"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 4528,
+            "end_offset": 4657,
+            "byte_start_utf8": 4640,
+            "byte_end_utf8": 4769,
+            "line_start": 113,
+            "line_end": 113,
+            "quote": "3. **Single-mode approximation**: Only the first bending mode is considered. Higher modes may be important for some FSI problems.",
+            "content_hash": "sha256:c9daf04509e36f3ea2a8f66331f79897cd95ad409afa4bab1f1ac97e3f89c3d9",
+            "occurrences_in_source": 1
+          },
+          "note": "step 3 input: assumption stated verbatim",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-11",
+          "claim_refs": [
+            "cls-9478-02-04"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 855,
+            "end_offset": 895,
+            "byte_start_utf8": 869,
+            "byte_end_utf8": 909,
+            "line_start": 22,
+            "line_end": 22,
+            "quote": "### Reference Values (Turek & Hron 2006)",
+            "content_hash": "sha256:de42687ff53f6521fe0618dd23f1a6515dddb0a61e58b177c411a47503919191",
+            "occurrences_in_source": 1
+          },
+          "note": "citation 1 of 2",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-12",
+          "claim_refs": [
+            "cls-9478-02-04"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 2145,
+            "end_offset": 2226,
+            "byte_start_utf8": 2191,
+            "byte_end_utf8": 2272,
+            "line_start": 50,
+            "line_end": 50,
+            "quote": "Theodorsen (1935) analytical solution for 2-DOF typical section (plunge + pitch):",
+            "content_hash": "sha256:908d2a3ca5ad6e8e451942addb690a33bf97a34fbaf118c92f0acfb2ed80da90",
+            "occurrences_in_source": 1
+          },
+          "note": "citation 2 of 2",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-13",
+          "claim_refs": [
+            "cls-9478-02-05"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 3757,
+            "end_offset": 3787,
+            "byte_start_utf8": 3862,
+            "byte_end_utf8": 3892,
+            "line_start": 96,
+            "line_end": 96,
+            "quote": "**C7: Interface Conservation**",
+            "content_hash": "sha256:ef45fcaca2ca8bf48490782d27fb122f353d34cc61d5360761686cf2301f9c98",
+            "occurrences_in_source": 1
+          },
+          "note": "the literal 'interface' hit is the FSI interface, not a software interface",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-14",
+          "claim_refs": [
+            "cls-9478-02-05"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 5658,
+            "end_offset": 5747,
+            "byte_start_utf8": 5785,
+            "byte_end_utf8": 5874,
+            "line_start": 140,
+            "line_end": 143,
+            "quote": "- Code: \n- Tests:  (38 tests, all pass)\n- Full FSI suite: 162 tests, all pass\n- Figures: ",
+            "content_hash": "sha256:cafd93ff81351817cc5e7484ca794b849fc6c51f5229c93fcf48bbcb9a078442",
+            "occurrences_in_source": 1
+          },
+          "note": "audit chain carries no commit/changed-file reference",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-15",
+          "claim_refs": [
+            "cls-9478-02-06"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 87,
+            "end_offset": 110,
+            "byte_start_utf8": 89,
+            "byte_end_utf8": 112,
+            "line_start": 4,
+            "line_end": 4,
+            "quote": "## 1. Case Introduction",
+            "content_hash": "sha256:ac5670ab730f4d4e0a5515c3bec2d6230c3e1bc2df9006cfd06b12c985a4bd8f",
+            "occurrences_in_source": 1
+          },
+          "note": "first level-2 section",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-16",
+          "claim_refs": [
+            "cls-9478-02-06"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 5077,
+            "end_offset": 5099,
+            "byte_start_utf8": 5191,
+            "byte_end_utf8": 5213,
+            "line_start": 127,
+            "line_end": 127,
+            "quote": "## 6. Error Assessment",
+            "content_hash": "sha256:0a03a738c694e464fd02031a57b9fa7e4a888f2c76a0cb35a6d750f7b3f7dd7a",
+            "occurrences_in_source": 1
+          },
+          "note": "last numbered level-2 section",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-17",
+          "claim_refs": [
+            "cls-9478-02-06"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 5643,
+            "end_offset": 5657,
+            "byte_start_utf8": 5770,
+            "byte_end_utf8": 5784,
+            "line_start": 139,
+            "line_end": 139,
+            "quote": "## Audit Chain",
+            "content_hash": "sha256:a1324df931ce8a0175a1885d886f1dfd88b7ee84c952a1881c255df47523cf1e",
+            "occurrences_in_source": 1
+          },
+          "note": "unnumbered trailing audit section",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-18",
+          "claim_refs": [
+            "cls-9478-02-07"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 3934,
+            "end_offset": 4101,
+            "byte_start_utf8": 4045,
+            "byte_end_utf8": 4213,
+            "line_start": 103,
+            "line_end": 106,
+            "quote": "1. : Tip displacement and CL/CD time history\n2. : Energy conservation verification\n3. : Flutter analysis (U_cr vs μ, growth rate vs U)\n4. : Time-step convergence study",
+            "content_hash": "sha256:ec74d5d17c0a321d9e5454295fd5ef04be01658b03eda98eb451b4c4b6b5750c",
+            "occurrences_in_source": 1
+          },
+          "note": "all four figure captions carry an empty label slot",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-19",
+          "claim_refs": [
+            "cls-9478-02-07"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 5658,
+            "end_offset": 5747,
+            "byte_start_utf8": 5785,
+            "byte_end_utf8": 5874,
+            "line_start": 140,
+            "line_end": 143,
+            "quote": "- Code: \n- Tests:  (38 tests, all pass)\n- Full FSI suite: 162 tests, all pass\n- Figures: ",
+            "content_hash": "sha256:cafd93ff81351817cc5e7484ca794b849fc6c51f5229c93fcf48bbcb9a078442",
+            "occurrences_in_source": 1
+          },
+          "note": "audit-chain fields: Code and Figures are empty",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-20",
+          "claim_refs": [
+            "cls-9478-02-08"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 2649,
+            "end_offset": 2695,
+            "byte_start_utf8": 2711,
+            "byte_end_utf8": 2761,
+            "line_start": 63,
+            "line_end": 63,
+            "quote": "| C3: CL/CD | error ≤ 10% | tracked | ✅ PASS |",
+            "content_hash": "sha256:6c5f47e5baab415b15155d8822ef9fdf1eeb31cfcabe3e5d97e1cf6e61b2fbb3",
+            "occurrences_in_source": 1
+          },
+          "note": "C3 PASS with 'tracked' instead of a value",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-21",
+          "claim_refs": [
+            "cls-9478-02-08"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 2696,
+            "end_offset": 2739,
+            "byte_start_utf8": 2762,
+            "byte_end_utf8": 2809,
+            "line_start": 64,
+            "line_end": 64,
+            "quote": "| C4: Flutter | error ≤ 8% | <2% | ✅ PASS |",
+            "content_hash": "sha256:0032429f7eae9547d903880d85f89f9d9a47f53d43d5b72f847cd975265a0663",
+            "occurrences_in_source": 1
+          },
+          "note": "C4 PASS with an inequality only",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-22",
+          "claim_refs": [
+            "cls-9478-02-08"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 2888,
+            "end_offset": 2940,
+            "byte_start_utf8": 2971,
+            "byte_end_utf8": 3025,
+            "line_start": 68,
+            "line_end": 68,
+            "quote": "| C8: Honest FAIL | root cause | all pass | ✅ PASS |",
+            "content_hash": "sha256:3cf8bfd22923aa3e42170e2c6130a17209a850e43b641a01e59b3a4bf0977b8b",
+            "occurrences_in_source": 1
+          },
+          "note": "C8 'Honest FAIL' row marked PASS",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-23",
+          "claim_refs": [
+            "cls-9478-02-09"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 3080,
+            "end_offset": 3156,
+            "byte_start_utf8": 3169,
+            "byte_end_utf8": 3249,
+            "line_start": 78,
+            "line_end": 80,
+            "quote": "- Computed: A = 53.07 mm\n- Reference: A_ref = 50.0 mm\n- Error: 6.13% ≤ 10% ✓",
+            "content_hash": "sha256:004ecdaf9b1fa49628503d89006056af8c0f90061981f6b9c708d6ef6f6e0455",
+            "occurrences_in_source": 1
+          },
+          "note": "computed value, reference value and the stated error",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-24",
+          "claim_refs": [
+            "cls-9478-02-09"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 3702,
+            "end_offset": 3755,
+            "byte_start_utf8": 3807,
+            "byte_end_utf8": 3860,
+            "line_start": 94,
+            "line_end": 94,
+            "quote": "- Amplitude change: 6.07% (within 10% soft tolerance)",
+            "content_hash": "sha256:19dccf1a0248915a976f9f9c93d898b53ff8553d29d98d4f84c3904a59e0365e",
+            "occurrences_in_source": 1
+          },
+          "note": "a different amplitude-change figure in C6",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-25",
+          "claim_refs": [
+            "cls-9478-02-10"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 5320,
+            "end_offset": 5373,
+            "byte_start_utf8": 5440,
+            "byte_end_utf8": 5496,
+            "line_start": 133,
+            "line_end": 133,
+            "quote": "| Flutter U_cr (μ=10) | 6.325 | 6.325 | <2% | ✅ Yes |",
+            "content_hash": "sha256:8fa15f714b99ae2d3b2fbf638fa0683715c7fa85c6b59bb2dcc890e9ee4f6049",
+            "occurrences_in_source": 1
+          },
+          "note": "computed and reference columns are identical",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-26",
+          "claim_refs": [
+            "cls-9478-02-10"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 3255,
+            "end_offset": 3318,
+            "byte_start_utf8": 3353,
+            "byte_end_utf8": 3417,
+            "line_start": 84,
+            "line_end": 84,
+            "quote": "- For μ=10: U_cr = 6.325 (reference), numerical match within 2%",
+            "content_hash": "sha256:7b502b51fcd792275fa25684252c69ac70a88c59987f867e3a66d2064f1944b7",
+            "occurrences_in_source": 1
+          },
+          "note": "prose repeats the same value as the reference",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-27",
+          "claim_refs": [
+            "cls-9478-02-11"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 5667,
+            "end_offset": 5735,
+            "byte_start_utf8": 5794,
+            "byte_end_utf8": 5862,
+            "line_start": 141,
+            "line_end": 142,
+            "quote": "- Tests:  (38 tests, all pass)\n- Full FSI suite: 162 tests, all pass",
+            "content_hash": "sha256:07ae070b00bfa3a27f1248c057fe3f71b0be64a123d5e8f405e2a12124c15e35",
+            "occurrences_in_source": 1
+          },
+          "note": "test-count assertions without a command or link",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-28",
+          "claim_refs": [
+            "cls-9478-02-12"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 1,
+            "end_offset": 85,
+            "byte_start_utf8": 1,
+            "byte_end_utf8": 87,
+            "line_start": 2,
+            "line_end": 2,
+            "quote": "# P153W2-N03: FSI Strong Coupling — Turek-Hron FSI-2 + Flutter + Energy Conservation",
+            "content_hash": "sha256:77df46ad49dfeeb1e32baae97a8ade8f531eb836e064f31d75bdb305a7cc9cee",
+            "occurrences_in_source": 1
+          },
+          "note": "body H1, which omits the two solver names carried by the record title",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-29",
+          "claim_refs": [
+            "cls-9478-02-13"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 2000,
+            "end_offset": 2122,
+            "byte_start_utf8": 2046,
+            "byte_end_utf8": 2168,
+            "line_start": 47,
+            "line_end": 47,
+            "quote": "5. **Fluid Model**: Quasi-steady vortex shedding at Strouhal frequency St=0.16, with added mass and fluid damping effects.",
+            "content_hash": "sha256:5f9765a8396d9c1a99332f1b3695ed7f1f23831dbef3c09bc83793010c6a7bda",
+            "occurrences_in_source": 1
+          },
+          "note": "the body describes the fluid side as quasi-steady, not as an LBM solve",
+          "assessment_status": "unassessed"
+        },
+        {
+          "id": "ev-9478-02-30",
+          "claim_refs": [
+            "cls-9478-02-13"
+          ],
+          "source": {
+            "persistent_id": "9478",
+            "field": "markdown",
+            "source_uri": "tensor://reports/9478",
+            "source_hash": "sha256:133dbe58a74bd7549b66b2b86e5dc2e517f603c3ea65af45947d4cb5c1599e28"
+          },
+          "locator": {
+            "locator_type": "char_offset",
+            "offset_space": "unicode-codepoints (python str index)",
+            "start_offset": 4926,
+            "end_offset": 4983,
+            "byte_start_utf8": 5040,
+            "byte_end_utf8": 5097,
+            "line_start": 122,
+            "line_end": 122,
+            "quote": "- Full Navier-Stokes fluid solver (TensorLBM integration)",
+            "content_hash": "sha256:b8a9f443d67d56a80bb32043afabf8f7eef4f1a68cdf8809658ac3a7b1309998",
+            "occurrences_in_source": 1
+          },
+          "note": "a full Navier-Stokes / TensorLBM solver is listed as future work",
+          "assessment_status": "unassessed"
+        }
+      ],
+      "unresolved": [
+        {
+          "id": "unres-9478-02-U1",
+          "about": "experimental-validation 缺失锚点",
+          "reason": "设施/测量不确定度/重复试验三类锚点是负向发现，locator 只能证明'有'，无法证明'无'；仅记录为全文检索 0 命中的负向发现，不作可定位断言。",
+          "related_claims": [
+            "cls-9478-02-02"
+          ]
+        },
+        {
+          "id": "unres-9478-02-U2",
+          "about": "测试规模断言（38 / 162 tests）",
+          "reason": "报告未给命令/链接/提交号，工序 02 不访问代码仓，故不可核验。",
+          "related_claims": [
+            "cls-9478-02-11"
+          ]
+        },
+        {
+          "id": "unres-9478-02-U3",
+          "about": "图注 ↔ 图文件绑定",
+          "reason": "正文 4 条图注名称位为空、正文 'fsi2' 出现 0 次；记录 metadata 有 4 条具名图。两者只能按出现顺序对齐，本工序不建立未经原文支持的绑定，也不对图像内容作断言。",
+          "related_claims": [
+            "cls-9478-02-07"
+          ]
+        },
+        {
+          "id": "unres-9478-02-U4",
+          "about": "C3（CL/CD）数值缺失",
+          "reason": "报告只写 'tracked'，未给数值；工序 02 不做抽取，交 03 工序判定是否可抽取。",
+          "related_claims": [
+            "cls-9478-02-08"
+          ]
+        },
+        {
+          "id": "unres-9478-02-U5",
+          "about": "algorithm-implementation 缺失锚点",
+          "reason": "伪代码/复杂度/函数签名均为负向发现，无法用 locator 证明缺失。",
+          "related_claims": [
+            "cls-9478-02-02"
+          ]
+        },
+        {
+          "id": "unres-9478-02-U6",
+          "about": "参照值的外部正确性",
+          "reason": "报告把 f_ref=3.0 Hz、A_ref=0.05 m 等归因于 Turek & Hron (2006)，工序 02 不核对外部文献（超出本工序范围且禁止凭记忆断言），仅按原文记录。",
+          "related_claims": []
+        },
+        {
+          "id": "unres-9478-02-U7",
+          "about": "report_type 无 ground truth",
+          "reason": "平台未给报告 9478 的类型标注，本工序也不读其它工序结论，因此类型判定正确率不可测；只能声明规则可复现、依据可定位。",
+          "related_claims": [
+            "cls-9478-02-01",
+            "cls-9478-02-02"
+          ]
+        },
+        {
+          "id": "unres-9478-02-U8",
+          "about": "记录 summary 的『all 8 criteria verified』措辞",
+          "reason": "记录 summary 出现 'verified' 字样，但正文 C3 只写 'tracked'（无计算值），该措辞在正文中找不到数值支撑；summary 属平台元数据，无法用 markdown locator 定位，本工序既不采信也不改写，仅登记差异。",
+          "related_claims": [
+            "cls-9478-02-08"
+          ]
+        }
+      ],
+      "limitations": [
+        "分类依据是 registry 的关键词信号 + 本包自设的语义锚点；锚点清单是本包的判断，03/04 工序可从原文反驳。",
+        "本工序不做知识抽取：claims 全部是分类/解析判定，不是报告的技术结论。",
+        "正文与记录标题不一致（see cls-9478-02-12）；图件、测试规模与部分验收数值在本报告内不可核验（see unresolved）。",
+        "偏移量空间为 unicode 码点（python str 索引），同时给出 UTF-8 字节偏移，两种口径均可复算。",
+        "report_type_confidence=medium：主判领先次高候选主要靠语义锚点，而锚点由本包设定，存在自我实现的可能；experimental-validation 是主要竞争假设。"
+      ]
+    }
+  }
+}
