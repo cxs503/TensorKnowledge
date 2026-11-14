@@ -1,0 +1,98 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "check": "A1.valid_json",
+      "status": "passed",
+      "evidence": {
+        "artifacts": [
+          "kf_result.json",
+          "classification.json"
+        ],
+        "roundtrip": "json.dumps -> json.loads OK"
+      }
+    },
+    {
+      "check": "A2.schema_pass",
+      "status": "passed",
+      "evidence": {
+        "schema": "schemas/kf_result.v1.schema.json",
+        "schema_sha256": "sha256:5692e1a3e1ccc7e191753a63505243955aad56184b005eb3c3ecf7c9e1c9f817",
+        "errors": []
+      }
+    },
+    {
+      "check": "A3.source_hash_matches",
+      "status": "passed",
+      "evidence": {
+        "declared": "sha256:80bcb3216845e02d844926b8d2e733882e8de69ebd756ff706296a8ab3e165b5",
+        "recomputed": "sha256:80bcb3216845e02d844926b8d2e733882e8de69ebd756ff706296a8ab3e165b5",
+        "chars": {
+          "contract": 11250,
+          "actual": 11250
+        }
+      }
+    },
+    {
+      "check": "A4.source_locator_resolvable",
+      "status": "passed",
+      "evidence": {
+        "char_span_locators": 22,
+        "section_locators": 29,
+        "mismatches": [],
+        "empty_sections": []
+      }
+    },
+    {
+      "check": "A5.no_duplicate_ids",
+      "status": "passed",
+      "evidence": {
+        "ids": 34,
+        "duplicates": []
+      }
+    },
+    {
+      "check": "A6.all_claims_have_evidence_or_explicit_unresolved_status",
+      "status": "passed",
+      "evidence": {
+        "decision_basis": 9,
+        "unbound_statements": [],
+        "dangling_refs": [],
+        "claims_emitted": 0,
+        "note": "工序 02 不产 claims（objective.classify_report_type=true，notes: 不做抽取）；本包每条判断都绑定逐字证据或显式 unresolved"
+      }
+    },
+    {
+      "check": "A7.no_claims_marked_verified",
+      "status": "passed",
+      "evidence": {
+        "offending": []
+      }
+    },
+    {
+      "check": "A8.scope_lock_single_report_id",
+      "status": "passed",
+      "evidence": {
+        "guard": {
+          "report_ids_read": [
+            "9246"
+          ],
+          "report_ids_written": [
+            "9246"
+          ],
+          "upstream_artifacts_modified": [],
+          "other_work_packages_touched": []
+        }
+      }
+    },
+    {
+      "check": "A9.single_json_block_matches_envelope",
+      "status": "passed",
+      "evidence": {
+        "json_blocks": 1,
+        "fence_markers": 2,
+        "parses_equal": true
+      }
+    }
+  ]
+}
