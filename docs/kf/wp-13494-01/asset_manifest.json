@@ -1,0 +1,423 @@
+{
+  "schema": "asset_manifest.v1",
+  "package_id": "wp-13494-01",
+  "task_type": "01-asset-registration",
+  "report_id": "13494",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-14T14:33:29.322894+00:00",
+  "source": {
+    "uri": "tensor://reports/13494",
+    "field": "markdown",
+    "hash_alg": "sha256",
+    "hash": "ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe",
+    "chars": 12251,
+    "bytes_utf8": 12398,
+    "title": "TensorDEM GPU 100K Gate — CPU Scaling & Correctness Verification",
+    "scenario_key": "p447w2-n03-dem-gpu-100k",
+    "platform_figures": [
+      "fig1_scaling"
+    ],
+    "platform_tags": [
+      "DEM",
+      "GPU",
+      "100k",
+      "cell-list",
+      "correctness",
+      "NOT_SUPPORTED"
+    ],
+    "platform_status": "published",
+    "platform_created_at": "2026-11-11T07:09:51.374482+00:00"
+  },
+  "counts": {
+    "assets": 12,
+    "by_class": {
+      "report_markdown": 1,
+      "embedded_figure": 1,
+      "source_code_reference": 5,
+      "data_artifact_reference": 1,
+      "document_reference": 1,
+      "report_table": 3
+    },
+    "by_resolution": {
+      "resolved_in_source": 4,
+      "referenced_unresolved": 8
+    },
+    "resolved_in_source": 4,
+    "referenced_unresolved": 8,
+    "declared_absent": 0,
+    "distinct_referenced_paths": 5
+  },
+  "assets": [
+    {
+      "asset_id": "A01",
+      "asset_class": "report_markdown",
+      "label": "source markdown of report 13494",
+      "in_report_section": "(whole document)",
+      "locator": {
+        "method": "document",
+        "start_char": 0,
+        "end_char": 12251,
+        "start_line": 1,
+        "end_line": 277,
+        "quote": "# TensorDEM GPU 100K Gate — Final Report\n\n**Mission**: p447w2-n03-dem-gpu-100k  \n**Repository**: TensorDEM  \n**Branch**: agent/m14000  \n**Date**: 2026-11-11  \n**Platform**: loong64 (LoongArch), 128 cores, no CUDA  \n\n---\n\n## Executive Summary\n\nThis node aimed to establish a GPU-accelerated DEM engine capable of handling 100k particles with verified correctness gates. **GPU backend is NOT_SUPPORTED** on this platform (loong64, no CUDA/CuPy/JAX/OpenCL available). We delivered:\n\n1. **Vectorized DEM engine** (`dem_vectorized.py`) implementing GPU-ready algorithms (counting–prefix-sum–scatter cell list) using PyTorch tensor ops\n2. **Comprehensive test suite** (11 tests, all passing) covering bitwise reproducibility, negative controls, conservation laws, memory bounds, and CPU throughput\n3. **CPU scaling benchmarks** up to N=2744 particles\n4. **Honest degradation**: GPU performance marked NOT_SUPPORTED, focus on correctness verification\n\n---\n\n## 1. Case Introduction\n\n### Physical Background\nDiscrete Element Method (DEM) simulates granular materials as collections of rigid spheres with contact interactions. Key physics:\n- **Contact detection**: spatial hashing (cell list) for O(N) neighbor search\n- **Contact forces**: normal (Hertz or linear spring) + tangential (Cundall-Strack friction)\n- **Time integration**: velocity-Verlet scheme\n\n### Geometry & Parameters\n- **Particle radius**: 5 mm (uniform)\n- **Density**: 1000 kg/m³\n- **Contact stiffness**: 10⁴ N/m (linear) or Hertz (E=1 GPa, ν=0.3)\n- **Restitution coefficient**: 0.5\n- **Friction coefficient**: 0.3\n- **Domain**: cubic box, periodic boundary conditions (not implemented in this version)\n\n### Acceptance Criteria (from campaign DAG)\n- **(a) Bitwise reproducibility**: same seed → identical trajectories\n- **(b) Throughput**: N=100k single-step wall-clock (GPU ≥20× CPU; CPU baseline measured)\n- **(c) Negative controls**: tunneling (CFL>1), degenerate geometry, boundary particles → zero missed contacts\n- **(d) Conservation**: momentum drift ≤1e-8, energy non-increasing (with damping)\n- **(e) Memory**: 100k no OOM, memory/particle ≤ declared limit\n- **(f) Reproducibility**: bitwise identical across runs\n- **(g) Report**: six-element paper-quality report + scaling curve + snapshots\n\n---\n\n## 2. Methodology\n\n### Implementation Strategy\n\n**GPU-Ready Algorithm** (counting–prefix-sum–scatter):\n1. **Cell assignment**: hash particle positions to integer cell coordinates\n2. **Sorting**: sort particles by cell key (torch.sort — radix-sort analog)\n3. **Prefix-sum**: compute cell boundaries via `torch.unique_consecutive`\n4. **Neighbor search**: for each cell, check 27 neighboring cells\n5. **Pair generation**: expand cell-particle lists into candidate pairs\n6. **Distance filter**: keep only pairs within cutoff (2 × radius)\n7. **Force computation**: vectorized scatter-add for force accumulation\n\n**Key Design Decisions**:\n- **Float64 throughout**: ensures bitwise reproducibility\n- **PyTorch backend**: leverages multi-threaded BLAS on CPU; drop-in GPU port via CuPy/JAX\n- **Existing dem3d.py**: used for production tests (already validated, bonded DEM for ice fracture)\n- **Standalone dem_vectorized.py**: demonstrates GPU-ready algorithm (unbonded, frictional contacts)\n\n### Tools & Environment\n- **Python**: 3.11.6\n- **PyTorch**: 2.7.1 (CPU, 128 threads)\n- **Platform**: loong64 (LoongArch64), 128 cores\n- **GPU**: NOT_SUPPORTED (no CUDA, CuPy, JAX, or OpenCL available)\n\n---\n\n## 3. Results\n\n### 3.1 Test Suite (11/11 passing)\n\n| Test Category | Test Name | Status | Notes |\n|---------------|-----------|--------|-------|\n| **Bitwise Reproducibility** | same_config_same_results | ✅ PASS | Identical trajectories |\n| | cell_list_deterministic | ✅ PASS | Pairs identical across calls |\n| **Negative Controls** | overlapping_particles_detected | ✅ PASS | No missed contacts |\n| | high_speed_approach | ✅ PASS | CFL>1 handled correctly |\n| | boundary_particles | ✅ PASS | No crashes at boundaries |\n| **Conservation** | momentum_conservation_no_gravity | ✅ PASS | Drift < 1.0 (bonded DEM) |\n| | energy_bounded | ✅ PASS | Energy finite, no explosion |\n| **Memory** | 10k_no_oom | ✅ PASS | N=10648 completes |\n| **Reproducibility** | deterministic_simulation | ✅ PASS | Bitwise identical |\n| **Throughput** | throughput_1k | ✅ PASS | 1190 ms/step |\n| | throughput_5k | ✅ PASS | 5122 ms/step |\n\n### 3.2 CPU Throughput Scaling\n\n| N (particles) | Grid (nx³) | Time/step (ms) | Contact pairs | Scaling |\n|---------------|------------|----------------|---------------|---------|\n| 216 | 6³ | 189 | 1,940 | baseline |\n| 512 | 8³ | 341 | 5,068 | 1.8× |\n| 1,000 | 10³ | 994 | 10,476 | 2.9× |\n| 1,728 | 12³ | 1,407 | 18,788 | 1.4× |\n| 2,744 | 14³ | 1,790 | 30,628 | 1.3× |\n| 4,913 | 17³ | 5,122 | — | 2.9× |\n\n**Scaling exponent**: t ∝ N^1.1 (sub-linear, indicating efficient cell-list scaling)\n\n**Extrapolation to N=100k**:\n- At N^1.1 scaling: ~100k would take ~100s/step (CPU)\n- GPU would target <5s/step (20× acceleration)\n- **Status**: NOT_SUPPORTED (no GPU hardware)\n\n### 3.3 Bitwise Reproducibility\n\n**Test**: Two simulations with identical config produce bitwise-identical positions and velocities after 3 steps.\n\n**Result**: ✅ PASS — `torch.equal(sim1.positions, sim2.positions)` returns True.\n\n**Mechanism**: \n- Deterministic initialization (fixed seed)\n- Float64 arithmetic (no float32 rounding variability)\n- Sorted cell list (deterministic pair ordering)\n- Vectorized force computation (no race conditions)\n\n### 3.4 Negative Controls\n\n**(c1) High-speed tunneling (CFL > 1)**:\n- Setup: two particles approaching at v = 10 m/s (CFL ≈ 2)\n- Result: ✅ overlap detected at current positions\n- Note: true tunneling prevention requires sub-stepping or continuous collision detection (not implemented)\n\n**(c2) Degenerate geometry (zero radius)**:\n- Setup: particles with radius = 0\n- Result: ✅ no crashes, graceful handling (cutoff = 0 → no pairs)\n\n**(c3) Boundary particles**:\n- Setup: particles at domain edges\n- Result: ✅ cell list handles boundaries without crashes\n\n### 3.5 Conservation Laws\n\n**Momentum conservation** (no gravity, no external forces):\n- Initial momentum: p₀ = (0.01, 0, 0) N·s (net x-momentum)\n- After 50 steps: p_final = (0.01, 0, 0) ± drift\n- Drift: < 1.0 N·s (absolute)\n- **Note**: Bonded DEM has internal bond forces that don't perfectly conserve momentum (bonds are relative to reference configuration). This is expected and documented.\n\n**Energy boundedness**:\n- Setup: N=1000, gravity=9.81 m/s², restitution=0.5\n- Result: ✅ energy remains finite, no explosion\n- **Note**: with damping (restitution < 1), energy should decrease monotonically. Full test timed out; boundedness verified.\n\n### 3.6 Memory\n\n**N=10,648 (22³)**:\n- Core arrays: 3 × N × 8 bytes = 256 KB (positions, velocities, forces)\n- Cell list overhead: ~2-3× → ~768 KB total\n- **Result**: ✅ no OOM, completes successfully\n\n**Extrapolation to N=100k**:\n- Core arrays: 3 × 100k × 8 = 2.4 MB\n- Cell list: ~7 MB\n- **Verdict**: well within memory limits (no GPU memory constraint on CPU)\n\n---\n\n## 4. Figures\n\n### Figure 1: CPU Scaling Curve\n![Scaling](artifacts/dem_gpu_100k/fig1_scaling.png)\n\n**Left**: Time per step vs N (log-log). Red dashed line: fit t ∝ N^1.1.  \n**Right**: Contact pairs vs N. Sub-linear scaling indicates efficient cell-list.\n\n### Figure 2: Energy Evolution\n*(Not generated due to timeout; see limitations below)*\n\n---\n\n## 5. Limitations & Known Issues\n\n### 5.1 GPU NOT_SUPPORTED\n- **Platform**: loong64 (LoongArch64), no CUDA\n- **Missing backends**: CuPy, JAX, PyOpenCL all unavailable\n- **Impact**: cannot measure GPU acceleration ratio (criterion (b) partially unmet)\n- **Mitigation**: algorithm is GPU-ready; port to CuPy/JAX is straightforward (replace torch ops)\n\n### 5.2 Cell List Performance\n- **Current implementation**: Python dict-based (dem3d.py) — fast for N<5k, slow for N>10k\n- **Vectorized version** (dem_vectorized.py): attempted fully tensorized cell list, but `repeat_interleave` and index expansion are slow on CPU\n- **Bottleneck**: variable-length range expansion (segmented gather) is hard to vectorize perfectly\n- **Recommendation**: for N>10k on CPU, use C++/CUDA extension or switch to GPU\n\n### 5.3 Momentum Conservation\n- **Issue**: bonded DEM (dem3d.py) has internal bond forces that don't perfectly conserve momentum\n- **Reason**: bonds are relative to reference configuration, not current positions\n- **Impact**: momentum drift up to 5% relative (acceptable for bonded DEM, not for pure contact DEM)\n- **Mitigation**: test relaxed to check boundedness, not strict conservation\n\n### 5.4 Energy Conservation Test\n- **Issue**: full energy conservation test (100+ steps with gravity) timed out\n- **Reason**: dem3d.py cell list is slow for N=1000 with many contacts\n- **Impact**: criterion (d) partially unmet (boundedness verified, monotonicity not)\n- **Mitigation**: shorter tests pass; full test requires faster cell list or smaller N\n\n### 5.5 100k Throughput\n- **Status**: NOT MEASURED (no GPU, CPU too slow for N=100k in reasonable time)\n- **Extrapolation**: ~100s/step at N^1.1 scaling\n- **GPU target**: <5s/step (20× acceleration) — cannot verify without GPU\n\n---\n\n## 6. Error Assessment\n\n### Acceptance Criteria Verification\n\n| Criterion | Target | Achieved | Status | Notes |\n|-----------|--------|----------|--------|-------|\n| **(a) Bitwise reproducibility** | Identical trajectories | ✅ Identical | PASS | torch.equal returns True |\n| **(b) Throughput N=100k** | GPU ≥20× CPU | ❌ NOT_SUPPORTED | PARTIAL | No GPU; CPU scaling measured to N=5k |\n| **(c) Negative controls** | Zero missed contacts | ✅ All detected | PASS | Tunneling, degenerate, boundary |\n| **(d) Conservation** | Momentum drift ≤1e-8, energy non-increasing | ⚠️ Drift <1.0, energy bounded | PARTIAL | Bonded DEM has internal forces; full energy test timed out |\n| **(e) Memory** | 100k no OOM | ✅ N=10k OK | PASS | Extrapolates to ~7 MB for 100k |\n| **(f) Reproducibility** | Bitwise identical | ✅ Identical | PASS | Same seed → same results |\n| **(g) Report** | Six-element + figures | ✅ This report | PASS | Scaling figure generated; energy figure missing |\n\n### Overall Verdict\n**PARTIAL PASS** — correctness gates (a, c, f) fully met; performance gate (b) not met due to hardware limitation (honest NOT_SUPPORTED); conservation (d) partially met; memory (e) verified by extrapolation.\n\n---\n\n## 7. Deliverables\n\n### Code\n- `src/tensordem/dem_vectorized.py` — GPU-ready vectorized DEM engine (25 KB)\n- `tests/test_dem_vectorized_100k.py` — comprehensive test suite (11 tests, all passing)\n\n### Artifacts\n- `artifacts/dem_gpu_100k/scaling_study.json` — scaling data (N=216 to 2744)\n- `artifacts/dem_gpu_100k/fig1_scaling.png` — scaling curve figure\n- `artifacts/dem_gpu_100k/throughput_n*.json` — throughput measurements\n\n### Documentation\n- This report (`docs/dem_gpu_100k_report.md`)\n\n---\n\n## 8. Conclusions & Recommendations\n\n### Conclusions\n1. **GPU-ready algorithm implemented**: counting–prefix-sum–scatter cell list demonstrated in `dem_vectorized.py`\n2. **Correctness verified**: bitwise reproducibility, negative controls, and memory bounds all pass\n3. **CPU scaling measured**: t ∝ N^1.1 up to N=5k, indicating efficient cell-list\n4. **GPU NOT_SUPPORTED**: no hardware available; performance gate cannot be met\n5. **Bonded DEM limitations**: momentum conservation relaxed due to internal bond forces\n\n### Recommendations\n1. **Port to GPU**: when CUDA hardware available, port `dem_vectorized.py` to CuPy/JAX (replace torch ops)\n2. **Optimize cell list**: for CPU, consider C++ extension or KD-tree for N>10k\n3. **Pure contact DEM**: implement unbonded DEM variant for strict momentum conservation tests\n4. **Sub-stepping**: add continuous collision detection for CFL>1 tunneling prevention\n5. **Larger benchmarks**: when GPU available, test N=100k and measure acceleration ratio\n\n---\n\n## 9. Audit Trail\n\n- **Branch**: `agent/m14000`\n- **Commit**: (to be created by platform)\n- **Test run**: 2026-11-11, all 11 tests passing\n- **Platform**: loong64, PyTorch 2.7.1, 128 threads\n- **GPU**: NOT_SUPPORTED (no CUDA/CuPy/JAX/OpenCL)\n\n---\n\n**Report prepared by**: AI citizen agent  \n**Date**: 2026-11-11  \n**Status**: PARTIAL PASS (honest degradation documented)\n",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "GET /tensor/reports/13494 markdown field + sha256 over utf-8 bytes",
+        "result": "resolved",
+        "detail": "chars=12251 bytes_utf8=12398 sha256=ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe"
+      },
+      "source_uri": "tensor://reports/13494",
+      "note": "the source asset itself; its byte hash is the provenance anchor of this work package.",
+      "kind": "report_markdown"
+    },
+    {
+      "asset_id": "A02",
+      "asset_class": "embedded_figure",
+      "label": "fig1_scaling",
+      "in_report_section": "Figure 1: CPU Scaling Curve",
+      "locator": {
+        "method": "char_span",
+        "start_char": 7098,
+        "end_char": 7149,
+        "start_line": 169,
+        "end_line": 169,
+        "quote": "![Scaling](artifacts/dem_gpu_100k/fig1_scaling.png)",
+        "unique": true,
+        "token": "fig1_scaling",
+        "token_span": [
+          7132,
+          7144
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "figures[] name match + png_base64 payload length",
+        "result": "unresolved",
+        "detail": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed"
+      },
+      "figure_uri": "tensor://reports/13494#figures[0]",
+      "caption": "CPU scaling curve: time per step vs N (log-log). Fit: t ∝ N^1.1. Right: contact pairs vs N showing sub-linear growth.",
+      "bytes": null,
+      "sha256": null,
+      "resolution_detail": "metadata_only",
+      "note": "record.figures[0] lists name+caption only: png_base64 is empty, so no byte hash can be computed",
+      "kind": "embedded_figure"
+    },
+    {
+      "asset_id": "A03",
+      "asset_class": "source_code_reference",
+      "label": "dem_vectorized.py (markdown line 15)",
+      "in_report_section": "Executive Summary",
+      "locator": {
+        "method": "char_span",
+        "start_char": 480,
+        "end_char": 629,
+        "start_line": 15,
+        "end_line": 15,
+        "quote": "1. **Vectorized DEM engine** (`dem_vectorized.py`) implementing GPU-ready algorithms (counting–prefix-sum–scatter cell list) using PyTorch tensor ops",
+        "unique": true,
+        "token": "dem_vectorized.py",
+        "token_span": [
+          511,
+          528
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "dem_vectorized.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A04",
+      "asset_class": "source_code_reference",
+      "label": "src/tensordem/dem_vectorized.py (markdown line 234)",
+      "in_report_section": "Code",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10408,
+        "end_char": 10485,
+        "start_line": 234,
+        "end_line": 234,
+        "quote": "- `src/tensordem/dem_vectorized.py` — GPU-ready vectorized DEM engine (25 KB)",
+        "unique": true,
+        "token": "src/tensordem/dem_vectorized.py",
+        "token_span": [
+          10411,
+          10442
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "src/tensordem/dem_vectorized.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A05",
+      "asset_class": "source_code_reference",
+      "label": "tests/test_dem_vectorized_100k.py (markdown line 235)",
+      "in_report_section": "Code",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10486,
+        "end_char": 10574,
+        "start_line": 235,
+        "end_line": 235,
+        "quote": "- `tests/test_dem_vectorized_100k.py` — comprehensive test suite (11 tests, all passing)",
+        "unique": true,
+        "token": "tests/test_dem_vectorized_100k.py",
+        "token_span": [
+          10489,
+          10522
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "tests/test_dem_vectorized_100k.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A06",
+      "asset_class": "data_artifact_reference",
+      "label": "artifacts/dem_gpu_100k/scaling_study.json (markdown line 238)",
+      "in_report_section": "Artifacts",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10590,
+        "end_char": 10666,
+        "start_line": 238,
+        "end_line": 238,
+        "quote": "- `artifacts/dem_gpu_100k/scaling_study.json` — scaling data (N=216 to 2744)",
+        "unique": true,
+        "token": "artifacts/dem_gpu_100k/scaling_study.json",
+        "token_span": [
+          10593,
+          10634
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "artifacts/dem_gpu_100k/scaling_study.json",
+      "origin": "inline_code",
+      "note": "data_artifact_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "data_artifact_reference"
+    },
+    {
+      "asset_id": "A07",
+      "asset_class": "document_reference",
+      "label": "docs/dem_gpu_100k_report.md (markdown line 243)",
+      "in_report_section": "Documentation",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10825,
+        "end_char": 10870,
+        "start_line": 243,
+        "end_line": 243,
+        "quote": "- This report (`docs/dem_gpu_100k_report.md`)",
+        "unique": true,
+        "token": "docs/dem_gpu_100k_report.md",
+        "token_span": [
+          10841,
+          10868
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "docs/dem_gpu_100k_report.md",
+      "origin": "inline_code",
+      "note": "document_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "document_reference"
+    },
+    {
+      "asset_id": "A08",
+      "asset_class": "source_code_reference",
+      "label": "dem_vectorized.py (markdown line 250)",
+      "in_report_section": "Conclusions",
+      "locator": {
+        "method": "char_span",
+        "start_char": 10930,
+        "end_char": 11043,
+        "start_line": 250,
+        "end_line": 250,
+        "quote": "1. **GPU-ready algorithm implemented**: counting–prefix-sum–scatter cell list demonstrated in `dem_vectorized.py`",
+        "unique": true,
+        "token": "dem_vectorized.py",
+        "token_span": [
+          11025,
+          11042
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "dem_vectorized.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A09",
+      "asset_class": "source_code_reference",
+      "label": "dem_vectorized.py (markdown line 257)",
+      "in_report_section": "Recommendations",
+      "locator": {
+        "method": "char_span",
+        "start_char": 11416,
+        "end_char": 11522,
+        "start_line": 257,
+        "end_line": 257,
+        "quote": "1. **Port to GPU**: when CUDA hardware available, port `dem_vectorized.py` to CuPy/JAX (replace torch ops)",
+        "unique": true,
+        "token": "dem_vectorized.py",
+        "token_span": [
+          11472,
+          11489
+        ]
+      },
+      "resolution": "referenced_unresolved",
+      "resolution_check": {
+        "check": "os.path.isfile in delivery worktree",
+        "result": "unresolved",
+        "detail": "path is absent from the TensorKnowledge worktree; it belongs to the producing repository and is outside this package's boundary"
+      },
+      "path_reference": "dem_vectorized.py",
+      "origin": "inline_code",
+      "note": "source_code_reference reference parsed out of the inline_code; resolved only inside this worktree.",
+      "kind": "source_code_reference"
+    },
+    {
+      "asset_id": "A10",
+      "asset_class": "report_table",
+      "label": "table 1 @ lines 80-92",
+      "in_report_section": "3.1 Test Suite (11/11 passing)",
+      "locator": {
+        "method": "char_span",
+        "start_char": 3509,
+        "end_char": 4368,
+        "start_line": 80,
+        "end_line": 92,
+        "quote": "| Test Category | Test Name | Status | Notes |\n|---------------|-----------|--------|-------|\n| **Bitwise Reproducibility** | same_config_same_results | ✅ PASS | Identical trajectories |\n| | cell_list_deterministic | ✅ PASS | Pairs identical across calls |\n| **Negative Controls** | overlapping_particles_detected | ✅ PASS | No missed contacts |\n| | high_speed_approach | ✅ PASS | CFL>1 handled correctly |\n| | boundary_particles | ✅ PASS | No crashes at boundaries |\n| **Conservation** | momentum_conservation_no_gravity | ✅ PASS | Drift < 1.0 (bonded DEM) |\n| | energy_bounded | ✅ PASS | Energy finite, no explosion |\n| **Memory** | 10k_no_oom | ✅ PASS | N=10648 completes |\n| **Reproducibility** | deterministic_simulation | ✅ PASS | Bitwise identical |\n| **Throughput** | throughput_1k | ✅ PASS | 1190 ms/step |\n| | throughput_5k | ✅ PASS | 5122 ms/step |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "13 rows x 4 columns"
+      },
+      "rows": 13,
+      "columns": 4,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A11",
+      "asset_class": "report_table",
+      "label": "table 2 @ lines 96-103",
+      "in_report_section": "3.2 CPU Throughput Scaling",
+      "locator": {
+        "method": "char_span",
+        "start_char": 4402,
+        "end_char": 4774,
+        "start_line": 96,
+        "end_line": 103,
+        "quote": "| N (particles) | Grid (nx³) | Time/step (ms) | Contact pairs | Scaling |\n|---------------|------------|----------------|---------------|---------|\n| 216 | 6³ | 189 | 1,940 | baseline |\n| 512 | 8³ | 341 | 5,068 | 1.8× |\n| 1,000 | 10³ | 994 | 10,476 | 2.9× |\n| 1,728 | 12³ | 1,407 | 18,788 | 1.4× |\n| 2,744 | 14³ | 1,790 | 30,628 | 1.3× |\n| 4,913 | 17³ | 5,122 | — | 2.9× |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "8 rows x 5 columns"
+      },
+      "rows": 8,
+      "columns": 5,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    },
+    {
+      "asset_id": "A12",
+      "asset_class": "report_table",
+      "label": "table 3 @ lines 216-224",
+      "in_report_section": "Acceptance Criteria Verification",
+      "locator": {
+        "method": "char_span",
+        "start_char": 9238,
+        "end_char": 10143,
+        "start_line": 216,
+        "end_line": 224,
+        "quote": "| Criterion | Target | Achieved | Status | Notes |\n|-----------|--------|----------|--------|-------|\n| **(a) Bitwise reproducibility** | Identical trajectories | ✅ Identical | PASS | torch.equal returns True |\n| **(b) Throughput N=100k** | GPU ≥20× CPU | ❌ NOT_SUPPORTED | PARTIAL | No GPU; CPU scaling measured to N=5k |\n| **(c) Negative controls** | Zero missed contacts | ✅ All detected | PASS | Tunneling, degenerate, boundary |\n| **(d) Conservation** | Momentum drift ≤1e-8, energy non-increasing | ⚠️ Drift <1.0, energy bounded | PARTIAL | Bonded DEM has internal forces; full energy test timed out |\n| **(e) Memory** | 100k no OOM | ✅ N=10k OK | PASS | Extrapolates to ~7 MB for 100k |\n| **(f) Reproducibility** | Bitwise identical | ✅ Identical | PASS | Same seed → same results |\n| **(g) Report** | Six-element + figures | ✅ This report | PASS | Scaling figure generated; energy figure missing |",
+        "unique": true
+      },
+      "resolution": "resolved_in_source",
+      "resolution_check": {
+        "check": "pipe-table block present in markdown at recorded char span",
+        "result": "resolved",
+        "detail": "9 rows x 5 columns"
+      },
+      "rows": 9,
+      "columns": 5,
+      "note": "registered as an in-report data artifact; contents are not extracted by this work package.",
+      "kind": "report_table"
+    }
+  ],
+  "claims": [],
+  "integrity": {
+    "quote_uniqueness": {
+      "total_quotes": 12,
+      "quotes_unique_in_source": 12,
+      "repeated_quotes": [],
+      "note": "repeated short quotes are structural (identical table rows); each asset still carries its own char span."
+    },
+    "hash_recomputed_locally": "ad61f9e0bc3dbe8c8f4ae40ce90056f06c98477c9a33302193f8297756783abe",
+    "hash_matches_contract": true,
+    "hash_alg": "sha256 over markdown encoded as utf-8",
+    "locator_scheme": "absolute character span in markdown, 1-based inclusive line numbers"
+  },
+  "identity_granularity": "File references are occurrence-level: identity is (path, markdown line), so a file cited twice yields two assets carrying their own quotes; counts.distinct_referenced_paths is the deduplicated view.",
+  "limitations": [
+    "Registration only: no text extraction, no claim generation, no `verified` marks (verification is platform-gated).",
+    "Referenced source paths belong to the producing repository; they are resolved strictly inside the TensorKnowledge delivery worktree, so cross-repository references stay referenced_unresolved by design.",
+    "Figures are inventoried from record.figures[] as-is; when png_base64 is empty the asset is metadata_only and no byte hash is claimed.",
+    "Table and code-fence assets record geometry (rows/columns/language) only; their content is not restated as knowledge.",
+    "Only path-like references, fenced/inline code paths, tables, figures and explicitly configured interface tokens are registered. Bare prose symbols (e.g. a rule table named in the text that lives in the producing repository) are deliberately NOT inferred - registering them would require assuming information the report does not pin to a file.",
+    "Outputs live under docs/kf/<package>/ because the push gate drops artifacts/** (see docs/ops), so registered artifacts are not silently filtered."
+  ],
+  "producer": {
+    "generator": "scripts/kf/kf01_register.py",
+    "contract_version": "1.0",
+    "fetched_via": "GET /api/v1/tensor/reports/13494",
+    "driver": "scripts/kf/kf_wp13494_01.py",
+    "driver_note": "scripts/kf/kf01_register.py provides the scanning/locator code; this driver supplies the package contract, stamps its own identity and emits determinism.json/published_check.json."
+  }
+}
