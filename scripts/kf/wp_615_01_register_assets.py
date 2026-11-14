@@ -14,7 +14,7 @@ source_hash=sha256:3c1b5f9d...b7e75，chars=2125）。
 
 用法：
   python3 scripts/kf/wp_615_01_register_assets.py            # 抓线上报告 615 并重建产物
-  python3 scripts/kf/wp_615_01_register_assets.py --check-only
+  python3 scripts/kf/wp_615_01_register_assets.py --check-only --offline
 """
 from __future__ import annotations
 
@@ -43,6 +43,8 @@ CONTRACT_CHARS = 2125
 API_BASE = os.environ.get("TENSOR_API_BASE", "http://127.0.0.1:8010/api/v1").rstrip("/")
 ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "artifacts" / "kf" / PKG
+# 结构门用包级 pin 的 schema（见 schemas/ 下同名文件 description 里的缘由）
+MANIFEST_SCHEMA = "asset_manifest.v1.wp-615-01.schema.json"
 # artifacts/ 被 .gitignore 忽略（mission-push 门会丢 artifacts/**），
 # 故交付副本另落 knowledge/kf/<pkg>/（受版本控制），两处逐字节一致，由 tests 绑定。
 MIRROR_DIR = ROOT / "knowledge" / "kf" / PKG
@@ -555,7 +557,9 @@ def verify(manifest: dict[str, Any], token: str | None, md_source: str | None = 
     schema_errors: list[str] = []
     try:
         import jsonschema
-        schema = json.loads((ROOT / "schemas" / "asset_manifest.v1.schema.json").read_text())
+        # 包级 pin：共享的 asset_manifest.v1.schema.json 描述的是另一族清单（wp-448-01 形状，
+        # asset_id ^A[0-9]{2}$、含 claims/integrity 块），对本包 198 处报错，不能用作结构门。
+        schema = json.loads((ROOT / "schemas" / MANIFEST_SCHEMA).read_text())
         for err in sorted(jsonschema.Draft202012Validator(schema).iter_errors(manifest), key=lambda e: list(e.path)):
             schema_errors.append(f"{'/'.join(map(str, err.path))}: {err.message}")
     except ImportError:  # pragma: no cover
@@ -624,11 +628,15 @@ def main() -> int:
     ap.add_argument("--record-file", default=None,
                     help="离线复跑：读 source_snapshot/report_615.json（完整记录）而不是访问平台")
     ap.add_argument("--out", default=str(OUT_DIR))
+    ap.add_argument("--no-mirror", action="store_true", help="不写仓库内的交付镜像（线上复跑比对用）")
+    ap.add_argument("--offline", action="store_true",
+                    help="不访问平台、不需要 token（配合 --record-file / --check-only 做离线重建与复检）")
     args = ap.parse_args()
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
 
-    token = login_token()
+    offline = bool(args.offline or args.record_file)
+    token = None if offline else login_token()
     if args.check_only:
         manifest = json.loads((out / "asset_manifest.json").read_text())
     else:
@@ -648,24 +656,28 @@ def main() -> int:
             snapshot.mkdir(parents=True, exist_ok=True)
             (snapshot / "report_615.json").write_text(json.dumps(rec, ensure_ascii=False, indent=2) + "\n")
             (snapshot / "report_615.md").write_text(rec["markdown"])
-        manifest = build_manifest(rec, None if args.record_file else token,
-                                  offline=bool(args.record_file),
-                                  prior=(prior if args.record_file else None))
+        manifest = build_manifest(rec, None if offline else token,
+                                  offline=offline,
+                                  prior=(prior if (offline and prior) else None))
         (out / "asset_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
         (out / "kf_result.json").write_text(json.dumps(build_envelope(manifest), ensure_ascii=False, indent=2) + "\n")
 
     md_source = json.loads((out / "source_snapshot" / "report_615.json").read_text())["markdown"] \
         if args.check_only else None
-    # 交付镜像：受版本控制的副本（artifacts/ 不进 git，镜像保证分支可审计）
-    MIRROR_DIR.mkdir(parents=True, exist_ok=True)
-    for name in ("asset_manifest.json", "kf_result.json", "checks.json"):
-        (MIRROR_DIR / name).write_bytes((out / name).read_bytes())
-    snap_md = out / "source_snapshot" / "report_615.md"
-    if snap_md.exists():
-        (MIRROR_DIR / "report_615.md").write_bytes(snap_md.read_bytes())
+    # 交付镜像：受版本控制的副本（artifacts/ 不进 git，镜像保证分支可审计）。
+    # --no-mirror 用于把线上源复跑结果落到临时目录做逐字节比对，不去动仓库里的交付镜像。
+    if not args.no_mirror:
+        MIRROR_DIR.mkdir(parents=True, exist_ok=True)
+        for name in ("asset_manifest.json", "kf_result.json"):
+            (MIRROR_DIR / name).write_bytes((out / name).read_bytes())
+        snap_md = out / "source_snapshot" / "report_615.md"
+        if snap_md.exists():
+            (MIRROR_DIR / "report_615.md").write_bytes(snap_md.read_bytes())
 
     checks = verify(manifest, token, md_source=md_source)
     (out / "checks.json").write_text(json.dumps(checks, ensure_ascii=False, indent=2) + "\n")
+    if not args.no_mirror:
+        (MIRROR_DIR / "checks.json").write_bytes((out / "checks.json").read_bytes())
     print(json.dumps({k: checks[k] for k in ("all_pass", "source_hash_matches", "source_locator_resolvable",
                                              "no_duplicate_ids", "schema_pass", "kf_result_schema_pass",
                                              "chars_match_contract")},

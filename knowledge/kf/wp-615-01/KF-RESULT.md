@@ -43,6 +43,12 @@ DEM↔流体双向耦合框架报告：物理背景是碎冰颗粒与流场（�
 TOKEN=$(curl -s -X POST $TENSOR_API_BASE/auth/login -H 'Content-Type: application/json' -d "{\"username\":\"$TENSOR_AGENT_USER\",\"password\":\"$TENSOR_AGENT_PASS\"}" | python3 -c 'import sys,json;print(json.load(sys.stdin)["access_token"])'); python3 scripts/kf/wp_615_01_register_assets.py && python3 scripts/kf/build_wp_615_01_report.py && python3 -m pytest tests/test_kf_wp_615_01.py -q
 ```
 
+工作区重建 + 离线复检（无网无 token，全新检出即可跑；`artifacts/**` 不进 git，靠它从受控镜像复原）：
+
+```
+python3 scripts/kf/wp_615_01_bootstrap_artifacts.py   # 镜像→工作区；同时离线复算 checks.json 并校验 docs/图件逐字节未漂移
+```
+
 离线复跑（无网无 token）：
 
 ```
@@ -57,7 +63,7 @@ python3 scripts/kf/wp_615_01_register_assets.py --record-file artifacts/kf/wp-61
 | `artifacts/kf/wp-615-01/kf_result.json` | 平台结果信封（package_id/task_type/report_id/provenance/outputs/claims=[]） |
 | `artifacts/kf/wp-615-01/checks.json` | 验收自检机读结果（13 项布尔通过项 + 明细） |
 | `artifacts/kf/wp-615-01/source_snapshot/report_615.json` | 取源时刻的完整记录快照（离线重建与审计用） |
-| `artifacts/kf/wp-615-01/figures/wp61501_asset_registry.png` | 图 1：资产登记图（左：资产/状态/偏移；右：验收自检） |
+| `knowledge/kf/wp-615-01/figures/wp61501_asset_registry.png` | 图 1：资产登记图（左：资产/状态/偏移；右：验收自检） |
 | `docs/kf/KF-RESULT-wp-615-01.md` | 本报告正文（含唯一一个 JSON 结果代码块） |
 | `knowledge/kf/wp-615-01/` | 交付镜像（`artifacts/` 被 .gitignore 忽略，随分支交付的是这一份）：清单/信封/自检/图/源快照，与 artifacts 逐字节一致（tests 绑定） |
 
@@ -95,7 +101,8 @@ momentum_exchange_conservation=0.0（阈值 < 1e-10 kg·m/s，✅ PASS）；sing
 | asset-615-15-test-run-artifact | run_artifact | §3 自述 12 tests collected / 12 passed，但报告未附原始 pytest 日志、trace 或测试文件路径，工件字节不可得；工序 01 不重跑上游算例，故保留未解析（断言可定位：asset-615-11）。 |
 | asset-615-16-codebase-pointer | codebase_pointer | 报告 markdown 正文不含代码仓库路径、分支或提交号，无法把「工具链/12 项测试」绑定到具体文件；仅能由记录 mission_id=706 解析到 mission 记录 repo=TensorDEM，属记录级间接线索，不认定为工件绑定。 |
 
-**图 1**（`artifacts/kf/wp-615-01/figures/wp61501_asset_registry.png`）：左图为 report 615 的 14 条资产
+**图 1**（`knowledge/kf/wp-615-01/figures/wp61501_asset_registry.png`，`scripts/kf/wp_615_01_bootstrap_artifacts.py`
+可在工作区 `artifacts/kf/wp-615-01/figures/` 下逐字节重建）：左图为 report 615 的 14 条资产
 （颜色=status，@n=逐字引文在 markdown 中的字符偏移），右图为机读验收自检。说明：本工序是纯登记工序，
 不产生任何物理场量，因此**没有场量云图、也没有与解析解/实验的比较曲线**——这是本单无物理图件的如实理由；
 图中数据全部来自 `asset_manifest.json` / `checks.json` 注入，无手填点。
