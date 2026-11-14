@@ -1,0 +1,278 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Review Report v1",
+  "description": "Schema for independent review reports (04-independent-review task type)",
+  "type": "object",
+  "required": [
+    "review_report_version",
+    "package_id",
+    "task_type",
+    "report_id",
+    "reviewed_package",
+    "reviewer",
+    "source",
+    "verdict",
+    "verdict_summary",
+    "findings",
+    "claims",
+    "checks_not_run",
+    "independence_limitations",
+    "disposition"
+  ],
+  "properties": {
+    "review_report_version": {
+      "type": "string",
+      "enum": [
+        "1.0"
+      ]
+    },
+    "package_id": {
+      "type": "string",
+      "pattern": "^wp-\\d+-\\d+$"
+    },
+    "task_type": {
+      "type": "string",
+      "enum": [
+        "04-independent-review"
+      ]
+    },
+    "report_id": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "reviewed_package": {
+      "type": "string",
+      "pattern": "^wp-\\d+-\\d+$"
+    },
+    "reviewer": {
+      "type": "object",
+      "required": [
+        "role",
+        "agent",
+        "repo",
+        "independence_of_producer"
+      ],
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "agent": {
+          "type": "string"
+        },
+        "repo": {
+          "type": "string"
+        },
+        "independence_of_producer": {
+          "type": "boolean"
+        },
+        "producer_explanation_used": {
+          "type": "boolean"
+        },
+        "review_prompt_copied_from_producer": {
+          "type": "boolean"
+        },
+        "context_used": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "uri",
+        "field",
+        "sha256",
+        "chars",
+        "title",
+        "scenario_key"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "field": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "chars": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "scenario_key": {
+          "type": "string"
+        }
+      }
+    },
+    "upstream": {
+      "type": "object",
+      "required": [
+        "package_id",
+        "product_found"
+      ],
+      "properties": {
+        "package_id": {
+          "type": "string"
+        },
+        "product_found": {
+          "type": "boolean"
+        },
+        "channels_checked": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "consequence": {
+          "type": "string"
+        }
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "approve",
+        "approve_with_notes",
+        "needs-fix",
+        "escalate"
+      ]
+    },
+    "verdict_summary": {
+      "type": "string"
+    },
+    "derived_metrics": {
+      "type": "object"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "severity",
+          "category",
+          "statement",
+          "evidence",
+          "analysis",
+          "remediation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocker",
+              "major",
+              "minor",
+              "cosmetic"
+            ]
+          },
+          "category": {
+            "type": "string"
+          },
+          "blocking": {
+            "type": "boolean"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "quote": {
+                  "type": "string"
+                },
+                "source_field": {
+                  "type": "string"
+                },
+                "offset_start": {
+                  "type": "integer"
+                },
+                "offset_end": {
+                  "type": "integer"
+                },
+                "content_hash": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "analysis": {
+            "type": "string"
+          },
+          "remediation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim_id",
+          "claim",
+          "judgement",
+          "basis"
+        ],
+        "properties": {
+          "claim_id": {
+            "type": "string"
+          },
+          "claim": {
+            "type": "string"
+          },
+          "judgement": {
+            "type": "string",
+            "enum": [
+              "supports",
+              "qualifies",
+              "refutes",
+              "insufficient"
+            ]
+          },
+          "basis": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "checks_not_run": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "independence_limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "disposition": {
+      "type": "string",
+      "enum": [
+        "approve",
+        "approve_with_notes",
+        "request_changes",
+        "escalate"
+      ]
+    },
+    "remediation_summary": {
+      "type": "string"
+    }
+  }
+}
