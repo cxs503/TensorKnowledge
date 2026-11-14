@@ -19,6 +19,7 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -90,6 +91,30 @@ PRESETS = {
             "写明原因，不做「大概存在」的推断。",
         ],
     },
+    "wp-13547-01": {
+        "package_id": "wp-13547-01",
+        "report_id": "13547",
+        "expected_hash": "2debab25c7d7bd29e00f59d43ced87eac163b12af701d9a9ad81cb4440579d42",
+        "expected_chars": 6168,
+        "title": "TensorKnowledge 质量审计（A+B）：14 个 scope 的成熟度判定与 main 红态根因",
+        "scenario_key": "quality-audit",
+        "mission_id": 20589,
+        "out_dir": "docs/kf/wp-13547-01",
+        # the audited repository *is* this worktree (cxs503/TensorKnowledge), so referenced paths
+        # resolve locally instead of staying cross-repo; the verdict table and the schema field are
+        # only named in prose, hence declared here (package config, not tool hard-coding)
+        "declared_tokens": {"db_table": ["tensor_maturity_verdicts"], "schema_field": ["epistemic_status.enum"]},
+        "producing_repo": "cxs503/TensorKnowledge（被审计仓 = 本工作树）",
+        "figure_note": ("红色条不是缺陷而是**边界的正确表达**：审计结论图在 `record.figures[]` 里只有 name+caption"
+                        "（`png_base64` 为空），本包不伪造字节哈希，如实记 `referenced_unresolved`（metadata_only）；"
+                        "绿条则是本工作树内**真的解析到**的路径（被审计仓即本仓）。"),
+        "cross_repo_note": [
+            "4. **同仓可解析、越界如实留白**：本报告的审计对象就是本工作树（`cxs503/TensorKnowledge`），",
+            "   故 `audit_report.md`、`docs/sediment-m2591-report.md` 等路径在包内**实解析**（记 sha256 + 字节数）；",
+            "   `artifacts/audit/*.log`（通配符而非单文件）与仅以裸名引用的脚本（如 `validate_oss_lbm.py` 实位于 `scripts/`）",
+            "   仍记 `referenced_unresolved` 并写明原因，不用「大概存在」补齐。",
+        ],
+    },
 }
 
 BASE = os.environ["TENSOR_API_BASE"].rstrip("/")
@@ -101,6 +126,12 @@ BACKTICK_RE = re.compile(r"`([^`\n]+)`")
 HEADING_RE = re.compile(r"^(#{2,4})\s+(.*)$")
 
 STATUS_ENUM = ("resolved_in_source", "referenced_unresolved", "declared_absent")
+
+# git-ref discovery for the evidence probe: only *backticked* hex tokens and `A..B` ranges count,
+# so error percentages / energies in the prose can never be promoted to a git object reference.
+GIT_REF_TOKEN_RE = re.compile(r"^[0-9a-f]{7,40}$")
+GIT_RANGE_RE = re.compile(r"\b([0-9a-f]{7,40})\.\.([0-9a-f]{7,40})\b")
+SLUG_TOKEN_RE = re.compile(r"^[A-Za-z0-9_.\-]+/[A-Za-z0-9_.\-]+$")
 
 
 # ------------------------------------------------------------------ platform I/O
@@ -607,6 +638,50 @@ def _relaxed_asset_schema():
     return spec
 
 
+def _check_matured_evidence(cfg, out_dir: Path):
+    """Re-run the git probe and re-hash the publication ledger, so these two artifact kinds are
+    verified by recomputation rather than by trust. Absent files contribute no check at all."""
+    checks = {}
+    gp, pub = out_dir / "evidence_git_probe.json", out_dir / "published.json"
+    try:
+        if gp.is_file():
+            probe = json.loads(gp.read_text(encoding="utf-8"))
+            bad = []
+            for r in probe["refs"]:
+                now_present = _git(REPO, ["cat-file", "-e", r["ref"] + "^{commit}"])[0] == 0
+                if now_present != bool(r["present"]):
+                    bad.append([r["ref"], "presence_drift"])
+                if r["present"] and not r.get("resolved_sha"):
+                    bad.append([r["ref"], "missing_resolved_sha"])
+            if probe["all_refs_present"] != all(r["present"] for r in probe["refs"]):
+                bad.append(["all_refs_present", "counter_disagrees_with_refs"])
+            checks["git_evidence_probe_reproducible"] = {
+                "pass": not bad,
+                "detail": "re-ran git cat-file on %d refs (+%d range probes); drift=%s"
+                % (len(probe["refs"]), len(probe["ranges"]), bad),
+            }
+        if pub.is_file():
+            ledger = json.loads(pub.read_text(encoding="utf-8"))
+            payload_p = out_dir / "report_payload.json"
+            payload = json.loads(payload_p.read_text(encoding="utf-8"))
+            ok = (ledger["payload_sha256"] == hashlib.sha256(payload_p.read_bytes()).hexdigest()
+                  and ledger["payload_markdown_sha256"] == hashlib.sha256(payload["markdown"].encode("utf-8")).hexdigest()
+                  and ledger["status"] == "awaiting_pr_merge"
+                  and ledger["report_id"] == cfg["report_id"]
+                  and payload.get("mission_id") == cfg.get("mission_id"))
+            checks["publication_ledger_consistent"] = {
+                "pass": ok,
+                "detail": "payload sha256 recomputed=%s ledger=%s status=%s report_id=%s mission_id=%s"
+                % (hashlib.sha256(payload_p.read_bytes()).hexdigest()[:16], ledger["payload_sha256"][:16],
+                   ledger["status"], ledger["report_id"], payload.get("mission_id")),
+            }
+    except (json.JSONDecodeError, KeyError, FileNotFoundError) as exc:
+        checks["git_evidence_probe_reproducible"] = {
+            "pass": False,
+            "detail": "matured evidence unreadable: %s: %s" % (type(exc).__name__, exc),
+        }
+    return checks
+
 def verify(cfg, out_dir: Path):
     import jsonschema
 
@@ -689,6 +764,8 @@ def verify(cfg, out_dir: Path):
             % (hashlib.sha256(mp.read_bytes()).hexdigest(), result["outputs"]["asset_manifest.json"]["sha256"]),
         }
 
+    checks.update(_check_matured_evidence(cfg, out_dir))
+
     verdict = {
         "package_id": cfg["package_id"],
         "report_id": cfg["report_id"],
@@ -764,6 +841,7 @@ def render_report(cfg, out_dir: Path, png: Path):
     n = manifest["counts"]["assets"]
     nfig = sum(1 for a in manifest["assets"] if a["asset_class"] == "embedded_figure")
     ntab = sum(1 for a in manifest["assets"] if a["asset_class"] == "report_table")
+    extra_file_rows, probe_block = _matured_extras(cfg, out_dir)
 
     def cell(v, lim=64):
         return (v.replace("\n", " ").replace("|", "\\|").replace("`", "'"))[:lim]
@@ -823,6 +901,7 @@ def render_report(cfg, out_dir: Path, png: Path):
             len(verdict["checks"]), verdict["all_pass"]),
         "| `report.md` | 本报告（由清单/信封/自检**程序化渲染**，无手抄）|",
         "| `figures/%s` | A) 资产类别×解析状态计数；B) 每个资产的字符跨度覆盖图 |" % png.name,
+        *extra_file_rows,
         "",
         "资产类别分布：`%s`。" % json.dumps(manifest["counts"]["by_class"], ensure_ascii=False),
         "",
@@ -834,6 +913,7 @@ def render_report(cfg, out_dir: Path, png: Path):
         "（横轴=字符偏移，源文档 %d 字符）。两图直接由 `asset_manifest.json` 绘出，零手抄。" % manifest["source"]["chars"],
         cfg.get("figure_note", "红色柱不是缺陷而是**边界的正确表达**：这些路径属产出仓（ship-performance-platform），本包不得读写，故只能如实记 `referenced_unresolved`。"),
         "",
+        *probe_block,
         "## ⑤ 证据定位表（资产 → 原文逐字片段，均由 `md[start_char:end_char]` 计算）",
         "",
         "| asset_id | 类别 | 解析 | 行 | 原文片段（逐字） |",
@@ -861,6 +941,9 @@ def render_report(cfg, out_dir: Path, png: Path):
         "| acceptance 项 | 结果 | 细节 |",
         "|---|---|---|",
         *selfrows,
+        "",
+        "（本表引自**第一遍**自检；`publish` / `readme` 之后流程会再跑一遍 fixpoint 复算，",
+        "因此 `verification.json` 可能比本表多一条 `publication_ledger_consistent`——**以 `verification.json` 为最终口径**。）",
         "",
         "## 复现",
         "",
@@ -906,6 +989,293 @@ def render_report(cfg, out_dir: Path, png: Path):
     return text, payload
 
 
+
+
+
+# ------------------------------------------------------------------ matured-deliverable evidence
+def _git(worktree: Path, args):
+    """Read-only git plumbing. Never raises: a missing git binary is itself a probe result."""
+    try:
+        p = subprocess.run(["git", "-C", str(worktree)] + args, capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.SubprocessError) as exc:  # noqa: BLE001
+        return None, str(exc)
+    return p.returncode, (p.stdout.strip() or p.stderr.strip())
+
+
+def collect_git_refs(src: Source):
+    """Deterministic, conservative ref discovery (see GIT_REF_TOKEN_RE): only backticked hex
+    tokens and `A..B` range endpoints qualify, so prose numbers can never become a ref."""
+    refs, seen = [], set()
+    for m in BACKTICK_RE.finditer(src.md):
+        tok = m.group(1).strip()
+        rm = GIT_RANGE_RE.search(tok)
+        if rm:
+            cands = [(rm.group(1), "range_endpoint"), (rm.group(2), "range_endpoint")]
+        elif GIT_REF_TOKEN_RE.match(tok):
+            cands = [(tok, "commit")]
+        else:
+            continue
+        for ref, kind in cands:
+            if ref in seen:
+                continue
+            seen.add(ref)
+            line = src.line_of(m.start(1))
+            refs.append({"ref": ref, "kind": kind, "quote": m.group(0),
+                         "start_line": line + 1, "in_report_section": src.section_of(line)})
+    return refs
+
+
+def collect_ranges(src: Source):
+    out, seen = [], set()
+    for m in GIT_RANGE_RE.finditer(src.md):
+        key = "%s..%s" % (m.group(1), m.group(2))
+        if key in seen:
+            continue
+        seen.add(key)
+        line = src.line_of(m.start())
+        out.append({"range": key, "start_line": line + 1, "in_report_section": src.section_of(line)})
+    return out
+
+
+def probe_git_evidence(cfg, out_dir: Path, worktree: Path):
+    """evidence_git_probe.json - does the git object the report names really exist here?
+
+    Answers *identification*, not *truth*: git plumbing is re-run in the delivery worktree and
+    presence / resolved sha / reachability are recorded. No conclusion of the source report is
+    copied, re-verified or upgraded.
+    """
+    _meta, md = fetch_report(login(), cfg["report_id"])
+    digest = hashlib.sha256(md.encode("utf-8")).hexdigest()
+    if digest != cfg["expected_hash"]:
+        raise SystemExit("SOURCE HASH MISMATCH: contract=%s actual=%s" % (cfg["expected_hash"], digest))
+    src = Source(md)
+
+    rc_head, head = _git(worktree, ["rev-parse", "HEAD"])
+    remotes = [ln for ln in (_git(worktree, ["remote", "-v"])[1] or "").splitlines() if ln.strip()]
+    rc_cnt, cnt = _git(worktree, ["rev-list", "--count", "--all"])
+    candidates = []
+    for m in BACKTICK_RE.finditer(md):
+        tok = m.group(1).strip()
+        if SLUG_TOKEN_RE.match(tok) and tok.count("/") == 1 and not any("." in seg for seg in tok.split("/")):
+            if tok not in candidates:
+                candidates.append(tok)
+    claimed = candidates[0] if candidates else None
+    if not remotes:
+        slug_match = "undecidable_no_remote"
+    elif claimed and any(claimed in r for r in remotes):
+        slug_match = "match"
+    else:
+        slug_match = "remote_configured_but_slug_differs"
+
+    refs = []
+    for r in collect_git_refs(src):
+        ref = r["ref"]
+        prc, _pout = _git(worktree, ["cat-file", "-e", ref + "^{commit}"])
+        present = prc == 0
+        row = dict(r)
+        row["present"] = present
+        row["probe"] = "git cat-file -e %s^{commit}" % ref
+        if present:
+            lrc, lout = _git(worktree, ["log", "-1", "--format=%H%x1f%aI%x1f%s", ref])
+            parts = (lout.split("\x1f") + ["", "", ""])[:3] if lrc == 0 else ["", "", ""]
+            arc, _ = _git(worktree, ["merge-base", "--is-ancestor", ref, "HEAD"])
+            row.update({"resolved_sha": parts[0] or None, "committed_at": parts[1] or None,
+                        "subject": parts[2] or None, "ancestor_of_head": arc == 0,
+                        "reachability_check": "git merge-base --is-ancestor %s HEAD" % ref})
+        else:
+            row["detail"] = "git reports no such commit object in this worktree's history"
+        refs.append(row)
+
+    ranges = []
+    for r in collect_ranges(src):
+        a, b = r["range"].split("..")
+        ok_a = _git(worktree, ["cat-file", "-e", a + "^{commit}"])[0] == 0
+        ok_b = _git(worktree, ["cat-file", "-e", b + "^{commit}"])[0] == 0
+        entry = dict(r)
+        entry["endpoints_present"] = bool(ok_a and ok_b)
+        entry["probe"] = "git rev-list --count %s..%s" % (a, b)
+        if ok_a and ok_b:
+            crc, cout = _git(worktree, ["rev-list", "--count", "%s..%s" % (a, b)])
+            entry["commits_between"] = int(cout) if crc == 0 and cout.isdigit() else None
+        entry["note"] = ("structural only: it says the range resolves in this worktree; the report's own "
+                         "file/line tallies are NOT re-verified by this work package.")
+        ranges.append(entry)
+
+    doc = {
+        "package_id": cfg["package_id"],
+        "report_id": cfg["report_id"],
+        "source_hash": "sha256:" + digest,
+        "probe": ("read-only git plumbing in the delivery worktree (cat-file / log / merge-base / rev-list); "
+                  "no network access, no repository writes"),
+        "repo": {
+            "worktree": str(worktree.relative_to(REPO)) if str(worktree).startswith(str(REPO)) else str(worktree),
+            "head": head if rc_head == 0 else None,
+            "branch": (_git(worktree, ["rev-parse", "--abbrev-ref", "HEAD"])[1] or None),
+            "objects_reachable": int(cnt) if rc_cnt == 0 and cnt.isdigit() else None,
+            "remotes": remotes,
+            "slug_claimed_in_report": claimed,
+            "slug_candidates": candidates,
+            "slug_match": slug_match,
+        },
+        "refs": refs,
+        "ranges": ranges,
+        "all_refs_present": bool(refs) and all(r["present"] for r in refs),
+        "scope_note": ("identification evidence only: it answers «is the git object the report names real in "
+                       "this worktree?», never «is the report's verdict correct?». Claim grading stays with "
+                       "the platform gate."),
+        "emitted_at": datetime.now(timezone.utc).isoformat(),
+    }
+    out = out_dir / "evidence_git_probe.json"
+    out.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("wrote %s (%d refs / %d ranges / all_refs_present=%s)"
+          % (out.relative_to(REPO), len(refs), len(ranges), doc["all_refs_present"]))
+    return doc
+
+
+def emit_publication(cfg, out_dir: Path):
+    """published.json - honest staging ledger: awaiting the pr-gate, not published."""
+    payload_p = out_dir / "report_payload.json"
+    payload = json.loads(payload_p.read_text(encoding="utf-8"))
+    doc = {
+        "package_id": cfg["package_id"],
+        "report_id": cfg["report_id"],
+        "status": "awaiting_pr_merge",
+        "payload_sha256": hashlib.sha256(payload_p.read_bytes()).hexdigest(),
+        "payload_markdown_sha256": hashlib.sha256(payload["markdown"].encode("utf-8")).hexdigest(),
+        "gate": ("pr-gate publishes after the branch merges; this ledger records staging only and is not "
+                 "a publication receipt"),
+        "emitted_at": datetime.now(timezone.utc).isoformat(),
+    }
+    out = out_dir / "published.json"
+    out.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("wrote %s (status=%s)" % (out.relative_to(REPO), doc["status"]))
+    return doc
+
+
+README_DESC = {
+    "asset_manifest.json": "资产清单（定位器 + 哈希，claims=0）",
+    "kf_result.json": "结果信封（package_id/task_type/report_id/provenance/outputs）",
+    "verification.json": "逐条 acceptance 自检 + 哈希重算",
+    "evidence_git_probe.json": "git 证据探针（报告点名的 commit 在本工作树是否存在）",
+    "report.md": "本包报告（程序化渲染，六要素）",
+    "report_payload.json": "上报载荷（title/summary/markdown/figure）",
+    "published.json": "发布台账（status=awaiting_pr_merge）",
+}
+
+
+def render_readme(cfg, out_dir: Path):
+    """README.md - package index. Every hash is recomputed from the file on disk; the README is
+    excluded from its own table (a self-hash is impossible)."""
+    manifest = json.loads((out_dir / "asset_manifest.json").read_text(encoding="utf-8"))
+    rows = []
+    items = list(README_DESC.items()) + [
+        ("figures/%s_asset_locator_map.png" % cfg["package_id"], "资产定位覆盖图（类别×解析状态 + 字符跨度）")]
+    for rel, desc in items:
+        p = out_dir / rel
+        if not p.is_file():
+            continue
+        rows.append("| `%s` | %d | `%s` | %s |"
+                    % (rel, len(p.read_bytes()), hashlib.sha256(p.read_bytes()).hexdigest(), desc))
+    gp, pub = out_dir / "evidence_git_probe.json", out_dir / "published.json"
+    probe = json.loads(gp.read_text(encoding="utf-8")) if gp.is_file() else None
+    ledger = json.loads(pub.read_text(encoding="utf-8")) if pub.is_file() else None
+    counts = manifest["counts"]
+    lines = [
+        "# %s — 包索引（report %s · mission %s）" % (cfg["package_id"], cfg["report_id"], cfg.get("mission_id", "n/a")),
+        "",
+        "**源报告**：`tensor://reports/%s` — %s" % (cfg["report_id"], cfg.get("title", "")),
+        "",
+        "**一句话**：把报告里可解析的工件（内嵌图 / 路径引用 / 表格 / 复现命令 / 接口字段）逐一定位并留哈希，",
+        "并对报告点名的 git 对象在本工作树做存在性探针；**claims=0**——登记不等于抽取，验证由平台门计算。",
+        "",
+        "## 文件清单（sha256 逐文件重算）",
+        "",
+        "| 文件 | 字节 | sha256 | 说明 |",
+        "|---|---:|---|---|",
+        *rows,
+        "",
+        "## 规模",
+        "",
+        "- 资产 **%d** 项；`by_class` = `%s`" % (counts["assets"], json.dumps(counts["by_class"], ensure_ascii=False)),
+        "- 解析分布：`resolved_in_source`=%d / `referenced_unresolved`=%d / `declared_absent`=%d；claims=**%d**"
+        % (counts["resolved_in_source"], counts["referenced_unresolved"], counts["declared_absent"], len(manifest["claims"])),
+        "- 源 markdown：%d 字符 / %d 字节 utf-8；`sha256:%s`"
+        % (manifest["source"]["chars"], manifest["source"]["bytes_utf8"], manifest["source"]["hash"]),
+    ]
+    if probe:
+        lines.append("- git 探针：%d 个 ref 中 %d 个在本工作树历史中实存（`all_refs_present`=%s）；范围探针 %d 条"
+                     % (len(probe["refs"]), sum(1 for r in probe["refs"] if r["present"]),
+                        probe["all_refs_present"], len(probe["ranges"])))
+    lines += [
+        "",
+        "## 状态",
+        "",
+        "- 发布：`%s`（记录于 `published.json`；合并后由平台门发布，本包不自称已发布）"
+        % (ledger["status"] if ledger else "not_emitted"),
+        "- 验证：`verification.json` 的 `all_pass` 是**生产方自检**结论，权威判定在平台门。",
+        "",
+        "## 复现",
+        "",
+        "```bash",
+        "python3 scripts/kf/kf01_register.py --preset %s build gitprobe result verify figure report publish readme"
+        % cfg["package_id"],
+        "```",
+        "",
+        "（顺序即依赖：`gitprobe` 先于 `verify`（自检会重跑探针）；`publish`/`readme` 最后（读全部产物哈希）。）",
+        "",
+    ]
+    out = out_dir / "README.md"
+    out.write_text("\n".join(lines), encoding="utf-8")
+    print("wrote %s" % out.relative_to(REPO))
+    return out
+
+
+def _matured_extras(cfg, out_dir: Path):
+    """Rows/sections for report.md when the matured-deliverable artifacts exist."""
+    extra_rows, block = [], []
+    gp, pub = out_dir / "evidence_git_probe.json", out_dir / "published.json"
+    if gp.is_file():
+        probe = json.loads(gp.read_text(encoding="utf-8"))
+        n_ok = sum(1 for r in probe["refs"] if r["present"])
+        extra_rows.append("| `evidence_git_probe.json` | git 探针：%d/%d 个 ref 在本工作树实存；范围探针 %d 条 |"
+                          % (n_ok, len(probe["refs"]), len(probe["ranges"])))
+        block += [
+            "## ④-b git 证据探针（报告点名的 commit 在本工作树是否真实存在）",
+            "",
+            "| ref | 出处行 | 实存 | 解析 sha | 提交时间 | 主题 / 说明 | HEAD 祖先链 |",
+            "|---|---:|---|---|---|---|---|",
+        ]
+        for r in probe["refs"]:
+            anc = {True: "是", False: "否"}.get(r.get("ancestor_of_head"), "—")
+            block.append("| `%s` | %d | %s | `%s` | %s | %s | %s |" % (
+                r["ref"], r["start_line"], "是" if r["present"] else "否",
+                (r.get("resolved_sha") or "—")[:12], r.get("committed_at") or "—",
+                (r.get("subject") or r.get("detail") or "—").replace("|", "/")[:56], anc))
+        if probe["ranges"]:
+            block += ["", "范围探针：" + "；".join(
+                "`%s`（%s%s）" % (x["range"], "两端实存" if x["endpoints_present"] else "端点缺失",
+                                 "" if x.get("commits_between") is None
+                                 else "，`rev-list --count`=%d" % x["commits_between"])
+                for x in probe["ranges"]) + "。范围探针只回答「区间在本工作树可解析」，**不复核**报告自报的文件/行数口径。"]
+        block += ["", "**边界**：%s" % probe["scope_note"], "",
+                  "仓库身份：工作树 HEAD `%s`（分支 `%s`，可达对象 %s 个）；报告点名仓 `%s`；`slug_match`=`%s`%s。" % (
+                      (probe["repo"]["head"] or "?")[:12], probe["repo"]["branch"], probe["repo"]["objects_reachable"],
+                      probe["repo"]["slug_claimed_in_report"], probe["repo"]["slug_match"],
+                      "（本工作树未配置 remote，远端无法确认 slug → 如实记 undecidable，不假设匹配）"
+                      if probe["repo"]["slug_match"] == "undecidable_no_remote" else ""),
+                  ""]
+    if pub.is_file():
+        ledger = json.loads(pub.read_text(encoding="utf-8"))
+        extra_rows.append("| `published.json` | 发布台账：status=`%s`，payload sha256 `%s` |"
+                          % (ledger["status"], ledger["payload_sha256"][:16]))
+        block += ["**发布状态**：`%s` —— 载荷已就绪（sha256 `%s`），合并后由 pr-gate 发布；本包不自称已发布。"
+                  % (ledger["status"], ledger["payload_sha256"][:16]), ""]
+    else:
+        # rendered before `publish` (clean run): state the intended status and say where the truth is
+        block += ["**发布状态**：`awaiting_pr_merge`（本报告渲染于 `publish` 之前，最终状态以 `published.json` 为准；"
+                  "本包不自称已发布）。", ""]
+    return extra_rows, block
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--preset", default="wp-7450-01")
@@ -917,6 +1287,8 @@ def main():
     # canonical order: manifest -> envelope -> independent verification -> figure -> report
     if "build" in acts:
         build(cfg, out_dir, REPO)
+    if "gitprobe" in acts:
+        probe_git_evidence(cfg, out_dir, REPO)
     if "result" in acts:
         emit_result(cfg, out_dir)
     if "verify" in acts:
@@ -928,6 +1300,16 @@ def main():
         if png is None:
             png = out_dir / "figures" / ("%s_asset_locator_map.png" % cfg["package_id"])
         render_report(cfg, out_dir, png)
+    if "publish" in acts:
+        emit_publication(cfg, out_dir)
+    # fixpoint pass: the matured artifacts (git probe, publication ledger) are produced *after* the
+    # first verification, so verification.json is re-derived once more and is always the last word of
+    # the package. report.md quotes the pass-1 self-check and says so explicitly; README runs after
+    # this pass so the hashes it lists are the final ones.
+    if "verify" in acts and ("publish" in acts or "readme" in acts):
+        verify(cfg, out_dir)
+    if "readme" in acts:
+        render_readme(cfg, out_dir)
     return 0
 
 

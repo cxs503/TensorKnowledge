@@ -1,0 +1,65 @@
+{
+  "package_id": "wp-13547-01",
+  "report_id": "13547",
+  "source_hash": "sha256:2debab25c7d7bd29e00f59d43ced87eac163b12af701d9a9ad81cb4440579d42",
+  "probe": "read-only git plumbing in the delivery worktree (cat-file / log / merge-base / rev-list); no network access, no repository writes",
+  "repo": {
+    "worktree": ".",
+    "head": "d87375feac4933d5cd99405cbf4d98e1c3c069a6",
+    "branch": "agent/m20589",
+    "objects_reachable": 1568,
+    "remotes": [
+      "origin\thttps://cxs503@github.com/cxs503/TensorKnowledge.git (fetch)",
+      "origin\thttps://cxs503@github.com/cxs503/TensorKnowledge.git (push)"
+    ],
+    "slug_claimed_in_report": "cxs503/TensorKnowledge",
+    "slug_candidates": [
+      "cxs503/TensorKnowledge"
+    ],
+    "slug_match": "match"
+  },
+  "refs": [
+    {
+      "ref": "edbc20a",
+      "kind": "range_endpoint",
+      "quote": "`edbc20a..2d3c446`",
+      "start_line": 3,
+      "in_report_section": "(preamble)",
+      "present": true,
+      "probe": "git cat-file -e edbc20a^{commit}",
+      "resolved_sha": "edbc20a61ade875f9cd950548bf3a2bc2668d156",
+      "committed_at": "2026-11-10T00:26:11+08:00",
+      "subject": "Merge #17 (m8688) via push-merge",
+      "ancestor_of_head": true,
+      "reachability_check": "git merge-base --is-ancestor edbc20a HEAD"
+    },
+    {
+      "ref": "2d3c446",
+      "kind": "range_endpoint",
+      "quote": "`edbc20a..2d3c446`",
+      "start_line": 3,
+      "in_report_section": "(preamble)",
+      "present": true,
+      "probe": "git cat-file -e 2d3c446^{commit}",
+      "resolved_sha": "2d3c446388d43372de39ef05a6d37fd1c79f3a78",
+      "committed_at": "2026-11-11T09:56:48+08:00",
+      "subject": "Merge pull request #26 from cxs503/agent/m8817",
+      "ancestor_of_head": true,
+      "reachability_check": "git merge-base --is-ancestor 2d3c446 HEAD"
+    }
+  ],
+  "ranges": [
+    {
+      "range": "edbc20a..2d3c446",
+      "start_line": 3,
+      "in_report_section": "(preamble)",
+      "endpoints_present": true,
+      "probe": "git rev-list --count edbc20a..2d3c446",
+      "commits_between": 33,
+      "note": "structural only: it says the range resolves in this worktree; the report's own file/line tallies are NOT re-verified by this work package."
+    }
+  ],
+  "all_refs_present": true,
+  "scope_note": "identification evidence only: it answers «is the git object the report names real in this worktree?», never «is the report's verdict correct?». Claim grading stays with the platform gate.",
+  "emitted_at": "2026-11-14T15:28:44.470837+00:00"
+}
