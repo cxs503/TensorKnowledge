@@ -1,0 +1,103 @@
+[
+  {
+    "seq": 1,
+    "event": "source_pinned",
+    "actor": "wp-11415-04",
+    "basis": [
+      "C1_source_identity"
+    ],
+    "outcome": "pass",
+    "note": "sha256=d8bc42883f1fa1d274a3ca4808586d2a8773e9d0f464b554c944f5090b0c8c50 chars=7903 与契约一致"
+  },
+  {
+    "seq": 2,
+    "event": "upstream_payload_isolated",
+    "actor": "wp-11415-04",
+    "basis": [
+      "scripts/kf_isolate_upstream_11415_04.py"
+    ],
+    "outcome": "pass",
+    "note": "只取 wp-11415-01 的单个 json 块，生产者叙述未进入审核上下文"
+  },
+  {
+    "seq": 3,
+    "event": "locators_recomputed",
+    "actor": "wp-11415-04",
+    "basis": [
+      "C2_locator_fidelity"
+    ],
+    "outcome": "pass",
+    "note": "28/28 逐字节命中"
+  },
+  {
+    "seq": 4,
+    "event": "coverage_and_labels_audited",
+    "actor": "wp-11415-04",
+    "basis": [
+      "C3_coverage",
+      "C4_label_numbers"
+    ],
+    "outcome": "pass",
+    "note": "5 个文件引用 + 4 张图 + 5 张表全部有归属资产；33 个数字原子均为原文子串"
+  },
+  {
+    "seq": 5,
+    "event": "resolution_honesty_audited",
+    "actor": "wp-11415-04",
+    "basis": [
+      "C5_resolution_honesty"
+    ],
+    "outcome": "pass",
+    "note": "21 resolved / 6 referenced_unresolved / 1 declared_absent，桶与计数自洽"
+  },
+  {
+    "seq": 6,
+    "event": "figure_binaries_refetched",
+    "actor": "wp-11415-04",
+    "basis": [
+      "C9_figure_binaries"
+    ],
+    "outcome": "pass",
+    "note": "4 张 png 的 sha256 与字节数与登记值逐字节一致"
+  },
+  {
+    "seq": 7,
+    "event": "source_internal_arithmetic_recomputed",
+    "actor": "wp-11415-04",
+    "basis": [
+      "C10_source_internal_arithmetic"
+    ],
+    "outcome": "pass",
+    "note": "lw2/lw1、b/a、C5 交叉列全部自洽（最大偏离 1.03e-03 = 4 位小数舍入）"
+  },
+  {
+    "seq": 8,
+    "event": "envelope_schema_check",
+    "actor": "wp-11415-04",
+    "basis": [
+      "C6_schema"
+    ],
+    "outcome": "fail",
+    "note": "kf_result.v1 两处 additionalProperties 违规；产线级 39/40 包同样违规（F2）"
+  },
+  {
+    "seq": 9,
+    "event": "upstream_verifier_replayed",
+    "actor": "wp-11415-04",
+    "basis": [
+      "C8_replay_upstream_verifier"
+    ],
+    "outcome": "fail",
+    "note": "重建输入后 ALL_PASS=False，唯一失败项 kf_result_schema（F1 的可复现性证据）"
+  },
+  {
+    "seq": 10,
+    "event": "disposition_emitted",
+    "actor": "wp-11415-04",
+    "basis": [
+      "C1..C10"
+    ],
+    "outcome": "approve-with-notes",
+    "note": "语义保真度 pass；产线 needs-fix（F1）；无一结论标 verified"
+  }
+]
