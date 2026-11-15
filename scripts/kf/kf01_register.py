@@ -62,10 +62,13 @@ PRESETS = {
         # this source has no file-path references at all; the 5 record figures are metadata-only
         "producing_repo": "（源报告未指明具体仓名）",
         "figure_note": ("红色条不是缺陷而是**边界的正确表达**：5 张图在 `record.figures[]` 中只有 name+caption（`png_base64` 为空），"
-                        "本包不伪造字节哈希，如实记 `referenced_unresolved`（metadata_only）。"),
+                        "本包不伪造字节哈希，如实记 `referenced_unresolved`（metadata_only）；但**定位器不退化**——"
+                        "图名是 slug（`sod_shock_tube`）而正文只有散文式小节标题，故按归一化词元在标题行上做确定性匹配"
+                        "（唯一最高分 ≥0.5），推导留痕于 `match_basis`。"),
         "cross_repo_note": [
             "4. **无跨仓路径引用**：源 markdown 不含任何文件路径引用（无行内代码/围栏代码路径），故清单中不存在路径类资产；",
-            "   5 个图名亦未出现在正文中，其定位器如实退化为整文档跨度（method=document）。",
+            "   5 个图名亦未逐字出现在正文中：此时不退回整文档跨度，而是匹配到 `### 3.x` 小节标题行"
+            "（score 与命中词元记入 `match_basis`；出现并列最高分则拒绝匹配、如实退回整文档）。",
         ],
     },
     "wp-12724-01": {
@@ -317,6 +320,53 @@ def scan_references(src: Source, worktree: Path):
     return out
 
 
+def norm_tokens(text: str):
+    """Lower-case word tokens used for name/heading matching (len>=3 drops slug fillers)."""
+    return [t for t in re.split(r"[^a-z0-9]+", (text or "").lower()) if len(t) >= 3]
+
+
+def match_figure_heading(src: Source, name: str):
+    """Deterministic fallback locator for figures whose record name is never written verbatim.
+
+    ``record.figures[]`` names are slugs (``sod_shock_tube``) while the body only carries the
+    prose form (``### 3.1 Sod Shock Tube (a)``). Rather than degrading to a whole-document span,
+    match the normalised figure-name tokens against the heading tokens and keep the derivation on
+    the asset. Accepted only for a *unique* top score >= 0.5; a tie is refused (no guessing).
+    Only the location is derived - figure bytes stay absent, so the asset stays
+    ``referenced_unresolved``: a locator is not a claim about content.
+    """
+    name_tokens = norm_tokens(name)
+    if not name_tokens:
+        return None, None
+    scored = []
+    for i, line in enumerate(src.lines):
+        m = HEADING_RE.match(line)
+        if not m:
+            continue
+        heading = m.group(2).strip()
+        heading_tokens = set(norm_tokens(heading))
+        matched = [t for t in name_tokens if t in heading_tokens]
+        if not matched:
+            continue
+        score = len(matched) / len(name_tokens)
+        if score >= 0.5:
+            scored.append((score, i, heading, matched))
+    if not scored:
+        return None, None
+    scored.sort(key=lambda x: (-x[0], x[1]))
+    if len(scored) > 1 and scored[1][0] == scored[0][0]:
+        return None, None
+    score, i, heading, matched = scored[0]
+    return i, {
+        "rule": "normalised figure-name tokens vs heading tokens: score>=0.5 and unique top score",
+        "figure_name_normalized": " ".join(name_tokens),
+        "heading": heading,
+        "matched_tokens": matched,
+        "unmatched_tokens": [t for t in name_tokens if t not in matched],
+        "score": round(score, 4),
+    }
+
+
 def scan_figures(src: Source, meta: dict):
     out = []
     for n, fig in enumerate(meta.get("figures") or [], start=1):
@@ -326,18 +376,32 @@ def scan_figures(src: Source, meta: dict):
             blob = base64.b64decode(b64) if b64 else b""
         except Exception:  # noqa: BLE001
             blob = b""
-        hit = None
+        hit, basis = None, None
         for i, line in enumerate(src.lines):
             if name in line:
                 hit = i
                 break
-        loc = src.locator_for_line(hit, name) if hit is not None else src.locator_document()
+        if hit is not None:
+            loc = src.locator_for_line(hit, name)
+            loc_note = "locator: figure name verbatim on line %d" % (hit + 1)
+        else:
+            hit, basis = match_figure_heading(src, name)
+            if hit is not None:
+                loc = src.locator_for_line(hit)
+                loc_note = ("locator: name not verbatim in the body; derived from heading line %d "
+                            "'%s' (normalised-token score %.2f, unique top score); location only - "
+                            "no byte hash follows from it"
+                            % (hit + 1, basis["heading"], basis["score"]))
+            else:
+                loc = src.locator_document()
+                loc_note = ("locator: no verbatim name and no unambiguous heading match -> "
+                            "whole-document span")
         payload_note = (
             "record.figures[%d] carries a png_base64 payload (%d bytes, sha256 %s)"
             % (n - 1, len(blob), hashlib.sha256(blob).hexdigest()) if blob else
             "record.figures[%d] lists name+caption only: png_base64 is empty, so no byte hash can be computed" % (n - 1)
         )
-        out.append({
+        asset = {
             "asset_class": "embedded_figure",
             "label": name,
             "in_report_section": src.section_of(hit) if hit is not None else "(record field figures)",
@@ -353,8 +417,11 @@ def scan_figures(src: Source, meta: dict):
             "bytes": len(blob) or None,
             "sha256": hashlib.sha256(blob).hexdigest() if blob else None,
             "resolution_detail": "payload_present" if blob else "metadata_only",
-            "note": payload_note,
-        })
+            "note": payload_note + "; " + loc_note,
+        }
+        if basis is not None:
+            asset["match_basis"] = basis
+        out.append(asset)
     return out
 
 
