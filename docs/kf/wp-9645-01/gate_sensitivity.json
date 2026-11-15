@@ -1,0 +1,133 @@
+{
+  "package_id": "wp-9645-01",
+  "report_id": "9645",
+  "generator": "scripts/kf/wp_9645_01_gate_sensitivity.py",
+  "definition": {
+    "gate_a": "register.build_locator_check(manifest with first k section hashes poisoned, snapshot)",
+    "gate_b": "scripts/kf/wp_9645_01_snapshot.py::verify_snapshot(snapshot with n flipped chars)"
+  },
+  "sections": 8,
+  "source_chars": 11824,
+  "gate_a_locator": [
+    {
+      "tampered_sections": 0,
+      "failed_checks": 0,
+      "gate_all_pass": true,
+      "detection_ratio": null,
+      "false_positive": false
+    },
+    {
+      "tampered_sections": 1,
+      "failed_checks": 1,
+      "gate_all_pass": false,
+      "detection_ratio": 1.0,
+      "false_positive": false
+    },
+    {
+      "tampered_sections": 2,
+      "failed_checks": 2,
+      "gate_all_pass": false,
+      "detection_ratio": 1.0,
+      "false_positive": false
+    },
+    {
+      "tampered_sections": 3,
+      "failed_checks": 3,
+      "gate_all_pass": false,
+      "detection_ratio": 1.0,
+      "false_positive": false
+    },
+    {
+      "tampered_sections": 4,
+      "failed_checks": 4,
+      "gate_all_pass": false,
+      "detection_ratio": 1.0,
+      "false_positive": false
+    },
+    {
+      "tampered_sections": 5,
+      "failed_checks": 5,
+      "gate_all_pass": false,
+      "detection_ratio": 1.0,
+      "false_positive": false
+    },
+    {
+      "tampered_sections": 6,
+      "failed_checks": 6,
+      "gate_all_pass": false,
+      "detection_ratio": 1.0,
+      "false_positive": false
+    },
+    {
+      "tampered_sections": 7,
+      "failed_checks": 7,
+      "gate_all_pass": false,
+      "detection_ratio": 1.0,
+      "false_positive": false
+    },
+    {
+      "tampered_sections": 8,
+      "failed_checks": 8,
+      "gate_all_pass": false,
+      "detection_ratio": 1.0,
+      "false_positive": false
+    }
+  ],
+  "gate_b_snapshot": [
+    {
+      "flipped_chars": 0,
+      "verify_all_pass": true,
+      "failed_items": [],
+      "detected": false
+    },
+    {
+      "flipped_chars": 1,
+      "verify_all_pass": false,
+      "failed_items": [
+        "sha256"
+      ],
+      "detected": true
+    },
+    {
+      "flipped_chars": 2,
+      "verify_all_pass": false,
+      "failed_items": [
+        "sha256"
+      ],
+      "detected": true
+    },
+    {
+      "flipped_chars": 4,
+      "verify_all_pass": false,
+      "failed_items": [
+        "sha256"
+      ],
+      "detected": true
+    },
+    {
+      "flipped_chars": 7,
+      "verify_all_pass": false,
+      "failed_items": [
+        "sha256"
+      ],
+      "detected": true
+    },
+    {
+      "flipped_chars": 14,
+      "verify_all_pass": false,
+      "failed_items": [
+        "sha256"
+      ],
+      "detected": true
+    }
+  ],
+  "checks": {
+    "no_false_positive_at_k0": true,
+    "one_to_one_detection": true,
+    "clean_locator_gate_passes": true,
+    "single_char_flip_is_fatal": true,
+    "clean_snapshot_passes": true,
+    "no_missed_flips": true
+  },
+  "all_pass": true
+}

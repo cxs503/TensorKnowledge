@@ -1,0 +1,48 @@
+{
+  "id": 9645,
+  "title": "IN101-N09 ISO 19906 冰压设计分项系数目标可靠度反标定（成熟化）",
+  "summary": "两方程两未知量反问题解 (γ_f, ψ) = (1.4371, 0.9960)，κ*=1.4313，达到 β=4.000000000；Jacobian 条件数 4.79，三初值极差 7.9e-11；FORM 与闭式解析值、重要性抽样一致到 0.1% 量级；忽略 p–A 负相关使 γ_f 偏大 28.9%（检出）。机器判据 5/5 通过。",
+  "scenario_key": "ice_partial_factors_target_inverse",
+  "mission_id": 8350,
+  "stage": null,
+  "tags": [
+    "IN101-N09",
+    "ISO19906",
+    "partial-factors",
+    "FORM",
+    "importance-sampling",
+    "negative-control",
+    "ice"
+  ],
+  "figures": [
+    {
+      "name": "fig1_pa_joint.png",
+      "caption": "图1 联合 p–A 状态：两种相关假设共享同一对边缘分布，只差 $\\rho_{\\ln p,\\ln A}$；右图为年极值冰力密度（散度膨胀即负控的物理内容）"
+    },
+    {
+      "name": "fig2_beta_vs_kappa.png",
+      "caption": "图2 可靠度指标随分项系数乘积的曲线、目标线、Newton 解、单变量二分解，以及 FORM/IS/粗 MC/Rao–Blackwell MC 四个独立估计"
+    },
+    {
+      "name": "fig3_newton.png",
+      "caption": "图3 左：三组分散初值的残差收敛（二次收敛、同一根）；右：设计值劈分约定 $\\gamma_f(\\kappa)$、$\\psi(\\kappa)$ 与解点"
+    },
+    {
+      "name": "fig4_iso_deviations.png",
+      "caption": "图4 与 ISO 19906 A.2×A.3 表格分项系数逐项偏差图（±15% 验收带），下图为缺口行的实际达到 $\\beta$"
+    },
+    {
+      "name": "fig5_negative_control.png",
+      "caption": "图5 负控：计入/忽略 p–A 负相关时的标定分项系数与载荷散度"
+    },
+    {
+      "name": "fig6_sensitivity.png",
+      "caption": "图6 左：包络定理伴随导数 vs 中心差分；右：标定分项系数对 $\\beta_T$ 的敏感性"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-09T07:20:15.875461+00:00",
+  "markdown_sha256": "sha256:a8bb89020ad334b6b176aaa607852d61596fefcca86c8deaac6a22c6e2d8fb00",
+  "markdown_chars": 11824
+}
