@@ -1,0 +1,111 @@
+{
+  "package_id": "wp-12068-01",
+  "report_id": "12068",
+  "mission_id": 15738,
+  "checked_at": "2026-11-15T20:40:14.070330+00:00",
+  "mode": "offline+pinned+live",
+  "pinned_source": {
+    "path": "docs/kf/wp-12068-01/source/report-12068.md",
+    "sha256": "de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0",
+    "chars": 1086,
+    "bytes_utf8": 1113,
+    "snapshot_at": "2026-11-15T20:36:35.944269+00:00"
+  },
+  "line_convention": "end_line = 1-based line of the last character (md.count('\\n', 0, end_char - 1) + 1)",
+  "checks": [
+    {
+      "id": "pinned_source_present",
+      "pass": true,
+      "detail": "docs/kf/wp-12068-01/source/report-12068.md exists=True source_manifest=source_manifest.json exists=True"
+    },
+    {
+      "id": "pinned_source_hash_matches_pin",
+      "pass": true,
+      "detail": "recomputed=de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0 pin=de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0 chars=1086 bytes=1113"
+    },
+    {
+      "id": "pinned_source_matches_contract",
+      "pass": true,
+      "detail": "contract hash=de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0 chars=1086 bytes=1113; got hash=de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0 chars=1086 bytes=1113"
+    },
+    {
+      "id": "manifest_source_matches_pin",
+      "pass": true,
+      "detail": "manifest hash=de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0 chars=1086 bytes=1113"
+    },
+    {
+      "id": "envelope_provenance_matches_pin",
+      "pass": true,
+      "detail": "envelope source_hash=sha256:de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0 chars=1086 bytes=1113"
+    },
+    {
+      "id": "report_id_scoped",
+      "pass": true,
+      "detail": "manifest=12068 envelope=12068 pin=12068"
+    },
+    {
+      "id": "locator_spans_inside_source",
+      "pass": true,
+      "detail": "assets=9 violations=[]"
+    },
+    {
+      "id": "locator_quotes_re_slice_verbatim",
+      "pass": true,
+      "detail": "re-sliced md[start:end] for 9 assets; mismatching=[]"
+    },
+    {
+      "id": "locator_line_map_recomputed",
+      "pass": true,
+      "detail": "convention: end_line = 1-based line of the last character (md.count('\\n', 0, end_char - 1) + 1); mismatching=[]"
+    },
+    {
+      "id": "locator_quotes_unique_in_source",
+      "pass": true,
+      "detail": "each quote must occur exactly once in the pinned markdown; problems=[]"
+    },
+    {
+      "id": "counts_recomputed_from_assets",
+      "pass": true,
+      "detail": "assets=9/9 by_class={'report_markdown': 1, 'embedded_figure': 5, 'report_table': 3} by_resolution={'resolved_in_source': 4, 'referenced_unresolved': 5}"
+    },
+    {
+      "id": "asset_ids_unique",
+      "pass": true,
+      "detail": "ids=['A01', 'A02', 'A03', 'A04', 'A05', 'A06', 'A07', 'A08', 'A09']"
+    },
+    {
+      "id": "claims_empty_and_nothing_verified",
+      "pass": true,
+      "detail": "registration does not extract claims; no asset carries status='verified'"
+    },
+    {
+      "id": "figures_metadata_only_and_absent_from_body",
+      "pass": true,
+      "detail": "5 figures, payload bytes=0, names in body=[]"
+    },
+    {
+      "id": "delivered_manifest_matches_envelope",
+      "pass": true,
+      "detail": "sha256=ff4a48cc9589dbf6083a7acb4647d9dc50205badb87d3975876c81f2dd97e89e bytes=18960 asset_count=9"
+    },
+    {
+      "id": "live_source_matches_pin",
+      "pass": true,
+      "detail": "live source identical to the pin"
+    }
+  ],
+  "n_checks": 16,
+  "n_pass": 16,
+  "n_fail": 0,
+  "n_skipped": 0,
+  "all_pass": true,
+  "live_drift": {
+    "checked": true,
+    "live_sha256": "de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0",
+    "live_chars": 1086,
+    "drift": false,
+    "detail": "live source identical to the pin"
+  },
+  "publication_state": "awaiting_pr_merge",
+  "scope_note": "offline re-derivation by the producing agent over the pinned source bytes; the authoritative verification and the promotion decision remain the platform pr-gate's, which flips this package to published only on merge"
+}
