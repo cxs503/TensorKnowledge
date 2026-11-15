@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
@@ -60,8 +61,8 @@ class DatasetHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
-    def _send_jsonl_stream(self, rows: list[str], sha256: str):
-        """Stream JSONL rows with SHA256 header."""
+    def _send_jsonl_stream(self, rows: list[str], sha256: str, gate_level: str = "ungated"):
+        """Stream JSONL rows with SHA256 + train-gate level headers."""
         body = "\n".join(rows)
         if rows:
             body += "\n"
@@ -69,6 +70,7 @@ class DatasetHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "application/x-jsonl")
         self.send_header("X-Dataset-SHA256", sha256)
+        self.send_header("X-Train-Gate-Level", gate_level)
         self.send_header("Content-Length", str(len(body_bytes)))
         self.end_headers()
         self.wfile.write(body_bytes)
@@ -77,9 +79,14 @@ class DatasetHandler(BaseHTTPRequestHandler):
         self._send_json(code, {"error": message})
 
     def _parse_include(self, qs: dict[str, list[str]]) -> str:
+        """Training-side visibility only exposes published/reviewed.
+
+        ``include=all`` used to leak draft rows through this endpoint; it is now
+        rejected at the edge (403) instead of being passed down to the store.
+        """
         inc = qs.get("include", ["published"])[0]
-        if inc not in ("published", "reviewed", "all"):
-            inc = "published"
+        if inc not in ("published", "reviewed"):
+            return "__forbidden__"
         return inc
 
     # -- GET handlers -------------------------------------------------------
@@ -127,6 +134,10 @@ class DatasetHandler(BaseHTTPRequestHandler):
 
     def _handle_download(self, name: str, version: str, qs: dict):
         include = self._parse_include(qs)
+        if include == "__forbidden__":
+            self._send_error(403, "include must be 'published' or 'reviewed'; "
+                                  "'all' is never exposed to the training side")
+            return
         try:
             rows, sha = self.store.download_rows_jsonl(name, version, include=include)
         except KeyError:
@@ -144,7 +155,12 @@ class DatasetHandler(BaseHTTPRequestHandler):
             self._send_error(409, f"integrity check failed for {name}/{version}")
             return
 
-        self._send_jsonl_stream(rows, sha)
+        gate = getattr(self.store, "gate", None)
+        gate_level = "ungated"
+        if gate is not None:
+            row = gate.get(name, version)
+            gate_level = row["review_level"] if row else "ungated"
+        self._send_jsonl_stream(rows, sha, gate_level)
 
     def _handle_diff(self, name: str, version: str, qs: dict):
         since_list = qs.get("since")
@@ -174,9 +190,18 @@ class DatasetHandler(BaseHTTPRequestHandler):
         })
 
 
-def make_server(db_path: str, port: int, host: str = "127.0.0.1") -> HTTPServer:
-    """Create and return an HTTPServer with the dataset store."""
+def make_server(db_path: str, port: int, host: str = "127.0.0.1",
+                gate_enabled: bool = True) -> HTTPServer:
+    """Create and return an HTTPServer with the dataset store (+ train gate)."""
     store = DatasetStore(db_path)
+    if gate_enabled:
+        # 同一 SQLite 连接上的 train_gate 表：下载端点先过闸门再审级。
+        # KE_TRAIN_GATE_STRICT=1 → 无 gate 行即拒绝（生产 fail-closed）；
+        # 默认放开以兼容闸门上线前登记的历史数据集。
+        from .train_gate import TrainGateStore
+
+        strict = os.environ.get("KE_TRAIN_GATE_STRICT", "0") not in ("", "0", "false", "False")
+        store.attach_gate(TrainGateStore(conn=store.conn, strict=strict))
     # Attach store to handler class
     DatasetHandler.store = store
     server = HTTPServer((host, port), DatasetHandler)
