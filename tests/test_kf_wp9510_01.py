@@ -224,14 +224,20 @@ def test_report_has_error_judgement_section():
 
 def test_readback_audit_of_published_copy():
     """Post-publication audit: the copy the platform stores must hash to report 9510's
-    markdown and carry exactly one kf_result json block. Skips when the audit was not
-    run (offline checkout)."""
+    markdown and carry exactly one kf_result json block.
+
+    The record is committed next to the other artefacts, so a missing file is a FAILURE,
+    not a skip: on 2026-11-15 a simplified record (no schema/all_ok/checks) replaced the
+    kf_readback.v1 one on main and slipped through review; the fields below are the
+    minimum that makes the audit machine-readable again."""
     path = OUT / "readback.json"
-    if not path.exists():
-        pytest.skip("readback.json not present (publish step not run)")
+    assert path.exists(), "readback.json missing: the publish audit is part of the package"
     rec = json.loads(path.read_text(encoding="utf-8"))
     assert rec["schema"] == "kf_readback.v1"
+    assert rec["package_id"] == CONTRACT_PACKAGE_ID
     assert rec["source_report_id"] == CONTRACT_REPORT_ID
+    assert rec["checker"] == "scripts/kf_wp9510_01_report.py readback"
+    assert re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}", str(rec["checked_at"])), rec["checked_at"]
     assert rec["all_ok"] is True, rec["checks"]
     checks = rec["checks"]
     assert checks["json_blocks"] == 1 and checks["block_parses"] is True
@@ -239,5 +245,8 @@ def test_readback_audit_of_published_copy():
     assert checks["matches_contract"] is True
     assert checks["tags_ok"] is True
     assert checks["env_package_id"] == CONTRACT_PACKAGE_ID
+    assert checks["env_report_id"] == CONTRACT_REPORT_ID
     assert checks["source_hash_live"] == "sha256:" + CONTRACT_HASH
     assert str(checks["mission_id"]) == "21284"
+    assert str(checks["published_report_id"]).isdigit(), checks["published_report_id"]
+    assert checks["figures"], "audit must record which figures the platform served"
