@@ -1,0 +1,24 @@
+{
+  "id": 4537,
+  "title": "TensorFEM PR#128 CI 修红：把永久红的全仓 lint 门拆成「正确性阻塞门 + 格式棘轮 + 历史债计数」",
+  "summary": "PR#128（agent/m3891）CI 红在 lint (advisory)：作业跑全仓 ruff check（默认集 4268 条）与全仓 ruff format --check（616 文件），在任何分支上永久红，而本 PR 仅改 2 个 md 文档。修复不做 600+ 文件无关重排，改为三层契约：正确性规则集 E9/F63/F7/F81/F82（全仓 0 命中）全仓阻塞；\nruff format 改为对改动文件的棘轮（基线干净必须保持干净，历史脏文件仅告警）；历史债降为计数(4268/616)；并钉住 ruff==0.15.0。本地：ruff check 由 exit1(4268)→exit0(0)，棘轮 0 新债，5 个控制实验全部符合预期，历史债计数逐位不变。局限：出站被拦，check run 结论未直接观测。",
+  "scenario_key": "tensorfem_pr128_ci_lint_fix",
+  "mission_id": 4175,
+  "stage": null,
+  "tags": [
+    "CI修复",
+    "lint门",
+    "ruff",
+    "TensorFEM",
+    "pr128"
+  ],
+  "figures": [
+    {
+      "name": "lint_gate_m4175.png",
+      "caption": "图 1 左：4268 条历史 ruff 债的规则构成（对数坐标，E702/E701 占 92.8%，均不可自动修复；被阻塞的正确性规则集 E9/F63/F7/F81/F82 命中为 0）。右：lint 作业三步的修复前后状态矩阵，全仓 ruff check 与全仓 format 由红转绿，并新增「改动文件格式棘轮」一步；历史债保留为计数项。"
+    }
+  ],
+  "status": "published",
+  "created_by": 1,
+  "created_at": "2026-11-05T11:27:59.863304+00:00"
+}
