@@ -219,3 +219,40 @@ def test_offline_regeneration_reproduces_manifest():
     b.pop("generated_at")
     a.pop("generated_at")
     assert a == b
+
+# ------------------------------------------- environment independence (round 2)
+def test_pack_carries_no_host_worktree_path(manifest, envelope):
+    """The producer's own checkout root must not be baked into the pack.
+
+    Regression guard for the round-1 defect: `resolution.via` used to embed
+    `filesystem probe in worktree /srv/tensor/agent/work/<producer>`, which made the
+    committed manifest impossible to reproduce from any other worktree. Paths that
+    are quoted *from the source report* are source data and are allowed to remain.
+    """
+    host_root = str(ROOT)
+    for name, payload in (
+        ("asset_manifest.json", MANIFEST.read_text(encoding="utf-8")),
+        ("kf_result.json", envelope),
+        ("docs/kf/wp-4129-01.md", (ROOT / "docs" / "kf" / "wp-4129-01.md").read_text(encoding="utf-8")),
+    ):
+        assert host_root not in payload, f"host worktree path leaked into {name}"
+    for asset in manifest["assets"]:
+        assert "filesystem probe in worktree /" not in asset["resolution"].get("via", "")
+
+
+def test_offline_regen_is_independent_of_worktree_location(tmp_path):
+    """Regeneration must not depend on where the checkout lives (cwd-independent)."""
+    committed = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    out = tmp_path / "regen.json"
+    proc = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "kf_wp_4129_01_register.py"),
+         "--offline", "--out", str(out)],
+        cwd=str(tmp_path), capture_output=True, text=True,
+    )
+    assert proc.returncode == 0, proc.stderr
+    assert "SELF-CHECK PASS" in proc.stdout
+    regen = json.loads(out.read_text(encoding="utf-8"))
+    a, b = copy.deepcopy(committed), copy.deepcopy(regen)
+    a.pop("generated_at")
+    b.pop("generated_at")
+    assert b == a
