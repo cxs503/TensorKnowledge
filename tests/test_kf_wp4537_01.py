@@ -8,9 +8,11 @@ Every assertion here is an *invariant* rather than "the code ran":
   * no duplicate asset ids, zero claims, nothing marked verified;
   * the builder is deterministic (same input -> same manifest modulo timestamp).
 
-The source snapshot lives in runs/m15537_wp4537_01/ (run cache, not tracked).
-If it is absent the API is used; if neither is available the test skips with a
-reason instead of pretending to pass.
+The source snapshot is tracked as docs/kf/wp-4537-01/source_report_4537.md, so
+the hash / span / determinism / reproduction invariants hold in a clean checkout
+without network. The legacy runs/m15537_wp4537_01/ cache and the live API remain
+as fallbacks; when none is available the test skips with a reason instead of
+pretending to pass.
 """
 
 from __future__ import annotations
@@ -28,6 +30,10 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "docs" / "kf" / "wp-4537-01" / "asset_manifest.json"
 ENVELOPE_PATH = ROOT / "docs" / "kf" / "wp-4537-01" / "kf_result.json"
 SCHEMA_PATH = ROOT / "schemas" / "kf_result.v1.schema.json"
+# Tracked snapshot (in-repo, hash-pinned) — primary source for a clean checkout.
+TRACKED_MD = ROOT / "docs" / "kf" / "wp-4537-01" / "source_report_4537.md"
+TRACKED_RECORD = ROOT / "docs" / "kf" / "wp-4537-01" / "report_record_4537.json"
+# Legacy run cache (git-ignored); kept as a fallback for old worktrees.
 CACHE_MD = ROOT / "runs" / "m15537_wp4537_01" / "source_report_4537.md"
 CACHE_RECORD = ROOT / "runs" / "m15537_wp4537_01" / "report_record_4537.json"
 
@@ -47,8 +53,9 @@ def manifest() -> dict:
 
 @pytest.fixture(scope="module")
 def source_md() -> str:
-    if CACHE_MD.exists():
-        return CACHE_MD.read_text(encoding="utf-8")
+    for snapshot in (TRACKED_MD, CACHE_MD):
+        if snapshot.exists():
+            return snapshot.read_text(encoding="utf-8")
     base = os.environ.get("TENSOR_API_BASE")
     if not base or not os.environ.get("TENSOR_AGENT_USER"):
         pytest.skip("no cached source and no TENSOR_API_BASE/TENSOR_AGENT_USER to refetch")
@@ -183,12 +190,12 @@ def test_builder_is_deterministic(manifest):
     )
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    md = CACHE_MD if CACHE_MD.exists() else None
-    if md is None:
-        pytest.skip("builder determinism check needs the run cache")
-    record = json.loads(CACHE_RECORD.read_text(encoding="utf-8"))
-    a = mod.build(md.read_text(encoding="utf-8"), record)
-    b = mod.build(md.read_text(encoding="utf-8"), record)
+    md_path = TRACKED_MD if TRACKED_MD.exists() else CACHE_MD
+    record_path = TRACKED_RECORD if TRACKED_RECORD.exists() else CACHE_RECORD
+    assert md_path.exists() and record_path.exists(), "pinned snapshot/record missing"
+    record = json.loads(record_path.read_text(encoding="utf-8"))
+    a = mod.build(md_path.read_text(encoding="utf-8"), record)
+    b = mod.build(md_path.read_text(encoding="utf-8"), record)
     a.pop("generated_at")
     b.pop("generated_at")
     assert json.dumps(a, sort_keys=True, ensure_ascii=False) == json.dumps(
@@ -204,3 +211,58 @@ def test_manifest_matches_source_report_only(manifest):
     # regression guard: no other report id leaked into the register
     for other in re.findall(r"tensor://reports/(\d+)", blob):
         assert other == "4537"
+
+
+def _builder_module():
+    spec = importlib.util.spec_from_file_location(
+        "reg4537_repro", ROOT / "scripts" / "kf" / "register_4537_assets.py"
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_manifest_reproduces_offline_from_tracked_snapshot(manifest):
+    """A clean checkout must rebuild the committed manifest from in-repo bytes only."""
+    assert TRACKED_MD.exists(), f"tracked source snapshot missing: {TRACKED_MD}"
+    assert TRACKED_RECORD.exists(), f"tracked record snapshot missing: {TRACKED_RECORD}"
+    md = TRACKED_MD.read_text(encoding="utf-8")
+    assert _sha256(md) == CONTRACT_SOURCE_HASH[7:]
+    record = json.loads(TRACKED_RECORD.read_text(encoding="utf-8"))
+
+    rebuilt = _builder_module().build(md, record)
+    rebuilt.pop("generated_at", None)
+    committed = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    committed.pop("generated_at", None)
+    # full-field equality: spans, quotes, hashes, counts, unresolved reasons, checks
+    assert json.dumps(rebuilt, sort_keys=True, ensure_ascii=False) == json.dumps(
+        committed, sort_keys=True, ensure_ascii=False
+    ), "rebuilding from the tracked snapshot no longer reproduces the committed manifest"
+
+    # the asset-level retrieval provenance still records the original m15537 run
+    # cache, while the authoritative bytes live in the tracked (hash-identical) copy
+    markdown_asset = next(a for a in committed["assets"] if a["kind"] == "report_markdown")
+    assert markdown_asset["retrieval"]["cache"] == "runs/m15537_wp4537_01/source_report_4537.md"
+    assert markdown_asset["payload"]["sha256"] == CONTRACT_SOURCE_HASH
+    src = committed["source"]
+    assert src["sha256"] == CONTRACT_SOURCE_HASH
+    assert src["chars"] == CONTRACT_CHARS
+
+
+def test_snapshot_resolver_rejects_drifted_bytes(tmp_path, monkeypatch):
+    """The resolver must fail loudly on a drifted snapshot, never refresh silently."""
+    spec = importlib.util.spec_from_file_location(
+        "kf4537_source", ROOT / "scripts" / "kf" / "kf4537_source.py"
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    good = TRACKED_MD.read_text(encoding="utf-8")
+    assert mod.sha256_text(good) == CONTRACT_SOURCE_HASH
+    assert mod.load_markdown() == good  # tracked copy resolves and hash-checks
+
+    drifted = tmp_path / "source_report_4537.md"
+    drifted.write_text(good + "\n<!-- tampered -->", encoding="utf-8")
+    monkeypatch.setattr(mod, "TRACKED_MD", drifted)
+    with pytest.raises(ValueError, match="drifted from the pinned contract"):
+        mod.load_markdown()
