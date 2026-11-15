@@ -11,6 +11,8 @@ Design rules
 * download 默认 published-only；?include=reviewed 才并入 reviewed；
   draft 永不可下——服务端强制。
 * 所有数据集行以 JSONL 格式存储，每行一个训练样本。
+* 训练出口闸门（FEAT-SIM-DATAHOUSE）：持有 ``TrainGateStore`` 时，下载端点先问
+  ``train_gate`` —— 审级 ``none`` 的版本对训练侧一律 403（含 ``include=all``）。
 """
 from __future__ import annotations
 
@@ -76,13 +78,20 @@ def _now_iso() -> str:
 class DatasetStore:
     """SQLite-backed versioned dataset store."""
 
-    def __init__(self, db_path: str | Path = ":memory:"):
+    def __init__(self, db_path: str | Path = ":memory:", gate: "Any | None" = None):
         # check_same_thread=False allows the connection to be used from
         # multiple threads (e.g. HTTP server handler threads).
         self.conn = sqlite3.connect(str(db_path), check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
         self.conn.execute("PRAGMA foreign_keys = ON")
+        self.conn.execute("PRAGMA busy_timeout = 5000")
         self.conn.executescript(SCHEMA)
+        #: 训练出口闸门（ke.train_gate.TrainGateStore）；None = 未接入（不为旧调用方强加）
+        self.gate = gate
+
+    def attach_gate(self, gate: "Any") -> None:
+        """接入训练出口闸门（ke.train_gate.TrainGateStore）。"""
+        self.gate = gate
 
     # -- registration / publishing ------------------------------------------
 
@@ -93,11 +102,14 @@ class DatasetStore:
         rows: list[dict[str, Any]],
         status: str = "draft",
         description: str = "",
+        extra_manifest: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Register a new dataset version.
 
         *rows* is a list of dicts; each dict becomes one JSONL line.
         *status* must be 'draft', 'reviewed', or 'published'.
+        *extra_manifest* merges additional manifest keys (e.g. the ``held_out``
+        declaration written by :func:`ke.dataset_builder.build_dataset`).
         Returns the manifest dict.
         """
         if status not in ("draft", "reviewed", "published"):
@@ -127,6 +139,12 @@ class DatasetStore:
             "sha256": sha,
             "row_count": len(rows),
         }
+        if extra_manifest:
+            reserved = set(manifest)
+            clash = reserved & set(extra_manifest)
+            if clash:
+                raise ValueError(f"extra_manifest must not override core keys: {sorted(clash)}")
+            manifest.update(extra_manifest)
 
         with self.conn:
             self.conn.execute(
@@ -172,13 +190,26 @@ class DatasetStore:
         that status changes via promote() are reflected.
         """
         row = self.conn.execute(
-            "SELECT name, version, status, description, created_at, sha256, row_count "
-            "FROM datasets WHERE name=? AND version=?",
+            "SELECT name, version, status, description, created_at, sha256, row_count,"
+            " manifest_json FROM datasets WHERE name=? AND version=?",
             (name, version),
         ).fetchone()
         if row is None:
             return None
-        return dict(row)
+        out = dict(row)
+        stored = out.pop("manifest_json", None)
+        if stored:
+            # 冻结时写入的额外声明（如 held_out）必须保留；
+            # 核心字段以库内实时状态为准（promote() 会改 status）。
+            try:
+                base = json.loads(stored)
+            except (TypeError, ValueError):
+                base = {}
+            if isinstance(base, dict):
+                merged = {**base, **out}
+                merged.pop("manifest_json", None)
+                return merged
+        return out
 
     # -- download -----------------------------------------------------------
 
@@ -208,6 +239,11 @@ class DatasetStore:
 
         status = ds["status"]
         sha = ds["sha256"]
+
+        # Training-exit gate (FEAT-SIM-DATAHOUSE): 未过审版本对训练侧不可见。
+        gate = getattr(self, "gate", None)
+        if gate is not None:
+            gate.require_train_visible(name, version, include)
 
         # Epistemic leak prevention
         if include == "published" and status != "published":
@@ -264,6 +300,13 @@ class DatasetStore:
         if since_ds is None:
             raise KeyError(f"dataset {name}/{since} not found (since version)")
 
+        # Training-exit gate (FEAT-SIM-DATAHOUSE): 增量端点同样是训练侧出口，
+        # 否则未过审版本可以绕过 download 从 /diff 泄漏。
+        gate = getattr(self, "gate", None)
+        if gate is not None:
+            gate.require_train_visible(name, version, include)
+            gate.require_train_visible(name, since, include)
+
         # Check epistemic access for the since version too
         since_status = since_ds["status"]
         if include == "published" and since_status != "published":
@@ -294,9 +337,14 @@ class DatasetStore:
         ).fetchone()
         if ds is None:
             return False
-        rows, sha = self.download_rows_jsonl(name, version, include="all")
+        # 完整性校验是服务端内部动作，直读行、不过训练出口闸门
+        # （闸门只约束训练侧消费，不能把自己的校验路径也挡住）。
+        rows = [r["row_json"] for r in self.conn.execute(
+            "SELECT row_json FROM dataset_rows WHERE name=? AND version=? ORDER BY row_index",
+            (name, version),
+        )]
         computed = _sha256_of_rows(rows)
-        return computed == sha
+        return computed == ds["sha256"]
 
     # -- promote ------------------------------------------------------------
 

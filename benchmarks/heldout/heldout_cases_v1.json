@@ -1,0 +1,32 @@
+{
+  "schema": "tk-heldout/1",
+  "list_id": "ship-perf-heldout-v1",
+  "list_version": "1.0.0",
+  "frozen_at": "2026-11-15",
+  "anchor": "FEAT-SIM-DATAHOUSE",
+  "policy": "本名单内案号属于评测保留集(held-out)：任何数据集版本、任何 builder 产物一律排除，永不进入训练集。名单按内容 sha256 钉住，改动必须升 list_version 并在 manifest 重新声明。",
+  "selection_rule": "选取公开基准/解析解/水池试验可复核的公开案；覆盖船舶总体性能九学科（阻力/推进/耐波/操纵/稳性/结构/振动噪声/绿色航行/冰区）；每案可独立复算，容差按 ITTC/ISO/IMO 推荐做法给定。",
+  "cases": [
+    {"case_id": "HO-RES-001", "benchmark_name": "ITTC-1957-FRICTION-LINE", "domain": "resistance", "case_type": "analytic", "source": "ITTC 1957 model-ship correlation line Cf=0.075/(lgRe-2)^2", "tolerance": 0.001, "tolerance_basis": "closed-form formula, exact within float tolerance"},
+    {"case_id": "HO-RES-002", "benchmark_name": "MICHELL-WIGLEY-WAVE-RESISTANCE", "domain": "resistance", "case_type": "analytic", "source": "Michell thin-ship theory applied to Wigley parabolic hull, Fr=0.30", "tolerance": 0.05, "tolerance_basis": "thin-ship theory vs classical tabulated Michell integral"},
+    {"case_id": "HO-RES-003", "benchmark_name": "WIGLEY-ITTC-WORKSHOP-1980", "domain": "resistance", "case_type": "experiment", "source": "ITTC 1980 Wigley hull resistance, Fr=0.30/0.40 model test", "tolerance": 0.05, "tolerance_basis": "model-test repeatability + ITTC-78 correlation allowance"},
+    {"case_id": "HO-RES-004", "benchmark_name": "DTMB5415-RESISTANCE-FR028", "domain": "resistance", "case_type": "experiment", "source": "DTMB 5415 (ITTC recommended) naked hull resistance, Re=1.0e7, Fr=0.28", "tolerance": 0.05, "tolerance_basis": "model test + ITTC-57/78 correlation"},
+    {"case_id": "HO-RES-005", "benchmark_name": "KCS-RESISTANCE-FR026", "domain": "resistance", "case_type": "experiment", "source": "KCS (MOERI) resistance, Tokyo 2015 workshop, Fr=0.26", "tolerance": 0.05, "tolerance_basis": "workshop model-test scatter"},
+    {"case_id": "HO-RES-006", "benchmark_name": "KVLCC2-RESISTANCE-FR0142", "domain": "resistance", "case_type": "experiment", "source": "KVLCC2 tanker resistance, Gothenburg 2010 workshop, Fr=0.142", "tolerance": 0.06, "tolerance_basis": "workshop model-test scatter, full-form hull"},
+    {"case_id": "HO-PRO-001", "benchmark_name": "B-SERIES-B4-70-OPEN-WATER", "domain": "propulsion", "case_type": "experiment", "source": "Wageningen B4-70 open-water characteristics, J=0.6, P/D=1.0", "tolerance": 0.04, "tolerance_basis": "polynomial regression of NSMB/B-series model tests"},
+    {"case_id": "HO-PRO-002", "benchmark_name": "KP505-OPEN-WATER", "domain": "propulsion", "case_type": "experiment", "source": "KP505 propeller open-water (KCS self-propulsion), J=0.7", "tolerance": 0.04, "tolerance_basis": "MOERI model test + Tokyo 2015 workshop"},
+    {"case_id": "HO-PRO-003", "benchmark_name": "SELF-PROPULSION-KCS-WAKE-FRACTION", "domain": "propulsion", "case_type": "experiment", "source": "KCS self-propulsion wake fraction & thrust deduction, Tokyo 2015", "tolerance": 0.05, "tolerance_basis": "workshop blind-comparison scatter"},
+    {"case_id": "HO-SEA-001", "benchmark_name": "S175-HEAVE-PITCH-RAO-HEADSEAS", "domain": "seakeeping", "case_type": "experiment", "source": "S175 container ship heave/pitch RAO in head seas (ITTC seakeeping benchmark)", "tolerance": 0.10, "tolerance_basis": "experiment/semi-analytic strip theory spread at resonance"},
+    {"case_id": "HO-SEA-002", "benchmark_name": "ADDED-RESISTANCE-WAVES-NMRI", "domain": "seakeeping", "case_type": "experiment", "source": "Added resistance in regular head waves, NMRI/ITTC procedure", "tolerance": 0.15, "tolerance_basis": "short-wave scatter is known large; 15% is the achievable band"},
+    {"case_id": "HO-SEA-003", "benchmark_name": "ROLL-DAMPING-IKEDA-BENCH", "domain": "seakeeping", "case_type": "semi-analytic", "source": "Ikeda roll-damping prediction vs model-test roll decay, S175", "tolerance": 0.15, "tolerance_basis": "Ikeda method typical scatter 10-20%"},
+    {"case_id": "HO-MAN-001", "benchmark_name": "KVLCC2-TURNING-CIRCLE-IMO", "domain": "manoeuvring", "case_type": "experiment", "source": "KVLCC2 turning circle, IMO MSC.137(76) criteria, SI=35 deg", "tolerance": 0.10, "tolerance_basis": "free-running model test scatter"},
+    {"case_id": "HO-MAN-002", "benchmark_name": "DTMB5415-ZIGZAG-20-20", "domain": "manoeuvring", "case_type": "experiment", "source": "DTMB 5415 20/20 zigzag, SIMMAN/ITTC manoeuvring benchmark", "tolerance": 0.10, "tolerance_basis": "free-running model test + system-ID spread"},
+    {"case_id": "HO-MAN-003", "benchmark_name": "KCS-PMM-DERIVATIVES", "domain": "manoeuvring", "case_type": "experiment", "source": "KCS planar-motion-mechanism hydrodynamic derivatives", "tolerance": 0.12, "tolerance_basis": "PMM test repeatability"},
+    {"case_id": "HO-STA-001", "benchmark_name": "IMO-IS2008-GZ-AREA-CRITERIA", "domain": "stability", "case_type": "standard", "source": "IMO IS Code 2008 Part A 2.2: e30/e40/GZmax/initial GM criteria", "tolerance": 0.001, "tolerance_basis": "rule-based acceptance, deterministic"},
+    {"case_id": "HO-STA-002", "benchmark_name": "DAMAGED-SHIP-FLOODING-ATTWOOD", "domain": "stability", "case_type": "analytic", "source": "Attwood formula cross-curve flooded-ship heel (SOLAS II-1 probabilistic)", "tolerance": 0.03, "tolerance_basis": "closed-form cross-curve integration"},
+    {"case_id": "HO-STR-001", "benchmark_name": "CONTAINERSHIP-HULLGIRDER-SWL", "domain": "structure", "case_type": "rule", "source": "IACS UR S11 longitudinal strength: still-water + wave bending moment", "tolerance": 0.05, "tolerance_basis": "rule formula deterministic; grid convergence adds 5%"},
+    {"case_id": "HO-VIB-001", "benchmark_name": "ISO6954-DECK-VELOCITY", "domain": "vibration-noise", "case_type": "standard", "source": "ISO 6954:2000 habitability deck velocity RMS 1-80 Hz", "tolerance": 0.10, "tolerance_basis": "measurement + structural FE damping uncertainty"},
+    {"case_id": "HO-GRN-001", "benchmark_name": "EEDI-REFERENCE-LINE-PHASE2", "domain": "green-voyage", "case_type": "standard", "source": "MARPOL Annex VI EEDI reference line for bulk carrier (Phase 2)", "tolerance": 0.001, "tolerance_basis": "regulatory formula, deterministic"},
+    {"case_id": "HO-ICE-001", "benchmark_name": "ICE-RESISTANCE-LINDQVIST-LEVEL-ICE", "domain": "ice-going", "case_type": "semi-analytic", "source": "Lindqvist ice-resistance formulation, level ice h=1.0 m, v=1.5 m/s", "tolerance": 0.15, "tolerance_basis": "semi-empirical scatter 10-20%"}
+  ]
+}

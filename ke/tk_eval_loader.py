@@ -17,12 +17,27 @@ import argparse
 import hashlib
 import json
 import sys
+from urllib.error import HTTPError
 from urllib.request import urlopen, Request
 
 
 def _load_jsonl(url: str) -> tuple[list[dict], str]:
-    """Download JSONL from URL, return (rows, sha256_from_header)."""
+    """Download JSONL from URL, return (rows, sha256_from_header).
+
+    HTTP 403 = 训练出口闸门拒绝（review_level=='none' 或 include 越权）：
+    训练侧必须把这条错误当成硬失败，不许回退到别的 include 重试。
+    """
     req = Request(url)
+    try:
+        return _read_jsonl(req)
+    except HTTPError as exc:
+        if exc.code == 403:
+            body = exc.read().decode("utf-8", "replace")[:400]
+            raise PermissionError(f"train_gate denied {url}: {body}") from exc
+        raise
+
+
+def _read_jsonl(req: Request) -> tuple[list[dict], str]:
     with urlopen(req) as resp:
         sha256_header = resp.headers.get("X-Dataset-SHA256", "")
         body = resp.read().decode("utf-8")
