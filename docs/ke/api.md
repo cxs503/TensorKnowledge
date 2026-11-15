@@ -238,3 +238,23 @@ measurement must be registered as out-of-scope, never averaged away; (3) structu
 chain completeness does not imply upstream-source liveness — say `WITHHELD`, not
 "verified". `pytest tests/test_tk_agent_cases.py -q` re-checks every number against
 `runs/oss-lbm-kruger-8676/*.json` and every claim id against `knowledge/oss-lbm`.
+
+## 训练出口闸门（FEAT-SIM-DATAHOUSE）
+
+数据集下载不再是「有了版本号就能下」：每个 `(dataset_id, version)` 在
+`train_gate` 表里有一条审级（`none` / `reviewed` / `published`）。契约与红队
+取证见 [train-gate.md](train-gate.md)。
+
+```bash
+BASE=http://127.0.0.1:8021
+curl -s "$BASE/api/v1/knowledge/train-gate?dataset_id=FEAT-SIM-DATAHOUSE"
+curl -s -X POST "$BASE/api/v1/knowledge/train-gate" \
+  -H "Authorization: Bearer $KE_API_TOKEN" -H 'Content-Type: application/json' \
+  -d '{"dataset_id":"FEAT-SIM-DATAHOUSE","version":"v1.0","to_level":"reviewed",
+       "reviewer":"rev-zhang","evidence_chain":["tkc:review-form-v1.0"],"actor":"rev-zhang"}'
+curl -s "$BASE/api/v1/knowledge/held-out"          # held-out 保留名单（≥15 案）
+```
+
+`review_level='none'` 的版本对训练侧不可见：`/datasets/{name}/{version}/download`
+返回 403（`include=all` 同样 403）；`reviewed` 只认 `include=reviewed`；
+成功响应带 `X-Train-Gate-Level` 头。

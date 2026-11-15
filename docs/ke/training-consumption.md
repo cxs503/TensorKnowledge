@@ -3,6 +3,11 @@
 > 本文档定义训练侧如何消费 TensorKnowledge 版本化数据集服务。
 > 所有训练作业必须遵守版本锁纪律，确保可复现性。
 
+> **训练出口闸门（FEAT-SIM-DATAHOUSE）**：下面所有消费路径都先过 `train_gate`。
+> 未过审版本（`review_level='none'`）下载一律 403，`include=all` 在边缘即拒；
+> `reviewed` 只认 `include=reviewed`；成功响应带 `X-Train-Gate-Level` 头。
+> 契约见 [train-gate.md](train-gate.md)。训练作业必须把 403 当硬失败，不许换 include 重试。
+
 ## 1. SFT 语料 Schema
 
 每个训练样本是一行 JSON（JSONL 格式），字段如下：
