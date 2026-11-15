@@ -442,3 +442,13 @@ try:  # pragma: no cover - 可选依赖
     app.include_router(_ko_v1_router)
 except Exception as _ko_v1_exc:  # pragma: no cover
     _KO_V1_ROUTER_ERROR = _ko_v1_exc
+
+# ---------------------------------------------------------------- 训练出口闸门
+# 锚点 FEAT-SIM-DATAHOUSE：/api/v1/knowledge/train-gate 把「published/reviewed 才进
+# 训练集」落成可查可写的闸门表（实现见 ke/train_gate_api.py → ke/train_gate.py）。
+try:  # pragma: no cover - 可选依赖
+    from .train_gate_api import router as _train_gate_router
+
+    app.include_router(_train_gate_router)
+except Exception as _train_gate_exc:  # pragma: no cover
+    _TRAIN_GATE_ROUTER_ERROR = _train_gate_exc
