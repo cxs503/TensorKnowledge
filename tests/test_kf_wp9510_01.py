@@ -204,3 +204,40 @@ def test_self_verification_all_ok():
     }
     for name, check in ver["acceptance"].items():
         assert check["ok"], name
+
+def test_report_has_error_judgement_section():
+    """Section ⑥ must compare measured values with the contract baseline and answer the
+    <3% question explicitly, including the dimension that has no baseline at all."""
+    text = REPORT_MD.read_text(encoding="utf-8")
+    assert "## ⑥ 误差判定" in text
+    section = text.split("## ⑥ 误差判定", 1)[1].split("## ⑦", 1)[0]
+    assert "是否 <3%" in section
+    hash_row = [ln for ln in section.splitlines() if "源 markdown sha256" in ln]
+    chars_row = [ln for ln in section.splitlines() if "源 markdown 字符数" in ln]
+    fig_row = [ln for ln in section.splitlines() if "图件字节 sha256" in ln]
+    assert hash_row and chars_row and fig_row, "error table rows missing"
+    assert hash_row[0].rstrip().endswith("| 是 |"), hash_row[0]
+    assert chars_row[0].rstrip().endswith("| 是 |"), chars_row[0]
+    assert "不可判" in fig_row[0], "no-baseline dimension must declare itself unjudgeable"
+    assert "不可判" in section  # prose statement, not only a table cell
+
+
+def test_readback_audit_of_published_copy():
+    """Post-publication audit: the copy the platform stores must hash to report 9510's
+    markdown and carry exactly one kf_result json block. Skips when the audit was not
+    run (offline checkout)."""
+    path = OUT / "readback.json"
+    if not path.exists():
+        pytest.skip("readback.json not present (publish step not run)")
+    rec = json.loads(path.read_text(encoding="utf-8"))
+    assert rec["schema"] == "kf_readback.v1"
+    assert rec["source_report_id"] == CONTRACT_REPORT_ID
+    assert rec["all_ok"] is True, rec["checks"]
+    checks = rec["checks"]
+    assert checks["json_blocks"] == 1 and checks["block_parses"] is True
+    assert checks["provenance_matches_live"] is True
+    assert checks["matches_contract"] is True
+    assert checks["tags_ok"] is True
+    assert checks["env_package_id"] == CONTRACT_PACKAGE_ID
+    assert checks["source_hash_live"] == "sha256:" + CONTRACT_HASH
+    assert str(checks["mission_id"]) == "21284"

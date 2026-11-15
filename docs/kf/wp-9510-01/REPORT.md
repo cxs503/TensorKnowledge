@@ -1,10 +1,12 @@
 # KF-RESULT wp-9510-01
 
 **工序**：01-asset-registration（产线 lane B，源 report_id=9510）
-**母任务**：mission 18538 · **锚点**：KBM-RCI-F1-FACTORY
+**母任务**：mission 21284 · **锚点**：KBM-RCI-F1-FACTORY
 **源**：`tensor://reports/9510` 字段 `markdown` · sha256 `sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c` · 8039 chars / 12580 bytes / 203 行
 **产物**：`docs/kf/wp-9510-01/`（asset_manifest.json / kf_result.json / verification.json / source_9510.md 源副本 / figures）
-**重开**：原 PR#171（m15660）于 2026-11-05 被 owner 关闭；本包从当前 main 重建（本单=m18538）
+**重开**：原 PR#171（m15660）与其重开 PR#380 均于 2026-11-05 被 owner 关闭；本包自当前 main 重建（本单=m21284），
+改动路径仅为 `docs/kf/wp-9510-01/**` + `scripts/kf_wp9510_01_{register_assets,report}.py` + `tests/test_kf_wp9510_01.py`，
+不含 TensorKnowledge 核心模块（无与其它在开 PR 的热文件重叠）。
 
 ## ① 本工序做了什么
 
@@ -17,6 +19,11 @@ verification 由平台门独立重算）。`claims` 为空数组并写明理由�
 - 登记资产总数：**26**（按类别 `{"api_endpoint_reference": 1, "code_directory": 2, "code_symbol_reference": 1, "data_artifact": 5, "external_standard_reference": 5, "figure": 5, "source_document": 1, "source_module": 5, "test_module": 1}`）
 - 按解析状态：`{"referenced_unresolved": 25, "resolved_in_source": 1}`（其中 `resolved_in_source`=1，`referenced_unresolved`=25）
 - 源指纹一致性：hash=一致 / chars=一致 / title=一致 / scenario=一致
+
+**物理背景 / 几何 / 参数（本案声明为 N/A）**：本工序不求解、不复算任何物理量，故无几何与参数表；
+被登记源 report 9510（P155W1-N02 绿色航行法规合规验证面：EEXI/CII/EEDI 计算链）的船型几何与
+主机/工况参数只作为**原文引文**登记定位（见 ④ 表），本工序**不转录其数值**——转录即引入二次手抄误差，
+故按纪律留给下游工序从源字节读取。这解释了为何 ⑥ 的误差判定基准是契约值而非实验值。
 
 ## ② 怎么做的（步骤 / 工具 / 关键设置）
 
@@ -38,7 +45,7 @@ verification 由平台门独立重算）。`claims` 为空数组并写明理由�
 6. **封装**：`kf_result.v1` 信封（package_id/task_type/report_id/provenance/outputs/claims）；
    `provenance.source_hash` 在封装阶段**重新取数重算**，与 manifest 不一致即中止（防陈旧哈希）。
 7. **自检**：`jsonschema` 双 schema 校验（`schemas/kf_result.v1.schema.json` + `schemas/asset_manifest.v1.schema.json`），
-   再逐条机器判 6 项 acceptance（结果见 ⑥）。
+   再逐条机器判 6 项 acceptance（结果见 ⑦）。
 
 ## ③ 产出物清单
 
@@ -49,6 +56,7 @@ verification 由平台门独立重算）。`claims` 为空数组并写明理由�
 | `docs/kf/wp-9510-01/verification.json` | 6 项 acceptance 自检（`all_ok=True`） |
 | `docs/kf/wp-9510-01/figures/wp-9510-01_source_locator_map.png` | 定位符分布图：行剖面 + 资产类别×解析状态直方图；sha256 `sha256:f69091c3cc4df1fbbd12d8f122b900243d78e4c07439f06a1cc5902e6551b73b` |
 | `docs/kf/wp-9510-01/REPORT.md` | 本报告 |
+| `docs/kf/wp-9510-01/readback.json` | 发布后回读审计：server 侧副本的 json 块数 / 源哈希一致性 / 标签 / mission_id，逐项记录于该文件（由 `readback <id>` 子命令生成，不手抄） |
 | `docs/kf/wp-9510-01/source_9510.md` | 源 markdown 原样副本（12580 bytes，供离线复算；放 docs/ 因推送门禁滤除 runs/**） |
 | `runs/wp-9510-01/report.json` | 发平台载荷（含图件 base64；运行记录，不入库） |
 | `scripts/kf_wp9510_01_register_assets.py` / `scripts/kf_wp9510_01_report.py` | 可复跑流水线（build/envelope/verify/figure/report/publish） |
@@ -120,7 +128,26 @@ verification 由平台门独立重算）。`claims` 为空数组并写明理由�
    本工序只登记、不改写这些不确定性，也不把它们升格为结论。
 8. **未做**：报告类型分类（契约关）、知识抽取（下游工序 03）、`verified` 标记（平台门职责）、读写其它 report_id。
 
-## ⑥ 自检（逐条对照 acceptance）
+## ⑥ 误差判定（关键量 vs 契约基准，逐项给出是否 <3%）
+
+本工序无可比对实验/解析解的物理场量（任务=资产登记，不产数值结果），
+因此"基准"取 **工单契约 wp-9510-01 的声明值** 与 **报告原文自身声明的工件链**，
+逐项比较实测值与基准值；无基准的维度显式声明"不可判"，不计为通过。
+
+| 关键量 | 基准（契约 / 原文声明） | 实测（本进程重算） | 相对偏差 | 是否 <3% |
+|---|---|---|---|---|
+| 源 markdown sha256 | `sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c`（契约） | `sha256:cdc7db83dac16cc900d6a54d14b29f7c59e3288804041be61444d517921ee39c`（重算） | 0（逐位相等） | 是 |
+| 源 markdown 字符数 | 8039（契约） | 8039（`len(markdown)`） | 0% | 是 |
+| title / scenario_key | `P155W1-N02 绿色航行法规合规验证面成熟化（EEXI/CII/EEDI 全链 + 两处缺陷修复）` / `green_navigation_regulatory_compliance`（契约） | `P155W1-N02 绿色航行法规合规验证面成熟化（EEXI/CII/EEDI 全链 + 两处缺陷修复）` / `green_navigation_regulatory_compliance`（平台记录） | 0（串相等） | 是 |
+| 资产定位符可复算数 | 26（登记总数） | 26/26 | 0% | 是 |
+| 图件字节 sha256 | 报告正文截断前缀 5 个 | 图件端点 HTTP 404，无字节 | 无基准 | 不可判（不计通过） |
+
+判定：源指纹三个维度（sha256 / 字符数 / title+scenario）实测与契约**逐位相等**，偏差 0%，均 <3%；
+定位符可复算率 100%（26/26），偏差 0%，<3%。
+图件字节维度**无基准可判**（平台图件端点 404、无载荷）：不下"<3%"结论，如实登记为
+`referenced_unresolved`，不冒充实测通过。
+
+## ⑦ 自检（逐条对照 acceptance）
 
 | acceptance | 结果 | 实测依据 |
 |---|---|---|
@@ -170,8 +197,8 @@ verification 由平台门独立重算）。`claims` 为空数组并写明理由�
       "task_type": "01-asset-registration",
       "report_id": "9510",
       "lane": "B",
-      "generated_at": "2026-11-13T15:10:25.993644+00:00",
-      "producer": "agent/m18538",
+      "generated_at": "2026-11-15T02:53:48.769237+00:00",
+      "producer": "agent/m21284",
       "source": {
         "uri": "tensor://reports/9510",
         "report_id": "9510",
