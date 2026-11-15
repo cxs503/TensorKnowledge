@@ -1,0 +1,878 @@
+{
+  "package_id": "wp-9645-01",
+  "report_id": "9645",
+  "tool": "scripts/kf/wp_9645_01_inverse_audit.py",
+  "method": "independent closed-form reliability re-derivation (pure stdlib; no tensorphysics import)",
+  "inputs_from": "docs/kf/wp-9645-01/source/report_9645.md :: ① 参数表",
+  "inputs": {
+    "A0": 5.0,
+    "A_med": 5.0,
+    "F_k": 23.517,
+    "R_k": 33.66,
+    "a_cov": 0.35,
+    "ex": 0.4,
+    "load_cov": 0.1,
+    "p0": 2.5,
+    "pressure_cov": 0.15,
+    "res_cov": 0.12,
+    "rho_reported": -0.6737,
+    "sigma_F_reported": 0.2717,
+    "sigma_F_uncorr_reported": 0.4077
+  },
+  "derived": {
+    "sigma_lnA": 0.3399387307063912,
+    "sigma_lnp": 0.20184138187275497,
+    "sigma_lnF": 0.27166512918725116,
+    "sigma_lnF_rho0": 0.40773596226448283,
+    "rho_lnp_lnA": -0.6736749967768171,
+    "sigma_lnR": 0.11957133728793198,
+    "sigma_total": 0.29681517332702223,
+    "sigma_total_rho0": 0.4249069540788526,
+    "F_med": 12.500091548218332,
+    "F_k_rho0": 32.27431320790018,
+    "kappa_star": 1.4313180739218063,
+    "gamma_f_star": 1.437056465858938,
+    "psi_star": 0.9960068431036203,
+    "F_design": 33.795256907604646,
+    "kappa_star_rho0": 1.7409218634587025,
+    "gamma_f_star_rho0": 1.8524327829950076,
+    "psi_star_rho0": 0.939802987422834,
+    "d_gamma_f_negative_control": 0.289046622039167,
+    "d_kappa_negative_control": 0.21630677008680732,
+    "beta_naive_physical": 4.6597338928606264,
+    "beta_at_kappa_star": 4.000000000000002
+  },
+  "numeric_crosscheck": {
+    "beta_at_kappa_star_numeric": 4.0000000000000036,
+    "beta_at_kappa_star_closed": 4.000000000000002,
+    "kappa_star_numeric": 1.4313180739218057,
+    "kappa_star_closed": 1.4313180739218063,
+    "beta_naive_numeric": 4.659733892860658,
+    "beta_naive_closed": 4.6597338928606264,
+    "grid": {
+      "n": 4000,
+      "half_width": 10.0,
+      "rule": "composite Simpson on u-space, Phi=statistics.NormalDist",
+      "bisection": "β_numeric(κ)=β_T on κ∈[0.2,20], 60 iterations"
+    }
+  },
+  "iso_table": [
+    {
+      "pair": "ice_action_extreme x steel_plate_yielding",
+      "kappa_tab": 1.485,
+      "reported": {
+        "d_gamma_f": -0.060599999999999994,
+        "d_psi": 0.10439999999999999,
+        "d_kappa": 0.0375,
+        "beta_achieved": 4.124,
+        "verdict": "带内/偏保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.06057971132463724,
+        "d_psi": 0.10441008273831787,
+        "d_kappa": 0.03750523874201184,
+        "beta_achieved": 4.1240469686477015,
+        "non_conservative": false
+      }
+    },
+    {
+      "pair": "ice_action_extreme x steel_plate_buckling",
+      "kappa_tab": 1.5525,
+      "reported": {
+        "d_gamma_f": -0.060599999999999994,
+        "d_psi": 0.15460000000000002,
+        "d_kappa": 0.08470000000000001,
+        "beta_achieved": 4.2738,
+        "verdict": "超差/偏保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.06057971132463724,
+        "d_psi": 0.1546105410446048,
+        "d_kappa": 0.08466456777573939,
+        "beta_achieved": 4.273809401856795,
+        "non_conservative": false
+      }
+    },
+    {
+      "pair": "ice_action_extreme x steel_weld_connection",
+      "kappa_tab": 1.6875,
+      "reported": {
+        "d_gamma_f": -0.060599999999999994,
+        "d_psi": 0.255,
+        "d_kappa": 0.179,
+        "beta_achieved": 4.5547,
+        "verdict": "超差/偏保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.06057971132463724,
+        "d_psi": 0.25501145765717936,
+        "d_kappa": 0.17898322584319515,
+        "beta_achieved": 4.554730380405233,
+        "non_conservative": false
+      }
+    },
+    {
+      "pair": "ice_action_abnormal x steel_plate_yielding",
+      "kappa_tab": 1.21,
+      "reported": {
+        "d_gamma_f": -0.2345,
+        "d_psi": 0.10439999999999999,
+        "d_kappa": -0.15460000000000002,
+        "beta_achieved": 3.4341,
+        "verdict": "超差/不保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.23454643144970444,
+        "d_psi": 0.10441008273831787,
+        "d_kappa": -0.15462536102502755,
+        "beta_achieved": 3.4340741133166937,
+        "non_conservative": true
+      }
+    },
+    {
+      "pair": "ice_action_abnormal x steel_plate_buckling",
+      "kappa_tab": 1.265,
+      "reported": {
+        "d_gamma_f": -0.2345,
+        "d_psi": 0.15460000000000002,
+        "d_kappa": -0.1162,
+        "beta_achieved": 3.5838,
+        "verdict": "超差/不保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.23454643144970444,
+        "d_psi": 0.1546105410446048,
+        "d_kappa": -0.11619924107161972,
+        "beta_achieved": 3.5838365465257884,
+        "non_conservative": true
+      }
+    },
+    {
+      "pair": "ice_action_abnormal x steel_weld_connection",
+      "kappa_tab": 1.375,
+      "reported": {
+        "d_gamma_f": -0.2345,
+        "d_psi": 0.255,
+        "d_kappa": -0.0393,
+        "beta_achieved": 3.8648,
+        "verdict": "超差/不保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.23454643144970444,
+        "d_psi": 0.25501145765717936,
+        "d_kappa": -0.03934700116480394,
+        "beta_achieved": 3.8647575250742268,
+        "non_conservative": true
+      }
+    },
+    {
+      "pair": "ice_action_frequent x steel_plate_yielding",
+      "kappa_tab": 1.1,
+      "reported": {
+        "d_gamma_f": -0.3041,
+        "d_psi": 0.10439999999999999,
+        "d_kappa": -0.23149999999999998,
+        "beta_achieved": 3.113,
+        "verdict": "超差/不保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.3041331194997313,
+        "d_psi": 0.10441008273831787,
+        "d_kappa": -0.2314776009318431,
+        "beta_achieved": 3.112964586684392,
+        "non_conservative": true
+      }
+    },
+    {
+      "pair": "ice_action_frequent x steel_plate_buckling",
+      "kappa_tab": 1.15,
+      "reported": {
+        "d_gamma_f": -0.3041,
+        "d_psi": 0.15460000000000002,
+        "d_kappa": -0.19649999999999998,
+        "beta_achieved": 3.2627,
+        "verdict": "超差/不保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.3041331194997313,
+        "d_psi": 0.1546105410446048,
+        "d_kappa": -0.19654476461056336,
+        "beta_achieved": 3.262727019893487,
+        "non_conservative": true
+      }
+    },
+    {
+      "pair": "ice_action_frequent x steel_weld_connection",
+      "kappa_tab": 1.25,
+      "reported": {
+        "d_gamma_f": -0.3041,
+        "d_psi": 0.255,
+        "d_kappa": -0.1267,
+        "beta_achieved": 3.5436,
+        "verdict": "超差/不保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.3041331194997313,
+        "d_psi": 0.25501145765717936,
+        "d_kappa": -0.12667909196800364,
+        "beta_achieved": 3.5436479984419234,
+        "non_conservative": true
+      }
+    },
+    {
+      "pair": "repo_anchor gamma_ice x gamma_m",
+      "kappa_tab": 1.4375,
+      "reported": {
+        "d_gamma_f": -0.13019999999999998,
+        "d_psi": 0.15460000000000002,
+        "d_kappa": 0.0043,
+        "beta_achieved": 4.0145,
+        "verdict": "超差/偏保守"
+      },
+      "recomputed": {
+        "d_gamma_f": -0.13016639937466423,
+        "d_psi": 0.1546105410446048,
+        "d_kappa": 0.004319044236795744,
+        "beta_achieved": 4.01451995828332,
+        "non_conservative": false
+      }
+    }
+  ],
+  "sensitivity8_informational": [
+    {
+      "parameter": "exponent",
+      "nominal": 0.4,
+      "reported": 1.1474,
+      "recomputed": 1.1476851007219402,
+      "rel_err": 0.0002484754418164654,
+      "gated": false
+    },
+    {
+      "parameter": "a_cov",
+      "nominal": 0.35,
+      "reported": -1.8573,
+      "recomputed": -1.8580371426768496,
+      "rel_err": -0.0003968893968931545,
+      "gated": false
+    },
+    {
+      "parameter": "pressure_model_cov",
+      "nominal": 0.15,
+      "reported": -2.427,
+      "recomputed": -2.428276506642272,
+      "rel_err": -0.0005259607096299828,
+      "gated": false
+    },
+    {
+      "parameter": "load_model_cov",
+      "nominal": 0.1,
+      "reported": -1.6383,
+      "recomputed": -1.638886290655783,
+      "rel_err": -0.00035786526019835973,
+      "gated": false
+    },
+    {
+      "parameter": "resistance_cov",
+      "nominal": 0.12,
+      "reported": 0.1134,
+      "recomputed": 0.11153641658416072,
+      "rel_err": -0.016433716189058922,
+      "gated": false
+    }
+  ],
+  "assumptions": [
+    "特征值按模型自身散度取常态：F_k=F_med·e^{q99·σ_lnF}，R_k=R_med·e^{-q05·σ_lnR}（q99=2.3263, q05=1.6449）——ρ=0 对照下 F_k 随 σ_lnF 重定，这是报告数字隐含的口径",
+    "失效域 {R<F} 在 (lnR,lnF) 正态坐标下是半空间，故 Hasofer–Lind 距离=真值，闭式 β_ln 可作解析基准（不是近似）",
+    "冰压按单一幂律指数 ex（常数）建模、抗力与冰力独立、年极值面积对数正态",
+    "报告表值多为 5–6 位有效数字，本复核的舍入地板约 0.05 %",
+    "n<0.01 的极小量（如表4 的 Δκ）改为绝对差门限，不用相对误差"
+  ],
+  "summary": {
+    "n_gated": 51,
+    "n_pass": 51,
+    "n_fail": 0,
+    "max_abs_rel_err": 0.00012834307231811873,
+    "median_abs_rel_err": 4.971548965062335e-06,
+    "tol": 0.03,
+    "all_pass": true,
+    "failed": [],
+    "verdict": "PASS at 3 % gate"
+  },
+  "checks": [
+    {
+      "quantity": "sigma_lnF (correlated)",
+      "source": "参数表: σ_lnF",
+      "reported": 0.2717,
+      "recomputed": 0.27166512918725116,
+      "rel_err": -0.00012834307231811873,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "sigma_lnF (rho=0)",
+      "source": "参数表: σ_lnF（ρ=0 对照）",
+      "reported": 0.4077,
+      "recomputed": 0.40773596226448283,
+      "rel_err": 8.820766368119947e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "rho_lnp_lnA",
+      "source": "参数表: ρ_lnp,lnA",
+      "reported": -0.6737,
+      "recomputed": -0.6736749967768171,
+      "rel_err": 3.711328956936991e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "kappa*",
+      "source": "表1",
+      "reported": 1.431318,
+      "recomputed": 1.4313180739218063,
+      "rel_err": 5.1645969820669025e-08,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "gamma_f*",
+      "source": "表1",
+      "reported": 1.437056,
+      "recomputed": 1.437056465858938,
+      "rel_err": 3.241759110934906e-07,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "psi*",
+      "source": "表1",
+      "reported": 0.996007,
+      "recomputed": 0.9960068431036203,
+      "rel_err": -1.5752537850245412e-07,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "F* (design point)",
+      "source": "表1",
+      "reported": 33.795,
+      "recomputed": 33.795256907604646,
+      "rel_err": 7.601941252970586e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "R* (design point)",
+      "source": "表1",
+      "reported": 33.795,
+      "recomputed": 33.795256907604646,
+      "rel_err": 7.601941252970586e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "设计点满足 R=F ⇒ R* 应与 F* 相同"
+    },
+    {
+      "quantity": "beta at kappa* (physical)",
+      "source": "表1",
+      "reported": 4.0,
+      "recomputed": 4.000000000000002,
+      "rel_err": 4.440892098500626e-16,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [ice_action_extreme x steel_plate_yielding]",
+      "source": "表4",
+      "reported": 0.0375,
+      "recomputed": 0.03750523874201184,
+      "rel_err": 5.238742011838549e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [ice_action_extreme x steel_plate_yielding]",
+      "source": "表4",
+      "reported": 4.124,
+      "recomputed": 4.1240469686477015,
+      "rel_err": 1.1389099830702521e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [ice_action_extreme x steel_plate_buckling]",
+      "source": "表4",
+      "reported": 0.08470000000000001,
+      "recomputed": 0.08466456777573939,
+      "rel_err": -3.5432224260625866e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [ice_action_extreme x steel_plate_buckling]",
+      "source": "表4",
+      "reported": 4.2738,
+      "recomputed": 4.273809401856795,
+      "rel_err": 2.199882258252925e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [ice_action_extreme x steel_weld_connection]",
+      "source": "表4",
+      "reported": 0.179,
+      "recomputed": 0.17898322584319515,
+      "rel_err": -1.6774156804844065e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [ice_action_extreme x steel_weld_connection]",
+      "source": "表4",
+      "reported": 4.5547,
+      "recomputed": 4.554730380405233,
+      "rel_err": 6.670122122730302e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [ice_action_abnormal x steel_plate_yielding]",
+      "source": "表4",
+      "reported": -0.15460000000000002,
+      "recomputed": -0.15462536102502755,
+      "rel_err": -2.536102502753712e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [ice_action_abnormal x steel_plate_yielding]",
+      "source": "表4",
+      "reported": 3.4341,
+      "recomputed": 3.4340741133166937,
+      "rel_err": -7.538127400563588e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [ice_action_abnormal x steel_plate_buckling]",
+      "source": "表4",
+      "reported": -0.1162,
+      "recomputed": -0.11619924107161972,
+      "rel_err": 7.589283802789115e-07,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [ice_action_abnormal x steel_plate_buckling]",
+      "source": "表4",
+      "reported": 3.5838,
+      "recomputed": 3.5838365465257884,
+      "rel_err": 1.0197702379688586e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [ice_action_abnormal x steel_weld_connection]",
+      "source": "表4",
+      "reported": -0.0393,
+      "recomputed": -0.03934700116480394,
+      "rel_err": -4.700116480393923e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [ice_action_abnormal x steel_weld_connection]",
+      "source": "表4",
+      "reported": 3.8648,
+      "recomputed": 3.8647575250742268,
+      "rel_err": -1.0990200210367512e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [ice_action_frequent x steel_plate_yielding]",
+      "source": "表4",
+      "reported": -0.23149999999999998,
+      "recomputed": -0.2314776009318431,
+      "rel_err": 2.2399068156875312e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [ice_action_frequent x steel_plate_yielding]",
+      "source": "表4",
+      "reported": 3.113,
+      "recomputed": 3.112964586684392,
+      "rel_err": -1.1375944621897957e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [ice_action_frequent x steel_plate_buckling]",
+      "source": "表4",
+      "reported": -0.19649999999999998,
+      "recomputed": -0.19654476461056336,
+      "rel_err": -4.4764610563380325e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [ice_action_frequent x steel_plate_buckling]",
+      "source": "表4",
+      "reported": 3.2627,
+      "recomputed": 3.262727019893487,
+      "rel_err": 8.281452014170787e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [ice_action_frequent x steel_weld_connection]",
+      "source": "表4",
+      "reported": -0.1267,
+      "recomputed": -0.12667909196800364,
+      "rel_err": 2.090803199636393e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [ice_action_frequent x steel_weld_connection]",
+      "source": "表4",
+      "reported": 3.5436,
+      "recomputed": 3.5436479984419234,
+      "rel_err": 1.3545107213926317e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δκ [repo_anchor gamma_ice x gamma_m]",
+      "source": "表4",
+      "reported": 0.0043,
+      "recomputed": 0.004319044236795744,
+      "rel_err": 1.9044236795743782e-05,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": "相对偏差量：比较用绝对差"
+    },
+    {
+      "quantity": "β_table [repo_anchor gamma_ice x gamma_m]",
+      "source": "表4",
+      "reported": 4.0145,
+      "recomputed": 4.01451995828332,
+      "rel_err": 4.971548965062335e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "non_conservative_row_set",
+      "source": "表4 判定列",
+      "reported": [
+        "ice_action_abnormal x steel_plate_yielding",
+        "ice_action_abnormal x steel_plate_buckling",
+        "ice_action_abnormal x steel_weld_connection",
+        "ice_action_frequent x steel_plate_yielding",
+        "ice_action_frequent x steel_plate_buckling",
+        "ice_action_frequent x steel_weld_connection"
+      ],
+      "recomputed": [
+        "ice_action_abnormal x steel_plate_yielding",
+        "ice_action_abnormal x steel_plate_buckling",
+        "ice_action_abnormal x steel_weld_connection",
+        "ice_action_frequent x steel_plate_yielding",
+        "ice_action_frequent x steel_plate_buckling",
+        "ice_action_frequent x steel_weld_connection"
+      ],
+      "rel_err": 0.0,
+      "tol": 0.0,
+      "pass": true,
+      "gated": true,
+      "note": "集合相等即通过（Δκ<-15 % 判不保守）"
+    },
+    {
+      "quantity": "kappa* (rho=0)",
+      "source": "表6",
+      "reported": 1.740922,
+      "recomputed": 1.7409218634587025,
+      "rel_err": -7.843045099192646e-08,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "gamma_f* (rho=0)",
+      "source": "表6",
+      "reported": 1.852433,
+      "recomputed": 1.8524327829950076,
+      "rel_err": -1.1714593317002269e-07,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "psi* (rho=0)",
+      "source": "表6",
+      "reported": 0.939803,
+      "recomputed": 0.939802987422834,
+      "rel_err": -1.3382768608293957e-08,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "Δγ_f* (ignoring p-A correlation)",
+      "source": "表6 正文",
+      "reported": 0.289,
+      "recomputed": 0.289046622039167,
+      "rel_err": 4.662203916699914e-05,
+      "tol": 0.01,
+      "pass": true,
+      "gated": true,
+      "note": "绝对差门限 1 个百分点"
+    },
+    {
+      "quantity": "Δκ* (ignoring p-A correlation)",
+      "source": "表6 正文",
+      "reported": 0.2163,
+      "recomputed": 0.21630677008680732,
+      "rel_err": 6.770086807328379e-06,
+      "tol": 0.01,
+      "pass": true,
+      "gated": true,
+      "note": "绝对差门限 1 个百分点"
+    },
+    {
+      "quantity": "β when over-large κ* is applied to physical model",
+      "source": "表6 正文",
+      "reported": 4.6597,
+      "recomputed": 4.6597338928606264,
+      "rel_err": 7.27361431561996e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "beta(κ*) closed form vs numeric quadrature",
+      "source": "数值路径自检",
+      "reported": 4.000000000000002,
+      "recomputed": 4.0000000000000036,
+      "rel_err": 1.7763568394002505e-15,
+      "tol": 0.0001,
+      "pass": true,
+      "gated": true,
+      "note": "绝对差门限 1e-6（两条独立路径）"
+    },
+    {
+      "quantity": "κ* closed form vs numeric bisection",
+      "source": "数值路径自检",
+      "reported": 1.4313180739218063,
+      "recomputed": 1.4313180739218057,
+      "rel_err": -6.661338147750939e-16,
+      "tol": 0.0001,
+      "pass": true,
+      "gated": true,
+      "note": "相对差门限 1e-4"
+    },
+    {
+      "quantity": "β_naive closed form vs numeric quadrature",
+      "source": "数值路径自检",
+      "reported": 4.6597338928606264,
+      "recomputed": 4.659733892860658,
+      "rel_err": 3.197442310920451e-14,
+      "tol": 1e-06,
+      "pass": true,
+      "gated": true,
+      "note": "绝对差门限 1e-6"
+    },
+    {
+      "quantity": "kappa*(β_T=3.30)",
+      "source": "表7",
+      "reported": 1.16279,
+      "recomputed": 1.1627933008067566,
+      "rel_err": 2.8386955138845673e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "gamma_f*(β_T=3.30)",
+      "source": "表7",
+      "reported": 1.20749,
+      "recomputed": 1.2074909524638646,
+      "rel_err": 7.88796482511166e-07,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "psi*(β_T=3.30)",
+      "source": "表7",
+      "reported": 0.96298,
+      "recomputed": 0.9629830338969387,
+      "rel_err": 3.1505295424480677e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "kappa*(β_T=3.80)",
+      "source": "表7",
+      "reported": 1.34882,
+      "recomputed": 1.3488234785284803,
+      "rel_err": 2.578941949534985e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "gamma_f*(β_T=3.80)",
+      "source": "表7",
+      "reported": 1.36734,
+      "recomputed": 1.3673405867709714,
+      "rel_err": 4.2913318660095187e-07,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "psi*(β_T=3.80)",
+      "source": "表7",
+      "reported": 0.98646,
+      "recomputed": 0.9864575743442093,
+      "rel_err": -2.458949973310737e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "kappa*(β_T=4.00)",
+      "source": "表7",
+      "reported": 1.43132,
+      "recomputed": 1.4313180739218063,
+      "rel_err": -1.345665674764334e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "gamma_f*(β_T=4.00)",
+      "source": "表7",
+      "reported": 1.43706,
+      "recomputed": 1.437056465858938,
+      "rel_err": -2.459285667976741e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "psi*(β_T=4.00)",
+      "source": "表7",
+      "reported": 0.99601,
+      "recomputed": 0.9960068431036203,
+      "rel_err": -3.1695428556353234e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "kappa*(β_T=4.30)",
+      "source": "表7",
+      "reported": 1.56462,
+      "recomputed": 1.5646158048617982,
+      "rel_err": -2.6812505283790745e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "gamma_f*(β_T=4.30)",
+      "source": "表7",
+      "reported": 1.54835,
+      "recomputed": 1.5483513780507057,
+      "rel_err": 8.900124040231476e-07,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    },
+    {
+      "quantity": "psi*(β_T=4.30)",
+      "source": "表7",
+      "reported": 1.0105,
+      "recomputed": 1.0105043513001348,
+      "rel_err": 4.306086229465559e-06,
+      "tol": 0.03,
+      "pass": true,
+      "gated": true,
+      "note": ""
+    }
+  ]
+}
