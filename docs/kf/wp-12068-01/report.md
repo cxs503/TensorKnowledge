@@ -30,8 +30,8 @@
 
 | 文件 | 要点 |
 |---|---|
-| `asset_manifest.json` | 9 项资产；`by_class`={"report_markdown": 1, "embedded_figure": 5, "report_table": 3}；claims=0；sha256 `ff4a48cc9589dbf6083a7acb4647d9dc50205badb87d3975876c81f2dd97e89e` |
-| `kf_result.json` | 结果信封（package_id/task_type/report_id/provenance/outputs/claims）；sha256 `c4807e57c3e2b6316ed09957a8606b6c315beef7be021950c7670e9433601534` |
+| `asset_manifest.json` | 9 项资产；`by_class`={"report_markdown": 1, "embedded_figure": 5, "report_table": 3}；claims=0；sha256 `fb81688950ad1711068b19b04f5e527c72d86971a29d740078401d78957bcae3` |
+| `kf_result.json` | 结果信封（package_id/task_type/report_id/provenance/outputs/claims）；sha256 `6c2e8b1ce6a2f69c70ec03919e348372ac226db1879769642b846fa60413a532` |
 | `verification.json` | 9 项 acceptance 自检逐条 pass/fail + 重算哈希；`all_pass`=True |
 | `report.md` | 本报告（由清单/信封/自检**程序化渲染**，无手抄）|
 | `figures/wp-12068-01_asset_locator_map.png` | A) 资产类别×解析状态计数；B) 每个资产的字符跨度覆盖图 |
@@ -44,18 +44,20 @@
 
 **图注**：A) 资产类别 × 解析状态（绿=源内已解析、红=引用未解析、灰=声明缺失）；B) 每个资产在 markdown 中的字符跨度
 （横轴=字符偏移，源文档 1086 字符）。两图直接由 `asset_manifest.json` 绘出，零手抄。
-红色条不是缺陷而是**边界的正确表达**：5 张图在 `record.figures[]` 中只有 name+caption（`png_base64` 为空），本包不伪造字节哈希，如实记 `referenced_unresolved`（metadata_only）。
+红色条不是缺陷而是**边界的正确表达**：5 张图在 `record.figures[]` 中只有 name+caption（`png_base64` 为空），本包不伪造字节哈希，如实记 `referenced_unresolved`（metadata_only）；但**定位器不退化**——图名是 slug（`sod_shock_tube`）而正文只有散文式小节标题，故按归一化词元在标题行上做确定性匹配（唯一最高分 ≥0.5），推导留痕于 `match_basis`。
+
+**发布状态**：`awaiting_pr_merge`（本报告渲染于 `publish` 之前，最终状态以 `published.json` 为准；本包不自称已发布）。
 
 ## ⑤ 证据定位表（资产 → 原文逐字片段，均由 `md[start_char:end_char]` 计算）
 
 | asset_id | 类别 | 解析 | 行 | 原文片段（逐字） |
 |---|---|---|---|---|
 | A01 | report_markdown | resolved_in_source | L1 | `# DG Compressible Euler: Hierarchical Verification Chain  ## 1. ` |
-| A02 | embedded_figure | referenced_unresolved | L1 | `# DG Compressible Euler: Hierarchical Verification Chain  ## 1. ` |
-| A03 | embedded_figure | referenced_unresolved | L1 | `# DG Compressible Euler: Hierarchical Verification Chain  ## 1. ` |
-| A04 | embedded_figure | referenced_unresolved | L1 | `# DG Compressible Euler: Hierarchical Verification Chain  ## 1. ` |
-| A05 | embedded_figure | referenced_unresolved | L1 | `# DG Compressible Euler: Hierarchical Verification Chain  ## 1. ` |
-| A06 | embedded_figure | referenced_unresolved | L1 | `# DG Compressible Euler: Hierarchical Verification Chain  ## 1. ` |
+| A02 | embedded_figure | referenced_unresolved | L13 | `### 3.1 Sod Shock Tube (a)` |
+| A03 | embedded_figure | referenced_unresolved | L19 | `### 3.2 Lax Shock Tube (b)` |
+| A04 | embedded_figure | referenced_unresolved | L26 | `### 3.3 Vortex Convergence (c)` |
+| A05 | embedded_figure | referenced_unresolved | L33 | `### 3.4 Double Mach (d)` |
+| A06 | embedded_figure | referenced_unresolved | L36 | `### 3.5 Cylinder (e)` |
 | A07 | report_table | resolved_in_source | L14 | `\| Field \| L2 Error \| <2%? \| \|-------\|----------\|------\| ` |
 | A08 | report_table | resolved_in_source | L20 | `\| Field \| L2 Error \| <3%? \| \|-------\|----------\|------\| ` |
 | A09 | report_table | resolved_in_source | L27 | `\| Degree \| Order \| Required \| Pass \| \|--------\|-------\|-` |
@@ -69,7 +71,7 @@
 3. **图只有元数据**：报告记录 `figures[]` 共 5 项均无 `png_base64` 载荷（0 字节），故只登记 name/caption + 正文出现位置，
    记 `metadata_only`（`resolution=referenced_unresolved`），**不宣称拿到图字节**。
 4. **无跨仓路径引用**：源 markdown 不含任何文件路径引用（无行内代码/围栏代码路径），故清单中不存在路径类资产；
-   5 个图名亦未出现在正文中，其定位器如实退化为整文档跨度（method=document）。
+   5 个图名亦未逐字出现在正文中：此时不退回整文档跨度，而是匹配到 `### 3.x` 小节标题行（score 与命中词元记入 `match_basis`；出现并列最高分则拒绝匹配、如实退回整文档）。
 5. **表格内容未复述**：3 张表只登记几何（行×列）与字符跨度，避免把报表数字二次转写引入漂移。
 6. **schema 口径**：仓库内 `schemas/asset_manifest.v1.schema.json` 把 `package_id/task_type/report_id`/`source.uri` 钉死为 wp-448-01 的包级取值，
    自检时**仅放松这四处包级固定值**（`source.uri` 改为 `^tensor://reports/[0-9]+$`，其余约束照常生效）并如实记录在 `detail` 里，避免把「本包必挂」伪装成通过。
@@ -86,7 +88,10 @@
 | all_claims_have_evidence_or_explicit_unresolved_status | PASS | claims=0 violating=0 (empty array: vacuously satisfied per contract notes) |
 | do_not_mark_claims_as_verified | PASS | claims=0, none carries status='verified' |
 | report_id_scoped | PASS | single report_id=12068 (no other report is read or written) |
-| manifest_hash_matches_envelope | PASS | recomputed=ff4a48cc9589dbf6083a7acb4647d9dc50205badb87d3975876c81f2dd97e89e envelope=ff4a48cc9589dbf6083a7acb4647d9dc50205badb87d3975876c81f2dd97e89e |
+| manifest_hash_matches_envelope | PASS | recomputed=fb81688950ad1711068b19b04f5e527c72d86971a29d740078401d78957bcae3 envelope=fb81688950ad1711068b19b04f5e527c72d86971a29d740078401d78957bcae3 |
+
+（本表引自**第一遍**自检；`publish` / `readme` 之后流程会再跑一遍 fixpoint 复算，
+因此 `verification.json` 可能比本表多一条 `publication_ledger_consistent`——**以 `verification.json` 为最终口径**。）
 
 ## 复现
 
@@ -114,13 +119,13 @@ repro_cmd: `python3 scripts/kf/kf01_register.py --preset wp-12068-01 build resul
     "fetched_via": "GET /api/v1/tensor/reports/12068",
     "generator": "scripts/kf/kf01_register.py",
     "contract_version": "1.0",
-    "emitted_at": "2026-11-14T10:53:06.022338+00:00"
+    "emitted_at": "2026-11-15T20:44:32.322150+00:00"
   },
   "outputs": {
     "asset_manifest.json": {
       "path": "docs/kf/wp-12068-01/asset_manifest.json",
-      "sha256": "ff4a48cc9589dbf6083a7acb4647d9dc50205badb87d3975876c81f2dd97e89e",
-      "bytes": 18960,
+      "sha256": "fb81688950ad1711068b19b04f5e527c72d86971a29d740078401d78957bcae3",
+      "bytes": 16163,
       "asset_count": 9,
       "claims": 0
     }
