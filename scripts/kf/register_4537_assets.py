@@ -40,8 +40,17 @@ PACKAGE_ID = "wp-4537-01"
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "docs" / "kf" / "wp-4537-01"  # tracked: artifacts/ is dropped by the push gate
-CACHE_MD = ROOT / "runs" / "m15537_wp4537_01" / "source_report_4537.md"
-CACHE_RECORD = ROOT / "runs" / "m15537_wp4537_01" / "report_record_4537.json"
+# Source snapshot resolution lives in one place: tracked docs/ snapshot first,
+# legacy runs/ run cache second (see scripts/kf/kf4537_source.py).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import kf4537_source  # noqa: E402
+
+CACHE_MD = kf4537_source.md_path  # callables: tracked docs/ snapshot first
+CACHE_RECORD = kf4537_source.record_path
+# Historical retrieval path of the m15537 run (what the manifest records as
+# provenance). The same bytes are now tracked as
+# docs/kf/wp-4537-01/source_report_4537.md, so build() output is unchanged.
+RETRIEVAL_CACHE_PATH = "runs/m15537_wp4537_01/source_report_4537.md"
 
 FILE_SUFFIXES = (
     ".py",
@@ -175,7 +184,7 @@ def build(md: str, record: dict) -> dict:
             "retrieval": {
                 "endpoint": f"GET /api/v1/tensor/reports/{REPORT_ID}",
                 "field": "markdown",
-                "cache": str(CACHE_MD.relative_to(ROOT)),
+                "cache": RETRIEVAL_CACHE_PATH,
             },
             "locator": {
                 "source_field": "markdown",
@@ -490,25 +499,34 @@ def build(md: str, record: dict) -> dict:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
-        "--from-cache", action="store_true", help="rebuild from the cached markdown+record"
+        "--from-cache",
+        action="store_true",
+        help="rebuild from the pinned snapshot (tracked docs/ copy first, then runs/ cache)",
+    )
+    ap.add_argument(
+        "--out-dir",
+        default=None,
+        help="write manifest+envelope here instead of docs/kf/wp-4537-01 (verification runs)",
     )
     args = ap.parse_args()
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    CACHE_MD.parent.mkdir(parents=True, exist_ok=True)
+    out_dir = Path(args.out_dir).resolve() if args.out_dir else OUT_DIR
+    out_dir.mkdir(parents=True, exist_ok=True)
+    kf4537_source.LEGACY_MD.parent.mkdir(parents=True, exist_ok=True)
 
     if args.from_cache:
-        md = CACHE_MD.read_text(encoding="utf-8")
-        record = json.loads(CACHE_RECORD.read_text(encoding="utf-8"))
+        md, record = kf4537_source.load()  # hash-checked against the pinned contract
     else:
         record = fetch_record()
         md = record["markdown"]
-        CACHE_MD.write_text(md, encoding="utf-8")
+        kf4537_source.LEGACY_MD.write_text(md, encoding="utf-8")
         record_meta = {k: v for k, v in record.items() if k != "markdown"}
-        CACHE_RECORD.write_text(json.dumps(record_meta, ensure_ascii=False, indent=2), encoding="utf-8")
+        kf4537_source.LEGACY_RECORD.write_text(
+            json.dumps(record_meta, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
     manifest = build(md, record)
-    manifest_path = OUT_DIR / "asset_manifest.json"
+    manifest_path = out_dir / "asset_manifest.json"
     manifest_path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
@@ -528,14 +546,16 @@ def main() -> int:
         "outputs": {"asset_manifest.json": manifest},
         "claims": manifest["claims"],
     }
-    (OUT_DIR / "kf_result.json").write_text(
+    (out_dir / "kf_result.json").write_text(
         json.dumps(envelope, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
 
     print(
         json.dumps(
             {
-                "manifest": str(manifest_path.relative_to(ROOT)),
+                "manifest": str(manifest_path.relative_to(ROOT))
+                if manifest_path.is_relative_to(ROOT)
+                else str(manifest_path),
                 "checks": manifest["checks"],
                 "asset_counts": manifest["asset_counts"],
             },

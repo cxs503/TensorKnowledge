@@ -3,7 +3,7 @@
 
 Every number and every quote in the emitted markdown is produced here from
 docs/kf/wp-4537-01/asset_manifest.json and from the pinned source snapshot
-(runs/m15537_wp4537_01/source_report_4537.md) — no hand copied digits, and each
+(docs/kf/wp-4537-01/source_report_4537.md, hash-pinned) — no hand copied digits, and each
 quote is re-sliced from the source by its recorded span before being used
 (a drifted span aborts the publish instead of shipping a wrong quote).
 
@@ -25,9 +25,39 @@ PKG_DIR = ROOT / "docs" / "kf" / "wp-4537-01"
 MANIFEST = PKG_DIR / "asset_manifest.json"
 ENVELOPE = PKG_DIR / "kf_result.json"
 FIGURE = PKG_DIR / "asset_status.png"
-SOURCE_MD = ROOT / "runs" / "m15537_wp4537_01" / "source_report_4537.md"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import kf4537_source  # noqa: E402
+
+# Pinned snapshot: tracked docs/ copy first, legacy runs/ cache second.
+SOURCE_MD = kf4537_source.md_path()
 MISSION_ID = 15537
 PKG = "wp-4537-01"
+
+# `kf_result.json` is the *trimmed* deterministic projection of the envelope (no
+# timestamps, so a rebuild is byte-stable).  The report embeds the envelope as it
+# was emitted at publication time, so it is reconstructed here from the manifest
+# instead of read from the trimmed file — otherwise `--dry-run` would silently
+# rewrite the report without its provenance fields.
+REGISTER_NOTES = "source_hash=本脚本对 markdown UTF-8 字节独立重算的 sha256；与契约声明一致（见 checks）。"
+
+
+def publication_envelope(m: dict) -> dict:
+    """The envelope shape ``scripts/kf/register_4537_assets.py`` emits."""
+    return {
+        "package_id": PKG,
+        "task_type": "01-asset-registration",
+        "report_id": str(m["source"]["report_id"]),
+        "provenance": {
+            "source_hash": m["source"]["sha256"],
+            "source_field": "markdown",
+            "source_uri": m["source"]["source_uri"],
+            "producer": "scripts/kf/register_4537_assets.py",
+            "emitted_at": m["generated_at"],
+            "notes": REGISTER_NOTES,
+        },
+        "outputs": {"asset_manifest.json": m},
+        "claims": m["claims"],
+    }
 
 
 def quote(md: str, span: list[int], expected: str) -> str:
@@ -38,7 +68,7 @@ def quote(md: str, span: list[int], expected: str) -> str:
 
 
 def build_markdown(m: dict, env: dict) -> str:
-    md = SOURCE_MD.read_text(encoding="utf-8")
+    md = kf4537_source.load_markdown()  # hash-checked against the pinned contract
     src = m["source"]
     counts = m["asset_counts"]
     checks = m["checks"]
@@ -147,8 +177,9 @@ def build_markdown(m: dict, env: dict) -> str:
         "7. **附件扫描**：记录 `figures[]` 长度、markdown 图片语法命中数、markdown 明文 URL 命中数，全量登记不裁剪。"
     )
     A(
-        "8. **自检**：`python3 -m pytest tests/test_kf_wp4537_01.py -q` → 10 项不变量（含 envelope 走 `schemas/kf_result.v1.schema.json`、"
-        "逐 span 复解、去重、构建器确定性）；图 `asset_status.png` 由 manifest 现场计数渲染。"
+        "8. **自检**：`python3 -m pytest tests/test_kf_wp4537_01.py -q` → 11 项不变量（含 envelope 走 `schemas/kf_result.v1.schema.json`、"
+        "逐 span 复解、去重、构建器确定性、以及**离线复现**：仅用入库的取源快照重建 manifest 并与入库件逐字段相等）；"
+        "图 `asset_status.png` 由 manifest 现场计数渲染。干净检出即可全绿，不依赖运行缓存与网络。"
     )
     A("")
     A(
@@ -171,17 +202,25 @@ def build_markdown(m: dict, env: dict) -> str:
         "| `docs/kf/wp-4537-01/asset_status.png` | 结果图 | 资产状态×种类构成 + 哈希/自检摘要（数字由 manifest 现场统计） |"
     )
     A(
-        "| `scripts/kf/register_4537_assets.py` | 构建器 | 取源→重算哈希→分类→定位→写 manifest/信封；`--from-cache` 可离线复算 |"
+        "| `scripts/kf/register_4537_assets.py` | 构建器 | 取源→重算哈希→分类→定位→写 manifest/信封；"
+        "`--from-cache` 走入库快照离线复算，`--out-dir` 可写到临时目录做比对 |"
     )
     A("| `scripts/kf/make_4537_figure.py` | 图生成器 | 只读 manifest 计数，零手抄 |")
     A(
-        "| `tests/test_kf_wp4537_01.py` | 不变量测试 | 10 项：哈希/字符数/逐 span 复解/去重/claims 空/无 verified/确定性/单报告范围 |"
+        "| `tests/test_kf_wp4537_01.py` | 不变量测试 | 11 项：哈希/字符数/逐 span 复解/去重/claims 空/无 verified/确定性/离线复现/单报告范围 |"
     )
     A(
         "| `schemas/kf_result.v1.schema.json` | 契约（随包引入） | 与平台侧同名 schema 逐字节一致（sha256 `170dba8b…c076`），供信封结构门本地复跑 |"
     )
     A(
-        "| `runs/m15537_wp4537_01/source_report_4537.md` | 运行缓存（不入库） | 取源快照，供离线复算；不作为第二份真相 |"
+        "| `docs/kf/wp-4537-01/source_report_4537.md` | 取源快照（入库） | "
+        f"{src['bytes_utf8']} 字节 / sha256 已钉住，供干净检出离线复算；不作第二份真相 |"
+    )
+    A(
+        "| `docs/kf/wp-4537-01/report_record_4537.json` | 记录元数据快照（入库） | 平台 `GET /tensor/reports/4537` 去掉 markdown 字段后的记录；构建器确定性复算的输入 |"
+    )
+    A(
+        "| `scripts/kf/kf4537_source.py` | 取源解析器 | 唯一取源入口：入库快照优先、`runs/` 缓存兜底，读入即校验钉住的 sha256/字符数 |"
     )
     A("")
     A("## ④ 证据定位表（claim/字段 → 原文引文片段）")
@@ -245,8 +284,10 @@ def build_markdown(m: dict, env: dict) -> str:
         "8. **确定性边界**：构建器除 `generated_at` 外逐字节确定（`test_builder_is_deterministic` 断言）；时间戳反映实际取源时刻。"
     )
     A(
-        "9. **贴源原则的偏差声明**：为使定位可离线复算，本单把取源快照落在 `runs/m15537_wp4537_01/source_report_4537.md`（{src['bytes_utf8']} 字节，sha256 已在 manifest 钉住）。"
-        "它**不是第二份真相**：manifest 只存 span/sha256，权威正文仍回平台取；若该快照缺失，测试改为现场重取或 skip（不伪绿）。"
+        "9. **贴源原则的偏差声明**：为使定位可离线复算，本单把取源快照入库为 `docs/kf/wp-4537-01/source_report_4537.md`"
+        f"（{src['bytes_utf8']} 字节，sha256 已在 manifest 钉住，读入即校验）。"
+        "它**不是第二份真相**：manifest 只存 span/sha256，权威正文仍回平台取；快照一旦漂移，解析器直接报错而不是静默更新。"
+        "（原方案落在不入库的 `runs/m15537_wp4537_01/`，干净检出下复算与一条不变量会退化为 skip；已由上述入库快照修复，见 `docs/kf/wp-4537-01/REPRODUCE.md`。）"
     )
     A("")
     A("## ⑥ 计算结果与误差判定（含结果图与「是否 <3%」显式回答）")
@@ -324,7 +365,7 @@ def main() -> int:
     args = ap.parse_args()
 
     m = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    env = json.loads(ENVELOPE.read_text(encoding="utf-8"))
+    env = publication_envelope(m)
     md = build_markdown(m, env)
     out = PKG_DIR / "report.md"
     out.write_text(md, encoding="utf-8")
