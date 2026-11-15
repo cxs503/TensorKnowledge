@@ -247,7 +247,12 @@ def build(markdown: str, record: dict, *, offline: bool, probes: dict | None = N
                 "resolution": {
                     "status": "unresolved",
                     "scope": "delivery_worktree",
-                    "via": "filesystem probe in worktree " + str(ROOT),
+                    # Environment-independent on purpose: the producer's absolute
+                    # worktree path must never enter the pack, otherwise the manifest
+                    # stops being reproducible from any other checkout. The declared
+                    # path itself is quoted from the frozen source, so it is stable.
+                    "via": "filesystem probe in delivery worktree (TensorKnowledge); "
+                           "declared path as quoted from source: " + name,
                     "path_present_in_worktree": bool(in_wt),
                     "reason": (
                         "path not present in delivery worktree TensorKnowledge"
@@ -396,7 +401,7 @@ def build(markdown: str, record: dict, *, offline: bool, probes: dict | None = N
         "single_report_scope": True,
     }
 
-    return {
+    manifest = {
         "manifest_version": "1.0",
         "package_id": PKG,
         "task_type": TASK_TYPE,
@@ -489,6 +494,7 @@ def build(markdown: str, record: dict, *, offline: bool, probes: dict | None = N
         ],
         "checks": checks,
     }
+    return manifest
 
 
 def _now() -> str:
@@ -579,6 +585,17 @@ def _contains_verified(assets, facts) -> bool:
     return '"verified"' in blob or ":verified" in blob
 
 
+def _contains_abs_host_path(obj, root: Path) -> bool:
+    """True if the producer's own checkout path leaked into any string value.
+
+    The pack must be reproducible from any other worktree, so environment-specific
+    absolute paths (the producing checkout root) may never be embedded in it. Paths
+    quoted *from the source report* are source data and are not affected.
+    """
+    blob = json.dumps(obj, ensure_ascii=False)
+    return str(root) in blob or str(root.resolve()) in blob
+
+
 def _findings(markdown: str) -> list[dict]:
     """Structural observations that are checked mechanically, not read off by eye."""
     pairs = {
@@ -633,6 +650,13 @@ def main(argv: list[str] | None = None) -> int:
         )
 
     manifest = build(markdown, record, offline=args.offline, probes=probes)
+    # Environment hygiene hard gate: the producing worktree root must not appear
+    # anywhere in the payload, otherwise `--offline` regeneration stops being
+    # byte-stable across checkouts (round-1 defect). Source-quoted paths are fine.
+    if _contains_abs_host_path(manifest, ROOT):
+        print(f"host worktree path {ROOT} leaked into the manifest; refusing to write",
+              file=sys.stderr)
+        return 1
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out).write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

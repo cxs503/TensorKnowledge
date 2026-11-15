@@ -142,7 +142,7 @@ python3 scripts/kf_wp_4129_01_report.py                           # 重生成本
 
 | 文件（worktree 内） | 要点 |
 |---|---|
-| `knowledge/kf/wp-4129-01/asset_manifest.json` | **主产物**：{counts['assets_total']} 资产 + {counts['symbol_references']} 符号 + {counts['vcs_references']} VCS 引用 + {counts['locators']} 定位点；`claims: []`（附理由）；状态四分齐全；7 项自检全 true |
+| `knowledge/kf/wp-4129-01/asset_manifest.json` | **主产物**：{counts['assets_total']} 资产 + {counts['symbol_references']} 符号 + {counts['vcs_references']} VCS 引用 + {counts['locators']} 定位点；`claims: []`（附理由）；状态四分齐全；{len(checks)} 项自检全 true |
 | `knowledge/kf/wp-4129-01/kf_result.json` | 提交信封（`package_id`/`task_type`/`report_id`/`provenance`/`outputs`），本报告末尾 JSON 块即其原文 |
 | `knowledge/kf/wp-4129-01/source_report_4129.md` | 源 markdown 字节等同快照（{src['bytes']} B，sha256 与契约一致），供离线复跑 |
 | `knowledge/kf/wp-4129-01/source_record.json` | 平台记录的非 markdown 字段（title/scenario_key/mission_id/created_at/tags/figures），图登记的依据 |
@@ -155,7 +155,7 @@ python3 scripts/kf_wp_4129_01_report.py                           # 重生成本
 | `docs/kf/wp-4129-01.md` | 本报告正文 |
 | `docs/kf/figures/wp-4129-01.png` | 结构/定位图（见下） |
 
-**图说明**：本工序是纯登记/文档类工序，报告载体里**没有物理场量**（无速度场/应力场/自由面），故按纪律不伪造云图，改画**结构与定位图**：(A) 109 行 markdown 的行长剖面，并按资产类型在声明行位置打点（`## ` 章节线用虚点线标出）；(B) 资产 kind/status 直方图——`unresolved` 占多数的原因正是"工件属 TensorFEM、本工作树没有"；(C) 7 项契约自检的通过矩阵。三张子图的数据全部由 `asset_manifest.json` + 快照程序化注入。
+**图说明**：本工序是纯登记/文档类工序，报告载体里**没有物理场量**（无速度场/应力场/自由面），故按纪律不伪造云图，改画**结构与定位图**：(A) 109 行 markdown 的行长剖面，并按资产类型在声明行位置打点（`## ` 章节线用虚点线标出）；(B) 资产 kind/status 直方图——`unresolved` 占多数的原因正是"工件属 TensorFEM、本工作树没有"；(C) {len(checks)} 项契约自检的通过矩阵。三张子图的数据全部由 `asset_manifest.json` + 快照程序化注入。
 
 ## ④ 证据定位表（字段 → 原文引文片段）
 
@@ -174,7 +174,8 @@ python3 scripts/kf_wp_4129_01_report.py                           # 重生成本
 5. **VCS 引用只做前缀算术，不查对象库**。可机检且已查：`b7bbe3707838` 是 `b7bbe3707838bc8bb25af16c77134efd58b2b75e` 的前缀（true）；`7accc4b` 是 `7accc4b9c` 的前缀（true）。`c441d91` 与合并提交**不是**前缀关系（它是父提交），报告自述该关系，本单不重算。三者都无法在本工作树用 `git cat-file` 验证（不同仓）。
 6. **源哈希脆弱性**：口径是平台返回的 markdown 字符串的 UTF-8 字节；上游只要改一个空格，本清单的 `source_hash` 即失效——这是设计意图（可发现篡改），但也意味着不要在报告里做格式微调后继续沿用旧清单。
 7. **诚实未完成项被原样保留**：报告 ⑥ 最后一行 `本地全量套件（1707 项）` 判的是"未完成 / 不计为通过"，本单**不升级**该结论，也不把它转写成 claim。
-8. **未做**（如实）：未做 claim 抽取、未做报告类型判定、未做 verified 标记、未核 TensorFEM 侧工件内容、未访问集群。
+8. **复跑可在任意 worktree 达标（第 2 轮修复）**：首版清单把生产 worktree 的绝对路径写进了每个正文引用的 `resolution.via`，于是换一个 checkout 重跑 `--offline` 必与已提交清单不一致——在 main 上实测 `test_offline_regeneration_reproduces_manifest` **FAIL**（差异仅该字段的 13 处路径字符串）。本版把该字段改成不携带本机环境信息的表述（只回引源报告中逐字声明的路径），并在生成器里加了硬门：只要本 checkout 的根路径出现在载荷的任何字符串里，生成器直接以非零码退出、拒绝落盘（源报告里逐字引用的外来路径属源数据，不在拦截范围）；现清单在 `/tmp`、`/root`、本 worktree 三个不同 cwd 下重跑，除 `generated_at` 外**逐字段相同**。
+9. **未做**（如实）：未做 claim 抽取、未做报告类型判定、未做 verified 标记、未核 TensorFEM 侧工件内容、未访问集群。
 
 ## ⑥ 自检：逐条对照 acceptance
 
@@ -187,7 +188,7 @@ python3 scripts/kf_wp_4129_01_report.py                           # 重生成本
 | `no_duplicate_ids` | ✅ | {manifest['id_integrity']['ids_checked']} 个 id 全唯一（资产+VCS；资产 id 与符号/VCS 前缀空间不重叠）；`test_no_duplicate_ids` |
 | `all_claims_have_evidence_or_explicit_unresolved_status` | ✅（空集） | `claims: []` 且 `claims_empty_reason` 说明契约依据；所有 18 资产与 9 条引用均带显式 `resolution.status` + `reason`；`test_claims_empty_but_explicitly_reasoned`、`test_every_asset_states_an_explicit_resolution_status` |
 
-清单自带的 7 项机检：
+清单自带的 {len(checks)} 项机检：
 
 | 自检项 | 通过 | 说明 |
 |---|---|---|
