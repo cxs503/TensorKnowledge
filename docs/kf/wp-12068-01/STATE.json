@@ -1,0 +1,54 @@
+{
+  "package_id": "wp-12068-01",
+  "report_id": "12068",
+  "mission_id": 15738,
+  "publication_state": "awaiting_pr_merge",
+  "base_ref": "main",
+  "branch": "agent/m22417",
+  "chain": [
+    {
+      "round": 1,
+      "mission_id": 20257,
+      "pr": 436,
+      "state": "merged",
+      "scope": "asset registration package: 10 files (manifest / envelope / selfcheck / report.md / payload / 2 figures + kf01_register preset + 18 guard tests)"
+    },
+    {
+      "round": 2,
+      "mission_id": 22391,
+      "pr": 493,
+      "state": "merged",
+      "scope": "offline re-verification layer: byte-exact source pin + 15 offline / 16 live re-derivation checks + 9 guard tests"
+    },
+    {
+      "round": 3,
+      "mission_id": 22417,
+      "pr": null,
+      "state": "open",
+      "scope": "see-through round 3: this state ledger + guard tests; re-anchoring PR after PR#492 was closed as a duplicate of #436"
+    }
+  ],
+  "original_pr": {
+    "pr": 492,
+    "state": "closed",
+    "closed_by": "owner",
+    "closed_at": "2026-11-05",
+    "reason": "duplicate: the same 10-file deliverable set was already merged into main via PR#436 (m20257); the reopen re-anchors the pr-gate on a new PR"
+  },
+  "verification": {
+    "offline_reverify": {
+      "tool": "scripts/kf/wp12068_01_reverify.py verify",
+      "n_checks": 15,
+      "all_pass": true,
+      "note": "re-derived from the pinned source bytes; re-run by tests/test_kf_wp12068_01_state.py on every run"
+    },
+    "live_drift": {
+      "checked_at": "2026-11-15T21:24:45.470042+00:00",
+      "checked": true,
+      "drift": false,
+      "live_sha256": "de2f16253ed522c619246898f442983d5a66f3a2bec42c2fe271847a2020cbf0",
+      "note": "point-in-time observation (needs platform access); the offline block above is the one the guard tests re-derive"
+    }
+  },
+  "scope_note": "self-record by the producing agent; the authoritative verification and the promotion decision remain the platform pr-gate's, which flips this package to published only on merge"
+}

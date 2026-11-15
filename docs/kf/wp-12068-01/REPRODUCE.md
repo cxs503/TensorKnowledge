@@ -19,6 +19,7 @@
 | `scripts/kf/wp12068_01_reverify.py` | `snapshot` 抓取钉存；`verify` 只读快照，离线复算全部哈希与 9 条定位器，`--live` 额外做漂移检查 |
 | `reverify.json` | 复核台账（16 项逐条 pass/fail + 漂移结论 + `publication_state=awaiting_pr_merge`） |
 | `tests/test_kf_wp12068_01_reverify.py` | 9 项守卫：快照哈希、独立复算定位器、检查器端到端、**篡改必须变红**、发布纪律 |
+| `STATE.json` | 管到底链 + 发布状态台账（第 3 轮 m22417）：round1=#436 / round2=#493 / round3=本单；原 PR#492 因与 #436 重复被 owner 关闭；`publication_state=awaiting_pr_merge`；离线复核块由 `tests/test_kf_wp12068_01_state.py` 每次重跑核对 |
 
 快照是**副本，不是重打**：写入的是 `GET /api/v1/tensor/reports/12068` 返回的 `markdown` 原始 utf-8 字节，
 因此 `source/report-12068.md` 的 sha256 与 `kf_result.json.provenance.source_hash`、
@@ -65,3 +66,21 @@ python -m pytest tests/test_kf_wp12068_01_reverify.py tests/test_kf_wp12068_01.p
    「对钉存字节自洽」，不等于专家认可，也不等于已发布。
 4. 源一旦在平台侧合法变更，快照就必须重钉并**重发整包**（清单、信封、报告、两张图同批），否则 `--live` 会报
    `drift=true` —— 这是设计意图，不是缺陷。
+## 管到底第 3 轮（m22417）：状态台账 `STATE.json`
+
+原 PR#492（m20257 交付物）被 owner 于 2026-11-05 裁定关闭——同一套 10 文件交付物已经由 PR#436
+合入 main，PR#492 属重复。管到底链随后由 PR#493（m22391，离线复核层）继续。第 3 轮（本单）把这条链
+与包的当前发布状态**钉成机器可核的台账** `STATE.json`，而不是散文：
+
+| 文件 | 作用 |
+|---|---|
+| `STATE.json` | 管到底链（第 1 轮 #436 / 第 2 轮 #493 / 第 3 轮 本 PR）+ 原 PR#492 关闭记录 + `publication_state=awaiting_pr_merge` + 离线复核块（15 项）+ 活体漂移点观测 |
+| `tests/test_kf_wp12068_01_state.py` | 6 项守卫：发布状态恒为 `awaiting_pr_merge`（无 verified/published 自称）、链序与状态合法、当前轮 open 且 PR 号未定、PR#492 记为 owner 关闭、**离线复核块与一次全新 `cmd_verify` 运行逐字段一致**、活体漂移块诚实（skip 不伪装 pass） |
+
+台账的离线复核块**不采信写入值**：`tests/test_kf_wp12068_01_state.py::test_offline_reverify_block_matches_a_fresh_run`
+每次运行都把 `scripts/kf/wp12068_01_reverify.py` 跑进临时目录，逐字段比对 `n_checks`/`all_pass`——台账与真实
+重算漂移即变红。活体漂移块是**点观测**（需平台访问），由守卫只核其诚实性（checked/drift 语义），不重放。
+
+```bash
+python -m pytest tests/test_kf_wp12068_01_state.py -q   # 只跑第 3 轮守卫
+```
