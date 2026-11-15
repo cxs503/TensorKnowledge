@@ -51,6 +51,18 @@ CLAIMS_EMPTY_REASON = (
 
 PROBE_ARTIFACT = "figure_probe.json"
 
+#: 构建器一次跑出的工件清单（相对本包根）。REPORT.md 与第 2 轮取证件不在内。
+BUILDER_ARTIFACTS = (
+    "asset_manifest.json",
+    "kf_result.json",
+    "acceptance.json",
+    "fig1_asset_resolution.png",
+    "source/report_5577.json",
+    "source/report_5577.md",
+    "source/markdown.sha256",
+    "source/figure_probe.json",
+)
+
 #: 正对照候选（有序）。同一路由 ``/tensor/reports/<rid>/figures/<name>``，
 #: 用来把目标图的 404 归因到「该报告没传图字节」而不是「平台/路由不存图」。
 #: 取第一个 http 200 且载荷非空者；候选全失败则探活实验判为无效（probe_valid=False），
@@ -784,7 +796,9 @@ def render_report(manifest: dict, acceptance: dict, fig_name: str,
             sl=a["locator"]["start_line"], el=a["locator"]["end_line"],
             res=a["resolution"], uniq="Y" if a["locator"]["unique"] else "N")
         for a in manifest["assets"])
-    n_art = len([p for p in PKG.rglob("*") if p.is_file() and p.name != "REPORT.md"])
+    # 工件数只数「构建器产出的固定清单」（AGENT 产物），不数目录里的任意新增文件：
+    # rglob 计数会因别人往包里放一份取证文档而静默改变报告结论。
+    n_art = sum(1 for rel in BUILDER_ARTIFACTS if (PKG / rel).exists())
     art = probe_artifact or {}
     ctl = next((c for c in art.get("controls", [])
                 if c.get("report_id") == (art.get("control_used") or {}).get("report_id")), {}) or {}
@@ -810,9 +824,12 @@ def render_report(manifest: dict, acceptance: dict, fig_name: str,
 
 > **交付纪律声明**：本包零改动 TensorKnowledge 核心模块——未触 `ke/` 任何模块、未改任何共享
 > schema（`schemas/asset_manifest.v1.schema.json`、`schemas/kf_result.v1.schema.json` 均只读），
-> 改动为新增：1 个构建脚本 + 1 个测试 + 本包目录 {n_art} 个产物 + 本报告（合计 {n_files} 个文件），
-> 不与其他在开 PR 的热文件路径重叠。原 PR#152 携带 `ke/__pycache__/*.pyc` 二进制，
-> 本轮由 AC13 机械禁止复现。
+> 不与其他在开 PR 的热文件路径重叠。本包 {n_art} 个工件 + 本报告**全部由构建器一次跑出**，
+> 并在 `tests/test_kf_wp_5577_01.py` 里离线重放 `plan` / `build_acceptance` / `render_report`
+> 逐字段复现——改数字必须改代码，手改产物即被用例判红（源载荷哈希钉子 + 三件产物重放门）。
+> 第 2 轮取证件（`REPAIR-ROUND2.md` 与 `drift_forensics.png`）由
+> `scripts/kf/wp5577_drift_forensics.py` 现算生成，不计入上述 {n_art} 个工件。
+> 原 PR#152 携带 `ke/__pycache__/*.pyc` 二进制，本轮由 AC13 机械禁止复现。
 
 ## ① 案例介绍
 

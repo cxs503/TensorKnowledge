@@ -418,3 +418,33 @@ def test_probe_figure_bytes_short_circuits_on_first_good_control(builder):
     assert len(art["controls"]) == 2
     assert len(art["targets"]) == 2
     assert sum(1 for c in calls if "/reports/5577/" in c) == 2
+
+
+# ---------------------------------------------------------------------------
+# 产物可复算门：acceptance / REPORT.md 也必须由构建器重放得到（不许手改）
+# ---------------------------------------------------------------------------
+def test_builder_reproduces_committed_acceptance(builder, md, manifest, kf_result,
+                                                acceptance, probe_artifact):
+    """离线重放 build_acceptance()：逐字段等于提交的 acceptance.json。
+
+    源载荷与 manifest 一致但 acceptance 是旧构建的产物（例如缺 AC17/AC18），
+    本用例即失败——正是「部分文件手同步」这类漂移的探测器。
+    两个只能在线观测的事实（双次拉取一致、图字节探活 status）取自各自的钉子工件，
+    由 AC02 与本文件探活用例分别复核。
+    """
+    fig_path = PKG / acceptance["figure"]["path"].split("/")[-1]
+    rebuilt = builder.build_acceptance(
+        manifest, kf_result, md, PKG, fig_path,
+        double_fetch_stable=True,
+        second_fetch_hash=manifest["source"]["hash"],
+        probe_artifact=probe_artifact,
+    )
+    assert rebuilt == acceptance
+
+
+def test_builder_reproduces_committed_report(builder, manifest, acceptance,
+                                             probe_artifact):
+    """离线重放 render_report()：提交的 REPORT.md 必须逐字节复现（数字零手抄）。"""
+    fig_name = acceptance["figure"]["path"].split("/")[-1]
+    rebuilt = builder.render_report(manifest, acceptance, fig_name, probe_artifact)
+    assert rebuilt == (PKG / "REPORT.md").read_text(encoding="utf-8")
