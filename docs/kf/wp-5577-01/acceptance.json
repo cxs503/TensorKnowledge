@@ -4,8 +4,8 @@
   "task_type": "01-asset-registration",
   "generated_by": "scripts/wp5577_build_report.py",
   "verdict": "PASS",
-  "items_total": 16,
-  "items_pass": 16,
+  "items_total": 18,
+  "items_pass": 18,
   "items": [
     {
       "id": "AC01",
@@ -184,6 +184,20 @@
       "expected": true,
       "observed": true,
       "pass": true
+    },
+    {
+      "id": "AC17",
+      "check": "图字节探活带有效正对照（同路由 200 且载荷非空）且声明图全 404",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "id": "AC18",
+      "check": "manifest 图探活状态与 source/figure_probe.json 逐条一致",
+      "expected": [],
+      "observed": [],
+      "pass": true
     }
   ],
   "figure": {
@@ -193,6 +207,7 @@
   },
   "notes": [
     "AC02：平台未声明 report 5577 的 markdown 哈希 → 以双次拉取一致性代替（NOT_APPLICABLE→passed by substitution）。",
-    "AC11：图字节 0/3 是 honest 观测（端点未返回内容），不作本包失败项，但已写入 manifest.limitations 供后续工序追讨。"
+    "AC11：图字节 0/3 是 honest 观测（端点未返回内容），不作本包失败项，但已写入 manifest.limitations 供后续工序追讨。",
+    "AC17/AC18：404 的归因由 source/figure_probe.json 承载（目标图 + 同路由正对照），正对照取不到字节则 probe_valid=False、AC17 失败，不许把缺口记到任一侧。"
   ]
 }
