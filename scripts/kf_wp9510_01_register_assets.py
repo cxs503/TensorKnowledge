@@ -52,7 +52,7 @@ MANIFEST = OUT_DIR / "asset_manifest.json"
 ENVELOPE = OUT_DIR / "kf_result.json"
 VERIFICATION = OUT_DIR / "verification.json"
 RESULT_FIG = FIG_DIR / ("%s_source_locator_map.png" % PACKAGE_ID)
-PRODUCER = "agent/m18538"
+PRODUCER = "agent/m21284"
 
 ENVELOPE_SCHEMA = ROOT / "schemas" / "kf_result.v1.schema.json"
 MANIFEST_SCHEMA = ROOT / "schemas" / "asset_manifest.v1.schema.json"

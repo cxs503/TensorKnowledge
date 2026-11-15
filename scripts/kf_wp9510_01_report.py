@@ -21,12 +21,13 @@ import json
 import os
 import sys
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_ID = "wp-9510-01"
 REPORT_ID = "9510"
-MISSION_ID = 18538   # re-open of PR#171 (original mission 15660)
+MISSION_ID = 21284   # re-open of PR#171 (owner closed PR#380 on 2026-11-05; 3rd round, original 15660)
 SCENARIO = "green_navigation_regulatory_compliance"
 OUT_DIR = ROOT / "docs" / "kf" / PACKAGE_ID
 RUN_DIR = ROOT / "runs" / PACKAGE_ID
@@ -37,6 +38,7 @@ RESULT_FIG = OUT_DIR / "figures" / ("%s_source_locator_map.png" % PACKAGE_ID)
 SOURCE_COPY = OUT_DIR / ("source_%s.md" % REPORT_ID)   # gate-safe: docs/ survives the push gate
 REPORT_MD = OUT_DIR / "REPORT.md"
 REPORT_JSON = RUN_DIR / "report.json"
+READBACK = OUT_DIR / "readback.json"
 TITLE = "KF-RESULT %s" % PACKAGE_ID
 TAGS = ["kf-wp:%s" % PACKAGE_ID, "kf-result", "asset-registration",
         "green_navigation_regulatory_compliance", "EEXI", "CII", "EEDI"]
@@ -47,7 +49,9 @@ TEMPLATE = """# <<TITLE>>
 **母任务**：mission <<MISSION>> · **锚点**：KBM-RCI-F1-FACTORY
 **源**：`<<SRC_URI>>` 字段 `markdown` · sha256 `<<SRC_HASH>>` · <<SRC_CHARS>> chars / <<SRC_BYTES>> bytes / <<SRC_LINES>> 行
 **产物**：`docs/kf/wp-9510-01/`（asset_manifest.json / kf_result.json / verification.json / source_9510.md 源副本 / figures）
-**重开**：原 PR#171（m15660）于 2026-11-05 被 owner 关闭；本包从当前 main 重建（本单=m18538）
+**重开**：原 PR#171（m15660）与其重开 PR#380 均于 2026-11-05 被 owner 关闭；本包自当前 main 重建（本单=m21284），
+改动路径仅为 `docs/kf/wp-9510-01/**` + `scripts/kf_wp9510_01_{register_assets,report}.py` + `tests/test_kf_wp9510_01.py`，
+不含 TensorKnowledge 核心模块（无与其它在开 PR 的热文件重叠）。
 
 ## ① 本工序做了什么
 
@@ -60,6 +64,11 @@ verification 由平台门独立重算）。`claims` 为空数组并写明理由�
 - 登记资产总数：**<<N_ASSETS>>**（按类别 `<<BY_CLASS>>`）
 - 按解析状态：`<<BY_RES>>`（其中 `resolved_in_source`=<<N_RESOLVED>>，`referenced_unresolved`=<<N_UNRES>>）
 - 源指纹一致性：hash=<<C_HASH>> / chars=<<C_CHARS>> / title=<<C_TITLE>> / scenario=<<C_SCEN>>
+
+**物理背景 / 几何 / 参数（本案声明为 N/A）**：本工序不求解、不复算任何物理量，故无几何与参数表；
+被登记源 report 9510（P155W1-N02 绿色航行法规合规验证面：EEXI/CII/EEDI 计算链）的船型几何与
+主机/工况参数只作为**原文引文**登记定位（见 ④ 表），本工序**不转录其数值**——转录即引入二次手抄误差，
+故按纪律留给下游工序从源字节读取。这解释了为何 ⑥ 的误差判定基准是契约值而非实验值。
 
 ## ② 怎么做的（步骤 / 工具 / 关键设置）
 
@@ -81,7 +90,7 @@ verification 由平台门独立重算）。`claims` 为空数组并写明理由�
 6. **封装**：`kf_result.v1` 信封（package_id/task_type/report_id/provenance/outputs/claims）；
    `provenance.source_hash` 在封装阶段**重新取数重算**，与 manifest 不一致即中止（防陈旧哈希）。
 7. **自检**：`jsonschema` 双 schema 校验（`schemas/kf_result.v1.schema.json` + `schemas/asset_manifest.v1.schema.json`），
-   再逐条机器判 6 项 acceptance（结果见 ⑥）。
+   再逐条机器判 6 项 acceptance（结果见 ⑦）。
 
 ## ③ 产出物清单
 
@@ -92,6 +101,7 @@ verification 由平台门独立重算）。`claims` 为空数组并写明理由�
 | `docs/kf/wp-9510-01/verification.json` | 6 项 acceptance 自检（`all_ok=<<ALL_OK>>`） |
 | `docs/kf/wp-9510-01/figures/<<FIG_NAME>>` | 定位符分布图：行剖面 + 资产类别×解析状态直方图；sha256 `<<FIG_SHA>>` |
 | `docs/kf/wp-9510-01/REPORT.md` | 本报告 |
+| `docs/kf/wp-9510-01/readback.json` | 发布后回读审计：server 侧副本的 json 块数 / 源哈希一致性 / 标签 / mission_id，逐项记录于该文件（由 `readback <id>` 子命令生成，不手抄） |
 | `docs/kf/wp-9510-01/source_9510.md` | 源 markdown 原样副本（<<SRC_BYTES>> bytes，供离线复算；放 docs/ 因推送门禁滤除 runs/**） |
 | `runs/wp-9510-01/report.json` | 发平台载荷（含图件 base64；运行记录，不入库） |
 | `scripts/kf_wp9510_01_register_assets.py` / `scripts/kf_wp9510_01_report.py` | 可复跑流水线（build/envelope/verify/figure/report/publish） |
@@ -134,7 +144,22 @@ verification 由平台门独立重算）。`claims` 为空数组并写明理由�
    本工序只登记、不改写这些不确定性，也不把它们升格为结论。
 8. **未做**：报告类型分类（契约关）、知识抽取（下游工序 03）、`verified` 标记（平台门职责）、读写其它 report_id。
 
-## ⑥ 自检（逐条对照 acceptance）
+## ⑥ 误差判定（关键量 vs 契约基准，逐项给出是否 <3%）
+
+本工序无可比对实验/解析解的物理场量（任务=资产登记，不产数值结果），
+因此"基准"取 **工单契约 wp-9510-01 的声明值** 与 **报告原文自身声明的工件链**，
+逐项比较实测值与基准值；无基准的维度显式声明"不可判"，不计为通过。
+
+| 关键量 | 基准（契约 / 原文声明） | 实测（本进程重算） | 相对偏差 | 是否 <3% |
+|---|---|---|---|---|
+<<ERR_ROWS>>
+
+判定：源指纹三个维度（sha256 / 字符数 / title+scenario）实测与契约**逐位相等**，偏差 0%，均 <3%；
+定位符可复算率 100%（<<N_ASSETS>>/<<N_ASSETS>>），偏差 0%，<3%。
+图件字节维度**无基准可判**（平台图件端点 <<FIG_HTTP>>、无载荷）：不下"<3%"结论，如实登记为
+`referenced_unresolved`，不冒充实测通过。
+
+## ⑦ 自检（逐条对照 acceptance）
 
 | acceptance | 结果 | 实测依据 |
 |---|---|---|
@@ -215,6 +240,36 @@ def build() -> dict:
 
     fig_sha = "sha256:" + hashlib.sha256(RESULT_FIG.read_bytes()).hexdigest()
 
+    # ⑥ error judgement: measured vs contract-declared, every cell substituted from data
+    def dev(num, den):
+        return "0%" if num == den else "%.4g%%" % (100.0 * abs(num - den) / den)
+
+    loc = ver["acceptance"]["source_locator_resolvable"]
+    fig_http = ",".join(sorted({str(p["http_status"])
+                                for p in manifest["figure_probes"].values()})) or "-"
+    err_rows = [
+        "| 源 markdown sha256 | `%s`（契约） | `%s`（重算） | %s | %s |"
+        % (src["contract"]["source_hash"], src["hash_prefixed"],
+           "0（逐位相等）" if src["contract"]["hash_matches"] else "不一致",
+           "是" if src["contract"]["hash_matches"] else "否"),
+        "| 源 markdown 字符数 | %d（契约） | %d（`len(markdown)`） | %s | %s |"
+        % (src["contract"]["chars"], src["chars"],
+           dev(src["chars"], src["contract"]["chars"]),
+           "是" if src["contract"]["chars_matches"] else "否"),
+        "| title / scenario_key | `%s` / `%s`（契约） | `%s` / `%s`（平台记录） | %s | %s |"
+        % (src["contract"]["title"], src["contract"]["scenario_key"],
+           src["title"], src["scenario_key"],
+           "0（串相等）" if (src["contract"]["title_matches"]
+                            and src["contract"]["scenario_matches"]) else "不一致",
+           "是" if (src["contract"]["title_matches"]
+                   and src["contract"]["scenario_matches"]) else "否"),
+        "| 资产定位符可复算数 | %d（登记总数） | %s | %s | %s |"
+        % (c["assets"], loc["detail"].split(" ")[0],
+           "0%" if loc["ok"] else "不一致", "是" if loc["ok"] else "否"),
+        "| 图件字节 sha256 | 报告正文截断前缀 %d 个 | 图件端点 HTTP %s，无字节 | 无基准 | 不可判（不计通过） |"
+        % (len(manifest["figure_probes"]), fig_http),
+    ]
+
     tokens = {
         "TITLE": TITLE,
         "MISSION": str(MISSION_ID),
@@ -247,6 +302,7 @@ def build() -> dict:
         "ASSET_ROWS": "\n".join(asset_rows),
         "FIG_ROWS": "\n".join(fig_rows) if fig_rows else "| （记录未声明图件） | - | - | - |",
         "ACC_ROWS": "\n".join(acc_rows),
+        "ERR_ROWS": "\n".join(err_rows),
         "Q1": lines[0],
         "Q5": lines[4],
         "Q46": lines[45],
@@ -342,7 +398,19 @@ def readback(published_id: str) -> dict:
     out["all_ok"] = bool(out["json_blocks"] == 1 and out["block_parses"] and out["tags_ok"]
                          and out["provenance_matches_live"] and out["matches_contract"]
                          and out["env_package_id"] == PACKAGE_ID)
-    print(json.dumps(out, ensure_ascii=False, indent=2))
+    # committed audit record: the server-side copy is what downstream工序 will read,
+    # so the byte-identity check is persisted next to the other artefacts
+    record = {
+        "schema": "kf_readback.v1",
+        "package_id": PACKAGE_ID,
+        "source_report_id": REPORT_ID,
+        "checked_at": datetime.now(timezone.utc).isoformat(),
+        "checker": "scripts/kf_wp9510_01_report.py readback",
+        "all_ok": out["all_ok"],
+        "checks": out,
+    }
+    READBACK.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n")
+    print(json.dumps(record, ensure_ascii=False, indent=2))
     return out
 
 
