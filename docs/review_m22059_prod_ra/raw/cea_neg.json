@@ -1,0 +1,87 @@
+{
+  "schema_version": "0.2.0",
+  "product_id": "research-audit",
+  "product_version": "0.2.0",
+  "created_at": "2026-11-15T22:28:59+00:00",
+  "inputs": {
+    "claims_dir": "runs/m22059/negative_test/claims",
+    "evidence_dir": "runs/m22059/negative_test/evidence",
+    "source_root": "/root/tp-agent/work/m22059/runs/m22059/negative_test/source"
+  },
+  "counts": {
+    "claims": 2,
+    "evidence": 2,
+    "pending_review": 0
+  },
+  "checks": [
+    {
+      "check_id": "bidirectional_references",
+      "version": "0.2.0",
+      "method": "deterministic_rule",
+      "state": "failed",
+      "required": true,
+      "details": "2 broken or non-reciprocal links across 2 claims and 2 evidence records."
+    },
+    {
+      "check_id": "source_locator_integrity",
+      "version": "0.2.0",
+      "method": "deterministic_rule",
+      "state": "failed",
+      "required": true,
+      "details": "2 source/quote locator errors across 2 evidence records."
+    },
+    {
+      "check_id": "review_relation_consistency",
+      "version": "0.2.0",
+      "method": "deterministic_rule",
+      "state": "passed",
+      "required": true,
+      "details": "0 relation/review conflicts; 0 evidence items remain unassessed."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "missing_evidence_record:1",
+      "check_id": "missing_evidence_record",
+      "status": "confirmed",
+      "severity": "high",
+      "summary": "claim-dangling-1 references missing evidence evidence-nonexistent-xyz.",
+      "details": {}
+    },
+    {
+      "finding_id": "missing_claim_record:2",
+      "check_id": "missing_claim_record",
+      "status": "confirmed",
+      "severity": "high",
+      "summary": "evidence-dangling-1 references missing claim claim-nonexistent-abc.",
+      "details": {}
+    },
+    {
+      "finding_id": "quote_offset_mismatch:3",
+      "check_id": "quote_offset_mismatch",
+      "status": "confirmed",
+      "severity": "high",
+      "summary": "evidence-dangling-1 quote does not match the source at its declared offsets.",
+      "details": {
+        "expected_quote": "test quote",
+        "actual_text": "# KF-RESUL",
+        "citation": "kf_result_bad.md"
+      }
+    },
+    {
+      "finding_id": "source_file_missing:4",
+      "check_id": "source_file_missing",
+      "status": "confirmed",
+      "severity": "high",
+      "summary": "evidence-review-1 source file does not exist: kf_result_wp-2506-04.md.",
+      "details": {}
+    }
+  ],
+  "overall_status": "failed",
+  "limitations": [
+    "This audit verifies record linkage, source paths, exact quote offsets and quote hashes.",
+    "It does not determine whether a source semantically entails, supports or refutes a claim.",
+    "A structurally valid unassessed relation is reported as inconclusive, never as verified support.",
+    "External URLs are not fetched; only local source files under source_root are checked."
+  ]
+}
