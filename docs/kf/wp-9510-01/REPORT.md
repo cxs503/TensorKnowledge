@@ -7,6 +7,8 @@
 **重开**：原 PR#171（m15660）与其重开 PR#380 均于 2026-11-05 被 owner 关闭；本包自当前 main 重建（本单=m21284），
 改动路径仅为 `docs/kf/wp-9510-01/**` + `scripts/kf_wp9510_01_{register_assets,report}.py` + `tests/test_kf_wp9510_01.py`，
 不含 TensorKnowledge 核心模块（无与其它在开 PR 的热文件重叠）。
+**补记（m21347 · PR#381 第2轮管到底）**：main 上的 `readback.json` 曾被另一单（m21278）的简化记录（只有 5 个字段，无 `schema`/`all_ok`/`checks`）覆盖，`test_readback_audit_of_published_copy` 因此变红。
+本单用 `python3 scripts/kf_wp9510_01_report.py readback 19250` 对 server 侧已发布副本重新生成 `kf_readback.v1` 审计记录（`all_ok=true`，源哈希与契约逐位一致），并把该测试的"缺文件即 skip"改为硬断言，防止同类覆盖再次静默通过。
 
 ## ① 本工序做了什么
 
