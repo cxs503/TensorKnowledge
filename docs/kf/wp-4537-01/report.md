@@ -22,7 +22,7 @@
 5. **定位可解性**：每个 token 记录其在 markdown 中的字符区间 `[start,end)` 与片段 sha256；门侧只需切片比对即可判定定位是否可解（本单共登记 38 个片段区间，全部逐字复算通过）。
 6. **外部可解析性探测**：把每个声明路径拿去本地工作树 `Path.exists()` 检查；不存在则 `payload.present=false`、`sha256=null`，status 降为 `declared_only`/`declared_shorthand`（诚实计负，不送分）。
 7. **附件扫描**：记录 `figures[]` 长度、markdown 图片语法命中数、markdown 明文 URL 命中数，全量登记不裁剪。
-8. **自检**：`python3 -m pytest tests/test_kf_wp4537_01.py -q` → 10 项不变量（含 envelope 走 `schemas/kf_result.v1.schema.json`、逐 span 复解、去重、构建器确定性）；图 `asset_status.png` 由 manifest 现场计数渲染。
+8. **自检**：`python3 -m pytest tests/test_kf_wp4537_01.py -q` → 11 项不变量（含 envelope 走 `schemas/kf_result.v1.schema.json`、逐 span 复解、去重、构建器确定性、以及**离线复现**：仅用入库的取源快照重建 manifest 并与入库件逐字段相等）；图 `asset_status.png` 由 manifest 现场计数渲染。干净检出即可全绿，不依赖运行缓存与网络。
 
 **工具链**：Python 3.11 标准库（urllib/hashlib/json）+ matplotlib 3.10.8 + jsonschema 4.26.0 + pytest；无第三方抓取、无手抄。
 
@@ -33,11 +33,13 @@
 | `docs/kf/wp-4537-01/asset_manifest.json` | 交付物（本工序唯一声明输出） | 27 项资产登记；状态分布 resolved 2，declared_metadata_only 6，declared_shorthand 6，declared_only 13；源哈希与契约精确相等；claims 空数组 |
 | `docs/kf/wp-4537-01/kf_result.json` | 结果信封 | 按 `schemas/kf_result.v1.schema.json` 组织：package_id/task_type/report_id/provenance/outputs(+claims) |
 | `docs/kf/wp-4537-01/asset_status.png` | 结果图 | 资产状态×种类构成 + 哈希/自检摘要（数字由 manifest 现场统计） |
-| `scripts/kf/register_4537_assets.py` | 构建器 | 取源→重算哈希→分类→定位→写 manifest/信封；`--from-cache` 可离线复算 |
+| `scripts/kf/register_4537_assets.py` | 构建器 | 取源→重算哈希→分类→定位→写 manifest/信封；`--from-cache` 走入库快照离线复算，`--out-dir` 可写到临时目录做比对 |
 | `scripts/kf/make_4537_figure.py` | 图生成器 | 只读 manifest 计数，零手抄 |
-| `tests/test_kf_wp4537_01.py` | 不变量测试 | 10 项：哈希/字符数/逐 span 复解/去重/claims 空/无 verified/确定性/单报告范围 |
+| `tests/test_kf_wp4537_01.py` | 不变量测试 | 11 项：哈希/字符数/逐 span 复解/去重/claims 空/无 verified/确定性/离线复现/单报告范围 |
 | `schemas/kf_result.v1.schema.json` | 契约（随包引入） | 与平台侧同名 schema 逐字节一致（sha256 `170dba8b…c076`），供信封结构门本地复跑 |
-| `runs/m15537_wp4537_01/source_report_4537.md` | 运行缓存（不入库） | 取源快照，供离线复算；不作为第二份真相 |
+| `docs/kf/wp-4537-01/source_report_4537.md` | 取源快照（入库） | 12973 字节 / sha256 已钉住，供干净检出离线复算；不作第二份真相 |
+| `docs/kf/wp-4537-01/report_record_4537.json` | 记录元数据快照（入库） | 平台 `GET /tensor/reports/4537` 去掉 markdown 字段后的记录；构建器确定性复算的输入 |
+| `scripts/kf/kf4537_source.py` | 取源解析器 | 唯一取源入口：入库快照优先、`runs/` 缓存兜底，读入即校验钉住的 sha256/字符数 |
 
 ## ④ 证据定位表（claim/字段 → 原文引文片段）
 
@@ -87,7 +89,7 @@
 6. **图 1 引用的数值未复核**：caption 中的 4268/616/92.8% 是源报告主张，本单只登记 caption 与其定位，不采信、不复核（那是 03/门的工作）。
 7. **section_span 语义**：`[标题起点, 下一个任意级标题起点)`，不做层级展开；因此父节 span 不含子节内容——下游若按父节切片需自行递归（已写入 manifest `section_span_definition`）。
 8. **确定性边界**：构建器除 `generated_at` 外逐字节确定（`test_builder_is_deterministic` 断言）；时间戳反映实际取源时刻。
-9. **贴源原则的偏差声明**：为使定位可离线复算，本单把取源快照落在 `runs/m15537_wp4537_01/source_report_4537.md`（{src['bytes_utf8']} 字节，sha256 已在 manifest 钉住）。它**不是第二份真相**：manifest 只存 span/sha256，权威正文仍回平台取；若该快照缺失，测试改为现场重取或 skip（不伪绿）。
+9. **贴源原则的偏差声明**：为使定位可离线复算，本单把取源快照入库为 `docs/kf/wp-4537-01/source_report_4537.md`（12973 字节，sha256 已在 manifest 钉住，读入即校验）。它**不是第二份真相**：manifest 只存 span/sha256，权威正文仍回平台取；快照一旦漂移，解析器直接报错而不是静默更新。（原方案落在不入库的 `runs/m15537_wp4537_01/`，干净检出下复算与一条不变量会退化为 skip；已由上述入库快照修复，见 `docs/kf/wp-4537-01/REPRODUCE.md`。）
 
 ## ⑥ 计算结果与误差判定（含结果图与「是否 <3%」显式回答）
 
