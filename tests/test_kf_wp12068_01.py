@@ -10,7 +10,13 @@ Two layers, deliberately separated:
 The package registers 9 assets of a 1086-char report that contains no file-path references and
 whose 5 figures carry no payload: the honest outcome is 4 resolved table/markdown spans plus 5
 ``metadata_only`` figure records, and claims=[] (registration is not extraction).
+
+The 5 figure names are slugs (``sod_shock_tube``) that never occur verbatim in the body, so their
+locators used to degrade to the whole 1086-char document. They are now *derived* from the section
+headings by a deterministic normalised-token match (``match_basis`` records the derivation); the
+resolution stays ``referenced_unresolved`` because a locator is not a byte hash.
 """
+import base64
 import hashlib
 import importlib.util
 import json
@@ -111,6 +117,57 @@ def test_figures_are_registered_as_metadata_only_not_overclaimed(manifest):
         assert f["resolution"] == "referenced_unresolved"
         assert f["resolution_check"]["result"] == "unresolved"
         assert f["figure_uri"] == "tensor://reports/12068#figures[%d]" % names.index(f["label"])
+
+
+EXPECTED_FIGURE_SECTIONS = {
+    "sod_shock_tube": ("### 3.1 Sod Shock Tube (a)", 1.0, ["sod", "shock", "tube"]),
+    "lax_shock_tube": ("### 3.2 Lax Shock Tube (b)", 1.0, ["lax", "shock", "tube"]),
+    "isentropic_vortex": ("### 3.3 Vortex Convergence (c)", 0.5, ["vortex"]),
+    "double_mach_reflection": ("### 3.4 Double Mach (d)", 2 / 3, ["double", "mach"]),
+    "supersonic_cylinder": ("### 3.5 Cylinder (e)", 0.5, ["cylinder"]),
+}
+
+
+def test_figure_locators_are_derived_heading_spans_not_document_spans(manifest):
+    """Slug name -> prose heading: the locator must be the heading line, and say how it got there."""
+    figs = {a["label"]: a for a in manifest["assets"] if a["asset_class"] == "embedded_figure"}
+    assert set(figs) == set(EXPECTED_FIGURE_SECTIONS)
+    n = manifest["source"]["chars"]
+    for name, (heading, score, matched) in EXPECTED_FIGURE_SECTIONS.items():
+        a = figs[name]
+        loc, basis = a["locator"], a["match_basis"]
+        assert loc["method"] == "char_span", name          # a real span, not a fallback
+        assert loc["quote"] == heading, name
+        assert loc["start_line"] == loc["end_line"], name
+        width = loc["end_char"] - loc["start_char"]
+        assert width == len(heading) <= 40, (name, width)  # was 1086 chars, now one heading line
+        assert loc["end_char"] < n and loc["unique"] is True, name
+        assert basis["heading"] == heading.lstrip("# ").strip(), name
+        assert basis["score"] == pytest.approx(score, abs=1e-3), name
+        assert basis["matched_tokens"] == matched, name
+        assert basis["unmatched_tokens"] == [
+            t for t in basis["figure_name_normalized"].split() if t not in matched], name
+        assert "unique top score" in basis["rule"]         # the acceptance rule is stated, not implied
+        assert a["in_report_section"] == basis["heading"], name
+        # the derived locator does NOT upgrade the evidence level
+        assert a["bytes"] is None and a["sha256"] is None, name
+        assert a["resolution"] == "referenced_unresolved", name
+        assert a["resolution_detail"] == "metadata_only", name
+
+
+def test_no_figure_locator_falls_back_to_the_whole_document(manifest):
+    figs = [a for a in manifest["assets"] if a["asset_class"] == "embedded_figure"]
+    assert [f["label"] for f in figs if f["locator"]["method"] == "document"] == []
+    whole = [a["asset_class"] for a in manifest["assets"]
+             if a["locator"]["end_char"] - a["locator"]["start_char"] == manifest["source"]["chars"]]
+    assert whole == ["report_markdown"]      # only the source asset spans the whole report
+
+
+def test_figure_notes_explain_the_derivation(manifest):
+    for a in manifest["assets"]:
+        if a["asset_class"] != "embedded_figure":
+            continue
+        assert "heading line" in a["note"] and "location only" in a["note"], a["asset_id"]
 
 
 def test_tables_record_geometry_only(manifest):
@@ -244,6 +301,37 @@ def test_new_preset_added(monkeypatch):
     # the package declares the two facts that make its报告 differ from the template default
     assert "无跨仓路径引用" in cfg["cross_repo_note"][0]
     assert "5 张图" in cfg["figure_note"]
+    assert "match_basis" in cfg["figure_note"]      # the locator derivation is declared, not silent
+
+
+def test_heading_matcher_refuses_ties_and_records_derivation(monkeypatch):
+    mod = _load_registrar(monkeypatch)
+    tie = mod.Source("# T\n\n## Alpha Beta\n\n## Alpha Beta Reloaded\n\n")
+    assert mod.match_figure_heading(tie, "alpha_beta") == (None, None)   # two 1.0 scores -> refuse
+    unique = mod.Source("# T\n\n## Convergence Study\n\n## Solver Details\n\n")
+    line, basis = mod.match_figure_heading(unique, "mesh_convergence")
+    assert line == 2 and basis["heading"] == "Convergence Study"
+    assert basis["score"] == 0.5 and basis["matched_tokens"] == ["convergence"]
+    assert basis["unmatched_tokens"] == ["mesh"]
+    assert mod.match_figure_heading(unique, "no_such_thing") == (None, None)
+
+
+def test_scan_figures_prefers_verbatim_and_never_invents_bytes(monkeypatch):
+    mod = _load_registrar(monkeypatch)
+    src = mod.Source("# T\n\nsee sod_shock_tube in the body\n")
+    verbatim = mod.scan_figures(src, {"id": 9, "figures": [{"name": "sod_shock_tube", "caption": "c"}]})[0]
+    assert verbatim["locator"]["token"] == "sod_shock_tube"      # verbatim match keeps its token span
+    assert "match_basis" not in verbatim
+    assert verbatim["resolution"] == "referenced_unresolved"     # no payload -> still unresolved
+    raw = b"\x89PNG\r\n\x1a\nnot-a-real-figure"
+    payload = mod.scan_figures(src, {"id": 9, "figures": [{
+        "name": "sod_shock_tube", "caption": "c", "png_base64": base64.b64encode(raw).decode()}]})[0]
+    assert payload["resolution"] == "resolved_in_source"
+    assert payload["bytes"] == len(raw) and payload["sha256"] == hashlib.sha256(raw).hexdigest()
+    assert payload["resolution_detail"] == "payload_present"
+    empty = mod.scan_figures(src, {"id": 9, "figures": [{"name": "absent_figure", "caption": "c"}]})[0]
+    assert empty["locator"]["method"] == "document"              # nothing to match -> honest fallback
+    assert empty["bytes"] is None and "match_basis" not in empty
 
 
 def test_existing_presets_keep_their_contracts(monkeypatch):
