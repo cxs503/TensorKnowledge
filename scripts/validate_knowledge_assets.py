@@ -271,11 +271,18 @@ def main() -> int:
         except ValueError as exc:
             errors.append(str(exc))
 
+    supported_schema_dialects = {
+        "https://json-schema.org/draft/2020-12/schema",
+        "http://json-schema.org/draft-07/schema#",
+    }
     for path in sorted(SCHEMA_DIR.glob("*.schema.json")):
         try:
             schema = load_json(path)
-            if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
-                errors.append(f"{path.relative_to(ROOT)}: unexpected JSON Schema dialect")
+            dialect = schema.get("$schema")
+            if dialect not in supported_schema_dialects:
+                errors.append(
+                    f"{path.relative_to(ROOT)}: unsupported or missing JSON Schema dialect {dialect!r}"
+                )
             check_schema_version_rule(schema, path, errors)
         except ValueError as exc:
             errors.append(str(exc))
