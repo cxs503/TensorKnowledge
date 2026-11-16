@@ -18,7 +18,7 @@ Per-package statuses (always printed as an index, so one bad asset cannot hide
 behind a single opaque red line)::
 
     pass                        verifier exited 0
-    skipped-source-unavailable  read-only source repo absent -> nothing was checked
+    skipped-source-unavailable  read-only source repo absent or unreadable -> nothing was checked
     blocked-missing-dependency  a python module the verifier needs is not installed
                                 (``entry.requires``); the asset itself was not judged
     error-verifier-crashed      verifier emitted no PASS/FAIL line at all
@@ -93,6 +93,22 @@ def probe_requirements(modules: list[str], timeout: int = 120) -> dict[str, str]
     return missing
 
 
+def _permission_denied_source_path(stderr: str, source_root: str) -> str | None:
+    """Return a denied path only when the PermissionError is inside the declared source repo."""
+    match = re.search(
+        r"PermissionError: \\[Errno 13\\] Permission denied: ['\"]([^'\"]+)['\"]",
+        stderr,
+    )
+    if not match or not source_root:
+        return None
+    denied = os.path.normpath(match.group(1))
+    root = os.path.normpath(source_root)
+    try:
+        return denied if os.path.commonpath((root, denied)) == root else None
+    except ValueError:
+        return None
+
+
 def run_package(pkg: Path, timeout: int = 900) -> dict:
     manifest = json.loads((pkg / "manifest.json").read_text(encoding="utf-8"))
     entry_spec = manifest.get("entry", {})
@@ -119,7 +135,9 @@ def run_package(pkg: Path, timeout: int = 900) -> dict:
                 "reason": f"{detail} -- run: {_requirements_hint()}", "stdout": ""}
 
     env = dict(os.environ)
-    env.setdefault(source.get("root_env", "SEDIMENT_SRC_REPO"), source.get("default_root", ""))
+    root_env = source.get("root_env", "SEDIMENT_SRC_REPO")
+    env.setdefault(root_env, source.get("default_root", ""))
+    source_root = env.get(root_env) or source.get("default_root", "")
     # ``--no-write``: a validator must not mutate the committed run artefacts
     proc = subprocess.run(
         [sys.executable, str(ROOT / entry), "--no-write"],
@@ -153,6 +171,10 @@ def run_package(pkg: Path, timeout: int = 900) -> dict:
                            f"({_last_error_line(err)}) -- run: {_requirements_hint()}")}
 
     if n_checks == 0:
+        denied_path = _permission_denied_source_path(err, source_root)
+        if denied_path:
+            return {**base, "status": "skipped-source-unavailable",
+                    "reason": f"read-only source repository is not accessible; permission denied at {denied_path}; source-dependent checks NOT run"}
         return {**base, "status": "error-verifier-crashed",
                 "reason": f"verifier exited {proc.returncode} without a PASS/FAIL line: "
                           f"{_last_error_line(err) or _last_error_line(out) or 'no output'}"}
