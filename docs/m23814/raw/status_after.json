@@ -1,0 +1,425 @@
+{
+ "mission": 23257,
+ "purpose": "re-derive every fact before moving the RA row of products/STATUS.json",
+ "repo": "/srv/tensor/agent/work/m23814",
+ "head_commit": "543881ac789fd1623cd4d47771dd1eb8fd62b9a6",
+ "head_subject": "m23814 R6-fix: close R5 residuals of PROD-RA review bundle (locators/manifest/D6)",
+ "pr511_merge": {
+  "cmd": "git log -1 --pretty=%H%n%s 3a70ce8",
+  "cwd": "/srv/tensor/agent/work/m23814",
+  "exit_code": 0,
+  "stdout_tail": "3a70ce80b74a885ede35a8d3d369f1648527ff50\nMerge #511 (m23111) via push-merge\n",
+  "stderr_tail": "",
+  "in_head": true
+ },
+ "fix_identity": {
+  "path": "docs/review_m22059_prod_ra/recheck.py",
+  "sha256": "2cfa24548d69498831a4f05ab58ddbcd503875624d9ca203fdd14230924b1090",
+  "r5_reviewed_sha": "2cfa24548d69498831a4f05ab58ddbcd503875624d9ca203fdd14230924b1090",
+  "matches_r5_reviewed_fix": true,
+  "last_commit": "d1d5c49 m23111: matured mission deliverables（9 个文件被门禁滤除）"
+ },
+ "entry_point": {
+  "cold_exit_code": 0,
+  "stderr_tail": [],
+  "log": "docs/m23257/raw/recheck_cold.log",
+  "sections": [
+   "artifact_identity",
+   "criteria_frozen_before_run",
+   "evidence_traceability",
+   "failure_record",
+   "independent_rerun",
+   "regression_scope",
+   "reviewed_commit",
+   "target"
+  ]
+ },
+ "six_checks_recorded": {
+  "source": "docs/m23157/r5_recheck.json",
+  "source_sha256": "13742a4946071056c16e98517a049013207fd8638ad84725db7bbd8218eba765",
+  "all_six_pass": true,
+  "per_check": {
+   "1_artifact_identity": true,
+   "2_criteria_frozen_before_run": true,
+   "3_evidence_traceability": true,
+   "4_independent_rerun": true,
+   "5_failure_record": true,
+   "6_regression_scope": true,
+   "all_six_pass": true
+  },
+  "review_receipt": "docs/m23157/REVIEW-RECEIPT-R5.json",
+  "review_receipt_verdict": "changes_requested"
+ },
+ "verdict_ledger": {
+  "probe_sql": "SELECT id, repo, scope, mission_id, level, gate_state FROM tensor_maturity_verdicts WHERE id IN (903,917,918) OR mission_id IN (22059,23090,23111,23157) ORDER BY id;",
+  "exit_code": 1,
+  "stderr_tail": [
+   "ERROR:  permission denied for table tensor_maturity_verdicts"
+  ],
+  "read_ok": false,
+  "in_repo_quotations": [
+   {
+    "file": "docs/review_m22059_prod_ra/REVIEW-R4.md",
+    "line": 6,
+    "text": "- 判据基准：`tensor_maturity_verdicts` 行 903（`m22059 PROD-RA 试点验收`, level 2, verdict `changes_requested`, defects=12）＋ `docs/review_m22059_prod_ra/REPAIR-NOTES.md` 自述"
+   },
+   {
+    "file": "docs/review_m22059_prod_ra/REVIEW-R4.md",
+    "line": 27,
+    "text": "2. **判据基准**取 `tensor_maturity_verdicts` 行 903 的 12 条 defect 原文 + `REPAIR-NOTES.md` 的逐条自述，**双向对照**：既查\"缺陷是否消失\"，也查\"自述是否成立\"。"
+   },
+   {
+    "file": "docs/review_m22059_prod_ra/REVIEW-R4.md",
+    "line": 48,
+    "text": "## 3. D1–D12 逐项裁决（判据=行 903 缺陷原文 + REPAIR-NOTES 自述）"
+   },
+   {
+    "file": "docs/review_m22059_prod_ra/REVIEW-R4.md",
+    "line": 50,
+    "text": "| 缺陷 | 级别 | 缺陷原文（行 903） | 本轮判定方法 | 实测证据 | 状态 |"
+   },
+   {
+    "file": "docs/review_m22059_prod_ra/REVIEW-R4.md",
+    "line": 163,
+    "text": "| 台账行 | `tensor_maturity_verdicts` id=918，`repo=TensorKnowledge`，`scope=ra-rereview4-m22059-fixes`，`mission_id=23090`，level=2，`gate_state=pending`（level 沿用行 903 的 L2 判级，本轮未主张升级） |"
+   },
+   {
+    "file": "docs/m23157/REVIEW-R5.md",
+    "line": 5,
+    "text": "- 判据基准：`tensor_maturity_verdicts` 行 903（12 条缺陷原文，D6 即其一）＋ 行 918（R4 五条残差 R4-1…R4-5）＋ `REPAIR-NOTES.md`（m23111）逐条自述"
+   },
+   {
+    "file": "docs/m23157/REVIEW-R5.md",
+    "line": 63,
+    "text": "### 3.3 D6（evidence bundle 逐项核，行 903 缺陷 + 行 918 残差）"
+   },
+   {
+    "file": "docs/m23157/REVIEW-R5.md",
+    "line": 106,
+    "text": "5. **台账不可直读**：本席 psql 角色对 `tensor_maturity_verdicts` 无 SELECT 权限，行 903/918 的原文取自仓内 `REVIEW-R4.md` 的引用；如协调者需绝对独立，应在有读权限的席位复核一次。"
+   }
+  ],
+  "evidence_level": "WITHHELD (ledger not readable by this role; citations are in-repo quotations)"
+ },
+ "cold": {
+  "target": "/tmp/m23814_cold_after",
+  "untar_exit": 0,
+  "legacy_runs_present": false,
+  "files": 3978
+ },
+ "r5_1_locators": {
+  "files_with_locators": 17,
+  "locator_tokens": 193,
+  "pure_path_fields": 137,
+  "pure_path_fields_legacy_runs_prefix": 0,
+  "pure_path_fields_absolute_foreign": 0,
+  "pure_path_resolved_cold": 137,
+  "pure_path_resolved_after_prefix_repair": 0,
+  "pure_path_unresolvable_even_after_repair": 0,
+  "tokens_resolved_cold": 138,
+  "tokens_unresolved_cold": 55,
+  "unresolved_examples": [
+   {
+    "json_path": "$.records[0].repro_cmd",
+    "locator": "runs/m22059/citation_audit.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.records[1].repro_cmd",
+    "locator": "runs/m22059/audit_corpus/claims",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.records[1].repro_cmd",
+    "locator": "runs/m22059/audit_corpus/evidence",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.records[1].repro_cmd",
+    "locator": "runs/m22059/audit_corpus/source",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.records[1].repro_cmd",
+    "locator": "runs/m22059/claim_evidence_audit.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.records[2].repro_cmd",
+    "locator": "runs/m22059/kb10k_incompatibility.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.records[2].resolution_record",
+    "locator": "runs/m22059/audit_corpus）；数组格式适配留作后续增量，未在本单实现",
+    "prefix_repair_would_fix": false
+   },
+   {
+    "json_path": "$.regression_conclusion",
+    "locator": "runs/m22059/**",
+    "prefix_repair_would_fix": false
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[0].locator.command",
+    "locator": "runs/m22059/citation_audit.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[1].locator.command",
+    "locator": "runs/m22059/audit_corpus/claims",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[1].locator.command",
+    "locator": "runs/m22059/audit_corpus/evidence",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[1].locator.command",
+    "locator": "runs/m22059/audit_corpus/source",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[1].locator.command",
+    "locator": "runs/m22059/claim_evidence_audit.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[2].locator.command",
+    "locator": "runs/m22059/negative_test/corpus/kf_result_bad.md",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[2].locator.command",
+    "locator": "runs/m22059/negative_test/citation_audit_negative.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[3].locator.command",
+    "locator": "runs/m22059/negative_test/claims",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[3].locator.command",
+    "locator": "runs/m22059/negative_test/evidence",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[3].locator.command",
+    "locator": "runs/m22059/negative_test/source",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[3].locator.command",
+    "locator": "runs/m22059/negative_test/claim_evidence_audit_negative.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.evidence_bundle.evidence_items[4].locator.command",
+    "locator": "runs/m22059/kb10k_incompatibility.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.negative_test_results.bad_citation_injection.command",
+    "locator": "runs/m22059/negative_test/corpus/kf_result_bad.md",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.negative_test_results.bad_citation_injection.command",
+    "locator": "runs/m22059/negative_test/citation_audit_negative.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.negative_test_results.dangling_evidence_injection.command",
+    "locator": "runs/m22059/negative_test/claims",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.negative_test_results.dangling_evidence_injection.command",
+    "locator": "runs/m22059/negative_test/evidence",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.negative_test_results.dangling_evidence_injection.command",
+    "locator": "runs/m22059/negative_test/source",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.negative_test_results.dangling_evidence_injection.command",
+    "locator": "runs/m22059/negative_test/claim_evidence_audit_negative.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.failure_records[0].repro_cmd",
+    "locator": "runs/m22059/citation_audit.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.failure_records[1].repro_cmd",
+    "locator": "runs/m22059/audit_corpus/claims",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.failure_records[1].repro_cmd",
+    "locator": "runs/m22059/audit_corpus/evidence",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.failure_records[1].repro_cmd",
+    "locator": "runs/m22059/audit_corpus/source",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.failure_records[1].repro_cmd",
+    "locator": "runs/m22059/claim_evidence_audit.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.failure_records[2].repro_cmd",
+    "locator": "runs/m22059/kb10k_incompatibility.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.failure_records[2].resolution_record",
+    "locator": "runs/m22059/audit_corpus）；数组格式适配留作后续增量，未在本单实现",
+    "prefix_repair_would_fix": false
+   },
+   {
+    "json_path": "$.summary.value.cost.stages[1].evidence",
+    "locator": "runs/m22059/regression-scope.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.summary.value.reproducibility.commands[0]",
+    "locator": "runs/m22059/citation_audit.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.summary.value.reproducibility.commands[1]",
+    "locator": "runs/m22059/audit_corpus/claims",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.summary.value.reproducibility.commands[1]",
+    "locator": "runs/m22059/audit_corpus/evidence",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.summary.value.reproducibility.commands[1]",
+    "locator": "runs/m22059/audit_corpus/source",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.summary.value.reproducibility.commands[1]",
+    "locator": "runs/m22059/claim_evidence_audit.json",
+    "prefix_repair_would_fix": true
+   },
+   {
+    "json_path": "$.summary.value.reproducibility.verified_at_commit",
+    "locator": "runs/m22059/regression-scope.json",
+    "prefix_repair_would_fix": true
+   }
+  ],
+  "per_file": {
+   "docs/m22059/claim_evidence_audit.json": {
+    "n": 3,
+    "unresolved_cold": 0
+   },
+   "docs/m22059/negative_knowledge_ledger.json": {
+    "n": 11,
+    "unresolved_cold": 7
+   },
+   "docs/m22059/negative_test/citation_audit_negative.json": {
+    "n": 1,
+    "unresolved_cold": 0
+   },
+   "docs/m22059/negative_test/claim_evidence_audit_negative.json": {
+    "n": 3,
+    "unresolved_cold": 0
+   },
+   "docs/m22059/regression-scope.json": {
+    "n": 22,
+    "unresolved_cold": 1
+   },
+   "docs/m22059/validation-report.json": {
+    "n": 55,
+    "unresolved_cold": 32
+   },
+   "docs/review_m22059_prod_ra/REVIEW-RECEIPT.json": {
+    "n": 2,
+    "unresolved_cold": 1
+   },
+   "docs/review_m22059_prod_ra/raw/cea_neg.json": {
+    "n": 3,
+    "unresolved_cold": 0
+   },
+   "docs/review_m22059_prod_ra/raw/cea_rerun.json": {
+    "n": 3,
+    "unresolved_cold": 0
+   },
+   "docs/review_m22059_prod_ra/raw/cit_neg.json": {
+    "n": 1,
+    "unresolved_cold": 0
+   },
+   "docs/review_m22059_prod_ra/raw/citation_audit_rerun.json": {
+    "n": 1,
+    "unresolved_cold": 0
+   },
+   "docs/review_m22059_prod_ra/raw_r4/citation_audit_negative.json": {
+    "n": 1,
+    "unresolved_cold": 0
+   },
+   "docs/review_m22059_prod_ra/raw_r4/citation_audit_positive.json": {
+    "n": 1,
+    "unresolved_cold": 0
+   },
+   "docs/review_m22059_prod_ra/raw_r4/claim_evidence_audit_negative.json": {
+    "n": 3,
+    "unresolved_cold": 0
+   },
+   "docs/review_m22059_prod_ra/raw_r4/claim_evidence_audit_positive.json": {
+    "n": 3,
+    "unresolved_cold": 0
+   },
+   "docs/review_m22059_prod_ra/recheck_output.json": {
+    "n": 41,
+    "unresolved_cold": 1
+   },
+   "docs/review_m22059_prod_ra/recheck_r4_output.json": {
+    "n": 39,
+    "unresolved_cold": 13
+   }
+  }
+ },
+ "r5_2_manifest": {
+  "entries": 18,
+  "missing": [],
+  "mismatch": [],
+  "self_digest_entry": {
+   "declared_for_self": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "mirror_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "mirror_file": "raw/SHA256SUMS"
+  },
+  "sound": true
+ },
+ "d6_evidence": {
+  "items": 5,
+  "schema_path": "/srv/tensor/workspace/TensorBench/schemas/evidence-item.schema.json",
+  "schema_ok_count": 5,
+  "items_without_input_sha256": [],
+  "items_without_input_refs": [],
+  "items_with_absolute_foreign_input_refs": {},
+  "source_ref_resolve_cold": 5,
+  "sha256_matches": 5,
+  "bundle_sha256_declared": "19cf7160c094f5a89d4ff9a842a12c9819afcabf4d3e88e3ef0e27a730e45cc8",
+  "bundle_sha256_recomputed": "19cf7160c094f5a89d4ff9a842a12c9819afcabf4d3e88e3ef0e27a730e45cc8",
+  "bundle_sha256_matches": true,
+  "bundle_digest_convention": "tensorbench.criteria.canonical_sha256"
+ },
+ "payload_contracts": {
+  "ran": true,
+  "validator": "tensorbench.contracts",
+  "cross_field_errors": [],
+  "validate_payload": []
+ }
+}
