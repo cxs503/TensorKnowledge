@@ -1,0 +1,7 @@
+{
+  "cmd": "/usr/bin/python3 /tmp/cold_r5/docs/review_m22059_prod_ra/recheck.py --target /srv/tensor/agent/work/m22059 --out /srv/tensor/agent/work/m23157/docs/m23157/raw_r5/recheck_as_shipped_legacy.json",
+  "cwd": "/tmp/cold_r5",
+  "exit_code": 1,
+  "stdout_tail": "",
+  "stderr_tail": "Traceback (most recent call last):\n  File \"/tmp/cold_r5/docs/review_m22059_prod_ra/recheck.py\", line 235, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/tmp/cold_r5/docs/review_m22059_prod_ra/recheck.py\", line 47, in main\n    report = json.loads((t / RUN / \"validation-report.json\").read_text(encoding=\"utf-8\"))\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib64/python3.11/pathlib.py\", line 1058, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib64/python3.11/pathlib.py\", line 1044, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/srv/tensor/agent/work/m22059/runs/m22059/validation-report.json'\n"
+}

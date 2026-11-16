@@ -1,0 +1,196 @@
+{
+  "schema": "prod-ra-review-receipt/5",
+  "repo": "TensorKnowledge",
+  "reviewed_commit": "cbd754bbeb8bb386ac61068a762aa6a47bb7a26f",
+  "reviewed_commit_subject": "Merge #510 (m20865) via merge-master",
+  "fix_commit_under_review": "d1d5c49",
+  "fix_commit_in_main": false,
+  "target": "/tmp/cold_r5",
+  "target_is_cold_clone": true,
+  "baseline_rows": [
+    903,
+    918
+  ],
+  "verdict": "changes_requested",
+  "scenario_validated": false,
+  "scenario_validated_note": "复审席不置位；由协调者依裁决执行",
+  "residuals": [
+    {
+      "id": "R5-1",
+      "severity": "blocking",
+      "inherits": "R4-1",
+      "finding": "file locators inside docs/m22059/** still address runs/m22059/**; a third party with no legacy worktree resolves 17/144 locator fields cold-start",
+      "evidence": {
+        "pure_path_fields": 144,
+        "legacy_runs_prefix": 114,
+        "absolute_foreign": 17,
+        "resolved_cold": 17,
+        "resolved_only_after_rewrite": 122,
+        "unresolvable_after_rewrite": 5
+      }
+    },
+    {
+      "id": "R5-2",
+      "severity": "major",
+      "inherits": "R4-3",
+      "finding": "reviewer bundle manifest still unsound: 5 of 18 SHA256SUMS entries unsound",
+      "evidence": {
+        "entries": 18,
+        "missing": [
+          "raw/adjacent_unit_tests.log",
+          "raw/evidence_schema_validation.log",
+          "raw/pytest_collect_base.log",
+          "raw/pytest_collect_reviewed.log"
+        ],
+        "mismatch": [
+          {
+            "path": "raw/SHA256SUMS",
+            "declared": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "actual": "ac75e22446cc451facbc7e4efc2150a1665388b507c9a5e929f790b7482ddcda"
+          }
+        ],
+        "self_digest_entry": {
+          "declared_for_self": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "mirror_digest": "ac75e22446cc451facbc7e4efc2150a1665388b507c9a5e929f790b7482ddcda",
+          "mirror_file": "raw/SHA256SUMS"
+        },
+        "sound": false
+      }
+    },
+    {
+      "id": "R5-3",
+      "severity": "minor",
+      "inherits": "R4-4",
+      "finding": "3/5 evidence items carry absolute foreign input_refs under /srv/tensor/agent/work/m22760; ev-kb10k-incompatibility still has no input_sha256",
+      "evidence": {
+        "items_without_input_sha256": [
+          "ev-kb10k-incompatibility"
+        ],
+        "items_with_absolute_foreign_input_refs": {
+          "ev-claim-evidence-audit": [
+            "/srv/tensor/agent/work/m22760/runs/m22059/audit_corpus/source"
+          ],
+          "ev-negative-claim-evidence": [
+            "/srv/tensor/agent/work/m22760/runs/m22059/negative_test/source"
+          ],
+          "ev-kb10k-incompatibility": [
+            "/srv/tensor/agent/work/m22760"
+          ]
+        }
+      }
+    },
+    {
+      "id": "R5-4",
+      "severity": "info",
+      "finding": "recheck.py signals a false failure in its failure_record section (top-level input_sha256 lookup while the repaired items nest it in provenance) and exits 0 unconditionally, so an author-reported exit_code=0 carries no acceptance weight",
+      "evidence": {
+        "recheck_signal": [
+          "ev-citation-audit",
+          "ev-claim-evidence-audit",
+          "ev-negative-citation",
+          "ev-negative-claim-evidence",
+          "ev-kb10k-incompatibility"
+        ],
+        "independent": [
+          "ev-kb10k-incompatibility"
+        ]
+      }
+    }
+  ],
+  "r4_acceptance": {
+    "R4-1_locators_cold_start": {
+      "accepted": false,
+      "detail": "repair exists only on commit d1d5c49; the docs/m22059 rewrite never reached the delivery branch and the family of absolute /srv/tensor/agent refs remains"
+    },
+    "R4-2_entry_point_exit_code": {
+      "accepted": true,
+      "detail": "fixed recheck.py exit 0 on a cold clone and 0 on the legacy worktree; as-shipped still fails"
+    },
+    "D6_evidence_bundle": {
+      "accepted": false,
+      "detail": "4/5 items carry provenance.input_sha256, 1 systematically missing; source_ref 0/5 resolves cold"
+    }
+  },
+  "six_checks": {
+    "1_artifact_identity": {
+      "inputs_declared": 2,
+      "inputs_match": 2,
+      "corpus_blocks": 1,
+      "pass": true
+    },
+    "2_criteria_frozen_before_run": {
+      "match_canonical": true,
+      "frozen_before_created": true,
+      "pass": true
+    },
+    "3_evidence_traceability": {
+      "unresolvable": [],
+      "n_unresolvable": 0,
+      "pass": true
+    },
+    "4_independent_rerun": {
+      "citation_audit_positive_exit": 1,
+      "citation_audit_positive_status": "inconclusive",
+      "citation_audit_inconclusive_is_documented": true,
+      "positive_exit_codes": {
+        "citation_audit_positive": 1,
+        "citation_audit_negative": 1,
+        "claim_evidence_audit_positive": 0,
+        "claim_evidence_audit_negative": 1,
+        "claims_triage_counts": null
+      },
+      "claim_audit_status_rerun": "passed",
+      "claim_audit_status_recorded": "passed",
+      "negative_detected_dangling_evidence": true,
+      "negative_detected_dangling_claim": true,
+      "negative_citation_detected_999": true,
+      "pass": true
+    },
+    "5_failure_record": {
+      "records": 3,
+      "recheck_script_signal_items_without_input_fingerprint": [
+        "ev-citation-audit",
+        "ev-claim-evidence-audit",
+        "ev-negative-citation",
+        "ev-negative-claim-evidence",
+        "ev-kb10k-incompatibility"
+      ],
+      "recheck_script_signal_is_top_level_lookup": "recheck.py:214 looks up input_sha256/input_refs on the item root, but the repaired schema nests them under provenance",
+      "independent_items_without_input_sha256": [
+        "ev-kb10k-incompatibility"
+      ],
+      "independent_items_with_absolute_foreign_input_refs": [
+        "ev-claim-evidence-audit",
+        "ev-kb10k-incompatibility",
+        "ev-negative-claim-evidence"
+      ],
+      "per_record_missing_fields": [
+        [],
+        [],
+        []
+      ],
+      "pass": true
+    },
+    "6_regression_scope": {
+      "adjacent_unit_tests": "12 passed, 1 warning in 0.13s",
+      "full_suite": "queued on cluster (see review report)",
+      "pass": true,
+      "full_suite_not_run": false
+    },
+    "all_six_pass": true
+  },
+  "checks_not_run": [
+    "full pytest suite in the cold clone (suite is large; the reviewed bundle records not_run for it too)",
+    "cross-machine / cross-python rerun",
+    "verbatim audit of all 15 criteria against matrix/PRD (unchanged from R4: 7 sampled)",
+    "tensor_maturity_verdicts rows 903/918 read-back (psql role lacks SELECT on that table; texts used come from the in-repo quotations in docs/review_m22059_prod_ra/REVIEW-R4.md)"
+  ],
+  "artifacts": {
+    "docs/m23157/verify_r5.py": "7151e3cfd72ea91ab692712423acaee80d2345d52c6f8ac03eb7aa6dc0ba4227",
+    "docs/m23157/r5_recheck.json": "13742a4946071056c16e98517a049013207fd8638ad84725db7bbd8218eba765",
+    "docs/m23157/figures/r5-locator-coldstart.png": "da67025dc603917178f6d42df15cce85e7ec4c4cb5f1ea5c12945ff08e01bd4b",
+    "docs/m23157/figures/r5-entrypoint-exitcodes.png": "56b3093dc1df62b3081198c2aa3d506fd86f37906bd5b57d98a96a068bc5fd3f",
+    "docs/m23157/figures/r5-sixchecks-d6.png": "88eef5ccca411ae9bd58fd2e9d42a0452e101fe5549f3da1638b8e21112c2e7f",
+    "docs/m23157/raw_r5/recheck_fixed.py": "2cfa24548d69498831a4f05ab58ddbcd503875624d9ca203fdd14230924b1090"
+  }
+}
