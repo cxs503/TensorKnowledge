@@ -17,7 +17,7 @@ These are initial tutorial briefs, not completed or validated courses. Each must
 
 ## Development status
 
-Tutorial 01 is an initial draft (v0.2.1). Agent-assisted source checks cover the pendulum model and gravity reference (2026-11-09), plus the VIM measurement-uncertainty definition and its separation from NIST's Type A/Type B classification (2026-11-16). Independent subject-matter review, learning-design review, learner piloting, accessibility review, and reproducibility review remain pending. It is not validated.
+Tutorial 01 is an initial draft (v0.2.2). Agent-assisted source checks cover the pendulum model and gravity reference (2026-11-09), plus the VIM measurement-uncertainty definition, separation from NIST's Type A/Type B classification, and precise OpenStax small-angle wording (2026-11-16). Independent subject-matter review, learning-design review, learner piloting, accessibility review, and reproducibility review remain pending. It is not validated.
 
 ## Selection criteria
 
