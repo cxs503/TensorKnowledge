@@ -4,10 +4,12 @@
 A package declares its verifier in ``manifest.json`` (``entry.verifier``); this
 runner discovers the packages under ``knowledge/sediment/`` and executes the
 declared entry in a subprocess, so a package cannot silently opt out of
-verification and a broken package cannot take the runner down.  The source
-repository of a package is read-only and usually absent in CI; when it is, the
-package's verifier reports ``source:available = FAIL`` and this runner treats the
-package as **not run** (reported, never counted as passed).
+verification and a broken package cannot take the runner down. The source
+repository of a package is read-only and may be absent or inaccessible in CI.
+When the verifier reports that source-dependent checks did not run, or crashes
+with a permission denial inside the declared source checkout before any check
+line, this runner treats the package as **not run** (reported, never counted as
+passed).
 
 This module is the integration point of the sediment pipeline into the repository
 gate: ``scripts/validate_knowledge_assets.py`` imports it and calls
