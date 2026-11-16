@@ -1,6 +1,8 @@
 {
   "ledger_id": "negative_knowledge_ledger_m22059",
-  "created_at": "2026-11-15T15:35:22+00:00",
+  "created_at": "2026-11-16T02:29:46+00:00",
+  "record_format": "TensorBench docs/SCENARIO_ACCEPTANCE_FRAMEWORK.md section 5 (repo field -> platform ledger field)",
+  "verified_at_commit": "c5d46f5d3243b86de43ac18632a6a9a6a6520ce8",
   "records": [
     {
       "keywords": [
@@ -11,15 +13,17 @@
       "anchor": "GAP-ACCEPT-③",
       "category": "gap",
       "fail_stage": "evidence",
-      "failure_reason": "语料 kf_result_wp-2506-04.md 无标准 References/Bibliography 章节，citation_audit 无法完成引用解析（inconclusive）",
-      "repro_cmd": "python3 scripts/research_audit/citation_audit.py work/wp-2506-04/kf_result_wp-2506-04.md  # 2745f3a8aa8d",
+      "failure_reason": "语料 kf_result_wp-2506-04.md 无 References/Bibliography 章节，citation_audit 无法完成引用解析，返回 inconclusive（结构性能力缺口，非运行错误）",
+      "repro_cmd": "python3 scripts/research_audit/citation_audit.py work/wp-2506-04/kf_result_wp-2506-04.md --output runs/m22059/citation_audit.json  # c5d46f5d3243b86de43ac18632a6a9a6a6520ce8",
       "evidence_refs": [
-        "runs/m22059/citation_audit.json#sha256:807d0e1757bac7c29c600e0cbb87d84a93d03d7236d7c574cf66c14b810f09ad"
+        "runs/m22059/citation_audit.json#sha256:d523660b6035b64da6774cf32c11d5e7b6955b306e6b557625e77740436d7e7c"
       ],
       "affects": [
+        "RA-CITATION-PRECISION",
         "citation_reference_resolution"
       ],
       "resolution": "accepted_limitation",
+      "resolution_record": "citation_audit.json#overall_status=inconclusive; RA-CITATION-PRECISION 在 criteria.json 中标 not_measured",
       "cited_kb": []
     },
     {
@@ -29,17 +33,19 @@
         "source_locator_mismatch"
       ],
       "anchor": "GAP-ACCEPT-③",
-      "category": "fail",
+      "category": "defect",
       "fail_stage": "evidence",
-      "failure_reason": "从语料提取的 evidence 记录中 quote offsets 设为 0:200，与实际源文件中文本位置不匹配，source_locator_integrity 检查全部失败",
-      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/audit_corpus/claims --evidence runs/m22059/audit_corpus/evidence --source-root runs/m22059/audit_corpus/source",
+      "failure_reason": "语料抽取把 11 条 evidence 的 quote offsets 统一写成 0:200 且 claim-f1 的 quote 为空串，source_locator_integrity 11/11 失败（审计器判定正确，缺陷在证据记录）",
+      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/audit_corpus/claims --evidence runs/m22059/audit_corpus/evidence --source-root runs/m22059/audit_corpus/source --output runs/m22059/claim_evidence_audit.json  # c5d46f5d3243b86de43ac18632a6a9a6a6520ce8",
       "evidence_refs": [
-        "runs/m22059/claim_evidence_audit.json"
+        "runs/m22059/claim_evidence_audit.json#sha256:dc117e6e41e17cba61e4e4537d2cf7cf5356f7e8623f43a25c275e1a03ae5827"
       ],
       "affects": [
+        "RA-SOURCE-SPAN",
         "source_locator_integrity"
       ],
-      "resolution": "open",
+      "resolution": "superseded",
+      "resolution_record": "runs/m22059/claim_evidence_audit.json#checks[source_locator_integrity]=passed, findings=0（偏移按源文实测重写，quote 与 sha256 逐条复核）",
       "cited_kb": []
     },
     {
@@ -50,16 +56,19 @@
       ],
       "anchor": "GAP-ACCEPT-③",
       "category": "gap",
-      "fail_stage": "execution",
-      "failure_reason": "kb10k claims/evidence 为 JSON 数组格式，claim_evidence_audit 期望单对象 JSON 文件（含 id 字段），导致 0 claims/0 evidence 被加载",
-      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims knowledge/kb10k/claims --evidence knowledge/kb10k/evidence --source-root .",
-      "evidence_refs": [],
+      "fail_stage": "input",
+      "failure_reason": "kb10k 的 claims/evidence 为 JSON 数组格式，审计器每文件读单对象（需 id 字段），20 个文件报 invalid_record、加载 0 claims / 0 evidence —— 不静默当作 0 条通过",
+      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims knowledge/kb10k/claims --evidence knowledge/kb10k/evidence --source-root . --output runs/m22059/kb10k_incompatibility.json  # c5d46f5d3243b86de43ac18632a6a9a6a6520ce8",
+      "evidence_refs": [
+        "runs/m22059/kb10k_incompatibility.json#sha256:a0e5e544e2c1a4a26a5f585c4bc0de4f3fe9369a2193e0c7888cd09bb268da39"
+      ],
       "affects": [
         "bidirectional_references",
         "source_locator_integrity",
         "review_relation_consistency"
       ],
       "resolution": "mitigated",
+      "resolution_record": "本次试点改用单对象语料（runs/m22059/audit_corpus）；数组格式适配留作后续增量，未在本单实现",
       "cited_kb": []
     }
   ],
