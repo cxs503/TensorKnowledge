@@ -1,0 +1,85 @@
+{
+  "schema_version": "0.1.0",
+  "product_id": "research-audit",
+  "product_version": "0.1.0",
+  "run_id": "researchaudit-2745f3a8aa8db04e",
+  "created_at": "2026-11-15T15:33:06+00:00",
+  "input_refs": [
+    "/root/tp-agent/work/m19455/work/wp-2506-04/kf_result_wp-2506-04.md"
+  ],
+  "input_fingerprints": {
+    "report_sha256": "2745f3a8aa8db04edf24e7818501b4b8a4683ab6efc2406627e9608c26f6949f"
+  },
+  "checks": [
+    {
+      "check_id": "references_section_present",
+      "version": "0.1.0",
+      "method": "deterministic_rule",
+      "state": "inconclusive",
+      "required": true,
+      "details": "No References/Bibliography/参考文献 heading was found."
+    },
+    {
+      "check_id": "citation_reference_resolution",
+      "version": "0.1.0",
+      "method": "deterministic_rule",
+      "state": "failed",
+      "required": true,
+      "details": "Unresolved citation IDs: 0."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "references_section_present:1",
+      "check_id": "references_section_present",
+      "status": "confirmed",
+      "severity": "high",
+      "summary": "A recognizable bibliography section is missing; citation resolution cannot be completed.",
+      "rationale": "A recognizable bibliography section is missing; citation resolution cannot be completed.",
+      "review_state": "unreviewed",
+      "limitations": [
+        "This is a structural citation check, not a semantic source-support judgment."
+      ],
+      "locator": {
+        "line_numbers": []
+      }
+    },
+    {
+      "finding_id": "unresolved_citation:2",
+      "check_id": "unresolved_citation",
+      "status": "confirmed",
+      "severity": "high",
+      "summary": "In-text citation [0] has no matching bibliography entry.",
+      "rationale": "In-text citation [0] has no matching bibliography entry.",
+      "review_state": "unreviewed",
+      "limitations": [
+        "This is a structural citation check, not a semantic source-support judgment."
+      ],
+      "locator": {
+        "line_numbers": [
+          109
+        ]
+      }
+    }
+  ],
+  "evidence_refs": [
+    "file:sha256:2745f3a8aa8db04edf24e7818501b4b8a4683ab6efc2406627e9608c26f6949f"
+  ],
+  "overall_status": "inconclusive",
+  "summary": {
+    "citation_count": 1,
+    "distinct_citations": 1,
+    "bibliography_entries": 0,
+    "unresolved_citations": [
+      "0"
+    ],
+    "duplicate_reference_ids": [],
+    "unused_references": [],
+    "scope": "numeric citation/reference consistency only"
+  },
+  "provenance": {
+    "input_fingerprints": {
+      "report_sha256": "2745f3a8aa8db04edf24e7818501b4b8a4683ab6efc2406627e9608c26f6949f"
+    }
+  }
+}

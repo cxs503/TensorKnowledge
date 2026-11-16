@@ -1,0 +1,319 @@
+{
+  "schema_version": "0.1.0",
+  "product_id": "research-audit",
+  "scenario": {
+    "scenario_id": "RA-20261115-real-corpus-audit",
+    "usage_declaration": "真实审计工作流：审计一份真实研究成果语料（wp-2506-04 独立评审报告 + EVIDENCE.md 任务证据摘要）的主张-引用-证据可追溯性",
+    "permission_basis": "internal_consent",
+    "inputs": [
+      {
+        "path": "work/wp-2506-04/kf_result_wp-2506-04.md",
+        "sha256": "2745f3a8aa8db04edf24e7818501b4b8a4683ab6efc2406627e9608c26f6949f",
+        "role": "primary_corpus"
+      },
+      {
+        "path": "EVIDENCE.md",
+        "sha256": "d09f1ce8c053e125a309c75d08c8294bb7f487f55889f33faa32b2da88b672e7",
+        "role": "evidence_summary"
+      }
+    ],
+    "limits": [
+      "citation_audit 仅检查数字引用/参考文献结构一致性，不做语义支持判断",
+      "claim_evidence_audit 检查记录链接、源路径、精确引用偏移和哈希，不做语义蕴含判断",
+      "语料中的 JSON 代码块需提取为结构化 claim/evidence 记录方可被 claim_evidence_audit 处理",
+      "kb10k 批量 claim/evidence 为数组格式，与审计器期望的单记录 JSON 不兼容"
+    ]
+  },
+  "criteria_freeze": {
+    "criteria_ref": "runs/m22059/criteria.json",
+    "criteria_sha256": "f60695e1b40160af6a07813e3ec3016ff230fe22c36d2170df9b465b903fddcc",
+    "frozen_at": "2026-11-15T15:35:22+00:00",
+    "frozen_by": "agent/m22059"
+  },
+  "evidence_bundle": {
+    "evidence_items": [
+      {
+        "item_id": "ev-citation-audit",
+        "type": "audit_output",
+        "source": "scripts/research_audit/citation_audit.py",
+        "input_sha256": "2745f3a8aa8db04edf24e7818501b4b8a4683ab6efc2406627e9608c26f6949f",
+        "output_ref": "runs/m22059/citation_audit.json",
+        "overall_status": "inconclusive",
+        "checks": [
+          {
+            "check_id": "references_section_present",
+            "version": "0.1.0",
+            "method": "deterministic_rule",
+            "state": "inconclusive",
+            "required": true,
+            "details": "No References/Bibliography/参考文献 heading was found."
+          },
+          {
+            "check_id": "citation_reference_resolution",
+            "version": "0.1.0",
+            "method": "deterministic_rule",
+            "state": "failed",
+            "required": true,
+            "details": "Unresolved citation IDs: 0."
+          }
+        ],
+        "findings_count": 2
+      },
+      {
+        "item_id": "ev-claim-evidence-audit",
+        "type": "audit_output",
+        "source": "scripts/research_audit/claim_evidence_audit.py",
+        "input_refs": [
+          "runs/m22059/audit_corpus/claims/",
+          "runs/m22059/audit_corpus/evidence/"
+        ],
+        "output_ref": "runs/m22059/claim_evidence_audit.json",
+        "overall_status": "failed",
+        "checks": [
+          {
+            "check_id": "bidirectional_references",
+            "version": "0.2.0",
+            "method": "deterministic_rule",
+            "state": "passed",
+            "required": true,
+            "details": "0 broken or non-reciprocal links across 11 claims and 11 evidence records."
+          },
+          {
+            "check_id": "source_locator_integrity",
+            "version": "0.2.0",
+            "method": "deterministic_rule",
+            "state": "failed",
+            "required": true,
+            "details": "11 source/quote locator errors across 11 evidence records."
+          },
+          {
+            "check_id": "review_relation_consistency",
+            "version": "0.2.0",
+            "method": "deterministic_rule",
+            "state": "passed",
+            "required": true,
+            "details": "0 relation/review conflicts; 0 evidence items remain unassessed."
+          }
+        ],
+        "findings_count": 11
+      },
+      {
+        "item_id": "ev-negative-citation",
+        "type": "negative_test",
+        "description": "注入坏引用 [999] 到语料副本，citation_audit 必须检出",
+        "output_ref": "runs/m22059/negative_test/citation_audit_negative.json",
+        "detected": true,
+        "overall_status": "inconclusive"
+      },
+      {
+        "item_id": "ev-negative-claim-evidence",
+        "type": "negative_test",
+        "description": "注入悬空证据指针（claim 引用不存在的 evidence，evidence 引用不存在的 claim），claim_evidence_audit 必须检出",
+        "output_ref": "runs/m22059/negative_test/claim_evidence_audit_negative.json",
+        "detected_missing_evidence": true,
+        "detected_missing_claim": true,
+        "overall_status": "failed"
+      }
+    ],
+    "missing": [
+      "semantic_support_judgment: 审计器不做语义支持判断，需人工评审",
+      "cross_report_verification: 语料中引用 m2431 报告，但包边界禁止读取",
+      "golden_matrix_test: 无回归测试 golden matrix"
+    ]
+  },
+  "claims_triage": {
+    "verified": [
+      {
+        "claim_id": "claim-sc-1",
+        "claim": "α=0 在 20 个几何上造能 → 非正交修正不是主因",
+        "evidence": "independently reproduced: alpha=0 produces energy on exactly 20 of 41 geometries"
+      },
+      {
+        "claim_id": "claim-sc-2",
+        "claim": "相容装配：E 的最小值 = -3.935422，λmin(K) 最小值 = +0.360339 > 0",
+        "evidence": "reproduced to 6 decimals"
+      },
+      {
+        "claim_id": "claim-sc-3",
+        "claim": "K 矩阵是平方和，故对任意网格恒为对称半正定",
+        "evidence": "code structure verified: K = Σ w Gᵀdiag(2μV)G"
+      }
+    ],
+    "inconclusive": [
+      {
+        "claim_id": "check-cross-report",
+        "claim": "跨报告一致性：λmin 交叉点 0.975/86.22° 与 m2431 一致",
+        "reason": "package boundary forbids reading report_id other than 2506"
+      },
+      {
+        "claim_id": "check-bitwise",
+        "claim": "bitwise identity against pre-change HEAD matrix",
+        "reason": "verified by diff inspection only, no golden-matrix test exists"
+      },
+      {
+        "claim_id": "check-affine",
+        "claim": "affine consistency / second-order convergence on hexahedral meshes",
+        "reason": "withdrawn from test set, no reference implementation available"
+      },
+      {
+        "claim_id": "check-solver",
+        "claim": "admission of K into a solver (sparsity/bandwidth, iterative convergence)",
+        "reason": "out of scope for review package"
+      }
+    ],
+    "broken": [
+      {
+        "claim_id": "claim-f1",
+        "claim": "docstring claims exact affine gradients",
+        "evidence": "实测偏离 5.685/8.037/7.696（相对 3.46–7.62 倍）",
+        "severity": "high"
+      },
+      {
+        "claim_id": "claim-f2",
+        "claim": "归因修正：非正交修正不是主因",
+        "evidence": "与自身表格矛盾：α=0 20/41 vs α=1 2/41，修正修好了 18 个几何",
+        "severity": "medium"
+      },
+      {
+        "claim_id": "claim-f3",
+        "claim": "唯一 strict xfail",
+        "evidence": "实跑发现不止一个 xfail",
+        "severity": "medium"
+      },
+      {
+        "claim_id": "claim-f4",
+        "claim": "correction_damping=1.0 有回归用例",
+        "evidence": "回归用例是比较 1.0 与 1.0 的同义反复",
+        "severity": "medium"
+      },
+      {
+        "claim_id": "claim-f5",
+        "claim": "6 条用例",
+        "evidence": "实跑 5 passed",
+        "severity": "low"
+      },
+      {
+        "claim_id": "claim-f6",
+        "claim": "扫描汇总（41 几何）",
+        "evidence": "published table is 14-row subsample not labelled as such",
+        "severity": "low"
+      },
+      {
+        "claim_id": "claim-f7",
+        "claim": "legacy 默认装配在 2 个几何上造能",
+        "evidence": "defect real but at extreme edge of admissible family",
+        "severity": "low"
+      },
+      {
+        "claim_id": "claim-f8",
+        "claim": "距 0 的余量 100%",
+        "evidence": "signed quantity has no 100% margin to zero; metric carries no information",
+        "severity": "low"
+      }
+    ]
+  },
+  "negative_test_results": {
+    "bad_citation_injection": {
+      "injected": "[999]",
+      "detected": true,
+      "command": "python3 scripts/research_audit/citation_audit.py runs/m22059/negative_test/corpus/kf_result_bad.md",
+      "output_ref": "runs/m22059/negative_test/citation_audit_negative.json"
+    },
+    "dangling_evidence_injection": {
+      "injected": [
+        "claim-dangling-1 → evidence-nonexistent-xyz",
+        "evidence-dangling-1 → claim-nonexistent-abc"
+      ],
+      "detected_missing_evidence": true,
+      "detected_missing_claim": true,
+      "command": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/negative_test/claims --evidence runs/m22059/negative_test/evidence --source-root runs/m22059/negative_test/source",
+      "output_ref": "runs/m22059/negative_test/claim_evidence_audit_negative.json"
+    }
+  },
+  "failure_records": [
+    {
+      "keywords": [
+        "RA",
+        "citation_audit",
+        "no_references_section"
+      ],
+      "anchor": "GAP-ACCEPT-③",
+      "category": "gap",
+      "fail_stage": "evidence",
+      "failure_reason": "语料 kf_result_wp-2506-04.md 无标准 References/Bibliography 章节，citation_audit 无法完成引用解析（inconclusive）",
+      "repro_cmd": "python3 scripts/research_audit/citation_audit.py work/wp-2506-04/kf_result_wp-2506-04.md  # 2745f3a8aa8d",
+      "evidence_refs": [
+        "runs/m22059/citation_audit.json#sha256:807d0e1757bac7c29c600e0cbb87d84a93d03d7236d7c574cf66c14b810f09ad"
+      ],
+      "affects": [
+        "citation_reference_resolution"
+      ],
+      "resolution": "accepted_limitation",
+      "cited_kb": []
+    },
+    {
+      "keywords": [
+        "RA",
+        "claim_evidence_audit",
+        "source_locator_mismatch"
+      ],
+      "anchor": "GAP-ACCEPT-③",
+      "category": "fail",
+      "fail_stage": "evidence",
+      "failure_reason": "从语料提取的 evidence 记录中 quote offsets 设为 0:200，与实际源文件中文本位置不匹配，source_locator_integrity 检查全部失败",
+      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/audit_corpus/claims --evidence runs/m22059/audit_corpus/evidence --source-root runs/m22059/audit_corpus/source",
+      "evidence_refs": [
+        "runs/m22059/claim_evidence_audit.json"
+      ],
+      "affects": [
+        "source_locator_integrity"
+      ],
+      "resolution": "open",
+      "cited_kb": []
+    },
+    {
+      "keywords": [
+        "RA",
+        "kb10k",
+        "format_incompatibility"
+      ],
+      "anchor": "GAP-ACCEPT-③",
+      "category": "gap",
+      "fail_stage": "execution",
+      "failure_reason": "kb10k claims/evidence 为 JSON 数组格式，claim_evidence_audit 期望单对象 JSON 文件（含 id 字段），导致 0 claims/0 evidence 被加载",
+      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims knowledge/kb10k/claims --evidence knowledge/kb10k/evidence --source-root .",
+      "evidence_refs": [],
+      "affects": [
+        "bidirectional_references",
+        "source_locator_integrity",
+        "review_relation_consistency"
+      ],
+      "resolution": "mitigated",
+      "cited_kb": []
+    }
+  ],
+  "summary": {
+    "audit_scripts_used": [
+      "citation_audit.py v0.1.0",
+      "claim_evidence_audit.py v0.2.0"
+    ],
+    "corpus_inputs": 2,
+    "corpus_fingerprints_verified": true,
+    "citation_audit_status": "inconclusive",
+    "claim_evidence_audit_status": "failed",
+    "negative_tests_passed": true,
+    "claims_verified": 3,
+    "claims_inconclusive": 4,
+    "claims_broken": 8,
+    "failure_records_filed": 3,
+    "value": {
+      "problem": "研究成果语料的主张-引用-证据可追溯性审计，人工审查耗时且易遗漏结构性缺陷",
+      "automation": "2/4 步骤自动化（citation_audit + claim_evidence_audit 自动运行；语料提取 + 报告组装需手动）",
+      "quality": "citation_audit: inconclusive（无参考文献章节）；claim_evidence_audit: failed（source locator 偏移不匹配）；negative tests: 全部检出",
+      "cost": "wall_clock ~5min, human_review ~30min, compute: 1 core × 2min",
+      "reproducibility": "命令 + 语料指纹已记录，可独立复现",
+      "delivery": "unknown"
+    }
+  },
+  "created_at": "2026-11-15T15:35:22+00:00"
+}
