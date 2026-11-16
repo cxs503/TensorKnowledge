@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.2.0",
+  "product_id": "research-audit",
+  "product_version": "0.2.0",
+  "created_at": "2026-11-16T07:00:32+00:00",
+  "inputs": {
+    "claims_dir": "docs/m22059/audit_corpus/claims",
+    "evidence_dir": "docs/m22059/audit_corpus/evidence",
+    "source_root": "/srv/tensor/agent/work/m23090/docs/m22059/audit_corpus/source"
+  },
+  "counts": {
+    "claims": 11,
+    "evidence": 11,
+    "pending_review": 0
+  },
+  "checks": [
+    {
+      "check_id": "bidirectional_references",
+      "version": "0.2.0",
+      "method": "deterministic_rule",
+      "state": "passed",
+      "required": true,
+      "details": "0 broken or non-reciprocal links across 11 claims and 11 evidence records."
+    },
+    {
+      "check_id": "source_locator_integrity",
+      "version": "0.2.0",
+      "method": "deterministic_rule",
+      "state": "passed",
+      "required": true,
+      "details": "0 source/quote locator errors across 11 evidence records."
+    },
+    {
+      "check_id": "review_relation_consistency",
+      "version": "0.2.0",
+      "method": "deterministic_rule",
+      "state": "passed",
+      "required": true,
+      "details": "0 relation/review conflicts; 0 evidence items remain unassessed."
+    }
+  ],
+  "findings": [],
+  "overall_status": "passed",
+  "limitations": [
+    "This audit verifies record linkage, source paths, exact quote offsets and quote hashes.",
+    "It does not determine whether a source semantically entails, supports or refutes a claim.",
+    "A structurally valid unassessed relation is reported as inconclusive, never as verified support.",
+    "External URLs are not fetched; only local source files under source_root are checked."
+  ]
+}
