@@ -1,0 +1,67 @@
+{
+  "ledger_id": "negative_knowledge_ledger_m22059",
+  "created_at": "2026-11-15T15:35:22+00:00",
+  "records": [
+    {
+      "keywords": [
+        "RA",
+        "citation_audit",
+        "no_references_section"
+      ],
+      "anchor": "GAP-ACCEPT-③",
+      "category": "gap",
+      "fail_stage": "evidence",
+      "failure_reason": "语料 kf_result_wp-2506-04.md 无标准 References/Bibliography 章节，citation_audit 无法完成引用解析（inconclusive）",
+      "repro_cmd": "python3 scripts/research_audit/citation_audit.py work/wp-2506-04/kf_result_wp-2506-04.md  # 2745f3a8aa8d",
+      "evidence_refs": [
+        "runs/m22059/citation_audit.json#sha256:807d0e1757bac7c29c600e0cbb87d84a93d03d7236d7c574cf66c14b810f09ad"
+      ],
+      "affects": [
+        "citation_reference_resolution"
+      ],
+      "resolution": "accepted_limitation",
+      "cited_kb": []
+    },
+    {
+      "keywords": [
+        "RA",
+        "claim_evidence_audit",
+        "source_locator_mismatch"
+      ],
+      "anchor": "GAP-ACCEPT-③",
+      "category": "fail",
+      "fail_stage": "evidence",
+      "failure_reason": "从语料提取的 evidence 记录中 quote offsets 设为 0:200，与实际源文件中文本位置不匹配，source_locator_integrity 检查全部失败",
+      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/audit_corpus/claims --evidence runs/m22059/audit_corpus/evidence --source-root runs/m22059/audit_corpus/source",
+      "evidence_refs": [
+        "runs/m22059/claim_evidence_audit.json"
+      ],
+      "affects": [
+        "source_locator_integrity"
+      ],
+      "resolution": "open",
+      "cited_kb": []
+    },
+    {
+      "keywords": [
+        "RA",
+        "kb10k",
+        "format_incompatibility"
+      ],
+      "anchor": "GAP-ACCEPT-③",
+      "category": "gap",
+      "fail_stage": "execution",
+      "failure_reason": "kb10k claims/evidence 为 JSON 数组格式，claim_evidence_audit 期望单对象 JSON 文件（含 id 字段），导致 0 claims/0 evidence 被加载",
+      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims knowledge/kb10k/claims --evidence knowledge/kb10k/evidence --source-root .",
+      "evidence_refs": [],
+      "affects": [
+        "bidirectional_references",
+        "source_locator_integrity",
+        "review_relation_consistency"
+      ],
+      "resolution": "mitigated",
+      "cited_kb": []
+    }
+  ],
+  "total_records": 3
+}
