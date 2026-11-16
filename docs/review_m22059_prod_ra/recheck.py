@@ -22,7 +22,7 @@ TENSORBENCH = Path("/srv/tensor/workspace/TensorBench")
 sys.path.insert(0, str(TENSORBENCH))
 from tensorbench.criteria import canonical_sha256  # noqa: E402
 
-RUN = "runs/m22059"
+RUN = "docs/m22059"
 
 
 def sha(path: Path) -> str:
@@ -211,7 +211,7 @@ def main() -> int:
         "recorded_in_missing_or_ledger_per_claim": False,
         "evidence_bundle_missing": report["evidence_bundle"].get("missing", []),
         "evidence_items_without_input_fingerprint": [
-            it["item_id"] for it in report["evidence_bundle"]["evidence_items"]
+            it.get("evidence_id", "unknown") for it in report["evidence_bundle"]["evidence_items"]
             if not it.get("input_sha256") and not it.get("input_refs")],
     }
 
