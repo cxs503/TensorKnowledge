@@ -1,6 +1,196 @@
 {
-  "bidirectional_links": "all claim-evidence links must be reciprocal",
-  "citation_resolution": "all in-text citations must resolve to bibliography entries",
-  "review_relation_consistency": "assessment_status must match declared relation",
-  "source_locator_integrity": "all evidence quotes must match source at declared offsets"
+  "criteria_version": "1.1.0",
+  "product_id": "research-audit",
+  "scenario_id": "RA-20261115-real-corpus-audit",
+  "contract_sources": [
+    {
+      "path": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md",
+      "repo_head": "660954e",
+      "sha256": "c6a5c7ddec8de7ba7df1c4a8f122640f3937db55f3ff36ff821ece13c9b6812d"
+    },
+    {
+      "path": "TensorBench:products/research-audit/PRD.md",
+      "repo_head": "660954e",
+      "sha256": "8542c740de7c1fe6e0214dbd4aa1096b2dae62bf01123f98085ebaf94f7e7642"
+    }
+  ],
+  "criteria": [
+    {
+      "criterion_id": "RA-PILOT-SCOPE",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L21",
+      "statement": "Audit one permissioned report, bibliography and source bundle; retain reviewer receipt.",
+      "applies_to": "pilot_gate",
+      "measured_by": "validation-report.scenario.permission_basis + review_receipt"
+    },
+    {
+      "criterion_id": "RA-NO-UPGRADE",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L15",
+      "statement": "A passing unit-test suite never upgrades a product to real_world_verified. Missing or unsupported evidence is inconclusive, never a pass.",
+      "applies_to": "pilot_gate",
+      "measured_by": "overall_status of both auditors; claims_triage"
+    },
+    {
+      "criterion_id": "RA-RECORD-INPUTS",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L38",
+      "statement": "immutable input fingerprints and source locators",
+      "applies_to": "pilot_gate",
+      "measured_by": "scenario.inputs[].sha256; evidence locator offsets"
+    },
+    {
+      "criterion_id": "RA-RECORD-VERSIONS",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L39",
+      "statement": "product version, rule/profile version and configuration",
+      "applies_to": "pilot_gate",
+      "measured_by": "audit output product_version/check version"
+    },
+    {
+      "criterion_id": "RA-RECORD-CRITERIA",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L40",
+      "statement": "declared acceptance criteria and applicability assumptions",
+      "applies_to": "pilot_gate",
+      "measured_by": "this file + validation-report.criteria_freeze"
+    },
+    {
+      "criterion_id": "RA-RECORD-INVOCATION",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L41",
+      "statement": "command/API invocation and environment",
+      "applies_to": "pilot_gate",
+      "measured_by": "failure records repro_cmd; REPORT.md toolchain section"
+    },
+    {
+      "criterion_id": "RA-RECORD-OUTPUTS",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L42",
+      "statement": "raw test/check outputs, including failures and skipped checks",
+      "applies_to": "pilot_gate",
+      "measured_by": "citation_audit.json; claim_evidence_audit.json; negative_test/*.json"
+    },
+    {
+      "criterion_id": "RA-RECORD-FINDINGS",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L43",
+      "statement": "findings with evidence references and pass / fail / inconclusive",
+      "applies_to": "pilot_gate",
+      "measured_by": "claims_triage; auditors' findings[]"
+    },
+    {
+      "criterion_id": "RA-RECORD-REVIEWER",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L44",
+      "statement": "reviewer identity/role, decision, timestamp and rationale",
+      "applies_to": "pilot_gate",
+      "measured_by": "docs/review_m22059_prod_ra/REVIEW-RECEIPT.json"
+    },
+    {
+      "criterion_id": "RA-RECORD-METRICS",
+      "source": "TensorBench:docs/FOUR_PRODUCT_ACCEPTANCE_MATRIX.md#L45",
+      "statement": "labelled evaluation metrics where a holdout set exists",
+      "applies_to": "calibrated_gate",
+      "measured_by": null,
+      "status": "not_applicable",
+      "reason": "no labelled holdout set exists for this pilot corpus; not measured, not claimed"
+    },
+    {
+      "criterion_id": "RA-SOURCE-SPAN",
+      "source": "TensorBench:products/research-audit/PRD.md#L34",
+      "statement": "every finding must resolve to a source span or be explicitly marked as a heuristic prompt",
+      "applies_to": "pilot_gate",
+      "measured_by": "claim_evidence_audit:source_locator_integrity (slice == quote at declared offsets, sha256 matches)"
+    },
+    {
+      "criterion_id": "RA-CITATION-PRECISION",
+      "source": "TensorBench:products/research-audit/PRD.md#L34",
+      "statement": "citation metadata precision >= 0.98",
+      "applies_to": "calibrated_gate",
+      "measured_by": null,
+      "status": "not_measured",
+      "reason": "the audited corpus has no bibliography section, so no citation resolves and precision is undefined on this run; reported inconclusive by citation_audit"
+    },
+    {
+      "criterion_id": "RA-SUPPORT-F1",
+      "source": "TensorBench:products/research-audit/PRD.md#L34",
+      "statement": "support classification macro-F1 >= 0.80 on the labelled holdout",
+      "applies_to": "calibrated_gate",
+      "measured_by": null,
+      "status": "not_measured",
+      "reason": "no >=100-pair labelled holdout in this pilot; both auditors are structural and make no semantic-support judgement"
+    },
+    {
+      "criterion_id": "RA-REPRODUCIBLE-FINDINGS",
+      "source": "TensorBench:products/research-audit/PRD.md#L35",
+      "statement": "Human reviewers can reproduce each finding from the cited source.",
+      "applies_to": "pilot_gate",
+      "measured_by": "evidence locator (source + offsets + sha256) per finding; repro_cmd per record"
+    },
+    {
+      "criterion_id": "RA-INCONCLUSIVE",
+      "source": "TensorBench:products/research-audit/PRD.md#L36",
+      "statement": "Any unresolvable extraction or unavailable source is `inconclusive`, never silently passed.",
+      "applies_to": "pilot_gate",
+      "measured_by": "auditor overall_status semantics (no-bibliography -> inconclusive)"
+    }
+  ],
+  "check_mapping": [
+    {
+      "check_id": "references_section_present",
+      "auditor": "citation_audit.py",
+      "serves": [
+        "RA-INCONCLUSIVE",
+        "RA-CITATION-PRECISION"
+      ]
+    },
+    {
+      "check_id": "citation_reference_resolution",
+      "auditor": "citation_audit.py",
+      "serves": [
+        "RA-CITATION-PRECISION",
+        "RA-RECORD-FINDINGS"
+      ]
+    },
+    {
+      "check_id": "bidirectional_references",
+      "auditor": "claim_evidence_audit.py",
+      "serves": [
+        "RA-RECORD-FINDINGS",
+        "RA-REPRODUCIBLE-FINDINGS"
+      ]
+    },
+    {
+      "check_id": "source_locator_integrity",
+      "auditor": "claim_evidence_audit.py",
+      "serves": [
+        "RA-SOURCE-SPAN",
+        "RA-REPRODUCIBLE-FINDINGS",
+        "RA-RECORD-INPUTS"
+      ]
+    },
+    {
+      "check_id": "review_relation_consistency",
+      "auditor": "claim_evidence_audit.py",
+      "serves": [
+        "RA-NO-UPGRADE",
+        "RA-RECORD-FINDINGS"
+      ]
+    }
+  ],
+  "applicability_assumptions": [
+    "the audited corpus is a permissioned internal report (permission_basis=internal_consent) with an in-tree verbatim copy used as the locator root",
+    "the two auditors are structural: they verify record linkage, source paths, offsets and hashes; they do not judge whether a source semantically supports a claim",
+    "the pilot exercises the six-check framework on one real corpus; it does not claim calibrated/operational readiness (G3/G4)"
+  ],
+  "amendments": [
+    {
+      "amendment_id": "A1",
+      "amended_at": "2026-11-16T02:20:12+00:00",
+      "reason": "D1/D2 repair: the first criteria file (frozen 2026-11-15T15:35:22+00:00) restated the auditor's own check ids instead of transcribing the acceptance matrix and PRD, omitted the PRD source-span clause, and was hashed as sha256(json.dumps(obj, indent=2)) rather than tensorbench.criteria.canonical_sha256, so the declared hash did not resolve under the contract function. This version transcribes the matrix row/record bullets and the PRD acceptance bullets verbatim (D2) and is hashed with canonical_sha256 (D1); the superseded freeze is retained here instead of being overwritten (D8).",
+      "supersedes": {
+        "criteria_sha256": "f60695e1b40160af6a07813e3ec3016ff230fe22c36d2170df9b465b903fddcc",
+        "hash_convention": "sha256(json.dumps(obj, ensure_ascii=False, indent=2)) - not the contract function",
+        "frozen_at": "2026-11-15T15:35:22+00:00",
+        "keys": [
+          "bidirectional_links",
+          "citation_resolution",
+          "review_relation_consistency",
+          "source_locator_integrity"
+        ]
+      }
+    }
+  ]
 }
