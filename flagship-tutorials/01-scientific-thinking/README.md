@@ -1,7 +1,7 @@
 # Scientific Thinking: From Observation to Explanation
 
 **Status:** draft  
-**Version:** 0.2.0  
+**Version:** 0.2.1  
 **Audience:** curious learners; no specialist science background required  
 **Estimated time:** 3–5 hours, plus optional follow-up investigation  
 **Domains:** Cognitive Foundations; Evidence and Reality; Models and Principles; Creativity and Discovery  
@@ -200,7 +200,7 @@ Distinguish:
 - **systematic effect:** a consistent influence that may bias results, such as measuring from the wrong reference point;
 - **model limitation:** the idealized equation omits effects present in the real setup.
 
-Do not treat *measurement error* and *measurement uncertainty* as synonyms. In formal metrology, uncertainty characterizes the dispersion of values that could reasonably be attributed to the measurand; the relationship between random/systematic effects and formal uncertainty components is not a simple one-to-one mapping [2]. This tutorial uses the terms qualitatively and does not claim a complete uncertainty budget.
+Do not treat *measurement error* and *measurement uncertainty* as synonyms. The International Vocabulary of Metrology (VIM) defines measurement uncertainty as a non-negative parameter characterizing the dispersion of quantity values attributed to a measurand, based on the information used [4]. NIST TN 1297 explains that uncertainty components are grouped by how they are evaluated (Type A by statistical methods, Type B by other means), and that these categories do not map one-to-one onto the commonly used random/systematic labels [2]. This tutorial uses the terms qualitatively and does not claim a complete uncertainty budget.
 
 Do not report more decimal places than the method supports. If the three trials differ noticeably, report the spread as well as the mean. If a systematic effect is suspected, explain how it might shift the result; taking more trials alone may not fix it.
 
@@ -375,6 +375,7 @@ Write short answers:
 1. Ling, S. J., Sanny, J., and Moebs, W. (2016). *University Physics Volume 1*. OpenStax, Rice University, §15.4, “Pendulums” (open textbook). This section defines the simple-pendulum idealization, derives the small-angle period equation, and discusses its dependence on length and gravitational acceleration: https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums
 2. Taylor, B. N., and Kuyatt, C. E. (1994). *Guidelines for Evaluating and Expressing the Uncertainty of NIST Measurement Results*, NIST Technical Note 1297, §2, “Classification of Components of Uncertainty.” DOI: https://doi.org/10.6028/NIST.tn.1297. The section distinguishes uncertainty from error and cautions against treating random/systematic labels as a complete classification of uncertainty components: https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-2-classification-components-uncertainty
 3. Tate, D. R. (1969). *Gravity Measurements and the Standards Laboratory*, National Bureau of Standards Technical Note 491, §§5–6. This note distinguishes local gravity values from the conventional standard-gravity value 9.80665 m/s²: https://nvlpubs.nist.gov/nistpubs/Legacy/TN/nbstechnicalnote491.pdf
+4. Joint Committee for Guides in Metrology (JCGM). (2012). *International Vocabulary of Metrology — Basic and General Concepts and Associated Terms (VIM)*, 3rd edition, entry 2.26, “Measurement uncertainty” (JCGM 200:2012). This is the source for the formal definition of measurement uncertainty used above: https://jcgm.bipm.org/vim/en/2.26.html
 
 The value 9.81 m/s² is a rounded reference for classroom calculations, not a claim that local gravity is exactly the same everywhere. NIST's historical technical note explains the distinction between local gravity and the conventional standard-gravity value [3]. The ideal period equation is standard introductory mechanics, subject to the assumptions stated above.
 
@@ -382,8 +383,9 @@ The value 9.81 m/s² is a rounded reference for classroom calculations, not a cl
 
 ## 13. Review record
 
-- Authoring status: instructional draft, version 0.2.0
+- Authoring status: instructional draft, version 0.2.1
 - Agent-assisted source and structure check: 2026-11-09; OpenStax pendulum derivation, NIST uncertainty terminology, and standard/local gravity reference checked against cited sections
+- Supplemental agent-assisted source check: 2026-11-16; VIM 2.26 definition verified and citation scope corrected
 - Independent subject-matter review: pending
 - Independent learning-design review: pending
 - Learner pilot: pending
