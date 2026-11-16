@@ -2,11 +2,11 @@
   "schema_version": "0.2.0",
   "product_id": "research-audit",
   "product_version": "0.2.0",
-  "created_at": "2026-11-15T15:33:01+00:00",
+  "created_at": "2026-11-16T02:20:18+00:00",
   "inputs": {
     "claims_dir": "runs/m22059/audit_corpus/claims",
     "evidence_dir": "runs/m22059/audit_corpus/evidence",
-    "source_root": "/root/tp-agent/work/m22059/runs/m22059/audit_corpus/source"
+    "source_root": "/root/tp-agent/work/m22760/runs/m22059/audit_corpus/source"
   },
   "counts": {
     "claims": 11,
@@ -26,9 +26,9 @@
       "check_id": "source_locator_integrity",
       "version": "0.2.0",
       "method": "deterministic_rule",
-      "state": "failed",
+      "state": "passed",
       "required": true,
-      "details": "11 source/quote locator errors across 11 evidence records."
+      "details": "0 source/quote locator errors across 11 evidence records."
     },
     {
       "check_id": "review_relation_consistency",
@@ -39,137 +39,8 @@
       "details": "0 relation/review conflicts; 0 evidence items remain unassessed."
     }
   ],
-  "findings": [
-    {
-      "finding_id": "quote_missing:1",
-      "check_id": "quote_missing",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-f1 has no exact quote; locator cannot be content-verified.",
-      "details": {}
-    },
-    {
-      "finding_id": "quote_offset_mismatch:2",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-f2 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "- **归因修正**：m2431 把造能归给非正交修正（\"延迟修正恒耗散\"）。本单用逐面阻尼扫掠证明该结论在其自己的几何族上不成立：\n  α=0 仍造能，且 α 越小失效面越大 → 主因是融合装配 `D A G` 的**面/能量对偶性（sum-by-parts）不成立**，修正项只是把它放大。",
-        "actual_text": "# KF-RESULT wp-2506-04\n\n**tags**: `kf-wp:wp-2506-04`, `independent-review`, `red-team`, `tensorfvm`, `viscous-dissipativity`\n\n> 审核对象 wp-2506-01（rep",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    },
-    {
-      "finding_id": "quote_offset_mismatch:3",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-f3 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "- **默认路径未改**：`correction_damping=1.0` 与 HEAD 矩阵逐位相同（有回归用例）",
-        "actual_text": "# KF-RESULT wp-2506-04\n\n**tags**: `kf-wp:wp-2506-04`, `ind",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    },
-    {
-      "finding_id": "quote_offset_mismatch:4",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-f4 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "- **默认路径未改**：`correction_damping=1.0` 与 HEAD 矩阵逐位相同（有回归用例）",
-        "actual_text": "# KF-RESULT wp-2506-04\n\n**tags**: `kf-wp:wp-2506-04`, `ind",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    },
-    {
-      "finding_id": "quote_offset_mismatch:5",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-f5 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "`tests/test_native_compatible_viscous3d.py`，6 条用例",
-        "actual_text": "# KF-RESULT wp-2506-04\n\n**tags**: `kf-wp:wp-2506-",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    },
-    {
-      "finding_id": "quote_offset_mismatch:6",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-f6 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "扫描汇总（41 几何）",
-        "actual_text": "# KF-RESULT",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    },
-    {
-      "finding_id": "quote_offset_mismatch:7",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-f7 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "legacy 默认装配（α=1）在 **2 个几何**上造能，首个失效 skew=0.975（非正交角 86.22° 起）。",
-        "actual_text": "# KF-RESULT wp-2506-04\n\n**tags**: `kf-wp:wp-2506-04`, `indepen",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    },
-    {
-      "finding_id": "quote_offset_mismatch:8",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-f8 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "本单判据是**符号/特征值证书**而非与解析解的相对误差，无文献基准可比，故不适用「<3%」条款（显式声明，不含糊",
-        "actual_text": "# KF-RESULT wp-2506-04\n\n**tags**: `kf-wp:wp-2506-04`, `in",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    },
-    {
-      "finding_id": "quote_offset_mismatch:9",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-review-1 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "independently reproduced: alpha=0 produces energy on exactly 20 of 41 geometries (reviewer run of the producer's audit).",
-        "actual_text": "# KF-RESULT wp-2506-04\n\n**tags**: `kf-wp:wp-2506-04`, `independent-review`, `red-team`, `tensorfvm`, `viscous-dissipativ",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    },
-    {
-      "finding_id": "quote_offset_mismatch:10",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-review-2 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "reproduced to 6 decimals: min E = -3.935422, min lambda_min(K) = 0.360339.",
-        "actual_text": "# KF-RESULT wp-2506-04\n\n**tags**: `kf-wp:wp-2506-04`, `independent-review`",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    },
-    {
-      "finding_id": "quote_offset_mismatch:11",
-      "check_id": "quote_offset_mismatch",
-      "status": "confirmed",
-      "severity": "high",
-      "summary": "evidence-review-3 quote does not match the source at its declared offsets.",
-      "details": {
-        "expected_quote": "structure checked in code: K = sum w_ij G_ij^T diag(2 mu V) G_ij with mu,V>0 is a sum of Gram matrices, hence PSD for any mesh; the 41/41 sweep is therefore a tautological sanity check, not independen",
-        "actual_text": "# KF-RESULT wp-2506-04\n\n**tags**: `kf-wp:wp-2506-04`, `independent-review`, `red-team`, `tensorfvm`, `viscous-dissipativity`\n\n> 审核对象 wp-2506-01（report_id=2506，sha256 `c62850b3dacd416b…`）。\n> **判定：needs",
-        "citation": "kf_result_wp-2506-04.md"
-      }
-    }
-  ],
-  "overall_status": "failed",
+  "findings": [],
+  "overall_status": "passed",
   "limitations": [
     "This audit verifies record linkage, source paths, exact quote offsets and quote hashes.",
     "It does not determine whether a source semantically entails, supports or refutes a claim.",

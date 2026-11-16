@@ -26,100 +26,324 @@
   },
   "criteria_freeze": {
     "criteria_ref": "runs/m22059/criteria.json",
-    "criteria_sha256": "f60695e1b40160af6a07813e3ec3016ff230fe22c36d2170df9b465b903fddcc",
-    "frozen_at": "2026-11-15T15:35:22+00:00",
-    "frozen_by": "agent/m22059"
+    "criteria_version": "1.1.0",
+    "criteria_sha256": "0808bd1c459cc3934d4b32f9dc7fd613bf03aed87981c855c99c697083e8e947",
+    "hash_convention": "tensorbench.criteria.canonical_sha256 (sorted keys, no whitespace, UTF-8)",
+    "frozen_at": "2026-11-16T02:20:12+00:00",
+    "frozen_by": "agent/m22760 (stage-3 repair; author seat)",
+    "amendments_ref": "runs/m22059/criteria.json#amendments",
+    "amendments": [
+      {
+        "amendment_id": "A1",
+        "amended_at": "2026-11-16T02:20:12+00:00",
+        "reason_ref": "runs/m22059/criteria.json#amendments[0].reason"
+      }
+    ],
+    "freeze_precedes_outputs": true,
+    "earliest_audit_output_created_at": "2026-11-16T02:20:18+00:00",
+    "superseded_timeline": {
+      "note": "The first-round freeze is withdrawn, not backdated. It is recorded here instead of being overwritten, and it is NOT claimed to have preceded the first-round outputs.",
+      "criteria_sha256": "f60695e1b40160af6a07813e3ec3016ff230fe22c36d2170df9b465b903fddcc",
+      "hash_convention": "sha256(json.dumps(obj, ensure_ascii=False, indent=2)) - not the contract function (defect D1)",
+      "frozen_at": "2026-11-15T15:35:22+00:00",
+      "first_round_report_created_at": "2026-11-15T15:35:22+00:00",
+      "first_round_audit_outputs_created_at": "2026-11-15T15:33:06+00:00",
+      "honest_reading": "frozen_at equalled created_at and post-dated the first-round audit outputs by 2m16s, so 'criteria frozen before the run' was not demonstrable for the first round (defect D8). Only the 2026-11-16T02:20:12+00:00 freeze above is claimed to precede its own outputs."
+    }
   },
   "evidence_bundle": {
+    "item_schema": "TensorBench:schemas/evidence-item.schema.json",
+    "schema_note": "each item below is validated against evidence-item.schema.json; a product-level bundle schema does not exist for RA runs (TensorBench:schemas/evidence_bundle.json describes the AE-01 mission bundle: mission/PR/repo/ci/deliverables), so the bundle records its own self-digest instead of claiming compliance with a schema that does not describe it",
+    "items_sha256": [
+      "d523660b6035b64da6774cf32c11d5e7b6955b306e6b557625e77740436d7e7c",
+      "dc117e6e41e17cba61e4e4537d2cf7cf5356f7e8623f43a25c275e1a03ae5827",
+      "63ce3a86d73e4213a8168934fc4ce0b86dba3cf50f755596d2074040dd6c1b49",
+      "35b8e0efeec7e8298f4f1e084441e2a233398a30841b7b5e5ee9a73c0a015831",
+      "a0e5e544e2c1a4a26a5f585c4bc0de4f3fe9369a2193e0c7888cd09bb268da39"
+    ],
     "evidence_items": [
       {
-        "item_id": "ev-citation-audit",
-        "type": "audit_output",
-        "source": "scripts/research_audit/citation_audit.py",
-        "input_sha256": "2745f3a8aa8db04edf24e7818501b4b8a4683ab6efc2406627e9608c26f6949f",
-        "output_ref": "runs/m22059/citation_audit.json",
-        "overall_status": "inconclusive",
-        "checks": [
-          {
-            "check_id": "references_section_present",
-            "version": "0.1.0",
-            "method": "deterministic_rule",
-            "state": "inconclusive",
-            "required": true,
-            "details": "No References/Bibliography/参考文献 heading was found."
-          },
-          {
-            "check_id": "citation_reference_resolution",
-            "version": "0.1.0",
-            "method": "deterministic_rule",
-            "state": "failed",
-            "required": true,
-            "details": "Unresolved citation IDs: 0."
+        "evidence_id": "ev-citation-audit",
+        "source_type": "run",
+        "source_ref": "runs/m22059/citation_audit.json",
+        "sha256": "d523660b6035b64da6774cf32c11d5e7b6955b306e6b557625e77740436d7e7c",
+        "locator": {
+          "auditor": "scripts/research_audit/citation_audit.py v0.1.0",
+          "command": "python3 scripts/research_audit/citation_audit.py work/wp-2506-04/kf_result_wp-2506-04.md --output runs/m22059/citation_audit.json",
+          "exit_code": 1,
+          "overall_status": "inconclusive",
+          "checks": [
+            {
+              "check_id": "references_section_present",
+              "version": "0.1.0",
+              "method": "deterministic_rule",
+              "state": "inconclusive",
+              "required": true,
+              "details": "No References/Bibliography/参考文献 heading was found."
+            },
+            {
+              "check_id": "citation_reference_resolution",
+              "version": "0.1.0",
+              "method": "deterministic_rule",
+              "state": "failed",
+              "required": true,
+              "details": "Unresolved citation IDs: 0."
+            }
+          ],
+          "findings_count": 2,
+          "finding_ids": [
+            "references_section_present:1",
+            "unresolved_citation:2"
+          ],
+          "summary": {
+            "citation_count": 1,
+            "distinct_citations": 1,
+            "bibliography_entries": 0,
+            "unresolved_citations": [
+              "0"
+            ],
+            "duplicate_reference_ids": [],
+            "unused_references": [],
+            "scope": "numeric citation/reference consistency only"
           }
-        ],
-        "findings_count": 2
-      },
-      {
-        "item_id": "ev-claim-evidence-audit",
-        "type": "audit_output",
-        "source": "scripts/research_audit/claim_evidence_audit.py",
-        "input_refs": [
-          "runs/m22059/audit_corpus/claims/",
-          "runs/m22059/audit_corpus/evidence/"
-        ],
-        "output_ref": "runs/m22059/claim_evidence_audit.json",
-        "overall_status": "failed",
-        "checks": [
-          {
-            "check_id": "bidirectional_references",
-            "version": "0.2.0",
-            "method": "deterministic_rule",
-            "state": "passed",
-            "required": true,
-            "details": "0 broken or non-reciprocal links across 11 claims and 11 evidence records."
-          },
-          {
-            "check_id": "source_locator_integrity",
-            "version": "0.2.0",
-            "method": "deterministic_rule",
-            "state": "failed",
-            "required": true,
-            "details": "11 source/quote locator errors across 11 evidence records."
-          },
-          {
-            "check_id": "review_relation_consistency",
-            "version": "0.2.0",
-            "method": "deterministic_rule",
-            "state": "passed",
-            "required": true,
-            "details": "0 relation/review conflicts; 0 evidence items remain unassessed."
+        },
+        "provenance": {
+          "source_owner": "TensorKnowledge RA pilot (mission m22059, repair m22760)",
+          "source_version": "citation_audit.py v0.1.0, product_version 0.1.0",
+          "acquired_at": "2026-11-16T02:20:18+00:00",
+          "input_refs": [
+            "work/wp-2506-04/kf_result_wp-2506-04.md"
+          ],
+          "input_sha256": {
+            "report_sha256": "2745f3a8aa8db04edf24e7818501b4b8a4683ab6efc2406627e9608c26f6949f"
           }
-        ],
-        "findings_count": 11
+        }
       },
       {
-        "item_id": "ev-negative-citation",
-        "type": "negative_test",
-        "description": "注入坏引用 [999] 到语料副本，citation_audit 必须检出",
-        "output_ref": "runs/m22059/negative_test/citation_audit_negative.json",
-        "detected": true,
-        "overall_status": "inconclusive"
+        "evidence_id": "ev-claim-evidence-audit",
+        "source_type": "run",
+        "source_ref": "runs/m22059/claim_evidence_audit.json",
+        "sha256": "dc117e6e41e17cba61e4e4537d2cf7cf5356f7e8623f43a25c275e1a03ae5827",
+        "locator": {
+          "auditor": "scripts/research_audit/claim_evidence_audit.py v0.2.0",
+          "command": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/audit_corpus/claims --evidence runs/m22059/audit_corpus/evidence --source-root runs/m22059/audit_corpus/source --output runs/m22059/claim_evidence_audit.json",
+          "exit_code": 0,
+          "overall_status": "passed",
+          "checks": [
+            {
+              "check_id": "bidirectional_references",
+              "version": "0.2.0",
+              "method": "deterministic_rule",
+              "state": "passed",
+              "required": true,
+              "details": "0 broken or non-reciprocal links across 11 claims and 11 evidence records."
+            },
+            {
+              "check_id": "source_locator_integrity",
+              "version": "0.2.0",
+              "method": "deterministic_rule",
+              "state": "passed",
+              "required": true,
+              "details": "0 source/quote locator errors across 11 evidence records."
+            },
+            {
+              "check_id": "review_relation_consistency",
+              "version": "0.2.0",
+              "method": "deterministic_rule",
+              "state": "passed",
+              "required": true,
+              "details": "0 relation/review conflicts; 0 evidence items remain unassessed."
+            }
+          ],
+          "findings_count": 0,
+          "counts": {
+            "claims": 11,
+            "evidence": 11,
+            "pending_review": 0
+          }
+        },
+        "provenance": {
+          "source_owner": "TensorKnowledge RA pilot (mission m22059, repair m22760)",
+          "source_version": "claim_evidence_audit.py v0.2.0, product_version 0.2.0",
+          "acquired_at": "2026-11-16T02:20:18+00:00",
+          "input_refs": {
+            "claims_dir": "runs/m22059/audit_corpus/claims",
+            "evidence_dir": "runs/m22059/audit_corpus/evidence",
+            "source_root": "/root/tp-agent/work/m22760/runs/m22059/audit_corpus/source"
+          },
+          "input_sha256": {
+            "claims_dir_digest": "d2f5bc3823ee64c14b027e8c73e71eafedbd8a178924ea324ca46af5193a2695",
+            "evidence_dir_digest": "7bcef787da514f67d3a18dc73dddbbc174a9ffadaccbbced6c40f2f68ba8e44e",
+            "claims_files": {
+              "claim-f1.json": "d99f6e69da64bbb0486866d7a521583d22bc5d327c0d3e79f05120da6010f1e7",
+              "claim-f2.json": "9c0262330a04a72f4e6cd459fb669605a31e602d144da096f16b630464b2be59",
+              "claim-f3.json": "6a892bcd46531bd0243317848267cac766a34455bd154b50cb5162d2794c051e",
+              "claim-f4.json": "1b2541813dd5a2f2cd359d6ab34e4c2d5282987db037a6093ddea549067d66fb",
+              "claim-f5.json": "10c9222ccfe6d26c4ad73d163c3c3b42cade733012beaf801c9cea92a79a87f1",
+              "claim-f6.json": "eae09071b0a2516ec52dba771a7511d01b8763b4268fcc35310f3669c7423e3f",
+              "claim-f7.json": "df34db369b8ac6b4fc48b104d68e062ba32ddb0b9420e433d6272421588d54e2",
+              "claim-f8.json": "db567ee5648f40eec890df219f9e9a7dd767b36fac156b55236ba2476ca62301",
+              "claim-sc-1.json": "44e795c9a6e090c06bd6b6887196a8de3901b8e5fa3d5a91bb9b5a64a1d59258",
+              "claim-sc-2.json": "28492696ce3e37a20f0c9e73fddcced66146c65ee5a5e157cdaf427cbe8cb0dd",
+              "claim-sc-3.json": "c5a26fd287f7ea87065ab70c6e94b8f424ed4290cc9e365cb441df695f576df7"
+            },
+            "evidence_files": {
+              "evidence-f1.json": "f6ae77ddcb2ff64672cf0359ac96ca8355eb93c53d0e6061ed38081f5d21bf08",
+              "evidence-f2.json": "c6b3e2e5de8bed871dd4d3744fafc90d9dca2e86bcfbfa1a14c56840c8cf802c",
+              "evidence-f3.json": "9a6655d5d97ca278c8c1ff235d59fac62591801dfdfe3edcd112e7b5e8573237",
+              "evidence-f4.json": "08440566a8694121e63e414adc7bfb06fb68f6678be72187e459b65061b163b1",
+              "evidence-f5.json": "d1d0e3e6a42814b60be630eaba8aa3e3120732217f8df3ab20ce461f19d4f79f",
+              "evidence-f6.json": "666be8fa8fadb1c5888576ac2a252bbda99f61cb5c24e97b62bddb3f12d43064",
+              "evidence-f7.json": "8bff6410af053dc09d840a26a13b24c0bab36b9c962085904343d3bea8e3194d",
+              "evidence-f8.json": "519bf016507284adee3a80e654325c5978c056be6e8c3be45d045d5570965b39",
+              "evidence-review-1.json": "15139f61c159dc0e2d529f33b6d5b8fc484a8c1aba10bff0058d1a4dda26b89c",
+              "evidence-review-2.json": "b1a7e776e5e2aaa55cebdda01e2760c07e33e84b874738d7ca7847a405f9d3ab",
+              "evidence-review-3.json": "e7b58686be81486bd54d9689073fef80e1b3ac36ce6551adf8907b648ec42200"
+            },
+            "source_sha256": "2745f3a8aa8db04edf24e7818501b4b8a4683ab6efc2406627e9608c26f6949f"
+          }
+        }
       },
       {
-        "item_id": "ev-negative-claim-evidence",
-        "type": "negative_test",
-        "description": "注入悬空证据指针（claim 引用不存在的 evidence，evidence 引用不存在的 claim），claim_evidence_audit 必须检出",
-        "output_ref": "runs/m22059/negative_test/claim_evidence_audit_negative.json",
-        "detected_missing_evidence": true,
-        "detected_missing_claim": true,
-        "overall_status": "failed"
+        "evidence_id": "ev-negative-citation",
+        "source_type": "run",
+        "source_ref": "runs/m22059/negative_test/citation_audit_negative.json",
+        "sha256": "63ce3a86d73e4213a8168934fc4ce0b86dba3cf50f755596d2074040dd6c1b49",
+        "locator": {
+          "auditor": "scripts/research_audit/citation_audit.py v0.1.0",
+          "command": "python3 scripts/research_audit/citation_audit.py runs/m22059/negative_test/corpus/kf_result_bad.md --output runs/m22059/negative_test/citation_audit_negative.json",
+          "injected": "[999]",
+          "exit_code": 1,
+          "overall_status": "inconclusive",
+          "detected": true,
+          "finding_ids": [
+            "references_section_present:1",
+            "unresolved_citation:2",
+            "unresolved_citation:3"
+          ],
+          "unresolved_citations": [
+            "0",
+            "999"
+          ]
+        },
+        "provenance": {
+          "source_owner": "TensorKnowledge RA pilot (mission m22059, repair m22760)",
+          "source_version": "citation_audit.py v0.1.0",
+          "acquired_at": "2026-11-16T02:20:19+00:00",
+          "input_refs": [
+            "runs/m22059/negative_test/corpus/kf_result_bad.md"
+          ],
+          "input_sha256": {
+            "report_sha256": "f164b6552edb8ba2dd1d03b800530f6abc4cb2669f537711baf8809e88df86fb"
+          }
+        }
+      },
+      {
+        "evidence_id": "ev-negative-claim-evidence",
+        "source_type": "run",
+        "source_ref": "runs/m22059/negative_test/claim_evidence_audit_negative.json",
+        "sha256": "35b8e0efeec7e8298f4f1e084441e2a233398a30841b7b5e5ee9a73c0a015831",
+        "locator": {
+          "auditor": "scripts/research_audit/claim_evidence_audit.py v0.2.0",
+          "command": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/negative_test/claims --evidence runs/m22059/negative_test/evidence --source-root runs/m22059/negative_test/source --output runs/m22059/negative_test/claim_evidence_audit_negative.json",
+          "injected": [
+            "claim-dangling-1 -> evidence-nonexistent-xyz",
+            "evidence-dangling-1 -> claim-nonexistent-abc"
+          ],
+          "exit_code": 1,
+          "overall_status": "failed",
+          "finding_ids": [
+            "missing_evidence_record:1",
+            "missing_claim_record:2"
+          ],
+          "detected_missing_evidence": true,
+          "detected_missing_claim": true,
+          "collateral_findings": 0
+        },
+        "provenance": {
+          "source_owner": "TensorKnowledge RA pilot (mission m22059, repair m22760)",
+          "source_version": "claim_evidence_audit.py v0.2.0",
+          "acquired_at": "2026-11-16T02:20:19+00:00",
+          "input_refs": {
+            "claims_dir": "runs/m22059/negative_test/claims",
+            "evidence_dir": "runs/m22059/negative_test/evidence",
+            "source_root": "/root/tp-agent/work/m22760/runs/m22059/negative_test/source"
+          },
+          "input_sha256": {
+            "claims_dir_digest": "f4a33adb8ad32c3e787998c6124d8da217fcbc735a33ed8a178d08da748e591c",
+            "evidence_dir_digest": "975c33347ee7d337759bbf31469890333f6e6cb8762fd6693d233b7131405e8d",
+            "claims_files": {
+              "claim-dangling-1.json": "ea63652bb02287935d1766bbbfae754767e6585ac4d85b8e935c8bff7edeec1c",
+              "claim-sc-1.json": "44e795c9a6e090c06bd6b6887196a8de3901b8e5fa3d5a91bb9b5a64a1d59258"
+            },
+            "evidence_files": {
+              "evidence-dangling-1.json": "dfda909d47a07b0e2b7291b32f29e59d51b49dab344b38e821acbdc2588a144a",
+              "evidence-review-1.json": "eb63e3bac689fd796469243812595efc05f0dc9da5a1a8c28d8f7bb9616f3a0e"
+            },
+            "source_sha256": "f164b6552edb8ba2dd1d03b800530f6abc4cb2669f537711baf8809e88df86fb"
+          }
+        }
+      },
+      {
+        "evidence_id": "ev-kb10k-incompatibility",
+        "source_type": "run",
+        "source_ref": "runs/m22059/kb10k_incompatibility.json",
+        "sha256": "a0e5e544e2c1a4a26a5f585c4bc0de4f3fe9369a2193e0c7888cd09bb268da39",
+        "locator": {
+          "auditor": "scripts/research_audit/claim_evidence_audit.py v0.2.0",
+          "command": "python3 scripts/research_audit/claim_evidence_audit.py --claims knowledge/kb10k/claims --evidence knowledge/kb10k/evidence --source-root . --output runs/m22059/kb10k_incompatibility.json",
+          "exit_code": 1,
+          "overall_status": "failed",
+          "counts": {
+            "claims": 0,
+            "evidence": 0,
+            "pending_review": 0
+          },
+          "finding_ids": [
+            "invalid_record:1",
+            "invalid_record:2",
+            "invalid_record:3",
+            "invalid_record:4",
+            "invalid_record:5",
+            "invalid_record:6",
+            "invalid_record:7",
+            "invalid_record:8",
+            "invalid_record:9",
+            "invalid_record:10",
+            "invalid_record:11",
+            "invalid_record:12",
+            "invalid_record:13",
+            "invalid_record:14",
+            "invalid_record:15",
+            "invalid_record:16",
+            "invalid_record:17",
+            "invalid_record:18",
+            "invalid_record:19",
+            "invalid_record:20"
+          ],
+          "observation": "the batch knowledge-base records are JSON arrays; the auditor loads one record per file and reports invalid_record instead of silently auditing 0 records"
+        },
+        "provenance": {
+          "source_owner": "TensorKnowledge RA pilot (mission m22059, repair m22760)",
+          "source_version": "claim_evidence_audit.py v0.2.0",
+          "acquired_at": "2026-11-16T02:22:56+00:00",
+          "input_refs": {
+            "claims_dir": "knowledge/kb10k/claims",
+            "evidence_dir": "knowledge/kb10k/evidence",
+            "source_root": "/root/tp-agent/work/m22760"
+          }
+        }
       }
     ],
     "missing": [
       "semantic_support_judgment: 审计器不做语义支持判断，需人工评审",
       "cross_report_verification: 语料中引用 m2431 报告，但包边界禁止读取",
       "golden_matrix_test: 无回归测试 golden matrix"
-    ]
+    ],
+    "integrity": {
+      "bundle_sha256": "6a69c11318b36cbcafbb0e8aa1d862df527aebd49fac4db5bc36fc58316044bb",
+      "digest_scope": "canonical_json_of_evidence_bundle_excluding_integrity"
+    }
   },
   "claims_triage": {
     "verified": [
@@ -215,19 +439,54 @@
   "negative_test_results": {
     "bad_citation_injection": {
       "injected": "[999]",
+      "command": "python3 scripts/research_audit/citation_audit.py runs/m22059/negative_test/corpus/kf_result_bad.md --output runs/m22059/negative_test/citation_audit_negative.json",
+      "output_ref": "runs/m22059/negative_test/citation_audit_negative.json",
       "detected": true,
-      "command": "python3 scripts/research_audit/citation_audit.py runs/m22059/negative_test/corpus/kf_result_bad.md",
-      "output_ref": "runs/m22059/negative_test/citation_audit_negative.json"
+      "exit_code": 1,
+      "positive_exit_code": 1,
+      "overall_status": "inconclusive",
+      "positive_overall_status": "inconclusive",
+      "discrimination_level": "finding",
+      "discrimination_evidence": {
+        "positive_unresolved_citations": [
+          "0"
+        ],
+        "negative_unresolved_citations": [
+          "0",
+          "999"
+        ],
+        "positive_findings": 2,
+        "negative_findings": 3
+      },
+      "status_degenerate": true,
+      "status_degeneracy_reason": "citation_audit returns 'inconclusive' whenever no bibliography heading exists; both corpora lack one, so only the finding set and the unresolved-citation list separate them. The framework also requires a non-zero exit code on a detected defect, which holds (1).",
+      "exit_code_semantics": "non-zero (1) = no clean pass; the detected-defect case is required to be non-zero and is"
     },
     "dangling_evidence_injection": {
       "injected": [
-        "claim-dangling-1 → evidence-nonexistent-xyz",
-        "evidence-dangling-1 → claim-nonexistent-abc"
+        "claim-dangling-1 -> evidence-nonexistent-xyz",
+        "evidence-dangling-1 -> claim-nonexistent-abc"
       ],
+      "command": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/negative_test/claims --evidence runs/m22059/negative_test/evidence --source-root runs/m22059/negative_test/source --output runs/m22059/negative_test/claim_evidence_audit_negative.json",
+      "output_ref": "runs/m22059/negative_test/claim_evidence_audit_negative.json",
       "detected_missing_evidence": true,
       "detected_missing_claim": true,
-      "command": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/negative_test/claims --evidence runs/m22059/negative_test/evidence --source-root runs/m22059/negative_test/source",
-      "output_ref": "runs/m22059/negative_test/claim_evidence_audit_negative.json"
+      "exit_code": 1,
+      "positive_exit_code": 0,
+      "overall_status": "failed",
+      "positive_overall_status": "passed",
+      "discrimination_level": "status",
+      "discrimination_evidence": {
+        "positive_findings": 0,
+        "negative_findings": 2,
+        "negative_finding_ids": [
+          "missing_evidence_record:1",
+          "missing_claim_record:2"
+        ],
+        "collateral_findings": 0
+      },
+      "status_degenerate": false,
+      "exit_code_semantics": "0 = clean pass (positive corpus), 1 = detected defect (negative corpus); the two runs now differ both at status and exit-code level"
     }
   },
   "failure_records": [
@@ -240,15 +499,17 @@
       "anchor": "GAP-ACCEPT-③",
       "category": "gap",
       "fail_stage": "evidence",
-      "failure_reason": "语料 kf_result_wp-2506-04.md 无标准 References/Bibliography 章节，citation_audit 无法完成引用解析（inconclusive）",
-      "repro_cmd": "python3 scripts/research_audit/citation_audit.py work/wp-2506-04/kf_result_wp-2506-04.md  # 2745f3a8aa8d",
+      "failure_reason": "语料 kf_result_wp-2506-04.md 无 References/Bibliography 章节，citation_audit 无法完成引用解析，返回 inconclusive（结构性能力缺口，非运行错误）",
+      "repro_cmd": "python3 scripts/research_audit/citation_audit.py work/wp-2506-04/kf_result_wp-2506-04.md --output runs/m22059/citation_audit.json  # c5d46f5d3243b86de43ac18632a6a9a6a6520ce8",
       "evidence_refs": [
-        "runs/m22059/citation_audit.json#sha256:807d0e1757bac7c29c600e0cbb87d84a93d03d7236d7c574cf66c14b810f09ad"
+        "runs/m22059/citation_audit.json#sha256:d523660b6035b64da6774cf32c11d5e7b6955b306e6b557625e77740436d7e7c"
       ],
       "affects": [
+        "RA-CITATION-PRECISION",
         "citation_reference_resolution"
       ],
       "resolution": "accepted_limitation",
+      "resolution_record": "citation_audit.json#overall_status=inconclusive; RA-CITATION-PRECISION 在 criteria.json 中标 not_measured",
       "cited_kb": []
     },
     {
@@ -258,17 +519,19 @@
         "source_locator_mismatch"
       ],
       "anchor": "GAP-ACCEPT-③",
-      "category": "fail",
+      "category": "defect",
       "fail_stage": "evidence",
-      "failure_reason": "从语料提取的 evidence 记录中 quote offsets 设为 0:200，与实际源文件中文本位置不匹配，source_locator_integrity 检查全部失败",
-      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/audit_corpus/claims --evidence runs/m22059/audit_corpus/evidence --source-root runs/m22059/audit_corpus/source",
+      "failure_reason": "语料抽取把 11 条 evidence 的 quote offsets 统一写成 0:200 且 claim-f1 的 quote 为空串，source_locator_integrity 11/11 失败（审计器判定正确，缺陷在证据记录）",
+      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/audit_corpus/claims --evidence runs/m22059/audit_corpus/evidence --source-root runs/m22059/audit_corpus/source --output runs/m22059/claim_evidence_audit.json  # c5d46f5d3243b86de43ac18632a6a9a6a6520ce8",
       "evidence_refs": [
-        "runs/m22059/claim_evidence_audit.json"
+        "runs/m22059/claim_evidence_audit.json#sha256:dc117e6e41e17cba61e4e4537d2cf7cf5356f7e8623f43a25c275e1a03ae5827"
       ],
       "affects": [
+        "RA-SOURCE-SPAN",
         "source_locator_integrity"
       ],
-      "resolution": "open",
+      "resolution": "superseded",
+      "resolution_record": "runs/m22059/claim_evidence_audit.json#checks[source_locator_integrity]=passed, findings=0（偏移按源文实测重写，quote 与 sha256 逐条复核）",
       "cited_kb": []
     },
     {
@@ -279,16 +542,19 @@
       ],
       "anchor": "GAP-ACCEPT-③",
       "category": "gap",
-      "fail_stage": "execution",
-      "failure_reason": "kb10k claims/evidence 为 JSON 数组格式，claim_evidence_audit 期望单对象 JSON 文件（含 id 字段），导致 0 claims/0 evidence 被加载",
-      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims knowledge/kb10k/claims --evidence knowledge/kb10k/evidence --source-root .",
-      "evidence_refs": [],
+      "fail_stage": "input",
+      "failure_reason": "kb10k 的 claims/evidence 为 JSON 数组格式，审计器每文件读单对象（需 id 字段），20 个文件报 invalid_record、加载 0 claims / 0 evidence —— 不静默当作 0 条通过",
+      "repro_cmd": "python3 scripts/research_audit/claim_evidence_audit.py --claims knowledge/kb10k/claims --evidence knowledge/kb10k/evidence --source-root . --output runs/m22059/kb10k_incompatibility.json  # c5d46f5d3243b86de43ac18632a6a9a6a6520ce8",
+      "evidence_refs": [
+        "runs/m22059/kb10k_incompatibility.json#sha256:a0e5e544e2c1a4a26a5f585c4bc0de4f3fe9369a2193e0c7888cd09bb268da39"
+      ],
       "affects": [
         "bidirectional_references",
         "source_locator_integrity",
         "review_relation_consistency"
       ],
       "resolution": "mitigated",
+      "resolution_record": "本次试点改用单对象语料（runs/m22059/audit_corpus）；数组格式适配留作后续增量，未在本单实现",
       "cited_kb": []
     }
   ],
@@ -300,20 +566,118 @@
     "corpus_inputs": 2,
     "corpus_fingerprints_verified": true,
     "citation_audit_status": "inconclusive",
-    "claim_evidence_audit_status": "failed",
+    "claim_evidence_audit_status": "passed",
     "negative_tests_passed": true,
     "claims_verified": 3,
     "claims_inconclusive": 4,
     "claims_broken": 8,
     "failure_records_filed": 3,
     "value": {
-      "problem": "研究成果语料的主张-引用-证据可追溯性审计，人工审查耗时且易遗漏结构性缺陷",
-      "automation": "2/4 步骤自动化（citation_audit + claim_evidence_audit 自动运行；语料提取 + 报告组装需手动）",
-      "quality": "citation_audit: inconclusive（无参考文献章节）；claim_evidence_audit: failed（source locator 偏移不匹配）；negative tests: 全部检出",
-      "cost": "wall_clock ~5min, human_review ~30min, compute: 1 core × 2min",
-      "reproducibility": "命令 + 语料指纹已记录，可独立复现",
+      "problem": {
+        "statement": "研究成果语料的主张-引用-证据可追溯性审计，人工审查耗时且易遗漏结构性缺陷",
+        "stakeholder": "研究报告的作者席与独立评审席（RA 产品线的使用者）",
+        "decision_changed": "一份真实评审报告的 11 条主张-证据绑定是否可作为可复现结论被引用：可追溯的在审计器层面放行，不可追溯的逐条进入 claims_triage 并保留为 broken/inconclusive"
+      },
+      "automation": {
+        "steps": [
+          {
+            "step": "语料结构化提取（finding/supported-claim -> claim/evidence 记录）",
+            "mode": "manual"
+          },
+          {
+            "step": "citation_audit 引用结构审计",
+            "mode": "auto"
+          },
+          {
+            "step": "claim_evidence_audit 双向链接/源定位/评审关系审计",
+            "mode": "auto"
+          },
+          {
+            "step": "负向语料注入与复跑",
+            "mode": "auto"
+          },
+          {
+            "step": "claims_triage 语义分级",
+            "mode": "manual"
+          },
+          {
+            "step": "报告组装与字段化",
+            "mode": "manual"
+          }
+        ],
+        "auto_steps": 3,
+        "total_steps": 6,
+        "ratio": "0.50"
+      },
+      "quality": {
+        "criteria_ref": "runs/m22059/criteria.json",
+        "pilot_gate_criteria": 12,
+        "pilot_gate_passed": 12,
+        "calibrated_gate_criteria": 3,
+        "calibrated_gate_measured": 0,
+        "criteria_passed": 12,
+        "criteria_total": 15,
+        "ratio": "12/15 (12/12 pilot-gate; 3 calibrated-gate criteria are not_measured, not failed)",
+        "miss_rate": {
+          "evidence_locator_mismatches": "0/11",
+          "dangling_pointer_missed": "0/2",
+          "unresolved_citation_missed": "0/2"
+        },
+        "corpus_defects_flagged": "8 broken claims of 11 claim records (semantic level, manual triage)",
+        "baseline_comparison": "no human baseline exists for this corpus; miss rate is measured against the injected defects only, not against expert labels",
+        "assessed_by": "author seat (m22760) - not independently reviewed; the independent receipt for the first round is docs/review_m22059_prod_ra/REVIEW-RECEIPT.json (changes_requested)"
+      },
+      "cost": {
+        "stages": [
+          {
+            "stage": "auditor reruns (4 invocations: positive+negative x 2)",
+            "wall_clock_s": 7,
+            "evidence": "criteria frozen 2026-11-16T02:20:12Z -> audit outputs created_at 2026-11-16T02:20:18..19Z"
+          },
+          {
+            "stage": "full test suite (repository regression scope)",
+            "wall_clock_s": "unknown",
+            "evidence": "submitted to the shared compute queue (job cj4351); receipt recorded in runs/m22059/regression-scope.json"
+          },
+          {
+            "stage": "author repair session (criteria/locator/ledger/report edits)",
+            "wall_clock_s": "unknown",
+            "evidence": "session started 2026-11-16T02:16Z; not instrumented as a per-stage timer, recorded as unknown rather than estimated"
+          }
+        ],
+        "human_review_min": "unknown",
+        "compute": {
+          "cores": 4,
+          "minutes": "unknown",
+          "receipt": "run_compute job cj4351 (TensorKnowledge full suite); no compute receipt claimed for the auditors, which ran on the control plane in ~7 s"
+        }
+      },
+      "reproducibility": {
+        "commands": [
+          "python3 scripts/research_audit/citation_audit.py work/wp-2506-04/kf_result_wp-2506-04.md --output runs/m22059/citation_audit.json",
+          "python3 scripts/research_audit/claim_evidence_audit.py --claims runs/m22059/audit_corpus/claims --evidence runs/m22059/audit_corpus/evidence --source-root runs/m22059/audit_corpus/source --output runs/m22059/claim_evidence_audit.json"
+        ],
+        "verified_at_commit": "recorded in runs/m22059/regression-scope.json",
+        "independent_rerun": "first round reproduced by the reviewer (all findings, field-identical except created_at/input_refs); this repair round is not yet independently rerun",
+        "determinism": "auditors are deterministic; only created_at differs between runs"
+      },
       "delivery": "unknown"
     }
   },
-  "created_at": "2026-11-15T15:35:22+00:00"
+  "created_at": "2026-11-16T02:21:04+00:00",
+  "claims_triage_summary": {
+    "triage_entries": 15,
+    "verified": 3,
+    "inconclusive": 4,
+    "broken": 8,
+    "claim_records_in_corpus": 11,
+    "entries_without_claim_record": [
+      "check-cross-report",
+      "check-bitwise",
+      "check-affine",
+      "check-solver"
+    ],
+    "denominator_explanation": "the 4 'check-*' triage entries are checklist items of the audited corpus (cross-report consistency, bitwise identity, affine consistency, solver admission) and were never extracted into claim records, so the entry total (15) exceeds the claim-record count (11). Verified/inconclusive/broken are counted over triage entries, not over claim records; no claim record is omitted."
+  },
+  "regression_scope_ref": "runs/m22059/regression-scope.json"
 }
