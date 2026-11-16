@@ -26,6 +26,21 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _portable_ref(path: Path) -> str:
+    """Pointer that stays resolvable in another checkout of the same tree.
+
+    A host-local absolute path (``/root/tp-agent/work/<mission>/...``) rots as soon
+    as the worktree moves, so repository-relative references are recorded whenever
+    the input lives inside the current working tree; anything else keeps its
+    absolute path rather than pretending to be portable.
+    """
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        return str(resolved)
+
+
 def _parse_sections(lines: list[str]) -> tuple[int | None, int | None]:
     start = next((i for i, line in enumerate(lines) if _HEADING_RE.match(line.strip())), None)
     if start is None:
@@ -144,7 +159,7 @@ def audit_markdown(path: str | Path) -> dict[str, Any]:
         "product_version": "0.1.0",
         "run_id": f"researchaudit-{digest[:16]}",
         "created_at": now,
-        "input_refs": [str(source.resolve())],
+        "input_refs": [_portable_ref(source)],
         "input_fingerprints": {"report_sha256": digest},
         "checks": checks,
         "findings": findings,
