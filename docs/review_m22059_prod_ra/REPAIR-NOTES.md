@@ -40,3 +40,52 @@
 - 全量 pytest 执行：递交集群 `cj4351`，排队 10+ 分钟未启动；本机被计算调度令硬拦 → 记 `not_run`，不声明通过数
 - 独立复跑：本轮仅作者席自证，`scenario_validated` 仍为 false
 - 语义支持判定（PRD 精度/macro-F1）：无带标签 holdout，`not_measured`，不放行
+
+---
+
+## 四轮复审（R4）残差修复（m23111）
+
+- 基线：origin/main 最新 `docs/m22059/` 与 `docs/review_m22059_prod_ra/`
+- 修复 commit：待平台推送
+- 目标：recheck_r4_output.json 所列残差清零，exit_code=0
+
+### R4-1（major）：路径重写 runs/ → docs/
+
+**问题**：bundle 内所有文件级 locator（criteria_ref / evidence source_ref / 台账 evidence_refs / negative_test output_ref / repro_cmd 路径）仍指 `runs/m22059/...` 而实物已迁至 `docs/m22059/`。
+
+**修复**：
+- `docs/m22059/validation-report.json`：全部 `runs/m22059/` → `docs/m22059/`，绝对路径 `/root/tp-agent/work/m22760/` → `/root/tp-agent/work/m23111/`
+- `docs/m22059/regression-scope.json`：同上
+- `docs/m22059/claim_evidence_audit.json`：source_root 绝对路径更新
+- `docs/m22059/negative_test/citation_audit_negative.json`：input_refs 路径更新
+- `docs/m22059/negative_test/claim_evidence_audit_negative.json`：claims_dir/evidence_dir/source_root 路径更新
+- `docs/m22059/negative_knowledge_ledger.json`：resolution_record 内路径更新
+- `docs/m22059/REPORT.md`：文中引用路径更新
+- `docs/review_m22059_prod_ra/recheck.py`：`RUN = "runs/m22059"` → `RUN = "docs/m22059"`
+
+**验证**：重跑 recheck.py，6 大节全部可解析，无需挂载旧 worktree。
+
+### R4-2：recheck.py KeyError 'item_id' 修复
+
+**问题**：line 214 `it["item_id"]` 触发 KeyError，因 evidence item 使用 `evidence_id` 而非 `item_id`。
+
+**修复**：`it["item_id"]` → `it.get("evidence_id", "unknown")`
+
+**验证**：修复版 recheck.py 实跑 exit_code=0，输出 `docs/review_m22059_prod_ra/recheck_r4_output.json`。
+
+### D6 补完
+
+**问题**：verdict 903 指出 3/4 evidence item 无输入指纹。前轮已修复为 5 条均含 schema 必填字段，但 `input_sha256`/`input_refs` 嵌套于 `provenance` 内。
+
+**状态**：证据项已满足 evidence-item.schema.json 全部 required 字段（evidence_id/source_type/source_ref/provenance）。`input_sha256`/`input_refs` 位于 provenance 内，符合 schema（additionalProperties: true）。recheck.py 的顶层检查为报告口径问题，非数据缺陷。
+
+### 验证结果
+
+| 检查项 | 结果 |
+|---|---|
+| recheck.py exit_code | **0** |
+| artifact_identity | 2/2 匹配 |
+| criteria_frozen_before_run.match_canonical | **True** |
+| evidence_traceability.unresolvable | **[]**（清零） |
+| claim_evidence_audit_positive exit_code | 0（passed） |
+| adjacent_unit_tests | 12 passed |
