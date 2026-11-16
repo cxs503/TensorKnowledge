@@ -114,7 +114,7 @@ def test_permission_denied_inside_source_repo_is_a_skip(tmp_path: Path) -> None:
     source_root = tmp_path / "source-repo"
     denied_path = source_root / ".git"
     stderr = f"PermissionError: [Errno 13] Permission denied: '{denied_path}'"
-    body = f"import sys\\nsys.stderr.write({stderr!r})\\nraise SystemExit(1)\\n"
+    body = f"import sys\nsys.stderr.write({stderr!r})\nraise SystemExit(1)\n"
     pkg = make_package(tmp_path, entry=tmp_path / "permission.py", stdout=body)
     manifest_path = pkg / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
