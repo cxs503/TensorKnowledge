@@ -31,6 +31,11 @@ def load_json(path: Path):
 
 SEMVER_PATTERN = r"^[0-9]+\.[0-9]+\.[0-9]+$"
 
+SUPPORTED_SCHEMA_DIALECTS = {
+    "https://json-schema.org/draft/2020-12/schema",
+    "http://json-schema.org/draft-07/schema#",
+}
+
 
 def check_schema_version_rule(schema: dict, path: Path, errors: list[str]) -> None:
     """A schema that defines ``version`` must pin which form it accepts.
@@ -271,15 +276,11 @@ def main() -> int:
         except ValueError as exc:
             errors.append(str(exc))
 
-    supported_schema_dialects = {
-        "https://json-schema.org/draft/2020-12/schema",
-        "http://json-schema.org/draft-07/schema#",
-    }
     for path in sorted(SCHEMA_DIR.glob("*.schema.json")):
         try:
             schema = load_json(path)
             dialect = schema.get("$schema")
-            if dialect not in supported_schema_dialects:
+            if dialect not in SUPPORTED_SCHEMA_DIALECTS:
                 errors.append(
                     f"{path.relative_to(ROOT)}: unsupported or missing JSON Schema dialect {dialect!r}"
                 )
