@@ -99,6 +99,10 @@ def main() -> int:
                     errors.append(f"{path.relative_to(ROOT)}: missing required field {key}")
             if not NODE_ID_RE.fullmatch(node_id):
                 errors.append(f"{path.relative_to(ROOT)}: invalid node id {node_id}")
+            if item.get("evidence_status") in {"established", "well-supported"} and not item.get("sources"):
+                errors.append(
+                    f"{path.relative_to(ROOT)}: evidence_status={item['evidence_status']!r} requires traceable source records"
+                )
             check_version(item, path, errors)
             if not isinstance(item.get("domains"), list) or not item.get("domains"):
                 errors.append(f"{path.relative_to(ROOT)}: domains must be a non-empty array")

@@ -232,6 +232,13 @@ def test_repository_schemas_satisfy_the_version_rule() -> None:
     assert checked >= 1
 
 
+def test_repository_nodes_do_not_claim_supported_without_sources() -> None:
+    for path in sorted((ROOT / "knowledge-map" / "nodes").glob("*.json")):
+        node = json.loads(path.read_text(encoding="utf-8"))
+        if node.get("evidence_status") in {"established", "well-supported"}:
+            assert node.get("sources"), f"{path.name}: supported evidence status has no source records"
+
+
 def test_repository_schema_dialects_are_supported() -> None:
     observed: set[str] = set()
     for path in sorted((ROOT / "schemas").glob("*.schema.json")):

@@ -33,6 +33,6 @@ The initial nodes focus on scientific inquiry and its connections to causal reas
 3. Add prerequisites only for real dependencies.
 4. Use relations to express useful connections without implying equivalence or proof.
 5. Keep evidence status separate from editorial review status.
-6. Add sources for substantive factual claims; do not use an empty source list to imply verification.
+6. Add sources for substantive factual claims. If a node has no source records, omit `evidence_status`; do not label it `established` or `well-supported` merely because its draft definition sounds familiar.
 7. Run `python scripts/validate_knowledge_assets.py` before proposing a change.
 8. A passing structural check does not replace expert review or learner testing.
