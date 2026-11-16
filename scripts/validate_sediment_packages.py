@@ -96,7 +96,7 @@ def probe_requirements(modules: list[str], timeout: int = 120) -> dict[str, str]
 def _permission_denied_source_path(stderr: str, source_root: str) -> str | None:
     """Return a denied path only when the PermissionError is inside the declared source repo."""
     match = re.search(
-        r"PermissionError: \\[Errno 13\\] Permission denied: ['\"]([^'\"]+)['\"]",
+        r"PermissionError: \[Errno 13\] Permission denied: ['\"]([^'\"]+)['\"]",
         stderr,
     )
     if not match or not source_root:
