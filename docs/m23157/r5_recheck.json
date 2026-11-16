@@ -1,0 +1,520 @@
+{
+  "reviewed_commit": "cbd754bbeb8bb386ac61068a762aa6a47bb7a26f",
+  "reviewed_commit_subject": "Merge #510 (m20865) via merge-master",
+  "target": "/tmp/cold_r5",
+  "target_is_cold_clone": true,
+  "fix_rev_under_review": "d1d5c49",
+  "fix_rev_in_target": true,
+  "r4_1_locators": {
+    "files_with_locators": 19,
+    "locator_tokens": 200,
+    "pure_path_fields": 144,
+    "pure_path_fields_legacy_runs_prefix": 114,
+    "pure_path_fields_absolute_foreign": 17,
+    "pure_path_resolved_cold": 17,
+    "pure_path_resolved_after_prefix_repair": 122,
+    "pure_path_unresolvable_even_after_repair": 5,
+    "tokens_resolved_cold": 18,
+    "tokens_unresolved_cold": 182,
+    "unresolved_examples": [
+      {
+        "json_path": "$.inputs.claims_dir",
+        "locator": "runs/m22059/audit_corpus/claims",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.inputs.evidence_dir",
+        "locator": "runs/m22059/audit_corpus/evidence",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.inputs.source_root",
+        "locator": "/srv/tensor/agent/work/m22760/runs/m22059/audit_corpus/source",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.inputs.source_root",
+        "locator": "/srv/tensor/agent/work/m22760",
+        "prefix_repair_would_fix": false
+      },
+      {
+        "json_path": "$.records[0].repro_cmd",
+        "locator": "runs/m22059/citation_audit.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[0].evidence_refs[0]",
+        "locator": "runs/m22059/citation_audit.json#sha256:d523660b6035b64da6774cf32c11d5e7b6955b306e6b557625e77740436d7e7c",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[1].repro_cmd",
+        "locator": "runs/m22059/audit_corpus/claims",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[1].repro_cmd",
+        "locator": "runs/m22059/audit_corpus/evidence",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[1].repro_cmd",
+        "locator": "runs/m22059/audit_corpus/source",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[1].repro_cmd",
+        "locator": "runs/m22059/claim_evidence_audit.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[1].evidence_refs[0]",
+        "locator": "runs/m22059/claim_evidence_audit.json#sha256:dc117e6e41e17cba61e4e4537d2cf7cf5356f7e8623f43a25c275e1a03ae5827",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[1].resolution_record",
+        "locator": "runs/m22059/claim_evidence_audit.json#checks[source_locator_integrity]=passed, findings=0（偏移按源文实测重写，quote 与 sha256 逐条复核）",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[2].repro_cmd",
+        "locator": "runs/m22059/kb10k_incompatibility.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[2].evidence_refs[0]",
+        "locator": "runs/m22059/kb10k_incompatibility.json#sha256:a0e5e544e2c1a4a26a5f585c4bc0de4f3fe9369a2193e0c7888cd09bb268da39",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.records[2].resolution_record",
+        "locator": "runs/m22059/audit_corpus）；数组格式适配留作后续增量，未在本单实现",
+        "prefix_repair_would_fix": false
+      },
+      {
+        "json_path": "$.input_refs[0]",
+        "locator": "runs/m22059/negative_test/corpus/kf_result_bad.md",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.inputs.claims_dir",
+        "locator": "runs/m22059/negative_test/claims",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.inputs.evidence_dir",
+        "locator": "runs/m22059/negative_test/evidence",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.inputs.source_root",
+        "locator": "/srv/tensor/agent/work/m22760/runs/m22059/negative_test/source",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[0]",
+        "locator": "runs/m22059/REPORT.md",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[1]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-f1.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[2]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-f2.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[3]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-f3.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[4]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-f4.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[5]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-f5.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[6]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-f6.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[7]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-f7.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[8]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-f8.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[9]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-review-1.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[10]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-review-2.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[11]",
+        "locator": "runs/m22059/audit_corpus/evidence/evidence-review-3.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[12]",
+        "locator": "runs/m22059/citation_audit.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[13]",
+        "locator": "runs/m22059/claim_evidence_audit.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[14]",
+        "locator": "runs/m22059/criteria.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[15]",
+        "locator": "runs/m22059/kb10k_incompatibility.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[16]",
+        "locator": "runs/m22059/negative_test/citation_audit_negative.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[17]",
+        "locator": "runs/m22059/negative_test/claim_evidence_audit_negative.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[18]",
+        "locator": "runs/m22059/negative_test/evidence/evidence-dangling-1.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[19]",
+        "locator": "runs/m22059/negative_test/evidence/evidence-review-1.json",
+        "prefix_repair_would_fix": true
+      },
+      {
+        "json_path": "$.changed_paths[20]",
+        "locator": "runs/m22059/validation-report.json",
+        "prefix_repair_would_fix": true
+      }
+    ],
+    "per_file": {
+      "docs/m22059/claim_evidence_audit.json": {
+        "n": 3,
+        "unresolved_cold": 3
+      },
+      "docs/m22059/kb10k_incompatibility.json": {
+        "n": 1,
+        "unresolved_cold": 1
+      },
+      "docs/m22059/negative_knowledge_ledger.json": {
+        "n": 11,
+        "unresolved_cold": 11
+      },
+      "docs/m22059/negative_test/citation_audit_negative.json": {
+        "n": 1,
+        "unresolved_cold": 1
+      },
+      "docs/m22059/negative_test/claim_evidence_audit_negative.json": {
+        "n": 3,
+        "unresolved_cold": 3
+      },
+      "docs/m22059/regression-scope.json": {
+        "n": 22,
+        "unresolved_cold": 22
+      },
+      "docs/m22059/validation-report.json": {
+        "n": 56,
+        "unresolved_cold": 56
+      },
+      "docs/review_m22059_prod_ra/REVIEW-RECEIPT.json": {
+        "n": 3,
+        "unresolved_cold": 2
+      },
+      "docs/review_m22059_prod_ra/raw/cea_neg.json": {
+        "n": 3,
+        "unresolved_cold": 3
+      },
+      "docs/review_m22059_prod_ra/raw/cea_rerun.json": {
+        "n": 3,
+        "unresolved_cold": 3
+      },
+      "docs/review_m22059_prod_ra/raw/cit_neg.json": {
+        "n": 1,
+        "unresolved_cold": 1
+      },
+      "docs/review_m22059_prod_ra/raw/citation_audit_rerun.json": {
+        "n": 1,
+        "unresolved_cold": 1
+      },
+      "docs/review_m22059_prod_ra/raw_r4/citation_audit_negative.json": {
+        "n": 1,
+        "unresolved_cold": 0
+      },
+      "docs/review_m22059_prod_ra/raw_r4/citation_audit_positive.json": {
+        "n": 1,
+        "unresolved_cold": 0
+      },
+      "docs/review_m22059_prod_ra/raw_r4/claim_evidence_audit_negative.json": {
+        "n": 3,
+        "unresolved_cold": 0
+      },
+      "docs/review_m22059_prod_ra/raw_r4/claim_evidence_audit_positive.json": {
+        "n": 3,
+        "unresolved_cold": 0
+      },
+      "docs/review_m22059_prod_ra/raw_r4/kb10k_incompatibility.json": {
+        "n": 1,
+        "unresolved_cold": 1
+      },
+      "docs/review_m22059_prod_ra/recheck_output.json": {
+        "n": 43,
+        "unresolved_cold": 42
+      },
+      "docs/review_m22059_prod_ra/recheck_r4_output.json": {
+        "n": 40,
+        "unresolved_cold": 32
+      }
+    }
+  },
+  "r4_2_entry_point": {
+    "as_shipped": {
+      "exit_code": 1,
+      "stderr_last_line": "FileNotFoundError: [Errno 2] No such file or directory: '/tmp/cold_r5/runs/m22059/validation-report.json'"
+    },
+    "fixed_cold_start": {
+      "exit_code": 0,
+      "stderr_last_line": ""
+    },
+    "fixed_legacy_target": {
+      "exit_code": 0
+    },
+    "as_shipped_legacy_target": {
+      "exit_code": 1,
+      "stderr_last_line": "FileNotFoundError: [Errno 2] No such file or directory: '/srv/tensor/agent/work/m22059/runs/m22059/validation-report.json'"
+    },
+    "as_shipped_prepared_runs_layout": {
+      "exit_code": 1,
+      "stderr_last_line": "KeyError: 'item_id'"
+    }
+  },
+  "d6_evidence_bundle": {
+    "items": 5,
+    "schema_path": "/srv/tensor/workspace/TensorBench/schemas/evidence-item.schema.json",
+    "schema_ok_count": 5,
+    "items_without_input_sha256": [
+      "ev-kb10k-incompatibility"
+    ],
+    "items_without_input_refs": [],
+    "items_with_absolute_foreign_input_refs": {
+      "ev-claim-evidence-audit": [
+        "/srv/tensor/agent/work/m22760/runs/m22059/audit_corpus/source"
+      ],
+      "ev-negative-claim-evidence": [
+        "/srv/tensor/agent/work/m22760/runs/m22059/negative_test/source"
+      ],
+      "ev-kb10k-incompatibility": [
+        "/srv/tensor/agent/work/m22760"
+      ]
+    },
+    "source_ref_resolve_cold": 0,
+    "sha256_matches": 0,
+    "bundle_sha256_declared": "6a69c11318b36cbcafbb0e8aa1d862df527aebd49fac4db5bc36fc58316044bb",
+    "bundle_sha256_recomputed": "6a69c11318b36cbcafbb0e8aa1d862df527aebd49fac4db5bc36fc58316044bb",
+    "bundle_sha256_matches": true,
+    "bundle_digest_convention": "tensorbench.criteria.canonical_sha256",
+    "rows": [
+      {
+        "evidence_id": "ev-citation-audit",
+        "schema_errors": [],
+        "schema_ok": true,
+        "has_input_sha256": true,
+        "has_input_refs": true,
+        "input_refs_absolute_foreign": [],
+        "source_ref": "runs/m22059/citation_audit.json",
+        "source_ref_resolves_cold": false,
+        "sha256_declared": "d523660b6035b64da6774cf32c11d5e7b6955b306e6b557625e77740436d7e7c",
+        "source_ref_sha256_actual": null,
+        "sha256_matches_actual": false
+      },
+      {
+        "evidence_id": "ev-claim-evidence-audit",
+        "schema_errors": [],
+        "schema_ok": true,
+        "has_input_sha256": true,
+        "has_input_refs": true,
+        "input_refs_absolute_foreign": [
+          "/srv/tensor/agent/work/m22760/runs/m22059/audit_corpus/source"
+        ],
+        "source_ref": "runs/m22059/claim_evidence_audit.json",
+        "source_ref_resolves_cold": false,
+        "sha256_declared": "dc117e6e41e17cba61e4e4537d2cf7cf5356f7e8623f43a25c275e1a03ae5827",
+        "source_ref_sha256_actual": null,
+        "sha256_matches_actual": false
+      },
+      {
+        "evidence_id": "ev-negative-citation",
+        "schema_errors": [],
+        "schema_ok": true,
+        "has_input_sha256": true,
+        "has_input_refs": true,
+        "input_refs_absolute_foreign": [],
+        "source_ref": "runs/m22059/negative_test/citation_audit_negative.json",
+        "source_ref_resolves_cold": false,
+        "sha256_declared": "63ce3a86d73e4213a8168934fc4ce0b86dba3cf50f755596d2074040dd6c1b49",
+        "source_ref_sha256_actual": null,
+        "sha256_matches_actual": false
+      },
+      {
+        "evidence_id": "ev-negative-claim-evidence",
+        "schema_errors": [],
+        "schema_ok": true,
+        "has_input_sha256": true,
+        "has_input_refs": true,
+        "input_refs_absolute_foreign": [
+          "/srv/tensor/agent/work/m22760/runs/m22059/negative_test/source"
+        ],
+        "source_ref": "runs/m22059/negative_test/claim_evidence_audit_negative.json",
+        "source_ref_resolves_cold": false,
+        "sha256_declared": "35b8e0efeec7e8298f4f1e084441e2a233398a30841b7b5e5ee9a73c0a015831",
+        "source_ref_sha256_actual": null,
+        "sha256_matches_actual": false
+      },
+      {
+        "evidence_id": "ev-kb10k-incompatibility",
+        "schema_errors": [],
+        "schema_ok": true,
+        "has_input_sha256": false,
+        "has_input_refs": true,
+        "input_refs_absolute_foreign": [
+          "/srv/tensor/agent/work/m22760"
+        ],
+        "source_ref": "runs/m22059/kb10k_incompatibility.json",
+        "source_ref_resolves_cold": false,
+        "sha256_declared": "a0e5e544e2c1a4a26a5f585c4bc0de4f3fe9369a2193e0c7888cd09bb268da39",
+        "source_ref_sha256_actual": null,
+        "sha256_matches_actual": false
+      }
+    ]
+  },
+  "r4_3_sha256sums": {
+    "entries": 18,
+    "missing": [
+      "raw/adjacent_unit_tests.log",
+      "raw/evidence_schema_validation.log",
+      "raw/pytest_collect_base.log",
+      "raw/pytest_collect_reviewed.log"
+    ],
+    "mismatch": [
+      {
+        "path": "raw/SHA256SUMS",
+        "declared": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "actual": "ac75e22446cc451facbc7e4efc2150a1665388b507c9a5e929f790b7482ddcda"
+      }
+    ],
+    "self_digest_entry": {
+      "declared_for_self": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mirror_digest": "ac75e22446cc451facbc7e4efc2150a1665388b507c9a5e929f790b7482ddcda",
+      "mirror_file": "raw/SHA256SUMS"
+    },
+    "sound": false
+  },
+  "six_checks": {
+    "1_artifact_identity": {
+      "inputs_declared": 2,
+      "inputs_match": 2,
+      "corpus_blocks": 1,
+      "pass": true
+    },
+    "2_criteria_frozen_before_run": {
+      "match_canonical": true,
+      "frozen_before_created": true,
+      "pass": true
+    },
+    "3_evidence_traceability": {
+      "unresolvable": [],
+      "n_unresolvable": 0,
+      "pass": true
+    },
+    "4_independent_rerun": {
+      "citation_audit_positive_exit": 1,
+      "citation_audit_positive_status": "inconclusive",
+      "citation_audit_inconclusive_is_documented": true,
+      "positive_exit_codes": {
+        "citation_audit_positive": 1,
+        "citation_audit_negative": 1,
+        "claim_evidence_audit_positive": 0,
+        "claim_evidence_audit_negative": 1,
+        "claims_triage_counts": null
+      },
+      "claim_audit_status_rerun": "passed",
+      "claim_audit_status_recorded": "passed",
+      "negative_detected_dangling_evidence": true,
+      "negative_detected_dangling_claim": true,
+      "negative_citation_detected_999": true,
+      "pass": true
+    },
+    "5_failure_record": {
+      "records": 3,
+      "recheck_script_signal_items_without_input_fingerprint": [
+        "ev-citation-audit",
+        "ev-claim-evidence-audit",
+        "ev-negative-citation",
+        "ev-negative-claim-evidence",
+        "ev-kb10k-incompatibility"
+      ],
+      "recheck_script_signal_is_top_level_lookup": "recheck.py:214 looks up input_sha256/input_refs on the item root, but the repaired schema nests them under provenance",
+      "independent_items_without_input_sha256": [
+        "ev-kb10k-incompatibility"
+      ],
+      "independent_items_with_absolute_foreign_input_refs": [
+        "ev-claim-evidence-audit",
+        "ev-kb10k-incompatibility",
+        "ev-negative-claim-evidence"
+      ],
+      "per_record_missing_fields": [
+        [],
+        [],
+        []
+      ],
+      "pass": true
+    },
+    "6_regression_scope": {
+      "adjacent_unit_tests": "12 passed, 1 warning in 0.13s",
+      "full_suite": "queued on cluster (see review report)",
+      "pass": true,
+      "full_suite_not_run": false
+    },
+    "all_six_pass": true
+  },
+  "six_checks_raw_keys": [
+    "artifact_identity",
+    "criteria_frozen_before_run",
+    "evidence_traceability",
+    "failure_record",
+    "independent_rerun",
+    "regression_scope",
+    "reviewed_commit",
+    "target"
+  ]
+}
