@@ -1,0 +1,53 @@
+{
+  "mission": 24007,
+  "role": "PROD-RA R7 terminal review (independent third-party close-out)",
+  "reviewed": {
+    "head": "53959aff766167da7bd5b8aec849d37e06974bdd",
+    "head_subject": "Merge #526 (m21607) via merge-master",
+    "r6_merge": "53b5154be85f2fccd1ff37eef9dcb922aa96478b (Merge #525, m23814)",
+    "r6_claimed_after_head": "543881ac789fd1623cd4d47771dd1eb8fd62b9a6",
+    "r6_claimed_after_in_main": false
+  },
+  "method": "cold git-archive HEAD extraction + frozen verifier docs/m23257/verify_status.py (unchanged) independent rerun",
+  "verdict": "changes_requested",
+  "scenario_validated": false,
+  "scenario_validated_note": "终审单不抢跑；由协调者依裁决置位",
+  "residuals": {
+    "R5-1": {
+      "severity": "blocking",
+      "status": "NOT_CLOSED",
+      "r6_claimed": {"pure_path_fields": 137, "resolved_cold": 137, "legacy": 0, "absolute": 0},
+      "actual": {"pure_path_fields": 139, "resolved_cold": 82, "legacy": 51, "absolute": 6, "unresolvable_after_repair": 2}
+    },
+    "R5-2": {
+      "severity": "major",
+      "status": "NOT_CLOSED",
+      "r6_claimed": {"manifest_sound": true, "raw_restored": 4},
+      "actual": {"manifest_sound": false, "missing": ["raw/adjacent_unit_tests.log", "raw/evidence_schema_validation.log", "raw/pytest_collect_base.log", "raw/pytest_collect_reviewed.log"]}
+    },
+    "R5-3": {
+      "severity": "major",
+      "status": "NOT_CLOSED",
+      "r6_claimed": {"d6_green": "5/5", "kb10k_fingerprint": "added"},
+      "actual": {"items_without_input_sha256": ["ev-kb10k-incompatibility"], "items_with_absolute_foreign_input_refs": ["ev-claim-evidence-audit", "ev-negative-claim-evidence", "ev-kb10k-incompatibility"], "source_ref_resolve_cold": 0, "sha256_matches": 0}
+    }
+  },
+  "root_cause": "R6 fix (repair_r6.py) ran on agent/m23814 branch (543881ac/d6cceb3f, never merged into main); Merge #525 only shipped docs/m23814 report + partial docs/review_m22059_prod_ra changes, NOT the docs/m22059/ locator/D6/raw repairs. Verification evidence (status_after.json) is disconnected from the committed state.",
+  "new_issues_introduced": [
+    "verification-on-unmerged-branch: status_after.json (137/137 green) is in main but was generated from a branch never merged; main files are still broken",
+    "manifest phantom entries: SHA256SUMS asserts digests for 4 raw files that are not in the repo",
+    "idempotency claim (repair_r6.py '0 changes on rerun') only holds on the unmerged branch, not on main"
+  ],
+  "checks_not_run": [
+    "tensor_maturity_verdicts direct write (role lacks INSERT/SELECT permission)",
+    "full pytest suite in cold clone",
+    "cross-machine / cross-python rerun"
+  ],
+  "artifacts": {
+    "docs/m24007/TERMINAL_REVIEW.md": "review report (criteria+evidence+conclusion)",
+    "docs/m24007/verdict_insert_r7.sql": "in-repo verdict record (coordinator applies to DB)",
+    "docs/m24007/figures/r7_before_claimed_actual.png": "before / R6-claimed-after / actual-after comparison",
+    "docs/m24007/make_figure_r7.py": "figure generator"
+  },
+  "review_report": "docs/m24007/TERMINAL_REVIEW.md"
+}
