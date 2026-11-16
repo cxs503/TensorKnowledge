@@ -1,0 +1,56 @@
+{
+  "verified_at_commit": "c5d46f5d3243b86de43ac18632a6a9a6a6520ce8",
+  "base_commit": "8a54d10",
+  "changed_paths": [
+    "runs/m22059/REPORT.md",
+    "runs/m22059/audit_corpus/evidence/evidence-f1.json",
+    "runs/m22059/audit_corpus/evidence/evidence-f2.json",
+    "runs/m22059/audit_corpus/evidence/evidence-f3.json",
+    "runs/m22059/audit_corpus/evidence/evidence-f4.json",
+    "runs/m22059/audit_corpus/evidence/evidence-f5.json",
+    "runs/m22059/audit_corpus/evidence/evidence-f6.json",
+    "runs/m22059/audit_corpus/evidence/evidence-f7.json",
+    "runs/m22059/audit_corpus/evidence/evidence-f8.json",
+    "runs/m22059/audit_corpus/evidence/evidence-review-1.json",
+    "runs/m22059/audit_corpus/evidence/evidence-review-2.json",
+    "runs/m22059/audit_corpus/evidence/evidence-review-3.json",
+    "runs/m22059/citation_audit.json",
+    "runs/m22059/claim_evidence_audit.json",
+    "runs/m22059/criteria.json",
+    "runs/m22059/kb10k_incompatibility.json",
+    "runs/m22059/negative_test/citation_audit_negative.json",
+    "runs/m22059/negative_test/claim_evidence_audit_negative.json",
+    "runs/m22059/negative_test/evidence/evidence-dangling-1.json",
+    "runs/m22059/negative_test/evidence/evidence-review-1.json",
+    "runs/m22059/validation-report.json",
+    "scripts/research_audit/citation_audit.py",
+    "tests/test_research_audit_citations.py"
+  ],
+  "changed_python_or_test_files": [
+    "scripts/research_audit/citation_audit.py",
+    "tests/test_research_audit_citations.py"
+  ],
+  "auditor_unit_tests": {
+    "command": "python3 -m pytest tests/test_research_audit_citations.py tests/test_research_audit_claim_evidence.py -q",
+    "result": "12 passed",
+    "baseline_first_round": "11 passed（首轮未跑；独立审查席代跑记录 11 passed，本轮 +1 条 input_refs 可移植性用例）"
+  },
+  "collection_baseline": {
+    "command": "python3 -m pytest tests --collect-only -q",
+    "result": "3135 tests collected, 1 error",
+    "pre_existing_error": "tests/test_kf_wp11107_01.py FileNotFoundError —— 与 base 8a54d10 相同（首轮审查亦记录该既有 collection error）"
+  },
+  "full_suite": {
+    "command": "python3 -m pytest tests -q --continue-on-collection-errors -p no:cacheprovider",
+    "state": "not_run",
+    "job_id": "cj4351",
+    "detail": "递交共享计算队列（repo=TensorKnowledge, stage_dir=返修工作树, 4 核）；排队 10 分钟仍在 queued，未开始执行。本机被计算调度令硬拦（重计算不得本机跑），因此不声明任何通过计数。",
+    "claimed_pass_count": null
+  },
+  "checks_not_run": [
+    "全量 pytest 执行（job cj4351 仍在排队；只声明收集基线，不声明通过数）",
+    "独立复跑（评审席未介入本轮返修）",
+    "内容 diff 与首轮 96ff584 的逐文件比较（本轮为定向返修，差异见 changed_paths）"
+  ],
+  "regression_conclusion": "变更面只在 runs/m22059/** 与 citation_audit.py(+1 测试)；审计器判定逻辑未改；相邻审计器单测 12 passed；全量套件未取得执行结果，如实记 not_run。"
+}
