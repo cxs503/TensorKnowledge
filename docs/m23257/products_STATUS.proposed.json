@@ -1,0 +1,176 @@
+{
+  "schema_version": "2.0.0",
+  "as_of": "2026-11-16",
+  "purpose": "Truthful per-product-line implementation baseline. The two state fields are independent: code_implemented says an executable path exists with focused tests; scenario_validated says a permissioned real-world scenario ran the declared acceptance set with recorded evidence and independent review. A product may be code_implemented and still scenario_validated=false.",
+  "field_definitions": {
+    "code_implemented": "Executable code path exists in this repository (or the named owning repository) and focused automated tests cover its declared behavior.",
+    "scenario_validated": "A permissioned real scenario was executed end-to-end and passed the predeclared acceptance set, with recorded evidence (bundles/fingerprints/commit SHAs) and independent review.",
+    "not_implemented": "No executable implementation is verified; only documents or plans exist."
+  },
+  "release_rule": "code_implemented=true MUST NOT be read as scenario_validated. Unit tests do not validate a scenario. Missing or unsupported evidence is inconclusive, never pass.",
+  "acceptance_framework": "docs/SCENARIO_ACCEPTANCE_FRAMEWORK.md",
+  "mission_baseline_reconciliation": {
+    "asserted_by_mission": {
+      "RA_code_implemented": true,
+      "RA_scenario_validated": true,
+      "RA_acceptance_evidence.reviewed_commit": "PR#511 merge commit",
+      "RA_acceptance_evidence.verdict": "implied pass (brief says R5 review green, m23157 accepted=true)",
+      "RA_acceptance_evidence.maturity_verdict_ref": "rows 917/918"
+    },
+    "reconciled": {
+      "RA_code_implemented": true,
+      "RA_scenario_validated": false,
+      "RA_acceptance_evidence.reviewed_commit": "3a70ce80b74a885ede35a8d3d369f1648527ff50",
+      "RA_acceptance_evidence.verdict": "changes_requested",
+      "RA_acceptance_evidence.maturity_verdict_ref": "id=903 and id=918 cited by the reviews; m23157 row via docs/m23157/verdict_insert_r5.sql"
+    },
+    "reason": "Two part of the brief reconcile, one does not. (1) code_implemented=true is confirmed and now recorded: main ships the reviewed recheck.py byte-for-byte (sha256 2cfa2454...), PR#511 is an ancestor of main@3fbd3b3, and the entry point exits 0 on a cold extraction. (2) 'six checks pass' and 'PR#511 merged' are also confirmed. (3) scenario_validated=true is not supportable. The R5 receipt that this brief calls green records verdict=changes_requested, scenario_validated=false, and two unfixed residuals that this mission re-measured on main@3fbd3b3: 127 of 144 file locators still do not resolve in a cold checkout (114 legacy runs/m22059 prefixes, 17 absolute /srv/tensor/agent refs) and the reviewer manifest is still unsound (4 missing + 1 mismatch of 18). Independently, TensorBench/tensorbench/contracts.py::_status_errors rejects scenario_validated=true whenever acceptance_evidence.verdict != 'pass', so writing true here would fail the canonical validator and would launder a changes_requested verdict into an acceptance. The brief's 'm23157 accepted=true' is best read as the m23157 mission being accepted as a delivery (its changes_requested verdict is the accepted output), not as the RA scenario passing acceptance; conflating the two is the substantive defect this publication refuses to encode. Rows 917/918 could not be read back (this role has no SELECT on tensor_maturity_verdicts - see status_evidence.json#verdict_ledger); the shipped reviews cite id=903 (D1-D12) and id=918 (R4 residuals), and no in-repo citation of a row 917 was found, so the brief's '917' is left unreconciled rather than silently plausible."
+  },
+  "products": [
+    {
+      "id": "AE",
+      "name": "Agent Achievement Evaluator",
+      "repository": "cxs503/TensorBench",
+      "code_implemented": true,
+      "scenario_validated": false,
+      "acceptance_evidence": {
+        "scenario_id": null,
+        "validation_report_ref": null,
+        "review_receipt_ref": null,
+        "criteria_sha256": null,
+        "reviewed_commit": null,
+        "verdict": null
+      },
+      "implemented_evidence": [
+        "schemas/evidence_bundle.json (v1.0.0) mission evidence contract",
+        "tensorbench/evidence_bundle.py: normalization, explicit missing fields, per-deliverable SHA-256, self-digest",
+        "tensorbench/collect.py: read-only TensorPlatform login + mission/PR/commit/CI/deliverable collection",
+        "CLI: tensorbench collect --missions m1,m2 -> evidence/<mid>.json",
+        "tests/test_evidence_bundle.py, tests/test_collect_cli.py, tests/fixtures/real_missions/*.json",
+        "tensorbench/achievement.py, live_mission.py, mission_evidence.py (pre-existing)"
+      ],
+      "not_implemented_or_unverified": [
+        "Scenario validation with an independent reviewer receipt",
+        "Test vacuity/mutation quality checks",
+        "Blind-labelled calibration corpus",
+        "Platform-side acceptance decision made by TensorBench"
+      ],
+      "next_gate": "Run tensorbench collect on a closed mission set and have an independent reviewer sign the resulting bundles against the frozen acceptance criteria.",
+      "baseline_note": "code_implemented=true reflects code that existed before this mission; the mission's asserted false baseline is recorded under mission_baseline_reconciliation and rejected with reason."
+    },
+    {
+      "id": "BE",
+      "name": "Business Evidence Engine",
+      "repository": "cxs503/TensorBench",
+      "code_implemented": true,
+      "scenario_validated": true,
+      "acceptance_evidence": {
+        "scenario_id": "BE-20261115-tensorai-bp-field-extraction",
+        "validation_report_ref": "TensorBench@8c18865cb8b9f2fde39ff61d889d99d810c9942f:docs/pilots/BP-20261115-tensorai-bp-field-extraction/validation_report.json#sha256:f9b88fec299c09435355d5d0eaea5df6191312f524c79cf8d9df1e0138e49428",
+        "review_receipt_ref": "TensorBench@ee5d8289af0e6431e6eef7ccd9825300e0be0f90:docs/pilots/BP-20261115-tensorai-bp-field-extraction/review_receipt_amended.json#sha256:51d7210f016fdb192a204cee377628e6e221fac3ef16b3cea3b7367e68c14cdd",
+        "criteria_sha256": "4bd2e5208cb92500d95efb1cc1a1d3eaa8a1183a61bb24417b35707c6f3dcc5d",
+        "reviewed_commit": "8c18865cb8b9f2fde39ff61d889d99d810c9942f",
+        "verdict": "pass",
+        "maturity_verdict_ref": "tensorplatform:tensor_maturity_verdicts#id=911 (repo=TensorBench, mission_id=22060, level=3, gate_state=pending)"
+      },
+      "implemented_evidence": [
+        "tensorbench/pdf_evidence.py bounded PDF ingestion with per-page text + page_text_sha256 + file fingerprint",
+        "tensorbench/business_pdf_fields.py declared spectra (trade_documents_v1, business_plan_v1) -> rule-based page-addressable field proposals, reviewer decisions, evidence-record/document emitters",
+        "tensorbench/business_evidence.py normalized-record reconciliation (Decimal tolerance, cross-document checks)",
+        "CLI: extract-pdf / propose-pdf-fields / review-pdf-fields / reconcile-business",
+        "docs/pilots/BP-20261115-tensorai-bp-field-extraction/ — stage-3 pilot on one real permissioned business plan (19 pages, 9/10 fields, 22/22 locators, 4/4 negative cases, 13/13 frozen criteria)",
+        "Independent six-check review receipt: docs/pilots/BP-20261115-tensorai-bp-field-extraction/review_receipt_amended.json (verdict=pass, checks_not_run=[], blocking_conditions=[])",
+        "docs/m22925/DEMO.md + docs/m22925/demo/ — end-to-end demo chain re-run with committed artifacts",
+        "tests/test_pdf_evidence.py, tests/test_business_pdf_fields.py, tests/test_business_evidence.py, tests/test_bp_pilot_artifacts.py, tests/test_be_scenario_publish.py"
+      ],
+      "external_partial_state": "BE is scenario-validated for one document: single-language, single-layout business-plan PDF, extraction is rule-based (no OCR, no table cell reconstruction), and the pilot's own overall_status is 'partial' because no labelled ground truth corpus exists. Publication rests on the independent six-check receipt (verdict=pass), not on a ground-truth accuracy claim.",
+      "not_implemented_or_unverified": [
+        "OCR / scanned-document ingestion: not implemented",
+        "Reliable table/line-item cell extraction beyond label-line + value-line shapes: not implemented",
+        "Multi-document bundle orchestration in one command: the reconciler accepts a bundle, the extraction chain does not assemble one automatically",
+        "Field/market accuracy against a labelled ground-truth corpus: no labelled corpus exists for this document type (pilot overall_status=partial)",
+        "Customer-grade privacy/security verification: the pilot ran under internal_consent with a private bundle outside the repo; no security audit was performed",
+        "Cross-language / cross-layout generalisation: unverified (one document, one language, one layout)"
+      ],
+      "next_gate": "Run a second, permissioned document of a different layout (or a labelled holdout) and measure field precision/recall against ground truth; that is also the precondition for level 4 on the maturity ledger.",
+      "baseline_note": "Deviation from the mission baseline: BE scenario_validated was false because no independent review existed. Review mission m22509 produced a six-check passing receipt (amended by m22762: two items resolved, checks_not_run=[]), and the pilot row (tensor_maturity_verdicts id=911, level=3) records it. This mission publishes the status only; it re-ran the guards, not the pilot. code_implemented=true is unchanged from the pre-mission baseline."
+    },
+    {
+      "id": "RA",
+      "name": "Research Audit",
+      "repository": "cxs503/TensorKnowledge",
+      "code_implemented": true,
+      "scenario_validated": false,
+      "acceptance_evidence": {
+        "scenario_id": "PROD-RA-m22059",
+        "validation_report_ref": "cxs503/TensorKnowledge@3fbd3b35c02dd9457fbd46a1905384972883ec8e:docs/m22059/validation-report.json",
+        "review_receipt_ref": "cxs503/TensorKnowledge@3fbd3b35c02dd9457fbd46a1905384972883ec8e:docs/m23157/REVIEW-RECEIPT-R5.json",
+        "criteria_sha256": "c12873d308294508116dc623ff162f125b49ce251d3f3d86099e81421052d74a",
+        "reviewed_commit": "3a70ce80b74a885ede35a8d3d369f1648527ff50",
+        "verdict": "changes_requested",
+        "maturity_verdict_ref": "tensorplatform:tensor_maturity_verdicts#id=903 (m22059 D1-D12), #id=918 (R4 residuals); R5 row written by docs/m23157/verdict_insert_r5.sql (id not readable by this role)"
+      },
+      "implemented_evidence": [
+        "audit engine ships on main@3fbd3b3: docs/review_m22059_prod_ra/recheck.py sha256 2cfa24548d69498831a4f05ab58ddbcd503875624d9ca203fdd14230924b1090 = the exact file PR#511 (d1d5c49) was reviewed on and that was merged as 3a70ce8",
+        "entry point exits 0 on a cold extraction of main (tracked files only, no legacy runs/m22059 tree) and emits all six check sections",
+        "markdown citation audit, claim-evidence provenance, negative corpus (9/9/9 injections detected), failure ledger (3 records) and regression-scope declaration all execute inside the repository",
+        "authorship-side validation report retained at docs/m22059/validation-report.json (sha256 466f22995fd85dc718a257fc8abeeda5a956a7269f1a48f0c0cea94e933d7bd7, criteria sha256 c12873d308294508116dc623ff162f125b49ce251d3f3d86099e81421052d74a)",
+        "independent review rounds R4 (docs/review_m22059_prod_ra/REVIEW-R4.md) and R5 (docs/m23157/) executed; R5 receipt sha256 6c29270dc6961df7ec6bcf8ae3dce162ff0d96962617bc18005bccad6bc8932b"
+      ],
+      "not_implemented_or_unverified": [
+        "R5-1 (blocking, unfixed at main@3fbd3b3): 114 of 144 file locators still point at the legacy runs/m22059/ layout and 17 are absolute /srv/tensor/agent refs; only 17/144 resolve in a cold checkout (11.8%), so a third party cannot reproduce each finding from the cited source inside the repository",
+        "R5-2 (major, unfixed): reviewer bundle manifest unsound - 4 of 18 SHA256SUMS entries have no file and 1 mismatch (self-digest)",
+        "R5-3 (minor, unfixed): 3 of 5 evidence items carry absolute foreign input_refs and ev-kb10k-incompatibility has no provenance.input_sha256",
+        "No expert-labelled holdout or per-class precision/recall for the audit engine; validation is contract-level (reproducibility/portability), not accuracy against a labelled gold set",
+        "Accepted limitation carried from R4-5: citation_audit reports inconclusive + exit 1 when the corpus directory is absent"
+      ],
+      "next_gate": "Repair the R5-1/R5-2/R5-3 residuals (relocatable in-repo locators, sound manifest, complete provenance fingerprints) and obtain one further independent review whose verdict is pass; scenario_validated may only be set in the same change that cites that pass verdict, because contracts._status_errors rejects true against verdict=changes_requested.",
+      "baseline_note": "code_implemented flipped false->true: the audit engine is now in its owning repository and runs cold. scenario_validated deliberately left false despite the mission brief asking for true - see mission_baseline_reconciliation. reviewed_commit is the PR#511 merge 3a70ce8 as the mission specified; the R5 receipt under review actually reviewed main@cbd754b plus the standalone fix d1d5c49, which is why both shas are named here."
+    },
+    {
+      "id": "PV",
+      "name": "Physics Dataset Validator",
+      "repository": "cxs503/TensorData",
+      "code_implemented": true,
+      "scenario_validated": true,
+      "acceptance_evidence": {
+        "scenario_id": "pv-kcs-ex1-20261115-prereg-column-acceptance",
+        "validation_report_ref": "TensorData@857a189ee66cfda0fc208556b1316e25ff2e2104:artifacts/pv-pilot/ex1_kcs/pilot_report.json#sha256:7cbf516a9d563a983b705fea40d30cdf68a3ca25260b839ec203769d6a8f100a",
+        "review_receipt_ref": "TensorData@857a189ee66cfda0fc208556b1316e25ff2e2104:artifacts/pv-pilot/ex1_kcs/review_receipt.json#sha256:db77659dc634f016226be6c6b4d720b6d46170eb70db4ad044c1aeca20fe491e",
+        "criteria_sha256": "06fc0ee0272ef5a9fc3e71fbe67335fa1f5389a65231f311df77c0f54368406d",
+        "reviewed_commit": "18559035a5d8eb108055619f36191523e1a9364d",
+        "verdict": "pass"
+      },
+      "implemented_evidence": [
+        "TensorData@1855903:tensordata/quality/physics_csv.py — profile-driven physics CSV adapter (structure / axis / unit / physical-range rules)",
+        "TensorData@1855903:tensordata/quality/units.py — unit registry with exact SI conversion factors and unit-suffix resolution",
+        "TensorData@1855903:tensordata/quality/fields.py — numeric-column identification (symbol table, unit-less canonical-unit fallback)",
+        "TensorData@1855903:tensordata/quality/{engine,rules,profiles} — quality engine plus registered tabular profile, reachable through POST /api/v1/artifacts/{artifact_id}/quality-checks",
+        "TensorData@857a189:scripts/pv_pilot_ex1_kcs.py — stage-3 pilot driver (criteria freeze, four negative injections, report)",
+        "TensorData@1855903:tests/test_physics_csv_validator.py, tests/test_physics_field_inference.py, tests/test_physics_unit_conversion.py, tests/test_quality_engine.py — 96/96 pytest on the reviewed commit (review receipt, regression_scope)"
+      ],
+      "external_partial_state": "TensorData PV chain is implemented and scenario-validated for CSV column acceptance (physics CSV adapter + unit registry + field identification). Field-format (NetCDF/HDF5/VTK) and towing-tank accuracy remain unverified.",
+      "not_implemented_or_unverified": [
+        "NetCDF/HDF5/VTK field formats: not implemented — the adapter is CSV-only (declared scenario limit, pilot_report.json scenario.limits[0])",
+        "Initial/boundary-condition compliance rules: not implemented",
+        "Conservation-law residuals as a general profile: only the EX1 envelope closure (density / power / speed cross-column) is checked",
+        "TensorLBM ship-flow end-to-end validation: no such scenario has been run",
+        "Model accuracy vs towing tank (EFD): out of scope for this data-quality scenario, recorded as accepted_limitation in artifacts/pv-pilot/ex1_kcs/failure_records.json"
+      ],
+      "next_gate": "Run a second, independent PV scenario on a TensorLBM flow export (NetCDF/VTK) with an EFD or analytic cross-check, which is also the precondition for claiming level 4 (cross-validated) on the maturity ledger.",
+      "baseline_note": "Deviation from the mission baseline: the premise 'TensorData quality engine half-true' no longer holds for PV. The PV chain is implemented at TensorData@1855903 and one permissioned real scenario (EX1/KCS prereg column acceptance) passed the frozen criteria set on 29/29 numeric columns with all four negative injections detected, under an independent review receipt (verdict=pass, six checks pass, checks_not_run=[]). code_implemented and scenario_validated are therefore both true for PV only; AE/RA/BE are unchanged."
+    }
+  ],
+  "evidence_index": {
+    "mission_bundles": "tests/fixtures/real_missions/MANIFEST.json",
+    "recorded_upstream_payloads": "tests/fixtures/recorded/",
+    "contract": "schemas/evidence_bundle.json",
+    "design_and_selfcheck": "docs/EVIDENCE_BUNDLE.md",
+    "products/STATUS.json (canonical source of this patch)": "TensorBench@cxs503 sha256 e2e3458e3c043e6c457656a6826bcb1c0d9a7638a60dc421f41ef3d60ce0a582",
+    "docs/m22059/validation-report.json": "466f22995fd85dc718a257fc8abeeda5a956a7269f1a48f0c0cea94e933d7bd7",
+    "docs/m22059/criteria.json": "c12873d308294508116dc623ff162f125b49ce251d3f3d86099e81421052d74a",
+    "docs/m23157/REVIEW-RECEIPT-R5.json": "6c29270dc6961df7ec6bcf8ae3dce162ff0d96962617bc18005bccad6bc8932b",
+    "docs/m23257/status_evidence.json": "recomputed evidence bundle for this publication (verify_status.py)",
+    "docs/m23257/status_evidence.json#r5_1_locators": "17/144 locators resolve cold"
+  }
+}
