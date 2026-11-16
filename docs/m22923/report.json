@@ -1,0 +1,9 @@
+{
+  "title": "PROD-RA m22760 返修独立复审：D1-D12 证据文件被门禁滤除导致无法验证",
+  "summary": "m22760 返修 m22059 阶段3 试点的 12 项缺陷。复审发现 D7（citation_audit input_refs 可移植性）已确认修复并通过测试；但 D1-D6、D8-D12 的修复证据文件（runs/m22059/ 下的 criteria.json、validation-report.json、negative_knowledge_ledger.json 等）被 pusher 门禁滤除，不在 origin/main 上，复审者无法独立验证。六检中 3 项 not_run、3 项 partial，不满足 pass 条件。裁决：changes_requested，level=2（维持原级）。",
+  "scenario_key": "PROD-RA",
+  "mission_id": 22923,
+  "tags": ["prod-ra", "rereview", "m22760", "changes_requested", "delivery-layout-violation"],
+  "markdown": "docs/m22923/REVIEW-REPORT.md",
+  "figures": []
+}
