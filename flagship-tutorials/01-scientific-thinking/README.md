@@ -1,7 +1,7 @@
 # Scientific Thinking: From Observation to Explanation
 
 **Status:** draft  
-**Version:** 0.2.1  
+**Version:** 0.2.2  
 **Audience:** curious learners; no specialist science background required  
 **Estimated time:** 3–5 hours, plus optional follow-up investigation  
 **Domains:** Cognitive Foundations; Evidence and Reality; Models and Principles; Creativity and Discovery  
@@ -87,7 +87,7 @@ where:
 
 The equation predicts that period is proportional to the square root of length. If length is multiplied by four, the predicted period doubles.
 
-This is a model, not a law that applies under every condition. It assumes a point-like bob, a light inextensible string, negligible friction and air resistance, and a sufficiently small swing angle for the small-angle approximation. OpenStax derives this result from the small-angle approximation and describes the point-mass, light-string idealization; it notes that the approximation is accurate to within 1% for angles below about 15° [1]. The suggested 5–10° release range is deliberately more conservative.
+This is a model, not a law that applies under every condition. It assumes a point-like bob, a light inextensible string, negligible friction and air resistance, and a sufficiently small swing angle for the small-angle approximation. OpenStax derives this result from the small-angle approximation and describes the point-mass, light-string idealization; it notes that sin θ and θ differ by less than 1% for angles below about 15° [1]. The suggested 5–10° release range is a conservative introductory setting, not a high-precision gravimetry setting. In its worked gravimetry example, OpenStax says the maximum angle should be below about 0.5° for the small-angle approximation error to be smaller than the stated precision of the length and period measurements [1].
 
 ### 3.4 Design the experiment
 
@@ -383,9 +383,9 @@ The value 9.81 m/s² is a rounded reference for classroom calculations, not a cl
 
 ## 13. Review record
 
-- Authoring status: instructional draft, version 0.2.1
+- Authoring status: instructional draft, version 0.2.2
 - Agent-assisted source and structure check: 2026-11-09; OpenStax pendulum derivation, NIST uncertainty terminology, and standard/local gravity reference checked against cited sections
-- Supplemental agent-assisted source check: 2026-11-16; VIM 2.26 definition verified and citation scope corrected
+- Supplemental agent-assisted source check: 2026-11-16; VIM 2.26 definition verified, and OpenStax small-angle precision wording clarified
 - Independent subject-matter review: pending
 - Independent learning-design review: pending
 - Learner pilot: pending
