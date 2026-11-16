@@ -61,3 +61,17 @@ A claim cites [1], but the document has no recognizable references heading.
     report = audit_markdown(path)
     assert report["overall_status"] == "inconclusive"
     assert report["checks"][0]["state"] == "inconclusive"
+
+
+def test_input_refs_stay_portable_when_cwd_contains_the_input(tmp_path, monkeypatch):
+    """A recorded provenance pointer must survive a move of the worktree."""
+    monkeypatch.chdir(tmp_path)
+    path = _write(tmp_path, """# Findings
+
+A claim cites [1], but the document has no recognizable references heading.
+""")
+    report = audit_markdown("report.md")
+    assert report["input_refs"] == ["report.md"]
+    assert report["input_fingerprints"]["report_sha256"] == __import__("hashlib").sha256(
+        path.read_bytes()
+    ).hexdigest()
