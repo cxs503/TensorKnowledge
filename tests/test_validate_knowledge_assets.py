@@ -110,6 +110,23 @@ def test_source_unavailable_is_a_skip_not_a_pass(tmp_path: Path) -> None:
     assert res["status"] not in runner.FAILING_STATUSES
 
 
+def test_permission_denied_inside_source_repo_is_a_skip(tmp_path: Path) -> None:
+    source_root = tmp_path / "source-repo"
+    denied_path = source_root / ".git"
+    stderr = f"PermissionError: [Errno 13] Permission denied: '{denied_path}'"
+    body = f"import sys\\nsys.stderr.write({stderr!r})\\nraise SystemExit(1)\\n"
+    pkg = make_package(tmp_path, entry=tmp_path / "permission.py", stdout=body)
+    manifest_path = pkg / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["source"]["default_root"] = str(source_root)
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    result = runner.run_package(pkg)
+    assert result["status"] == "skipped-source-unavailable"
+    assert "permission denied" in result["reason"]
+    assert result["status"] not in runner.FAILING_STATUSES
+
+
 def test_crash_without_any_check_line_is_reported_as_a_crash(tmp_path: Path) -> None:
     body = 'raise SystemExit("boom: cannot even start")\n'
     pkg = make_package(tmp_path, entry=tmp_path / "silent.py", stdout=body)
@@ -215,10 +232,17 @@ def test_repository_schemas_satisfy_the_version_rule() -> None:
     assert checked >= 1
 
 
-def test_repository_schema_dialects_are_pinned_to_2020_12() -> None:
+def test_repository_schema_dialects_are_supported() -> None:
+    observed: set[str] = set()
     for path in sorted((ROOT / "schemas").glob("*.schema.json")):
         schema = json.loads(path.read_text(encoding="utf-8"))
-        assert schema.get("$schema") == "https://json-schema.org/draft/2020-12/schema", path.name
+        dialect = schema.get("$schema")
+        assert dialect in validator.SUPPORTED_SCHEMA_DIALECTS, (path.name, dialect)
+        observed.add(dialect)
+    assert observed == {
+        "https://json-schema.org/draft/2020-12/schema",
+        "http://json-schema.org/draft-07/schema#",
+    }
 
 
 # ---------------------------------------------------------------------------
