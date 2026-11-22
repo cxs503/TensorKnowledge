@@ -1,0 +1,46 @@
+{
+  "id": "tkc:tensor-knowledge:kbm-consume-w1-snapshot-drift",
+  "card_type": "failure",
+  "failure_mode": {
+    "description": "KBM-CONSUME-W1（m15181）的 KB 消费计量快照数字随时间漂移：同一审计轮次内复跑间隔 48 分钟后 kb_total 31→38、暴露分母 132→209、引用率 1.52%→0.96%；报告中的计数事实若不带 taken_at 被当作永久值引用即失真。",
+    "symptom": "repro_cmd 实跑两次计数不一致（kb_total 差 7，引用率相对漂移约 37%）；下游复用报告数字与库的现状对不上，复跑差异易被误判为复现失败。",
+    "severity": "minor",
+    "trigger_conditions": [
+      "计量对象是持续增长的活库（KB 卡数/暴露/引用持续变化）",
+      "快照未进周期调度（同审计 F2：kb_consumption_snapshots 仅 1 行且为手跑写入，无调度器/HTTP 端点/CI 消费方）",
+      "报告数字被下游当作永久值引用"
+    ],
+    "affected_domain": "knowledge-base-mining / KB consumption metrics",
+    "affected_method": "scripts/kb_consume_audit.py 计数事实（injected_total / cited_total / kb_total / 暴露分母 / 引用率）"
+  },
+  "root_cause": {
+    "description": "计数事实是时变量的瞬时快照，但快照采集未周期化（无调度器/端点/CI 消费方），报告数字缺少『仅代表 taken_at 时刻』的强制语义。",
+    "category": "data",
+    "mechanism": "活库持续增长 → 分子（引用次数）与分母（暴露次数）同时变化 → 比率漂移方向不定；无周期快照则任意两个时刻的数字不可比，报告值与复跑值的差异不是复现失败而是时间原点不同。",
+    "evidence": "m15247-kbm-consume-w1-audit.md §⑤ F5：『本轮复跑 48 分钟后 kb_total 31→38、暴露分母 132→209、引用率 1.52%→0.96%。报告数字是带 taken_at 的快照值，不可当永久值引用；这正是「快照未进周期调度」的直接后果』；§⑥ 表末行：计数事实复用 injected 3=3、cited 2=2、kb_total 差 7 → 部分是（时变字段超容差）"
+  },
+  "workaround": {
+    "description": "引用计数事实必须带 taken_at 时间戳并声明快照语义；稳定计数（本轮窗口内 injected_total=3、cited_total=2 稳定复现）与时变比率分开报告；把快照采集接入周期调度（被审设计文档 §④ 的『周期快照进 chronicle』方案）以获得可比时间序列。",
+    "effectiveness": "partial",
+    "side_effects": [
+      "周期调度依赖集成面建设（同审计 F2 指出当前未实施，故不到 L3）",
+      "带时间戳的数字不能跨时刻直接比较"
+    ]
+  },
+  "resolution": {
+    "status": "workaround-available",
+    "notes": "审计已给出引用纪律（带 taken_at 的快照语义）；周期化采集仍为设计方案未实施。"
+  },
+  "claim_type": "methodological",
+  "statement": "活库的计数/比率指标是时变快照：报告引用必须带 taken_at 并区分稳定计数与时变比率；快照采集不进周期调度时，任何复跑差异都不可判为复现失败，也不可把报告数字当永久值二次引用。",
+  "evidence_refs": [
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit/m15247-kbm-consume-w1-audit.md §⑤ 注意点 F5（L63-L64）",
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit/m15247-kbm-consume-w1-audit.md §⑥ 误差判定 计数事实复用行（L77）",
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit/m15247-kbm-consume-w1-audit.md §⑤ 注意点 F2（L57-L58）"
+  ],
+  "scope": "TensorKnowledge KB 消费计量及一切对活库做瞬时计数报告的场景；不适用于冻结数据集上的离线评测（数据不变则无漂移）。",
+  "created_by": "agent/m27038 (W3 GLM knowledge-card mining, TensorKnowledge)",
+  "notes": "confidence: high（failure_mode/root_cause.evidence 直接引自审计 §⑤ F5 与 §⑥ 表原文）；severity=minor 为本卡判断——审计对 F5 未标定级（F4 明确『低危』而 F5 无标注），此处按其对复现判定的影响定为 minor，特此注明。",
+  "created_at": "2026-11-22T00:00:00Z",
+  "version": "1.0.0"
+}
