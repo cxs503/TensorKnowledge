@@ -1,0 +1,45 @@
+{
+  "id": "tkc:tensor-knowledge:kbm-schema-w1-upstream-dep",
+  "card_type": "failure",
+  "failure_mode": {
+    "description": "KBM-SCHEMA-W1（m15180）验收判据中的『抽样一致率 ≥80%』在交付时无法执行：该判据依赖兄弟任务 KBM-CLEAN-W1 的清洗产出，而上游交付时尚未就绪。",
+    "symptom": "交差审计 m15246 记录：任务自带判据三项中『抽样一致率』一项零执行、零数据；同时基准裁判缺位——tensor_benchmark_cases 表不存在于任何本地 DB，API 无 benchmark 端点，anchor_slug='KBM-SCHEMA-W1' 无 case，该锚点无可注册基准。",
+    "severity": "major",
+    "trigger_conditions": [
+      "任务验收判据引用尚未完成的兄弟任务（KBM-CLEAN-W1）产出",
+      "schema/管道类任务无数值算例，无可注册的 tensor_benchmark_cases 基准"
+    ],
+    "affected_domain": "knowledge-base-mining",
+    "affected_method": "KBM 五类知识卡 schema v1 + LLM 抽取+规则核验管道（ke/kbm_extract.py 576 行、ke/kbm_validate.py 89 行）"
+  },
+  "root_cause": {
+    "description": "验收判据与上游数据依赖存在时序耦合：判据在任务定义时写死『抽样依赖 KBM-CLEAN-W1 产出，未就绪先设计后补跑』，交付时上游数据仍不存在，该判据既不能执行也不能证伪。",
+    "category": "configuration",
+    "mechanism": "跨任务数据依赖未建立阻塞/降级协议：上游未就绪时下游验收项处于『不可执行』悬空态，若不显式声明即形成静默验收欠账。",
+    "evidence": "audit-m15180-kbm-schema-w1.md §③『基准裁判』行：无注册基准（表不存在于任何本地 DB）；§⑤ 注意点第 1 条：『抽样一致率 ≥80%』一项未执行（依赖 KBM-CLEAN-W1，报告已如实声明待补跑，非虚报）"
+  },
+  "workaround": {
+    "description": "『先设计后补跑』+ 如实声明：报告显式声明该项待上游就绪后补跑；审计以任务自带判据的其余两项（schema 文档交付 + repro_cmd 独立重跑 6/6 verified 100.0%）为唯一裁判完成判级（L2），欠账记入后续任务。",
+    "effectiveness": "partial",
+    "side_effects": [
+      "验收闭环推迟到上游任务完成后",
+      "判级封顶：无平台集成调用方与完整数值算例时不可达 L3/L4"
+    ]
+  },
+  "resolution": {
+    "status": "accepted-limitation",
+    "notes": "m15246 裁定交差成立、m15180 消账（level=2）；两项过程性缺口（抽样一致率待 KBM-CLEAN-W1 补跑、报告 API 发布缺失）记入后续任务，不改变级别。"
+  },
+  "claim_type": "methodological",
+  "statement": "任务验收判据不得依赖交付时尚不存在的上游产出；若必须引用，须内置可独立执行的降级裁判（其余判据）并在报告中显式声明悬空项，否则形成静默验收欠账。",
+  "evidence_refs": [
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit-m15180-kbm-schema-w1.md §③ 计算结果（基准裁判行，L27）",
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit-m15180-kbm-schema-w1.md §⑤ 注意点 第1条（L37）",
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit-m15180-kbm-schema-w1.md 判级结论（L45-L53）"
+  ],
+  "scope": "TensorKnowledge KBM 线 schema/管道类任务的验收判据设计；适用于判据引用未完成上游产出、或无数值基准可注册的场景；不适用于有基准算例的数值计算任务。",
+  "created_by": "agent/m27038 (W3 GLM knowledge-card mining, TensorKnowledge)",
+  "notes": "confidence: high——failure_mode/root_cause.evidence/workaround 均直接引自审计文件原文；root_cause.mechanism 为对审计记录的概括转述（推断成分已在此标注）。来源文件实际路径为 docs/audit-m15180-kbm-schema-w1.md（任务书所给 docs/audit/ 路径多写了一层目录）。",
+  "created_at": "2026-11-22T00:00:00Z",
+  "version": "1.0.0"
+}

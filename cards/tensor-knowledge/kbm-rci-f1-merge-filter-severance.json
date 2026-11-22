@@ -1,0 +1,46 @@
+{
+  "id": "tkc:tensor-knowledge:kbm-rci-f1-merge-filter-severance",
+  "card_type": "failure",
+  "failure_mode": {
+    "description": "「报告→知识生产线 v1」（m15494）经 push-merge（e186a37 Merge #62）合入 main 时，合并门禁滤除 7 个文件，其中包括门禁自身的回归测试 tests/test_wp_gate.py（452 行/40 测试）与运行工件 runs/m15494/*（4 个工件）；而门禁本体 ke/wp_gate.py 与 schemas/work-package-contract.schema.json 以逐字节相同内容进入 main——交付物的证据链在 mainline 被砍断。",
+    "symptom": "main HEAD（3d43e3c）上 git cat-file -e 逐项 ABSENT；docs/production/GATE-RULES.md:4,108 与 docs/production/PRODUCTION-LINE-v1.md:231,292 仍教人执行 python -m pytest tests/test_wp_gate.py -q（40 passed）——指向仓库里不存在的文件，任何人照文档执行都会失败；门禁本体进了主干但回归网没进主干，后续任何人改 wp_gate.py 不会有 red light。",
+    "severity": "critical",
+    "trigger_conditions": [
+      "mission 成果经 push-merge 合入 main 且合并门禁启用文件过滤（合入提交自述『7 个文件被门禁滤除』）",
+      "交付物包含测试文件与 runs/ 运行工件（被过滤对象），而功能本体文件不在过滤名单",
+      "主干文档引用被过滤文件的执行命令"
+    ],
+    "affected_domain": "knowledge-base-mining / CI merge gate",
+    "affected_method": "ke/wp_gate.py 三道门可执行门禁（结构门 S1–S15 + 证据门 E1–E7 + 语义门，22 唯一规则 id）及其回归测试"
+  },
+  "root_cause": {
+    "description": "合并门禁的文件过滤策略把 mission 工作树中的测试文件与 runs/ 工件当作过程文件静默剔除，合入前未校验『被滤文件是否被主干文档或回归体系引用』，导致主干交付物自相矛盾：代码在、测试与证据不在。",
+    "category": "configuration",
+    "mechanism": "过滤器按文件类别（测试/运行记录）剔除，功能本体与证据链被分离存放；合入提交信息虽自述滤除数量，但无阻断级一致性检查，文档与回归引用悬空无人发现，直到下一次独立审计用 git cat-file -e 逐文件对照才暴露。",
+    "evidence": "AUDIT-m15895-KBM-RCI-F1-SPEC.md §5.1：e186a37 对应 a1c0c76 提交信息自述「7 个文件被门禁滤除」；实测 main HEAD 中 tests/test_wp_gate.py 与 runs/m15494/* 全部不存在（git cat-file -e 逐项 ABSENT），ke/wp_gate.py、schemas/work-package-contract.schema.json 与 mission 分支逐字节相同（git diff 空）"
+  },
+  "workaround": {
+    "description": "审计给出的最小修复路径：把 tests/test_wp_gate.py + runs/m15494/* 重新入库；tests/fixtures/extraction 夹具本身已在 main（git cat-file -e HEAD:tests/fixtures/extraction/ok-basic/work-package.json → YES），故只需补测试文件与运行记录，不需重做夹具。",
+    "effectiveness": "partial",
+    "side_effects": [
+      "修复路径在审计时点尚未落库，需下一轮执行（审计定为『必须下一轮修』）",
+      "在补齐前，main 上的门禁本体处于无回归保护运行状态"
+    ]
+  },
+  "resolution": {
+    "status": "workaround-available",
+    "notes": "m15895 审计判定功能实质 L2 不变，但该整合缺陷为阻断级、必须下一轮修；修复最小路径已给出（补测试文件与运行记录）。"
+  },
+  "claim_type": "methodological",
+  "statement": "合并门禁滤除文件时必须校验被滤文件是否被主干文档或回归体系引用；功能本体与其回归测试、运行工件必须同进同出，否则主干出现『代码在、证据链不在』的自相矛盾状态，文档可执行性与回归保护同时失效。",
+  "evidence_refs": [
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit/AUDIT-m15895-KBM-RCI-F1-SPEC.md §5.1（L92-L95）",
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit/AUDIT-m15895-KBM-RCI-F1-SPEC.md §3.1 三件套存在性核验（L45）",
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit/AUDIT-m15895-KBM-RCI-F1-SPEC.md 头部合入情况（L5-L6）"
+  ],
+  "scope": "TensorKnowledge 及采用 push-merge 门禁文件过滤的仓库；适用于 mission 成果合入 main 的场景；不适用于无合并过滤的直推分支。",
+  "created_by": "agent/m27038 (W3 GLM knowledge-card mining, TensorKnowledge)",
+  "notes": "confidence: high——failure_mode/root_cause.evidence/workaround 均直接引自审计 §5.1 原文；severity=critical 对应审计原文『阻断级，必须下一轮修』。同文件 §5.2 的次级缺陷（tensor_reports.id=14560 存在但 tensor_dev_missions.report_id 为 NULL，欠报守望线按 report_id 判会误记欠账）未单独立卡，留待后续按需补充。",
+  "created_at": "2026-11-22T00:00:00Z",
+  "version": "1.0.0"
+}

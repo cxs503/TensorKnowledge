@@ -1,0 +1,46 @@
+{
+  "id": "tkc:tensor-knowledge:kbm-consume-w1-pseudo-replication",
+  "card_type": "failure",
+  "failure_mode": {
+    "description": "KBM-CONSUME-W1（m15181）调用级受控 A/B 实验在 temperature=0 确定性解码下重复 4 次（reps=4），但 rep0 与 rep1 的文本/token/时延（12.35s）完全相同——重复不是独立样本而是伪重复，有效样本量 n≈1；报告以 4/4、0/4 呈现通过率但未给不确定区间。",
+    "symptom": "同一 cell 内 4 次重复输出逐字节相同（文本/token/时延全一致）；通过率 4/4 或 0/4 的二项式方差假设失效；效应量级推断无置信度支撑。",
+    "severity": "major",
+    "trigger_conditions": [
+      "LLM 调用 temperature=0（确定性/贪心解码）",
+      "重复维度仅为同配置重跑，无采样随机性或提示扰动",
+      "以 reps 计数呈现通过率分数并做组间比较"
+    ],
+    "affected_domain": "knowledge-base-mining / LLM A/B evaluation",
+    "affected_method": "scripts/kb_ab_experiment.py 3 臂（A 无 KB / B 被动整卡注入 / C 主动检索）× 3 锚 × 4 重复 = 32 主调用 + 12 粒度子臂"
+  },
+  "root_cause": {
+    "description": "实验设计把『确定性解码下的同配置重跑』当作独立重复采样：temperature=0 时解码无随机性，重复只复现同一输出，rep 维度不提供统计功效。",
+    "category": "algorithmic",
+    "mechanism": "temperature=0 → 贪心解码确定 → 同一 prompt 恒产生同一 token 序列；时延完全相同（12.35s）证实无采样方差；每 rep 的 pass/fail 是 prompt 的确定性函数，4/4 等价于一次伯努利试验被观察 4 次，而非 4 次独立试验。",
+    "evidence": "m15247-kbm-consume-w1-audit.md §⑤ F3：『temperature=0 下 K1/A 的 rep0 与 rep1 文本/token/时延（12.35s）完全相同 → reps=4 近似复制，有效 n≈1；报告以 4/4、0/4 呈现但未给不确定区间。方向性结论（K3 无卡必编 → 有卡 4/4）不受影响，量级推断需谨慎』"
+  },
+  "workaround": {
+    "description": "方向性结论（K3 无卡必编 → 有卡 4/4）保留成立；量级/效应推断降级为定性并注明有效 n≈1；如需统计功效，引入真实随机性（temperature>0 多采样，配合确定性规则判分兜底）或扩大锚/臂多样性，而非同配置重复。",
+    "effectiveness": "partial",
+    "side_effects": [
+      "提高 temperature 引入输出噪声，须依赖确定性规则判分（本实验已具备 grade_*() 确定性判分）",
+      "扩大锚/臂数量线性增加调用成本"
+    ]
+  },
+  "resolution": {
+    "status": "accepted-limitation",
+    "notes": "m15247 审计判定方向性结论不受影响、量级推断需谨慎；实验未重跑，按 L2 落表（tensor_maturity_verdicts id=256）。"
+  },
+  "claim_type": "methodological",
+  "statement": "temperature=0 的 LLM A/B 实验中，同配置重复次数不构成统计重复（有效 n≈1）；通过率 n/n 不得配二项式不确定度叙述；要统计功效须引入真实采样随机性或增加独立锚/臂，而非同配置重跑。",
+  "evidence_refs": [
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit/m15247-kbm-consume-w1-audit.md §⑤ 注意点 F3（L59-L60）",
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit/m15247-kbm-consume-w1-audit.md §① 案例介绍 主结果行（L20）",
+    "/root/tensor-ecosystem/TensorKnowledge/docs/audit/m15247-kbm-consume-w1-audit.md §② 核验方法 第5条 判分器确定性（L28）"
+  ],
+  "scope": "LLM 调用级受控实验与 KB 注入效果评估；适用于确定性解码下的重复设计；不适用于 temperature>0 的随机采样实验或物理数值重复试验（后者重复有真实测量方差）。",
+  "created_by": "agent/m27038 (W3 GLM knowledge-card mining, TensorKnowledge)",
+  "notes": "confidence: high——failure_mode/root_cause.evidence 直接引自审计 §⑤ F3 原文；『有效 n≈1』为审计原文的推断表述，本卡沿用并保留其出处。",
+  "created_at": "2026-11-22T00:00:00Z",
+  "version": "1.0.0"
+}
