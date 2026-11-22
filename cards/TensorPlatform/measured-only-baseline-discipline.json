@@ -1,0 +1,53 @@
+{
+  "id": "tkc:tensorplatform:measured-only-baseline-discipline",
+  "card_type": "method",
+  "claim_type": "methodological",
+  "problem": {
+    "description": "引用外部论文数字（如自报 F1 提升、压缩比）作为本平台预期/达标值时，因数据集、分词器、预算、任务定义全部不同，会制造不可证伪的假目标，把「该方法在其设定下的自报结果」误当成可继承结论。",
+    "regime": "基准评测 / 报告证据纪律"
+  },
+  "method": {
+    "name": "Measured-only reporting（不搬运外部数字，只报实测值）",
+    "description": "外部方法（如 SimpleMem、LLMLingua）只作对比基线与设计参考，不作预期值来源。三条纪律：①不搬运——外部数字只可引用为「该方法在其设定下的自报结果」，不得出现在本平台的「预期/达标」栏；②不声称压缩比——平台只报实测 token 数与实测恢复率，且必须给出命令、退出码与工件路径；③可替换——基线臂（如自然语言摘要、token 级压缩）实现可插拔，替换 arm 实现时判据协议不变。",
+    "family": "other",
+    "computational_complexity": "报告纪律，无额外计算开销"
+  },
+  "equations": [
+    {
+      "formula": "expectation_platform != number_external;  cite(number_external) only as self-reported(setting_external)",
+      "source": "TensorPlatform/docs/adr/AIL_ADR_001.md §5 纪律1 L143-144「外部数字只可作为…自报结果引用，不得出现在本平台的预期/达标栏」",
+      "source_type": "standard",
+      "equation_number": "S5-1"
+    },
+    {
+      "formula": "claim_platform(x) => exists (command, exit_code, artifact_path): measured(x)",
+      "source": "TensorPlatform/docs/adr/AIL_ADR_001.md §5 纪律2 L145「只报实测 token 数与实测恢复率，且必须给出命令、退出码与工件路径」",
+      "source_type": "standard",
+      "equation_number": "S5-2"
+    }
+  ],
+  "applicable_domain": {
+    "domain": "任何引用外部文献数字的平台基准与进展报告（TensorPlatform AIL 基准及同类评测）",
+    "limitations": [
+      "该纪律「写进报告即判据」（ADR L141），约束对象是平台报告与基准判据",
+      "ADR 自身的四臂对比结论只在「确定性、可复现、离线」口径下成立（§6 L163-164）",
+      "SimpleMem 自报 LoCoMo F1 +26.4%、token 最多降 30×；LLMLingua 自报约 20× 压缩——均属其论文设定，不是本平台可继承结论"
+    ]
+  },
+  "statement": "外部论文数字只能以「其设定下的自报结果」身份被引用，永远不得成为本平台的预期/达标值；平台结论只报实测值，且每项实测必须可追到命令、退出码与工件路径。",
+  "epistemic_status": "sourced-from-normative-doc",
+  "evidence_refs": [
+    "TensorPlatform/docs/adr/AIL_ADR_001.md §5 L132-147（基线定位表 + 三条纪律）",
+    "TensorPlatform/docs/adr/AIL_ADR_001.md §6 L163-164（对比结论的口径局限）",
+    "TensorPlatform/docs/QUALITY_BAR.md R2 L14-17（同源精神：参考数据必须可溯源，禁自生成曲线自证闭环）"
+  ],
+  "scope": "TensorPlatform ADR-001 §5 基线纪律（AIL 基准；精神同 QUALITY_BAR R2）",
+  "created_by": "agent/m27037",
+  "created_at": "2026-11-22T06:05:38+00:00",
+  "version": "1.0.0",
+  "notes": "confidence=high：三条纪律为原文直接引用；SimpleMem/LLMLingua 的具体自报数字（26.4%/30×/20×）按原文转述并仅作为「不得搬运」的反例出现。equations 为最小形式化（原文无公式）。与 QUALITY_BAR R2 的关联为本卡建立（标注于 evidence_refs 第三条），非 ADR 原文显式声明。",
+  "verification": {
+    "source_quote": "外部数字只可作为\"该方法在其设定下的自报结果\"引用，不得出现在本平台的\"预期/达标\"栏。",
+    "offset": 144
+  }
+}
