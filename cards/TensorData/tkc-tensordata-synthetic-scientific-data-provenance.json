@@ -1,0 +1,63 @@
+{
+  "id": "tkc:tensordata:synthetic-scientific-data-provenance",
+  "card_type": "method",
+  "claim_type": "methodological",
+  "problem": {
+    "description": "合成生成数据与科学仿真数据若不记录完整生成/计算条件，会与观测/实验证据混淆，导致下游训练与分析把人造数据当作真实证据使用。",
+    "regime": "数据治理/科学数据与合成数据溯源（适用于数值仿真数据集管理）"
+  },
+  "method": {
+    "name": "Synthetic-data labeling and scientific-data controls",
+    "description": "合成数据必须记录：生成状态、生成器/模型/工具版本、参数或规格、父资产、溯源、验证情况与局限；严禁与观测/实验证据静默混用。科学数据必须记录：单位、坐标系、初始/边界条件、求解器及版本、数值设置、网格/离散化、收敛指标，以及适用处的基准验证；领域项目提供领域特定校验器。",
+    "family": "other"
+  },
+  "equations": [
+    {
+      "formula": "synthetic(asset) => record{generated_status, generator/model/tool_version, parameters_specification, parent_assets, provenance, validation, limitations}",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Synthetic data L38",
+      "source_type": "standard",
+      "equation_number": "R1"
+    },
+    {
+      "formula": "silent_mix(synthetic, observed_or_experimental) = FORBIDDEN",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Synthetic data L38",
+      "source_type": "standard",
+      "equation_number": "R2"
+    },
+    {
+      "formula": "scientific(asset) => record{units, coordinate_systems, initial/boundary_conditions, solver_version, numerical_settings, mesh/discretization, convergence_indicators, benchmark_validation where applicable}",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Scientific data controls L41",
+      "source_type": "standard",
+      "equation_number": "R3"
+    },
+    {
+      "formula": "domain_specific_validators supplied_by(domain_projects)",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Scientific data controls L41",
+      "source_type": "standard",
+      "equation_number": "R4"
+    }
+  ],
+  "applicable_domain": {
+    "domain": "TensorData 中合成数据集与科学/仿真数据集的登记、验证与发布；直接适用于船舶总体性能等数值仿真平台产生的数据资产",
+    "limitations": [
+      "R3 中 benchmark_validation 为 where applicable（适用时才强制），非无条件",
+      "本卡只规定记录义务，不规定具体校验器实现；领域校验器由领域项目提供 (L41)",
+      "与 tkc:tensordata:lifecycle-gates-rights-release 互补：本卡管内容记录，该卡管生命周期门控"
+    ]
+  },
+  "statement": "TensorData 要求合成数据完整记录生成条件并与观测/实验证据显式区分，科学仿真数据必须记录单位/坐标系/边界条件/求解器版本/数值设置/离散化/收敛指标/基准验证，领域校验器由领域项目供给。",
+  "epistemic_status": "source-verified",
+  "evidence_refs": [
+    "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Synthetic data L37-L38",
+    "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Scientific data controls L40-L41"
+  ],
+  "scope": "TensorData 仓治理文档所述的记录义务；不涉及具体校验器算法或阈值",
+  "created_by": "agent:m27035-glm-kb-mining",
+  "notes": "置信度 high：R1-R4 为源文档 L38/L41 的直接结构化转写，无推断。本卡与卡2同源文件不同小节，聚焦科学/仿真数据记录义务，对 TensorPlatform 生态仿真数据最有复用价值。",
+  "verification": {
+    "source_quote": "Never silently mix synthetic and observed/experimental evidence.",
+    "offset": 38
+  },
+  "created_at": "2026-11-22T06:16:18Z",
+  "version": "1.0.0"
+}
