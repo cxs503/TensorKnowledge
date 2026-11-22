@@ -1,0 +1,29 @@
+{
+  "id": "tkc:tensordata:quality-gate-lineage",
+  "card_type": "code-pointer",
+  "statement": "TensorData 质量门与血缘的强制语义边界：数据集版本创建强制通过 SHA-256 匹配的质量报告、溯源校验 artifact 引用与摘要、以及当前未实现的治理能力清单（生命周期门/来源注册/可执行质量报告/已验证血缘图）。",
+  "claim_type": "methodological",
+  "epistemic_status": "verified",
+  "scope": "TensorData API quickstart 文档所述质量门与血缘强制语义（截至该文档版本）；适用于 TensorData 架构与资产模型知识卡挖掘（W3, m27036）",
+  "code_location": {
+    "repo": "TensorData",
+    "path": "docs/api/quickstart.md",
+    "line_range": {"start": 139, "end": 182}
+  },
+  "implements": {
+    "description": "TensorData 质量门与血缘强制语义指针。要点：①已知限制/下一批门（Known limitations / next gates, L139-149）——Alembic 迁移已实现、禁止依赖 create_all 演化既有库；API key 是单共享密钥、非身份或资源级授权；资产生命周期转换与审批门尚未暴露；来源注册表、证据背书的权利审批、可执行质量报告、已验证血缘图均未实现；数据集 manifest 中的 schema/transform ID 目前仅是声明标识、未对注册表解析；数据集版本当前允许快照隔离区/待权利审查资产——这仅记录状态、不授权训练或发布；本地文件系统存储仅用于开发；上传大小限制为应用层、生产还需代理层限制与内容检查；CI 通过前不得视为可部署。②工件质量检查（Artifact quality checks, L152-170）——POST /api/v1/artifacts/{id}/quality-checks 支持 general 完整性 profile 与 tabular CSV profile；tabular profile 将缺失单元格与重复行记为 warning，空/畸形文件、行宽不一致、完整性不匹配则 fail；每份报告 summary 记录 measured_sha256（实际检查的字节）与 executed_rules（规则 id+版本对）以供追溯；数据集版本创建要求一份已通过且其记录 SHA-256 与工件当前校验和匹配的质量报告；领域特定物理与多模态校验器尚未包含。③溯源与血缘（Provenance and lineage, L173-182）——溯源活动创建会对提供的 artifact_id 引用对照已注册工件进行校验、拒绝 SHA-256 不匹配；外部来源引用可不带 artifact ID 表示；GET /api/v1/lineage/artifacts/{id} 返回连通工件节点、溯源活动与外部输入引用；该初始图尚非完整 W3C PROV 实现。"
+  },
+  "evidence_refs": [
+    "TensorData/docs/api/quickstart.md#Known limitations / next gates (L139-L149)",
+    "TensorData/docs/api/quickstart.md#Artifact quality checks (L152-L170)",
+    "TensorData/docs/api/quickstart.md#Provenance and lineage (L173-L182)"
+  ],
+  "verification": {
+    "source_quote": "Dataset version creation requires a passing report whose recorded SHA-256 matches the artifact's current checksum."
+  },
+  "modality": "documentation",
+  "created_by": "agent-m27036",
+  "created_at": "2026-11-22T06:15:00Z",
+  "version": "1.0.0",
+  "notes": "confidence: high——全部内容直接引自 quickstart.md 对应小节原文（小节标题+行号见 evidence_refs），无推断。本卡与 tkc:tensordata:api-quickstart 同源文件但聚焦不同：本卡只覆盖强制/未实现语义边界（L139-182），供调用方避免误假设治理能力已就绪。"
+}

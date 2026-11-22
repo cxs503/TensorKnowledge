@@ -1,0 +1,34 @@
+{
+  "id": "tkc:tensordata:arch-overview",
+  "card_type": "code-pointer",
+  "statement": "TensorData 架构总览：治理式数据资产生命周期基础设施的使命、有界上下文划分、7 层逻辑架构、资产生命周期状态机与 5 类资产类别。",
+  "claim_type": "methodological",
+  "epistemic_status": "verified",
+  "scope": "TensorData 仓库文档所述架构边界；适用于 TensorData 架构与资产模型知识卡挖掘（W3, m27036）",
+  "code_location": {
+    "repo": "TensorData",
+    "path": "docs/architecture/overview.md",
+    "line_range": {"start": 1, "end": 51}
+  },
+  "implements": {
+    "description": "TensorData 架构总览指针。要点：①使命——使数据可发现、可追溯、质控、版本化、权限化（Mission, L3-4）；②有界上下文——TensorData 管数据源/采集记录、目录/模式/数据集/不可变版本、血缘与质量门；TensorPlatform 管编排调度；TensorKnowledge 管概念/主张/证据解释且其产出在 TensorData 注册为资产；领域项目管模式/求解器/实验协议；系统经显式 API 与稳定标识集成，禁止共享私有模块或业务库表（Bounded contexts, L6-12）；③7 层逻辑架构——连接器摄取/工件层（不可变载荷+元数据库分离）/目录注册/处理/信任面/交付/代理集成（L14-21）；④规范生命周期 DISCOVERED→REGISTERED→INGESTED→PROFILED→TRANSFORMED→VALIDATED→APPROVED→PUBLISHED→DEPRECATED，已发布版本不可变、更正产生新版本（L23-26）；⑤5 类资产——Evidence/Structured data/Knowledge assets/Training assets/Capability assets，是资产类别而非强制线性 ETL（L28-35）；⑥横切要求——每资产有稳定标识/类型/创建时间/owner/生命周期状态/溯源状态，大载荷入对象存储、关系元数据入事务目录、禁止大载荷入 Git 或关系行（L37-40）；⑦初始部署边界——单服务+关系元数据+本地文件系统后端，未测量前不引入 Kafka/Spark/Iceberg/图库/向量库（L42-43）；⑧非目标清单（L45-51）。"
+  },
+  "evidence_refs": [
+    "TensorData/docs/architecture/overview.md#Mission (L3-L4)",
+    "TensorData/docs/architecture/overview.md#Bounded contexts (L6-L12)",
+    "TensorData/docs/architecture/overview.md#Logical architecture (L14-L21)",
+    "TensorData/docs/architecture/overview.md#Canonical lifecycle (L23-L26)",
+    "TensorData/docs/architecture/overview.md#Asset classes (L28-L35)",
+    "TensorData/docs/architecture/overview.md#Cross-cutting requirements (L37-L40)",
+    "TensorData/docs/architecture/overview.md#Initial deployment boundary (L42-L43)",
+    "TensorData/docs/architecture/overview.md#Non-goals (L45-L51)"
+  ],
+  "verification": {
+    "source_quote": "DISCOVERED → REGISTERED → INGESTED → PROFILED → TRANSFORMED → VALIDATED → APPROVED → PUBLISHED → DEPRECATED."
+  },
+  "modality": "documentation",
+  "created_by": "agent-m27036",
+  "created_at": "2026-11-22T06:07:47Z",
+  "version": "1.0.0",
+  "notes": "confidence: high——全部内容直接引自 overview.md 对应小节原文（小节标题+行号见 evidence_refs），无推断。本卡为文档指针卡：code_location 指向 TensorData 架构文档本身（本单挖掘对象即该文档）。"
+}

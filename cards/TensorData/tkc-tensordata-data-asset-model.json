@@ -1,0 +1,32 @@
+{
+  "id": "tkc:tensordata:data-asset-model",
+  "card_type": "code-pointer",
+  "statement": "TensorData 规范数据资产模型：11 个核心实体（DataAsset/DataArtifact/DataSource/DataSchema/Dataset/DatasetVersion/Transform/QualityReport/LineageEdge/AccessPolicy/ProvenanceRecord）的字段定义、初始资产分类、标识与版本规则及互操作标准。",
+  "claim_type": "methodological",
+  "epistemic_status": "verified",
+  "scope": "TensorData 数据资产模型文档所述实体与规则；适用于 TensorData 架构与资产模型知识卡挖掘（W3, m27036）",
+  "code_location": {
+    "repo": "TensorData",
+    "path": "docs/architecture/data-asset-model.md",
+    "line_range": {"start": 1, "end": 53}
+  },
+  "implements": {
+    "description": "TensorData 规范数据资产模型指针。要点：①设计目标——覆盖文件与结构化记录而不假设一切皆表，保留不可变源证据、支持可复现数据集版本（Design goals, L3-4）；②核心实体及字段——DataAsset（asset_id 稳定不透明 ID/lifecycle_state/provenance_status 等, L8-9）、DataArtifact（不可变载荷, artifact_role=raw/intermediate/derived/export, checksum, L11-12）、DataSource（注册来源, 明确禁止存凭据/机密, L14-15）、DataSchema（版本化机器可读结构, L17-18）、Dataset/DatasetVersion（不可变快照：成员/模式/变换/切分任一变更即产生新版本, L20-24）、Transform（版本化处理规格含 code_digest/environment_digest, L26-27）、QualityReport（不可变校验结果, L29-30）、LineageEdge（有向关系, L32-33）、AccessPolicy（机器可评估策略, L35-36）、ProvenanceRecord（W3C PROV 风格, L38-39）；③初始资产分类 15 类（document/table/image/audio/video/timeseries/spatial/point_cloud/mesh/scientific_field/knowledge_bundle/agent_trace/training_sample/model_artifact/other），全局类型表不编码领域语义（L41-44）；④标识与版本——ID 不透明且稳定、名称非标识符，发布的数据集/模式契约用语义版本，工件/报告用不可变 ID，清单用内容校验和（L46-47）；⑤多模态与科学数据——目录描述载荷不入关系列，科学场 profile 可含网格/拓扑/变量/单位/坐标系/时间步/边界条件/求解器版本/数值设置/场数组（L49-50）；⑥互操作——优先 JSON Schema、Parquet/Arrow、W3C PROV、SPDX，无一致性测试不得声称符合标准（L52-53）。"
+  },
+  "evidence_refs": [
+    "TensorData/docs/architecture/data-asset-model.md#Design goals (L3-L4)",
+    "TensorData/docs/architecture/data-asset-model.md#Core entities (L6-L39)",
+    "TensorData/docs/architecture/data-asset-model.md#Initial asset taxonomy (L41-L44)",
+    "TensorData/docs/architecture/data-asset-model.md#Identity and versioning (L46-L47)",
+    "TensorData/docs/architecture/data-asset-model.md#Multimodal and scientific data (L49-L50)",
+    "TensorData/docs/architecture/data-asset-model.md#Interoperability (L52-L53)"
+  ],
+  "verification": {
+    "source_quote": "Any membership, schema, transform or split change creates a new version."
+  },
+  "modality": "documentation",
+  "created_by": "agent-m27036",
+  "created_at": "2026-11-22T06:09:28Z",
+  "version": "1.0.0",
+  "notes": "confidence: high——全部内容直接引自 data-asset-model.md 对应小节原文（小节标题+行号见 evidence_refs），无推断。实体字段为文档原文枚举的转述，未添加文档外字段。"
+}
