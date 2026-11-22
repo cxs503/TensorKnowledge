@@ -1,0 +1,34 @@
+{
+  "id": "tkc:tensordata:api-quickstart",
+  "card_type": "code-pointer",
+  "statement": "TensorData 本地 Quickstart 与 API 契约：MVP 状态、X-API-Key 认证、14 个端点表、内容寻址工件存储、不可变数据集版本清单及 Python 客户端用法。",
+  "claim_type": "methodological",
+  "epistemic_status": "verified",
+  "scope": "TensorData API quickstart 文档所述本地部署与 API 契约；适用于 TensorData 架构与资产模型知识卡挖掘（W3, m27036）",
+  "code_location": {
+    "repo": "TensorData",
+    "path": "docs/api/quickstart.md",
+    "line_range": {"start": 1, "end": 209}
+  },
+  "implements": {
+    "description": "TensorData API quickstart 指针。要点：①状态——早期 MVP：资产元数据注册、内容寻址工件上传/检索、数据集注册、不可变数据集版本清单、只追加溯源活动记录，尚非生产级数据湖或完整治理引擎（Status, L3-5）；②本地运行——Python 3.11+，pip install -e '.[dev]'，alembic upgrade head，uvicorn tensordata.main:app，环境变量 TENSORDATA_API_KEY/TENSORDATA_DATABASE_URL/TENSORDATA_STORAGE_ROOT/TENSORDATA_MAX_UPLOAD_BYTES，默认元数据 ./data/tensordata.db、载荷 ./data/artifacts，GET /health（Run locally, L7-24）；③认证——全部 /api/v1 路由要求 X-API-Key，未配置密钥则数据 API 禁用，health 端点故意免认证且不返回资产信息；单共享密钥仅适用于受控开发（Authentication, L26-30）；④当前端点表 14 项——assets 注册（进入 quarantine）/列表/读取、工件上传（不可变内容寻址）/列表/载荷检索、datasets 创建/列表、数据集版本创建（不可变）/列表/清单解析、provenance 记录/列表（Current endpoints, L32-49）；⑤数据集版本——响应含规范 manifest 及其 SHA-256，快照成员工件校验和/大小/媒体类型/角色/选择器/权利与生命周期状态，重复使用同一 dataset/version 对返回 HTTP 409，须新建版本而非修改（L51-82）；⑥溯源——activity_type/inputs/outputs/parameters/responsible_actor/code_digest/environment_digest，声明性活动证据，尚未校验全部引用实体或提供血缘图遍历（L84-101）；⑦资产上传——服务端计算 SHA-256 并按摘要派生路径存储，同资产内重复字节复用工件记录，原始文件名仅是元数据、绝不用于构造存储路径（L103-137）；⑧Python 客户端——tensordata.client.TensorDataClient 上下文管理器，create_asset/upload_artifact/run_quality_checks，非 2xx 抛 TensorDataAPIError，策略执行留在服务端（L185-209）。"
+  },
+  "evidence_refs": [
+    "TensorData/docs/api/quickstart.md#Status (L3-L5)",
+    "TensorData/docs/api/quickstart.md#Run locally (L7-L24)",
+    "TensorData/docs/api/quickstart.md#Authentication (L26-L30)",
+    "TensorData/docs/api/quickstart.md#Current endpoints (L32-L49)",
+    "TensorData/docs/api/quickstart.md#Dataset version example (L51-L82)",
+    "TensorData/docs/api/quickstart.md#Provenance example (L84-L101)",
+    "TensorData/docs/api/quickstart.md#Asset upload and retrieval (L103-L137)",
+    "TensorData/docs/api/quickstart.md#Python client for agents (L185-L209)"
+  ],
+  "verification": {
+    "source_quote": "The current code is an early MVP: asset metadata registry, content-addressed artifact upload/retrieval, dataset registry, immutable dataset-version manifests and append-only provenance activity records."
+  },
+  "modality": "documentation",
+  "created_by": "agent-m27036",
+  "created_at": "2026-11-22T06:13:05Z",
+  "version": "1.0.0",
+  "notes": "confidence: high——全部内容直接引自 quickstart.md 对应小节原文（小节标题+行号见 evidence_refs），无推断。端点计数 14 以文档 L34-49 表格逐行清点为准。"
+}
