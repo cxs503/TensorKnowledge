@@ -1,0 +1,76 @@
+{
+  "id": "tkc:tensordata:evidence-gated-migration-triage",
+  "card_type": "method",
+  "claim_type": "methodological",
+  "problem": {
+    "description": "从旧平台 (TensorPlatform) 向 TensorData 迁移数据处理能力时，需要按证据逐组件甄别：哪些逻辑可提取复用、哪些与平台 ORM/租户认证/上传路径耦合必须重写、哪些因虚拟数据或合成源必须排除，避免整体搬运造成治理倒退。",
+    "regime": "软件工程/数据平台迁移治理（非数值模拟方法）"
+  },
+  "method": {
+    "name": "Evidence-gated component triage for platform migration",
+    "description": "对旧平台每个候选组件建立证据化分类清单（文件路径 + 现状描述 + 分类 + 迁移处置），再以架构结论约束迁移方式：可复用的确定性校验/清洗/验收逻辑要抽到纯接口并使配置文件版本化、报告不可变；与 ORM、租户/认证、上传路径、服务容器耦合的 API 层按 TensorData 契约重实现而非照搬；含虚拟数据域表与宽泛异常吞咽的统计 API 不得当作可复用治理核心；采集能力在合成/演示源与真实授权连接器分离前不得迁移；数据工程与编排/训练按限界上下文拆分。迁移前完成审计动作清单（枚举模型/迁移/路由、追踪调用方、检查测试与夹具中的 mocked/virtual/hard-coded 路径、构建依赖图与逐迁移验收矩阵）。",
+    "family": "other"
+  },
+  "equations": [
+    {
+      "formula": "begin(bulk_code_migration) => FORALL candidate IN A/B_class: attached(evidence, candidate)",
+      "source": "/root/tensor-ecosystem/TensorData/docs/migration/tensorplatform-inventory-initial.md §Next audit actions L46",
+      "source_type": "standard",
+      "equation_number": "R1"
+    },
+    {
+      "formula": "coupled(component, {ORM, tenant_auth, upload_path, service_container}) => reimplement_behind_TensorData_contracts(component) ; NOT copy_router",
+      "source": "/root/tensor-ecosystem/TensorData/docs/migration/tensorplatform-inventory-initial.md §Key architectural conclusions L31 + rows L12/L14",
+      "source_type": "standard",
+      "equation_number": "R2"
+    },
+    {
+      "formula": "uses(virtual_domain_tables) AND swallows_broad_exceptions => NOT reusable_governance_core(component)",
+      "source": "/root/tensor-ecosystem/TensorData/docs/migration/tensorplatform-inventory-initial.md §Key architectural conclusions L34 + row L18",
+      "source_type": "standard",
+      "equation_number": "R3"
+    },
+    {
+      "formula": "allow_migrate(data_collection) => separated(synthetic_demo_sources, real_authorized_connectors)",
+      "source": "/root/tensor-ecosystem/TensorData/docs/migration/tensorplatform-inventory-initial.md §Key architectural conclusions L35 + row L19",
+      "source_type": "standard",
+      "equation_number": "R4"
+    },
+    {
+      "formula": "mixes(data_engineering, orchestration, model_training) => split_by(bounded_context) ; NOT move_wholesale",
+      "source": "/root/tensor-ecosystem/TensorData/docs/migration/tensorplatform-inventory-initial.md §Key architectural conclusions L36 + row L20",
+      "source_type": "standard",
+      "equation_number": "R5"
+    },
+    {
+      "formula": "audit_before_extraction: enumerate(models, migrations, routers, routes, clients) AND trace(callers, table_ownership) AND inspect(tests, fixtures) to identify mocked/virtual/hard-coded paths",
+      "source": "/root/tensor-ecosystem/TensorData/docs/migration/tensorplatform-inventory-initial.md §Next audit actions L41-L45",
+      "source_type": "standard",
+      "equation_number": "R6"
+    }
+  ],
+  "applicable_domain": {
+    "domain": "TensorPlatform → TensorData 迁移的组件甄别与迁移门控；可推广到任何『旧平台能力收编进治理仓』的场景",
+    "limitations": [
+      "分类字母 A/B/C/D/E 的图例定义位于本文件显示被裁剪的头部（L1-L9 不可见），本卡不定义其含义，仅引用文档中与各字母同行出现的处置描述",
+      "结论 1-7 是该时点 (initial inventory) 的审计结论，非长期不变式；代码演进后需重新核对",
+      "确定性质量校验可提取，但原文档指出其规则/报告存于进程内字典，须重设计为不可变持久化 QualityReport (L13/L33)"
+    ]
+  },
+  "statement": "TensorPlatform 迁移按证据门控：A/B 候选须附审计证据后才开始批量迁移；耦合平台 ORM/租户/上传路径的 API 按契约重实现；虚拟数据统计 API 不作治理核心；采集在合成源分离前不迁移；管道按限界上下文拆分。",
+  "epistemic_status": "source-verified-with-gaps",
+  "evidence_refs": [
+    "/root/tensor-ecosystem/TensorData/docs/migration/tensorplatform-inventory-initial.md §inventory rows L10-L27",
+    "/root/tensor-ecosystem/TensorData/docs/migration/tensorplatform-inventory-initial.md §Key architectural conclusions L29-L37",
+    "/root/tensor-ecosystem/TensorData/docs/migration/tensorplatform-inventory-initial.md §Next audit actions L39-L46"
+  ],
+  "scope": "TensorData 仓 migration 文档所述的初始清单结论；不覆盖清单中标记 C pending 的未决组件 (L23-L25) 的最终分类",
+  "created_by": "agent:m27035-glm-kb-mining",
+  "notes": "置信度 medium-high：R1-R6 均直接引自可见行号；扣分点：文件头部（含标题与分类图例）在读取时未显示，L1-L9 内容未引用也未推断；C pending 组件的处置保持未决。R2 中『按契约重实现』综合自 L31 结论与 L12/L14 行处置列原文。",
+  "verification": {
+    "source_quote": "Do not begin bulk code migration until the above evidence is attached to each A/B candidate.",
+    "offset": 46
+  },
+  "created_at": "2026-11-22T06:13:33Z",
+  "version": "1.0.0"
+}

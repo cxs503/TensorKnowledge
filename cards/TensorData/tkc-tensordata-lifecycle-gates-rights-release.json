@@ -1,0 +1,80 @@
+{
+  "id": "tkc:tensordata:lifecycle-gates-rights-release",
+  "card_type": "method",
+  "claim_type": "methodological",
+  "problem": {
+    "description": "数据资产从采集到发布需要可控的状态推进：未审查或权利不明的资产不得被消费，发布必须与用途绑定，且生产者不能自我批准高影响资产。",
+    "regime": "数据治理/资产生命周期与权利管理（非数值模拟方法）"
+  },
+  "method": {
+    "name": "Lifecycle gates with purpose-specific rights release",
+    "description": "TensorData 数据资产按门控生命周期推进：Quarantine（新采集/未审查/权利不明）→ Registered（最小元数据与来源记录完整）→ Profiled（基础统计与 schema 发现）→ Validated（必需规则通过或例外已记录）→ Approved（特定用途的权利与质量批准）→ Published（不可变版本对授权消费者可用）→ Deprecated/withdrawn。发布是用途特定的：资产可为科研检查批准而未批准用于训练或再分发。质量聚合分不得掩盖关键失败，报告须暴露规则级结果、严重度、证据与阈值。权利状态分 unknown/needs_review/restricted/approved/prohibited，仅 approved 可过用途特定发布门。",
+    "family": "other"
+  },
+  "equations": [
+    {
+      "formula": "lifecycle: Quarantine -> Registered -> Profiled -> Validated -> Approved -> Published ; exit: Deprecated/withdrawn",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Lifecycle gates L24-L30",
+      "source_type": "standard",
+      "equation_number": "R1"
+    },
+    {
+      "formula": "published(asset, purpose) => rights_state(asset) = approved AND purpose IN approved_purposes(asset)",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Lifecycle gates L32 + §Rights and licensing manifest L59-L60",
+      "source_type": "standard",
+      "equation_number": "R2"
+    },
+    {
+      "formula": "producer(asset) != sole_approver(asset) when impact = high ; agreement_among_LLMs != proof_of_truth",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Separation of duties L35 + §Agent production L73",
+      "source_type": "standard",
+      "equation_number": "R3"
+    },
+    {
+      "formula": "restrictions(derived) >= restrictions(inputs) unless documented_legal_basis ; transformation does not auto-remove copyright/privacy/confidentiality restrictions",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Rights and licensing manifest L61",
+      "source_type": "standard",
+      "equation_number": "R4"
+    },
+    {
+      "formula": "fabricate(model_version | run_id | rights_holder | license_expression | signature | approval_evidence) = FORBIDDEN ; use explicit unknown",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Agent production and accountable review L75",
+      "source_type": "standard",
+      "equation_number": "R5"
+    },
+    {
+      "formula": "aggregate_score must_not hide critical_failures ; report exposes rule-level results, severity, evidence, thresholds",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Quality dimensions L21",
+      "source_type": "standard",
+      "equation_number": "R6"
+    }
+  ],
+  "applicable_domain": {
+    "domain": "TensorData 数据资产全生命周期治理：采集、注册、剖析、验证、批准、发布与退役，及外部/混合来源资产的权利清单管理",
+    "limitations": [
+      "发布是用途特定的：research inspection 批准不含 training/redistribution (L32)",
+      "NOASSERTION 仅表示许可未确立，不是批准 (L57)；许可标签本身不足以证明上传者有权授予 (L60)",
+      "权利与隐私等 material/critical 决策需人类维护者；R0/R1 常规工作可自动化+抽检 (L74)",
+      "manifest 校验器只是最小结构门，不是法律意见或人类权利审查的替代 (L64)",
+      "合成数据必须记录生成状态与谱系，不得与观测/实验证据静默混用 (L38)"
+    ]
+  },
+  "statement": "TensorData 资产须经 Quarantine→Registered→Profiled→Validated→Approved→Published 门控推进，发布按用途绑定权利状态 approved，生产者不得自我批准，派生资产继承输入限制，且禁止编造任何版本/许可/批准证据。",
+  "epistemic_status": "source-verified",
+  "evidence_refs": [
+    "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Quality dimensions L9-L21",
+    "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Lifecycle gates L23-L32",
+    "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Separation of duties L34-L35",
+    "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Rights and licensing manifest L50-L64",
+    "/root/tensor-ecosystem/TensorData/docs/governance/data-governance.md §Agent production and accountable review L66-L76"
+  ],
+  "scope": "TensorData 仓治理文档所述的数据资产生命周期与权利发布规则；具体实现的校验脚本 (scripts/check_rights_manifests.py) 行为未在本卡验证",
+  "created_by": "agent:m27035-glm-kb-mining",
+  "notes": "置信度 high：规则均直接引自源文档小节与行号。注意：cat -n 显示该文件 L1 起始即为句中文字（文件头部疑似被截断或在显示中被裁剪），故本卡不引用 L1-L7 内容，仅引用 L8-L76 实际可见小节。R6 的质量维度清单（L11-L19）未逐项列为方程，仅收录聚合分不掩盖关键失败这一可执行规则。",
+  "verification": {
+    "source_quote": "Publication is purpose-specific. An asset may be approved for research inspection but not training or redistribution.",
+    "offset": 32
+  },
+  "created_at": "2026-11-22T06:10:38Z",
+  "version": "1.0.0"
+}

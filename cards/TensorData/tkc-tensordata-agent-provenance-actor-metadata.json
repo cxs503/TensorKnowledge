@@ -1,0 +1,66 @@
+{
+  "id": "tkc:tensordata:agent-provenance-actor-metadata",
+  "card_type": "method",
+  "claim_type": "methodological",
+  "problem": {
+    "description": "TensorData 需要在数据溯源记录中如实记录 agent 参与：既要可审计归因（哪个 agent/什么工具/谁负责），又不能把归因冒充为人类法律批准，也不能把无 actor 的旧请求静默归给人类。",
+    "regime": "数据治理/溯源元数据（非数值模拟方法）"
+  },
+  "method": {
+    "name": "Agent provenance actor-metadata attribution",
+    "description": "对每条涉及 agent 生成数据、代码派生数据集、模型工件与变换的溯源记录，在 POST /api/v1/provenance 请求中附带可选 actor 对象：actor_type=agent，必填 actor_id、tool_name、accountable_human（稳定且非个人的标识，如 project-maintainer），可选 tool_version、model_id、run_id、work_package、reviewer_agent_ids、verification_refs。字段未暴露就省略，禁止编造。API 将 actor 存到保留键 parameters_json._actor_provenance，客户端无法用自由 parameters 覆盖；无 actor 的旧请求保持兼容并标记 unknown/legacy_unattributed。",
+    "family": "other",
+    "computational_complexity": "O(1)：每条溯源记录附加一个 actor 对象"
+  },
+  "equations": [
+    {
+      "formula": "record(agent_generated) => actor.actor_id AND actor.tool_name AND actor.accountable_human",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/AGENT_PROVENANCE.md §Semantics L38",
+      "source_type": "standard",
+      "equation_number": "R1"
+    },
+    {
+      "formula": "stored_key(actor) = parameters_json._actor_provenance ; override_via_freeform_parameters = forbidden",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/AGENT_PROVENANCE.md §Semantics L40",
+      "source_type": "standard",
+      "equation_number": "R2"
+    },
+    {
+      "formula": "missing(actor) => attribution = unknown/legacy_unattributed (never silently human)",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/AGENT_PROVENANCE.md §Semantics L41",
+      "source_type": "standard",
+      "equation_number": "R3"
+    },
+    {
+      "formula": "exists(api_field_asserting_human_legal_approval) = FALSE",
+      "source": "/root/tensor-ecosystem/TensorData/docs/governance/AGENT_PROVENANCE.md §Semantics L42",
+      "source_type": "standard",
+      "equation_number": "R4"
+    }
+  ],
+  "applicable_domain": {
+    "domain": "TensorData 溯源 API (POST /api/v1/provenance) 及 agent 生成数据/代码派生数据集/模型工件/变换的归因记录",
+    "limitations": [
+      "归因不是法律署名或批准：该机制不证明 agent 输出具有原创性、可版权性或可许可性 (L48)",
+      "reviewer_agent_ids 与 verification_refs 只是质量证据，不代表人类批准 (L39)",
+      "人类法律批准需要单独的已认证可审计工作流，不得由 agent 用共享服务 API key 断言 (L42)",
+      "溯源中不得存私有 prompt、凭据或内部推理；用任务/PR/commit/测试证据链接代替 (L46)"
+    ]
+  },
+  "statement": "TensorData 用溯源元数据记录 agent 参与：agent 记录必须带 actor_id+tool_name+accountable_human，存于保留键 _actor_provenance，缺失则标 unknown/legacy_unattributed，且任何 API 字段都不得断言人类法律批准。",
+  "epistemic_status": "source-verified",
+  "evidence_refs": [
+    "/root/tensor-ecosystem/TensorData/docs/governance/AGENT_PROVENANCE.md §API L5-L32",
+    "/root/tensor-ecosystem/TensorData/docs/governance/AGENT_PROVENANCE.md §Semantics L34-L42",
+    "/root/tensor-ecosystem/TensorData/docs/governance/AGENT_PROVENANCE.md §Operational rule L44-L48"
+  ],
+  "scope": "TensorData 仓治理文档所述的溯源 API v1 行为；其他仓或未来 API 版本需重新核对",
+  "created_by": "agent:m27035-glm-kb-mining",
+  "notes": "置信度 high：全部规则直接引自源文档行号，无推断。source_type=standard 因源为规范性内部治理文档而非外部论文。accountable_human 示例值 project-maintainer 取自 L15/L46。",
+  "verification": {
+    "source_quote": "Agent records require actor_id, tool_name and accountable_human.",
+    "offset": 38
+  },
+  "created_at": "2026-11-22T06:07:07Z",
+  "version": "1.0.0"
+}
