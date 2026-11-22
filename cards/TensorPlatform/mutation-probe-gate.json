@@ -1,0 +1,46 @@
+{
+  "id": "tkc:tensorplatform:mutation-probe-gate",
+  "card_type": "method",
+  "claim_type": "methodological",
+  "problem": {
+    "description": "验收门/基准判据若恒真（喂坏工件也 PASS）则无法拦截回归，质量把控形同虚设；需要机器可证的门杀伤性（gate must be able to fail），且门本身也要能失败。",
+    "regime": "软件工程质量控制 / 数值仿真验收门"
+  },
+  "method": {
+    "name": "Mutation-probe gate kill-proof（质量门突变探针杀伤性验证）",
+    "description": "新增或修改任何验收门/基准判据时，必须附至少一个 mutation 探针证明该门在故意破坏时会 FAIL。五类探针至少其一：假参考曲线、破坏守恒、欠解析、关物理项、采样盲区。探针随套件常驻并打 @mutation 标记；无探针的门=未验收的门，不得作为交付依据。该规则同样约束质量门工具自身（喂坏工件必须 FAIL、喂好工件必须 PASS）。",
+    "family": "other",
+    "computational_complexity": "每门 O(1) 个探针用例，随 CI 套件常驻执行"
+  },
+  "equations": [
+    {
+      "formula": "gate_valid(g) <=> exists p in Probes: g(corrupt(p)) = FAIL  and  g(clean) = PASS",
+      "source": "TensorPlatform/docs/QUALITY_BAR.md §六条硬规则 R1「门必须能失败（杀伤性）」L8-12",
+      "source_type": "standard",
+      "equation_number": "R1"
+    }
+  ],
+  "applicable_domain": {
+    "domain": "TensorPlatform 生态各仓（TensorLBM/FVM/FEM/BEM/SPH 等）的验收门、基准判据，以及质量门工具自身的验收",
+    "limitations": [
+      "仅约束验收门/基准判据的新增与修改，不覆盖普通 lint/风格门",
+      "探针须随套件常驻（@mutation 标记），一次性验证不满足本方法"
+    ]
+  },
+  "statement": "任何验收门必须用 mutation 探针证明其杀伤性：故意破坏（五类探针至少其一）时门必须 FAIL；无探针的门视为未验收，不得作为交付依据。",
+  "epistemic_status": "sourced-from-normative-doc",
+  "evidence_refs": [
+    "TensorPlatform/docs/QUALITY_BAR.md L8-12（R1 门必须能失败）",
+    "TensorPlatform/docs/QUALITY_BAR.md L12（先例：TensorSPH #10 恒真判据修复、TensorLBM #396→#398 假参考教训）",
+    "TensorPlatform/docs/QUALITY_BAR.md L53-54（R1 同样约束 quality_gate.py：喂坏工件必须 FAIL、喂好工件必须 PASS）"
+  ],
+  "scope": "TensorPlatform 生态质量门 v1（owner 2026-10-25）",
+  "created_by": "agent/m27037",
+  "created_at": "2026-11-22T06:05:38+00:00",
+  "version": "1.0.0",
+  "notes": "confidence=high：R1 条文、五类探针名称与先例均直接引自 QUALITY_BAR.md 原文。equations[0].formula 为对 R1 语义的最小形式化表达（原文无公式），如需严格引用以原文为准。",
+  "verification": {
+    "source_quote": "新增或修改任何验收门/基准判据，必须附 mutation 探针证明该门在故意破坏时会失败（假参考曲线/破坏守恒/欠解析/关物理项/采样盲区五类探针至少其一）。探针随套件常驻（@mutation 标记）。无探针的门=未验收的门，不得作为交付依据。",
+    "offset": 8
+  }
+}

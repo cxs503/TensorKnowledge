@@ -1,0 +1,54 @@
+{
+  "id": "tkc:tensorplatform:evidence-level-separation",
+  "card_type": "method",
+  "claim_type": "methodological",
+  "problem": {
+    "description": "多智能体 GitHub 协作中，静态检查、单元测试、部署冒烟与科学验证常被折叠成一个「绿色」状态，掩盖了合并依据究竟是哪一级证据；成功退出的 solver 不等于经过科学验证的结果。",
+    "regime": "多智能体协作流程 / CI 证据管理"
+  },
+  "method": {
+    "name": "Layered evidence levels L0–L4 with SHA-bound test results（分层证据等级+SHA 绑定测试结果）",
+    "description": "证据分五级分开上报、绝不折叠为单一绿状态：L0 静态（格式/lint/类型与 schema 检查）、L1 单元测试、L2 集成（真实服务/适配器）、L3 部署冒烟（被测 SHA 精确部署到目标测试环境且健康检查通过）、L4 科学验证（版本化基准+数值容差+参考数据+守恒/误差检查+结果工件经评审）。测试结果只对同一被测 SHA+环境指纹+命令+配置幂等；PR head 变更后旧结果即失效，不得验证新修订。合并条件=必需 CI 通过+风险相称的证据等级+被测 SHA 与 head 一致。",
+    "family": "other",
+    "computational_complexity": "流程性方法，无额外计算开销；每 PR 记录一次分级证据"
+  },
+  "equations": [
+    {
+      "formula": "merge_allowed(PR) <=> CI_pass AND evidence_level >= required_level(risk) AND sha_tested = head_SHA(PR)",
+      "source": "TensorPlatform/docs/MULTI_AGENT_GITHUB_COLLABORATION.md §4 Branch and PR rules L56 + §5 Remote test and deployment handshake L62-67",
+      "source_type": "standard",
+      "equation_number": "S4.6+S5"
+    },
+    {
+      "formula": "stale(result) <=> sha(result) != head_SHA(PR)",
+      "source": "TensorPlatform/docs/MULTI_AGENT_GITHUB_COLLABORATION.md §5 step 4 L66「If the PR head changes, the prior test result is stale and must not verify the new revision」",
+      "source_type": "standard",
+      "equation_number": "S5.4"
+    }
+  ],
+  "applicable_domain": {
+    "domain": "TensorPlatform 生态基于 GitHub 的多智能体协作（coordinator/code agent/deployment-test agent/reviewer 五类角色，一 agent 可兼多角色但代码编写与验证证据必须可区分）",
+    "limitations": [
+      "该协议 Status 为 v1 proposal for implementation（L3），非已批准终版",
+      "GitHub 只是共享协调账本，不是远程命令通道；不得执行 Issue 评论中未经 allowlist 校验的任意 shell 命令",
+      "部署冒烟（L3）不可替代科学验证（L4）"
+    ]
+  },
+  "statement": "证据等级 L0–L4 必须分开上报、不得折叠为单一绿状态；测试结果绑定精确被测 SHA，head 变更即失效；部署冒烟不是科学验证，solver 成功退出不是经过验证的科学结果。",
+  "epistemic_status": "sourced-from-normative-doc",
+  "evidence_refs": [
+    "TensorPlatform/docs/MULTI_AGENT_GITHUB_COLLABORATION.md §6 Evidence levels L71-81（L0-L4 定义与「never collapse」禁令）",
+    "TensorPlatform/docs/MULTI_AGENT_GITHUB_COLLABORATION.md §5 L62-67（READY_FOR_TEST/TEST_RESULT 握手、SHA 绑定、失效规则）",
+    "TensorPlatform/docs/MULTI_AGENT_GITHUB_COLLABORATION.md §7 L85-87（任务身份=Issue号+仓库+目标SHA；结果幂等条件）",
+    "TensorPlatform/docs/MULTI_AGENT_GITHUB_COLLABORATION.md L3（Status: v1 proposal）"
+  ],
+  "scope": "TensorPlatform 多智能体 GitHub 协作协议 v1（提案）",
+  "created_by": "agent/m27037",
+  "created_at": "2026-11-22T06:05:38+00:00",
+  "version": "1.0.0",
+  "notes": "confidence=high：L0-L4 五级定义、失效规则与幂等条件均为原文直接引用。equations 为对 §4.6/§5.4 条文的最小形式化（原文无公式）。merge_allowed 公式中的 required_level(risk) 对应原文「risk-appropriate review/test evidence」，风险分级映射原文未给出，故未展开。",
+  "verification": {
+    "source_quote": "Report these separately; never collapse them into one green status ... A deployment smoke test is not scientific validation. A successful solver exit is not a validated scientific result.",
+    "offset": 73
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "id": "tkc:tensorplatform:derived-view-fact-separation",
+  "card_type": "method",
+  "claim_type": "methodological",
+  "problem": {
+    "description": "在既有 append-only 事实账本（Tensor Soul 记忆事件）旁新建派生记忆/上下文层（AIL）时，若边界不清会出现两份互相漂移的真相、派生层污染事实、或把未验证条目越权提升为已验证。",
+    "regime": "平台 Agent 记忆/上下文架构 / 数据分层治理"
+  },
+  "method": {
+    "name": "Fact-ledger / derived-view separation（Soul 拥有事实，AIL 拥有视图）",
+    "description": "硬规则：Soul 拥有事实（append-only、带来源与验证状态）；AIL 拥有视图（可重建、可丢弃、永远不写 Soul 的账本）。三条自约束：①可重建性——任何 AIL 结构都能从 Soul 事件（或记录快照）重新派生，删除 AIL 存储不损失事实；②零回写——AIL 不修改、不删除 Soul 记忆事件，只读，并把自产上下文标注为「派生视图」；③不越权验证——检索器可降权未验证/被取代条目，但不能把 observed 提升为 validated。配套口径：两侧 canonical 序列化逐字一致（sort_keys/ensure_ascii=False/separators），哈希可互认。",
+    "family": "other",
+    "computational_complexity": "架构约束，无额外渐近开销；派生层重建为 O(事件数) 离线批处理"
+  },
+  "equations": [
+    {
+      "formula": "Facts = append_only_ledger(Soul);  Views = derivable_cache(AIL);  write(Views, Facts) = forbidden",
+      "source": "TensorPlatform/docs/adr/AIL_ADR_001.md §3.3 L71-73 硬规则原文",
+      "source_type": "standard",
+      "equation_number": "S3.3"
+    },
+    {
+      "formula": "rebuild(derive(Soul_events)) == AIL_state  =>  delete(AIL_store) causes no fact loss",
+      "source": "TensorPlatform/docs/adr/AIL_ADR_001.md §3.3 L77 可重建性自约束",
+      "source_type": "standard",
+      "equation_number": "S3.3-1"
+    },
+    {
+      "formula": "rank(e) may decrease if verification_status(e) in {observed, superseded};  verification_status(e) is immutable by AIL",
+      "source": "TensorPlatform/docs/adr/AIL_ADR_001.md §3.3 L79-80 不越权验证自约束",
+      "source_type": "standard",
+      "equation_number": "S3.3-3"
+    }
+  ],
+  "applicable_domain": {
+    "domain": "带可信 append-only 事件账本 + 派生索引/摘要/预算调度层的平台 Agent 记忆架构（TensorPlatform Tensor Soul × AIL；可推广到同类「账本+视图」分层）",
+    "limitations": [
+      "边界对照的是 main 已落地的 Soul 第一阶段代码（事实核定 2026-10-23, commit 1b01550），非提案推测",
+      "AIL 阶段 2 全部实现在隔离路径 tools/ail/**，不接入常驻 Agent 正式执行链",
+      "预算口径差异：Soul 按字符、AIL 按 token（tiktoken 实测）；字符预算会低估中文语料成本（中英混排约 0.31–0.38 token/char，引自 ADR 转述的报告 §4，本卡未独立复测）"
+    ]
+  },
+  "statement": "事实账本与派生视图必须分层：事实层 append-only 且唯一；视图层可重建、可丢弃、零回写、不越权改验证状态。",
+  "epistemic_status": "sourced-from-normative-doc",
+  "evidence_refs": [
+    "TensorPlatform/docs/adr/AIL_ADR_001.md §3.3 L65-80（硬规则与三条自约束）",
+    "TensorPlatform/docs/adr/AIL_ADR_001.md §4 L96-108（Soul×AIL 逐行边界表；「Soul 是账本与信任边界，AIL 是索引、摘要与预算调度器」）",
+    "TensorPlatform/docs/adr/AIL_ADR_001.md 附录A A7/A8 L197-198（checkpoint version+checksum 拒绝恢复口径；canonical 序列化逐字一致）",
+    "TensorPlatform/docs/adr/AIL_ADR_001.md §4.1 L113-116（字符预算 vs token 预算差异）"
+  ],
+  "scope": "TensorPlatform ADR-001 语义记忆层决策（AIL 阶段 1-2）",
+  "created_by": "agent/m27037",
+  "created_at": "2026-11-22T06:05:38+00:00",
+  "version": "1.0.0",
+  "notes": "confidence=high：硬规则与三自约束为原文直接引用（L73、L77-80）。equations 为对条文的最小形式化（原文无公式）。token/char 比值为 ADR 转述报告 §4 的实测区间，本卡未独立复测，故同时写入 limitations。",
+  "verification": {
+    "source_quote": "Soul 拥有事实（append-only、带来源与验证状态）；AIL 拥有视图（可重建、可丢弃、永远不写 Soul 的账本）。",
+    "offset": 73
+  }
+}
