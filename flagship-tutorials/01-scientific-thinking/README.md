@@ -1,7 +1,7 @@
 # Scientific Thinking: From Observation to Explanation
 
 **Status:** draft  
-**Version:** 0.2.2  
+**Version:** 0.2.3  
 **Audience:** curious learners; no specialist science background required  
 **Estimated time:** 3–5 hours, plus optional follow-up investigation  
 **Domains:** Cognitive Foundations; Evidence and Reality; Models and Principles; Creativity and Discovery  
@@ -175,6 +175,14 @@ A responsible conclusion has four parts:
 Avoid saying "the experiment proves the formula." A finite experiment can support a model within tested conditions; it cannot establish that the model is universally true.
 
 ## 4. From data to knowledge: a worked reasoning example
+
+### 4.1 Reproduce an illustrative calculation
+
+Work through the [invented pendulum dataset and analysis](ILLUSTRATIVE_ANALYSIS.md), its [CSV input](illustrative-pendulum.csv), and its [Python standard-library analysis script](analyze_illustrative_pendulum.py). The twelve timing values were invented for teaching arithmetic. **They are not experimental measurements or a validated physical simulation.** Reproducing their regression does not verify pendulum physics or measure local gravity.
+
+Calculate the period means, squared periods, ordinary-least-squares line with a free intercept, and residuals; check at least one result by hand before running the script. Explain why a slope-to-gravity conversion is only formal when the input observations were invented. For the actual investigation in §3, replace the *method*, not the provenance: record genuine raw trials separately and never relabel these illustrative values as measured data.
+
+### 4.2 Evaluate evidence and alternative explanations
 
 Suppose a learner finds that a longer pendulum generally has a longer period. That observation is consistent with the model, but it does not by itself establish the square-root relationship.
 
@@ -383,9 +391,10 @@ The value 9.81 m/s² is a rounded reference for classroom calculations, not a cl
 
 ## 13. Review record
 
-- Authoring status: instructional draft, version 0.2.2
+- Authoring status: instructional draft, version 0.2.3
 - Agent-assisted source and structure check: 2026-11-09; OpenStax pendulum derivation, NIST uncertainty terminology, and standard/local gravity reference checked against cited sections
 - Supplemental agent-assisted source check: 2026-11-16; VIM 2.26 definition verified, and OpenStax small-angle precision wording clarified
+- Reproducible arithmetic companion added: 2026-11-23; inputs are invented and explicitly *not* physical data; independent executable and physical reproducibility review still pending
 - Independent subject-matter review: pending
 - Independent learning-design review: pending
 - Learner pilot: pending
