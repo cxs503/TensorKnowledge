@@ -873,5 +873,588 @@
         "notes": [
             "TensorLBM 可服务改进点: 时间演化的模块化组织可用于 TensorLBM 的求解器架构设计参考。"
         ]
+    },
+    {
+        "id": "tkc:oss-lbm:kruger-guo-force-term",
+        "statement": "Krüger 教科书 chapter9/shanchen.cpp 中力→分布使用 Guo 二阶力项（含 (1−0.5ω) 因子），速度采用重心速度 + 半力修正 u += 0.5F/ρ_total。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "力项=Guo 二阶",
+                "速度修正=半力"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:kruger-guo-force"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（Guo 力项）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:kruger-poiseuille-validation",
+        "statement": "Krüger 教科书 chapter6 实现 Poiseuille 流验证管线：力驱动与 PBBC 压差驱动双方案，相对 L2 误差 ‖u−u_ana‖/‖u_ana‖ 排除虚拟层，稳态判据 |mean(u)/mean(u_old)−1|<1e−12。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "验证=Poiseuille 解析解",
+                "误差=L2 相对",
+                "稳态判据=1e-12"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:kruger-poiseuille-l2"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（验证管线）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:kruger-shan-chen-twocomponent",
+        "statement": "Krüger 教科书 chapter9/shanchen.cpp 实现两组分 Shan-Chen：互作用势 ψ(ρ)=ρ₀[1−exp(−ρ/ρ₀)]，力矩阵 g[0][0]=gA, g[1][1]=gB, g[0][1]=g[1][0]=gAB，仅取 8 个最近邻（无次近邻）。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "模型=MCMP Shan-Chen",
+                "势=指数型",
+                "邻域=8 最近邻"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:kruger-sc-potential",
+            "tke:oss-lbm:kruger-force-matrix"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（两组分 SC 骨架）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:kruger-taylor-green-decay",
+        "statement": "Krüger 教科书 chapter13 实现 Taylor-Green 涡衰减验证：理论衰减率 2/t_d = 2ν(kx²+ky²) 对比拟合 d lnE/dt，实测误差 0.077%（<3%）。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "验证=Taylor-Green",
+                "指标=衰减率",
+                "误差=0.077%"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:kruger-tg-decay"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: Taylor-Green 验证",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:kruger-young-laplace-calibrator",
+        "statement": "Krüger 教科书 chapter9/shanchen.cpp 包含 Young-Laplace 标定器 calculateDeltaPressure()：4×4 盒平均取汽/液压力，沿 y=ny/2 找 ρ 跨过 ρ_av 处线性插值得半径，输出 γ=Δp·r。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "验证=Young-Laplace",
+                "方法=4×4 盒平均+线性插值半径"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:kruger-young-laplace"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: Young-Laplace 标定",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbmpy-collision-spectrum",
+        "statement": "lbmpy 碰撞谱系覆盖 SRT/BGK、TRT（含 magic number Λ=3/16）、MRT（原始矩/正交化）、中心矩、KBC（N4 动力学）、累积量（单项式/多项式），统一为 AbstractLbMethod 的矩空间松弛框架。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "碰撞=SRT/TRT/MRT/CM/KBC/Cumulant",
+                "框架=AbstractLbMethod 矩空间松弛"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbmpy-creation-functions"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: 碰撞算子谱系",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbmpy-force-models",
+        "statement": "lbmpy 实现 9 种力项模型（Simple/CentralMoment/Luo/Guo/He/Schiller/Buick/EDM/ShanChen），支持分布空间/矩空间/中心矩空间三种表示自动互转，可与 13 种碰撞算子任意组合。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "力项=9 种",
+                "表示空间=分布/矩/中心矩",
+                "组合=力项×碰撞全连接"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbmpy-force-models-list"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: 力项谱系",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbmpy-mcmp-barycentric",
+        "statement": "lbmpy MCMP 教程中两组分 Shan-Chen 使用重均速度 u_bary = (ρ_a u_a + ρ_b u_b)/(ρ_a + ρ_b) 作为两套 LBMConfig 的共同速度输入，互作用矩阵 g_aa=g_bb=0、g_ab=g_ba=6.0 产生分相。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "模型=MCMP Shan-Chen",
+                "速度=重均",
+                "互作用=g_ab=6.0"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbmpy-mcmp-tutorial"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（重均速度约定）",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:lbmpy-scmp-density-ratio",
+        "statement": "lbmpy SCMP 测试中指数势 ψ=ρ₀(1−e^{−ρ/ρ₀}) 配合 g_aa=−4.7 产生密度比 ρ_liquid/ρ_gas ≈ 2.1/0.15 ≈ 14，验证方式为与外部 C++ 参考实现 64 点密度剖面逐点 np.allclose。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "模型=SCMP",
+                "势=指数型",
+                "密度比≈14",
+                "验证=逐点对标"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:lbmpy-scmp-test"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: SCMP 密度比基线",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:ludwig-free-energy-colloid",
+        "statement": "ludwig 实现自由能多相 LBM 与胶体颗粒耦合：自由能泛函含 φ⁴ 双阱 + 梯度项，胶体通过表面锚定条件（planar/homeotropic）与序参量场耦合，支持主动粒子（active colloids）。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D3Q19",
+                "模型=自由能 Cahn-Hilliard",
+                "胶体=表面锚定",
+                "主动=是"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:ludwig-free-energy"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: 自由能多相+胶体",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:luma-multiphase-kernels",
+        "statement": "LUMA 实现多相 LBM 内核族：包含 Shan-Chen 伪势、自由能、颜色梯度三种范式，支持 D2Q9/D3Q19/D3Q27 格子，CUDA 后端。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9/D3Q19/D3Q27",
+                "模型=SC/自由能/颜色梯度",
+                "后端=CUDA"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:luma-kernels"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: 多相内核谱系",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:mcmp-lbm-cs-eos",
+        "statement": "mcmp-lbm 支持 Carnahan-Starling 状态方程（可选），默认指数势 ψ=1−exp(−ρ)，压力函数 Press 按 EOS 类型分支计算。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D3Q19",
+                "EOS=CS（可选）/指数（默认）",
+                "势=1-exp(-ρ)"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mcmp-lbm-eos"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: MCMP 状态方程",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:mcmp-lbm-mrt-taichi",
+        "statement": "mcmp-lbm (geoelements) 实现 3D D3Q19 MRT 多组元 Shan-Chen 求解器，基于 Taichi 后端（CPU/GPU 一键切换），稀疏存储用 ti.root.pointer 2×2×2 block 仅激活流体节点。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D3Q19",
+                "碰撞=MRT",
+                "后端=Taichi",
+                "存储=稀疏 pointer"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mcmp-lbm-mrt",
+            "tke:oss-lbm:mcmp-lbm-taichi"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: MRT 碰撞+稀疏存储",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:mplbm-ut-no-high-density",
+        "statement": "MPLBM-UT 无高密度比能力：仅使用简单势 ψ=ρ，无 P-R/CS 状态方程，无 MCMP-EOS 改进势，密度比能力判为 NOT_SUPPORTED。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D3Q19",
+                "势=简单势 ψ=ρ",
+                "密度比=不支持"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mplbm-ut-simple-potential"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-HIGHDENSITY（反面基线）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:mplbm-ut-two-lattice-sc",
+        "statement": "MPLBM-UT 使用两个独立 Palabos lattice（fluid1/fluid2），各用 ExternalMomentRegularizedBGKdynamics，Shan-Chen 多组元耦合通过 ShanChenMultiComponentProcessor3D 注入，constOmegaValues 推入顺序必须与 blockLattices 一致。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D3Q19",
+                "模型=MCMP Shan-Chen",
+                "碰撞=ExternalMomentRegularizedBGK",
+                "框架=Palabos"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mplbm-ut-two-lattice",
+            "tke:oss-lbm:mplbm-ut-omega-order"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（双 lattice 骨架）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:mplbm-ut-wetting-bounceback",
+        "statement": "MPLBM-UT 润湿壁面通过 BounceBack<T,DESCRIPTOR>(G_ads) 的黏附系数 G_ads 实现，接触角由 G_ads 符号控制（负=润湿相），非体积力形式。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D3Q19",
+                "润湿=BB 黏附系数",
+                "接触角控制=G_ads 符号"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:mplbm-ut-wetting"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（润湿 BB）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:openlbmpm-color-gradient-csf",
+        "statement": "openLBMPM 颜色梯度模型实现了 CSF 曲率力形式 F = −½σK∇φ（Akai 2018），K 由单位梯度散度构造，接触角由几何润湿 BC 通过 cosθ 与壁法向构造候选单位向量设定。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "模型=颜色梯度 R-K",
+                "表面张力=CSF 曲率",
+                "润湿=几何润湿 BC"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:openlbmpm-csf-force",
+            "tke:oss-lbm:openlbmpm-wetting-bc"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（颜色梯度润湿）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:openlbmpm-isotropy-stencil",
+        "statement": "openLBMPM 显式力支持各向同性 4/8/10 阶 stencil 切换：iso4 仅到 4 阶（A6=0.600，偏差 40%），iso8/iso10 到 8 阶（与理论差 <1e-12），用于压制 spurious current。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9 扩展",
+                "各向同性阶=4/8/10",
+                "用途=压制 spurious current"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:openlbmpm-isotropy-weights"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（各向同性 stencil）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:openlbmpm-porter-explicit-force",
+        "statement": "openLBMPM 实现了 Porter 2012 显式力格式：碰撞前 f ← f − ½F，碰撞中 f ← f + (f_eq − f − ½F)/τ + F，总速度 u = [ΣΣfc + ½(F₀+F₁)]/ρ_tot，平衡速度 u_eq = Σ[(Σfc+½F)/τ]/Σ(ρ/τ)。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "模型=MCMP Shan-Chen",
+                "力格式=Porter 2012 显式分裂",
+                "参数域=两组分"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:openlbmpm-porter-force-collision",
+            "tke:oss-lbm:openlbmpm-porter-velocity"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（显式力四件套）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:openlbmpm-pr-eos-unused",
+        "statement": "openLBMPM 中 P-R 状态方程（Yuan & Schaefer 2002）有完整实现但从未被调用，ExplicitD2Q9GPU.py 中 calEffectiveMassPR 为空壳函数体，高密度比能力代码层未启用。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9",
+                "EOS=P-R（未启用）",
+                "密度比=未实现"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:openlbmpm-pr-eos-code"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: NEW:GAP-LBM-MCMP-HIGHDENSITY（高密度比，本仓未启用）"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:sailfish-free-energy-binary",
+        "statement": "sailfish 实现了自由能二元流体（Cahn-Hilliard 型）：体自由能压强 pb = ρ/3 + A(−φ²/2 + 3φ⁴/4)，化学势 μ = A(−φ + φ³) − κ∇²φ，κ 各向异性通过二阶矩系数 wxx/wyy/wzz 注入。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9/D3Q19",
+                "模型=自由能 Cahn-Hilliard",
+                "自由能=φ⁴ 双阱"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:sailfish-free-energy-eq",
+            "tke:oss-lbm:sailfish-chemical-potential"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: 自由能多相（非 MCMP SC 系）",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:sailfish-shan-chen-binary",
+        "statement": "sailfish 双组分 Shan-Chen 实现中，宏观速度采用松弛时间加权合成 u = Σ_σ(ρ_σ/τ_σ)u_σ / Σ_σ(ρ_σ/τ_σ)，这是 SC 双组分黏性耦合的标准做法。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=D2Q9/D3Q19/D3Q27",
+                "模型=MCMP Shan-Chen",
+                "速度合成=τ 加权"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:sailfish-barycentric-velocity"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE（重均速度约定）",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
+    },
+    {
+        "id": "tkc:oss-lbm:sailfish-sympy-codegen",
+        "statement": "sailfish 使用 sympy 符号推导 + mako 模板生成 OpenCL/CUDA 内核，5 种格子（D2Q9/D3Q13/D3Q15/D3Q19/D3Q27）× 3 碰撞（BGK/MRT/entropic）× 多边界由一套模板覆盖。",
+        "claim_type": "descriptive",
+        "scope": {
+            "domain": "lattice Boltzmann multiphase/multicomponent methods",
+            "conditions": [
+                "格子=5 种",
+                "碰撞=BGK/MRT/entropic",
+                "后端=OpenCL/CUDA",
+                "代码生成=sympy+mako"
+            ]
+        },
+        "modality": "asserted",
+        "epistemic_status": "established",
+        "evidence_refs": [
+            "tke:oss-lbm:sailfish-sympy-grids",
+            "tke:oss-lbm:sailfish-mako-templates"
+        ],
+        "created_at": "2026-11-09T12:00:00Z",
+        "created_by": "agent/m8634 (TensorPlatform citizen, oss-lbm knowledge landing)",
+        "version": "1.0.0",
+        "notes": [
+            "映射 feature_ledger: 符号推导驱动代码生成",
+            "映射 feature_ledger: GAP-LBM-MCMP-POISEUILLE"
+        ]
     }
 ]
