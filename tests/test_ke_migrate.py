@@ -28,17 +28,18 @@ from ke import contract, migrate, queries as q, store, validate  # noqa: E402
 
 #: pinned inventory of the source package (four contracts)
 EXPECTED = {
-    "claims": 102,
-    "evidence": 142,
-    "provenance": 7,
+    "claims": 150,
+    "evidence": 197,
+    "provenance": 16,
     "gap_anchors": 6,
-    "claim_evidence": 150,
-    "evidence_claims": 150,
+    "claim_evidence": 205,
+    "evidence_claims": 205,
     "gap_claims": 27,
 }
-#: byte-identical roll-up duplicates collapsed by the loader (claims/claims.json
-#: re-publishes mflbm/claims.json)
-EXPECTED_COLLAPSED = 10
+#: byte-identical re-publications collapsed by the loader: the aggregate
+#: re-publishes the 23 gen-2 ingress claims, the 30 gen-2 ingress evidence
+#: records, the 8 gen-2 ingress provenance records, and mflbm/claims.json
+EXPECTED_COLLAPSED = 71
 
 
 @pytest.fixture(scope="module")
@@ -76,9 +77,12 @@ def test_source_inventory_pinned(src_store):
 def test_rollup_duplicates_collapsed_not_dropped():
     found = contract.discover(SOURCE)
     assert len(found.duplicates) == EXPECTED_COLLAPSED
-    assert {d["kind"] for d in found.duplicates} == {"claims"}
-    assert all(d["kept"] == "claims/claims.json" for d in found.duplicates)
-    assert all(d["collapsed"] == "mflbm/claims.json" for d in found.duplicates)
+    assert {d["kind"] for d in found.duplicates} == {"claims", "evidence", "provenance"}
+    # the kept copy is always the canonical aggregate (never a per-record or
+    # sub-package file), so no record is silently dropped or forked
+    AGG = {"claims": "claims/claims.json", "evidence": "evidence/evidence.json",
+           "provenance": "provenance/provenance.json"}
+    assert all(d["kept"] == AGG[d["kind"]] for d in found.duplicates)
 
 
 def test_conflicting_duplicate_record_is_rejected(tmp_path):
@@ -112,8 +116,8 @@ def test_migration_preserves_every_byte(src_store, migrated):
 def test_reconcile_verdict_pass(src_store, migrated):
     rep = migrate.reconcile(src_store, migrated)
     assert rep["verdict"] == "PASS", [r for r in rep["rows"] if not r["rows_match"]]
-    assert rep["totals"]["objects_source"] == rep["totals"]["objects_target"] == 257
-    assert rep["totals"]["relations_source"] == rep["totals"]["relations_target"] == 327
+    assert rep["totals"]["objects_source"] == rep["totals"]["objects_target"] == 369
+    assert rep["totals"]["relations_source"] == rep["totals"]["relations_target"] == 437
     assert rep["assertions"]["match"] and rep["assertions"]["stats_match"]
 
 
@@ -176,10 +180,10 @@ def test_migrate_cli_writes_reconciliation(pg_ok, tmp_path):
     assert r.returncode == 0, r.stdout + r.stderr
     rep = json.loads(out.read_text(encoding="utf-8"))
     assert rep["verdict"] == "PASS"
-    assert rep["totals"]["objects_source"] == rep["totals"]["objects_target"] == 257
-    assert rep["totals"]["relations_source"] == rep["totals"]["relations_target"] == 327
+    assert rep["totals"]["objects_source"] == rep["totals"]["objects_target"] == 369
+    assert rep["totals"]["relations_source"] == rep["totals"]["relations_target"] == 437
     md_text = md.read_text(encoding="utf-8")
-    assert "| object | claims (claim-record) | 102 | 102 |" in md_text
+    assert "| object | claims (claim-record) | 150 | 150 |" in md_text
     # re-run in --check mode: read-only reconciliation must stay PASS
     r2 = subprocess.run(cmd + ["--check"], cwd=REPO, capture_output=True, text=True, env=env)
     assert r2.returncode == 0, r2.stdout + r2.stderr
@@ -193,5 +197,7 @@ def test_dsn_credentials_never_written(tmp_path):
     assert migrate.mask_dsn("postgresql://user:s3cret@h:5432/db") == \
            "postgresql://user:***@h:5432/db"
     assert "s3cret" not in migrate.mask_dsn("postgresql://u:s3cret@h/db")
-    # the default DSN carries no credentials at all (peer auth over the socket)
-    assert "@" not in store.default_pg_dsn()
+    # the built-in default DSN carries no credentials at all (peer auth over
+    # the socket); check the constant, not default_pg_dsn(), which honours the
+    # KE_PG_DSN env var that CI sets to a credentialed DSN
+    assert "@" not in store.DEFAULT_PG_DSN

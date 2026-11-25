@@ -66,8 +66,10 @@ def test_generations_are_disjoint_and_additive():
     gen2 = {r["id"] for r in manifest["records"] if r["kind"] == "claim"}
     agg = [c["id"] for c in load(PKG / "claims" / "claims.json")]
     gen1 = set(agg) - gen2
-    assert len(agg) == 50, "aggregate claim count changed"
-    assert len(gen1) == 27, f"gen-1 claim count changed: {len(gen1)}"
+    # gen-1 count is the aggregate as of Merge #40 (m14523): 36 claims; the
+    # 23 gen-2 claims come from the m8634 landing manifest (PR #46).
+    assert len(agg) == 59, "aggregate claim count changed"
+    assert len(gen1) == 36, f"gen-1 claim count changed: {len(gen1)}"
     assert not (gen1 & gen2), "generations must not share claim ids"
     assert len(set(agg)) == len(agg), "duplicate claim ids in aggregate"
 
